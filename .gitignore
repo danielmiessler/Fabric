@@ -353,3 +353,6 @@ tmp/
 
 # Ignore .claude/
 .claude/
+
+# debug builds
+__debug*exe*

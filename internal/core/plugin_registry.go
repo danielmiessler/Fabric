@@ -43,6 +43,7 @@ import (
 // potential authentication source exists so we can safely initialize the
 // Bedrock client without causing the AWS SDK to search for credentials.
 func hasAWSCredentials() bool {
+	return false
 	if os.Getenv("AWS_PROFILE") != "" ||
 		os.Getenv("AWS_ROLE_SESSION_NAME") != "" ||
 		(os.Getenv("AWS_ACCESS_KEY_ID") != "" && os.Getenv("AWS_SECRET_ACCESS_KEY") != "") {
@@ -62,6 +63,10 @@ func hasAWSCredentials() bool {
 		}
 	}
 	return false
+}
+
+func hasOllama() bool {
+	return os.Getenv("OLLAMA_URL") != ""
 }
 
 func NewPluginRegistry(db *fsdb.Db) (ret *PluginRegistry, err error) {
@@ -91,7 +96,6 @@ func NewPluginRegistry(db *fsdb.Db) (ret *PluginRegistry, err error) {
 	// Add non-OpenAI compatible clients
 	vendors = append(vendors,
 		openai.NewClient(),
-		ollama.NewClient(),
 		azure.NewClient(),
 		gemini.NewClient(),
 		anthropic.NewClient(),
@@ -100,6 +104,9 @@ func NewPluginRegistry(db *fsdb.Db) (ret *PluginRegistry, err error) {
 		perplexity.NewClient(), // Added Perplexity client
 	)
 
+	if hasOllama() {
+		vendors = append(vendors, ollama.NewClient())
+	}
 	if hasAWSCredentials() {
 		vendors = append(vendors, bedrock.NewClient())
 	}

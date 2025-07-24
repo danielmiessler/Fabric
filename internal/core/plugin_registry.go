@@ -43,7 +43,10 @@ import (
 // potential authentication source exists so we can safely initialize the
 // Bedrock client without causing the AWS SDK to search for credentials.
 func hasAWSCredentials() bool {
-	return false
+	if os.Getenv("BEDROCK_AWS_REGION") == "" {
+		return false
+	}
+
 	if os.Getenv("AWS_PROFILE") != "" ||
 		os.Getenv("AWS_ROLE_SESSION_NAME") != "" ||
 		(os.Getenv("AWS_ACCESS_KEY_ID") != "" && os.Getenv("AWS_SECRET_ACCESS_KEY") != "") {

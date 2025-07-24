@@ -6,12 +6,20 @@
     "configurations": [
 
         {
-            "name": "Launch Package",
+            "name": "listmodels",
             "type": "go",
             "request": "launch",
             "mode": "auto",
             "program": "${workspaceFolder}\\cmd\\fabric",
             "args": ["/listmodels"]
+        },
+        {
+            "name": "basic request via gemini",
+            "type": "go",
+            "request": "launch",
+            "mode": "auto",
+            "program": "${workspaceFolder}\\cmd\\fabric",
+            "args": ["introduction to powershell"]
         }
     ]
 }

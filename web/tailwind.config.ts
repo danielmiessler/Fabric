@@ -6,12 +6,12 @@ import { skeleton } from '@skeletonlabs/tw-plugin';
 import { myCustomTheme } from './my-custom-theme.ts'
 
 export default {
-	darkMode: 'class',
-	content: [
-		'./src/**/*.{html,js,svelte,svx,md,ts}',
-		join(require.resolve('@skeletonlabs/skeleton'), '../**/*.{html,js,svelte,ts,svx,md}')
-	],
-	theme: { 
+  darkMode: 'class',
+  content: [
+    './src/**/*.{html,js,svelte,svx,md,ts}',
+    join(require.resolve('@skeletonlabs/skeleton'), '../**/*.{html,js,svelte,ts,svx,md}')
+  ],
+  theme: {
     container: {
       center: true,
       padding: "2rem",
@@ -19,7 +19,7 @@ export default {
         "2xl": "1400px",
       },
     },
-		extend: {
+    extend: {
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -68,8 +68,8 @@ export default {
           '50%': { 'background-size': '200% 200%, background-position: right center' },
         },
         blink: {
-          '0%, 100%': { opacity: 1 },
-          '50%': { opacity: 0 },
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0' },
         },
       },
       typography: {
@@ -86,26 +86,57 @@ export default {
       }
     },
   },
-	plugins: [
-		forms,
-    
-		typography,
-		skeleton({
-			themes: {
-				preset: [
-					{
-						name: 'skeleton',
-						enhancements: true
-					},
-					{
-						name: 'modern',
-						enhancements: true
-					}
-				],
+  plugins: [
+    forms,
+    typography,
+    skeleton({
+      themes: {
+        preset: [
+          {
+            name: 'skeleton',
+            enhancements: true
+          },
+          {
+            name: 'modern',
+            enhancements: true
+          },
+          {
+            name: 'crimson',
+            enhancements: true
+          },
+          {
+            name: 'hamlindigo',
+            enhancements: true
+          },
+          {
+            name: 'gold-nouveau',
+            enhancements: true
+          },
+          {
+            name: 'seafoam',
+            enhancements: true
+          },
+          {
+            name: 'rocket',
+            enhancements: true
+          },
+          {
+            name: 'sahara',
+            enhancements: true
+          },
+          {
+            name: 'wintry',
+            enhancements: true
+          },
+          {
+            name: 'vintage',
+            enhancements: true
+          },
+        ],
         custom: [
           myCustomTheme
         ]
-			}
-		})
-	]
-} satisfies Config;
+      }
+    })
+  ]
+}

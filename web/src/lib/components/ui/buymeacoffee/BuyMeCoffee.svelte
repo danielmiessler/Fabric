@@ -1,7 +1,6 @@
 <script lang="ts">
-	export let url: string = 'https://www.buymeacoffee.com/johnconnor.sec';
-	export let text: string = 'Buy me a coffee';
-    
+  export let url: string = 'https://www.buymeacoffee.com/johnconnor.sec';
+  export let text: string = 'Buy me a coffee';
 </script>
 
 <a

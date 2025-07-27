@@ -1,0 +1,4 @@
+{
+    "description": "Least-to-Most Prompting",
+    "prompt": "Break down the problem into simpler sub-problems from easiest to hardest; answer concisely at each step."
+}

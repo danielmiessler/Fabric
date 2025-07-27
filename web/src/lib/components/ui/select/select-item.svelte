@@ -1,10 +1,10 @@
 <script>
-	import { cn } from "$lib/utils";
+  import { cn } from "$lib/utils";
 
-	let className = undefined;
-	export let value;
-	export let disabled = false;
-	export { className as class };
+  let className = undefined;
+  export let value;
+  export let disabled = false;
+  export { className as class };
 </script>
 
 <option

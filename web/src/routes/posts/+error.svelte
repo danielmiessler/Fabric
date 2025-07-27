@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { page } from '$app/stores';
+  import { page } from '$app/stores';
 </script>
 
 <div class="container flex min-h-[400px] flex-col items-center justify-center">

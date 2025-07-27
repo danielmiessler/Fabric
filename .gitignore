@@ -58,6 +58,7 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 cover/
+coverage.out
 
 # Translations
 *.mo
@@ -130,9 +131,7 @@ celerybeat.pid
 # Environments
 .env
 .venv
-env/
 venv/
-ENV/
 env.bak/
 venv.bak/
 
@@ -166,6 +165,16 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
+
+patterns/dialog_with_socrates/Apology by Plato.txt
+patterns/dialog_with_socrates/Phaedrus by Plato.txt
+patterns/dialog_with_socrates/Symposium by Plato.txt
+patterns/dialog_with_socrates/The Economist by Xenophon.txt
+patterns/dialog_with_socrates/The Memorabilia by Xenophon.txt
+patterns/dialog_with_socrates/The Memorable Thoughts of Socrates by Xenophon.txt
+patterns/dialog_with_socrates/The Republic by Plato.txt
+patterns/dialog_with_socrates/The Symposium by Xenophon.txt
+
 web/node_modules
 
 # Output
@@ -332,3 +341,15 @@ web/.svelte-kit
 
 # End of https://www.toptal.com/developers/gitignore/api/node
 
+web/myfiles/Obsidian_perso_not_share/
+ENV
+web/package-lock.json
+.gitignore_backup
+web/static/*.png
+
+# Local tmp directory
+.tmp/
+tmp/
+
+# Ignore .claude/
+.claude/

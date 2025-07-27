@@ -1,0 +1,30 @@
+#this is an example yaml config file for fabric
+
+# use fabric pattern names
+pattern: ai
+
+# or use a filename
+# pattern: ~/testpattern.md
+
+model: phi3:latest
+
+# for models that support context length
+modelContextLength: 2048
+
+frequencypenalty: 0.5
+presencepenalty: 0.5
+topp: 0.67
+temperature: 0.88
+seed: 42
+
+stream: true
+raw: false
+
+# suppress vendor thinking output
+suppressThink: false
+thinkStartTag: "<think>"
+thinkEndTag: "</think>"
+
+# OpenAI Responses API settings
+# (use this for llama-server or other OpenAI-compatible local servers)
+disableResponsesAPI: true

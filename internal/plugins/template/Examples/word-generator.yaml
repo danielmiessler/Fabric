@@ -1,0 +1,16 @@
+name: word-generator
+executable: /usr/local/bin/word-generator.py
+type: executable
+timeout: "5s"
+description: "Generates random words based on count parameter"
+version: "1.0.0"
+env: []
+
+operations:
+  generate:
+    cmd_template: "{{executable}} {{value}}"
+
+config:
+  output:
+    method: stdout
+

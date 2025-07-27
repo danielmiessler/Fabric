@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { formatDistance } from 'date-fns';
-	import type { PageData } from './$types';
+  import { formatDistance } from 'date-fns';
+  import type { PageData } from './$types';
 
-	export let data: PageData;
+  export let data: PageData;
 
-	$: ({ tag, posts } = data);
+  $: ({ tag, posts } = data);
 </script>
 
 <div class="container py-12">

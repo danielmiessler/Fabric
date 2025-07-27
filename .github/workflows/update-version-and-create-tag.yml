@@ -3,16 +3,26 @@ name: Update Version File and Create Tag
 on:
   push:
     branches:
-      - main  # Monitor the main branch
+      - main # Monitor the main branch
     paths-ignore:
-      - 'patterns/**'
-      - '**/*.md'
+      - "data/patterns/**"
+      - "**/*.md"
+      - "data/strategies/**"
+      - "cmd/generate_changelog/*.db"
+      - "cmd/generate_changelog/incoming/*.txt"
+      - "scripts/pattern_descriptions/*.json"
+      - "web/static/data/pattern_descriptions.json"
 
 permissions:
-  contents: write  # Ensure the workflow has write permissions
+  contents: write # Ensure the workflow has write permissions
+
+concurrency:
+  group: version-update
+  cancel-in-progress: false
 
 jobs:
   update-version:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
 
     steps:
@@ -24,13 +34,15 @@ jobs:
       - name: Install Nix
         uses: DeterminateSystems/nix-installer-action@main
 
-      - name: Setup Nix Cache
-        uses: DeterminateSystems/magic-nix-cache-action@main
-
       - name: Set up Git
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Pull latest main and tags
+        run: |
+          git pull --rebase origin main
+          git fetch --tags
 
       - name: Get the latest tag
         id: get_latest_tag
@@ -56,37 +68,47 @@ jobs:
 
       - name: Update version.go file
         run: |
-          echo "package main" > version.go
-          echo "" >> version.go
-          echo "var version = \"${{ env.new_tag }}\"" >> version.go
+          echo "package main" > cmd/fabric/version.go
+          echo "" >> cmd/fabric/version.go
+          echo "var version = \"${{ env.new_tag }}\"" >> cmd/fabric/version.go
 
       - name: Update version.nix file
         run: |
-          echo "\"${{ env.new_version }}\"" > pkgs/fabric/version.nix
-      
-      - name: Format source codes
+          echo "\"${{ env.new_version }}\"" > nix/pkgs/fabric/version.nix
+
+      - name: Format source code
         run: |
-          go fmt ./...
+          nix fmt
 
       - name: Update gomod2nix.toml file
         run: |
-          nix run .#gomod2nix
+          nix run .#gomod2nix -- --outdir nix/pkgs/fabric
 
+      - name: Generate Changelog Entry
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          go run ./cmd/generate_changelog --process-prs ${{ env.new_tag }}
+          go run ./cmd/generate_changelog --sync-db
       - name: Commit changes
         run: |
-          git add version.go
-          git add pkgs/fabric/version.nix
-          git add gomod2nix.toml
-          git add .
+          # These files are modified by the version bump process
+          git add cmd/fabric/version.go
+          git add nix/pkgs/fabric/version.nix
+          git add nix/pkgs/fabric/gomod2nix.toml
+
+          # The changelog tool is responsible for staging CHANGELOG.md, changelog.db,
+          # and removing the incoming/ directory.
+
           if ! git diff --staged --quiet; then
-            git commit -m "Update version to ${{ env.new_tag }} and commit $commit_hash"
+            git commit -m "chore(release): Update version to ${{ env.new_tag }}"
           else
             echo "No changes to commit."
           fi
 
       - name: Push changes
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Use GITHUB_TOKEN to authenticate the push
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Use GITHUB_TOKEN to authenticate the push
         run: |
           git push origin main  # Push changes to the main branch
 
@@ -99,7 +121,7 @@ jobs:
 
       - name: Dispatch event to trigger release workflow
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Use GITHUB_TOKEN to authenticate the dispatch
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Use GITHUB_TOKEN to authenticate the dispatch
         run: |
           curl -X POST \
             -H "Authorization: token $GITHUB_TOKEN" \

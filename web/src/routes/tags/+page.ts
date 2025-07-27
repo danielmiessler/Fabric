@@ -1,5 +1,5 @@
 import type { PageLoad } from './$types';
-import type { PostMetadata } from '$lib/types/types';
+import type { Frontmatter } from '$lib/utils/markdown';
 
 export const load: PageLoad = async () => {
 	const postFiles = import.meta.glob('/src/lib/content/posts/*.{md,svx}', { eager: true });
@@ -25,7 +25,7 @@ export const load: PageLoad = async () => {
 			acc[tag].push(post);
 		});
 		return acc;
-	}, {} as Record<string, PostMetadata[]>);
+	}, {} as Record<string, Frontmatter[]>);
 
 	return {
 		tags,

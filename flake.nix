@@ -28,12 +28,14 @@
     let
       forAllSystems = nixpkgs.lib.genAttrs (import systems);
 
+      getGoVersion = system: nixpkgs.legacyPackages.${system}.go_1_24;
+
       treefmtEval = forAllSystems (
         system:
         let
           pkgs = nixpkgs.legacyPackages.${system};
         in
-        treefmt-nix.lib.evalModule pkgs ./treefmt.nix
+        treefmt-nix.lib.evalModule pkgs ./nix/treefmt.nix
       );
     in
     {
@@ -47,10 +49,14 @@
         system:
         let
           pkgs = nixpkgs.legacyPackages.${system};
-          goEnv = gomod2nix.legacyPackages.${system}.mkGoEnv { pwd = ./.; };
+          goVersion = getGoVersion system;
+          goEnv = gomod2nix.legacyPackages.${system}.mkGoEnv {
+            pwd = ./.;
+            go = goVersion;
+          };
         in
-        import ./shell.nix {
-          inherit pkgs goEnv;
+        import ./nix/shell.nix {
+          inherit pkgs goEnv goVersion;
           inherit (gomod2nix.legacyPackages.${system}) gomod2nix;
         }
       );
@@ -59,10 +65,13 @@
         system:
         let
           pkgs = nixpkgs.legacyPackages.${system};
+          goVersion = getGoVersion system;
         in
         {
           default = self.packages.${system}.fabric;
-          fabric = pkgs.callPackage ./pkgs/fabric {
+          fabric = pkgs.callPackage ./nix/pkgs/fabric {
+            go = goVersion;
+            inherit self;
             inherit (gomod2nix.legacyPackages.${system}) buildGoApplication;
           };
           inherit (gomod2nix.legacyPackages.${system}) gomod2nix;

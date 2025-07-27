@@ -1,0 +1,11 @@
+[
+  { "name": "aot", "description": "Atom-of-Thought (AoT)" },
+  { "name": "cod", "description": "Chain-of-Draft (CoD)" },
+  { "name": "cot", "description": "Chain-of-Thought (CoT) Prompting" },
+  { "name": "ltm", "description": "Least-to-Most Prompting" },
+  { "name": "reflexion", "description": "Reflexion Prompting" },
+  { "name": "self-consistent", "description": "Self-Consistency Prompting" },
+  { "name": "self-refine", "description": "Self-Refinement" },
+  { "name": "standard", "description": "Standard Prompting" },
+  { "name": "tot", "description": "Tree-of-Thoughts (ToT)" }
+]

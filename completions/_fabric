@@ -1,0 +1,124 @@
+#compdef fabric
+
+# Zsh completion for fabric CLI
+# Place this file in a directory in your $fpath (e.g. /usr/local/share/zsh/site-functions)
+
+_fabric_patterns() {
+  local -a patterns
+  patterns=(${(f)"$(fabric --listpatterns --shell-complete-list 2>/dev/null)"})
+  compadd -X "Patterns:" ${patterns}
+}
+
+_fabric_models() {
+  local -a models
+  models=(${(f)"$(fabric --listmodels --shell-complete-list 2>/dev/null)"})
+  compadd -X "Models:" ${models}
+}
+
+_fabric_contexts() {
+  local -a contexts
+  contexts=(${(f)"$(fabric --listcontexts --shell-complete-list 2>/dev/null)"})
+  compadd -X "Contexts:" ${contexts}
+}
+
+_fabric_sessions() {
+  local -a sessions
+  sessions=(${(f)"$(fabric --listsessions --shell-complete-list 2>/dev/null)"})
+  compadd -X "Sessions:" ${sessions}
+}
+
+_fabric_strategies() {
+  local -a strategies
+  strategies=(${(f)"$(fabric --liststrategies --shell-complete-list 2>/dev/null)"})
+  compadd -X "Strategies:" ${strategies}
+}
+
+_fabric_extensions() {
+  local -a extensions
+  extensions=(${(f)"$(fabric --listextensions --shell-complete-list 2>/dev/null)"})
+  compadd -X "Extensions:" ${extensions}
+}
+
+_fabric_gemini_voices() {
+  local -a voices
+  voices=(${(f)"$(fabric --list-gemini-voices --shell-complete-list 2>/dev/null)"})
+  compadd -X "Gemini TTS Voices:" ${voices}
+}
+
+_fabric() {
+  local curcontext="$curcontext" state line
+  typeset -A opt_args
+
+  _arguments -C \
+    '(-p --pattern)'{-p,--pattern}'[Choose a pattern from the available patterns]:pattern:_fabric_patterns' \
+    '(-v --variable)'{-v,--variable}'[Values for pattern variables, e.g. -v=#role:expert -v=#points:30]:variable:' \
+    '(-C --context)'{-C,--context}'[Choose a context from the available contexts]:context:_fabric_contexts' \
+    '(--session)--session[Choose a session from the available sessions]:session:_fabric_sessions' \
+    '(-a --attachment)'{-a,--attachment}'[Attachment path or URL (e.g. for OpenAI image recognition messages)]:file:_files' \
+    '(-S --setup)'{-S,--setup}'[Run setup for all reconfigurable parts of fabric]' \
+    '(-t --temperature)'{-t,--temperature}'[Set temperature (default: 0.7)]:temperature:' \
+    '(-T --topp)'{-T,--topp}'[Set top P (default: 0.9)]:topp:' \
+    '(-s --stream)'{-s,--stream}'[Stream]' \
+    '(-P --presencepenalty)'{-P,--presencepenalty}'[Set presence penalty (default: 0.0)]:presence penalty:' \
+    '(-r --raw)'{-r,--raw}'[Use the defaults of the model without sending chat options]' \
+    '(-F --frequencypenalty)'{-F,--frequencypenalty}'[Set frequency penalty (default: 0.0)]:frequency penalty:' \
+    '(-l --listpatterns)'{-l,--listpatterns}'[List all patterns]' \
+    '(-L --listmodels)'{-L,--listmodels}'[List all available models]' \
+    '(-x --listcontexts)'{-x,--listcontexts}'[List all contexts]' \
+    '(-X --listsessions)'{-X,--listsessions}'[List all sessions]' \
+    '(-U --updatepatterns)'{-U,--updatepatterns}'[Update patterns]' \
+    '(-c --copy)'{-c,--copy}'[Copy to clipboard]' \
+    '(-m --model)'{-m,--model}'[Choose model]:model:_fabric_models' \
+    '(--modelContextLength)--modelContextLength[Model context length (only affects ollama)]:length:' \
+    '(-o --output)'{-o,--output}'[Output to file]:file:_files' \
+    '(--output-session)--output-session[Output the entire session to the output file]' \
+    '(-n --latest)'{-n,--latest}'[Number of latest patterns to list (default: 0)]:number:' \
+    '(-d --changeDefaultModel)'{-d,--changeDefaultModel}'[Change default model]' \
+    '(-y --youtube)'{-y,--youtube}'[YouTube video or play list URL]:youtube url:' \
+    '(--playlist)--playlist[Prefer playlist over video if both ids are present in the URL]' \
+    '(--transcript)--transcript[Grab transcript from YouTube video and send to chat]' \
+    '(--transcript-with-timestamps)--transcript-with-timestamps[Grab transcript from YouTube video with timestamps]' \
+    '(--comments)--comments[Grab comments from YouTube video and send to chat]' \
+    '(--metadata)--metadata[Output video metadata]' \
+    '(-g --language)'{-g,--language}'[Specify the Language Code for the chat, e.g. -g=en -g=zh]:language:' \
+    '(-u --scrape_url)'{-u,--scrape_url}'[Scrape website URL to markdown using Jina AI]:url:' \
+    '(-q --scrape_question)'{-q,--scrape_question}'[Search question using Jina AI]:question:' \
+    '(-e --seed)'{-e,--seed}'[Seed to be used for LMM generation]:seed:' \
+    '(-w --wipecontext)'{-w,--wipecontext}'[Wipe context]:context:_fabric_contexts' \
+    '(-W --wipesession)'{-W,--wipesession}'[Wipe session]:session:_fabric_sessions' \
+    '(--printcontext)--printcontext[Print context]:context:_fabric_contexts' \
+    '(--printsession)--printsession[Print session]:session:_fabric_sessions' \
+    '(--readability)--readability[Convert HTML input into a clean, readable view]' \
+    '(--input-has-vars)--input-has-vars[Apply variables to user input]' \
+    '(--dry-run)--dry-run[Show what would be sent to the model without actually sending it]' \
+    '(--serve)--serve[Serve the Fabric Rest API]' \
+    '(--serveOllama)--serveOllama[Serve the Fabric Rest API with ollama endpoints]' \
+    '(--address)--address[The address to bind the REST API (default: :8080)]:address:' \
+    '(--api-key)--api-key[API key used to secure server routes]:api-key:' \
+    '(--config)--config[Path to YAML config file]:config file:_files -g "*.yaml *.yml"' \
+    '(--version)--version[Print current version]' \
+    '(--search)--search[Enable web search tool for supported models (Anthropic, OpenAI)]' \
+    '(--search-location)--search-location[Set location for web search results]:location:' \
+    '(--image-file)--image-file[Save generated image to specified file path]:image file:_files -g "*.png *.webp *.jpeg *.jpg"' \
+    '(--image-size)--image-size[Image dimensions]:size:(1024x1024 1536x1024 1024x1536 auto)' \
+    '(--image-quality)--image-quality[Image quality]:quality:(low medium high auto)' \
+    '(--image-compression)--image-compression[Compression level 0-100 for JPEG/WebP formats]:compression:' \
+    '(--image-background)--image-background[Background type]:background:(opaque transparent)' \
+    '(--listextensions)--listextensions[List all registered extensions]' \
+    '(--addextension)--addextension[Register a new extension from config file path]:config file:_files -g "*.yaml *.yml"' \
+    '(--rmextension)--rmextension[Remove a registered extension by name]:extension:_fabric_extensions' \
+    '(--strategy)--strategy[Choose a strategy from the available strategies]:strategy:_fabric_strategies' \
+    '(--liststrategies)--liststrategies[List all strategies]' \
+    '(--listvendors)--listvendors[List all vendors]' \
+    '(--voice)--voice[TTS voice name for supported models]:voice:_fabric_gemini_voices' \
+    '(--list-gemini-voices)--list-gemini-voices[List all available Gemini TTS voices]' \
+    '(--shell-complete-list)--shell-complete-list[Output raw list without headers/formatting (for shell completion)]' \
+    '(--suppress-think)--suppress-think[Suppress text enclosed in thinking tags]' \
+    '(--think-start-tag)--think-start-tag[Start tag for thinking sections (default: <think>)]:start tag:' \
+    '(--think-end-tag)--think-end-tag[End tag for thinking sections (default: </think>)]:end tag:' \
+    '(--disable-responses-api)--disable-responses-api[Disable OpenAI Responses API (default: false)]' \
+    '(-h --help)'{-h,--help}'[Show this help message]' \
+    '*:arguments:'
+}
+
+_fabric "$@"

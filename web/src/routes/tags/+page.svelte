@@ -1,11 +1,11 @@
 <script lang="ts">
-	import type { PageData } from './$types';
-	// import TagList from '$components/ui/tag-list/TagList.svelte';
+  import type { PageData } from './$types';
+  // import TagList from '$components/ui/tag-list/TagList.svelte';
 
-	export let data: PageData;
+  export let data: PageData;
 
-	$: tags = data.tags;
-	$: postsCount = data.postsCount;
+  $: tags = data.tags;
+  $: postsCount = data.postsCount;
 </script>
 
 <div class="container py-12">

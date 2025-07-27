@@ -1,0 +1,23 @@
+name: memory-query
+executable: /usr/bin/sqlite3
+type: executable
+timeout: "5s"
+description: "Query memories database"
+version: "1.0.0"
+env: []
+
+operations:
+  goal:
+    cmd_template: "{{executable}} -json /home/matt/memories.db \"select * from memories where type= 'goal'\""
+  value:
+    cmd_template: "{{executable}} -json /home/matt/memories.db \"select * from memories where type= 'value'\""
+  project:
+    cmd_template: "{{executable}} -json /home/matt/memories.db \"select * from memories where type= 'project'\""
+  byid:
+    cmd_template: "{{executable}} -json /home/matt/memories.db \"select * from memories where uid= {{value}}\""
+  all:
+    cmd_template: "{{executable}} -json ~/memories.db \"select * from memories\""
+
+config:
+  output:
+    method: stdout

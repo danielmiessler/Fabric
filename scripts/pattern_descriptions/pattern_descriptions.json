@@ -1,0 +1,1876 @@
+{
+  "patterns": [
+    {
+      "patternName": "agility_story",
+      "description": "Generate agile user stories and acceptance criteria following agile formats.",
+      "tags": [
+        "DEVELOPMENT"
+      ]
+    },
+    {
+      "patternName": "ai",
+      "description": "Provide concise, insightful answers in brief bullets focused on core concepts.",
+      "tags": [
+        "AI",
+        "ANALYSIS"
+      ]
+    },
+    {
+      "patternName": "analyze_answers",
+      "description": "Evaluate student responses providing detailed feedback adapted to levels.",
+      "tags": [
+        "ANALYSIS",
+        "LEARNING"
+      ]
+    },
+    {
+      "patternName": "analyze_candidates",
+      "description": "Compare candidate positions, policy differences and backgrounds.",
+      "tags": [
+        "ANALYSIS",
+        "RESEARCH"
+      ]
+    },
+    {
+      "patternName": "analyze_cfp_submission",
+      "description": "Evaluate conference submissions for content, speaker qualifications and educational value.",
+      "tags": [
+        "ANALYSIS",
+        "REVIEW"
+      ]
+    },
+    {
+      "patternName": "analyze_comments",
+      "description": "Analyze user comments for sentiment, extract praise/criticism, and summarize reception.",
+      "tags": [
+        "ANALYSIS",
+        "EXTRACT"
+      ]
+    },
+    {
+      "patternName": "analyze_email_headers",
+      "description": "Analyze email authentication headers to assess security and provide recommendations.",
+      "tags": [
+        "SECURITY"
+      ]
+    },
+    {
+      "patternName": "analyze_prose_json",
+      "description": "Evaluate writing and provide JSON output rating novelty, clarity, effectiveness.",
+      "tags": [
+        "ANALYSIS",
+        "WRITING",
+        "DEVELOPMENT"
+      ]
+    },
+    {
+      "patternName": "analyze_prose_pinker",
+      "description": "Analyze writing style using Pinker's principles to improve clarity and effectiveness.",
+      "tags": [
+        "ANALYSIS",
+        "WRITING"
+      ]
+    },
+    {
+      "patternName": "ask_uncle_duke",
+      "description": "Expert software dev. guidance focusing on Java, Spring, frontend, and best practices.",
+      "tags": [
+        "DEVELOPMENT",
+        "LEARNING"
+      ]
+    },
+    {
+      "patternName": "capture_thinkers_work",
+      "description": "Extract key concepts, background, and ideas from notable thinkers' work.",
+      "tags": [
+        "SUMMARIZE",
+        "RESEARCH",
+        "CR THINKING"
+      ]
+    },
+    {
+      "patternName": "check_agreement",
+      "description": "Review contract to identify stipulations, issues, and changes for negotiation.",
+      "tags": [
+        "ANALYSIS",
+        "BUSINESS"
+      ]
+    },
+    {
+      "patternName": "clean_text",
+      "description": "Format/clean text by fixing breaks, punctuation, preserving content/meaning.",
+      "tags": [
+        "WRITING",
+        "CONVERSION"
+      ]
+    },
+    {
+      "patternName": "coding_master",
+      "description": "Explain coding concepts/languages for beginners",
+      "tags": [
+        "DEVELOPMENT",
+        "LEARNING"
+      ]
+    },
+    {
+      "patternName": "compare_and_contrast",
+      "description": "Create comparisons table, highlighting key differences and similarities.",
+      "tags": [
+        "ANALYSIS",
+        "WRITING"
+      ]
+    },
+    {
+      "patternName": "convert_to_markdown",
+      "description": "Convert content to markdown, preserving original content and structure.",
+      "tags": [
+        "CONVERSION",
+        "WRITING"
+      ]
+    },
+    {
+      "patternName": "create_5_sentence_summary",
+      "description": "Generate concise summaries of content in five levels, five words to one.",
+      "tags": [
+        "SUMMARIZE",
+        "WRITING"
+      ]
+    },
+    {
+      "patternName": "create_ai_jobs_analysis",
+      "description": "Identify automation risks and career resilience strategies.",
+      "tags": [
+        "ANALYSIS",
+        "AI",
+        "BUSINESS"
+      ]
+    },
+    {
+      "patternName": "create_aphorisms",
+      "description": "Compile relevant, attributed aphorisms from historical figures on topics.",
+      "tags": [
+        "EXTRACT",
+        "WRITING"
+      ]
+    },
+    {
+      "patternName": "create_better_frame",
+      "description": "Develop positive mental frameworks for challenging situations.",
+      "tags": [
+        "ANALYSIS",
+        "STRATEGY",
+        "SELF"
+      ]
+    },
+    {
+      "patternName": "create_coding_project",
+      "description": "Design coding projects with clear architecture, steps, and best practices.",
+      "tags": [
+        "DEVELOPMENT"
+      ]
+    },
+    {
+      "patternName": "create_command",
+      "description": "Generate precise CLI commands for penetration testing tools based on docs.",
+      "tags": [
+        "SECURITY",
+        "DEVELOPMENT"
+      ]
+    },
+    {
+      "patternName": "create_cyber_summary",
+      "description": "Summarize incidents, vulnerabilities into concise intelligence briefings.",
+      "tags": [
+        "SECURITY"
+      ]
+    },
+    {
+      "patternName": "create_diy",
+      "description": "Create step-by-step DIY tutorials with clear instructions and materials.",
+      "tags": [
+        "WRITING",
+        "LEARNING",
+        "SELF"
+      ]
+    },
+    {
+      "patternName": "create_formal_email",
+      "description": "Compose professional emails with proper tone and structure.",
+      "tags": [
+        "WRITING",
+        "BUSINESS"
+      ]
+    },
+    {
+      "patternName": "create_git_diff_commit",
+      "description": "Generate clear git commit messages and commands for code changes.",
+      "tags": [
+        "DEVELOPMENT"
+      ]
+    },
+    {
+      "patternName": "create_graph_from_input",
+      "description": "Transform security metrics to CSV for visualizing progress over time.",
+      "tags": [
+        "VISUALIZE",
+        "SECURITY",
+        "CONVERSION"
+      ]
+    },
+    {
+      "patternName": "create_hormozi_offer",
+      "description": "Create compelling business offers using Alex Hormozi's methodology.",
+      "tags": [
+        "BUSINESS",
+        "WRITING"
+      ]
+    },
+    {
+      "patternName": "create_idea_compass",
+      "description": "Organize thoughts analyzing definitions, evidence, relationships, implications.",
+      "tags": [
+        "ANALYSIS",
+        "VISUALIZE",
+        "CR THINKING"
+      ]
+    },
+    {
+      "patternName": "create_investigation_visualization",
+      "description": "Create Graphviz vis. of investigation data showing relationships and findings.",
+      "tags": [
+        "VISUALIZE",
+        "SECURITY",
+        "ANALYSIS"
+      ]
+    },
+    {
+      "patternName": "create_logo",
+      "description": "Generate minimalist logo prompts capturing brand essence via vector graphics.",
+      "tags": [
+        "VISUALIZE",
+        "BUSINESS"
+      ]
+    },
+    {
+      "patternName": "create_markmap_visualization",
+      "description": "Transform complex ideas into mind maps using Markmap syntax.",
+      "tags": [
+        "VISUALIZE",
+        "CONVERSION",
+        "CR THINKING"
+      ]
+    },
+    {
+      "patternName": "create_mermaid_visualization_for_github",
+      "description": "Create Mermaid diagrams to visualize workflows in documentation.",
+      "tags": [
+        "VISUALIZE",
+        "DEVELOPMENT"
+      ]
+    },
+    {
+      "patternName": "create_newsletter_entry",
+      "description": "Write concise newsletter content focusing on key insights.",
+      "tags": [
+        "WRITING",
+        "SUMMARIZE",
+        "BUSINESS"
+      ]
+    },
+    {
+      "patternName": "create_npc",
+      "description": "Generate detailed D&D 5E NPC characters with backgrounds and game stats.",
+      "tags": [
+        "GAMING"
+      ]
+    },
+    {
+      "patternName": "create_pattern",
+      "description": "Design structured patterns for AI prompts with identity, purpose, steps, output.",
+      "tags": [
+        "AI",
+        "DEVELOPMENT"
+      ]
+    },
+    {
+      "patternName": "create_prediction_block",
+      "description": "Format predictions for tracking/verification in markdown prediction logs.",
+      "tags": [
+        "AI",
+        "ANALYSIS",
+        "WRITING"
+      ]
+    },
+    {
+      "patternName": "create_recursive_outline",
+      "description": "Break down tasks into hierarchical, actionable components via decomposition.",
+      "tags": [
+        "ANALYSIS",
+        "VISUALIZE"
+      ]
+    },
+    {
+      "patternName": "create_report_finding",
+      "description": "Document security findings with descriptions, recommendations, and evidence.",
+      "tags": [
+        "SECURITY"
+      ]
+    },
+    {
+      "patternName": "create_rpg_summary",
+      "description": "Summarize RPG sessions capturing events, combat, and narrative.",
+      "tags": [
+        "GAMING"
+      ]
+    },
+    {
+      "patternName": "create_show_intro",
+      "description": "Craft compelling podcast/show intros to engage audience.",
+      "tags": [
+        "WRITING"
+      ]
+    },
+    {
+      "patternName": "create_story_explanation",
+      "description": "Transform complex concepts into clear, engaging narratives.",
+      "tags": [
+        "WRITING",
+        "LEARNING"
+      ]
+    },
+    {
+      "patternName": "create_tags",
+      "description": "Generate single-word tags for content categorization and mind mapping.",
+      "tags": [
+        "ANALYSIS",
+        "EXTRACT",
+        "WRITING"
+      ]
+    },
+    {
+      "patternName": "create_threat_scenarios",
+      "description": "Develop realistic security threat scenarios based on risk analysis.",
+      "tags": [
+        "SECURITY"
+      ]
+    },
+    {
+      "patternName": "create_ttrc_graph",
+      "description": "Generate time-series for visualizing vulnerability remediation metrics.",
+      "tags": [
+        "SECURITY",
+        "VISUALIZE"
+      ]
+    },
+    {
+      "patternName": "create_ttrc_narrative",
+      "description": "Create narratives for security program improvements in remediation efficiency.",
+      "tags": [
+        "SECURITY"
+      ]
+    },
+    {
+      "patternName": "create_upgrade_pack",
+      "description": "Extract world model updates/algorithms to improve decision-making.",
+      "tags": [
+        "EXTRACT",
+        "BUSINESS",
+        "CR THINKING"
+      ]
+    },
+    {
+      "patternName": "create_video_chapters",
+      "description": "Organize video content into timestamped chapters highlighting key topics.",
+      "tags": [
+        "EXTRACT",
+        "VISUALIZE"
+      ]
+    },
+    {
+      "patternName": "create_visualization",
+      "description": "Transform concepts to ASCII art with explanations of relationships.",
+      "tags": [
+        "VISUALIZE"
+      ]
+    },
+    {
+      "patternName": "dialog_with_socrates",
+      "description": "Engage in Socratic dialogue to explore ideas via questioning.",
+      "tags": [
+        "LEARNING",
+        "SELF",
+        "CR THINKING"
+      ]
+    },
+    {
+      "patternName": "analyze_paper",
+      "description": "Analyze scientific papers to identify findings and assess conclusion.",
+      "tags": [
+        "ANALYSIS",
+        "RESEARCH",
+        "LEARNING"
+      ]
+    },
+    {
+      "patternName": "create_summary",
+      "description": "Generate concise summaries by extracting key points and main ideas.",
+      "tags": [
+        "SUMMARIZE",
+        "WRITING"
+      ]
+    },
+    {
+      "patternName": "extract_wisdom",
+      "description": "Extract insightful ideas and recommendations focusing on life wisdom.",
+      "tags": [
+        "EXTRACT",
+        "WISDOM",
+        "SELF"
+      ]
+    },
+    {
+      "patternName": "create_design_document",
+      "description": "Create software architecture docs using C4 model.",
+      "tags": [
+        "DEVELOPMENT",
+        "WRITING",
+        "VISUALIZE"
+      ]
+    },
+    {
+      "patternName": "create_stride_threat_model",
+      "description": "Generate threat models using STRIDE to prioritize security threats.",
+      "tags": [
+        "SECURITY"
+      ]
+    },
+    {
+      "patternName": "extract_main_idea",
+      "description": "Identify key idea, providing core concept and recommendation.",
+      "tags": [
+        "ANALYSIS",
+        "EXTRACT",
+        "SUMMARIZE"
+      ]
+    },
+    {
+      "patternName": "create_mermaid_visualization",
+      "description": "Transform concepts into visual diagrams using Mermaid syntax.",
+      "tags": [
+        "VISUALIZE",
+        "DEVELOPMENT"
+      ]
+    },
+    {
+      "patternName": "create_prd",
+      "description": "Create Product Requirements Documents (PRDs) from input specs.",
+      "tags": [
+        "DEVELOPMENT",
+        "WRITING",
+        "BUSINESS"
+      ]
+    },
+    {
+      "patternName": "explain_code",
+      "description": "Analyze/explain code, security tool outputs, and configs.",
+      "tags": [
+        "DEVELOPMENT",
+        "LEARNING"
+      ]
+    },
+    {
+      "patternName": "create_sigma_rules",
+      "description": "Extract TTPs and translate them into YAML Sigma detection rules.",
+      "tags": [
+        "SECURITY",
+        "DEVELOPMENT"
+      ]
+    },
+    {
+      "patternName": "extract_predictions",
+      "description": "Identify/analyze predictions, claims, confidence, and verification.",
+      "tags": [
+        "ANALYSIS",
+        "EXTRACT",
+        "CR THINKING"
+      ]
+    },
+    {
+      "patternName": "create_user_story",
+      "description": "Write clear user stories with descriptions and acceptance criteria.",
+      "tags": [
+        "DEVELOPMENT",
+        "WRITING"
+      ]
+    },
+    {
+      "patternName": "analyze_threat_report",
+      "description": "Extract/analyze insights, trends, and recommendations from threat reports.",
+      "tags": [
+        "SECURITY"
+      ]
+    },
+    {
+      "patternName": "analyze_malware",
+      "description": "Analyze malware behavior, extract IOCs, MITRE ATT&CK, provide recommendations.",
+      "tags": [
+        "SECURITY"
+      ]
+    },
+    {
+      "patternName": "extract_book_recommendations",
+      "description": "Extract/prioritize practical advice from books.",
+      "tags": [
+        "EXTRACT",
+        "SUMMARIZE",
+        "SELF"
+      ]
+    },
+    {
+      "patternName": "create_art_prompt",
+      "description": "Transform concepts into detailed AI art prompts with style references.",
+      "tags": [
+        "AI",
+        "VISUALIZE"
+      ]
+    },
+    {
+      "patternName": "create_network_threat_landscape",
+      "description": "Analyze network ports/services to create threat reports with recommendations.",
+      "tags": [
+        "SECURITY"
+      ]
+    },
+    {
+      "patternName": "create_academic_paper",
+      "description": "Transform content into academic papers using LaTeX layout.",
+      "tags": [
+        "WRITING",
+        "RESEARCH",
+        "LEARNING"
+      ]
+    },
+    {
+      "patternName": "create_keynote",
+      "description": "Design TED-style presentations with narrative, slides and notes.",
+      "tags": [
+        "WRITING",
+        "VISUALIZE"
+      ]
+    },
+    {
+      "patternName": "extract_core_message",
+      "description": "Distill the fundamental message into a single, impactful sentence.",
+      "tags": [
+        "ANALYSIS",
+        "SUMMARIZE"
+      ]
+    },
+    {
+      "patternName": "create_reading_plan",
+      "description": "Design three-phase reading plans to build knowledge of topics.",
+      "tags": [
+        "LEARNING",
+        "SELF"
+      ]
+    },
+    {
+      "patternName": "extract_extraordinary_claims",
+      "description": "Identify/extract claims contradicting scientific consensus.",
+      "tags": [
+        "ANALYSIS",
+        "RESEARCH",
+        "CR THINKING"
+      ]
+    },
+    {
+      "patternName": "create_quiz",
+      "description": "Generate review questions adapting difficulty to student levels.",
+      "tags": [
+        "LEARNING"
+      ]
+    },
+    {
+      "patternName": "create_security_update",
+      "description": "Compile security newsletters covering threats, advisories, developments with links.",
+      "tags": [
+        "SECURITY"
+      ]
+    },
+    {
+      "patternName": "extract_skills",
+      "description": "Extract/classify hard/soft skills from job descriptions into skill inventory.",
+      "tags": [
+        "EXTRACT",
+        "ANALYSIS",
+        "BUSINESS"
+      ]
+    },
+    {
+      "patternName": "create_micro_summary",
+      "description": "Generate concise summaries with one-sentence overview and key points.",
+      "tags": [
+        "SUMMARIZE",
+        "WRITING"
+      ]
+    },
+    {
+      "patternName": "extract_insights",
+      "description": "Extract insights about life, tech, presenting as bullet points.",
+      "tags": [
+        "EXTRACT",
+        "SELF"
+      ]
+    },
+    {
+      "patternName": "analyze_claims",
+      "description": "Evaluate truth claims by analyzing evidence and logical fallacies.",
+      "tags": [
+        "ANALYSIS",
+        "RESEARCH",
+        "CR THINKING"
+      ]
+    },
+    {
+      "patternName": "analyze_debate",
+      "description": "Analyze debates identifying arguments, agreements, and emotional intensity.",
+      "tags": [
+        "ANALYSIS",
+        "SUMMARIZE",
+        "CR THINKING"
+      ]
+    },
+    {
+      "patternName": "analyze_incident",
+      "description": "Extract info from breach articles, including attack details and impact.",
+      "tags": [
+        "SECURITY"
+      ]
+    },
+    {
+      "patternName": "analyze_interviewer_techniques",
+      "description": "Study interviewer questions/methods to identify effective interview techniques.",
+      "tags": [
+        "ANALYSIS",
+        "BUSINESS"
+      ]
+    },
+    {
+      "patternName": "analyze_military_strategy",
+      "description": "Examine battles analyzing strategic decisions to extract military lessons.",
+      "tags": [
+        "ANALYSIS",
+        "STRATEGY"
+      ]
+    },
+    {
+      "patternName": "analyze_logs",
+      "description": "Examine server logs to identify patterns and potential system issues.",
+      "tags": [
+        "DEVELOPMENT",
+        "SECURITY"
+      ]
+    },
+    {
+      "patternName": "analyze_mistakes",
+      "description": "Analyze past errors to prevent similar mistakes in predictions/decisions.",
+      "tags": [
+        "ANALYSIS",
+        "SELF",
+        "CR THINKING"
+      ]
+    },
+    {
+      "patternName": "analyze_personality",
+      "description": "Psychological analysis by examining language to reveal personality traits.",
+      "tags": [
+        "ANALYSIS",
+        "RESEARCH",
+        "SELF"
+      ]
+    },
+    {
+      "patternName": "analyze_presentation",
+      "description": "Evaluate presentations scoring novelty, value for feedback.",
+      "tags": [
+        "ANALYSIS",
+        "REVIEW",
+        "BUSINESS"
+      ]
+    },
+    {
+      "patternName": "analyze_product_feedback",
+      "description": "Process user feedback to identify themes and prioritize insights.",
+      "tags": [
+        "ANALYSIS",
+        "BUSINESS"
+      ]
+    },
+    {
+      "patternName": "analyze_proposition",
+      "description": "Examine ballot propositions to assess purpose and potential impact.",
+      "tags": [
+        "ANALYSIS",
+        "RESEARCH"
+      ]
+    },
+    {
+      "patternName": "analyze_prose",
+      "description": "Evaluate writing quality by rating novelty, clarity, and style.",
+      "tags": [
+        "ANALYSIS",
+        "WRITING",
+        "REVIEW"
+      ]
+    },
+    {
+      "patternName": "analyze_risk",
+      "description": "Assess vendor security compliance to determine risk levels.",
+      "tags": [
+        "SECURITY"
+      ]
+    },
+    {
+      "patternName": "analyze_sales_call",
+      "description": "Evaluate sales calls analyzing pitch, fundamentals, and customer interaction.",
+      "tags": [
+        "ANALYSIS",
+        "BUSINESS"
+      ]
+    },
+    {
+      "patternName": "analyze_spiritual_text",
+      "description": "Compare religious texts with KJV, identifying claims and doctrinal variations.",
+      "tags": [
+        "ANALYSIS",
+        "RESEARCH",
+        "SELF"
+      ]
+    },
+    {
+      "patternName": "analyze_tech_impact",
+      "description": "Evaluate tech projects' societal impact across dimensions.",
+      "tags": [
+        "ANALYSIS",
+        "RESEARCH",
+        "BUSINESS"
+      ]
+    },
+    {
+      "patternName": "analyze_threat_report_trends",
+      "description": "Extract/analyze trends from threat reports to identify emerging patterns.",
+      "tags": [
+        "SECURITY"
+      ]
+    },
+    {
+      "patternName": "answer_interview_question",
+      "description": "Generate appropriate responses to technical interview questions.",
+      "tags": [
+        "DEVELOPMENT",
+        "LEARNING"
+      ]
+    },
+    {
+      "patternName": "ask_secure_by_design_questions",
+      "description": "Generate security-focused questions to guide secure system design.",
+      "tags": [
+        "SECURITY",
+        "DEVELOPMENT"
+      ]
+    },
+    {
+      "patternName": "analyze_patent",
+      "description": "Analyze patents to evaluate novelty and technical advantages.",
+      "tags": [
+        "ANALYSIS",
+        "BUSINESS"
+      ]
+    },
+    {
+      "patternName": "analyze_threat_report_cmds",
+      "description": "Interpret commands from threat reports, providing implementation guidance.",
+      "tags": [
+        "SECURITY"
+      ]
+    },
+    {
+      "patternName": "enrich_blog_post",
+      "description": "Enhance blog posts by improving structure and visuals for static sites.",
+      "tags": [
+        "WRITING",
+        "VISUALIZE"
+      ]
+    },
+    {
+      "patternName": "explain_docs",
+      "description": "Transform technical docs into clearer explanations with examples.",
+      "tags": [
+        "WRITING",
+        "DEVELOPMENT"
+      ]
+    },
+    {
+      "patternName": "explain_math",
+      "description": "Explain math concepts for students using step-by-step instructions.",
+      "tags": [
+        "LEARNING"
+      ]
+    },
+    {
+      "patternName": "explain_project",
+      "description": "Create project overviews with instructions and usage examples.",
+      "tags": [
+        "DEVELOPMENT",
+        "BUSINESS"
+      ]
+    },
+    {
+      "patternName": "explain_terms",
+      "description": "Create glossaries of advanced terms with definitions and analogies.",
+      "tags": [
+        "WRITING",
+        "LEARNING"
+      ]
+    },
+    {
+      "patternName": "export_data_as_csv",
+      "description": "Extract data and convert to CSV, preserving data integrity.",
+      "tags": [
+        "CONVERSION",
+        "DEVELOPMENT"
+      ]
+    },
+    {
+      "patternName": "extract_algorithm_update_recommendations",
+      "description": "Extract recommendations for improving algorithms, focusing on steps.",
+      "tags": [
+        "EXTRACT",
+        "DEVELOPMENT",
+        "ANALYSIS"
+      ]
+    },
+    {
+      "patternName": "extract_article_wisdom",
+      "description": "Extract wisdom from articles, organizing into actionable takeaways.",
+      "tags": [
+        "EXTRACT",
+        "SELF",
+        "WISDOM"
+      ]
+    },
+    {
+      "patternName": "extract_book_ideas",
+      "description": "Extract novel ideas from books to inspire new projects.",
+      "tags": [
+        "EXTRACT",
+        "SELF",
+        "WISDOM"
+      ]
+    },
+    {
+      "patternName": "extract_business_ideas",
+      "description": "Identify business opportunities and insights",
+      "tags": [
+        "BUSINESS"
+      ]
+    },
+    {
+      "patternName": "extract_controversial_ideas",
+      "description": "Analyze contentious viewpoints while maintaining objective analysis.",
+      "tags": [
+        "EXTRACT",
+        "ANALYSIS",
+        "CR THINKING"
+      ]
+    },
+    {
+      "patternName": "extract_ctf_writeup",
+      "description": "Extract techniques from CTF writeups to create learning resources.",
+      "tags": [
+        "SECURITY"
+      ]
+    },
+    {
+      "patternName": "extract_ideas",
+      "description": "Extract/organize concepts and applications into idea collections.",
+      "tags": [
+        "EXTRACT",
+        "ANALYSIS",
+        "WISDOM"
+      ]
+    },
+    {
+      "patternName": "extract_insights_dm",
+      "description": "Extract insights from DMs, focusing on learnings and takeaways.",
+      "tags": [
+        "EXTRACT",
+        "SELF",
+        "WISDOM"
+      ]
+    },
+    {
+      "patternName": "extract_instructions",
+      "description": "Extract procedures into clear instructions for implementation.",
+      "tags": [
+        "EXTRACT",
+        "LEARNING",
+        "BUSINESS"
+      ]
+    },
+    {
+      "patternName": "extract_jokes",
+      "description": "Extract/categorize jokes, puns, and witty remarks.",
+      "tags": [
+        "OTHER"
+      ]
+    },
+    {
+      "patternName": "extract_latest_video",
+      "description": "Extract info from the latest video, including title and content.",
+      "tags": [
+        "EXTRACT",
+        "SUMMARIZE"
+      ]
+    },
+    {
+      "patternName": "extract_most_redeeming_thing",
+      "description": "Identify the most positive aspect from content.",
+      "tags": [
+        "ANALYSIS",
+        "SELF",
+        "WISDOM"
+      ]
+    },
+    {
+      "patternName": "extract_patterns",
+      "description": "Extract patterns and themes to create reusable templates.",
+      "tags": [
+        "EXTRACT",
+        "ANALYSIS",
+        "BUSINESS"
+      ]
+    },
+    {
+      "patternName": "extract_poc",
+      "description": "Extract/document proof-of-concept demos from technical content.",
+      "tags": [
+        "DEVELOPMENT",
+        "BUSINESS"
+      ]
+    },
+    {
+      "patternName": "extract_primary_problem",
+      "description": "Identify/analyze the core problem / root causes.",
+      "tags": [
+        "ANALYSIS",
+        "EXTRACT",
+        "CR THINKING"
+      ]
+    },
+    {
+      "patternName": "extract_primary_solution",
+      "description": "Identify/analyze the main solution proposed in content.",
+      "tags": [
+        "ANALYSIS",
+        "EXTRACT"
+      ]
+    },
+    {
+      "patternName": "extract_product_features",
+      "description": "Extract/categorize product features into a structured list.",
+      "tags": [
+        "EXTRACT",
+        "BUSINESS",
+        "DEVELOPMENT"
+      ]
+    },
+    {
+      "patternName": "extract_questions",
+      "description": "Extract/categorize questions to create Q&A resources.",
+      "tags": [
+        "EXTRACT",
+        "LEARNING",
+        "BUSINESS"
+      ]
+    },
+    {
+      "patternName": "extract_recipe",
+      "description": "Extract/format recipes into instructions with ingredients and steps.",
+      "tags": [
+        "SELF"
+      ]
+    },
+    {
+      "patternName": "extract_recommendations",
+      "description": "Extract recommendations, organizing into actionable guidance.",
+      "tags": [
+        "EXTRACT",
+        "ANALYSIS",
+        "SELF",
+        "WISDOM"
+      ]
+    },
+    {
+      "patternName": "extract_references",
+      "description": "Extract/format citations into a structured reference list.",
+      "tags": [
+        "EXTRACT",
+        "RESEARCH",
+        "WRITING",
+        "LEARNING"
+      ]
+    },
+    {
+      "patternName": "extract_song_meaning",
+      "description": "Analyze song lyrics to uncover deeper meanings and themes.",
+      "tags": [
+        "ANALYSIS",
+        "SELF"
+      ]
+    },
+    {
+      "patternName": "extract_sponsors",
+      "description": "Extract/organize sponsorship info, including names and messages.",
+      "tags": [
+        "EXTRACT",
+        "BUSINESS"
+      ]
+    },
+    {
+      "patternName": "extract_videoid",
+      "description": "Extract/parse video IDs and URLs to create video lists.",
+      "tags": [
+        "EXTRACT",
+        "CONVERSION"
+      ]
+    },
+    {
+      "patternName": "extract_wisdom_agents",
+      "description": "Extract insights from AI agent interactions, focusing on learning.",
+      "tags": [
+        "AI",
+        "ANALYSIS",
+        "EXTRACT"
+      ]
+    },
+    {
+      "patternName": "extract_wisdom_dm",
+      "description": "Extract learnings from DMs, focusing on personal growth.",
+      "tags": [
+        "EXTRACT",
+        "SELF",
+        "WISDOM"
+      ]
+    },
+    {
+      "patternName": "extract_wisdom_nometa",
+      "description": "Extract pure wisdom from content without metadata.",
+      "tags": [
+        "EXTRACT",
+        "CR THINKING",
+        "WISDOM"
+      ]
+    },
+    {
+      "patternName": "find_hidden_message",
+      "description": "Analyze content to uncover concealed meanings and implications.",
+      "tags": [
+        "ANALYSIS",
+        "RESEARCH",
+        "CR THINKING"
+      ]
+    },
+    {
+      "patternName": "find_logical_fallacies",
+      "description": "Identify/analyze logical fallacies to evaluate argument validity.",
+      "tags": [
+        "ANALYSIS",
+        "RESEARCH",
+        "CR THINKING"
+      ]
+    },
+    {
+      "patternName": "get_wow_per_minute",
+      "description": "Calculate frequency of impressive moments to measure engagement.",
+      "tags": [
+        "ANALYSIS",
+        "REVIEW"
+      ]
+    },
+    {
+      "patternName": "get_youtube_rss",
+      "description": "Generate RSS feed URLs for YouTube channels.",
+      "tags": [
+        "CONVERSION",
+        "DEVELOPMENT"
+      ]
+    },
+    {
+      "patternName": "humanize",
+      "description": "Transform technical content into approachable language.",
+      "tags": [
+        "WRITING",
+        "CONVERSION"
+      ]
+    },
+    {
+      "patternName": "identify_dsrp_distinctions",
+      "description": "Analyze content using DSRP to identify key distinctions.",
+      "tags": [
+        "ANALYSIS",
+        "RESEARCH"
+      ]
+    },
+    {
+      "patternName": "identify_dsrp_perspectives",
+      "description": "Analyze content using DSRP to identify different viewpoints.",
+      "tags": [
+        "ANALYSIS",
+        "RESEARCH"
+      ]
+    },
+    {
+      "patternName": "identify_dsrp_relationships",
+      "description": "Analyze content using DSRP to identify connections.",
+      "tags": [
+        "ANALYSIS",
+        "RESEARCH"
+      ]
+    },
+    {
+      "patternName": "identify_dsrp_systems",
+      "description": "Analyze content using DSRP to identify systems and structures.",
+      "tags": [
+        "ANALYSIS",
+        "RESEARCH"
+      ]
+    },
+    {
+      "patternName": "identify_job_stories",
+      "description": "Extract/analyze user job stories to understand motivations.",
+      "tags": [
+        "ANALYSIS",
+        "BUSINESS",
+        "DEVELOPMENT"
+      ]
+    },
+    {
+      "patternName": "improve_academic_writing",
+      "description": "Enhance academic writing by improving clarity and structure.",
+      "tags": [
+        "WRITING",
+        "RESEARCH"
+      ]
+    },
+    {
+      "patternName": "improve_prompt",
+      "description": "Enhance AI prompts by refining clarity and specificity.",
+      "tags": [
+        "AI",
+        "WRITING",
+        "DEVELOPMENT"
+      ]
+    },
+    {
+      "patternName": "improve_report_finding",
+      "description": "Enhance security report by improving clarity and accuracy.",
+      "tags": [
+        "SECURITY"
+      ]
+    },
+    {
+      "patternName": "improve_writing",
+      "description": "Enhance writing by improving clarity, flow, and style.",
+      "tags": [
+        "WRITING"
+      ]
+    },
+    {
+      "patternName": "judge_output",
+      "description": "Evaluate AI outputs for quality and accuracy.",
+      "tags": [
+        "AI",
+        "ANALYSIS",
+        "REVIEW"
+      ]
+    },
+    {
+      "patternName": "label_and_rate",
+      "description": "Categorize/evaluate content by assigning labels and ratings.",
+      "tags": [
+        "ANALYSIS",
+        "REVIEW",
+        "WRITING"
+      ]
+    },
+    {
+      "patternName": "md_callout",
+      "description": "Generate markdown callout blocks to highlight info.",
+      "tags": [
+        "WRITING",
+        "CONVERSION"
+      ]
+    },
+    {
+      "patternName": "official_pattern_template",
+      "description": "Define pattern templates with sections for consistent creation.",
+      "tags": [
+        "DEVELOPMENT",
+        "WRITING"
+      ]
+    },
+    {
+      "patternName": "prepare_7s_strategy",
+      "description": "Apply McKinsey 7S framework to analyze organizational alignment.",
+      "tags": [
+        "ANALYSIS",
+        "BUSINESS",
+        "STRATEGY"
+      ]
+    },
+    {
+      "patternName": "provide_guidance",
+      "description": "Offer expert advice tailored to situations, providing steps.",
+      "tags": [
+        "ANALYSIS",
+        "LEARNING",
+        "SELF"
+      ]
+    },
+    {
+      "patternName": "rate_ai_response",
+      "description": "Evaluate AI responses for quality and effectiveness.",
+      "tags": [
+        "AI",
+        "ANALYSIS",
+        "REVIEW"
+      ]
+    },
+    {
+      "patternName": "rate_ai_result",
+      "description": "Assess AI outputs against criteria, providing scores and feedback.",
+      "tags": [
+        "AI",
+        "ANALYSIS",
+        "REVIEW"
+      ]
+    },
+    {
+      "patternName": "rate_content",
+      "description": "Evaluate content quality across dimensions, providing scoring.",
+      "tags": [
+        "ANALYSIS",
+        "REVIEW",
+        "WRITING"
+      ]
+    },
+    {
+      "patternName": "rate_value",
+      "description": "Assess practical value of content by evaluating utility.",
+      "tags": [
+        "ANALYSIS",
+        "BUSINESS",
+        "REVIEW"
+      ]
+    },
+    {
+      "patternName": "raw_query",
+      "description": "Process direct queries by interpreting intent.",
+      "tags": [
+        "AI",
+        "ANALYSIS"
+      ]
+    },
+    {
+      "patternName": "recommend_artists",
+      "description": "Suggest artists based on user preferences and style.",
+      "tags": [
+        "ANALYSIS",
+        "RESEARCH",
+        "SELF"
+      ]
+    },
+    {
+      "patternName": "recommend_pipeline_upgrades",
+      "description": "Suggest CI/CD pipeline improvements for efficiency and security.",
+      "tags": [
+        "DEVELOPMENT",
+        "SECURITY"
+      ]
+    },
+    {
+      "patternName": "recommend_talkpanel_topics",
+      "description": "Generate discussion topics for panel talks based on interests.",
+      "tags": [
+        "ANALYSIS",
+        "WRITING"
+      ]
+    },
+    {
+      "patternName": "refine_design_document",
+      "description": "Enhance design docs by improving clarity and accuracy.",
+      "tags": [
+        "DEVELOPMENT",
+        "WRITING"
+      ]
+    },
+    {
+      "patternName": "review_design",
+      "description": "Evaluate software designs for scalability and security.",
+      "tags": [
+        "DEVELOPMENT",
+        "ANALYSIS",
+        "REVIEW"
+      ]
+    },
+    {
+      "patternName": "sanitize_broken_html_to_markdown",
+      "description": "Clean/convert malformed HTML to markdown.",
+      "tags": [
+        "CONVERSION",
+        "DEVELOPMENT"
+      ]
+    },
+    {
+      "patternName": "show_fabric_options_markmap",
+      "description": "Visualize Fabric capabilities using Markmap syntax.",
+      "tags": [
+        "VISUALIZE",
+        "DEVELOPMENT"
+      ]
+    },
+    {
+      "patternName": "solve_with_cot",
+      "description": "Solve problems using chain-of-thought reasoning.",
+      "tags": [
+        "AI",
+        "ANALYSIS",
+        "LEARNING"
+      ]
+    },
+    {
+      "patternName": "suggest_pattern",
+      "description": "Recommend Fabric patterns based on user requirements.",
+      "tags": [
+        "AI",
+        "ANALYSIS",
+        "DEVELOPMENT"
+      ]
+    },
+    {
+      "patternName": "summarize",
+      "description": "Generate summaries capturing key points and details.",
+      "tags": [
+        "SUMMARIZE",
+        "WRITING"
+      ]
+    },
+    {
+      "patternName": "summarize_debate",
+      "description": "Summarize debates highlighting arguments and agreements.",
+      "tags": [
+        "SUMMARIZE",
+        "ANALYSIS",
+        "CR THINKING"
+      ]
+    },
+    {
+      "patternName": "summarize_git_changes",
+      "description": "Summarize git changes highlighting key modifications.",
+      "tags": [
+        "DEVELOPMENT",
+        "SUMMARIZE"
+      ]
+    },
+    {
+      "patternName": "summarize_git_diff",
+      "description": "Summarize git diff output highlighting functional changes.",
+      "tags": [
+        "DEVELOPMENT",
+        "ANALYSIS"
+      ]
+    },
+    {
+      "patternName": "summarize_lecture",
+      "description": "Summarize lectures capturing key concepts and takeaways.",
+      "tags": [
+        "SUMMARIZE",
+        "LEARNING",
+        "WRITING"
+      ]
+    },
+    {
+      "patternName": "summarize_legislation",
+      "description": "Summarize legislation highlighting key provisions and implications.",
+      "tags": [
+        "SUMMARIZE",
+        "ANALYSIS",
+        "WRITING"
+      ]
+    },
+    {
+      "patternName": "summarize_meeting",
+      "description": "Summarize meetings capturing discussions and decisions.",
+      "tags": [
+        "SUMMARIZE",
+        "WRITING",
+        "BUSINESS"
+      ]
+    },
+    {
+      "patternName": "summarize_micro",
+      "description": "Generate extremely concise summaries of content.",
+      "tags": [
+        "SUMMARIZE",
+        "WRITING"
+      ]
+    },
+    {
+      "patternName": "summarize_newsletter",
+      "description": "Summarize newsletters highlighting updates and trends.",
+      "tags": [
+        "SUMMARIZE",
+        "WRITING"
+      ]
+    },
+    {
+      "patternName": "summarize_paper",
+      "description": "Summarize papers highlighting objectives and findings.",
+      "tags": [
+        "SUMMARIZE",
+        "RESEARCH",
+        "WRITING",
+        "LEARNING"
+      ]
+    },
+    {
+      "patternName": "summarize_prompt",
+      "description": "Summarize AI prompts to identify instructions and outputs.",
+      "tags": [
+        "ANALYSIS",
+        "AI"
+      ]
+    },
+    {
+      "patternName": "summarize_pull-requests",
+      "description": "Summarize pull requests highlighting code changes.",
+      "tags": [
+        "SUMMARIZE",
+        "DEVELOPMENT"
+      ]
+    },
+    {
+      "patternName": "summarize_rpg_session",
+      "description": "Summarize RPG sessions capturing story events and decisions.",
+      "tags": [
+        "SUMMARIZE",
+        "GAMING",
+        "WRITING"
+      ]
+    },
+    {
+      "patternName": "t_analyze_challenge_handling",
+      "description": "Evaluate challenge handling by analyzing response strategies.",
+      "tags": [
+        "ANALYSIS",
+        "STRATEGY",
+        "CR THINKING"
+      ]
+    },
+    {
+      "patternName": "t_check_metrics",
+      "description": "Analyze metrics, tracking progress and identifying trends.",
+      "tags": [
+        "ANALYSIS",
+        "BUSINESS"
+      ]
+    },
+    {
+      "patternName": "t_create_h3_career",
+      "description": "Generate career plans using the Head, Heart, Hands framework.",
+      "tags": [
+        "BUSINESS",
+        "WRITING",
+        "SELF"
+      ]
+    },
+    {
+      "patternName": "t_create_opening_sentences",
+      "description": "Generate compelling opening sentences for content.",
+      "tags": [
+        "WRITING"
+      ]
+    },
+    {
+      "patternName": "t_describe_life_outlook",
+      "description": "Analyze personal philosophies to understand core beliefs.",
+      "tags": [
+        "ANALYSIS",
+        "WRITING",
+        "SELF"
+      ]
+    },
+    {
+      "patternName": "t_extract_intro_sentences",
+      "description": "Extract intro sentences to identify engagement strategies.",
+      "tags": [
+        "EXTRACT",
+        "ANALYSIS",
+        "WRITING"
+      ]
+    },
+    {
+      "patternName": "t_extract_panel_topics",
+      "description": "Extract panel topics to create engaging discussions.",
+      "tags": [
+        "EXTRACT",
+        "ANALYSIS",
+        "WRITING"
+      ]
+    },
+    {
+      "patternName": "t_find_blindspots",
+      "description": "Identify blind spots in thinking to improve awareness.",
+      "tags": [
+        "ANALYSIS",
+        "STRATEGY",
+        "CR THINKING"
+      ]
+    },
+    {
+      "patternName": "t_find_negative_thinking",
+      "description": "Identify negative thinking patterns to recognize distortions.",
+      "tags": [
+        "ANALYSIS",
+        "STRATEGY",
+        "CR THINKING"
+      ]
+    },
+    {
+      "patternName": "t_find_neglected_goals",
+      "description": "Identify neglected goals to surface opportunities.",
+      "tags": [
+        "STRATEGY",
+        "CR THINKING",
+        "SELF"
+      ]
+    },
+    {
+      "patternName": "t_give_encouragement",
+      "description": "Generate personalized messages of encouragement.",
+      "tags": [
+        "WRITING",
+        "SELF"
+      ]
+    },
+    {
+      "patternName": "t_red_team_thinking",
+      "description": "Apply adversarial thinking to identify weaknesses.",
+      "tags": [
+        "ANALYSIS",
+        "SECURITY",
+        "STRATEGY",
+        "CR THINKING"
+      ]
+    },
+    {
+      "patternName": "t_threat_model_plans",
+      "description": "Analyze plans through a security lens to identify threats.",
+      "tags": [
+        "SECURITY",
+        "ANALYSIS",
+        "STRATEGY"
+      ]
+    },
+    {
+      "patternName": "t_visualize_mission_goals_projects",
+      "description": "Visualize missions and goals to clarify relationships.",
+      "tags": [
+        "VISUALIZE",
+        "BUSINESS",
+        "STRATEGY"
+      ]
+    },
+    {
+      "patternName": "t_year_in_review",
+      "description": "Generate annual reviews by analyzing achievements and learnings.",
+      "tags": [
+        "ANALYSIS",
+        "WRITING",
+        "BUSINESS"
+      ]
+    },
+    {
+      "patternName": "to_flashcards",
+      "description": "Convert content into flashcard format for learning.",
+      "tags": [
+        "LEARNING",
+        "CONVERSION"
+      ]
+    },
+    {
+      "patternName": "transcribe_minutes",
+      "description": "Convert meeting recordings into structured minutes.",
+      "tags": [
+        "WRITING",
+        "BUSINESS",
+        "CONVERSION"
+      ]
+    },
+    {
+      "patternName": "translate",
+      "description": "Convert content between languages while preserving meaning.",
+      "tags": [
+        "CONVERSION"
+      ]
+    },
+    {
+      "patternName": "tweet",
+      "description": "Transform content into concise tweets.",
+      "tags": [
+        "WRITING",
+        "CONVERSION"
+      ]
+    },
+    {
+      "patternName": "write_essay_pg",
+      "description": "Create essays with thesis statements and arguments in the style of Paul Graham.",
+      "tags": [
+        "WRITING",
+        "RESEARCH",
+        "LEARNING"
+      ]
+    },
+    {
+      "patternName": "write_hackerone_report",
+      "description": "Create vulnerability reports following HackerOne's format.",
+      "tags": [
+        "SECURITY",
+        "WRITING",
+        "ANALYSIS"
+      ]
+    },
+    {
+      "patternName": "write_latex",
+      "description": "Generate LaTeX documents with proper formatting.",
+      "tags": [
+        "WRITING",
+        "RESEARCH",
+        "CONVERSION"
+      ]
+    },
+    {
+      "patternName": "write_micro_essay",
+      "description": "Create concise essays presenting a single key idea.",
+      "tags": [
+        "WRITING",
+        "RESEARCH"
+      ]
+    },
+    {
+      "patternName": "write_nuclei_template_rule",
+      "description": "Generate Nuclei scanning templates with detection logic.",
+      "tags": [
+        "SECURITY",
+        "DEVELOPMENT"
+      ]
+    },
+    {
+      "patternName": "write_pull-request",
+      "description": "Create pull request descriptions with summaries of changes.",
+      "tags": [
+        "DEVELOPMENT"
+      ]
+    },
+    {
+      "patternName": "write_semgrep_rule",
+      "description": "Create Semgrep rules for static code analysis.",
+      "tags": [
+        "SECURITY",
+        "DEVELOPMENT"
+      ]
+    },
+    {
+      "patternName": "extract_wisdom_short",
+      "description": "Extract condensed  insightful ideas and recommendations focusing on life wisdom.",
+      "tags": [
+        "EXTRACT",
+        "WISDOM",
+        "SELF"
+      ]
+    },
+    {
+      "patternName": "analyze_bill",
+      "description": "Analyze a legislative bill and implications.",
+      "tags": [
+        "ANALYSIS",
+        "BILL"
+      ]
+    },
+    {
+      "patternName": "analyze_bill_short",
+      "description": "Condensed - Analyze a legislative bill and implications.",
+      "tags": [
+        "ANALYSIS",
+        "BILL"
+      ]
+    },
+    {
+      "patternName": "create_coding_feature",
+      "description": "Generate secure and composable code features using latest technology and best practices.",
+      "tags": [
+        "DEVELOPMENT"
+      ]
+    },
+    {
+      "patternName": "create_excalidraw_visualization",
+      "description": "Create visualizations using Excalidraw.",
+      "tags": [
+        "VISUALIZATION"
+      ]
+    },
+    {
+      "patternName": "create_flash_cards",
+      "description": "Generate flashcards for key concepts and definitions.",
+      "tags": [
+        "LEARNING"
+      ]
+    },
+    {
+      "patternName": "create_loe_document",
+      "description": "Create detailed Level of Effort (LOE) estimation documents.",
+      "tags": [
+        "DEVELOPMENT",
+        "BUSINESS"
+      ]
+    },
+    {
+      "patternName": "extract_domains",
+      "description": "Extract key content and source.",
+      "tags": [
+        "EXTRACT",
+        "ANALYSIS"
+      ]
+    },
+    {
+      "patternName": "extract_main_activities",
+      "description": "Extract and list main events from transcripts.",
+      "tags": [
+        "EXTRACT",
+        "ANALYSIS"
+      ]
+    },
+    {
+      "patternName": "find_female_life_partner",
+      "description": "Clarify and summarize partner criteria in direct language.",
+      "tags": [
+        "SELF"
+      ]
+    },
+    {
+      "patternName": "youtube_summary",
+      "description": "Summarize YouTube videos with key points and timestamps.",
+      "tags": [
+        "SUMMARIZE"
+      ]
+    },
+    {
+      "patternName": "analyze_paper_simple",
+      "description": "Analyze research papers to determine primary findings and assess scientific rigor.",
+      "tags": [
+        "ANALYSIS",
+        "RESEARCH",
+        "WRITING"
+      ]
+    },
+    {
+      "patternName": "analyze_terraform_plan",
+      "description": "Analyze Terraform plans for infrastructure changes, security risks, and cost implications.",
+      "tags": [
+        "ANALYSIS",
+        "DEVOPS"
+      ]
+    },
+    {
+      "patternName": "create_mnemonic_phrases",
+      "description": "Create memorable mnemonic sentences using given words in exact order for memory aids.",
+      "tags": [
+        "CREATIVITY",
+        "LEARNING"
+      ]
+    },
+    {
+      "patternName": "summarize_board_meeting",
+      "description": "Convert board meeting transcripts into formal meeting notes for corporate records.",
+      "tags": [
+        "ANALYSIS",
+        "BUSINESS"
+      ]
+    },
+    {
+      "patternName": "write_essay",
+      "description": "Write essays on given topics in the distinctive style of specified authors.",
+      "tags": [
+        "WRITING",
+        "CREATIVITY"
+      ]
+    },
+    {
+      "patternName": "extract_alpha",
+      "description": "Extracts the most novel and surprising ideas (\"alpha\") from content, inspired by information theory.",
+      "tags": [
+        "EXTRACT",
+        "ANALYSIS",
+        "CR THINKING",
+        "WISDOM"
+      ]
+    },
+    {
+      "patternName": "extract_mcp_servers",
+      "description": "Analyzes content to identify and extract detailed information about Model Context Protocol (MCP) servers.",
+      "tags": [
+        "ANALYSIS",
+        "EXTRACT",
+        "DEVELOPMENT",
+        "AI"
+      ]
+    },
+    {
+      "patternName": "review_code",
+      "description": "Performs a comprehensive code review, providing detailed feedback on correctness, security, and performance.",
+      "tags": [
+        "DEVELOPMENT",
+        "REVIEW",
+        "SECURITY"
+      ]
+    },
+    {
+      "patternName": "apply_ul_tags",
+      "description": "Apply standardized content tags to categorize topics like AI, cybersecurity, politics, and culture.",
+      "tags": [
+        "ANALYSIS",
+        "CLASSIFICATION"
+      ]
+    },
+    {
+      "patternName": "t_check_dunning_kruger",
+      "description": "Analyze cognitive biases to identify overconfidence and underestimation of abilities using Dunning-Kruger principles.",
+      "tags": [
+        "ANALYSIS",
+        "CR THINKING",
+        "SELF"
+      ]
+    },
+    {
+      "patternName": "generate_code_rules",
+      "description": "Extracts a list of best practices rules for AI coding assisted tools.",
+      "tags": [
+        "ANALYSIS",
+        "EXTRACT",
+        "DEVELOPMENT",
+        "AI"
+      ]
+    }
+  ]
+}

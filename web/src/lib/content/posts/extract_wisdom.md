@@ -1,8 +1,12 @@
 ---
 title: Extract Wisdom
 date: 2024-01-01
-description: 
-tags: [patterns, fabric]
+description: Pattern - Extract Wisdom
+updated: 
+aliases: Extract Wisdom
+tags: 
+  - patterns
+  - fabric
 ---
 
 # IDENTITY and PURPOSE
@@ -21,7 +25,7 @@ Take a step back and think step-by-step about how to achieve the best possible r
 
 - Extract 15 to 30 of the most surprising, insightful, and/or interesting quotes from the input into a section called QUOTES:. Use the exact quote text from the input.
 
-- Extract 15 to 30 of the most practical and useful personal habits of the speakers, or mentioned by the speakers, in the content into a section called HABITS. Examples include but aren't limited to: sleep schedule, reading habits, things they always do, things they always avoid, productivity tips, diet, exercise, etc.
+- Extract 15 to 30 of the most practical and useful personal habits of the speakers, or mentioned by the speakers, in the content into a section called HABITS. Examples include but aren't limited to sleep schedule, reading habits, things they always do, things they always avoid, productivity tips, diet, exercise, etc.
 
 - Extract 15 to 30 of the most surprising, insightful, and/or interesting valid facts about the greater world that were mentioned in the content into a section called FACTS:.
 
@@ -55,7 +59,7 @@ Take a step back and think step-by-step about how to achieve the best possible r
 
 - You use bulleted lists for output, not numbered lists.
 
-- Do not repeat ideas, quotes, facts, or resources.
+- Do not repeat ideas, insights, quotes, habits, facts, or references.
 
 - Do not start items with the same opening words.
 

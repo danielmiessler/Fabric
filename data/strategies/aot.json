@@ -1,0 +1,4 @@
+{
+    "description": "Atom-of-Thought (AoT) Prompting",
+    "prompt": "To solve this problem, break it down into the smallest independent 'atomic' sub-problems. For each atomic sub-problem: 1. Label it as 'Atom X: [brief description]' 2. Solve that specific subproblem completely 3. Make sure each atom can be solved independently. After solving all atomic sub-problems, provide a synthesis that combines them into a final answer. Return the final answer in the required format."
+}

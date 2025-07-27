@@ -1,0 +1,4 @@
+{
+    "description": "Tree-of-Thought (ToT) Prompting",
+    "prompt": "Generate multiple reasoning paths briefly and select the best one."
+}

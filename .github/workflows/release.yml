@@ -2,7 +2,7 @@ name: Go Release
 
 on:
   repository_dispatch:
-    types: [ tag_created ]
+    types: [tag_created]
   push:
     tags:
       - "v*"
@@ -69,7 +69,7 @@ jobs:
           GOOS: ${{ env.OS }}
           GOARCH: ${{ matrix.arch }}
         run: |
-          go build -o fabric-${OS}-${{ matrix.arch }} .
+          go build -o fabric-${OS}-${{ matrix.arch }} ./cmd/fabric
 
       - name: Build binary on Windows
         if: matrix.os == 'windows-latest'
@@ -77,41 +77,51 @@ jobs:
           GOOS: windows
           GOARCH: ${{ matrix.arch }}
         run: |
-          go build -o fabric-windows-${{ matrix.arch }}.exe .
+          go build -o fabric-windows-${{ matrix.arch }}.exe ./cmd/fabric
 
       - name: Upload build artifact
         if: matrix.os != 'windows-latest'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: fabric-${OS}-${{ matrix.arch }}
           path: fabric-${OS}-${{ matrix.arch }}
 
       - name: Upload build artifact
         if: matrix.os == 'windows-latest'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: fabric-windows-${{ matrix.arch }}.exe
           path: fabric-windows-${{ matrix.arch }}.exe
 
-      - name: Get latest tag
-        if: matrix.os != 'windows-latest'
-        id: get_latest_tag
+      - name: Get version from source
+        id: get_version
+        shell: bash
         run: |
-          latest_tag=$(git tag --sort=-creatordate | head -n 1)
-          echo "latest_tag=$latest_tag" >> $GITHUB_ENV
-
-      - name: Get latest tag
-        if: matrix.os == 'windows-latest'
-        id: get_latest_tag_windows
-        run: |
-          $latest_tag = git tag --sort=-creatordate | Select-Object -First 1
-          Add-Content -Path $env:GITHUB_ENV -Value "latest_tag=$latest_tag"
+          if [ ! -f "nix/pkgs/fabric/version.nix" ]; then
+            echo "Error: version.nix file not found"
+            exit 1
+          fi
+          version=$(cat nix/pkgs/fabric/version.nix | tr -d '"' | tr -cd '0-9.')
+          if [ -z "$version" ]; then
+            echo "Error: version is empty"
+            exit 1
+          fi
+          if ! echo "$version" | grep -E '^[0-9]+\.[0-9]+\.[0-9]+' > /dev/null; then
+            echo "Error: Invalid version format: $version"
+            exit 1
+          fi
+          echo "latest_tag=v$version" >> $GITHUB_ENV
 
       - name: Create release if it doesn't exist
+        shell: bash
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release view ${{ env.latest_tag }} || gh release create ${{ env.latest_tag }} --title "Release ${{ env.latest_tag }}" --notes "Automated release for ${{ env.latest_tag }}"
+          if ! gh release view ${{ env.latest_tag }} >/dev/null 2>&1; then
+            gh release create ${{ env.latest_tag }} --title "Release ${{ env.latest_tag }}" --notes "Automated release for ${{ env.latest_tag }}"
+          else
+            echo "Release ${{ env.latest_tag }} already exists."
+          fi
 
       - name: Upload release artifact
         if: matrix.os == 'windows-latest'

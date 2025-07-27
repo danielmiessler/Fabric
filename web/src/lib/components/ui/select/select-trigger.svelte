@@ -1,11 +1,11 @@
 <script>
-	import { Select as SelectPrimitive } from "bits-ui";
-	import { ChevronDown } from "lucide-svelte";
-	import { cn } from "$lib/utils";
-	import { getContext } from "svelte";
+  import { Select as SelectPrimitive } from "bits-ui";
+  import { ChevronDown } from "lucide-svelte";
+  import { cn } from "$lib/utils";
+  import { getContext } from "svelte";
 
-	let className = undefined;
-	export { className as class };
+  let className = undefined;
+  export { className as class };
 </script>
 
 <SelectPrimitive.Trigger

@@ -1,0 +1,4 @@
+{
+    "description": "Chain-of-Draft (CoD) Prompting",
+    "prompt": "Think step by step, keeping a minimal draft (5 words max) for each step. Return the final answer in the required format."
+}

@@ -4,13 +4,13 @@ on:
   push:
     branches: ["main"]
     paths-ignore:
-      - 'patterns/**'
-      - '**/*.md'
+      - "data/patterns/**"
+      - "**/*.md"
   pull_request:
     branches: ["main"]
     paths-ignore:
-      - 'patterns/**'
-      - '**/*.md'
+      - "data/patterns/**"
+      - "**/*.md"
 
 jobs:
   test:
@@ -22,6 +22,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@main
+
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
@@ -29,3 +32,6 @@ jobs:
 
       - name: Run tests
         run: go test -v ./...
+
+      - name: Check Formatting
+        run: nix flake check

@@ -1,25 +1,26 @@
 ---
 title: README
 description: fabric is an open-source framework for augmenting humans using AI. It provides a modular framework for solving specific problems using a crowdsourced set of AI prompts that can be used anywhere.
+aliases: Fabric/Docs
 date: 2024-1-12
 updated: 2024-11-22
 ---
-The UI for Fabric can be found [here](/chat).
-<div align="center" style="">
-<img src="./src/lib/images/fabric-logo.gif" alt="fabriclogo" width="400" height="400"/>
+
+<div align="center">
+
+<img src="/fabric-logo.gif" alt="fabriclogo" width="400" height="400"/>
 
 # `fabric`
 
 
-![Static Badge](https://img.shields.io/badge/mission-human_flourishing_via_AI_augmentation-purple)![Github top language](https://img.shields.io/github/languages/top/danielmiessler/fabric)![GitHub last commit](https://img.shields.io/github/last-commit/danielmiessler/fabric)
-![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
-
-[MIT Open Source License](https://opensource.org/licenses/MIT)
+<div class="justify-left flex gap-2">
+    <img src="https://img.shields.io/github/languages/top/danielmiessler/fabric" alt="Github top language">
+    <img src="https://img.shields.io/github/last-commit/danielmiessler/fabric" alt="GitHub last commit">
+    <img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License">
 </div>
-<div align="center">
-<p class="align center">
-<h2><code>fabric</code> is an open-source framework for augmenting humans using AI.</h2>
 
+<p class="align center">
+<h4><code>fabric</code> is an open-source framework for augmenting humans using AI.</h4>
 
 [Updates](#updates) •
 [What and Why](#whatandwhy) •
@@ -32,6 +33,8 @@ The UI for Fabric can be found [here](/chat).
 [Helper Apps](#helper-apps) •
 [Meta](#meta)
 
+![Screenshot of fabric](/fabric-summarize.png)
+
 </div>
 
 ## Navigation
@@ -39,8 +42,8 @@ The UI for Fabric can be found [here](/chat).
 - [`fabric`](#fabric)
   - [Navigation](#navigation)
   - [Updates](#updates)
-  - [What and why](#what-and-why)
   - [Intro videos](#intro-videos)
+  - [What and why](#what-and-why)
   - [Philosophy](#philosophy)
     - [Breaking problems into components](#breaking-problems-into-components)
     - [Too many prompts](#too-many-prompts)
@@ -62,6 +65,7 @@ The UI for Fabric can be found [here](/chat).
     - [`to_pdf`](#to_pdf)
     - [`to_pdf` Installation](#to_pdf-installation)
   - [pbpaste](#pbpaste)
+  - [Web Interface](#Web_Interface)
   - [Meta](#meta)
     - [Primary contributors](#primary-contributors)
 
@@ -70,9 +74,9 @@ The UI for Fabric can be found [here](/chat).
 ## Updates
 
 > [!NOTE]
-November 8, 2024
-> * **Multimodal Support**: You can now us `-a` (attachment) for Multimodal submissions to OpenAI models that support it. Example: `fabric -a https://path/to/image "Give me a description of this image."`
-
+> November 8, 2024
+>
+> - **Multimodal Support**: You can now use `-a` (attachment) for Multimodal submissions to OpenAI models that support it. Example: `fabric -a https://path/to/image "Give me a description of this image."`
 
 ## What and why
 
@@ -88,10 +92,10 @@ Fabric was created to address this by enabling everyone to granularly apply AI t
 
 Keep in mind that many of these were recorded when Fabric was Python-based, so remember to use the current [install instructions](#Installation) below.
 
-* [Network Chuck](https://www.youtube.com/watch?v=UbDyjIIGaxQ)
-* [David Bombal](https://www.youtube.com/watch?v=vF-MQmVxnCs)
-* [My Own Intro to the Tool](https://www.youtube.com/watch?v=wPEyyigh10g)
-* [More Fabric YouTube Videos](https://www.youtube.com/results?search_query=fabric+ai)
+- [Network Chuck](https://www.youtube.com/watch?v=UbDyjIIGaxQ)
+- [David Bombal](https://www.youtube.com/watch?v=vF-MQmVxnCs)
+- [My Own Intro to the Tool](https://www.youtube.com/watch?v=wPEyyigh10g)
+- [More Fabric YouTube Videos](https://www.youtube.com/results?search_query=fabric+ai)
 
 ## Philosophy
 
@@ -161,6 +165,7 @@ go install github.com/danielmiessler/fabric@latest
 You may need to set some environment variables in your `~/.bashrc` on linux or `~/.zshrc` file on mac to be able to run the `fabric` command. Here is an example of what you can add:
 
 For Intel based macs or linux
+
 ```bash
 # Golang environment variables
 export GOROOT=/usr/local/go
@@ -171,6 +176,7 @@ export PATH=$GOPATH/bin:$GOROOT/bin:$HOME/.local/bin:$PATH
 ```
 
 for Apple Silicon based macs
+
 ```bash
 # Golang environment variables
 export GOROOT=$(brew --prefix go)/libexec
@@ -179,14 +185,18 @@ export PATH=$GOPATH/bin:$GOROOT/bin:$HOME/.local/bin:$PATH
 ```
 
 ### Setup
+
 Now run the following command
+
 ```bash
 # Run the setup to set up your directories and keys
 fabric --setup
 ```
+
 If everything works you are good to go.
 
 ### Add aliases for all patterns
+
 In order to add aliases for all your patterns and use them directly as commands ie. `summarize` instead of `fabric --pattern summarize`
 You can add the following to your `.zshrc` or `.bashrc` file.
 
@@ -195,10 +205,10 @@ You can add the following to your `.zshrc` or `.bashrc` file.
 for pattern_file in $HOME/.config/fabric/patterns/*; do
     # Get the base name of the file (i.e., remove the directory path)
     pattern_name=$(basename "$pattern_file")
-    
+
     # Create an alias in the form: alias pattern_name="fabric --pattern pattern_name"
     alias_command="alias $pattern_name='fabric --pattern $pattern_name'"
-    
+
     # Evaluate the alias command to add it to the current shell
     eval "$alias_command"
 done
@@ -208,9 +218,11 @@ yt() {
     fabric -y "$video_link" --transcript
 }
 ```
+
 This also creates a `yt` alias that allows you to use `yt https://www.youtube.com/watch?v=4b0iet22VIk` to get your transcripts.
 
 #### Save your files in markdown using aliases
+
 If in addition to the above aliases you would like to have the option to save the output to your favourite markdown note vault like Obsidian then instead of the above add the following to your `.zshrc` or `.bashrc` file:
 
 ```bash
@@ -250,7 +262,7 @@ yt() {
 }
 ```
 
-This will allow you to use the patterns as aliases like in the above for example `summarize` instead of `fabric --pattern summarize --stream`, however if you pass in an extra argument like this `summarize "my_article_title"` your output will be saved in the destination that you set in `obsidian_base="/path/to/obsidian"` in the following format `YYYY-MM-DD-my_article_title.md` where the date gets autogenerated for you. 
+This will allow you to use the patterns as aliases like in the above for example `summarize` instead of `fabric --pattern summarize --stream`, however if you pass in an extra argument like this `summarize "my_article_title"` your output will be saved in the destination that you set in `obsidian_base="/path/to/obsidian"` in the following format `YYYY-MM-DD-my_article_title.md` where the date gets autogenerated for you.
 You can tweak the date format by tweaking the `date_stamp` format.
 
 ### Migration
@@ -274,11 +286,13 @@ Then [set your environmental variables](#environmental-variables) as shown above
 ### Upgrading
 
 The great thing about Go is that it's super easy to upgrade. Just run the same command you used to install it in the first place and you'll always get the latest version.
+
 ```bash
 go install github.com/danielmiessler/fabric@latest
 ```
 
 ## Usage
+
 Once you have it all set up, here's how to use it.
 
 ```bash
@@ -326,6 +340,7 @@ Application Options:
       --printcontext=        Print context
       --printsession=        Print session
       --readability          Convert HTML input into a clean, readable view
+      --serve                Initiate the API server
       --dry-run              Show what would be sent to the model without actually sending it
       --version              Print current version
 
@@ -407,7 +422,6 @@ When you're ready to use them, copy them into:
 
 You can then use them like any other Patterns, but they won't be public unless you explicitly submit them as Pull Requests to the Fabric project. So don't worry—they're private to you.
 
-
 This feature works with all openai and ollama models but does NOT work with claude. You can specify your model with the -m flag
 
 ## Helper Apps
@@ -448,7 +462,7 @@ The [examples](#examples) use the macOS program `pbpaste` to paste content from 
 
 On Windows, you can use the PowerShell command `Get-Clipboard` from a PowerShell command prompt. If you like, you can also alias it to `pbpaste`. If you are using classic PowerShell, edit the file `~\Documents\WindowsPowerShell\.profile.ps1`, or if you are using PowerShell Core, edit `~\Documents\PowerShell\.profile.ps1` and add the alias,
 
-```powershell
+```
 Set-Alias pbpaste Get-Clipboard
 ```
 
@@ -465,6 +479,46 @@ You can also create an alias by editing `~/.bashrc` or `~/.zshrc` and adding the
 alias pbpaste='xclip -selection clipboard -o'
 ```
 
+## Web Interface
+
+Fabric now includes a built-in web interface that provides a GUI alternative to the command-line interface and an out-of-the-box website for those who want to get started with web development or blogging.  
+You can use this app as a GUI interface for Fabric, a ready to go blog-site, or a website template for your own projects.  
+
+The `web/src/lib/content` directory includes starter `.obsidian/` and `templates/` directories,  allowing you to open up the `web/src/lib/content/` directory as an [Obsidian.md](https://obsidian.md) vault. You can place your posts in the posts directory when you're ready to publish. 
+### Installing
+
+The GUI can be installed by navigating to the `web` directory and using `npm install`, `pnpm install`, or your favorite package manager. Then simply run the development server to start the app. 
+
+_You will need to run fabric in a separate terminal with the `fabric --serve` command._ 
+
+**From the fabric project `web/` directory:**
+```shell
+npm run dev
+
+## or ##
+
+pnpm run dev
+
+## or your equivalent 
+```
+
+### Streamlit UI
+
+To run the Streamlit user interface:
+
+```bash
+# Install required dependencies
+pip install streamlit pandas matplotlib seaborn numpy python-dotenv
+
+# Run the Streamlit app
+streamlit run streamlit.py
+```
+
+The Streamlit UI provides a user-friendly interface for:
+- Running and chaining patterns
+- Managing pattern outputs
+- Creating and editing patterns
+- Analyzing pattern results
 ## Meta
 
 > [!NOTE]
@@ -473,6 +527,7 @@ alias pbpaste='xclip -selection clipboard -o'
 - _Jonathan Dunn_ for being the absolute MVP dev on the project, including spearheading the new Go version, as well as the GUI! All this while also being a full-time medical doctor!
 - _Caleb Sima_ for pushing me over the edge of whether to make this a public project or not.
 - _Eugen Eisler_ and _Frederick Ros_ for their invaluable contributions to the Go version
+- _David Peters_ for his work on the web interface.
 - _Joel Parish_ for super useful input on the project's Github directory structure..
 - _Joseph Thacker_ for the idea of a `-c` context flag that adds pre-created context in the `./config/fabric/` directory to all Pattern queries.
 - _Jason Haddix_ for the idea of a stitch (chained Pattern) to filter content using a local model before sending on to a cloud model, i.e., cleaning customer data using `llama2` before sending on to `gpt-4` for analysis.
@@ -486,11 +541,5 @@ alias pbpaste='xclip -selection clipboard -o'
 <a href="https://github.com/agu3rra"><img src="https://avatars.githubusercontent.com/u/10410523?v=4" alt="Andre Guerra" title="Andre Guerra" width="50" height="50"></a>
 
 `fabric` was created by <a href="https://danielmiessler.com/subscribe" target="_blank">Daniel Miessler</a> in January of 2024.
-<br />
-
-<a href="https://twitter.com/intent/user?screen_name=danielmiessler">
-
-
-![X (formerly Twitter) Follow](https://img.shields.io/twitter/follow/danielmiessler)
-
-</a>
+<br /><br />
+<a href="https://twitter.com/intent/user?screen_name=danielmiessler">![X (formerly Twitter) Follow](https://img.shields.io/twitter/follow/danielmiessler)</a>

@@ -1,0 +1,4 @@
+{
+    "description": "Self-Refinement",
+    "prompt": "Provide an initial concise answer, critique it briefly, and refine if necessary."
+}

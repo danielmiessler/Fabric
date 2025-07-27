@@ -3,7 +3,7 @@ name: Patterns Artifact
 on:
   push:
     paths:
-      - "patterns/**" # Trigger only on changes to files in the patterns folder
+      - "data/patterns/**" # Trigger only on changes to files in the patterns folder
 
 jobs:
   zip-and-upload:
@@ -18,16 +18,16 @@ jobs:
       - name: Verify Changes in Patterns Folder
         run: |
           git fetch origin
-          if git diff --quiet HEAD~1 -- patterns; then
+          if git diff --quiet HEAD~1 -- data/patterns; then
             echo "No changes detected in patterns folder."
             exit 1
           fi
 
       - name: Zip the Patterns Folder
-        run: zip -r patterns.zip patterns/
+        run: zip -r patterns.zip data/patterns/
 
       - name: Upload Patterns Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: patterns
           path: patterns.zip

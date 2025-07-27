@@ -7,29 +7,74 @@ body:
     attributes:
       value: |
         Thanks for taking the time to fill out this bug report!
+        Please provide as much detail as possible to help us understand and reproduce the issue.
+
   - type: textarea
     id: what-happened
     attributes:
       label: What happened?
       description: Also tell us, what did you expect to happen?
       placeholder: Tell us what you see!
-      value: "I was doing THIS, when THAT happened. I was expecting THAT_OTHER_THING to happen instead."
+      value: "Please provide all the steps to reproduce the bug. I was doing THIS, when THAT happened. I was expecting THAT_OTHER_THING to happen instead."
     validations:
       required: true
-  - type: checkboxes
+
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating System
+      options:
+        - macOS - Silicon (arm64)
+        - macOS - Intel (amd64)
+        - Linux - amd64
+        - Linux - arm64
+        - Windows
+    validations:
+      required: true
+
+  - type: textarea
+    id: os-version
+    attributes:
+      label: OS Version
+      description: Please provide details about your OS version by running one of the following commands.
+      placeholder: |
+        macOS: `sw_vers`
+        Linux: `uname -a` or `cat /etc/os-release`
+        Windows: `ver`
+      render: shell
+
+  - type: dropdown
+    id: installation
+    attributes:
+      label: How did you install Fabric?
+      description: "Please select the method you used to install Fabric. You can find this information in the [Installation section of the README](https://github.com/ksylvan/fabric/blob/main/README.md#installation)."
+      options:
+        - Release Binary - Windows
+        - Release Binary - macOS (arm64)
+        - Release Binary - macOS (amd64)
+        - Release Binary - Linux (amd64)
+        - Release Binary - Linux (arm64)
+        - Package Manager - Homebrew (macOS)
+        - Package Manager - AUR (Arch Linux)
+        - From Source
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
     id: version
     attributes:
-      label: Version check
-      description: Please make sure you were using the latest version of this project available in the `main` branch.
-      options:
-        - label: Yes I was.
-          required: true
+      label: Version
+      description: Please copy and paste the output of `fabric --version` (or `fabric-ai --version` if you installed it via brew) here.
+      render: text
+
   - type: textarea
     id: logs
     attributes:
       label: Relevant log output
       description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
       render: shell
+
   - type: textarea
     id: screens
     attributes:

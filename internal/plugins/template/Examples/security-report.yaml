@@ -1,0 +1,18 @@
+name: "security-report"
+executable: "/usr/local/bin/security-report.sh"
+type: "executable"
+timeout: "30s"
+description: "Generate system security report"
+version: "1.0.0"
+
+operations:
+  generate:
+    cmd_template: "{{executable}} /tmp/security-report-{{1}}.txt"
+
+config:
+  output:
+    method: "file"
+    file_config:
+      cleanup: true
+      path_from_stdout: true
+      work_dir: "/tmp"

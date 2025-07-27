@@ -1,0 +1,17 @@
+name: "remote-security"
+executable: "/usr/local/bin/remote-security-report.sh"
+type: "executable"
+timeout: "60s"
+description: "Generate security report from remote system"
+
+operations:
+  report:
+    cmd_template: "{{executable}} {{1}} {{2}} {{3}}"
+
+config:
+  output:
+    method: "file"
+    file_config:
+      cleanup: true
+      path_from_stdout: true
+      work_dir: "/tmp"

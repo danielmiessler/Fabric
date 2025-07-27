@@ -482,7 +482,7 @@ You can use this app as a GUI interface for Fabric, a ready to go blog-site, or 
 
 The `web/src/lib/content` directory includes starter `.obsidian/` and `templates/` directories,  allowing you to open up the `web/src/lib/content/` directory as an [Obsidian.md](https://obsidian.md) vault. You can place your posts in the posts directory when you're ready to publish. 
 
-#### Installing
+### Installing
 
 The GUI can be installed by navigating to the `web` directory and using `npm install`, `pnpm install`, or your favorite package manager. Then simply run the development server to start the app. 
 
@@ -517,6 +517,16 @@ The Streamlit UI provides additional features for:
 - Creating and editing patterns
 - Analyzing pattern results
 - Starring and organizing favorite outputs
+
+#### Clipboard Support
+
+Some pattern workflows involve copying and pasting content to and from the clipboard. The Streamlit UI supports clipboard integration on all major platforms:
+
+- **macOS:** Uses the built-in `pbcopy` and `pbpaste` commands.
+- **Windows:** Uses the `pyperclip` Python library for clipboard access.
+- **Linux:** Uses `xclip`. Install with `sudo apt install xclip` if not present.
+
+If you encounter clipboard issues, ensure your system has the appropriate tool installed and accessible from the command line.
 
 ### Contributing
 

@@ -516,7 +516,7 @@ def substitute_pattern_variables(content: str, variables: Dict[str, str]) -> str
     result = content
     for var_name, var_value in variables.items():
         if var_value:  # Only substitute if value is provided
-            pattern = f"{{{{{var_name}}}}}"
+            pattern = f"{{{var_name}}}"
             result = result.replace(pattern, var_value)
             logger.debug(f"Substituted {pattern} with '{var_value}'")
     

@@ -2985,7 +2985,18 @@ def main():
                                         if feedback == 1:
                                             st.toast("Thanks for the positive feedback!", icon="👍")
                                         else:
-                                            st.toast("Thanks for the feedback!", icon="👎")
+                                    try:
+                                        feedback = st.feedback(
+                                            "thumbs",
+                                            key=f"output_feedback_{i}"
+                                        )
+                                        if feedback is not None:
+                                            if feedback == 1:
+                                                st.toast("Thanks for the positive feedback!", icon="👍")
+                                            else:
+                                                st.toast("Thanks for the feedback!", icon="👎")
+                                    except Exception as e:
+                                        st.warning("Feedback widget failed to load.")
 
                                 with col2:
                                     if st.button("⭐ Star", key=f"star_output_{i}"):

@@ -17,4 +17,5 @@ type Config struct {
 	IncomingDir       string
 	Push              bool
 	SyncDB            bool
+	Release           string
 }

@@ -122,6 +122,8 @@ jobs:
           else
             echo "Release ${{ env.latest_tag }} already exists."
           fi
+          go run ./cmd/generate_changelog --sync-db
+          go run ./cmd/generate_changelog --release ${{ env.latest_tag }}
 
       - name: Upload release artifact
         if: matrix.os == 'windows-latest'

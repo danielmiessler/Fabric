@@ -492,7 +492,7 @@ def render_pattern_variables_ui(variables: List[str], key_prefix: str = "vars") 
             f"**{label}** (`{var}`)",
             placeholder=placeholder,
             key=f"{key_prefix}_{var}",
-            help=f"This value will replace {{{{{{var}}}}}} in the pattern"
+            help=f"This value will replace {{{var}}} in the pattern"
         )
         
         variable_values[var] = value

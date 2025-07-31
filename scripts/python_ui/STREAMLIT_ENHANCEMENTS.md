@@ -6,6 +6,31 @@ The Fabric Pattern Studio has been significantly enhanced with modern Streamlit 
 
 ## ✨ New Features Added
 
+### 🔧 Pattern Variables Support ⭐ *NEW*
+
+1. **Automatic Variable Detection**
+   - Scans pattern content for `{{variable_name}}` syntax
+   - Displays variable indicators in pattern selection (🔧 icon)
+   - Shows count of variables per pattern
+
+2. **Dynamic Variable Input UI**
+   - Renders input fields for each required variable
+   - Smart placeholders based on variable names (author, topic, etc.)
+   - Validation ensures all required variables are filled
+   - Supports single and multiple pattern variable workflows
+
+3. **Enhanced Pattern Execution**
+   - Passes variables to fabric CLI using `--variable` flags
+   - Works with both single pattern and chain mode execution
+   - Validates variables before execution
+   - Clear error messages for missing variables
+
+4. **User Experience Improvements**
+   - Tabbed interface for multiple patterns with variables
+   - Real-time validation feedback
+   - Execution button disabled until all variables are filled
+   - Helpful tooltips and examples
+
 ### 🎨 Modern UI Components
 
 1. **Enhanced Pattern Selection**
@@ -87,6 +112,14 @@ The Fabric Pattern Studio has been significantly enhanced with modern Streamlit 
 
 ## 🔧 Technical Improvements
 
+### Pattern Variables Implementation
+- `detect_pattern_variables()` - Regex-based variable detection
+- `render_pattern_variables_ui()` - Dynamic UI generation
+- `validate_pattern_variables()` - Input validation
+- `substitute_pattern_variables()` - Variable substitution (for future use)
+- Enhanced `execute_patterns_enhanced()` with variable support
+- Updated `execute_pattern_chain()` for chain mode variables
+
 ### Backward Compatibility
 - All new components have fallbacks for older Streamlit versions
 - Graceful degradation when features aren't available
@@ -121,7 +154,8 @@ The Fabric Pattern Studio has been significantly enhanced with modern Streamlit 
 2. **Better User Interaction**: More intuitive and responsive interface
 3. **Enhanced Feedback**: Real-time user feedback and notifications
 4. **Improved Workflow**: Streamlined pattern execution and management
-5. **Future-Proof**: Built with latest Streamlit features while maintaining compatibility
+5. **Pattern Variables Support**: Full support for parameterized patterns
+6. **Future-Proof**: Built with latest Streamlit features while maintaining compatibility
 
 ## 🚀 Usage Examples
 
@@ -140,6 +174,24 @@ feedback = st.feedback("thumbs", key=f"feedback_{pattern_name}")
 st.toast("Pattern executed successfully!", icon="✅")
 ```
 
+### Pattern Variables Support
+```python
+# Detect variables in a pattern
+pattern_variables = detect_pattern_variables("write_essay")
+# Returns: ["author_name"]
+
+# Render UI for variable input
+variables = render_pattern_variables_ui(pattern_variables, "vars_write_essay")
+# Returns: {"author_name": "Paul Graham"}
+
+# Execute with variables
+execute_patterns_enhanced(
+    ["write_essay"], 
+    pattern_variables={"write_essay": variables}
+)
+# Passes --variable author_name="Paul Graham" to fabric CLI
+```
+
 ### Chat Interface
 ```python
 with st.chat_message("assistant"):
@@ -152,6 +204,9 @@ with st.chat_message("assistant"):
 2. **Pattern Recommendation System**
 3. **Collaborative Features**
 4. **Custom Theme Support**
+5. **Variable Templates & Presets**
+6. **Pattern Variable Validation Rules**
+7. **Variable History & Favorites**
 
 ---
 

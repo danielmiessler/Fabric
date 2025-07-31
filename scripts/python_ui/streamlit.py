@@ -427,6 +427,121 @@ def get_pattern_metadata(pattern_name):
     return None
 
 
+def detect_pattern_variables(pattern_name: str) -> List[str]:
+    """Detect variables like {{variable_name}} in pattern content.
+    
+    Args:
+        pattern_name: Name of the pattern to analyze
+        
+    Returns:
+        List of variable names found in the pattern
+    """
+    logger.debug(f"Detecting variables in pattern: {pattern_name}")
+    
+    pattern_content = get_pattern_metadata(pattern_name)
+    if not pattern_content:
+        return []
+    
+    # Find all variables in {{variable_name}} format
+    variable_pattern = r'\{\{([a-zA-Z_][a-zA-Z0-9_]*)\}\}'
+    matches = re.findall(variable_pattern, pattern_content)
+    
+    # Remove duplicates and sort
+    variables = sorted(list(set(matches)))
+    
+    logger.debug(f"Found variables in {pattern_name}: {variables}")
+    return variables
+
+
+def render_pattern_variables_ui(variables: List[str], key_prefix: str = "vars") -> Dict[str, str]:
+    """Render input fields for pattern variables.
+    
+    Args:
+        variables: List of variable names to render inputs for
+        key_prefix: Prefix for streamlit keys to avoid conflicts
+        
+    Returns:
+        Dictionary mapping variable names to their values
+    """
+    if not variables:
+        return {}
+    
+    st.subheader("📝 Pattern Variables")
+    st.info("This pattern requires the following variables to be set:")
+    
+    variable_values = {}
+    
+    for var in variables:
+        # Create a more user-friendly label
+        label = var.replace('_', ' ').title()
+        
+        # Provide helpful placeholders based on common variable names
+        placeholder = ""
+        if "name" in var.lower():
+            placeholder = "Enter a name..."
+        elif "author" in var.lower():
+            placeholder = "e.g., Paul Graham, Maya Angelou, etc."
+        elif "topic" in var.lower():
+            placeholder = "Enter the topic..."
+        elif "style" in var.lower():
+            placeholder = "Enter the style..."
+        else:
+            placeholder = f"Enter value for {var}..."
+        
+        value = st.text_input(
+            f"**{label}** (`{var}`)",
+            placeholder=placeholder,
+            key=f"{key_prefix}_{var}",
+            help=f"This value will replace {{{{{{var}}}}}} in the pattern"
+        )
+        
+        variable_values[var] = value
+    
+    return variable_values
+
+
+def substitute_pattern_variables(content: str, variables: Dict[str, str]) -> str:
+    """Substitute variables in pattern content.
+    
+    Args:
+        content: The pattern content with variables
+        variables: Dictionary mapping variable names to values
+        
+    Returns:
+        Content with variables substituted
+    """
+    if not variables:
+        return content
+    
+    result = content
+    for var_name, var_value in variables.items():
+        if var_value:  # Only substitute if value is provided
+            pattern = f"{{{{{var_name}}}}}"
+            result = result.replace(pattern, var_value)
+            logger.debug(f"Substituted {pattern} with '{var_value}'")
+    
+    return result
+
+
+def validate_pattern_variables(variables: Dict[str, str], required_vars: List[str]) -> Tuple[bool, List[str]]:
+    """Validate that all required variables have values.
+    
+    Args:
+        variables: Dictionary of variable values
+        required_vars: List of required variable names
+        
+    Returns:
+        Tuple of (is_valid, list_of_missing_variables)
+    """
+    missing_vars = []
+    
+    for var in required_vars:
+        if var not in variables or not variables[var].strip():
+            missing_vars.append(var)
+    
+    return len(missing_vars) == 0, missing_vars
+
+
 def get_pattern_description_and_tags(pattern_name, descriptions_data=None):
     """Get pattern description and tags from the descriptions JSON."""
     if descriptions_data is None:
@@ -759,12 +874,23 @@ def enhanced_pattern_selector(patterns: List[str], key: str = "pattern_selector"
     if selected_tags:
         st.caption(f"📊 Showing {len(filtered_patterns)} patterns matching tags: {', '.join(selected_tags)}")
 
+    # Enhanced pattern display with variable indicators
+    pattern_display_options = []
+    for pattern in filtered_patterns:
+        variables = detect_pattern_variables(pattern)
+        if variables:
+            # Add variable indicator to pattern name
+            display_name = f"{pattern} 🔧 ({len(variables)} vars)"
+        else:
+            display_name = pattern
+        pattern_display_options.append(display_name)
+
     # Use pills for pattern selection if available and not too many patterns
     try:
         if len(filtered_patterns) <= 10:
-            selected_patterns = st.pills(
+            selected_display_patterns = st.pills(
                 "Select Patterns",
-                filtered_patterns,
+                pattern_display_options,
                 selection_mode="multi",
                 key=f"{key}_pills"
             )
@@ -772,11 +898,19 @@ def enhanced_pattern_selector(patterns: List[str], key: str = "pattern_selector"
             raise AttributeError("Too many patterns for pills")
     except (AttributeError, TypeError):
         # Fall back to multiselect if pills is not available
-        selected_patterns = st.multiselect(
+        selected_display_patterns = st.multiselect(
             "Select Patterns",
-            filtered_patterns,
+            pattern_display_options,
             key=f"{key}_multiselect"
         )
+
+    # Convert display names back to actual pattern names
+    selected_patterns = []
+    if selected_display_patterns:
+        for display_pattern in selected_display_patterns:
+            # Extract the actual pattern name (before any indicators)
+            actual_pattern = display_pattern.split(' 🔧')[0]
+            selected_patterns.append(actual_pattern)
 
     return selected_patterns if selected_patterns else []
 
@@ -1293,8 +1427,16 @@ def execute_patterns_enhanced(
     patterns_to_run: List[str],
     chain_mode: bool = False,
     initial_input: Optional[str] = None,
+    pattern_variables: Optional[Dict[str, Dict[str, str]]] = None,
 ) -> List[str]:
-    """Execute patterns with enhanced UI feedback and streaming."""
+    """Execute patterns with enhanced UI feedback and streaming.
+    
+    Args:
+        patterns_to_run: List of pattern names to execute
+        chain_mode: Whether to chain patterns (output of one becomes input of next)
+        initial_input: Initial input text
+        pattern_variables: Dict mapping pattern names to their variable values
+    """
     logger.info(f"Executing {len(patterns_to_run)} patterns")
 
     # Update execution stats
@@ -1335,6 +1477,20 @@ def execute_patterns_enhanced(
 
         st.write("✅ Input validated")
 
+        # Validate pattern variables
+        if pattern_variables:
+            st.write("🔍 Validating pattern variables...")
+            for pattern_name, variables in pattern_variables.items():
+                required_vars = detect_pattern_variables(pattern_name)
+                is_valid, missing_vars = validate_pattern_variables(variables, required_vars)
+                if not is_valid:
+                    error_msg = f"Pattern '{pattern_name}' is missing required variables: {', '.join(missing_vars)}"
+                    logger.error(error_msg)
+                    st.error(error_msg)
+                    st.session_state.execution_stats["failed_runs"] += 1
+                    return []
+            st.write("✅ Pattern variables validated")
+
         # Sanitize input content
         try:
             sanitized_input = sanitize_input_content(current_input)
@@ -1364,7 +1520,17 @@ def execute_patterns_enhanced(
 
                 logger.info(f"Running pattern: {pattern}")
                 try:
+                    # Handle pattern variables
                     cmd = ["fabric", "--pattern", pattern]
+                    
+                    # Add variables if present for this pattern
+                    if pattern_variables and pattern in pattern_variables:
+                        variables = pattern_variables[pattern]
+                        for var_name, var_value in variables.items():
+                            if var_value:  # Only add non-empty variables
+                                cmd.extend(["--variable", f"{var_name}={var_value}"])
+                                logger.debug(f"Added variable {var_name}={var_value} for pattern {pattern}")
+                    
                     message = current_input if chain_mode else st.session_state.input_content
                     input_data = str(message)
 
@@ -1429,9 +1595,10 @@ def execute_patterns(
     patterns_to_run: List[str],
     chain_mode: bool = False,
     initial_input: Optional[str] = None,
+    pattern_variables: Optional[Dict[str, Dict[str, str]]] = None,
 ) -> List[str]:
     """Legacy wrapper for backward compatibility."""
-    return execute_patterns_enhanced(patterns_to_run, chain_mode, initial_input)
+    return execute_patterns_enhanced(patterns_to_run, chain_mode, initial_input, pattern_variables)
 
 
 def validate_pattern(pattern_name):
@@ -1660,12 +1827,13 @@ def handle_star_name_input(log_index: int, name: str):
         st.error(f"Error starring output: {str(e)}")
 
 
-def execute_pattern_chain(patterns_sequence: List[str], initial_input: str) -> Dict:
+def execute_pattern_chain(patterns_sequence: List[str], initial_input: str, pattern_variables: Optional[Dict[str, Dict[str, str]]] = None) -> Dict:
     """Execute a sequence of patterns in a chain, passing output from each to the next.
 
     Args:
         patterns_sequence: List of pattern names to execute in sequence
         initial_input: Initial input text to start the chain
+        pattern_variables: Dict mapping pattern names to their variable values
 
     Returns:
         Dict containing results from each stage of the chain
@@ -1698,6 +1866,15 @@ def execute_pattern_chain(patterns_sequence: List[str], initial_input: str) -> D
 
             try:
                 cmd = ["fabric", "--pattern", pattern]
+                
+                # Add variables if present for this pattern
+                if pattern_variables and pattern in pattern_variables:
+                    variables = pattern_variables[pattern]
+                    for var_name, var_value in variables.items():
+                        if var_value:  # Only add non-empty variables
+                            cmd.extend(["--variable", f"{var_name}={var_value}"])
+                            logger.debug(f"Added variable {var_name}={var_value} for pattern {pattern} in chain")
+                
                 result = run(
                     cmd, input=current_input, capture_output=True, text=True, check=True
                 )
@@ -2572,17 +2749,66 @@ def main():
                         if new_patterns != selected_patterns:
                             st.session_state.selected_patterns = new_patterns
 
+                    # Pattern Variables UI
+                    pattern_variables = {}
+                    if selected_patterns:
+                        # Check if any selected patterns have variables
+                        patterns_with_vars = []
+                        for pattern in selected_patterns:
+                            variables = detect_pattern_variables(pattern)
+                            if variables:
+                                patterns_with_vars.append((pattern, variables))
+                        
+                        if patterns_with_vars:
+                            st.markdown("---")
+                            st.subheader("🔧 Pattern Variables")
+                            st.info(f"The following patterns require variables to be set:")
+                            
+                            # Create tabs for each pattern with variables
+                            if len(patterns_with_vars) == 1:
+                                pattern, variables = patterns_with_vars[0]
+                                st.markdown(f"**{pattern}**")
+                                pattern_variables[pattern] = render_pattern_variables_ui(
+                                    variables, f"vars_{pattern}"
+                                )
+                            else:
+                                # Multiple patterns with variables - use tabs
+                                tab_names = [f"{pattern} ({len(vars)} vars)" for pattern, vars in patterns_with_vars]
+                                tabs = st.tabs(tab_names)
+                                
+                                for i, (pattern, variables) in enumerate(patterns_with_vars):
+                                    with tabs[i]:
+                                        pattern_variables[pattern] = render_pattern_variables_ui(
+                                            variables, f"vars_{pattern}"
+                                        )
+
                     # Enhanced execution button section
                     st.markdown("---")
                     col1, col2, col3 = st.columns([2, 1, 1])
 
                     with col1:
+                        # Check if all required variables are filled
+                        can_execute = True
+                        missing_vars_info = []
+                        
+                        if pattern_variables:
+                            for pattern_name, variables in pattern_variables.items():
+                                required_vars = detect_pattern_variables(pattern_name)
+                                is_valid, missing_vars = validate_pattern_variables(variables, required_vars)
+                                if not is_valid:
+                                    can_execute = False
+                                    missing_vars_info.append(f"{pattern_name}: {', '.join(missing_vars)}")
+                        
                         run_button = st.button(
                             "🚀 Execute Patterns",
                             type="primary",
                             use_container_width=True,
-                            disabled=not st.session_state.input_content or not selected_patterns
+                            disabled=not st.session_state.input_content or not selected_patterns or not can_execute
                         )
+                        
+                        # Show missing variables warning
+                        if missing_vars_info:
+                            st.warning(f"⚠️ Missing required variables:\n" + "\n".join([f"• {info}" for info in missing_vars_info]))
 
                     with col2:
                         if st.button("🧹 Clear Output", use_container_width=True):
@@ -2620,6 +2846,7 @@ def main():
                                 chain_results = execute_pattern_chain(
                                     selected_patterns,
                                     st.session_state.input_content,
+                                    pattern_variables if pattern_variables else None
                                 )
 
                                 # Enhanced chain results display
@@ -2665,7 +2892,10 @@ def main():
                                     show_pattern_feedback_ui("Chain Result", chain_results["final_output"])
                             else:
                                 # Enhanced normal pattern execution
-                                outputs = execute_patterns_enhanced(selected_patterns)
+                                outputs = execute_patterns_enhanced(
+                                    selected_patterns,
+                                    pattern_variables=pattern_variables if pattern_variables else None
+                                )
                                 if outputs:
                                     st.session_state.last_run_outputs = outputs
                                     st.session_state.show_success_toast = True

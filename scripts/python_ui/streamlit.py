@@ -14,6 +14,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
+from io import StringIO
+import uuid
 
 # Create formatters
 console_formatter = logging.Formatter(
@@ -99,6 +101,24 @@ def initialize_session_state():
         "starred_outputs": [],
         "starring_output": None,
         "temp_star_name": "",
+        # Enhanced UI state
+        "show_advanced_options": False,
+        "execution_mode": "standard",
+        "current_session_id": str(uuid.uuid4()),
+        "user_preferences": {
+            "auto_save": True,
+            "show_timestamps": True,
+            "compact_view": False,
+            "enable_notifications": True
+        },
+        # New interaction states
+        "pattern_feedback": {},
+        "execution_stats": {
+            "total_runs": 0,
+            "successful_runs": 0,
+            "failed_runs": 0,
+            "avg_execution_time": 0
+        }
     }
 
     for key, value in default_configs.items():
@@ -269,9 +289,17 @@ def load_configuration() -> bool:
 
 
 def load_models_and_providers() -> None:
-    """Load models and providers from fabric configuration."""
+    """Load models and providers from fabric configuration with enhanced UI."""
     try:
-        st.sidebar.header("Model and Provider Selection")
+        # Enhanced sidebar header with status indicator
+        col1, col2 = st.sidebar.columns([3, 1])
+        with col1:
+            st.header("🤖 AI Configuration")
+        with col2:
+            if st.session_state.config.get("model"):
+                st.success("✓")
+            else:
+                st.error("⚠️")
 
         providers: Dict[str, List[str]] = fetch_models_once()
 
@@ -294,19 +322,32 @@ def load_models_and_providers() -> None:
                 f"Current vendor {current_vendor} not found in available providers"
             )
 
-        selected_provider = st.sidebar.selectbox(
-            "Provider",
-            available_providers,
-            index=provider_index,
-            key="provider_select",
-            on_change=lambda: update_provider_selection(
-                st.session_state.provider_select
-            ),
-        )
+        # Use segmented control for provider selection if available, otherwise fallback to selectbox
+        try:
+            if len(available_providers) <= 4:
+                selected_provider = st.sidebar.segmented_control(
+                    "Provider",
+                    available_providers,
+                    default=available_providers[provider_index] if available_providers else None,
+                    key="provider_segmented"
+                )
+            else:
+                raise AttributeError("Too many providers for segmented control")
+        except (AttributeError, TypeError):
+            # Fallback to selectbox if segmented_control is not available
+            selected_provider = st.sidebar.selectbox(
+                "Provider",
+                available_providers,
+                index=provider_index,
+                key="provider_select",
+                on_change=lambda: update_provider_selection(
+                    st.session_state.provider_select
+                ),
+            )
 
-        if selected_provider != st.session_state.config.get("vendor"):
+        if selected_provider and selected_provider != st.session_state.config.get("vendor"):
             update_provider_selection(selected_provider)
-        st.sidebar.success(f"Using {selected_provider}")
+            st.sidebar.toast(f"Switched to {selected_provider}", icon="🔄")
 
         available_models = providers.get(selected_provider, [])
         if not available_models:
@@ -328,19 +369,53 @@ def load_models_and_providers() -> None:
 
         model_key = f"model_select_{selected_provider}"
         selected_model = st.sidebar.selectbox(
-            "Model", available_models, index=model_index, key=model_key
+            "Model",
+            available_models,
+            index=model_index,
+            key=model_key,
+            help=f"Available models for {selected_provider}"
         )
 
         if selected_model != st.session_state.config.get("model"):
             logger.debug(f"Updating model selection to: {selected_model}")
             st.session_state.config["model"] = selected_model
             st.session_state.selected_model = selected_model
+            st.sidebar.toast(f"Model updated to {selected_model}", icon="⚙️")
+
+        # Add model info expander
+        with st.sidebar.expander("ℹ️ Model Info", expanded=False):
+            st.write(f"**Provider:** {selected_provider}")
+            st.write(f"**Model:** {selected_model}")
+            st.write(f"**Context Length:** {st.session_state.config.get('context_length', 'Unknown')}")
 
     except Exception as e:
         logger.error(f"Error loading models and providers: {str(e)}", exc_info=True)
         st.sidebar.error(f"Error loading models and providers: {str(e)}")
         st.session_state.selected_model = None
         st.session_state.config["model"] = None
+
+
+def load_pattern_descriptions():
+    """Load pattern descriptions and tags from JSON file with fallback."""
+    try:
+        # Try to load from the pattern_descriptions directory
+        descriptions_path = os.path.join(
+            os.path.dirname(os.path.dirname(__file__)),
+            "pattern_descriptions",
+            "pattern_descriptions.json"
+        )
+
+        if os.path.exists(descriptions_path):
+            with open(descriptions_path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+                logger.info(f"Loaded {len(data.get('patterns', []))} pattern descriptions")
+                return data.get("patterns", [])
+        else:
+            logger.warning(f"Pattern descriptions file not found at {descriptions_path}")
+            return []
+    except Exception as e:
+        logger.error(f"Error loading pattern descriptions: {str(e)}")
+        return []
 
 
 def get_pattern_metadata(pattern_name):
@@ -350,6 +425,384 @@ def get_pattern_metadata(pattern_name):
         with open(pattern_path, "r") as f:
             return f.read()
     return None
+
+
+def detect_pattern_variables(pattern_name: str) -> List[str]:
+    """Detect variables like {{variable_name}} in pattern content.
+    
+    Args:
+        pattern_name: Name of the pattern to analyze
+        
+    Returns:
+        List of variable names found in the pattern
+    """
+    logger.debug(f"Detecting variables in pattern: {pattern_name}")
+    
+    pattern_content = get_pattern_metadata(pattern_name)
+    if not pattern_content:
+        return []
+    
+    # Find all variables in {{variable_name}} format
+    variable_pattern = r'\{\{([a-zA-Z_][a-zA-Z0-9_]*)\}\}'
+    matches = re.findall(variable_pattern, pattern_content)
+    
+    # Remove duplicates and sort
+    variables = sorted(list(set(matches)))
+    
+    logger.debug(f"Found variables in {pattern_name}: {variables}")
+    return variables
+
+
+def render_pattern_variables_ui(variables: List[str], key_prefix: str = "vars") -> Dict[str, str]:
+    """Render input fields for pattern variables.
+    
+    Args:
+        variables: List of variable names to render inputs for
+        key_prefix: Prefix for streamlit keys to avoid conflicts
+        
+    Returns:
+        Dictionary mapping variable names to their values
+    """
+    if not variables:
+        return {}
+    
+    st.subheader("📝 Pattern Variables")
+    st.info("This pattern requires the following variables to be set:")
+    
+    variable_values = {}
+    
+    for var in variables:
+        # Create a more user-friendly label
+        label = var.replace('_', ' ').title()
+        
+        # Provide helpful placeholders based on common variable names
+        placeholder = ""
+        if "name" in var.lower():
+            placeholder = "Enter a name..."
+        elif "author" in var.lower():
+            placeholder = "e.g., Paul Graham, Maya Angelou, etc."
+        elif "topic" in var.lower():
+            placeholder = "Enter the topic..."
+        elif "style" in var.lower():
+            placeholder = "Enter the style..."
+        else:
+            placeholder = f"Enter value for {var}..."
+        
+        value = st.text_input(
+            f"**{label}** (`{var}`)",
+            placeholder=placeholder,
+            key=f"{key_prefix}_{var}",
+            help=f"This value will replace {{{var}}} in the pattern"
+        )
+        
+        variable_values[var] = value
+    
+    return variable_values
+
+
+def substitute_pattern_variables(content: str, variables: Dict[str, str]) -> str:
+    """Substitute variables in pattern content.
+    
+    Args:
+        content: The pattern content with variables
+        variables: Dictionary mapping variable names to values
+        
+    Returns:
+        Content with variables substituted
+    """
+    if not variables:
+        return content
+    
+    result = content
+    for var_name, var_value in variables.items():
+        if var_value:  # Only substitute if value is provided
+            pattern = f"{{{var_name}}}"
+            result = result.replace(pattern, var_value)
+            logger.debug(f"Substituted {pattern} with '{var_value}'")
+    
+    return result
+
+
+def validate_pattern_variables(variables: Dict[str, str], required_vars: List[str]) -> Tuple[bool, List[str]]:
+    """Validate that all required variables have values.
+    
+    Args:
+        variables: Dictionary of variable values
+        required_vars: List of required variable names
+        
+    Returns:
+        Tuple of (is_valid, list_of_missing_variables)
+    """
+    missing_vars = []
+    
+    for var in required_vars:
+        if var not in variables or not variables[var].strip():
+            missing_vars.append(var)
+    
+    return len(missing_vars) == 0, missing_vars
+
+
+def get_pattern_description_and_tags(pattern_name, descriptions_data=None):
+    """Get pattern description and tags from the descriptions JSON."""
+    if descriptions_data is None:
+        descriptions_data = load_pattern_descriptions()
+
+    for pattern in descriptions_data:
+        if pattern.get("patternName") == pattern_name:
+            return {
+                "description": pattern.get("description", "No description available"),
+                "tags": pattern.get("tags", [])
+            }
+
+    # Fallback: try to extract from system.md
+    metadata = get_pattern_metadata(pattern_name)
+    if metadata:
+        # Extract first line or paragraph as description
+        lines = metadata.split('\n')
+        for line in lines:
+            line = line.strip()
+            if line and not line.startswith('#') and len(line) > 20:
+                return {
+                    "description": line[:200] + "..." if len(line) > 200 else line,
+                    "tags": ["UNCATEGORIZED"]
+                }
+
+    return {
+        "description": "No description available",
+        "tags": []
+    }
+
+
+def get_all_tags(descriptions_data=None):
+    """Get all unique tags from pattern descriptions."""
+    if descriptions_data is None:
+        descriptions_data = load_pattern_descriptions()
+
+    all_tags = set()
+    for pattern in descriptions_data:
+        tags = pattern.get("tags", [])
+        all_tags.update(tags)
+
+    return sorted(list(all_tags))
+
+
+def filter_patterns_by_tags(patterns, selected_tags, descriptions_data=None):
+    """Filter patterns by selected tags."""
+    if not selected_tags:
+        return patterns
+
+    if descriptions_data is None:
+        descriptions_data = load_pattern_descriptions()
+
+    # Create a mapping of pattern names to their tags
+    pattern_tags = {}
+    for pattern_data in descriptions_data:
+        pattern_name = pattern_data.get("patternName")
+        tags = pattern_data.get("tags", [])
+        pattern_tags[pattern_name] = tags
+
+    filtered_patterns = []
+    for pattern in patterns:
+        pattern_tags_list = pattern_tags.get(pattern, [])
+        # Check if any of the selected tags match the pattern's tags
+        if any(tag in pattern_tags_list for tag in selected_tags):
+            filtered_patterns.append(pattern)
+
+    return filtered_patterns
+
+
+def search_patterns_by_description(patterns, search_term, descriptions_data=None):
+    """Search patterns by description content."""
+    if not search_term:
+        return patterns
+
+    if descriptions_data is None:
+        descriptions_data = load_pattern_descriptions()
+
+    search_term = search_term.lower()
+
+    # Create a mapping of pattern names to their descriptions
+    pattern_descriptions = {}
+    for pattern_data in descriptions_data:
+        pattern_name = pattern_data.get("patternName")
+        description = pattern_data.get("description", "")
+        pattern_descriptions[pattern_name] = description.lower()
+
+    filtered_patterns = []
+    for pattern in patterns:
+        # Search in pattern name
+        if search_term in pattern.lower():
+            filtered_patterns.append(pattern)
+            continue
+
+        # Search in description
+        description = pattern_descriptions.get(pattern, "")
+        if search_term in description:
+            filtered_patterns.append(pattern)
+            continue
+
+        # Fallback: search in system.md content
+        metadata = get_pattern_metadata(pattern)
+        if metadata and search_term in metadata.lower():
+            filtered_patterns.append(pattern)
+
+    return filtered_patterns
+
+
+def run_pattern_extraction():
+    """Run the pattern extraction script to update descriptions."""
+    try:
+        script_path = os.path.join(
+            os.path.dirname(os.path.dirname(__file__)),
+            "pattern_descriptions",
+            "extract_patterns.py"
+        )
+
+        if os.path.exists(script_path):
+            import subprocess
+            result = subprocess.run(
+                [sys.executable, script_path],
+                capture_output=True,
+                text=True,
+                cwd=os.path.dirname(script_path)
+            )
+
+            if result.returncode == 0:
+                return True, result.stdout
+            else:
+                return False, result.stderr
+        else:
+            return False, f"Extract patterns script not found at {script_path}"
+    except Exception as e:
+        return False, str(e)
+
+
+def show_pattern_management_ui():
+    """Show pattern descriptions and tags management interface."""
+    st.header("🏷️ Pattern Descriptions & Tags Management")
+
+    # Check if pattern descriptions system is available
+    descriptions_data = load_pattern_descriptions()
+
+    if not descriptions_data:
+        st.warning("⚠️ Pattern descriptions system not found or empty.")
+        st.info("This feature requires the pattern descriptions JSON files. You can:")
+
+        col1, col2 = st.columns(2)
+        with col1:
+            if st.button("🔄 Run Pattern Extraction", type="primary"):
+                with st.spinner("Running pattern extraction..."):
+                    success, output = run_pattern_extraction()
+                    if success:
+                        st.success("✅ Pattern extraction completed!")
+                        st.code(output)
+                        st.rerun()
+                    else:
+                        st.error(f"❌ Pattern extraction failed: {output}")
+
+        with col2:
+            st.markdown("""
+            **Manual Setup:**
+            1. Navigate to `scripts/pattern_descriptions/`
+            2. Run `python extract_patterns.py`
+            3. Refresh this page
+            """)
+        return
+
+    # Show statistics
+    st.subheader("📊 Pattern Statistics")
+    col1, col2, col3, col4 = st.columns(4)
+
+    total_patterns = len(descriptions_data)
+    pending_descriptions = len([p for p in descriptions_data if p.get("description") == "[Description pending]"])
+    tagged_patterns = len([p for p in descriptions_data if p.get("tags")])
+    all_tags = get_all_tags(descriptions_data)
+
+    with col1:
+        st.metric("Total Patterns", total_patterns)
+    with col2:
+        st.metric("Pending Descriptions", pending_descriptions)
+    with col3:
+        st.metric("Tagged Patterns", tagged_patterns)
+    with col4:
+        st.metric("Unique Tags", len(all_tags))
+
+    # Management tabs
+    tab1, tab2, tab3 = st.tabs(["📝 Edit Descriptions", "🏷️ Manage Tags", "🔄 Sync Patterns"])
+
+    with tab1:
+        st.subheader("Edit Pattern Descriptions")
+
+        # Filter for pending descriptions
+        if st.checkbox("Show only pending descriptions"):
+            patterns_to_show = [p for p in descriptions_data if p.get("description") == "[Description pending]"]
+        else:
+            patterns_to_show = descriptions_data
+
+        if patterns_to_show:
+            for i, pattern_data in enumerate(patterns_to_show[:10]):  # Show first 10
+                pattern_name = pattern_data.get("patternName", "")
+                current_description = pattern_data.get("description", "")
+
+                with st.expander(f"📝 {pattern_name}", expanded=current_description == "[Description pending]"):
+                    # Show current info
+                    col1, col2 = st.columns([2, 1])
+                    with col1:
+                        st.markdown(f"**Pattern:** {pattern_name}")
+                        st.markdown(f"**Current Description:** {current_description}")
+                    with col2:
+                        current_tags = pattern_data.get("tags", [])
+                        if current_tags:
+                            tag_display = " ".join([f"`{tag}`" for tag in current_tags])
+                            st.markdown(f"**Tags:** {tag_display}")
+
+                    # Show pattern preview
+                    metadata = get_pattern_metadata(pattern_name)
+                    if metadata:
+                        with st.expander("📖 Pattern Content Preview", expanded=False):
+                            preview = metadata[:1000] + "..." if len(metadata) > 1000 else metadata
+                            st.code(preview, language="markdown")
+
+                    st.info("💡 Use this preview to write a concise description of what this pattern does.")
+        else:
+            st.success("🎉 All patterns have descriptions!")
+
+    with tab2:
+        st.subheader("Tag Management")
+
+        if all_tags:
+            st.markdown("**Current Tags:**")
+            tag_display = " ".join([f"`{tag}`" for tag in all_tags])
+            st.markdown(tag_display)
+
+            # Tag usage statistics
+            tag_usage = {}
+            for pattern_data in descriptions_data:
+                for tag in pattern_data.get("tags", []):
+                    tag_usage[tag] = tag_usage.get(tag, 0) + 1
+
+            if tag_usage:
+                st.markdown("**Tag Usage:**")
+                for tag, count in sorted(tag_usage.items(), key=lambda x: x[1], reverse=True):
+                    st.write(f"• `{tag}`: {count} patterns")
+        else:
+            st.info("No tags found. Add tags to patterns to see them here.")
+
+    with tab3:
+        st.subheader("Sync Pattern Data")
+        st.info("Use this to update pattern descriptions when new patterns are added.")
+
+        if st.button("🔄 Run Pattern Extraction", type="primary"):
+            with st.spinner("Extracting pattern information..."):
+                success, output = run_pattern_extraction()
+                if success:
+                    st.success("✅ Pattern extraction completed!")
+                    with st.expander("📋 Extraction Output", expanded=False):
+                        st.code(output)
+                    st.rerun()
+                else:
+                    st.error(f"❌ Pattern extraction failed:")
+                    st.code(output)
 
 
 def get_patterns():
@@ -370,6 +823,180 @@ def get_patterns():
     except Exception as e:
         st.error(f"An unexpected error occurred: {e}")
         return []
+
+
+def enhanced_pattern_selector(patterns: List[str], key: str = "pattern_selector") -> List[str]:
+    """Enhanced pattern selector with descriptions, tags, and search functionality."""
+    if not patterns:
+        st.warning("No patterns available. Create a pattern first.")
+        return []
+
+    # Load pattern descriptions and tags
+    descriptions_data = load_pattern_descriptions()
+    all_tags = get_all_tags(descriptions_data)
+
+    selected_tags = []
+    with st.expander("Filter by Category", expanded=False):
+        if all_tags:
+            try:
+                selected_tags = st.pills(
+                    "Select tags to filter patterns",
+                    all_tags,
+                    selection_mode="multi",
+                    key=f"{key}_tag_pills",
+                    label_visibility="collapsed"
+                )
+            except (AttributeError, TypeError):
+                selected_tags = st.multiselect(
+                    "Select tags to filter patterns",
+                    all_tags,
+                    key=f"{key}_tag_multiselect",
+                    label_visibility="collapsed"
+                )
+
+    # Define search_term as empty since it's removed
+    search_term = ""
+
+    # Apply filters
+    filtered_patterns = patterns
+
+    # Filter by tags
+    if selected_tags:
+        filtered_patterns = filter_patterns_by_tags(
+            filtered_patterns, selected_tags, descriptions_data
+        )
+
+    if not filtered_patterns:
+        st.info("No patterns match your filters. Try adjusting your search or tags.")
+        return []
+
+    # Show filter results summary
+    if selected_tags:
+        st.caption(f"📊 Showing {len(filtered_patterns)} patterns matching tags: {', '.join(selected_tags)}")
+
+    # Enhanced pattern display with variable indicators
+    pattern_display_options = []
+    for pattern in filtered_patterns:
+        variables = detect_pattern_variables(pattern)
+        if variables:
+            # Add variable indicator to pattern name
+            display_name = f"{pattern} 🔧 ({len(variables)} vars)"
+        else:
+            display_name = pattern
+        pattern_display_options.append(display_name)
+
+    # Use pills for pattern selection if available and not too many patterns
+    try:
+        if len(filtered_patterns) <= 10:
+            selected_display_patterns = st.pills(
+                "Select Patterns",
+                pattern_display_options,
+                selection_mode="multi",
+                key=f"{key}_pills"
+            )
+        else:
+            raise AttributeError("Too many patterns for pills")
+    except (AttributeError, TypeError):
+        # Fall back to multiselect if pills is not available
+        selected_display_patterns = st.multiselect(
+            "Select Patterns",
+            pattern_display_options,
+            key=f"{key}_multiselect"
+        )
+
+    # Convert display names back to actual pattern names
+    selected_patterns = []
+    if selected_display_patterns:
+        for display_pattern in selected_display_patterns:
+            # Extract the actual pattern name (before any indicators)
+            actual_pattern = display_pattern.split(' 🔧')[0]
+            selected_patterns.append(actual_pattern)
+
+    return selected_patterns if selected_patterns else []
+
+
+def create_execution_status_container():
+    """Create an enhanced status container for pattern execution."""
+    return st.status("🚀 Preparing execution...", expanded=True)
+
+
+def show_pattern_feedback_ui(pattern_name: str, output: str):
+    """Show feedback UI for pattern execution results."""
+    col1, col2, col3 = st.columns([2, 1, 1])
+
+    with col1:
+        st.markdown(f"**{pattern_name}** execution completed")
+
+    with col2:
+        try:
+            feedback = st.feedback(
+                "thumbs",
+                key=f"feedback_{pattern_name}_{hash(output)}"
+            )
+            if feedback is not None:
+                st.session_state.pattern_feedback[pattern_name] = feedback
+                if feedback == 1:
+                    try:
+                        st.toast("Thanks for the positive feedback! 👍", icon="✅")
+                    except (AttributeError, TypeError):
+                        st.success("Thanks for the positive feedback! 👍")
+                else:
+                    try:
+                        st.toast("Thanks for the feedback. We'll improve! 👎", icon="📝")
+                    except (AttributeError, TypeError):
+                        st.info("Thanks for the feedback. We'll improve! 👎")
+        except (AttributeError, TypeError):
+            # Fallback to simple buttons if feedback widget is not available
+            col_like, col_dislike = st.columns(2)
+            with col_like:
+                if st.button("👍", key=f"like_{pattern_name}_{hash(output)}"):
+                    st.session_state.pattern_feedback[pattern_name] = 1
+                    st.success("Thanks!")
+            with col_dislike:
+                if st.button("👎", key=f"dislike_{pattern_name}_{hash(output)}"):
+                    st.session_state.pattern_feedback[pattern_name] = 0
+                    st.info("Thanks for feedback!")
+
+    with col3:
+        if st.button("⭐ Star Output", key=f"star_{pattern_name}_{hash(output)}"):
+            # Add to starred outputs
+            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            star_output_enhanced(pattern_name, output, timestamp)
+
+
+def star_output_enhanced(pattern_name: str, output: str, timestamp: str):
+    """Enhanced starring functionality with dialog."""
+    @st.dialog("⭐ Star this output")
+    def star_dialog():
+        st.write(f"**Pattern:** {pattern_name}")
+        st.write(f"**Timestamp:** {timestamp}")
+
+        custom_name = st.text_input(
+            "Give this output a name (optional):",
+            placeholder=f"Great {pattern_name} result"
+        )
+
+        col1, col2 = st.columns(2)
+        with col1:
+            if st.button("⭐ Star it!", type="primary", use_container_width=True):
+                log_entry = {
+                    "timestamp": timestamp,
+                    "pattern_name": pattern_name,
+                    "input": st.session_state.get("input_content", ""),
+                    "output": output,
+                    "is_starred": True,
+                    "custom_name": custom_name or f"Starred {pattern_name} output",
+                }
+                st.session_state.starred_outputs.append(log_entry)
+                save_outputs()
+                st.success("Output starred successfully!")
+                st.rerun()
+
+        with col2:
+            if st.button("Cancel", use_container_width=True):
+                st.rerun()
+
+    star_dialog()
 
 
 def create_pattern(
@@ -796,120 +1423,182 @@ def sanitize_input_content(input_text: str) -> str:
     return text
 
 
+def execute_patterns_enhanced(
+    patterns_to_run: List[str],
+    chain_mode: bool = False,
+    initial_input: Optional[str] = None,
+    pattern_variables: Optional[Dict[str, Dict[str, str]]] = None,
+) -> List[str]:
+    """Execute patterns with enhanced UI feedback and streaming.
+    
+    Args:
+        patterns_to_run: List of pattern names to execute
+        chain_mode: Whether to chain patterns (output of one becomes input of next)
+        initial_input: Initial input text
+        pattern_variables: Dict mapping pattern names to their variable values
+    """
+    logger.info(f"Executing {len(patterns_to_run)} patterns")
+
+    # Update execution stats
+    st.session_state.execution_stats["total_runs"] += 1
+
+    # Create enhanced status container
+    status_container = st.status(
+        f"🚀 Executing {len(patterns_to_run)} pattern{'s' if len(patterns_to_run) > 1 else ''}...",
+        expanded=True
+    )
+
+    with status_container:
+        st.write("🔍 Validating configuration...")
+
+        # Validate configuration
+        current_provider = st.session_state.config.get("vendor")
+        current_model = st.session_state.config.get("model")
+
+        if not current_provider or not current_model:
+            error_msg = "Please select a provider and model first."
+            logger.error(error_msg)
+            st.error(error_msg)
+            st.session_state.execution_stats["failed_runs"] += 1
+            return []
+
+        st.write("✅ Configuration validated")
+        st.write("🔍 Validating input content...")
+
+        current_input = initial_input or st.session_state.input_content
+
+        # Validate input content
+        is_valid, error_message = validate_input_content(current_input)
+        if not is_valid:
+            logger.error(f"Input validation failed: {error_message}")
+            st.error(f"Input validation failed: {error_message}")
+            st.session_state.execution_stats["failed_runs"] += 1
+            return []
+
+        st.write("✅ Input validated")
+
+        # Validate pattern variables
+        if pattern_variables:
+            st.write("🔍 Validating pattern variables...")
+            for pattern_name, variables in pattern_variables.items():
+                required_vars = detect_pattern_variables(pattern_name)
+                is_valid, missing_vars = validate_pattern_variables(variables, required_vars)
+                if not is_valid:
+                    error_msg = f"Pattern '{pattern_name}' is missing required variables: {', '.join(missing_vars)}"
+                    logger.error(error_msg)
+                    st.error(error_msg)
+                    st.session_state.execution_stats["failed_runs"] += 1
+                    return []
+            st.write("✅ Pattern variables validated")
+
+        # Sanitize input content
+        try:
+            sanitized_input = sanitize_input_content(current_input)
+            if sanitized_input != current_input:
+                logger.info("Input content was sanitized")
+                st.warning("Input content was automatically sanitized")
+            current_input = sanitized_input
+        except Exception as e:
+            logger.error(f"Error sanitizing input: {str(e)}")
+            st.error(f"Error processing input: {str(e)}")
+            st.session_state.execution_stats["failed_runs"] += 1
+            return []
+
+        st.write(f"🤖 Using: {current_provider} - {current_model}")
+
+        all_outputs = []
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        start_time = time.time()
+
+        try:
+            for i, pattern in enumerate(patterns_to_run, 1):
+                st.write(f"🔄 Running pattern {i}/{len(patterns_to_run)}: **{pattern}**")
+
+                # Create progress bar
+                progress = st.progress(0)
+                progress.progress(i / len(patterns_to_run))
+
+                logger.info(f"Running pattern: {pattern}")
+                try:
+                    # Handle pattern variables
+                    cmd = ["fabric", "--pattern", pattern]
+                    
+                    # Add variables if present for this pattern
+                    if pattern_variables and pattern in pattern_variables:
+                        variables = pattern_variables[pattern]
+                        for var_name, var_value in variables.items():
+                            if var_value:  # Only add non-empty variables
+                                cmd.extend(["--variable", f"{var_name}={var_value}"])
+                                logger.debug(f"Added variable {var_name}={var_value} for pattern {pattern}")
+                    
+                    message = current_input if chain_mode else st.session_state.input_content
+                    input_data = str(message)
+
+                    # Run the command
+                    result = run(
+                        cmd, input=input_data, capture_output=True, text=True, check=True
+                    )
+
+                    pattern_output = result.stdout.strip()
+
+                    if pattern_output:
+                        st.write(f"✅ Pattern **{pattern}** completed successfully")
+
+                        # Save to output logs
+                        save_output_log(pattern, message, pattern_output, timestamp)
+
+                        # Add to outputs with enhanced formatting
+                        output_msg = f"""### 🎯 {pattern}
+
+{pattern_output}"""
+                        all_outputs.append(output_msg)
+
+                        if chain_mode:
+                            current_input = pattern_output
+                    else:
+                        st.warning(f"Pattern **{pattern}** generated no output")
+                        all_outputs.append(f"### ⚠️ {pattern}\n\nNo output generated.")
+
+                except Exception as e:
+                    error_msg = f"❌ Pattern **{pattern}** failed: {str(e)}"
+                    st.error(error_msg)
+                    logger.error(f"Pattern {pattern} failed: {str(e)}")
+                    all_outputs.append(f"### ❌ {pattern}\n\n{str(e)}")
+                    if chain_mode:
+                        break
+
+            # Calculate execution time
+            execution_time = time.time() - start_time
+            st.session_state.execution_stats["avg_execution_time"] = (
+                (st.session_state.execution_stats["avg_execution_time"] *
+                 (st.session_state.execution_stats["total_runs"] - 1) + execution_time) /
+                st.session_state.execution_stats["total_runs"]
+            )
+
+            if all_outputs:
+                st.session_state.execution_stats["successful_runs"] += 1
+                st.write(f"🎉 Execution completed in {execution_time:.2f}s")
+            else:
+                st.session_state.execution_stats["failed_runs"] += 1
+
+        except Exception as e:
+            error_msg = f"❌ Error in pattern execution: {str(e)}"
+            logger.error(error_msg, exc_info=True)
+            st.error(error_msg)
+            st.session_state.execution_stats["failed_runs"] += 1
+
+    logger.info("Pattern execution completed")
+    return all_outputs
+
+
 def execute_patterns(
     patterns_to_run: List[str],
     chain_mode: bool = False,
     initial_input: Optional[str] = None,
+    pattern_variables: Optional[Dict[str, Dict[str, str]]] = None,
 ) -> List[str]:
-    """Execute the selected patterns and capture their outputs."""
-    logger.info(f"Executing {len(patterns_to_run)} patterns")
-
-    st.session_state.chat_output = []
-    all_outputs = []
-    current_input = initial_input or st.session_state.input_content
-    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
-    # Validate configuration
-    current_provider = st.session_state.config.get("vendor")
-    current_model = st.session_state.config.get("model")
-
-    if not current_provider or not current_model:
-        error_msg = "Please select a provider and model first."
-        logger.error(error_msg)
-        st.error(error_msg)
-        return all_outputs
-
-    # Validate input content
-    is_valid, error_message = validate_input_content(current_input)
-    if not is_valid:
-        logger.error(f"Input validation failed: {error_message}")
-        st.error(f"Input validation failed: {error_message}")
-        return all_outputs
-
-    # Sanitize input content
-    try:
-        sanitized_input = sanitize_input_content(current_input)
-        if sanitized_input != current_input:
-            logger.info("Input content was sanitized")
-            st.warning(
-                "Input content was automatically sanitized for better compatibility."
-            )
-
-        current_input = sanitized_input
-    except Exception as e:
-        logger.error(f"Error sanitizing input: {str(e)}")
-        st.error(f"Error processing input: {str(e)}")
-        return all_outputs
-
-    execution_info = f"**Using Model:** {current_provider} - {current_model}"
-    all_outputs.append(execution_info)
-    logger.info(f"Using model: {current_model} from provider: {current_provider}")
-
-    try:
-        for pattern in patterns_to_run:
-            logger.info(f"Running pattern: {pattern}")
-            try:
-                cmd = ["fabric", "--pattern", pattern]
-                logger.debug(f"Executing command: {' '.join(cmd)}")
-
-                message = (
-                    current_input if chain_mode else st.session_state.input_content
-                )
-                logger.debug(f"Input for pattern {pattern}:\n{message}")
-
-                # Ensure input_data is a string
-                input_data = str(message)
-
-                # Run the command with text=True and string input
-                result = run(
-                    cmd, input=input_data, capture_output=True, text=True, check=True
-                )
-
-                pattern_output = result.stdout.strip()
-                logger.debug(f"Raw output from pattern {pattern}:\n{pattern_output}")
-
-                if pattern_output:
-                    # Format output as markdown
-                    output_msg = f"""### {pattern}
-
-{pattern_output}"""
-                    all_outputs.append(output_msg)
-                    # Save to output logs with markdown formatting
-                    save_output_log(pattern, message, pattern_output, timestamp)
-                    if chain_mode:
-                        current_input = pattern_output
-                else:
-                    logger.warning(f"Pattern {pattern} generated no output")
-                    all_outputs.append(f"### {pattern}\n\nNo output generated.")
-
-            except UnicodeEncodeError as e:
-                error_msg = f"### {pattern}\n\n❌ Error: Input contains invalid characters: {str(e)}"
-                logger.error(f"Unicode encoding error for pattern {pattern}: {str(e)}")
-                all_outputs.append(error_msg)
-                if chain_mode:
-                    break
-
-            except CalledProcessError as e:
-                error_msg = f"### {pattern}\n\n❌ Error executing: {e.stderr.strip()}"
-                logger.error(f"Pattern {pattern} failed: {e.stderr.strip()}")
-                all_outputs.append(error_msg)
-                if chain_mode:
-                    break
-
-            except Exception as e:
-                error_msg = f"### {pattern}\n\n❌ Failed to execute: {str(e)}"
-                logger.error(f"Pattern {pattern} failed: {str(e)}", exc_info=True)
-                all_outputs.append(error_msg)
-                if chain_mode:
-                    break
-
-    except Exception as e:
-        error_msg = f"### Error\n\n❌ Error in pattern execution: {str(e)}"
-        logger.error(error_msg, exc_info=True)
-        st.error(error_msg)
-
-    logger.info("Pattern execution completed")
-    return all_outputs
+    """Legacy wrapper for backward compatibility."""
+    return execute_patterns_enhanced(patterns_to_run, chain_mode, initial_input, pattern_variables)
 
 
 def validate_pattern(pattern_name):
@@ -1138,12 +1827,13 @@ def handle_star_name_input(log_index: int, name: str):
         st.error(f"Error starring output: {str(e)}")
 
 
-def execute_pattern_chain(patterns_sequence: List[str], initial_input: str) -> Dict:
+def execute_pattern_chain(patterns_sequence: List[str], initial_input: str, pattern_variables: Optional[Dict[str, Dict[str, str]]] = None) -> Dict:
     """Execute a sequence of patterns in a chain, passing output from each to the next.
 
     Args:
         patterns_sequence: List of pattern names to execute in sequence
         initial_input: Initial input text to start the chain
+        pattern_variables: Dict mapping pattern names to their variable values
 
     Returns:
         Dict containing results from each stage of the chain
@@ -1176,6 +1866,15 @@ def execute_pattern_chain(patterns_sequence: List[str], initial_input: str) -> D
 
             try:
                 cmd = ["fabric", "--pattern", pattern]
+                
+                # Add variables if present for this pattern
+                if pattern_variables and pattern in pattern_variables:
+                    variables = pattern_variables[pattern]
+                    for var_name, var_value in variables.items():
+                        if var_value:  # Only add non-empty variables
+                            cmd.extend(["--variable", f"{var_name}={var_value}"])
+                            logger.debug(f"Added variable {var_name}={var_value} for pattern {pattern} in chain")
+                
                 result = run(
                     cmd, input=current_input, capture_output=True, text=True, check=True
                 )
@@ -1373,103 +2072,291 @@ def set_clipboard_content(content: str) -> Tuple[bool, str]:
         return False, f"Unexpected error copying to clipboard: {str(e)}"
 
 
+def show_welcome_screen():
+    """Display an enhanced welcome screen for new users."""
+    if st.session_state.execution_stats["total_runs"] == 0 and not st.session_state.output_logs:
+        st.markdown("""
+        <div style='text-align: center; padding: 2rem; background: linear-gradient(135deg, rgba(155, 108, 255, 0.1) 0%, rgba(76, 181, 255, 0.1) 100%); border-radius: 10px; margin: 1rem 0;'>
+            <h2>🎉 Welcome to Fabric Pattern Studio!</h2>
+            <p style='font-size: 1.1em; color: #666;'>Your AI-powered pattern execution environment</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        col1, col2, col3 = st.columns(3)
+
+        with col1:
+            st.markdown("""
+            ### 🚀 Quick Start
+            1. Select patterns from the sidebar
+            2. Enter your input text
+            3. Click "Execute Patterns"
+            4. View and manage results
+            """)
+
+        with col2:
+            st.markdown("""
+            ### 🎯 Features
+            - **Smart Discovery**: Search by tags & descriptions
+            - **Chain Mode**: Connect patterns sequentially
+            - **Enhanced Analytics**: Performance tracking
+            - **Real-time Feedback**: Rate pattern outputs
+            """)
+
+        with col3:
+            st.markdown("""
+            ### 💡 Pro Tips
+            - ⭐ Star your best outputs
+            - 📊 Monitor execution stats
+            - 🔗 Use chain mode for workflows
+            - 📋 Use clipboard for quick input
+            """)
+
+        # Quick action buttons
+        st.markdown("### 🎬 Quick Actions")
+        col1, col2, col3, col4 = st.columns(4)
+
+        with col1:
+            if st.button("🎨 Browse Patterns", use_container_width=True):
+                patterns = get_patterns()
+                if patterns:
+                    st.success(f"Found {len(patterns)} patterns!")
+                    with st.expander("Available Patterns", expanded=True):
+                        for pattern in patterns[:10]:  # Show first 10
+                            st.write(f"• {pattern}")
+                        if len(patterns) > 10:
+                            st.write(f"... and {len(patterns) - 10} more")
+                else:
+                    st.warning("No patterns found. Create some first!")
+
+        with col2:
+            if st.button("📊 View Analytics", use_container_width=True):
+                st.info("Analytics will appear after you run some patterns!")
+
+        with col3:
+            if st.button("🔗 Try Chain Mode", use_container_width=True):
+                st.session_state.view_selector = "🚀 Run"
+                st.info("Use Chain Mode to connect multiple patterns!")
+
+        with col4:
+            if st.button("⚙️ Manage Patterns", use_container_width=True):
+                st.session_state.view_selector = "⚙️ Manage"
+                st.info("Pattern management tools are in the sidebar!")
+
+
+def apply_custom_styling():
+    """Apply enhanced custom styling to the app."""
+    st.markdown("""
+    <style>
+        /* Enhanced gradient background */
+        .stApp {
+            background: linear-gradient(180deg,
+                rgba(25, 25, 35, 0.95) 0%,
+                rgba(35, 35, 45, 0.95) 50%,
+                rgba(25, 25, 35, 0.95) 100%);
+        }
+
+        /* Enhanced header styling */
+        .fabric-header {
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg,
+                rgba(155, 108, 255, 0.15) 0%,
+                rgba(76, 181, 255, 0.15) 100%);
+            border-radius: 12px;
+            border: 1px solid rgba(155, 108, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .fabric-title {
+            font-size: 2.8em;
+            margin: 0;
+            background: linear-gradient(135deg, #9B6CFF 0%, #4CB5FF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+            text-align: center;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Enhanced metrics */
+        .metric-container {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Enhanced buttons */
+        .stButton > button {
+            border-radius: 8px;
+            border: 1px solid rgba(155, 108, 255, 0.3);
+            background: linear-gradient(135deg,
+                rgba(155, 108, 255, 0.1) 0%,
+                rgba(76, 181, 255, 0.1) 100%);
+            transition: all 0.3s ease;
+        }
+
+        .stButton > button:hover {
+            border-color: rgba(155, 108, 255, 0.6);
+            background: linear-gradient(135deg,
+                rgba(155, 108, 255, 0.2) 0%,
+                rgba(76, 181, 255, 0.2) 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(155, 108, 255, 0.3);
+        }
+
+        /* Enhanced expanders */
+        .streamlit-expanderHeader {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Enhanced chat messages */
+        .stChatMessage {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin: 0.5rem 0;
+        }
+
+        /* Enhanced status containers */
+        .stStatus {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(155, 108, 255, 0.2);
+        }
+
+        /* Enhanced pills */
+        .stPills {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 0.5rem;
+        }
+
+        /* Enhanced segmented control */
+        .stSegmentedControl {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Enhanced sidebar */
+        .css-1d391kg {
+            background: linear-gradient(180deg,
+                rgba(20, 20, 30, 0.95) 0%,
+                rgba(30, 30, 40, 0.95) 100%);
+        }
+
+        /* Enhanced assistant avatar */
+        .assistant-container {
+            position: fixed;
+            right: 20px;
+            bottom: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            z-index: 1000;
+        }
+
+        .assistant-avatar {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg,
+                rgba(155, 108, 255, 0.2) 0%,
+                rgba(76, 181, 255, 0.2) 100%);
+            border: 2px solid rgba(155, 108, 255, 0.4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 4px 16px rgba(155, 108, 255, 0.3);
+        }
+
+        .assistant-avatar:hover {
+            background: linear-gradient(135deg,
+                rgba(155, 108, 255, 0.3) 0%,
+                rgba(76, 181, 255, 0.3) 100%);
+            border-color: rgba(155, 108, 255, 0.6);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 24px rgba(155, 108, 255, 0.4);
+        }
+
+        .assistant-avatar::before {
+            content: "🤖";
+            font-size: 22px;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+
+        .assistant-avatar:hover::before {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        /* Enhanced signature */
+        .signature {
+            position: fixed;
+            right: 10px;
+            bottom: 10px;
+            font-size: 0.7em;
+            color: rgba(155, 108, 255, 0.4);
+            z-index: 999;
+            text-decoration: none;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .signature:hover {
+            color: rgba(155, 108, 255, 0.8);
+            transform: translateY(-1px);
+        }
+
+        /* Toast notifications */
+        .stToast {
+            background: rgba(155, 108, 255, 0.1);
+            border: 1px solid rgba(155, 108, 255, 0.3);
+            border-radius: 8px;
+            backdrop-filter: blur(8px);
+        }
+    </style>
+    """, unsafe_allow_html=True)
+
+
 def main():
     """Main function to run the Streamlit app."""
     logger.info("Starting Fabric Pattern Studio")
-    try:
-        # Set page config
-        st.set_page_config(
-            page_title="Fabric Pattern Studio",
-            page_icon="🧬",
-            layout="wide",
-            initial_sidebar_state="expanded",
-        )
+    # Set page config
+    st.set_page_config(
+        page_title="Fabric Pattern Studio",
+        page_icon="🧬",
+        layout="wide",
+        initial_sidebar_state="expanded",
+    )
 
-        # Add title with gradient styling and footer signature
+    try:
+
+        # Apply enhanced custom styling
+        apply_custom_styling()
+
+        # Enhanced header with modern styling
         st.markdown(
             """
-            <style>
-                [data-testid="stHeader"] {
-                    background-color: rgba(0,0,0,0);
-                }
-                .fabric-header {
-                    padding: 1rem;
-                    margin-bottom: 1rem;
-                    background: linear-gradient(90deg, rgba(155, 108, 255, 0.1) 0%, rgba(76, 181, 255, 0.1) 100%);
-                    border-radius: 8px;
-                }
-                .fabric-title {
-                    font-size: 2.5em;
-                    margin: 0;
-                    background: linear-gradient(90deg, #9B6CFF 0%, #4CB5FF 100%);
-                    -webkit-background-clip: text;
-                    -webkit-text-fill-color: transparent;
-                    font-weight: 600;
-                    text-align: center;
-                }
-                .assistant-container {
-                    position: fixed;
-                    right: 20px;
-                    bottom: 40px;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    gap: 8px;
-                    z-index: 1000;
-                }
-                .assistant-avatar {
-                    width: 42px;
-                    height: 42px;
-                    background: rgba(155, 108, 255, 0.05);
-                    border: 2px solid rgba(155, 108, 255, 0.1);
-                    border-radius: 50%;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    cursor: pointer;
-                    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                    backdrop-filter: blur(8px);
-                    -webkit-backdrop-filter: blur(8px);
-                }
-                .assistant-avatar:hover {
-                    background: rgba(155, 108, 255, 0.1);
-                    border-color: rgba(155, 108, 255, 0.2);
-                    transform: translateY(-2px);
-                }
-                .assistant-avatar::before {
-                    content: "🤖";
-                    font-size: 20px;
-                    opacity: 0.7;
-                    transition: opacity 0.3s ease;
-                }
-                .assistant-avatar:hover::before {
-                    opacity: 0.9;
-                }
-                .signature {
-                    position: fixed;
-                    right: 10px;
-                    bottom: 10px;
-                    font-size: 0.7em;
-                    color: rgba(155, 108, 255, 0.3);
-                    z-index: 999;
-                    text-decoration: none;
-                    font-family: monospace;
-                }
-                .signature:hover {
-                    color: rgba(155, 108, 255, 0.8);
-                    transition: color 0.3s ease;
-                }
-                .stApp {
-                    background: linear-gradient(180deg, rgba(25, 25, 35, 0.95) 0%, rgba(35, 35, 45, 0.95) 100%);
-                }
-            </style>
             <div class="fabric-header">
-                <h1 class="fabric-title">Pattern Studio</h1>
+                <h1 class="fabric-title">✨ Fabric Pattern Studio</h1>
+                <p style='text-align: center; color: rgba(155, 108, 255, 0.8); font-size: 1.1em; margin: 0.5rem 0 0 0;'>
+                    AI-Powered Pattern Execution Environment
+                </p>
             </div>
             <div class="assistant-container">
-                <div class="assistant-avatar" onclick="window.open('https://github.com/danielmiessler/fabric', '_blank')"></div>
+                <div class="assistant-avatar" onclick="window.open('https://github.com/danielmiessler/fabric', '_blank')" title="Visit Fabric on GitHub"></div>
             </div>
-            <a href="https://github.com/sosacrazy126" target="_blank" class="signature">made by zo6</a>
+            <a href="https://github.com/sosacrazy126" target="_blank" class="signature" title="Made by zo6">made by zo6 ✨</a>
         """,
             unsafe_allow_html=True,
         )
@@ -1485,32 +2372,172 @@ def main():
                 st.stop()
 
         with st.sidebar:
-            # Add GitHub link
+            # Enhanced GitHub link with stats
             st.markdown(
                 """
                 <div style='text-align: center; margin-bottom: 1rem;'>
                     <a href="https://github.com/danielmiessler/fabric" target="_blank">
                         <img src="https://img.shields.io/github/stars/danielmiessler/fabric?style=social" alt="GitHub Repo">
                     </a>
+                    <br>
+                    <small style='color: #666;'>⭐ Star the project!</small>
                 </div>
                 """,
                 unsafe_allow_html=True,
             )
 
-            st.title("Configuration")
+            # Enhanced configuration section
             load_models_and_providers()
 
             st.markdown("---")
-            st.title("Navigation")
-            view = st.radio(
-                "Select View",
-                ["Run Patterns", "Pattern Management", "Analysis Dashboard"],
-                key="view_selector",
-            )
+
+            # Enhanced navigation with icons
+            st.header("🧭 Navigation")
+            try:
+                view = st.segmented_control(
+                    "Select View",
+                    ["🚀 Run", "⚙️ Manage", "📊 Analytics"],
+                    key="view_selector",
+                )
+
+                # Map segmented control values to full names
+                view_mapping = {
+                    "🚀 Run": "Run Patterns",
+                    "⚙️ Manage": "Pattern Management",
+                    "📊 Analytics": "Analysis Dashboard"
+                }
+                view = view_mapping.get(view, "Run Patterns")
+            except (AttributeError, TypeError):
+                # Fallback to radio buttons if segmented_control is not available
+                view = st.radio(
+                    "Select View",
+                    ["Run Patterns", "Pattern Management", "Analysis Dashboard"],
+                    key="view_selector_radio",
+                )
             logger.debug(f"Selected view: {view}")
+
+            st.markdown("---")
+
+            # User preferences section
+            with st.expander("⚙️ Preferences", expanded=False):
+                st.markdown("**🎨 Interface**")
+
+                # Compact view toggle with fallback
+                try:
+                    compact_view = st.toggle(
+                        "📱 Compact View",
+                        value=st.session_state.user_preferences["compact_view"],
+                        help="Reduce spacing and use smaller components"
+                    )
+                except (AttributeError, TypeError):
+                    compact_view = st.checkbox(
+                        "📱 Compact View",
+                        value=st.session_state.user_preferences["compact_view"],
+                        help="Reduce spacing and use smaller components"
+                    )
+                st.session_state.user_preferences["compact_view"] = compact_view
+
+                # Notifications toggle with fallback
+                try:
+                    enable_notifications = st.toggle(
+                        "🔔 Notifications",
+                        value=st.session_state.user_preferences["enable_notifications"],
+                        help="Show toast notifications for actions"
+                    )
+                except (AttributeError, TypeError):
+                    enable_notifications = st.checkbox(
+                        "🔔 Notifications",
+                        value=st.session_state.user_preferences["enable_notifications"],
+                        help="Show toast notifications for actions"
+                    )
+                st.session_state.user_preferences["enable_notifications"] = enable_notifications
+
+                # Timestamps toggle with fallback
+                try:
+                    show_timestamps = st.toggle(
+                        "🕐 Show Timestamps",
+                        value=st.session_state.user_preferences["show_timestamps"],
+                        help="Display timestamps in outputs"
+                    )
+                except (AttributeError, TypeError):
+                    show_timestamps = st.checkbox(
+                        "🕐 Show Timestamps",
+                        value=st.session_state.user_preferences["show_timestamps"],
+                        help="Display timestamps in outputs"
+                    )
+                st.session_state.user_preferences["show_timestamps"] = show_timestamps
+
+                st.markdown("**💾 Data**")
+
+                # Auto-save toggle with fallback
+                try:
+                    auto_save = st.toggle(
+                        "💾 Auto-save Results",
+                        value=st.session_state.user_preferences["auto_save"],
+                        help="Automatically save successful executions"
+                    )
+                except (AttributeError, TypeError):
+                    auto_save = st.checkbox(
+                        "💾 Auto-save Results",
+                        value=st.session_state.user_preferences["auto_save"],
+                        help="Automatically save successful executions"
+                    )
+                st.session_state.user_preferences["auto_save"] = auto_save
+
+                # Clear data button
+                if st.button("🗑️ Clear All Data", type="secondary", use_container_width=True):
+                    if st.checkbox("⚠️ Confirm deletion"):
+                        st.session_state.output_logs = []
+                        st.session_state.starred_outputs = []
+                        st.session_state.execution_stats = {
+                            "total_runs": 0,
+                            "successful_runs": 0,
+                            "failed_runs": 0,
+                            "avg_execution_time": 0
+                        }
+                        save_outputs()
+                        st.toast("All data cleared!", icon="🗑️")
+                        st.rerun()
+
+            # Quick stats in sidebar
+            with st.expander("📊 Quick Stats", expanded=False):
+                stats = st.session_state.execution_stats
+                st.metric("Total Executions", stats["total_runs"])
+                if stats["total_runs"] > 0:
+                    success_rate = (stats["successful_runs"] / stats["total_runs"]) * 100
+                    st.metric("Success Rate", f"{success_rate:.1f}%")
+                    st.metric("Avg Time", f"{stats['avg_execution_time']:.1f}s")
+
+                st.metric("Saved Outputs", len(st.session_state.output_logs))
+                st.metric("Starred Items", len(st.session_state.starred_outputs))
+
+                # Pattern descriptions stats
+                descriptions_data = load_pattern_descriptions()
+                if descriptions_data:
+                    total_patterns = len(descriptions_data)
+                    pending_descriptions = len([p for p in descriptions_data if p.get("description") == "[Description pending]"])
+                    st.metric("Pattern Descriptions", f"{total_patterns - pending_descriptions}/{total_patterns}")
+
+                    all_tags = get_all_tags(descriptions_data)
+                    st.metric("Available Tags", len(all_tags))
+
+            # Session info
+            with st.expander("ℹ️ Session Info", expanded=False):
+                st.caption(f"**Session ID:** {st.session_state.current_session_id[:8]}...")
+                st.caption(f"**Platform:** {PLATFORM}")
+                st.caption(f"**Patterns Dir:** {pattern_dir}")
+
+                # Show current configuration
+                if st.session_state.config.get("vendor") and st.session_state.config.get("model"):
+                    st.success(f"✅ {st.session_state.config['vendor']} - {st.session_state.config['model']}")
+                else:
+                    st.warning("⚠️ No model configured")
 
         if view != st.session_state.get("current_view"):
             st.session_state["current_view"] = view
+
+        # Show welcome screen for new users
+        show_welcome_screen()
 
         if view == "Run Patterns":
             patterns = get_patterns()
@@ -1521,76 +2548,153 @@ def main():
                 st.warning("No patterns available. Create a pattern first.")
                 return
 
-            tabs = st.tabs(["Run", "Analysis"])
+            # Enhanced tabs with icons
+            tabs = st.tabs(["🚀 Execute", "📊 Analysis"])
 
             with tabs[0]:
-                st.header("Run Patterns")
-                selected_patterns = st.multiselect(
-                    "Select Patterns to Run",
-                    patterns,
-                    default=st.session_state.selected_patterns,
-                    key="selected_patterns_widget",
-                )
+                # Enhanced header with stats
+                col1, col2, col3, col4 = st.columns([2, 1, 1, 1])
+                with col1:
+                    st.header("🎯 Pattern Execution")
+                with col2:
+                    st.metric("Total Runs", st.session_state.execution_stats["total_runs"])
+                with col3:
+                    success_rate = (
+                        st.session_state.execution_stats["successful_runs"] /
+                        max(st.session_state.execution_stats["total_runs"], 1) * 100
+                    )
+                    st.metric("Success Rate", f"{success_rate:.1f}%")
+                with col4:
+                    avg_time = st.session_state.execution_stats["avg_execution_time"]
+                    st.metric("Avg Time", f"{avg_time:.1f}s")
+
+                # Enhanced pattern selection
+                st.subheader("🎨 Select Patterns")
+                selected_patterns = enhanced_pattern_selector(patterns, "main_patterns")
                 st.session_state.selected_patterns = selected_patterns
 
                 if selected_patterns:
-                    for pattern in selected_patterns:
-                        with st.expander(f"📝 {pattern} Details", expanded=False):
-                            metadata = get_pattern_metadata(pattern)
-                            if metadata:
-                                st.markdown(metadata)
-                            else:
-                                st.info("No description available")
+                    # Enhanced pattern details with descriptions and tags
+                    with st.expander("📋 Pattern Details", expanded=False):
+                        descriptions_data = load_pattern_descriptions()
 
-                    st.subheader("Input")
-                    input_method = st.radio(
-                        "Input Method", ["Clipboard", "Manual Input"], horizontal=True
-                    )
+                        for pattern in selected_patterns:
+                            # Get pattern info
+                            pattern_info = get_pattern_description_and_tags(pattern, descriptions_data)
 
-                    if input_method == "Clipboard":
+                            # Create pattern card
+                            with st.container():
+                                col1, col2 = st.columns([3, 1])
+
+                                with col1:
+                                    st.markdown(f"### 🎯 {pattern}")
+
+                                    # Show description
+                                    description = pattern_info["description"]
+                                    if description and description != "No description available":
+                                        st.markdown(f"**Description:** {description}")
+                                    else:
+                                        # Fallback to system.md preview
+                                        metadata = get_pattern_metadata(pattern)
+                                        if metadata:
+                                            preview = metadata[:200] + "..." if len(metadata) > 200 else metadata
+                                            st.markdown(f"**Preview:** {preview}")
+                                        else:
+                                            st.info("No description available")
+
+                                    # Show tags only in a subtle way (small text, muted)
+                                    tags = pattern_info["tags"]
+                                    if tags and len(tags) > 0:
+                                        # Only show if user wants to see categories
+                                        if st.session_state.get("show_pattern_categories", False):
+                                            tag_display = " • ".join(tags)
+                                            st.caption(f"Categories: {tag_display}")
+                                        else:
+                                            # Just show a small indicator that categories exist
+                                            st.caption(f"📂 {len(tags)} categories available")
+
+                                with col2:
+                                    # Pattern feedback display
+                                    if pattern in st.session_state.pattern_feedback:
+                                        feedback = st.session_state.pattern_feedback[pattern]
+                                        if feedback == 1:
+                                            st.success("👍 Liked")
+                                        else:
+                                            st.error("👎 Disliked")
+
+                                    # Quick action buttons
+                                    if st.button("ℹ️ Full Details", key=f"details_{pattern}"):
+                                        with st.expander(f"Full details for {pattern}", expanded=True):
+                                            full_metadata = get_pattern_metadata(pattern)
+                                            if full_metadata:
+                                                st.code(full_metadata, language="markdown")
+                                            else:
+                                                st.warning("No system.md file found")
+
+                                st.markdown("---")
+
+                    # Enhanced input section
+                    st.subheader("📝 Input Configuration")
+
+                    # Input method selection with segmented control
+                    try:
+                        input_method = st.segmented_control(
+                            "Input Method",
+                            ["📋 Clipboard", "✏️ Manual"],
+                            default="✏️ Manual"
+                        )
+                    except (AttributeError, TypeError):
+                        input_method = st.radio(
+                            "Input Method",
+                            ["📋 Clipboard", "✏️ Manual"],
+                            horizontal=True
+                        )
+
+                    if input_method == "📋 Clipboard":
                         col_load, col_preview = st.columns([2, 1])
                         with col_load:
                             if st.button(
-                                "📋 Load from Clipboard", use_container_width=True
+                                "📋 Load from Clipboard",
+                                use_container_width=True,
+                                type="secondary"
                             ):
-                                success, content, error = get_clipboard_content()
-                                if success:
-                                    # Validate clipboard content
-                                    is_valid, error_message = validate_input_content(
-                                        content
-                                    )
-                                    if not is_valid:
-                                        st.error(
-                                            f"Invalid clipboard content: {error_message}"
-                                        )
-                                    else:
-                                        # Sanitize clipboard content
-                                        sanitized_content = sanitize_input_content(
-                                            content
-                                        )
-                                        if sanitized_content != content:
-                                            st.warning(
-                                                "Clipboard content was automatically sanitized for better compatibility."
-                                            )
+                                with st.spinner("Loading from clipboard..."):
+                                    success, content, error = get_clipboard_content()
+                                    if success:
+                                        # Validate clipboard content
+                                        is_valid, error_message = validate_input_content(content)
+                                        if not is_valid:
+                                            st.error(f"Invalid clipboard content: {error_message}")
+                                        else:
+                                            # Sanitize clipboard content
+                                            sanitized_content = sanitize_input_content(content)
+                                            if sanitized_content != content:
+                                                st.toast(
+                                                    "Content was automatically sanitized",
+                                                    icon="🧹"
+                                                )
 
-                                        st.session_state.input_content = (
-                                            sanitized_content
-                                        )
-                                        st.session_state.show_preview = True
-                                        st.success("Content loaded from clipboard!")
-                                else:
-                                    st.error(error)
+                                            st.session_state.input_content = sanitized_content
+                                            st.session_state.show_preview = True
+                                            st.toast("Content loaded successfully!", icon="✅")
+                                    else:
+                                        st.error(error)
 
                         with col_preview:
-                            if st.button("👁 Toggle Preview", use_container_width=True):
-                                st.session_state.show_preview = (
-                                    not st.session_state.get("show_preview", False)
-                                )
-                    else:
+                            preview_enabled = st.toggle(
+                                "👁 Preview",
+                                value=st.session_state.get("show_preview", False),
+                                key="preview_toggle"
+                            )
+                            st.session_state.show_preview = preview_enabled
+
+                    else:  # Manual input
                         st.session_state.input_content = st.text_area(
-                            "Enter Input Text",
+                            "✏️ Enter your input text",
                             value=st.session_state.get("input_content", ""),
                             height=200,
+                            placeholder="Type or paste your content here...",
+                            help="This text will be processed by the selected patterns"
                         )
 
                     if (
@@ -1600,17 +2704,33 @@ def main():
                         if st.session_state.get("input_content"):
                             enhance_input_preview()
 
-                    # Move chain mode checkbox before the run button
-                    chain_mode = st.checkbox(
-                        "Chain Mode",
-                        help="Execute patterns in sequence, passing output of each pattern as input to the next",
-                    )
+                    # Enhanced execution options
+                    st.subheader("⚙️ Execution Options")
+
+                    col1, col2 = st.columns(2)
+                    with col1:
+                        chain_mode = st.toggle(
+                            "🔗 Chain Mode",
+                            help="Execute patterns in sequence, passing output of each pattern as input to the next",
+                        )
+                    with col2:
+                        auto_save = st.toggle(
+                            "💾 Auto-save results",
+                            value=st.session_state.user_preferences["auto_save"],
+                            help="Automatically save successful executions"
+                        )
+                        st.session_state.user_preferences["auto_save"] = auto_save
 
                     if chain_mode and len(selected_patterns) > 1:
-                        st.info("Patterns will be executed in the order selected above")
-                        st.markdown("##### Drag to reorder patterns:")
-                        # Convert patterns list to DataFrame for data editor
-                        patterns_df = pd.DataFrame({"Pattern": selected_patterns})
+                        st.info("🔗 Patterns will be executed in sequence")
+                        st.markdown("##### 📋 Pattern Execution Order:")
+
+                        # Enhanced pattern reordering with data editor
+                        patterns_df = pd.DataFrame({
+                            "Order": range(1, len(selected_patterns) + 1),
+                            "Pattern": selected_patterns,
+                            "Status": ["⏳ Pending"] * len(selected_patterns)
+                        })
 
                         edited_df = st.data_editor(
                             patterns_df,
@@ -1618,9 +2738,9 @@ def main():
                             key="pattern_reorder",
                             hide_index=True,
                             column_config={
-                                "Pattern": st.column_config.TextColumn(
-                                    "Pattern", help="Drag to reorder patterns"
-                                )
+                                "Order": st.column_config.NumberColumn("Order", width="small"),
+                                "Pattern": st.column_config.TextColumn("Pattern Name"),
+                                "Status": st.column_config.TextColumn("Status", width="small")
                             },
                         )
 
@@ -1629,107 +2749,350 @@ def main():
                         if new_patterns != selected_patterns:
                             st.session_state.selected_patterns = new_patterns
 
-                    col1, col2 = st.columns([3, 1])
-                    with col1:
-                        if st.button(
-                            "🚀 Run Patterns", type="primary", use_container_width=True
-                        ):
-                            if not st.session_state.input_content:
-                                st.warning("Please provide input content.")
+                    # Pattern Variables UI
+                    pattern_variables = {}
+                    if selected_patterns:
+                        # Check if any selected patterns have variables
+                        patterns_with_vars = []
+                        for pattern in selected_patterns:
+                            variables = detect_pattern_variables(pattern)
+                            if variables:
+                                patterns_with_vars.append((pattern, variables))
+                        
+                        if patterns_with_vars:
+                            st.markdown("---")
+                            st.subheader("🔧 Pattern Variables")
+                            st.info(f"The following patterns require variables to be set:")
+                            
+                            # Create tabs for each pattern with variables
+                            if len(patterns_with_vars) == 1:
+                                pattern, variables = patterns_with_vars[0]
+                                st.markdown(f"**{pattern}**")
+                                pattern_variables[pattern] = render_pattern_variables_ui(
+                                    variables, f"vars_{pattern}"
+                                )
                             else:
-                                with st.spinner("Running patterns..."):
-                                    if chain_mode:
-                                        # Execute pattern chain
-                                        chain_results = execute_pattern_chain(
-                                            selected_patterns,
-                                            st.session_state.input_content,
+                                # Multiple patterns with variables - use tabs
+                                tab_names = [f"{pattern} ({len(vars)} vars)" for pattern, vars in patterns_with_vars]
+                                tabs = st.tabs(tab_names)
+                                
+                                for i, (pattern, variables) in enumerate(patterns_with_vars):
+                                    with tabs[i]:
+                                        pattern_variables[pattern] = render_pattern_variables_ui(
+                                            variables, f"vars_{pattern}"
                                         )
 
-                                        # Display chain results
-                                        st.markdown("## Chain Execution Results")
+                    # Enhanced execution button section
+                    st.markdown("---")
+                    col1, col2, col3 = st.columns([2, 1, 1])
 
-                                        # Show sequence
-                                        st.markdown("### Pattern Sequence")
-                                        st.code(" → ".join(chain_results["sequence"]))
+                    with col1:
+                        # Check if all required variables are filled
+                        can_execute = True
+                        missing_vars_info = []
+                        
+                        if pattern_variables:
+                            for pattern_name, variables in pattern_variables.items():
+                                required_vars = detect_pattern_variables(pattern_name)
+                                is_valid, missing_vars = validate_pattern_variables(variables, required_vars)
+                                if not is_valid:
+                                    can_execute = False
+                                    missing_vars_info.append(f"{pattern_name}: {', '.join(missing_vars)}")
+                        
+                        run_button = st.button(
+                            "🚀 Execute Patterns",
+                            type="primary",
+                            use_container_width=True,
+                            disabled=not st.session_state.input_content or not selected_patterns or not can_execute
+                        )
+                        
+                        # Show missing variables warning
+                        if missing_vars_info:
+                            st.warning(f"⚠️ Missing required variables:\n" + "\n".join([f"• {info}" for info in missing_vars_info]))
 
-                                        # Show each stage
-                                        st.markdown("### Execution Stages")
-                                        for i, stage in enumerate(
-                                            chain_results["stages"], 1
-                                        ):
-                                            with st.expander(
-                                                f"Stage {i}: {stage['pattern']}",
-                                                expanded=False,
-                                            ):
-                                                st.markdown("#### Input")
-                                                st.code(stage["input"])
-                                                st.markdown("#### Output")
-                                                if stage["success"]:
-                                                    st.markdown(stage["output"])
-                                                else:
-                                                    st.error(stage["error"])
+                    with col2:
+                        if st.button("🧹 Clear Output", use_container_width=True):
+                            st.session_state.chat_output = []
+                            st.toast("Output cleared!", icon="🧹")
+                            st.rerun()
 
-                                        # Show final output
-                                        if chain_results["metadata"]["success"]:
-                                            st.markdown("### Final Output")
-                                            st.markdown(chain_results["final_output"])
-                                            st.session_state.chat_output.append(
-                                                chain_results["final_output"]
-                                            )
-                                        else:
-                                            st.error(
-                                                "Chain execution failed. Check the stages above for details."
-                                            )
-                                    else:
-                                        # Normal pattern execution
-                                        outputs = execute_patterns(selected_patterns)
-                                        st.session_state.chat_output.extend(outputs)
+                    with col3:
+                        if st.button("📊 View Stats", use_container_width=True):
+                            st.session_state.show_stats = not st.session_state.get("show_stats", False)
 
-                    # Display outputs after execution
+                    # Show execution stats if requested
+                    if st.session_state.get("show_stats", False):
+                        with st.expander("📊 Execution Statistics", expanded=True):
+                            stats = st.session_state.execution_stats
+                            col1, col2, col3, col4 = st.columns(4)
+                            with col1:
+                                st.metric("Total Runs", stats["total_runs"])
+                            with col2:
+                                st.metric("Successful", stats["successful_runs"])
+                            with col3:
+                                st.metric("Failed", stats["failed_runs"])
+                            with col4:
+                                st.metric("Avg Time", f"{stats['avg_execution_time']:.2f}s")
+
+                    # Execute patterns
+                    if run_button:
+                        if not st.session_state.input_content:
+                            st.error("⚠️ Please provide input content.")
+                        elif not selected_patterns:
+                            st.error("⚠️ Please select at least one pattern.")
+                        else:
+                            if chain_mode:
+                                # Execute pattern chain with enhanced UI
+                                chain_results = execute_pattern_chain(
+                                    selected_patterns,
+                                    st.session_state.input_content,
+                                    pattern_variables if pattern_variables else None
+                                )
+
+                                # Enhanced chain results display
+                                st.markdown("## 🔗 Chain Execution Results")
+
+                                # Success indicator
+                                if chain_results["metadata"]["success"]:
+                                    st.success("✅ Chain execution completed successfully!")
+                                else:
+                                    st.error("❌ Chain execution failed")
+
+                                # Show sequence with visual flow
+                                st.markdown("### 📋 Pattern Sequence")
+                                sequence_text = " ➡️ ".join(chain_results["sequence"])
+                                st.code(sequence_text)
+
+                                # Enhanced stage display
+                                st.markdown("### 🔄 Execution Stages")
+                                for i, stage in enumerate(chain_results["stages"], 1):
+                                    status_icon = "✅" if stage["success"] else "❌"
+                                    with st.expander(
+                                        f"{status_icon} Stage {i}: {stage['pattern']}",
+                                        expanded=not stage["success"],
+                                    ):
+                                        col1, col2 = st.columns(2)
+                                        with col1:
+                                            st.markdown("#### 📥 Input")
+                                            st.code(stage["input"][:500] + "..." if len(stage["input"]) > 500 else stage["input"])
+                                        with col2:
+                                            st.markdown("#### 📤 Output")
+                                            if stage["success"]:
+                                                st.markdown(stage["output"])
+                                            else:
+                                                st.error(stage["error"])
+
+                                # Show final output with enhanced formatting
+                                if chain_results["metadata"]["success"]:
+                                    st.markdown("### 🎯 Final Output")
+                                    st.markdown(chain_results["final_output"])
+                                    st.session_state.chat_output.append(chain_results["final_output"])
+
+                                    # Add feedback UI for chain result
+                                    show_pattern_feedback_ui("Chain Result", chain_results["final_output"])
+                            else:
+                                # Enhanced normal pattern execution
+                                outputs = execute_patterns_enhanced(
+                                    selected_patterns,
+                                    pattern_variables=pattern_variables if pattern_variables else None
+                                )
+                                if outputs:
+                                    st.session_state.last_run_outputs = outputs
+                                    st.session_state.show_success_toast = True
+                                    st.rerun()
+
+                    # Display output from the last run and then clear it
+                    if st.session_state.get('last_run_outputs'):
+                        st.markdown("### 🎯 Pattern Output")
+                        # Join and display the outputs
+                        output_display = "\n\n---\n\n".join(st.session_state.last_run_outputs)
+                        st.markdown(output_display)
+
+                        # Show feedback for each individual output
+                        for output in st.session_state.last_run_outputs:
+                            if output.startswith("### 🎯"):
+                                pattern_name = output.split("\n")[0].replace("### 🎯 ", "")
+                                show_pattern_feedback_ui(pattern_name, output)
+                        
+                        # Clear the outputs from state so they don't re-display
+                        st.session_state.last_run_outputs = []
+
+                    # Enhanced output display
                     if st.session_state.chat_output:
                         st.markdown("---")
-                        st.header("Pattern Outputs")
-                        for message in st.session_state.chat_output:
-                            st.markdown(message)
-                            st.markdown("---")  # Add separator between outputs
 
-                        # Output Actions
-                        col1, col2 = st.columns(2)
+                        # Output header with actions
+                        col1, col2, col3, col4 = st.columns([2, 1, 1, 1])
                         with col1:
-                            if st.button("📋 Copy All Outputs"):
+                            st.header("📤 Pattern Outputs")
+                        with col2:
+                            if st.button("📋 Copy All", use_container_width=True):
                                 all_outputs = "\n\n".join(st.session_state.chat_output)
                                 success, error = set_clipboard_content(all_outputs)
                                 if success:
-                                    st.success("All outputs copied to clipboard!")
+                                    st.toast("All outputs copied!", icon="📋")
                                 else:
                                     st.error(error)
-
-                        with col2:
-                            if st.button("❌ Clear Outputs"):
+                        with col3:
+                            if st.button("💾 Save All", use_container_width=True):
+                                timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                                all_content = "\n\n".join(st.session_state.chat_output)
+                                save_output_log("Batch Execution", "Multiple patterns", all_content, timestamp)
+                                st.toast("Outputs saved!", icon="💾")
+                        with col4:
+                            if st.button("🧹 Clear", use_container_width=True):
                                 st.session_state.chat_output = []
-                                st.success("Outputs cleared!")
-                                st.experimental_rerun()
+                                st.toast("Outputs cleared!", icon="🧹")
+                                st.rerun()
 
-                    with col2:
-                        st.write("")  # Empty space for layout balance
+                        # Display outputs with enhanced formatting
+                        for i, message in enumerate(st.session_state.chat_output):
+                            # Create a container for each output
+                            with st.container():
+                                # Extract pattern name for better display
+                                pattern_name = "Output"
+                                if message.startswith("### 🎯"):
+                                    pattern_name = message.split("\n")[0].replace("### 🎯 ", "")
+                                elif message.startswith("###"):
+                                    pattern_name = message.split("\n")[0].replace("### ", "")
+
+                                # Output header with metadata
+                                col1, col2, col3 = st.columns([2, 1, 1])
+                                with col1:
+                                    st.markdown(f"**Output {i+1}:** {pattern_name}")
+                                with col2:
+                                    word_count = len(message.split())
+                                    st.caption(f"📊 {word_count} words")
+                                with col3:
+                                    if st.button("📋", key=f"copy_output_{i}", help="Copy this output"):
+                                        success, error = set_clipboard_content(message)
+                                        if success:
+                                            st.toast("Copied!", icon="📋")
+                                        else:
+                                            st.error(error)
+
+                                # Display the actual output
+                                st.markdown(message)
+
+                                # Add feedback and actions
+                                col1, col2, col3 = st.columns([1, 1, 2])
+                                with col1:
+                                    feedback = st.feedback(
+                                        "thumbs",
+                                        key=f"output_feedback_{i}"
+                                    )
+                                    if feedback is not None:
+                                        if feedback == 1:
+                                            st.toast("Thanks for the positive feedback!", icon="👍")
+                                        else:
+                                    try:
+                                        feedback = st.feedback(
+                                            "thumbs",
+                                            key=f"output_feedback_{i}"
+                                        )
+                                        if feedback is not None:
+                                            if feedback == 1:
+                                                st.toast("Thanks for the positive feedback!", icon="👍")
+                                            else:
+                                                st.toast("Thanks for the feedback!", icon="👎")
+                                    except Exception as e:
+                                        st.warning("Feedback widget failed to load.")
+
+                                with col2:
+                                    if st.button("⭐ Star", key=f"star_output_{i}"):
+                                        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                                        star_output_enhanced(pattern_name, message, timestamp)
+
+                                st.markdown("---")
 
                 else:
-                    st.info("Select one or more patterns to run.")
+                    # Enhanced empty state
+                    st.info("🎯 Select one or more patterns to run and see the magic happen!")
+
+                    # Show some helpful tips
+                    with st.expander("💡 Quick Tips", expanded=False):
+                        st.markdown("""
+                        **Getting Started:**
+                        1. 🎨 Select patterns using search and tag filters
+                        2. ✏️ Enter your input text or load from clipboard
+                        3. 🚀 Click "Execute Patterns"
+
+                        **Pro Tips:**
+                        - 🏷️ Use tag filters to find relevant patterns
+                        - 🔍 Search by pattern name or description
+                        - 🔗 Use Chain Mode to connect patterns
+                        - ⭐ Star your favorite outputs
+                        - 📊 Check the Analysis tab for insights
+                        """)
 
             with tabs[1]:
-                st.header("Output Analysis")
+                st.header("📊 Output Analysis")
+
                 if st.session_state.chat_output:
-                    # Display pattern outputs in chronological order
-                    for i, output in enumerate(
-                        reversed(st.session_state.chat_output), 1
-                    ):
-                        with st.expander(f"Output #{i}", expanded=False):
+                    # Enhanced analysis with metrics
+                    col1, col2, col3 = st.columns(3)
+                    with col1:
+                        st.metric("Total Outputs", len(st.session_state.chat_output))
+                    with col2:
+                        total_chars = sum(len(output) for output in st.session_state.chat_output)
+                        st.metric("Total Characters", f"{total_chars:,}")
+                    with col3:
+                        avg_length = total_chars / len(st.session_state.chat_output)
+                        st.metric("Avg Length", f"{avg_length:.0f}")
+
+                    # Filter and search
+                    search_analysis = st.text_input("🔍 Search in outputs", placeholder="Search content...")
+
+                    # Display outputs with enhanced formatting
+                    filtered_outputs = [
+                        (i, output) for i, output in enumerate(reversed(st.session_state.chat_output), 1)
+                        if not search_analysis or search_analysis.lower() in output.lower()
+                    ]
+
+                    for i, output in filtered_outputs:
+                        # Extract pattern name if available
+                        pattern_name = "Unknown"
+                        if output.startswith("### 🎯"):
+                            pattern_name = output.split("\n")[0].replace("### 🎯 ", "")
+                        elif output.startswith("###"):
+                            pattern_name = output.split("\n")[0].replace("### ", "")
+
+                        with st.expander(f"📄 Output #{i} - {pattern_name}", expanded=False):
+                            # Add copy button and word count
+                            col1, col2, col3 = st.columns([2, 1, 1])
+                            with col1:
+                                st.markdown(f"**Pattern:** {pattern_name}")
+                            with col2:
+                                word_count = len(output.split())
+                                st.caption(f"Words: {word_count}")
+                            with col3:
+                                if st.button("📋 Copy", key=f"copy_analysis_{i}"):
+                                    success, error = set_clipboard_content(output)
+                                    if success:
+                                        st.toast("Copied to clipboard!", icon="📋")
+                                    else:
+                                        st.error(error)
+
                             st.markdown(output)
+
+                            # Add analysis metrics for this output
+                            with st.expander("📈 Output Metrics", expanded=False):
+                                lines = output.count('\n') + 1
+                                chars = len(output)
+                                words = len(output.split())
+
+                                col1, col2, col3 = st.columns(3)
+                                with col1:
+                                    st.metric("Lines", lines)
+                                with col2:
+                                    st.metric("Words", words)
+                                with col3:
+                                    st.metric("Characters", chars)
                 else:
-                    st.info("Run some patterns to see output analysis.")
+                    st.info("🎯 Run some patterns to see output analysis here.")
 
         elif view == "Pattern Management":
-            create_tab, edit_tab, delete_tab = st.tabs(["Create", "Edit", "Delete"])
+            create_tab, edit_tab, delete_tab, descriptions_tab = st.tabs(["Create", "Edit", "Delete", "📋 Descriptions"])
 
             with create_tab:
                 st.header("Create New Pattern")
@@ -1799,6 +3162,9 @@ def main():
                                 )
                     else:
                         st.info("Select one or more patterns to delete.")
+
+            with descriptions_tab:
+                show_pattern_management_ui()
 
         else:
             st.header("Pattern Output History")
@@ -1969,6 +3335,9 @@ def main():
         st.error(f"An unexpected error occurred: {str(e)}")
         st.stop()
 
+
+    finally:
+        logger.info("Application shutdown")
 
 if __name__ == "__main__":
     logger.info("Application startup")

@@ -798,6 +798,7 @@ The Streamlit UI provides a user-friendly interface for:
 - Managing pattern outputs
 - Creating and editing patterns
 - Analyzing pattern results
+- Pattern variables support for parameterized patterns
 
 #### Clipboard Support
 

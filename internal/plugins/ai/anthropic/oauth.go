@@ -46,8 +46,13 @@ func (t *OAuthTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 	// Add OAuth Bearer token
 	newReq.Header.Set("Authorization", "Bearer "+token)
 
-	// Add the anthropic-beta header for OAuth
-	newReq.Header.Set("anthropic-beta", "oauth-2025-04-20")
+	// Add the anthropic-beta header for OAuth, preserving existing betas
+	existing := newReq.Header.Get("anthropic-beta")
+	beta := "oauth-2025-04-20"
+	if existing != "" {
+		beta = existing + "," + beta
+	}
+	newReq.Header.Set("anthropic-beta", beta)
 
 	// Set User-Agent to match AI SDK exactly
 	newReq.Header.Set("User-Agent", "ai-sdk/anthropic")

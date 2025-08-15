@@ -85,6 +85,9 @@ func (o *Client) buildChatCompletionParams(
 			ret.Seed = openai.Int(int64(opts.Seed))
 		}
 	}
+	if eff, ok := parseReasoningEffort(opts.Thinking); ok {
+		ret.ReasoningEffort = eff
+	}
 	return
 }
 

@@ -50,7 +50,7 @@ These files are volume-mounted into the Docker container and persist changes mad
 
 The interactive mode (`-i`) provides several options:
 
-```
+```text
 Available test cases:
 
 1) No APIs configured (no-config)

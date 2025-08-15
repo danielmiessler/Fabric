@@ -153,7 +153,7 @@ func (c *BedrockClient) ListModels() ([]string, error) {
 	return models, nil
 }
 
-// SendStream sends the messages to the the Bedrock ConverseStream API
+// SendStream sends the messages to the Bedrock ConverseStream API
 func (c *BedrockClient) SendStream(msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan string) (err error) {
 	// Ensure channel is closed on all exit paths to prevent goroutine leaks
 	defer func() {

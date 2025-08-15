@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"os"
+	"strconv"
 	"strings"
 
 	"github.com/anthropics/anthropic-sdk-go"
@@ -46,6 +48,11 @@ func NewClient() (ret *Client) {
 		string(anthropic.ModelClaude_3_5_Sonnet_20240620), string(anthropic.ModelClaude3OpusLatest),
 		string(anthropic.ModelClaude_3_Opus_20240229), string(anthropic.ModelClaude_3_Haiku_20240307),
 		string(anthropic.ModelClaudeOpus4_20250514), string(anthropic.ModelClaudeSonnet4_20250514),
+		string(anthropic.ModelClaudeOpus4_1_20250805),
+	}
+
+	ret.modelBetas = map[string][]string{
+		string(anthropic.ModelClaudeSonnet4_20250514): {"context-1m-2025-08-07"},
 	}
 
 	return
@@ -92,6 +99,7 @@ type Client struct {
 	maxTokens                  int
 	defaultRequiredUserMessage string
 	models                     []string
+	modelBetas                 map[string][]string
 
 	client anthropic.Client
 }
@@ -147,6 +155,26 @@ func (an *Client) ListModels() (ret []string, err error) {
 	return an.models, nil
 }
 
+func parseThinking(level domain.ThinkingLevel) (anthropic.ThinkingConfigParamUnion, bool) {
+	lower := strings.ToLower(string(level))
+	switch domain.ThinkingLevel(lower) {
+	case domain.ThinkingOff:
+		disabled := anthropic.NewThinkingConfigDisabledParam()
+		return anthropic.ThinkingConfigParamUnion{OfDisabled: &disabled}, true
+	case domain.ThinkingLow, domain.ThinkingMedium, domain.ThinkingHigh:
+		if budget, ok := domain.ThinkingBudgets[domain.ThinkingLevel(lower)]; ok {
+			return anthropic.ThinkingConfigParamOfEnabled(budget), true
+		}
+	default:
+		if tokens, err := strconv.ParseInt(lower, 10, 64); err == nil {
+			if tokens >= 1 && tokens <= 10000 {
+				return anthropic.ThinkingConfigParamOfEnabled(tokens), true
+			}
+		}
+	}
+	return anthropic.ThinkingConfigParamUnion{}, false
+}
+
 func (an *Client) SendStream(
 	msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan string,
 ) (err error) {
@@ -159,7 +187,17 @@ func (an *Client) SendStream(
 
 	ctx := context.Background()
 
-	stream := an.client.Messages.NewStreaming(ctx, an.buildMessageParams(messages, opts))
+	params := an.buildMessageParams(messages, opts)
+	betas := an.modelBetas[opts.Model]
+	var reqOpts []option.RequestOption
+	if len(betas) > 0 {
+		reqOpts = append(reqOpts, option.WithHeader("anthropic-beta", strings.Join(betas, ",")))
+	}
+	stream := an.client.Messages.NewStreaming(ctx, params, reqOpts...)
+	if stream.Err() != nil && len(betas) > 0 {
+		fmt.Fprintf(os.Stderr, "Anthropic beta feature %s failed: %v\n", strings.Join(betas, ","), stream.Err())
+		stream = an.client.Messages.NewStreaming(ctx, params)
+	}
 
 	for stream.Next() {
 		event := stream.Current()
@@ -181,11 +219,19 @@ func (an *Client) buildMessageParams(msgs []anthropic.MessageParam, opts *domain
 	params anthropic.MessageNewParams) {
 
 	params = anthropic.MessageNewParams{
-		Model:       anthropic.Model(opts.Model),
-		MaxTokens:   int64(an.maxTokens),
-		TopP:        anthropic.Opt(opts.TopP),
-		Temperature: anthropic.Opt(opts.Temperature),
-		Messages:    msgs,
+		Model:     anthropic.Model(opts.Model),
+		MaxTokens: int64(an.maxTokens),
+		Messages:  msgs,
+	}
+
+	// Only set one of Temperature or TopP as some models don't allow both
+	// Always set temperature to ensure consistent behavior (Anthropic default is 1.0, Fabric default is 0.7)
+	if opts.TopP != domain.DefaultTopP {
+		// User explicitly set TopP, so use that instead of temperature
+		params.TopP = anthropic.Opt(opts.TopP)
+	} else {
+		// Use temperature (always set to ensure Fabric's default of 0.7, not Anthropic's 1.0)
+		params.Temperature = anthropic.Opt(opts.Temperature)
 	}
 
 	// Add Claude Code spoofing system message for OAuth authentication
@@ -217,6 +263,11 @@ func (an *Client) buildMessageParams(msgs []anthropic.MessageParam, opts *domain
 			{OfWebSearchTool20250305: &webTool},
 		}
 	}
+
+	if t, ok := parseThinking(opts.Thinking); ok {
+		params.Thinking = t
+	}
+
 	return
 }
 
@@ -230,8 +281,21 @@ func (an *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, 
 	}
 
 	var message *anthropic.Message
-	if message, err = an.client.Messages.New(ctx, an.buildMessageParams(messages, opts)); err != nil {
-		return
+	params := an.buildMessageParams(messages, opts)
+	betas := an.modelBetas[opts.Model]
+	var reqOpts []option.RequestOption
+	if len(betas) > 0 {
+		reqOpts = append(reqOpts, option.WithHeader("anthropic-beta", strings.Join(betas, ",")))
+	}
+	if message, err = an.client.Messages.New(ctx, params, reqOpts...); err != nil {
+		if len(betas) > 0 {
+			fmt.Fprintf(os.Stderr, "Anthropic beta feature %s failed: %v\n", strings.Join(betas, ","), err)
+			if message, err = an.client.Messages.New(ctx, params); err != nil {
+				return
+			}
+		} else {
+			return
+		}
 	}
 
 	var textParts []string

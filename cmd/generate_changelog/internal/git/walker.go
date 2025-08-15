@@ -2,12 +2,12 @@ package git
 
 import (
 	"fmt"
-	"os"
 	"regexp"
 	"strconv"
 	"strings"
 	"time"
 
+	"github.com/danielmiessler/fabric/cmd/generate_changelog/util"
 	"github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing"
 	"github.com/go-git/go-git/v5/plumbing/object"
@@ -520,7 +520,7 @@ func (w *Walker) PushToRemote() error {
 	pushOptions := &git.PushOptions{}
 
 	// Check if we have a GitHub token for authentication
-	if githubToken := os.Getenv("GITHUB_TOKEN"); githubToken != "" {
+	if githubToken := util.GetTokenFromEnv(""); githubToken != "" {
 		// Get remote URL to check if it's a GitHub repository
 		remotes, err := w.repo.Remotes()
 		if err == nil && len(remotes) > 0 {

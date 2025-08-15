@@ -1,10 +1,19 @@
 package core
 
 import (
+	"bytes"
+	"context"
+	"io"
 	"os"
+	"strings"
 	"testing"
 
+	"github.com/danielmiessler/fabric/internal/chat"
+	"github.com/danielmiessler/fabric/internal/domain"
+	"github.com/danielmiessler/fabric/internal/plugins"
+	"github.com/danielmiessler/fabric/internal/plugins/ai"
 	"github.com/danielmiessler/fabric/internal/plugins/db/fsdb"
+	"github.com/danielmiessler/fabric/internal/tools"
 )
 
 func TestSaveEnvFile(t *testing.T) {
@@ -17,5 +26,65 @@ func TestSaveEnvFile(t *testing.T) {
 	err = registry.SaveEnvFile()
 	if err != nil {
 		t.Fatalf("SaveEnvFile() error = %v", err)
+	}
+}
+
+// testVendor implements ai.Vendor for testing purposes
+type testVendor struct {
+	name   string
+	models []string
+}
+
+func (m *testVendor) GetName() string                       { return m.name }
+func (m *testVendor) GetSetupDescription() string           { return m.name }
+func (m *testVendor) IsConfigured() bool                    { return true }
+func (m *testVendor) Configure() error                      { return nil }
+func (m *testVendor) Setup() error                          { return nil }
+func (m *testVendor) SetupFillEnvFileContent(*bytes.Buffer) {}
+func (m *testVendor) ListModels() ([]string, error)         { return m.models, nil }
+func (m *testVendor) SendStream([]*chat.ChatCompletionMessage, *domain.ChatOptions, chan string) error {
+	return nil
+}
+func (m *testVendor) Send(context.Context, []*chat.ChatCompletionMessage, *domain.ChatOptions) (string, error) {
+	return "", nil
+}
+func (m *testVendor) NeedsRawMode(string) bool { return false }
+
+func TestGetChatter_WarnsOnAmbiguousModel(t *testing.T) {
+	tempDir := t.TempDir()
+	db := fsdb.NewDb(tempDir)
+
+	vendorA := &testVendor{name: "VendorA", models: []string{"shared-model"}}
+	vendorB := &testVendor{name: "VendorB", models: []string{"shared-model"}}
+
+	vm := ai.NewVendorsManager()
+	vm.AddVendors(vendorA, vendorB)
+
+	defaults := &tools.Defaults{
+		PluginBase:         &plugins.PluginBase{},
+		Vendor:             &plugins.Setting{Value: "VendorA"},
+		Model:              &plugins.SetupQuestion{Setting: &plugins.Setting{Value: "shared-model"}},
+		ModelContextLength: &plugins.SetupQuestion{Setting: &plugins.Setting{Value: "0"}},
+	}
+
+	registry := &PluginRegistry{Db: db, VendorManager: vm, Defaults: defaults}
+
+	r, w, _ := os.Pipe()
+	oldStderr := os.Stderr
+	os.Stderr = w
+	defer func() { os.Stderr = oldStderr }()
+
+	chatter, err := registry.GetChatter("shared-model", 0, "", "", false, false)
+	w.Close()
+	warning, _ := io.ReadAll(r)
+
+	if err != nil {
+		t.Fatalf("GetChatter() error = %v", err)
+	}
+	if chatter.vendor.GetName() != "VendorA" {
+		t.Fatalf("expected vendor VendorA, got %s", chatter.vendor.GetName())
+	}
+	if !strings.Contains(string(warning), "multiple vendors provide model shared-model") {
+		t.Fatalf("expected warning about multiple vendors, got %q", string(warning))
 	}
 }

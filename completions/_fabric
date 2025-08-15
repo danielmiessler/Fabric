@@ -1,47 +1,62 @@
-#compdef fabric
+#compdef fabric fabric-ai
 
 # Zsh completion for fabric CLI
 # Place this file in a directory in your $fpath (e.g. /usr/local/share/zsh/site-functions)
 
 _fabric_patterns() {
   local -a patterns
-  patterns=(${(f)"$(fabric --listpatterns --shell-complete-list 2>/dev/null)"})
+  local cmd=${words[1]}
+  patterns=(${(f)"$($cmd --listpatterns --shell-complete-list 2>/dev/null)"})
   compadd -X "Patterns:" ${patterns}
 }
 
 _fabric_models() {
   local -a models
-  models=(${(f)"$(fabric --listmodels --shell-complete-list 2>/dev/null)"})
+  local cmd=${words[1]}
+  models=(${(f)"$($cmd --listmodels --shell-complete-list 2>/dev/null)"})
   compadd -X "Models:" ${models}
 }
+
+_fabric_vendors() {
+  local -a vendors
+  local cmd=${words[1]}
+  vendors=(${(f)"$($cmd --listvendors --shell-complete-list 2>/dev/null)"})
+  compadd -X "Vendors:" ${vendors}
+}
+
 _fabric_contexts() {
   local -a contexts
-  contexts=(${(f)"$(fabric --listcontexts --shell-complete-list 2>/dev/null)"})
+  local cmd=${words[1]}
+  contexts=(${(f)"$($cmd --listcontexts --shell-complete-list 2>/dev/null)"})
   compadd -X "Contexts:" ${contexts}
 }
+
 _fabric_sessions() {
   local -a sessions
-  sessions=(${(f)"$(fabric --listsessions --shell-complete-list 2>/dev/null)"})
+  local cmd=${words[1]}
+  sessions=(${(f)"$($cmd --listsessions --shell-complete-list 2>/dev/null)"})
   compadd -X "Sessions:" ${sessions}
 }
+
 _fabric_strategies() {
   local -a strategies
-  strategies=(${(f)"$(fabric --liststrategies --shell-complete-list 2>/dev/null)"})
+  local cmd=${words[1]}
+  strategies=(${(f)"$($cmd --liststrategies --shell-complete-list 2>/dev/null)"})
   compadd -X "Strategies:" ${strategies}
 }
 
 _fabric_extensions() {
   local -a extensions
-  extensions=(${(f)"$(fabric --listextensions --shell-complete-list 2>/dev/null)"})
+  local cmd=${words[1]}
+  extensions=(${(f)"$($cmd --listextensions --shell-complete-list 2>/dev/null)"})
   compadd -X "Extensions:" ${extensions}
-    '(-L --listmodels)'{-L,--listmodels}'[List all available models]:list models:_fabric_models' \
-    '(-x --listcontexts)'{-x,--listcontexts}'[List all contexts]:list contexts:_fabric_contexts' \
-    '(-X --listsessions)'{-X,--listsessions}'[List all sessions]:list sessions:_fabric_sessions' \
-    '(--listextensions)--listextensions[List all registered extensions]' \
-    '(--liststrategies)--liststrategies[List all strategies]:list strategies:_fabric_strategies' \
-    '(--listvendors)--listvendors[List all vendors]' \
-  vendors=(${(f)"$(fabric --listvendors 2>/dev/null)"})
-  compadd -X "Vendors:" ${vendors}
+}
+
+_fabric_gemini_voices() {
+  local -a voices
+  local cmd=${words[1]}
+  voices=(${(f)"$($cmd --list-gemini-voices --shell-complete-list 2>/dev/null)"})
+  compadd -X "Gemini TTS Voices:" ${voices}
 }
 
 _fabric() {
@@ -68,6 +83,7 @@ _fabric() {
     '(-U --updatepatterns)'{-U,--updatepatterns}'[Update patterns]' \
     '(-c --copy)'{-c,--copy}'[Copy to clipboard]' \
     '(-m --model)'{-m,--model}'[Choose model]:model:_fabric_models' \
+    '(-V --vendor)'{-V,--vendor}'[Specify vendor for chosen model (e.g., -V "LM Studio" -m openai/gpt-oss-20b)]:vendor:_fabric_vendors' \
     '(--modelContextLength)--modelContextLength[Model context length (only affects ollama)]:length:' \
     '(-o --output)'{-o,--output}'[Output to file]:file:_files' \
     '(--output-session)--output-session[Output the entire session to the output file]' \
@@ -79,10 +95,12 @@ _fabric() {
     '(--transcript-with-timestamps)--transcript-with-timestamps[Grab transcript from YouTube video with timestamps]' \
     '(--comments)--comments[Grab comments from YouTube video and send to chat]' \
     '(--metadata)--metadata[Output video metadata]' \
+    '(--yt-dlp-args)--yt-dlp-args[Additional arguments to pass to yt-dlp]:yt-dlp args:' \
     '(-g --language)'{-g,--language}'[Specify the Language Code for the chat, e.g. -g=en -g=zh]:language:' \
     '(-u --scrape_url)'{-u,--scrape_url}'[Scrape website URL to markdown using Jina AI]:url:' \
     '(-q --scrape_question)'{-q,--scrape_question}'[Search question using Jina AI]:question:' \
     '(-e --seed)'{-e,--seed}'[Seed to be used for LMM generation]:seed:' \
+    '(--thinking)--thinking[Set reasoning/thinking level]:level:(off low medium high)' \
     '(-w --wipecontext)'{-w,--wipecontext}'[Wipe context]:context:_fabric_contexts' \
     '(-W --wipesession)'{-W,--wipesession}'[Wipe session]:session:_fabric_sessions' \
     '(--printcontext)--printcontext[Print context]:context:_fabric_contexts' \
@@ -96,7 +114,7 @@ _fabric() {
     '(--api-key)--api-key[API key used to secure server routes]:api-key:' \
     '(--config)--config[Path to YAML config file]:config file:_files -g "*.yaml *.yml"' \
     '(--version)--version[Print current version]' \
-    '(--search)--search[Enable web search tool for supported models (Anthropic, OpenAI)]' \
+    '(--search)--search[Enable web search tool for supported models (Anthropic, OpenAI, Gemini)]' \
     '(--search-location)--search-location[Set location for web search results]:location:' \
     '(--image-file)--image-file[Save generated image to specified file path]:image file:_files -g "*.png *.webp *.jpeg *.jpg"' \
     '(--image-size)--image-size[Image dimensions]:size:(1024x1024 1536x1024 1024x1536 auto)' \
@@ -109,14 +127,17 @@ _fabric() {
     '(--strategy)--strategy[Choose a strategy from the available strategies]:strategy:_fabric_strategies' \
     '(--liststrategies)--liststrategies[List all strategies]' \
     '(--listvendors)--listvendors[List all vendors]' \
+    '(--voice)--voice[TTS voice name for supported models]:voice:_fabric_gemini_voices' \
+    '(--list-gemini-voices)--list-gemini-voices[List all available Gemini TTS voices]' \
     '(--shell-complete-list)--shell-complete-list[Output raw list without headers/formatting (for shell completion)]' \
     '(--suppress-think)--suppress-think[Suppress text enclosed in thinking tags]' \
     '(--think-start-tag)--think-start-tag[Start tag for thinking sections (default: <think>)]:start tag:' \
     '(--think-end-tag)--think-end-tag[End tag for thinking sections (default: </think>)]:end tag:' \
     '(--disable-responses-api)--disable-responses-api[Disable OpenAI Responses API (default: false)]' \
+    '(--notification)--notification[Send desktop notification when command completes]' \
+    '(--notification-command)--notification-command[Custom command to run for notifications]:notification command:' \
     '(-h --help)'{-h,--help}'[Show this help message]' \
     '*:arguments:'
 }
 
 _fabric "$@"
-

@@ -5,8 +5,10 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/danielmiessler/fabric/cmd/generate_changelog/internal"
 	"github.com/danielmiessler/fabric/cmd/generate_changelog/internal/changelog"
 	"github.com/danielmiessler/fabric/cmd/generate_changelog/internal/config"
+	"github.com/danielmiessler/fabric/cmd/generate_changelog/util"
 	"github.com/joho/godotenv"
 	"github.com/spf13/cobra"
 )
@@ -42,6 +44,7 @@ func init() {
 	rootCmd.Flags().StringVar(&cfg.IncomingDir, "incoming-dir", "./cmd/generate_changelog/incoming", "Directory for incoming PR files")
 	rootCmd.Flags().BoolVar(&cfg.Push, "push", false, "Enable automatic git push after creating an incoming entry")
 	rootCmd.Flags().BoolVar(&cfg.SyncDB, "sync-db", false, "Synchronize and validate database integrity with git history and GitHub PRs")
+	rootCmd.Flags().StringVar(&cfg.Release, "release", "", "Update GitHub release description with AI summary for version (e.g., v1.2.3)")
 }
 
 func run(cmd *cobra.Command, args []string) error {
@@ -49,9 +52,11 @@ func run(cmd *cobra.Command, args []string) error {
 		return fmt.Errorf("--incoming-pr and --process-prs are mutually exclusive flags")
 	}
 
-	if cfg.GitHubToken == "" {
-		cfg.GitHubToken = os.Getenv("GITHUB_TOKEN")
+	if cfg.Release != "" && (cfg.IncomingPR > 0 || cfg.ProcessPRsVersion != "" || cfg.SyncDB) {
+		return fmt.Errorf("--release cannot be used with other processing flags")
 	}
+
+	cfg.GitHubToken = util.GetTokenFromEnv(cfg.GitHubToken)
 
 	generator, err := changelog.New(cfg)
 	if err != nil {
@@ -68,6 +73,15 @@ func run(cmd *cobra.Command, args []string) error {
 
 	if cfg.SyncDB {
 		return generator.SyncDatabase()
+	}
+
+	if cfg.Release != "" {
+		releaseManager, err := internal.NewReleaseManager(cfg)
+		if err != nil {
+			return fmt.Errorf("failed to create release manager: %w", err)
+		}
+		defer releaseManager.Close()
+		return releaseManager.UpdateReleaseDescription(cfg.Release)
 	}
 
 	output, err := generator.Generate()

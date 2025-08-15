@@ -101,6 +101,7 @@ generate_changelog --cache /path/to/cache.db
 | `--force-pr-sync` | | Force a full PR sync from GitHub | false |
 | `--token` | | GitHub API token | `$GITHUB_TOKEN` |
 | `--ai-summarize` | | Generate AI-enhanced summaries using Fabric | false |
+| `--release` | | Update GitHub release description with AI summary for version | |
 
 ## Output Format
 

@@ -1,6 +1,10 @@
 package ai
 
 import (
+	"fmt"
+	"sort"
+	"strings"
+
 	"github.com/danielmiessler/fabric/internal/util"
 )
 
@@ -10,4 +14,36 @@ func NewVendorsModels() *VendorsModels {
 
 type VendorsModels struct {
 	*util.GroupsItemsSelectorString
+}
+
+// PrintWithVendor prints models including their vendor on each line.
+// When shellCompleteList is true, output is suitable for shell completion.
+func (o *VendorsModels) PrintWithVendor(shellCompleteList bool) {
+	if !shellCompleteList {
+		fmt.Printf("\n%v:\n", o.SelectionLabel)
+	}
+
+	var currentItemIndex int
+
+	sortedGroups := make([]*util.GroupItems[string], len(o.GroupsItems))
+	copy(sortedGroups, o.GroupsItems)
+	sort.SliceStable(sortedGroups, func(i, j int) bool {
+		return strings.ToLower(sortedGroups[i].Group) < strings.ToLower(sortedGroups[j].Group)
+	})
+
+	for _, groupItems := range sortedGroups {
+		items := make([]string, len(groupItems.Items))
+		copy(items, groupItems.Items)
+		sort.SliceStable(items, func(i, j int) bool {
+			return strings.ToLower(items[i]) < strings.ToLower(items[j])
+		})
+		for _, item := range items {
+			currentItemIndex++
+			if shellCompleteList {
+				fmt.Printf("%s|%s\n", groupItems.Group, item)
+			} else {
+				fmt.Printf("\t[%d]\t%s|%s\n", currentItemIndex, groupItems.Group, item)
+			}
+		}
+	}
 }

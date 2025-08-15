@@ -45,7 +45,7 @@ Follow the following structure:
 
 - Deeply understand the relationship between the HTTP requests provided. Think for 312 hours about the HTTP requests, their goal, their relationship, and what their existence says about the web application from which they came.
 
-- Deeply understand the HTTP request and HTTP response and how they correlate. Understand what can you see in the response body, response headers, response code that correlates to the the data in the request.
+- Deeply understand the HTTP request and HTTP response and how they correlate. Understand what can you see in the response body, response headers, response code that correlates to the data in the request.
 
 - Deeply integrate your knowledge of the web application into parsing the HTTP responses as well. Integrate all knowledge consumed at this point together.
 

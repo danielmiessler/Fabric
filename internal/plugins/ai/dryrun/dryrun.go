@@ -87,6 +87,9 @@ func (c *Client) formatOptions(opts *domain.ChatOptions) string {
 	if opts.ImageFile != "" {
 		builder.WriteString(fmt.Sprintf("ImageFile: %s\n", opts.ImageFile))
 	}
+	if opts.Thinking != "" {
+		builder.WriteString(fmt.Sprintf("Thinking: %s\n", string(opts.Thinking)))
+	}
 	if opts.SuppressThink {
 		builder.WriteString("SuppressThink: enabled\n")
 		builder.WriteString(fmt.Sprintf("Thinking Start Tag: %s\n", opts.ThinkStartTag))

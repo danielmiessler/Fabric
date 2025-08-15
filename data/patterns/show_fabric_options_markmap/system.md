@@ -167,6 +167,8 @@ us the results in
                         Select the model to use. NOTE: Will not work if you
                         have set a default model. please use --clear to clear
                         persistence before using this flag
+  --vendor VENDOR, -V VENDOR
+                        Specify vendor for the selected model (e.g., -V "LM Studio" -m openai/gpt-oss-20b)
   --listmodels          List all available models
   --remoteOllamaServer REMOTEOLLAMASERVER
                         The URL of the remote ollamaserver to use. ONLY USE

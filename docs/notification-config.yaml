@@ -1,0 +1,21 @@
+# Example Fabric configuration with notification support
+# Save this to ~/.config/fabric/config.yaml to use as defaults
+
+# Enable notifications by default for all commands
+notification: true
+
+# Optional: Use a custom notification command
+# Examples:
+# macOS with custom sound:
+# notificationCommand: 'osascript -e "display notification \"$2\" with title \"$1\" sound name \"Ping\""'
+#
+# Linux with custom urgency:
+# notificationCommand: 'notify-send --urgency=normal "$1" "$2"'
+#
+# Custom script:
+# notificationCommand: '/path/to/custom-notification-script.sh "$1" "$2"'
+
+# Other common settings
+model: "gpt-4o"
+temperature: 0.7
+stream: true

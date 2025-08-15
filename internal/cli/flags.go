@@ -20,73 +20,82 @@ import (
 )
 
 // Flags create flags struct. the users flags go into this, this will be passed to the chat struct in cli
+// Chat parameter defaults set in the struct tags must match domain.Default* constants
+
 type Flags struct {
-	Pattern                         string            `short:"p" long:"pattern" yaml:"pattern" description:"Choose a pattern from the available patterns" default:""`
-	PatternVariables                map[string]string `short:"v" long:"variable" description:"Values for pattern variables, e.g. -v=#role:expert -v=#points:30"`
-	Context                         string            `short:"C" long:"context" description:"Choose a context from the available contexts" default:""`
-	Session                         string            `long:"session" description:"Choose a session from the available sessions"`
-	Attachments                     []string          `short:"a" long:"attachment" description:"Attachment path or URL (e.g. for OpenAI image recognition messages)"`
-	Setup                           bool              `short:"S" long:"setup" description:"Run setup for all reconfigurable parts of fabric"`
-	Temperature                     float64           `short:"t" long:"temperature" yaml:"temperature" description:"Set temperature" default:"0.7"`
-	TopP                            float64           `short:"T" long:"topp" yaml:"topp" description:"Set top P" default:"0.9"`
-	Stream                          bool              `short:"s" long:"stream" yaml:"stream" description:"Stream"`
-	PresencePenalty                 float64           `short:"P" long:"presencepenalty" yaml:"presencepenalty" description:"Set presence penalty" default:"0.0"`
-	Raw                             bool              `short:"r" long:"raw" yaml:"raw" description:"Use the defaults of the model without sending chat options (like temperature etc.) and use the user role instead of the system role for patterns."`
-	FrequencyPenalty                float64           `short:"F" long:"frequencypenalty" yaml:"frequencypenalty" description:"Set frequency penalty" default:"0.0"`
-	ListPatterns                    bool              `short:"l" long:"listpatterns" description:"List all patterns"`
-	ListAllModels                   bool              `short:"L" long:"listmodels" description:"List all available models"`
-	ListAllContexts                 bool              `short:"x" long:"listcontexts" description:"List all contexts"`
-	ListAllSessions                 bool              `short:"X" long:"listsessions" description:"List all sessions"`
-	UpdatePatterns                  bool              `short:"U" long:"updatepatterns" description:"Update patterns"`
-	Message                         string            `hidden:"true" description:"Messages to send to chat"`
-	Copy                            bool              `short:"c" long:"copy" description:"Copy to clipboard"`
-	Model                           string            `short:"m" long:"model" yaml:"model" description:"Choose model"`
-	ModelContextLength              int               `long:"modelContextLength" yaml:"modelContextLength" description:"Model context length (only affects ollama)"`
-	Output                          string            `short:"o" long:"output" description:"Output to file" default:""`
-	OutputSession                   bool              `long:"output-session" description:"Output the entire session (also a temporary one) to the output file"`
-	LatestPatterns                  string            `short:"n" long:"latest" description:"Number of latest patterns to list" default:"0"`
-	ChangeDefaultModel              bool              `short:"d" long:"changeDefaultModel" description:"Change default model"`
-	YouTube                         string            `short:"y" long:"youtube" description:"YouTube video or play list \"URL\" to grab transcript, comments from it and send to chat or print it put to the console and store it in the output file"`
-	YouTubePlaylist                 bool              `long:"playlist" description:"Prefer playlist over video if both ids are present in the URL"`
-	YouTubeTranscript               bool              `long:"transcript" description:"Grab transcript from YouTube video and send to chat (it is used per default)."`
-	YouTubeTranscriptWithTimestamps bool              `long:"transcript-with-timestamps" description:"Grab transcript from YouTube video with timestamps and send to chat"`
-	YouTubeComments                 bool              `long:"comments" description:"Grab comments from YouTube video and send to chat"`
-	YouTubeMetadata                 bool              `long:"metadata" description:"Output video metadata"`
-	Language                        string            `short:"g" long:"language" description:"Specify the Language Code for the chat, e.g. -g=en -g=zh" default:""`
-	ScrapeURL                       string            `short:"u" long:"scrape_url" description:"Scrape website URL to markdown using Jina AI"`
-	ScrapeQuestion                  string            `short:"q" long:"scrape_question" description:"Search question using Jina AI"`
-	Seed                            int               `short:"e" long:"seed" yaml:"seed" description:"Seed to be used for LMM generation"`
-	WipeContext                     string            `short:"w" long:"wipecontext" description:"Wipe context"`
-	WipeSession                     string            `short:"W" long:"wipesession" description:"Wipe session"`
-	PrintContext                    string            `long:"printcontext" description:"Print context"`
-	PrintSession                    string            `long:"printsession" description:"Print session"`
-	HtmlReadability                 bool              `long:"readability" description:"Convert HTML input into a clean, readable view"`
-	InputHasVars                    bool              `long:"input-has-vars" description:"Apply variables to user input"`
-	DryRun                          bool              `long:"dry-run" description:"Show what would be sent to the model without actually sending it"`
-	Serve                           bool              `long:"serve" description:"Serve the Fabric Rest API"`
-	ServeOllama                     bool              `long:"serveOllama" description:"Serve the Fabric Rest API with ollama endpoints"`
-	ServeAddress                    string            `long:"address" description:"The address to bind the REST API" default:":8080"`
-	ServeAPIKey                     string            `long:"api-key" description:"API key used to secure server routes" default:""`
-	Config                          string            `long:"config" description:"Path to YAML config file"`
-	Version                         bool              `long:"version" description:"Print current version"`
-	ListExtensions                  bool              `long:"listextensions" description:"List all registered extensions"`
-	AddExtension                    string            `long:"addextension" description:"Register a new extension from config file path"`
-	RemoveExtension                 string            `long:"rmextension" description:"Remove a registered extension by name"`
-	Strategy                        string            `long:"strategy" description:"Choose a strategy from the available strategies" default:""`
-	ListStrategies                  bool              `long:"liststrategies" description:"List all strategies"`
-	ListVendors                     bool              `long:"listvendors" description:"List all vendors"`
-	ShellCompleteOutput             bool              `long:"shell-complete-list" description:"Output raw list without headers/formatting (for shell completion)"`
-	Search                          bool              `long:"search" description:"Enable web search tool for supported models (Anthropic, OpenAI)"`
-	SearchLocation                  string            `long:"search-location" description:"Set location for web search results (e.g., 'America/Los_Angeles')"`
-	ImageFile                       string            `long:"image-file" description:"Save generated image to specified file path (e.g., 'output.png')"`
-	ImageSize                       string            `long:"image-size" description:"Image dimensions: 1024x1024, 1536x1024, 1024x1536, auto (default: auto)"`
-	ImageQuality                    string            `long:"image-quality" description:"Image quality: low, medium, high, auto (default: auto)"`
-	ImageCompression                int               `long:"image-compression" description:"Compression level 0-100 for JPEG/WebP formats (default: not set)"`
-	ImageBackground                 string            `long:"image-background" description:"Background type: opaque, transparent (default: opaque, only for PNG/WebP)"`
-	SuppressThink                   bool              `long:"suppress-think" yaml:"suppressThink" description:"Suppress text enclosed in thinking tags"`
-	ThinkStartTag                   string            `long:"think-start-tag" yaml:"thinkStartTag" description:"Start tag for thinking sections" default:"<think>"`
-	ThinkEndTag                     string            `long:"think-end-tag" yaml:"thinkEndTag" description:"End tag for thinking sections" default:"</think>"`
-	DisableResponsesAPI             bool              `long:"disable-responses-api" yaml:"disableResponsesAPI" description:"Disable OpenAI Responses API (default: false)"`
+	Pattern                         string               `short:"p" long:"pattern" yaml:"pattern" description:"Choose a pattern from the available patterns" default:""`
+	PatternVariables                map[string]string    `short:"v" long:"variable" description:"Values for pattern variables, e.g. -v=#role:expert -v=#points:30"`
+	Context                         string               `short:"C" long:"context" description:"Choose a context from the available contexts" default:""`
+	Session                         string               `long:"session" description:"Choose a session from the available sessions"`
+	Attachments                     []string             `short:"a" long:"attachment" description:"Attachment path or URL (e.g. for OpenAI image recognition messages)"`
+	Setup                           bool                 `short:"S" long:"setup" description:"Run setup for all reconfigurable parts of fabric"`
+	Temperature                     float64              `short:"t" long:"temperature" yaml:"temperature" description:"Set temperature" default:"0.7"`
+	TopP                            float64              `short:"T" long:"topp" yaml:"topp" description:"Set top P" default:"0.9"`
+	Stream                          bool                 `short:"s" long:"stream" yaml:"stream" description:"Stream"`
+	PresencePenalty                 float64              `short:"P" long:"presencepenalty" yaml:"presencepenalty" description:"Set presence penalty" default:"0.0"`
+	Raw                             bool                 `short:"r" long:"raw" yaml:"raw" description:"Use the defaults of the model without sending chat options (like temperature etc.) and use the user role instead of the system role for patterns."`
+	FrequencyPenalty                float64              `short:"F" long:"frequencypenalty" yaml:"frequencypenalty" description:"Set frequency penalty" default:"0.0"`
+	ListPatterns                    bool                 `short:"l" long:"listpatterns" description:"List all patterns"`
+	ListAllModels                   bool                 `short:"L" long:"listmodels" description:"List all available models"`
+	ListAllContexts                 bool                 `short:"x" long:"listcontexts" description:"List all contexts"`
+	ListAllSessions                 bool                 `short:"X" long:"listsessions" description:"List all sessions"`
+	UpdatePatterns                  bool                 `short:"U" long:"updatepatterns" description:"Update patterns"`
+	Message                         string               `hidden:"true" description:"Messages to send to chat"`
+	Copy                            bool                 `short:"c" long:"copy" description:"Copy to clipboard"`
+	Model                           string               `short:"m" long:"model" yaml:"model" description:"Choose model"`
+	Vendor                          string               `short:"V" long:"vendor" yaml:"vendor" description:"Specify vendor for the selected model (e.g., -V \"LM Studio\" -m openai/gpt-oss-20b)"`
+	ModelContextLength              int                  `long:"modelContextLength" yaml:"modelContextLength" description:"Model context length (only affects ollama)"`
+	Output                          string               `short:"o" long:"output" description:"Output to file" default:""`
+	OutputSession                   bool                 `long:"output-session" description:"Output the entire session (also a temporary one) to the output file"`
+	LatestPatterns                  string               `short:"n" long:"latest" description:"Number of latest patterns to list" default:"0"`
+	ChangeDefaultModel              bool                 `short:"d" long:"changeDefaultModel" description:"Change default model"`
+	YouTube                         string               `short:"y" long:"youtube" description:"YouTube video or play list \"URL\" to grab transcript, comments from it and send to chat or print it put to the console and store it in the output file"`
+	YouTubePlaylist                 bool                 `long:"playlist" description:"Prefer playlist over video if both ids are present in the URL"`
+	YouTubeTranscript               bool                 `long:"transcript" description:"Grab transcript from YouTube video and send to chat (it is used per default)."`
+	YouTubeTranscriptWithTimestamps bool                 `long:"transcript-with-timestamps" description:"Grab transcript from YouTube video with timestamps and send to chat"`
+	YouTubeComments                 bool                 `long:"comments" description:"Grab comments from YouTube video and send to chat"`
+	YouTubeMetadata                 bool                 `long:"metadata" description:"Output video metadata"`
+	YtDlpArgs                       string               `long:"yt-dlp-args" yaml:"ytDlpArgs" description:"Additional arguments to pass to yt-dlp (e.g. '--cookies-from-browser brave')"`
+	Language                        string               `short:"g" long:"language" description:"Specify the Language Code for the chat, e.g. -g=en -g=zh" default:""`
+	ScrapeURL                       string               `short:"u" long:"scrape_url" description:"Scrape website URL to markdown using Jina AI"`
+	ScrapeQuestion                  string               `short:"q" long:"scrape_question" description:"Search question using Jina AI"`
+	Seed                            int                  `short:"e" long:"seed" yaml:"seed" description:"Seed to be used for LMM generation"`
+	WipeContext                     string               `short:"w" long:"wipecontext" description:"Wipe context"`
+	WipeSession                     string               `short:"W" long:"wipesession" description:"Wipe session"`
+	PrintContext                    string               `long:"printcontext" description:"Print context"`
+	PrintSession                    string               `long:"printsession" description:"Print session"`
+	HtmlReadability                 bool                 `long:"readability" description:"Convert HTML input into a clean, readable view"`
+	InputHasVars                    bool                 `long:"input-has-vars" description:"Apply variables to user input"`
+	DryRun                          bool                 `long:"dry-run" description:"Show what would be sent to the model without actually sending it"`
+	Serve                           bool                 `long:"serve" description:"Serve the Fabric Rest API"`
+	ServeOllama                     bool                 `long:"serveOllama" description:"Serve the Fabric Rest API with ollama endpoints"`
+	ServeAddress                    string               `long:"address" description:"The address to bind the REST API" default:":8080"`
+	ServeAPIKey                     string               `long:"api-key" description:"API key used to secure server routes" default:""`
+	Config                          string               `long:"config" description:"Path to YAML config file"`
+	Version                         bool                 `long:"version" description:"Print current version"`
+	ListExtensions                  bool                 `long:"listextensions" description:"List all registered extensions"`
+	AddExtension                    string               `long:"addextension" description:"Register a new extension from config file path"`
+	RemoveExtension                 string               `long:"rmextension" description:"Remove a registered extension by name"`
+	Strategy                        string               `long:"strategy" description:"Choose a strategy from the available strategies" default:""`
+	ListStrategies                  bool                 `long:"liststrategies" description:"List all strategies"`
+	ListVendors                     bool                 `long:"listvendors" description:"List all vendors"`
+	ShellCompleteOutput             bool                 `long:"shell-complete-list" description:"Output raw list without headers/formatting (for shell completion)"`
+	Search                          bool                 `long:"search" description:"Enable web search tool for supported models (Anthropic, OpenAI, Gemini)"`
+	SearchLocation                  string               `long:"search-location" description:"Set location for web search results (e.g., 'America/Los_Angeles')"`
+	ImageFile                       string               `long:"image-file" description:"Save generated image to specified file path (e.g., 'output.png')"`
+	ImageSize                       string               `long:"image-size" description:"Image dimensions: 1024x1024, 1536x1024, 1024x1536, auto (default: auto)"`
+	ImageQuality                    string               `long:"image-quality" description:"Image quality: low, medium, high, auto (default: auto)"`
+	ImageCompression                int                  `long:"image-compression" description:"Compression level 0-100 for JPEG/WebP formats (default: not set)"`
+	ImageBackground                 string               `long:"image-background" description:"Background type: opaque, transparent (default: opaque, only for PNG/WebP)"`
+	SuppressThink                   bool                 `long:"suppress-think" yaml:"suppressThink" description:"Suppress text enclosed in thinking tags"`
+	ThinkStartTag                   string               `long:"think-start-tag" yaml:"thinkStartTag" description:"Start tag for thinking sections" default:"<think>"`
+	ThinkEndTag                     string               `long:"think-end-tag" yaml:"thinkEndTag" description:"End tag for thinking sections" default:"</think>"`
+	DisableResponsesAPI             bool                 `long:"disable-responses-api" yaml:"disableResponsesAPI" description:"Disable OpenAI Responses API (default: false)"`
+	Voice                           string               `long:"voice" yaml:"voice" description:"TTS voice name for supported models (e.g., Kore, Charon, Puck)" default:"Kore"`
+	ListGeminiVoices                bool                 `long:"list-gemini-voices" description:"List all available Gemini TTS voices"`
+	Notification                    bool                 `long:"notification" yaml:"notification" description:"Send desktop notification when command completes"`
+	NotificationCommand             string               `long:"notification-command" yaml:"notificationCommand" description:"Custom command to run for notifications (overrides built-in notifications)"`
+	Thinking                        domain.ThinkingLevel `long:"thinking" yaml:"thinking" description:"Set reasoning/thinking level (e.g., off, low, medium, high, or numeric tokens for Anthropic)"`
 }
 
 var debug = false
@@ -423,24 +432,28 @@ func (o *Flags) BuildChatOptions() (ret *domain.ChatOptions, err error) {
 	}
 
 	ret = &domain.ChatOptions{
-		Model:              o.Model,
-		Temperature:        o.Temperature,
-		TopP:               o.TopP,
-		PresencePenalty:    o.PresencePenalty,
-		FrequencyPenalty:   o.FrequencyPenalty,
-		Raw:                o.Raw,
-		Seed:               o.Seed,
-		ModelContextLength: o.ModelContextLength,
-		Search:             o.Search,
-		SearchLocation:     o.SearchLocation,
-		ImageFile:          o.ImageFile,
-		ImageSize:          o.ImageSize,
-		ImageQuality:       o.ImageQuality,
-		ImageCompression:   o.ImageCompression,
-		ImageBackground:    o.ImageBackground,
-		SuppressThink:      o.SuppressThink,
-		ThinkStartTag:      startTag,
-		ThinkEndTag:        endTag,
+		Model:               o.Model,
+		Temperature:         o.Temperature,
+		TopP:                o.TopP,
+		PresencePenalty:     o.PresencePenalty,
+		FrequencyPenalty:    o.FrequencyPenalty,
+		Raw:                 o.Raw,
+		Seed:                o.Seed,
+		Thinking:            o.Thinking,
+		ModelContextLength:  o.ModelContextLength,
+		Search:              o.Search,
+		SearchLocation:      o.SearchLocation,
+		ImageFile:           o.ImageFile,
+		ImageSize:           o.ImageSize,
+		ImageQuality:        o.ImageQuality,
+		ImageCompression:    o.ImageCompression,
+		ImageBackground:     o.ImageBackground,
+		SuppressThink:       o.SuppressThink,
+		ThinkStartTag:       startTag,
+		ThinkEndTag:         endTag,
+		Voice:               o.Voice,
+		Notification:        o.Notification || o.NotificationCommand != "",
+		NotificationCommand: o.NotificationCommand,
 	}
 	return
 }

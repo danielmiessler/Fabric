@@ -89,6 +89,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           go run ./cmd/generate_changelog --process-prs ${{ env.new_tag }}
+          go run ./cmd/generate_changelog --sync-db
       - name: Commit changes
         run: |
           # These files are modified by the version bump process

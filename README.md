@@ -84,6 +84,7 @@ Keep in mind that many of these were recorded when Fabric was Python-based, so r
     - [Migration](#migration)
     - [Upgrading](#upgrading)
     - [Shell Completions](#shell-completions)
+      - [Quick install (no clone required)](#quick-install-no-clone-required)
       - [Zsh Completion](#zsh-completion)
       - [Bash Completion](#bash-completion)
       - [Fish Completion](#fish-completion)
@@ -428,6 +429,25 @@ Fabric provides shell completion scripts for Zsh, Bash, and Fish
 shells, making it easier to use the CLI by providing tab completion
 for commands and options.
 
+#### Quick install (no clone required)
+
+You can install completions directly via a one-liner:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/danielmiessler/Fabric/refs/heads/main/completions/setup-completions.sh | sh
+```
+
+Optional variants:
+
+```bash
+# Dry-run (see actions without changing your system)
+curl -fsSL https://raw.githubusercontent.com/danielmiessler/Fabric/refs/heads/main/completions/setup-completions.sh | sh -s -- --dry-run
+
+# Override the download source (advanced)
+FABRIC_COMPLETIONS_BASE_URL="https://raw.githubusercontent.com/danielmiessler/Fabric/refs/heads/main/completions" \
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/danielmiessler/Fabric/refs/heads/main/completions/setup-completions.sh)"
+```
+
 #### Zsh Completion
 
 To enable Zsh completion:
@@ -498,6 +518,7 @@ Application Options:
   -U, --updatepatterns              Update patterns
   -c, --copy                        Copy to clipboard
   -m, --model=                      Choose model
+  -V, --vendor=                     Specify vendor for chosen model (e.g., -V "LM Studio" -m openai/gpt-oss-20b)
       --modelContextLength=         Model context length (only affects ollama)
   -o, --output=                     Output to file
       --output-session              Output the entire session (also a temporary one) to the output file
@@ -536,7 +557,7 @@ Application Options:
       --liststrategies              List all strategies
       --listvendors                 List all vendors
       --shell-complete-list         Output raw list without headers/formatting (for shell completion)
-      --search                      Enable web search tool for supported models (Anthropic, OpenAI)
+      --search                      Enable web search tool for supported models (Anthropic, OpenAI, Gemini)
       --search-location=            Set location for web search results (e.g., 'America/Los_Angeles')
       --image-file=                 Save generated image to specified file path (e.g., 'output.png')
       --image-size=                 Image dimensions: 1024x1024, 1536x1024, 1024x1536, auto (default: auto)
@@ -548,6 +569,15 @@ Application Options:
       --think-start-tag=            Start tag for thinking sections (default: <think>)
       --think-end-tag=              End tag for thinking sections (default: </think>)
       --disable-responses-api       Disable OpenAI Responses API (default: false)
+      --voice=                      TTS voice name for supported models (e.g., Kore, Charon, Puck)
+                                    (default: Kore)
+      --list-gemini-voices          List all available Gemini TTS voices
+      --notification                Send desktop notification when command completes
+      --notification-command=       Custom command to run for notifications (overrides built-in
+                                    notifications)
+      --yt-dlp-args=                Additional arguments to pass to yt-dlp (e.g. '--cookies-from-browser brave')
+      --thinking=                   Set reasoning/thinking level (e.g., off, low, medium,
+                                    high, or numeric tokens for Anthropic)
 
 Help Options:
   -h, --help                        Show this help message

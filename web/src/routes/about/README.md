@@ -1,6 +1,6 @@
 ---
 title: README
-description: fabric is an open-source framework for augmenting humans using AI. It provides a modular framework for solving specific problems using a crowdsourced set of AI prompts that can be used anywhere.
+description: fabric is an open-source framework for augmenting humans using AI. It provides a modular framework for solving specific problems using a crowd-sourced set of AI prompts that can be used anywhere.
 aliases: Fabric/Docs
 date: 2024-1-12
 updated: 2024-11-22
@@ -12,7 +12,6 @@ updated: 2024-11-22
 
 # `fabric`
 
-
 <div class="justify-left flex gap-2">
     <img src="https://img.shields.io/github/languages/top/danielmiessler/fabric" alt="Github top language">
     <img src="https://img.shields.io/github/last-commit/danielmiessler/fabric" alt="GitHub last commit">
@@ -23,10 +22,10 @@ updated: 2024-11-22
 <h4><code>fabric</code> is an open-source framework for augmenting humans using AI.</h4>
 
 [Updates](#updates) •
-[What and Why](#whatandwhy) •
+[What and Why](#what-and-why) •
 [Philosophy](#philosophy) •
-[Installation](#Installation) •
-[Usage](#Usage) •
+[Installation](#installation) •
+[Usage](#usage) •
 [Examples](#examples) •
 [Just Use the Patterns](#just-use-the-patterns) •
 [Custom Patterns](#custom-patterns) •
@@ -42,8 +41,8 @@ updated: 2024-11-22
 - [`fabric`](#fabric)
   - [Navigation](#navigation)
   - [Updates](#updates)
-  - [Intro videos](#intro-videos)
   - [What and why](#what-and-why)
+  - [Intro videos](#intro-videos)
   - [Philosophy](#philosophy)
     - [Breaking problems into components](#breaking-problems-into-components)
     - [Too many prompts](#too-many-prompts)
@@ -65,7 +64,9 @@ updated: 2024-11-22
     - [`to_pdf`](#to_pdf)
     - [`to_pdf` Installation](#to_pdf-installation)
   - [pbpaste](#pbpaste)
-  - [Web Interface](#Web_Interface)
+  - [Web Interface](#web-interface)
+    - [Installing](#installing)
+    - [Streamlit UI](#streamlit-ui)
   - [Meta](#meta)
     - [Primary contributors](#primary-contributors)
 
@@ -76,7 +77,7 @@ updated: 2024-11-22
 > [!NOTE]
 > November 8, 2024
 >
-> - **Multimodal Support**: You can now use `-a` (attachment) for Multimodal submissions to OpenAI models that support it. Example: `fabric -a https://path/to/image "Give me a description of this image."`
+> - **Multi-modal Support**: You can now use `-a` (attachment) for Multi-modal submissions to OpenAI models that support it. Example: `fabric -a https://path/to/image "Give me a description of this image."`
 
 ## What and why
 
@@ -90,7 +91,7 @@ Fabric was created to address this by enabling everyone to granularly apply AI t
 
 ## Intro videos
 
-Keep in mind that many of these were recorded when Fabric was Python-based, so remember to use the current [install instructions](#Installation) below.
+Keep in mind that many of these were recorded when Fabric was Python-based, so remember to use the current [install instructions](#installation) below.
 
 - [Network Chuck](https://www.youtube.com/watch?v=UbDyjIIGaxQ)
 - [David Bombal](https://www.youtube.com/watch?v=vF-MQmVxnCs)
@@ -223,7 +224,7 @@ This also creates a `yt` alias that allows you to use `yt https://www.youtube.co
 
 #### Save your files in markdown using aliases
 
-If in addition to the above aliases you would like to have the option to save the output to your favourite markdown note vault like Obsidian then instead of the above add the following to your `.zshrc` or `.bashrc` file:
+If in addition to the above aliases you would like to have the option to save the output to your favorite markdown note vault like Obsidian then instead of the above add the following to your `.zshrc` or `.bashrc` file:
 
 ```bash
 # Define the base directory for Obsidian notes
@@ -281,7 +282,7 @@ go install github.com/danielmiessler/fabric@latest
 fabric --setup
 ```
 
-Then [set your environmental variables](#environmental-variables) as shown above.
+Then [set your environmental variables](#environment-variables) as shown above.
 
 ### Upgrading
 
@@ -324,6 +325,7 @@ Application Options:
   -U, --updatepatterns       Update patterns
   -c, --copy                 Copy to clipboard
   -m, --model=               Choose model
+  -V, --vendor=              Specify vendor for chosen model (e.g., -V "LM Studio" -m openai/gpt-oss-20b)
   -o, --output=              Output to file
       --output-session       Output the entire session (also a temporary one) to the output file
   -n, --latest=              Number of latest patterns to list (default: 0)
@@ -375,21 +377,21 @@ Now let's look at some things you can do with Fabric.
 
 1. Run the `summarize` Pattern based on input from `stdin`. In this case, the body of an article.
 
-```bash
-pbpaste | fabric --pattern summarize
-```
+    ```bash
+    pbpaste | fabric --pattern summarize
+    ```
 
 2. Run the `analyze_claims` Pattern with the `--stream` option to get immediate and streaming results.
 
-```bash
-pbpaste | fabric --stream --pattern analyze_claims
-```
+    ```bash
+    pbpaste | fabric --stream --pattern analyze_claims
+    ```
 
 3. Run the `extract_wisdom` Pattern with the `--stream` option to get immediate and streaming results from any Youtube video (much like in the original introduction video).
 
-```bash
-fabric -y "https://youtube.com/watch?v=uXs-zPc63kM" --stream --pattern extract_wisdom
-```
+    ```bash
+    fabric -y "https://youtube.com/watch?v=uXs-zPc63kM" --stream --pattern extract_wisdom
+    ```
 
 4. Create patterns- you must create a .md file with the pattern and save it to ~/.config/fabric/patterns/[yourpatternname].
 
@@ -414,11 +416,7 @@ You may want to use Fabric to create your own custom Patterns—but not share th
 
 Just make a directory in `~/.config/custompatterns/` (or wherever) and put your `.md` files in there.
 
-When you're ready to use them, copy them into:
-
-```
-~/.config/fabric/patterns/
-```
+When you're ready to use them, copy them into: `~/.config/fabric/patterns/`
 
 You can then use them like any other Patterns, but they won't be public unless you explicitly submit them as Pull Requests to the Fabric project. So don't worry—they're private to you.
 
@@ -462,7 +460,7 @@ The [examples](#examples) use the macOS program `pbpaste` to paste content from 
 
 On Windows, you can use the PowerShell command `Get-Clipboard` from a PowerShell command prompt. If you like, you can also alias it to `pbpaste`. If you are using classic PowerShell, edit the file `~\Documents\WindowsPowerShell\.profile.ps1`, or if you are using PowerShell Core, edit `~\Documents\PowerShell\.profile.ps1` and add the alias,
 
-```
+```powershell
 Set-Alias pbpaste Get-Clipboard
 ```
 
@@ -481,17 +479,19 @@ alias pbpaste='xclip -selection clipboard -o'
 
 ## Web Interface
 
-Fabric now includes a built-in web interface that provides a GUI alternative to the command-line interface and an out-of-the-box website for those who want to get started with web development or blogging.  
-You can use this app as a GUI interface for Fabric, a ready to go blog-site, or a website template for your own projects.  
+Fabric now includes a built-in web interface that provides a GUI alternative to the command-line interface and an out-of-the-box website for those who want to get started with web development or blogging.
+You can use this app as a GUI interface for Fabric, a ready to go blog-site, or a website template for your own projects.
 
-The `web/src/lib/content` directory includes starter `.obsidian/` and `templates/` directories,  allowing you to open up the `web/src/lib/content/` directory as an [Obsidian.md](https://obsidian.md) vault. You can place your posts in the posts directory when you're ready to publish. 
+The `web/src/lib/content` directory includes starter `.obsidian/` and `templates/` directories,  allowing you to open up the `web/src/lib/content/` directory as an [Obsidian.md](https://obsidian.md) vault. You can place your posts in the posts directory when you're ready to publish.
+
 ### Installing
 
-The GUI can be installed by navigating to the `web` directory and using `npm install`, `pnpm install`, or your favorite package manager. Then simply run the development server to start the app. 
+The GUI can be installed by navigating to the `web` directory and using `npm install`, `pnpm install`, or your favorite package manager. Then simply run the development server to start the app.
 
-_You will need to run fabric in a separate terminal with the `fabric --serve` command._ 
+_You will need to run fabric in a separate terminal with the `fabric --serve` command._
 
 **From the fabric project `web/` directory:**
+
 ```shell
 npm run dev
 
@@ -499,7 +499,7 @@ npm run dev
 
 pnpm run dev
 
-## or your equivalent 
+## or your equivalent
 ```
 
 ### Streamlit UI
@@ -515,10 +515,12 @@ streamlit run streamlit.py
 ```
 
 The Streamlit UI provides a user-friendly interface for:
+
 - Running and chaining patterns
 - Managing pattern outputs
 - Creating and editing patterns
 - Analyzing pattern results
+
 ## Meta
 
 > [!NOTE]

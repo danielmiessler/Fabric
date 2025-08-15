@@ -140,7 +140,7 @@ func (g *Generator) CreateNewChangelogEntry(version string) error {
 			continue // Continue to attempt processing other files
 		}
 		content.WriteString(string(data))
-		content.WriteString("\n")
+		// Note: No extra newline needed here as each incoming file already ends with a newline
 	}
 
 	if len(processingErrors) > 0 {

@@ -72,7 +72,8 @@ func TestBuildMessageParams_WithoutSearch(t *testing.T) {
 	client := NewClient()
 	opts := &domain.ChatOptions{
 		Model:       "claude-3-5-sonnet-latest",
-		Temperature: 0.7,
+		Temperature: 0.8,                // Use non-default value to ensure it gets set
+		TopP:        domain.DefaultTopP, // Use default TopP so temperature takes precedence
 		Search:      false,
 	}
 
@@ -90,6 +91,7 @@ func TestBuildMessageParams_WithoutSearch(t *testing.T) {
 		t.Errorf("Expected model %s, got %s", opts.Model, params.Model)
 	}
 
+	// When using non-default temperature, it should be set in params
 	if params.Temperature.Value != opts.Temperature {
 		t.Errorf("Expected temperature %f, got %f", opts.Temperature, params.Temperature.Value)
 	}
@@ -99,7 +101,8 @@ func TestBuildMessageParams_WithSearch(t *testing.T) {
 	client := NewClient()
 	opts := &domain.ChatOptions{
 		Model:       "claude-3-5-sonnet-latest",
-		Temperature: 0.7,
+		Temperature: 0.8,                // Use non-default value
+		TopP:        domain.DefaultTopP, // Use default TopP so temperature takes precedence
 		Search:      true,
 	}
 
@@ -135,7 +138,8 @@ func TestBuildMessageParams_WithSearchAndLocation(t *testing.T) {
 	client := NewClient()
 	opts := &domain.ChatOptions{
 		Model:          "claude-3-5-sonnet-latest",
-		Temperature:    0.7,
+		Temperature:    0.8,                // Use non-default value
+		TopP:           domain.DefaultTopP, // Use default TopP so temperature takes precedence
 		Search:         true,
 		SearchLocation: "America/Los_Angeles",
 	}
@@ -161,6 +165,15 @@ func TestBuildMessageParams_WithSearchAndLocation(t *testing.T) {
 
 	if webTool.UserLocation.Timezone.Value != opts.SearchLocation {
 		t.Errorf("Expected timezone %s, got %s", opts.SearchLocation, webTool.UserLocation.Timezone.Value)
+	}
+}
+
+func TestModelBetasConfiguration(t *testing.T) {
+	client := NewClient()
+	model := string(anthropic.ModelClaudeSonnet4_20250514)
+	betas, ok := client.modelBetas[model]
+	if !ok || len(betas) != 1 || betas[0] != "context-1m-2025-08-07" {
+		t.Errorf("expected beta mapping for %s", model)
 	}
 }
 
@@ -254,5 +267,61 @@ func TestCitationFormatting(t *testing.T) {
 	citationCount := strings.Count(result, "- [")
 	if citationCount != 2 {
 		t.Errorf("Expected 2 unique citations, got %d", citationCount)
+	}
+}
+
+func TestBuildMessageParams_DefaultValues(t *testing.T) {
+	client := NewClient()
+
+	// Test with default temperature - should always set temperature unless TopP is explicitly set
+	opts := &domain.ChatOptions{
+		Model:       "claude-3-5-sonnet-latest",
+		Temperature: domain.DefaultTemperature, // 0.7 - should be set to override Anthropic's 1.0 default
+		TopP:        domain.DefaultTopP,        // 0.9 - default, so temperature takes precedence
+		Search:      false,
+	}
+
+	messages := []anthropic.MessageParam{
+		anthropic.NewUserMessage(anthropic.NewTextBlock("Hello")),
+	}
+
+	params := client.buildMessageParams(messages, opts)
+
+	// Temperature should be set when using default value to override Anthropic's 1.0 default
+	if params.Temperature.Value != opts.Temperature {
+		t.Errorf("Expected temperature %f, got %f", opts.Temperature, params.Temperature.Value)
+	}
+
+	// TopP should not be set when using default value (temperature takes precedence)
+	if params.TopP.Value != 0 {
+		t.Errorf("Expected TopP to not be set (0), but got %f", params.TopP.Value)
+	}
+}
+
+func TestBuildMessageParams_ExplicitTopP(t *testing.T) {
+	client := NewClient()
+
+	// Test with explicit TopP - should set TopP instead of temperature
+	opts := &domain.ChatOptions{
+		Model:       "claude-3-5-sonnet-latest",
+		Temperature: domain.DefaultTemperature, // 0.7 - ignored when TopP is explicitly set
+		TopP:        0.5,                       // Non-default - should be set
+		Search:      false,
+	}
+
+	messages := []anthropic.MessageParam{
+		anthropic.NewUserMessage(anthropic.NewTextBlock("Hello")),
+	}
+
+	params := client.buildMessageParams(messages, opts)
+
+	// Temperature should not be set when TopP is explicitly set
+	if params.Temperature.Value != 0 {
+		t.Errorf("Expected temperature to not be set (0), but got %f", params.Temperature.Value)
+	}
+
+	// TopP should be set when using non-default value
+	if params.TopP.Value != opts.TopP {
+		t.Errorf("Expected TopP %f, got %f", opts.TopP, params.TopP.Value)
 	}
 }

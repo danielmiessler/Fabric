@@ -105,7 +105,7 @@ func (h *ChatHandler) HandleChat(c *gin.Context) {
 					}
 				}
 
-				chatter, err := h.registry.GetChatter(p.Model, 2048, "", false, false)
+				chatter, err := h.registry.GetChatter(p.Model, 2048, p.Vendor, "", false, false)
 				if err != nil {
 					log.Printf("Error creating chatter: %v", err)
 					streamChan <- fmt.Sprintf("Error: %v", err)
@@ -130,6 +130,7 @@ func (h *ChatHandler) HandleChat(c *gin.Context) {
 					TopP:             request.TopP,
 					FrequencyPenalty: request.FrequencyPenalty,
 					PresencePenalty:  request.PresencePenalty,
+					Thinking:         request.Thinking,
 				}
 
 				session, err := chatter.Send(chatReq, opts)

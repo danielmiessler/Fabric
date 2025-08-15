@@ -288,7 +288,7 @@ func (o *PluginRegistry) Configure() (err error) {
 	return
 }
 
-func (o *PluginRegistry) GetChatter(model string, modelContextLength int, strategy string, stream bool, dryRun bool) (ret *Chatter, err error) {
+func (o *PluginRegistry) GetChatter(model string, modelContextLength int, vendorName string, strategy string, stream bool, dryRun bool) (ret *Chatter, err error) {
 	ret = &Chatter{
 		db:     o.Db,
 		Stream: stream,
@@ -317,14 +317,32 @@ func (o *PluginRegistry) GetChatter(model string, modelContextLength int, strate
 			ret.model = defaultModel
 		}
 	} else if model == "" {
-		ret.vendor = vendorManager.FindByName(defaultVendor)
+		if vendorName != "" {
+			ret.vendor = vendorManager.FindByName(vendorName)
+		} else {
+			ret.vendor = vendorManager.FindByName(defaultVendor)
+		}
 		ret.model = defaultModel
 	} else {
 		var models *ai.VendorsModels
 		if models, err = vendorManager.GetModels(); err != nil {
 			return
 		}
-		ret.vendor = vendorManager.FindByName(models.FindGroupsByItemFirst(model))
+		if vendorName != "" {
+			// ensure vendor exists and provides model
+			ret.vendor = vendorManager.FindByName(vendorName)
+			availableVendors := models.FindGroupsByItem(model)
+			if ret.vendor == nil || !lo.Contains(availableVendors, vendorName) {
+				err = fmt.Errorf("model %s not available for vendor %s", model, vendorName)
+				return
+			}
+		} else {
+			availableVendors := models.FindGroupsByItem(model)
+			if len(availableVendors) > 1 {
+				fmt.Fprintf(os.Stderr, "Warning: multiple vendors provide model %s: %s. Using %s. Specify --vendor to select a vendor.\n", model, strings.Join(availableVendors, ", "), availableVendors[0])
+			}
+			ret.vendor = vendorManager.FindByName(models.FindGroupsByItemFirst(model))
+		}
 		ret.model = model
 	}
 

@@ -27,8 +27,39 @@ jobs:
       - name: Run tests
         run: go test -v ./...
 
+  get_version:
+    name: Get version
+    runs-on: ubuntu-latest
+    outputs:
+      latest_tag: ${{ steps.get_version.outputs.latest_tag }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get version from source
+        id: get_version
+        shell: bash
+        run: |
+          if [ ! -f "nix/pkgs/fabric/version.nix" ]; then
+            echo "Error: version.nix file not found"
+            exit 1
+          fi
+          version=$(cat nix/pkgs/fabric/version.nix | tr -d '"' | tr -cd '0-9.')
+          if [ -z "$version" ]; then
+            echo "Error: version is empty"
+            exit 1
+          fi
+          if ! echo "$version" | grep -E '^[0-9]+\.[0-9]+\.[0-9]+' > /dev/null; then
+            echo "Error: Invalid version format: $version"
+            exit 1
+          fi
+          echo "latest_tag=v$version" >> $GITHUB_OUTPUT
+
   build:
     name: Build binaries for Windows, macOS, and Linux
+    needs: [test, get_version]
     runs-on: ${{ matrix.os }}
     permissions:
       contents: write
@@ -51,25 +82,14 @@ jobs:
         with:
           go-version-file: ./go.mod
 
-      - name: Determine OS Name
-        id: os-name
-        run: |
-          if [ "${{ matrix.os }}" == "ubuntu-latest" ]; then
-            echo "OS=linux" >> $GITHUB_ENV
-          elif [ "${{ matrix.os }}" == "macos-latest" ]; then
-            echo "OS=darwin" >> $GITHUB_ENV
-          else
-            echo "OS=windows" >> $GITHUB_ENV
-          fi
-        shell: bash
-
       - name: Build binary on Linux and macOS
         if: matrix.os != 'windows-latest'
         env:
-          GOOS: ${{ env.OS }}
+          GOOS: ${{ matrix.os == 'ubuntu-latest' && 'linux' || 'darwin' }}
           GOARCH: ${{ matrix.arch }}
         run: |
-          go build -o fabric-${OS}-${{ matrix.arch }} ./cmd/fabric
+          OS_NAME="${{ matrix.os == 'ubuntu-latest' && 'linux' || 'darwin' }}"
+          go build -o fabric-${OS_NAME}-${{ matrix.arch }} ./cmd/fabric
 
       - name: Build binary on Windows
         if: matrix.os == 'windows-latest'
@@ -83,8 +103,8 @@ jobs:
         if: matrix.os != 'windows-latest'
         uses: actions/upload-artifact@v4
         with:
-          name: fabric-${OS}-${{ matrix.arch }}
-          path: fabric-${OS}-${{ matrix.arch }}
+          name: fabric-${{ matrix.os == 'ubuntu-latest' && 'linux' || 'darwin' }}-${{ matrix.arch }}
+          path: fabric-${{ matrix.os == 'ubuntu-latest' && 'linux' || 'darwin' }}-${{ matrix.arch }}
 
       - name: Upload build artifact
         if: matrix.os == 'windows-latest'
@@ -93,34 +113,15 @@ jobs:
           name: fabric-windows-${{ matrix.arch }}.exe
           path: fabric-windows-${{ matrix.arch }}.exe
 
-      - name: Get version from source
-        id: get_version
-        shell: bash
-        run: |
-          if [ ! -f "nix/pkgs/fabric/version.nix" ]; then
-            echo "Error: version.nix file not found"
-            exit 1
-          fi
-          version=$(cat nix/pkgs/fabric/version.nix | tr -d '"' | tr -cd '0-9.')
-          if [ -z "$version" ]; then
-            echo "Error: version is empty"
-            exit 1
-          fi
-          if ! echo "$version" | grep -E '^[0-9]+\.[0-9]+\.[0-9]+' > /dev/null; then
-            echo "Error: Invalid version format: $version"
-            exit 1
-          fi
-          echo "latest_tag=v$version" >> $GITHUB_ENV
-
       - name: Create release if it doesn't exist
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          if ! gh release view ${{ env.latest_tag }} >/dev/null 2>&1; then
-            gh release create ${{ env.latest_tag }} --title "Release ${{ env.latest_tag }}" --notes "Automated release for ${{ env.latest_tag }}"
+          if ! gh release view ${{ needs.get_version.outputs.latest_tag }} >/dev/null 2>&1; then
+            gh release create ${{ needs.get_version.outputs.latest_tag }} --title "Release ${{ needs.get_version.outputs.latest_tag }}" --notes "Automated release for ${{ needs.get_version.outputs.latest_tag }}"
           else
-            echo "Release ${{ env.latest_tag }} already exists."
+            echo "Release ${{ needs.get_version.outputs.latest_tag }} already exists."
           fi
 
       - name: Upload release artifact
@@ -128,11 +129,35 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release upload ${{ env.latest_tag }} fabric-windows-${{ matrix.arch }}.exe
+          gh release upload ${{ needs.get_version.outputs.latest_tag }} fabric-windows-${{ matrix.arch }}.exe
 
       - name: Upload release artifact
         if: matrix.os != 'windows-latest'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release upload ${{ env.latest_tag }} fabric-${OS}-${{ matrix.arch }}
+          OS_NAME="${{ matrix.os == 'ubuntu-latest' && 'linux' || 'darwin' }}"
+          gh release upload ${{ needs.get_version.outputs.latest_tag }} fabric-${OS_NAME}-${{ matrix.arch }}
+
+  update_release_notes:
+    needs: [build, get_version]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version-file: ./go.mod
+
+      - name: Update release description
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          go run ./cmd/generate_changelog --sync-db
+          go run ./cmd/generate_changelog --release ${{ needs.get_version.outputs.latest_tag }}

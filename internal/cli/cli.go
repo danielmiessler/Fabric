@@ -113,11 +113,11 @@ func processYoutubeVideo(
 			}
 		}
 		if flags.YouTubeTranscriptWithTimestamps {
-			if transcript, err = registry.YouTube.GrabTranscriptWithTimestamps(videoId, language); err != nil {
+			if transcript, err = registry.YouTube.GrabTranscriptWithTimestampsWithArgs(videoId, language, flags.YtDlpArgs); err != nil {
 				return
 			}
 		} else {
-			if transcript, err = registry.YouTube.GrabTranscript(videoId, language); err != nil {
+			if transcript, err = registry.YouTube.GrabTranscriptWithArgs(videoId, language, flags.YtDlpArgs); err != nil {
 				return
 			}
 		}

@@ -4,6 +4,14 @@ import "github.com/danielmiessler/fabric/internal/chat"
 
 const ChatMessageRoleMeta = "meta"
 
+// Default values for chat options (must match cli/flags.go defaults)
+const (
+	DefaultTemperature      = 0.7
+	DefaultTopP             = 0.9
+	DefaultPresencePenalty  = 0.0
+	DefaultFrequencyPenalty = 0.0
+)
+
 type ChatRequest struct {
 	ContextName      string
 	SessionName      string
@@ -17,25 +25,31 @@ type ChatRequest struct {
 }
 
 type ChatOptions struct {
-	Model              string
-	Temperature        float64
-	TopP               float64
-	PresencePenalty    float64
-	FrequencyPenalty   float64
-	Raw                bool
-	Seed               int
-	ModelContextLength int
-	MaxTokens          int
-	Search             bool
-	SearchLocation     string
-	ImageFile          string
-	ImageSize          string
-	ImageQuality       string
-	ImageCompression   int
-	ImageBackground    string
-	SuppressThink      bool
-	ThinkStartTag      string
-	ThinkEndTag        string
+	Model               string
+	Temperature         float64
+	TopP                float64
+	PresencePenalty     float64
+	FrequencyPenalty    float64
+	Raw                 bool
+	Seed                int
+	Thinking            ThinkingLevel
+	ModelContextLength  int
+	MaxTokens           int
+	Search              bool
+	SearchLocation      string
+	ImageFile           string
+	ImageSize           string
+	ImageQuality        string
+	ImageCompression    int
+	ImageBackground     string
+	SuppressThink       bool
+	ThinkStartTag       string
+	ThinkEndTag         string
+	AudioOutput         bool
+	AudioFormat         string
+	Voice               string
+	Notification        bool
+	NotificationCommand string
 }
 
 // NormalizeMessages remove empty messages and ensure messages order user-assist-user

@@ -1,5 +1,200 @@
 # Changelog
 
+## v1.4.286 (2025-08-14)
+
+### PR [#1700](https://github.com/danielmiessler/Fabric/pull/1700) by [ksylvan](https://github.com/ksylvan): Introduce Thinking Config Across Anthropic and OpenAI Providers
+
+- Add --thinking CLI flag for configurable reasoning levels across providers
+- Implement Anthropic ThinkingConfig with standardized budgets and tokens
+- Map OpenAI reasoning effort from thinking levels
+- Show thinking level in dry-run formatted options
+- Overhaul suggest_pattern docs with categories, workflows, usage examples
+
+## v1.4.285 (2025-08-13)
+
+### PR [#1698](https://github.com/danielmiessler/Fabric/pull/1698) by [ksylvan](https://github.com/ksylvan): Enable One Million Token Context Beta Feature for Sonnet-4
+
+- Chore: upgrade anthropic-sdk-go to v1.9.1 and add beta feature support for context-1m
+- Add modelBetas map for beta feature configuration
+- Implement context-1m-2025-08-07 beta for Claude Sonnet 4
+- Add beta header support with fallback handling
+- Preserve existing beta headers in OAuth transport
+
+## v1.4.284 (2025-08-12)
+
+### PR [#1695](https://github.com/danielmiessler/Fabric/pull/1695) by [ksylvan](https://github.com/ksylvan): Introduce One-Liner Curl Install for Completions
+
+- Add one-liner curl install method for shell completions without requiring repository cloning
+- Support downloading completions when files are missing locally with dry-run option for previewing changes
+- Enable custom download source via environment variable and create temporary directory for downloaded completion files
+- Add automatic cleanup of temporary files and validate downloaded files are non-empty and not HTML
+- Improve error handling and standardize logging by routing informational messages to stderr to avoid stdout pollution
+
+## v1.4.283 (2025-08-12)
+
+### PR [#1692](https://github.com/danielmiessler/Fabric/pull/1692) by [ksylvan](https://github.com/ksylvan): Add Vendor Selection Support for Models
+
+- Add -V/--vendor flag to specify model vendor
+- Implement vendor-aware model resolution and availability validation
+- Warn on ambiguous models; suggest --vendor to disambiguate
+- Update bash, zsh, fish completions with vendor suggestions
+- Extend --listmodels to print vendor|model when interactive
+
+## v1.4.282 (2025-08-11)
+
+### PR [#1689](https://github.com/danielmiessler/Fabric/pull/1689) by [ksylvan](https://github.com/ksylvan): Enhanced Shell Completions for Fabric CLI Binaries
+
+- Add 'fabric-ai' alias support across all shell completions
+- Use invoked command name for dynamic completion list queries
+- Refactor fish completions into reusable registrar for multiple commands
+- Update Bash completion to reference executable via COMP_WORDS[0]
+- Install completions automatically with new cross-shell setup script
+
+## v1.4.281 (2025-08-11)
+
+### PR [#1687](https://github.com/danielmiessler/Fabric/pull/1687) by [ksylvan](https://github.com/ksylvan): Add Web Search Tool Support for Gemini Models
+
+- Enable Gemini models to use web search tool with --search flag
+- Add validation for search-location timezone and language code formats
+- Normalize language codes from underscores to hyphenated form
+- Append deduplicated web citations under standardized Sources section
+- Improve robustness for nil candidates and content parts
+
+## v1.4.280 (2025-08-10)
+
+### PR [#1686](https://github.com/danielmiessler/Fabric/pull/1686) by [ksylvan](https://github.com/ksylvan): Prevent duplicate text output in OpenAI streaming responses
+
+- Fix: prevent duplicate text output in OpenAI streaming responses
+- Skip processing of ResponseOutputTextDone events
+- Prevent doubled text in stream output
+- Add clarifying comment about API behavior
+- Maintain delta chunk streaming functionality
+
+## v1.4.279 (2025-08-10)
+
+### PR [#1685](https://github.com/danielmiessler/Fabric/pull/1685) by [ksylvan](https://github.com/ksylvan): Fix Gemini Role Mapping for API Compatibility
+
+- Fix Gemini role mapping to ensure proper API compatibility by converting chat roles to Gemini's user/model format
+- Map assistant role to model role per Gemini API constraints
+- Map system, developer, function, and tool roles to user role for proper handling
+- Default unrecognized roles to user role to preserve instruction context
+- Add comprehensive unit tests to validate convertMessages role mapping logic
+
+## v1.4.278 (2025-08-09)
+
+### PR [#1681](https://github.com/danielmiessler/Fabric/pull/1681) by [ksylvan](https://github.com/ksylvan): Enhance YouTube Support with Custom yt-dlp Arguments
+
+- Add `--yt-dlp-args` flag for custom YouTube downloader options with advanced control capabilities
+- Implement smart subtitle language fallback system when requested locale is unavailable
+- Add fallback logic for YouTube subtitle language detection with auto-detection of downloaded languages
+- Replace custom argument parser with shellquote and precompile regexes for improved performance and safety
+
+## v1.4.277 (2025-08-08)
+
+### PR [#1679](https://github.com/danielmiessler/Fabric/pull/1679) by [ksylvan](https://github.com/ksylvan): Add cross-platform desktop notifications to Fabric CLI
+
+- Add cross-platform desktop notifications with secure custom commands
+- Integrate notification sending into chat processing workflow
+- Add --notification and --notification-command CLI flags and help
+- Provide cross-platform providers: macOS, Linux, Windows with fallbacks
+- Escape shell metacharacters to prevent injection vulnerabilities
+
+## v1.4.276 (2025-08-08)
+
+### Direct commits
+
+- Ci: add write permissions to update_release_notes job
+
+- Add contents write permission to release notes job
+
+- Enable GitHub Actions to modify repository contents
+- Fix potential permission issues during release process
+
+## v1.4.275 (2025-08-07)
+
+### PR [#1676](https://github.com/danielmiessler/Fabric/pull/1676) by [ksylvan](https://github.com/ksylvan): Refactor authentication to support GITHUB_TOKEN and GH_TOKEN
+
+- Refactor: centralize GitHub token retrieval logic into utility function
+- Support both GITHUB_TOKEN and GH_TOKEN environment variables with fallback handling
+- Add new util/token.go file for centralized token handling across the application
+- Update walker.go and main.go to use the new centralized token utility function
+- Feat: add 'gpt-5' to raw-mode models in OpenAI client to bypass structured chat message formatting
+
+## v1.4.274 (2025-08-07)
+
+### PR [#1673](https://github.com/danielmiessler/Fabric/pull/1673) by [ksylvan](https://github.com/ksylvan): Add Support for Claude Opus 4.1 Model
+
+- Add Claude Opus 4.1 model support
+- Upgrade anthropic-sdk-go from v1.4.0 to v1.7.0
+- Fix temperature/topP parameter conflict for models
+- Refactor release workflow to use shared version job and simplify OS handling
+- Improve chat parameter defaults handling with domain constants
+
+## v1.4.273 (2025-08-05)
+
+### Direct commits
+
+- Remove redundant words from codebase
+- Fix typos in t_ patterns
+
+## v1.4.272 (2025-07-28)
+
+### PR [#1658](https://github.com/danielmiessler/Fabric/pull/1658) by [ksylvan](https://github.com/ksylvan): Update Release Process for Data Consistency
+
+- Add database sync before generating changelog in release workflow
+- Ensure changelog generation includes latest database updates
+- Update changelog cache database
+
+## v1.4.271 (2025-07-28)
+
+### PR [#1657](https://github.com/danielmiessler/Fabric/pull/1657) by [ksylvan](https://github.com/ksylvan): Add GitHub Release Description Update Feature
+
+- Add GitHub release description update via `--release` flag
+- Implement `ReleaseManager` for managing release descriptions
+- Create `release.go` for handling release updates
+- Update `release.yml` to run changelog generation
+- Enable AI summary updates for GitHub releases
+
+## v1.4.270 (2025-07-27)
+
+### PR [#1654](https://github.com/danielmiessler/Fabric/pull/1654) by [ksylvan](https://github.com/ksylvan): Refine Output File Handling for Safety
+
+- Fix: prevent file overwrite and improve output messaging in CreateOutputFile
+- Add file existence check before creating output file
+- Return error if target file already exists
+- Change success message to write to stderr
+- Update message format with brackets for clarity
+
+## v1.4.269 (2025-07-26)
+
+### PR [#1653](https://github.com/danielmiessler/Fabric/pull/1653) by [ksylvan](https://github.com/ksylvan): docs: update Gemini TTS model references to gemini-2.5-flash-preview-tts
+
+- Updated Gemini TTS model references from gemini-2.0-flash-tts to gemini-2.5-flash-preview-tts throughout documentation
+- Modified documentation examples to use the new gemini-2.5-flash-preview-tts model
+- Updated voice selection example commands in Gemini-TTS.md
+- Revised CLI help text example commands to reflect model changes
+- Updated changelog database binary file
+
+## v1.4.268 (2025-07-26)
+
+### PR [#1652](https://github.com/danielmiessler/Fabric/pull/1652) by [ksylvan](https://github.com/ksylvan): Implement Voice Selection for Gemini Text-to-Speech
+
+- Feat: add Gemini TTS voice selection and listing functionality
+- Add `--voice` flag for TTS voice selection
+- Add `--list-gemini-voices` command for voice discovery
+- Implement voice validation for Gemini TTS models
+- Update shell completions for voice options
+
+## v1.4.267 (2025-07-26)
+
+### PR [#1650](https://github.com/danielmiessler/Fabric/pull/1650) by [ksylvan](https://github.com/ksylvan): Update Gemini Plugin to New SDK with TTS Support
+
+- Update Gemini SDK to new genai library and add TTS audio output support
+- Replace deprecated generative-ai-go with google.golang.org/genai library
+- Add TTS model detection and audio output validation
+- Implement WAV file generation for TTS audio responses
+- Add audio format checking utilities in CLI output
+
 ## v1.4.266 (2025-07-25)
 
 ### PR [#1649](https://github.com/danielmiessler/Fabric/pull/1649) by [ksylvan](https://github.com/ksylvan): Fix Conditional API Initialization to Prevent Unnecessary Error Messages
@@ -9,7 +204,6 @@
 - Implement IsConfigured check for Ollama API URL
 - Create comprehensive Docker testing environment with 6 scenarios
 - Add interactive test runner with shell access
-
 
 ## v1.4.265 (2025-07-25)
 

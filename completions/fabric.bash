@@ -13,11 +13,11 @@ _fabric() {
   _get_comp_words_by_ref -n : cur prev words cword
 
   # Define all possible options/flags
-  local opts="--pattern -p --variable -v --context -C --session --attachment -a --setup -S --temperature -t --topp -T --stream -s --presencepenalty -P --raw -r --frequencypenalty -F --listpatterns -l --listmodels -L --listcontexts -x --listsessions -X --updatepatterns -U --copy -c --model -m --modelContextLength --output -o --output-session --latest -n --changeDefaultModel -d --youtube -y --playlist --transcript --transcript-with-timestamps --comments --metadata --language -g --scrape_url -u --scrape_question -q --seed -e --wipecontext -w --wipesession -W --printcontext --printsession --readability --input-has-vars --dry-run --serve --serveOllama --address --api-key --config --search --search-location --image-file --image-size --image-quality --image-compression --image-background --suppress-think --think-start-tag --think-end-tag --disable-responses-api --version --listextensions --addextension --rmextension --strategy --liststrategies --listvendors --shell-complete-list --help -h"
+  local opts="--pattern -p --variable -v --context -C --session --attachment -a --setup -S --temperature -t --topp -T --stream -s --presencepenalty -P --raw -r --frequencypenalty -F --listpatterns -l --listmodels -L --listcontexts -x --listsessions -X --updatepatterns -U --copy -c --model -m --vendor -V --modelContextLength --output -o --output-session --latest -n --changeDefaultModel -d --youtube -y --playlist --transcript --transcript-with-timestamps --comments --metadata --yt-dlp-args --language -g --scrape_url -u --scrape_question -q --seed -e --thinking --wipecontext -w --wipesession -W --printcontext --printsession --readability --input-has-vars --dry-run --serve --serveOllama --address --api-key --config --search --search-location --image-file --image-size --image-quality --image-compression --image-background --suppress-think --think-start-tag --think-end-tag --disable-responses-api --voice --list-gemini-voices --notification --notification-command --version --listextensions --addextension --rmextension --strategy --liststrategies --listvendors --shell-complete-list --help -h"
 
   # Helper function for dynamic completions
   _fabric_get_list() {
-    fabric "$1" --shell-complete-list 2>/dev/null
+    "${COMP_WORDS[0]}" "$1" --shell-complete-list 2>/dev/null
   }
 
   # Handle completions based on the previous word
@@ -38,6 +38,10 @@ _fabric() {
     COMPREPLY=($(compgen -W "$(_fabric_get_list --listmodels)" -- "${cur}"))
     return 0
     ;;
+  -V | --vendor)
+    COMPREPLY=($(compgen -W "$(_fabric_get_list --listvendors)" -- "${cur}"))
+    return 0
+    ;;
   -w | --wipecontext)
     COMPREPLY=($(compgen -W "$(_fabric_get_list --listcontexts)" -- "${cur}"))
     return 0
@@ -54,12 +58,20 @@ _fabric() {
     COMPREPLY=($(compgen -W "$(_fabric_get_list --listsessions)" -- "${cur}"))
     return 0
     ;;
+  --thinking)
+    COMPREPLY=($(compgen -W "off low medium high" -- "${cur}"))
+    return 0
+    ;;
   --rmextension)
     COMPREPLY=($(compgen -W "$(_fabric_get_list --listextensions)" -- "${cur}"))
     return 0
     ;;
   --strategy)
     COMPREPLY=($(compgen -W "$(_fabric_get_list --liststrategies)" -- "${cur}"))
+    return 0
+    ;;
+  --voice)
+    COMPREPLY=($(compgen -W "$(_fabric_get_list --list-gemini-voices)" -- "${cur}"))
     return 0
     ;;
   # Options requiring file/directory paths
@@ -81,7 +93,7 @@ _fabric() {
     return 0
     ;;
   # Options requiring simple arguments (no specific completion logic here)
-  -v | --variable | -t | --temperature | -T | --topp | -P | --presencepenalty | -F | --frequencypenalty | --modelContextLength | -n | --latest | -y | --youtube | -g | --language | -u | --scrape_url | -q | --scrape_question | -e | --seed | --address | --api-key | --search-location | --image-compression | --think-start-tag | --think-end-tag)
+  -v | --variable | -t | --temperature | -T | --topp | -P | --presencepenalty | -F | --frequencypenalty | --modelContextLength | -n | --latest | -y | --youtube | --yt-dlp-args | -g | --language | -u | --scrape_url | -q | --scrape_question | -e | --seed | --address | --api-key | --search-location | --image-compression | --think-start-tag | --think-end-tag | --notification-command)
     # No specific completion suggestions, user types the value
     return 0
     ;;
@@ -100,4 +112,4 @@ _fabric() {
 
 }
 
-complete -F _fabric fabric
+complete -F _fabric fabric fabric-ai

@@ -11,7 +11,7 @@ This is a web app for Fabric. It was built using [Svelte][svelte], [SkeletonUI][
 
 The goal of this app is to not only provide a user interface for Fabric, but also an out-of-the-box website for those who want to get started with web development, blogging, or to just have a web interface for fabric. You can use this app as a GUI interface for Fabric, a ready to go blog-site, or a website template for your own projects.
 
-![Preview](./static/preview.png)
+![Preview](../docs/images/svelte-preview.png)
 
 ## Installing
 

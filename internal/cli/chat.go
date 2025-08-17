@@ -26,7 +26,6 @@ func handleChatProcessing(currentFlags *Flags, registry *core.PluginRegistry, me
 		} else {
 
 			if modelSpec, ok := mapping[currentFlags.Pattern]; ok {
-
 				parts := strings.SplitN(modelSpec, "/", 2)
 				if len(parts) == 2 {
 					currentFlags.Vendor = parts[0]

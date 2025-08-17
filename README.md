@@ -536,6 +536,8 @@ cp completions/fabric.fish ~/.config/fish/completions/
 
 Once you have it all set up, here's how to use it.
 
+You can assign default models to specific patterns and manage these mappings via `fabric pattern-model set|unset|list`. See the [Pattern Model Mapping documentation](./docs/Pattern-Models.md) for details.
+
 ```bash
 fabric -h
 ```

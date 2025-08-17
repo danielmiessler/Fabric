@@ -10,11 +10,11 @@ import (
 
 // getPatternModelFile returns the path to the pattern models mapping file
 func getPatternModelFile() (string, error) {
-	home, err := os.UserHomeDir()
+	configDir, err := os.UserConfigDir()
 	if err != nil {
-		return "", fmt.Errorf("could not determine user home directory: %w", err)
+		return "", fmt.Errorf("could not determine user config directory: %w", err)
 	}
-	return filepath.Join(home, ".config", "fabric", "pattern_models.yaml"), nil
+	return filepath.Join(configDir, "fabric", "pattern_models.yaml"), nil
 }
 
 // loadPatternModelMapping loads the pattern->model mapping from disk. It returns

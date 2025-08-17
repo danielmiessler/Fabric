@@ -4,7 +4,7 @@ Fabric can automatically select a model for a pattern based on a user-defined ma
 
 ## Configuration
 
-Create `~/.config/fabric/pattern_models.yaml` with entries mapping pattern names to models:
+Create a `pattern_models.yaml` file in your user configuration directory (for example, `~/.config/fabric/pattern_models.yaml`) with entries mapping pattern names to models:
 
 ```yaml
 summarize: openai/gpt-4o-mini
@@ -20,6 +20,7 @@ When you run a pattern without specifying `--model`, Fabric consults this file t
 You can manage this mapping from the command line:
 
 ```bash
+
 fabric pattern-model list
 fabric pattern-model set <pattern> <model>
 fabric pattern-model unset <pattern>

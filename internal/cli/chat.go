@@ -20,8 +20,13 @@ func handleChatProcessing(currentFlags *Flags, registry *core.PluginRegistry, me
 	}
 
 	if currentFlags.Pattern != "" && currentFlags.Model == "" {
-		if mapping, err2 := loadPatternModelMapping(); err2 == nil {
-			if modelSpec, ok := mapping[strings.ToLower(currentFlags.Pattern)]; ok {
+
+		mapping, err2 := loadPatternModelMapping()
+		if err2 != nil {
+			fmt.Fprintf(os.Stderr, "Failed to load pattern-model mapping: %v. Please check your mapping file.\n", err2)
+		} else {
+
+			if modelSpec, ok := mapping[currentFlags.Pattern]; ok {
 				parts := strings.SplitN(modelSpec, "/", 2)
 				if len(parts) == 2 {
 					currentFlags.Vendor = parts[0]

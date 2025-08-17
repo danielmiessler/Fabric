@@ -5,7 +5,6 @@ import (
 	"os"
 	"path/filepath"
 	"sort"
-
 	"strings"
 
 	"gopkg.in/yaml.v3"
@@ -128,3 +127,4 @@ func printPatternModelMapping(mapping map[string]string) {
         fmt.Printf("%s: %s\n", k, mapping[k])
     }
 }
+

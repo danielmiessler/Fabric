@@ -76,7 +76,7 @@ func unsetPatternModel(pattern string) error {
         return err
     }
 
-    delete(mapping, pattern)
+    delete(mapping, strings.ToLower(pattern))
 
     if len(mapping) == 0 {
         // Remove the mapping file if empty

@@ -14,6 +14,16 @@ import (
 
 // Cli Controls the cli. It takes in the flags and runs the appropriate functions
 func Cli(version string) (err error) {
+	if len(os.Args) > 1 && os.Args[1] == "pattern-model" {
+		if len(os.Args) == 5 && os.Args[2] == "set" {
+			if err = setPatternModel(os.Args[3], os.Args[4]); err == nil {
+				fmt.Printf("pattern '%s' mapped to model '%s'\n", os.Args[3], os.Args[4])
+			}
+			return
+		}
+		return fmt.Errorf("usage: fabric pattern-model set <pattern> <model>")
+	}
+
 	var currentFlags *Flags
 	if currentFlags, err = Init(); err != nil {
 		return

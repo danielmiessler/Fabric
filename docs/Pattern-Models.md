@@ -20,7 +20,10 @@ When you run a pattern without specifying `--model`, Fabric consults this file t
 You can manage this mapping from the command line:
 
 ```bash
+
+fabric pattern-model list
 fabric pattern-model set <pattern> <model>
+fabric pattern-model unset <pattern>
 ```
 
-This updates the mapping file, creating it if necessary.
+`set` updates the mapping file, creating it if necessary. `unset` removes a mapping. `list` shows all current mappings.

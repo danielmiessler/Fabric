@@ -63,19 +63,39 @@ func setPatternModel(pattern, model string) error {
 	return os.WriteFile(path, data, 0o644)
 }
 
-// printPatternModelMapping prints the current pattern->model mapping in a
-// deterministic order. Since Go maps iterate in random order, we first collect
-// the keys, sort them, and then print each mapping.
-func printPatternModelMapping(mapping map[string]string) {
-	if len(mapping) == 0 {
-		return
-	}
-	keys := make([]string, 0, len(mapping))
-	for k := range mapping {
-		keys = append(keys, k)
-	}
-	sort.Strings(keys)
-	for _, k := range keys {
-		fmt.Printf("%s: %s\n", k, mapping[k])
-	}
+// unsetPatternModel removes a pattern from the mapping file.
+func unsetPatternModel(pattern string) error {
+    path, err := getPatternModelFile()
+    if err != nil {
+        return err
+    }
+
+    mapping, err := loadPatternModelMapping()
+    if err != nil {
+        return err
+    }
+
+    delete(mapping, pattern)
+
+    if len(mapping) == 0 {
+        // Remove the mapping file if empty
+        if err := os.Remove(path); err != nil && !os.IsNotExist(err) {
+            return err
+        }
+        return nil
+    }
+
+    data, err := yaml.Marshal(mapping)
+    if err != nil {
+        return err
+    }
+
+    if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
+        return err
+    }
+    return os.WriteFile(path, data, 0o644)
+}
+
+// listPatternModels prints all pa
+
 }

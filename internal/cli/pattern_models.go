@@ -6,6 +6,8 @@ import (
 	"path/filepath"
 	"sort"
 
+	"strings"
+
 	"gopkg.in/yaml.v3"
 )
 
@@ -52,7 +54,7 @@ func setPatternModel(pattern, model string) error {
 	if mapping == nil {
 		mapping = make(map[string]string)
 	}
-	mapping[pattern] = model
+	mapping[strings.ToLower(pattern)] = model
 	data, err := yaml.Marshal(mapping)
 	if err != nil {
 		return err
@@ -96,6 +98,33 @@ func unsetPatternModel(pattern string) error {
     return os.WriteFile(path, data, 0o644)
 }
 
-// listPatternModels prints all pa
+// listPatternModels prints all pattern->model mappings to stdout.
+func listPatternModels() error {
+    mapping, err := loadPatternModelMapping()
+    if err != nil {
+        return err
+    }
+    if len(mapping) == 0 {
+        fmt.Println("no pattern model mappings found")
+        return nil
+    }
+    printPatternModelMapping(mapping)
+    return nil
+}
 
+// printPatternModelMapping prints the current pattern->model mapping in a
+// deterministic order. Since Go maps iterate in random order, we first collect
+// the keys, sort them, and then print each mapping.
+func printPatternModelMapping(mapping map[string]string) {
+    if len(mapping) == 0 {
+        return
+    }
+    keys := make([]string, 0, len(mapping))
+    for k := range mapping {
+        keys = append(keys, k)
+    }
+    sort.Strings(keys)
+    for _, k := range keys {
+        fmt.Printf("%s: %s\n", k, mapping[k])
+    }
 }

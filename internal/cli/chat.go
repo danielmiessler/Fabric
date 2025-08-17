@@ -19,6 +19,20 @@ func handleChatProcessing(currentFlags *Flags, registry *core.PluginRegistry, me
 		currentFlags.AppendMessage(messageTools)
 	}
 
+	if currentFlags.Pattern != "" && currentFlags.Model == "" {
+		if mapping, err2 := loadPatternModelMapping(); err2 == nil {
+			if modelSpec, ok := mapping[currentFlags.Pattern]; ok {
+				parts := strings.SplitN(modelSpec, "/", 2)
+				if len(parts) == 2 {
+					currentFlags.Vendor = parts[0]
+					currentFlags.Model = parts[1]
+				} else {
+					currentFlags.Model = modelSpec
+				}
+			}
+		}
+	}
+
 	var chatter *core.Chatter
 	if chatter, err = registry.GetChatter(currentFlags.Model, currentFlags.ModelContextLength,
 		currentFlags.Vendor, currentFlags.Strategy, currentFlags.Stream, currentFlags.DryRun); err != nil {

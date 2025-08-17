@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"sort"
 
 	"gopkg.in/yaml.v3"
 )
@@ -60,4 +61,21 @@ func setPatternModel(pattern, model string) error {
 		return err
 	}
 	return os.WriteFile(path, data, 0o644)
+}
+
+// printPatternModelMapping prints the current pattern->model mapping in a
+// deterministic order. Since Go maps iterate in random order, we first collect
+// the keys, sort them, and then print each mapping.
+func printPatternModelMapping(mapping map[string]string) {
+	if len(mapping) == 0 {
+		return
+	}
+	keys := make([]string, 0, len(mapping))
+	for k := range mapping {
+		keys = append(keys, k)
+	}
+	sort.Strings(keys)
+	for _, k := range keys {
+		fmt.Printf("%s: %s\n", k, mapping[k])
+	}
 }

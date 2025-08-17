@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"sort"
+	"strings"
 
 	"gopkg.in/yaml.v3"
 )
@@ -51,7 +53,7 @@ func setPatternModel(pattern, model string) error {
 	if mapping == nil {
 		mapping = make(map[string]string)
 	}
-	mapping[pattern] = model
+	mapping[strings.ToLower(pattern)] = model
 	data, err := yaml.Marshal(mapping)
 	if err != nil {
 		return err
@@ -60,4 +62,46 @@ func setPatternModel(pattern, model string) error {
 		return err
 	}
 	return os.WriteFile(path, data, 0o644)
+}
+
+// unsetPatternModel removes a pattern mapping from the file.
+func unsetPatternModel(pattern string) error {
+	path, err := getPatternModelFile()
+	if err != nil {
+		return err
+	}
+	mapping, err := loadPatternModelMapping()
+	if err != nil {
+		return err
+	}
+	delete(mapping, strings.ToLower(pattern))
+	data, err := yaml.Marshal(mapping)
+	if err != nil {
+		return err
+	}
+	if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
+		return err
+	}
+	return os.WriteFile(path, data, 0o644)
+}
+
+// listPatternModels prints all pattern to model mappings.
+func listPatternModels() error {
+	mapping, err := loadPatternModelMapping()
+	if err != nil {
+		return err
+	}
+	if len(mapping) == 0 {
+		fmt.Println("no pattern models found")
+		return nil
+	}
+	patterns := make([]string, 0, len(mapping))
+	for p := range mapping {
+		patterns = append(patterns, p)
+	}
+	sort.Strings(patterns)
+	for _, p := range patterns {
+		fmt.Printf("%s -> %s\n", p, mapping[p])
+	}
+	return nil
 }

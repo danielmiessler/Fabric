@@ -207,7 +207,12 @@ To install Fabric, you can use the latest release binaries or install it from th
 
 #### Windows
 
-`https://github.com/danielmiessler/fabric/releases/latest/download/fabric-windows-amd64.exe`
+```
+$LATEST="https://github.com/danielmiessler/fabric/releases/latest/download/fabric-windows-amd64.exe"
+$DIR="$HOME\.local\bin"
+New-Item -Path $DIR -ItemType Directory -Force
+Invoke-Webrequest -URI  $LATEST -outfile $DIR\fabric.exe 
+```
 
 #### macOS (arm64)
 

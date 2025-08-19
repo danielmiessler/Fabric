@@ -205,13 +205,14 @@ To install Fabric, you can use the latest release binaries or install it from th
 
 ### Get Latest Release Binaries
 
-#### Windows
-
-```
+#### Windows ( Powershell )
+```powershell
+$ErrorActionPreference = "Stop"
 $LATEST="https://github.com/danielmiessler/fabric/releases/latest/download/fabric-windows-amd64.exe"
 $DIR="$HOME\.local\bin"
 New-Item -Path $DIR -ItemType Directory -Force
-Invoke-Webrequest -URI  $LATEST -outfile $DIR\fabric.exe 
+Invoke-Webrequest -URI  $LATEST -outfile $DIR\fabric.exe
+& "${DIR}\fabric.exe" /version
 ```
 
 #### macOS (arm64)

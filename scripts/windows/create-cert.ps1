@@ -1,0 +1,1 @@
+New-SelfSignedCertificate -Subject "CN=Fabric Self-Signing Certificate" -Type CodeSigningCert -CertStoreLocation Cert:\CurrentUser\My -HashAlgorithm SHA256

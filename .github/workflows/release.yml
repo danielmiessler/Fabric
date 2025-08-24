@@ -98,7 +98,13 @@ jobs:
           GOARCH: ${{ matrix.arch }}
         run: |
           go build -o fabric-windows-${{ matrix.arch }}.exe ./cmd/fabric
-
+      - name: Sign Binary on Windows
+        if: false && matrix.os == 'windows-latest'
+        uses: tonymet/code-sign-action@v1.0.1
+        with:
+          file: fabric-windows-${{ matrix.arch }}.exe
+          certificate-data: ${{ secrets.WINDOWS_CERT_BASE64 }}
+          certificate-password: ${{ secrets.WINDOWS_CERT_PASSWORD }}
       - name: Upload build artifact
         if: matrix.os != 'windows-latest'
         uses: actions/upload-artifact@v4

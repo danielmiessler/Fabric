@@ -1,0 +1,7 @@
+### PR [#1736](https://github.com/danielmiessler/Fabric/pull/1736) by [tonymet](https://github.com/tonymet): Winget Publishing and GoReleaser
+
+- Added Goreleaser and winget support for automated package publishing
+- Updated GitHub workflows to restrict fork builds and added repository owner checks
+- Updated winget package owner configuration to ksylvan
+- Cleaned up goreleaser configuration by removing example comments and changelog/release footer configurations
+- Added spelling dictionary entries for new terms and formatted pull request template with proper spacing

@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   build-and-push:
-    # Optional safety: only run from your fork
+    # Only run on ksylvan fork
     if: ${{ github.repository_owner == 'ksylvan' }}
     runs-on: ubuntu-latest
 

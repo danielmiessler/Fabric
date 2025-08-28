@@ -21,9 +21,10 @@ concurrency:
 
 jobs:
   update-version:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: >
+      ${{ github.repository_owner == 'danielmiessler' }} &&
+      github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5

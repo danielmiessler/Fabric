@@ -20,7 +20,6 @@ builds:
     main: ./cmd/fabric
     binary: fabric
 
-
 archives:
   - formats: [tar.gz]
     # this name template makes the OS and Arch compatible with the results of `uname`.
@@ -35,23 +34,3 @@ archives:
     format_overrides:
       - goos: windows
         formats: [zip]
-
-winget:
-  - name: Fabric
-    publisher: danielmiessler
-    license: MIT
-    homepage: https://github.com/danielmiessler/fabric
-    copyright: Daniel Miessler
-    short_description: open-source AI framework for augmenting
-    repository:
-      owner: ksylvan
-      name: winget-pkgs
-      branch: "ksylvan.Fabric-{{.Version}}"
-      pull_request:
-        enabled: true
-        draft: true
-        base:
-          owner: microsoft
-          name: winget-pkgs
-          branch: master
-

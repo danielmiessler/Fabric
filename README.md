@@ -57,6 +57,7 @@ Below are the **new features and capabilities** we've added (newest first):
 
 ### Recent Major Features
 
+- [v1.4.303](https://github.com/danielmiessler/fabric/releases/tag/v1.4.303) (Aug 29, 2025) — **New Binary Releases**: Linux ARM and Windows ARM targets. You can run Fabric on the Raspberry PI and on your Windows Surface!
 - [v1.4.294](https://github.com/danielmiessler/fabric/releases/tag/v1.4.294) (Aug 20, 2025) — **Venice AI Support**: Added the Venice AI provider. Venice is a Privacy-First, Open-Source AI provider. See their ["About Venice"](https://docs.venice.ai/overview/about-venice) page for details.
 - [v1.4.291](https://github.com/danielmiessler/fabric/releases/tag/v1.4.291) (Aug 18, 2025) — **Speech To Text**: Add OpenAI speech-to-text support with `--transcribe-file`, `--transcribe-model`, and `--split-media-file` flags.
 - [v1.4.287](https://github.com/danielmiessler/fabric/releases/tag/v1.4.287) (Aug 16, 2025) — **AI Reasoning**: Add Thinking to Gemini models and introduce `readme_updates` python script

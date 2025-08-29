@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
@@ -26,7 +26,6 @@ jobs:
             echo "Changes detected in patterns folder."
             echo "changes=true" >> $GITHUB_OUTPUT
           fi
-
       - name: Zip the Patterns Folder
         if: steps.check-changes.outputs.changes == 'true'
         run: zip -r patterns.zip data/patterns/

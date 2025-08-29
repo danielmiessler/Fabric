@@ -21,12 +21,13 @@ concurrency:
 
 jobs:
   update-version:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: >
+      ${{ github.repository_owner == 'danielmiessler' }} &&
+      github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
@@ -48,12 +49,13 @@ jobs:
         run: |
           latest_tag=$(git tag --sort=-creatordate | head -n 1)
           echo "Latest tag is: $latest_tag"
+          echo "tag=$latest_tag" >> $GITHUB_OUTPUT
           echo "tag=$latest_tag" >> $GITHUB_ENV  # Save the latest tag to environment file
 
       - name: Increment patch version
         id: increment_version
         run: |
-          latest_tag=${{ env.tag }}
+          latest_tag=${{ steps.get_latest_tag.outputs.tag }}
           major=$(echo "$latest_tag" | cut -d. -f1 | sed 's/v//')
           minor=$(echo "$latest_tag" | cut -d. -f2)
           patch=$(echo "$latest_tag" | cut -d. -f3)
@@ -61,19 +63,21 @@ jobs:
           new_version="${major}.${minor}.${new_patch}"
           new_tag="v${new_version}"
           echo "New version is: $new_version"
+          echo "new_version=$new_version" >> $GITHUB_OUTPUT
           echo "new_version=$new_version" >> $GITHUB_ENV  # Save the new version to environment file
           echo "New tag is: $new_tag"
+          echo "new_tag=$new_tag" >> $GITHUB_OUTPUT
           echo "new_tag=$new_tag" >> $GITHUB_ENV  # Save the new tag to environment file
 
       - name: Update version.go file
         run: |
           echo "package main" > cmd/fabric/version.go
           echo "" >> cmd/fabric/version.go
-          echo "var version = \"${{ env.new_tag }}\"" >> cmd/fabric/version.go
+          echo "var version = \"${{ steps.increment_version.outputs.new_tag }}\"" >> cmd/fabric/version.go
 
       - name: Update version.nix file
         run: |
-          echo "\"${{ env.new_version }}\"" > nix/pkgs/fabric/version.nix
+          echo "\"${{ steps.increment_version.outputs.new_version }}\"" > nix/pkgs/fabric/version.nix
 
       - name: Format source code
         run: |
@@ -87,7 +91,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          go run ./cmd/generate_changelog --process-prs ${{ env.new_tag }}
+          go run ./cmd/generate_changelog --process-prs ${{ steps.increment_version.outputs.new_tag }}
           go run ./cmd/generate_changelog --sync-db
       - name: Commit changes
         run: |
@@ -100,7 +104,7 @@ jobs:
           # and removing the incoming/ directory.
 
           if ! git diff --staged --quiet; then
-            git commit -m "chore(release): Update version to ${{ env.new_tag }}"
+            git commit -m "chore(release): Update version to ${{ steps.increment_version.outputs.new_tag }}"
           else
             echo "No changes to commit."
           fi
@@ -113,10 +117,10 @@ jobs:
 
       - name: Create a new tag
         env:
-          GITHUB_TOKEN: ${{ secrets.TAG_PAT }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git tag ${{ env.new_tag }}
-          git push origin ${{ env.new_tag }}  # Push the new tag
+          git tag ${{ steps.increment_version.outputs.new_tag }}
+          git push origin ${{ steps.increment_version.outputs.new_tag }}  # Push the new tag
 
       - name: Dispatch event to trigger release workflow
         env:
@@ -126,4 +130,4 @@ jobs:
             -H "Authorization: token $GITHUB_TOKEN" \
             -H "Accept: application/vnd.github.v3+json" \
             https://api.github.com/repos/${{ github.repository }}/dispatches \
-            -d '{"event_type": "tag_created", "client_payload": {"tag": "${{ env.new_tag }}"}}'
+            -d '{"event_type": "tag_created", "client_payload": {"tag": "${{ steps.increment_version.outputs.new_tag }}"}}'

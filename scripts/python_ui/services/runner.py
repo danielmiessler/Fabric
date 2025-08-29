@@ -82,17 +82,17 @@ def run_fabric(
     # Update progress to indicate execution started
     update_execution_progress(execution_id, 0.1)
 
-    args: List[str] = [FABRIC_BIN, "--pattern", pattern]
+    args: List[str] = [FABRIC_BIN, "-p", pattern]
     
-    # Handle vendor/model specification
-    # Fabric expects either just model name or vendor/model format
-    if model:
-        # If vendor is specified, use vendor/model format
-        if provider and provider != "All Providers":
-            model_arg = f"{provider}/{model}"
+    # Handle vendor/model specification safely
+    norm_provider = (provider or "").strip() or None
+    norm_model = (model or "").strip() or None
+    if norm_model:
+        if norm_provider and norm_provider != "All Providers":
+            model_arg = f"{norm_provider}/{norm_model}"
         else:
-            model_arg = model
-        args += ["--model", model_arg]
+            model_arg = norm_model
+        args += ["-m", model_arg]
 
     logger.info("runner: %s (execution_id: %s)", " ".join(args), execution_id)
     

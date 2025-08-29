@@ -4,4 +4,8 @@ matplotlib>=3.5.0
 seaborn>=0.12.0
 numpy>=1.23.0
 python-dotenv>=1.0.0
-pyperclip>=1.8.0  # For cross-platform clipboard support 
+pyperclip>=1.8.0  # For cross-platform clipboard support
+plotly>=5.0.0  # For enhanced charts and visualizations
+cachetools>=5.0.0  # For efficient caching
+sentence-transformers  # For AI-powered semantic search (optional)
+pytest>=7.0.0  # For running tests

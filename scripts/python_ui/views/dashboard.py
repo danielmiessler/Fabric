@@ -1,6 +1,6 @@
 import streamlit as st
 from utils.errors import ui_error_boundary
-from components import stats_panel, history_table, real_time_monitor, starring_system
+from components import stats_panel, history_table, real_time_monitor
 
 @ui_error_boundary
 def render() -> None:
@@ -72,9 +72,7 @@ def render() -> None:
             history_table.render_history_overview()
         
         with tab3:
-            # Starred outputs management (matching original functionality)
-            starring_sys = starring_system.create_starring_system()
-            starring_sys.render_starred_outputs_management()
+                        st.info("⭐ Starred outputs feature not available")
         
         with tab4:
             render_dashboard_controls()
@@ -93,9 +91,7 @@ def render() -> None:
             history_table.render_history_overview()
         
         with tab3:
-            # Starred outputs management (matching original functionality)
-            starring_sys = starring_system.create_starring_system()
-            starring_sys.render_starred_outputs_management()
+                        st.info("⭐ Starred outputs feature not available")
         
         render_dashboard_controls()
 

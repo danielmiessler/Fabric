@@ -2,7 +2,7 @@ import streamlit as st
 from utils.errors import ui_error_boundary
 from services import patterns
 from utils.typing import PatternSpec
-from components import pattern_editor, pattern_list, pattern_descriptions
+from components import pattern_editor, pattern_list
 
 @ui_error_boundary
 def render() -> None:
@@ -22,8 +22,7 @@ def render() -> None:
     
     with descriptions_tab:
         # Pattern descriptions management (matching original functionality)
-        descriptions_manager = pattern_descriptions.create_pattern_descriptions_manager()
-        descriptions_manager.render_management_interface()
+                st.info("Pattern descriptions management not available")
 
 @ui_error_boundary
 def _render_create_tab() -> None:

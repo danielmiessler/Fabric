@@ -265,7 +265,13 @@ def render_analysis_tab(outputs: List[str]) -> None:
 
 
 def _set_clipboard_content(content: str) -> tuple[bool, str]:
-    """Set clipboard content. This should be moved to a service."""
+    """Set clipboard content with automatic dependency installation."""
+    from services.dependencies import check_and_install_if_missing
+    
+    # Try to ensure pyperclip is available
+    if not check_and_install_if_missing("pyperclip", "pyperclip>=1.8.0"):
+        return False, "Pyperclip not available. Please install: pip install pyperclip"
+    
     try:
         import pyperclip
         pyperclip.copy(content)
@@ -299,23 +305,34 @@ def _save_outputs() -> None:
     """Save outputs to storage. This should use the storage service."""
     try:
         # This is a placeholder - should use storage service
-        import json
-        import os
+import json
+import os
+import tempfile
         
+
         outputs_dir = os.path.expanduser("~/.config/fabric/outputs")
         os.makedirs(outputs_dir, exist_ok=True)
+
+        def _atomic_write(path: str, data: Any) -> None:
+            dir_name = os.path.dirname(path)
+            fd, tmp_path = tempfile.mkstemp(dir=dir_name, prefix=".tmp_", suffix=".json")
+            try:
+                with os.fdopen(fd, "w") as f:
+                    json.dump(data, f, indent=2)
+                os.replace(tmp_path, path)
+            finally:
+                if os.path.exists(tmp_path):
+                    try:
+                        os.remove(tmp_path)
+                    except Exception:
+                        pass
         
-        # Save output logs
         if "output_logs" in st.session_state:
             output_logs_file = os.path.join(outputs_dir, "output_logs.json")
-            with open(output_logs_file, "w") as f:
-                json.dump(st.session_state.output_logs, f, indent=2)
+            _atomic_write(output_logs_file, st.session_state.output_logs)
         
-        # Save starred outputs
         if "starred_outputs" in st.session_state:
             starred_outputs_file = os.path.join(outputs_dir, "starred_outputs.json")
-            with open(starred_outputs_file, "w") as f:
-                json.dump(st.session_state.starred_outputs, f, indent=2)
-                
+            _atomic_write(starred_outputs_file, st.session_state.starred_outputs)
     except Exception as e:
         logger.error(f"Failed to save outputs: {e}")

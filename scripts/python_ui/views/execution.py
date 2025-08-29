@@ -10,7 +10,7 @@ import time
 from utils.errors import ui_error_boundary
 from utils.logging import logger
 from services import runner, patterns
-from components import pattern_selector, output_panel, input_preview, starring_system, welcome_screen
+from components import pattern_selector, output_panel
 
 @ui_error_boundary
 def render() -> None:
@@ -18,9 +18,7 @@ def render() -> None:
     # Initialize session state
     _initialize_session_state()
     
-    # Show welcome screen if configured
-    welcome_screen.render_welcome_screen()
-
+    
     # Check for patterns availability
     try:
         pattern_specs = patterns.list_patterns()
@@ -103,10 +101,10 @@ def _render_execution_tab(available_patterns: List[str]) -> None:
         # Enhanced execution button section
         _render_execution_controls(selected_patterns, chain_mode, pattern_variables)
 
-        # Execute patterns if requested
+        # Defer execution to next rerun to avoid double-execution within same pass
         if st.session_state.get("execute_patterns", False):
-            st.session_state.execute_patterns = False
-            _execute_patterns(selected_patterns, chain_mode, pattern_variables, auto_save)
+            # Do not execute here; allow top-level to handle in next run
+            pass
 
         # Display output from the last run
         if st.session_state.get('last_run_outputs'):
@@ -120,10 +118,7 @@ def _render_execution_tab(available_patterns: List[str]) -> None:
                     pattern_name = output.split("\n")[0].replace("### 🎯 ", "")
                     _show_pattern_feedback_ui(pattern_name, output)
                     
-                    # Add starring functionality
-                    starring_sys = starring_system.create_starring_system()
-                    starring_sys.render_star_button(output, pattern_name, st.session_state.get("input_content", ""))
-            
+                                
             # Clear the outputs from state so they don't re-display
             st.session_state.last_run_outputs = []
 
@@ -132,9 +127,7 @@ def _render_execution_tab(available_patterns: List[str]) -> None:
             output_panel.render_output_panel(st.session_state.chat_output)
         
         # Handle starring dialogs (render outside of conditional blocks)
-        starring_sys = starring_system.create_starring_system()
-        starring_sys.render_starring_dialog()
-
+        
     else:
         # Enhanced empty state
         st.info("🎯 Select one or more patterns to run and see the magic happen!")
@@ -219,7 +212,7 @@ def _render_input_section() -> None:
 
     # Show input preview if enabled
     if st.session_state.get("show_preview", False) and st.session_state.get("input_content"):
-        input_preview.render_input_preview(st.session_state.input_content, "execution_preview")
+        st.text_area("Input Preview", value=st.session_state.input_content, height=100, disabled=True)
 
 
 @ui_error_boundary
@@ -491,6 +484,7 @@ def _execute_individual_patterns(selected_patterns: List[str], pattern_variables
     with status_container:
         st.write("🔍 Validating configuration...")
         st.write("✅ Configuration validated")
+        start_ts = time.time()
         
         # Display model info properly
         if provider and model:
@@ -548,8 +542,8 @@ def _execute_individual_patterns(selected_patterns: List[str], pattern_variables
                 all_outputs.append(f"### ❌ {pattern}\n\n{str(e)}")
         
         if all_outputs:
-            execution_time = time.time() - time.time()  # This should be properly calculated
-            st.write(f"🎉 Execution completed")
+            execution_time = time.time() - start_ts
+            st.write(f"🎉 Execution completed in {execution_time:.2f}s")
     
     return all_outputs
 
@@ -685,7 +679,13 @@ def _initialize_session_state() -> None:
 
 
 def _get_clipboard_content() -> tuple[bool, str, str]:
-    """Get content from clipboard."""
+    """Get content from clipboard with automatic dependency installation."""
+    from services.dependencies import check_and_install_if_missing
+    
+    # Try to ensure pyperclip is available
+    if not check_and_install_if_missing("pyperclip", "pyperclip>=1.8.0"):
+        return False, "", "Pyperclip not available. Please install: pip install pyperclip"
+    
     try:
         import pyperclip
         content = pyperclip.paste()

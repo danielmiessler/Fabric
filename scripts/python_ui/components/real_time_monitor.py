@@ -7,14 +7,19 @@ import time
 from datetime import datetime, timedelta
 from typing import Dict, Any, List
 
-# Optional plotly imports for enhanced charts
-try:
-    import plotly.graph_objects as go
-    import plotly.express as px
-    from plotly.subplots import make_subplots
-    PLOTLY_AVAILABLE = True
-except ImportError:
-    PLOTLY_AVAILABLE = False
+# Optional plotly imports for enhanced charts with dependency fallback
+from services.dependencies import OptionalImport, check_and_install_if_missing
+
+PLOTLY_AVAILABLE = check_and_install_if_missing("plotly", "plotly>=5.0.0")
+
+if PLOTLY_AVAILABLE:
+    try:
+        import plotly.graph_objects as go
+        import plotly.express as px
+        from plotly.subplots import make_subplots
+    except ImportError:
+        PLOTLY_AVAILABLE = False
+        go = px = None
 
 from services.monitoring import get_execution_monitor, ExecutionStatus, ExecutionMetrics
 from utils.logging import logger
@@ -296,12 +301,9 @@ def render_monitoring_dashboard() -> None:
         if st.button("🔄 Refresh Now"):
             st.rerun()
     
-    # Auto-refresh logic
+    # Auto-refresh logic (non-blocking)
     if auto_refresh:
-        # Refresh every 2 seconds
-        placeholder = st.empty()
-        time.sleep(2)
-        st.rerun()
+        st.autorefresh(interval=2000, key="monitor_auto_refresh")
     
     # Dashboard sections
     render_active_executions()

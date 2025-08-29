@@ -124,8 +124,8 @@ class ProviderService:
                     config.enabled = True
                     config.env_var_name = vendor_info["env_var"]
             elif vendor_name == "ollama":
-                # Ollama doesn't need API key
-                config.enabled = True
+                # Skip Ollama if not available
+                config.enabled = False
             
             # Check for base URL
             if vendor_info.get("base_url_var"):

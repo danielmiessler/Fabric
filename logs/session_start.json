@@ -1,0 +1,9 @@
+[
+  {
+    "session_id": "8db5b40a-551c-4864-87cf-ae590f5624b5",
+    "transcript_path": "/home/evilbastardxd/.claude/projects/-home-evilbastardxd-Desktop-tools-fabric/8db5b40a-551c-4864-87cf-ae590f5624b5.jsonl",
+    "cwd": "/home/evilbastardxd/Desktop/tools/fabric",
+    "hook_event_name": "SessionStart",
+    "source": "startup"
+  }
+]

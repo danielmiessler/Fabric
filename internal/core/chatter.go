@@ -180,7 +180,7 @@ func (o *Chatter) BuildSession(request *domain.ChatRequest, raw bool) (session *
 	}
 
 	// Now we know request.Message is not nil, process template variables
-	if request.InputHasVars {
+	if request.InputHasVars && !request.NoVariableReplacement {
 		request.Message.Content, err = template.ApplyTemplate(request.Message.Content, request.PatternVariables, "")
 		if err != nil {
 			return nil, err
@@ -190,7 +190,12 @@ func (o *Chatter) BuildSession(request *domain.ChatRequest, raw bool) (session *
 	var patternContent string
 	inputUsed := false
 	if request.PatternName != "" {
-		pattern, err := o.db.Patterns.GetApplyVariables(request.PatternName, request.PatternVariables, request.Message.Content)
+		var pattern *fsdb.Pattern
+		if request.NoVariableReplacement {
+			pattern, err = o.db.Patterns.GetWithoutVariables(request.PatternName, request.Message.Content)
+		} else {
+			pattern, err = o.db.Patterns.GetApplyVariables(request.PatternName, request.PatternVariables, request.Message.Content)
+		}
 
 		if err != nil {
 			return nil, fmt.Errorf("could not get pattern %s: %v", request.PatternName, err)

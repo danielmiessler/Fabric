@@ -148,7 +148,6 @@ func (o *VendorsManager) setupVendorTo(vendor Vendor, configuredVendors map[stri
 		delete(configuredVendors, vendor.GetName())
 		fmt.Printf("[%v] skipped\n", vendor.GetName())
 	}
-	return
 }
 
 type modelResult struct {

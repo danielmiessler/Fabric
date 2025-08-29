@@ -145,6 +145,22 @@ func TestGetApplyVariables(t *testing.T) {
 	}
 }
 
+func TestGetWithoutVariables(t *testing.T) {
+	entity, cleanup := setupTestPatternsEntity(t)
+	defer cleanup()
+
+	createTestPattern(t, entity, "test-pattern", "Prefix {{input}} {{roam}}")
+
+	result, err := entity.GetWithoutVariables("test-pattern", "hello")
+	require.NoError(t, err)
+	assert.Equal(t, "Prefix hello {{roam}}", result.Pattern)
+
+	createTestPattern(t, entity, "no-input", "Static content")
+	result, err = entity.GetWithoutVariables("no-input", "hi")
+	require.NoError(t, err)
+	assert.Equal(t, "Static content\nhi", result.Pattern)
+}
+
 func TestPatternsEntity_Save(t *testing.T) {
 	entity, cleanup := setupTestPatternsEntity(t)
 	defer cleanup()

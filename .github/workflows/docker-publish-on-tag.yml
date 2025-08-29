@@ -1,0 +1,150 @@
+name: Release Docker image on tag (GHCR + Docker Hub)
+
+on:
+  push:
+    tags: ["v*"] # e.g., v1.4.300
+
+permissions:
+  contents: read
+  packages: write # needed for GHCR with GITHUB_TOKEN
+
+jobs:
+  build-and-push:
+    # Optional safety: only run from your fork
+    if: ${{ github.repository_owner == 'ksylvan' }}
+    runs-on: ubuntu-latest
+
+    outputs:
+      is_latest: ${{ steps.latest.outputs.is_latest }}
+      owner_lc: ${{ steps.vars.outputs.owner_lc }}
+      repo_lc: ${{ steps.vars.outputs.repo_lc }}
+      dockerhub_user_lc: ${{ steps.dh.outputs.user_lc }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # full history for tag comparisons
+
+      - name: Fetch all tags
+        run: git fetch --tags --force
+
+      # More reliable cross-builds
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # Compute lowercase owner/repo for registry image names
+      - name: Compute image names
+        id: vars
+        run: |
+          OWNER="${GITHUB_REPOSITORY_OWNER}"
+          REPO="${GITHUB_REPOSITORY#*/}"
+          echo "owner_lc=${OWNER,,}" >> "$GITHUB_OUTPUT"
+          echo "repo_lc=${REPO,,}" >> "$GITHUB_OUTPUT"
+
+      # Lowercase Docker Hub username (belt & suspenders)
+      - name: Lowercase Docker Hub username
+        id: dh
+        run: echo "user_lc=${DOCKERHUB_USERNAME,,}" >> "$GITHUB_OUTPUT"
+        env:
+          DOCKERHUB_USERNAME: ${{ vars.DOCKERHUB_USERNAME }}
+
+      # Determine if the current tag is the highest vX.Y.Z (no pre-releases)
+      - name: Is this the latest semver tag?
+        id: latest
+        shell: bash
+        run: |
+          CTAG="${GITHUB_REF_NAME}"
+          LATEST="$(git tag -l 'v[0-9]*.[0-9]*.[0-9]*' --sort=-v:refname | head -n1)"
+          echo "current_tag=$CTAG" >> "$GITHUB_OUTPUT"
+          echo "latest_tag=$LATEST" >> "$GITHUB_OUTPUT"
+          if [[ "$CTAG" == "$LATEST" ]]; then
+            echo "is_latest=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "is_latest=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      # Login to GHCR (uses built-in GITHUB_TOKEN)
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # Login to Docker Hub
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ steps.dh.outputs.user_lc }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # Generate versioned tags/labels for BOTH registries (no :latest here)
+      - name: Extract metadata (tags, labels)
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: |
+            ghcr.io/${{ steps.vars.outputs.owner_lc }}/${{ steps.vars.outputs.repo_lc }}
+            docker.io/${{ steps.dh.outputs.user_lc }}/${{ steps.vars.outputs.repo_lc }}
+          tags: |
+            type=ref,event=tag                        # v1.4.300
+            type=semver,pattern={{version}}           # 1.4.300 (optional)
+            type=semver,pattern={{major}}.{{minor}}   # 1.4 (optional)
+          labels: |
+            org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
+
+      - name: Build and push (multi-arch)
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./scripts/docker/Dockerfile
+          push: true
+          platforms: linux/amd64,linux/arm64
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  # Separate job to (re)point :latest — serialized to avoid races
+  move-latest:
+    needs: build-and-push
+    if: ${{ needs.build-and-push.outputs.is_latest == 'true' }}
+    runs-on: ubuntu-latest
+
+    # Only one "latest" move at a time; newer runs cancel older in-progress ones
+    concurrency:
+      group: latest-${{ github.repository }}
+      cancel-in-progress: true
+
+    steps:
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Tag :latest on GHCR
+        run: |
+          SRC="ghcr.io/${{ needs.build-and-push.outputs.owner_lc }}/${{ needs.build-and-push.outputs.repo_lc }}:${{ github.ref_name }}"
+          DST="ghcr.io/${{ needs.build-and-push.outputs.owner_lc }}/${{ needs.build-and-push.outputs.repo_lc }}:latest"
+          docker buildx imagetools create -t "$DST" "$SRC"
+
+      - name: Tag :latest on Docker Hub
+        run: |
+          SRC="docker.io/${{ needs.build-and-push.outputs.dockerhub_user_lc }}/${{ needs.build-and-push.outputs.repo_lc }}:${{ github.ref_name }}"
+          DST="docker.io/${{ needs.build-and-push.outputs.dockerhub_user_lc }}/${{ needs.build-and-push.outputs.repo_lc }}:latest"
+          docker buildx imagetools create -t "$DST" "$SRC"

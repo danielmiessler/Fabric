@@ -3,6 +3,9 @@ package internal
 import (
 	"context"
 	"fmt"
+	"os/exec"
+	"regexp"
+	"strings"
 
 	"github.com/danielmiessler/fabric/cmd/generate_changelog/internal/cache"
 	"github.com/danielmiessler/fabric/cmd/generate_changelog/internal/config"
@@ -17,17 +20,50 @@ type ReleaseManager struct {
 	repo        string
 }
 
+// getGitHubInfo extracts owner and repo from git remote origin URL
+func getGitHubInfo() (owner, repo string, err error) {
+	cmd := exec.Command("git", "remote", "get-url", "origin")
+	output, err := cmd.Output()
+	if err != nil {
+		return "", "", fmt.Errorf("failed to get git remote URL: %w", err)
+	}
+
+	url := strings.TrimSpace(string(output))
+
+	// Handle both SSH and HTTPS URLs
+	// SSH: git@github.com:owner/repo.git
+	// HTTPS: https://github.com/owner/repo.git
+	var re *regexp.Regexp
+	if strings.HasPrefix(url, "git@") {
+		re = regexp.MustCompile(`git@github\.com:([^/]+)/([^/.]+)(?:\.git)?`)
+	} else {
+		re = regexp.MustCompile(`https://github\.com/([^/]+)/([^/.]+)(?:\.git)?`)
+	}
+
+	matches := re.FindStringSubmatch(url)
+	if len(matches) < 3 {
+		return "", "", fmt.Errorf("invalid GitHub URL format: %s", url)
+	}
+
+	return matches[1], matches[2], nil
+}
+
 func NewReleaseManager(cfg *config.Config) (*ReleaseManager, error) {
 	cache, err := cache.New(cfg.CacheFile)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create cache: %w", err)
 	}
 
+	owner, repo, err := getGitHubInfo()
+	if err != nil {
+		return nil, fmt.Errorf("failed to get GitHub repository info: %w", err)
+	}
+
 	return &ReleaseManager{
 		cache:       cache,
 		githubToken: cfg.GitHubToken,
-		owner:       "danielmiessler",
-		repo:        "fabric",
+		owner:       owner,
+		repo:        repo,
 	}, nil
 }
 

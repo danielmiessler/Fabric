@@ -181,7 +181,8 @@ func (o *YouTube) tryMethodYtDlpInternal(videoId string, language string, additi
 		if len(langMatch) > 2 {
 			langMatch = langMatch[:2]
 		}
-		args = append(args, "--sub-langs", langMatch)
+		langOpts := language + "," + langMatch + ".*," + langMatch
+		args = append(args, "--sub-langs", langOpts)
 	}
 
 	// Add user-provided arguments last so they take precedence

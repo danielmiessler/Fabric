@@ -1871,6 +1871,22 @@
         "DEVELOPMENT",
         "AI"
       ]
+    },
+    {
+      "patternName": "create_story_about_person",
+      "description": "Infer everyday challenges and realistic coping strategies from a psychological profile and craft an empathetic 500–700-word story consistent with the character.",
+      "tags": [
+        "WRITING",
+        "SELF"
+      ]
+    },
+    {
+      "patternName": "heal_person",
+      "description": "Analyze a psychological profile, pinpoint issues and strengths, and deliver compassionate, structured strategies for spiritual, mental, and life improvement.",
+      "tags": [
+        "ANALYSIS",
+        "SELF"
+      ]
     }
   ]
 }

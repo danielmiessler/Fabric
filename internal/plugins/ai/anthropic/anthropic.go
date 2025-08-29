@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"net/http"
-	"os"
 	"strconv"
 	"strings"
 
@@ -12,6 +11,7 @@ import (
 	"github.com/anthropics/anthropic-sdk-go/option"
 	"github.com/danielmiessler/fabric/internal/chat"
 	"github.com/danielmiessler/fabric/internal/domain"
+	debuglog "github.com/danielmiessler/fabric/internal/log"
 	"github.com/danielmiessler/fabric/internal/plugins"
 	"github.com/danielmiessler/fabric/internal/util"
 )
@@ -195,7 +195,7 @@ func (an *Client) SendStream(
 	}
 	stream := an.client.Messages.NewStreaming(ctx, params, reqOpts...)
 	if stream.Err() != nil && len(betas) > 0 {
-		fmt.Fprintf(os.Stderr, "Anthropic beta feature %s failed: %v\n", strings.Join(betas, ","), stream.Err())
+		debuglog.Debug(debuglog.Basic, "Anthropic beta feature %s failed: %v\n", strings.Join(betas, ","), stream.Err())
 		stream = an.client.Messages.NewStreaming(ctx, params)
 	}
 
@@ -289,7 +289,7 @@ func (an *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, 
 	}
 	if message, err = an.client.Messages.New(ctx, params, reqOpts...); err != nil {
 		if len(betas) > 0 {
-			fmt.Fprintf(os.Stderr, "Anthropic beta feature %s failed: %v\n", strings.Join(betas, ","), err)
+			debuglog.Debug(debuglog.Basic, "Anthropic beta feature %s failed: %v\n", strings.Join(betas, ","), err)
 			if message, err = an.client.Messages.New(ctx, params); err != nil {
 				return
 			}

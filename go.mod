@@ -21,7 +21,7 @@ require (
 	github.com/joho/godotenv v1.5.1
 	github.com/kballard/go-shellquote v0.0.0-20180428030007-95032a82bc51
 	github.com/mattn/go-sqlite3 v1.14.28
-	github.com/ollama/ollama v0.9.0
+	github.com/ollama/ollama v0.11.7
 	github.com/openai/openai-go v1.8.2
 	github.com/otiai10/copy v1.14.1
 	github.com/pkg/errors v0.9.1

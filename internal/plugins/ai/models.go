@@ -18,7 +18,8 @@ type VendorsModels struct {
 
 // PrintWithVendor prints models including their vendor on each line.
 // When shellCompleteList is true, output is suitable for shell completion.
-func (o *VendorsModels) PrintWithVendor(shellCompleteList bool) {
+// Default vendor and model are highlighted with an asterisk.
+func (o *VendorsModels) PrintWithVendor(shellCompleteList bool, defaultVendor, defaultModel string) {
 	if !shellCompleteList {
 		fmt.Printf("\n%v:\n", o.SelectionLabel)
 	}
@@ -42,7 +43,11 @@ func (o *VendorsModels) PrintWithVendor(shellCompleteList bool) {
 			if shellCompleteList {
 				fmt.Printf("%s|%s\n", groupItems.Group, item)
 			} else {
-				fmt.Printf("\t[%d]\t%s|%s\n", currentItemIndex, groupItems.Group, item)
+				mark := "       "
+				if strings.EqualFold(groupItems.Group, defaultVendor) && strings.EqualFold(item, defaultModel) {
+					mark = "      *"
+				}
+				fmt.Printf("%s\t[%d]\t%s|%s\n", mark, currentItemIndex, groupItems.Group, item)
 			}
 		}
 	}

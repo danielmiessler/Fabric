@@ -9,11 +9,11 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"os"
 	"os/exec"
 	"strings"
 	"time"
 
+	debuglog "github.com/danielmiessler/fabric/internal/log"
 	"github.com/danielmiessler/fabric/internal/util"
 	"golang.org/x/oauth2"
 )
@@ -77,7 +77,7 @@ func (t *OAuthTransport) getValidToken(tokenIdentifier string) (string, error) {
 	}
 	// If no token exists, run OAuth flow
 	if token == nil {
-		fmt.Fprintln(os.Stderr, "No OAuth token found, initiating authentication...")
+		debuglog.Log("No OAuth token found, initiating authentication...\n")
 		newAccessToken, err := RunOAuthFlow(tokenIdentifier)
 		if err != nil {
 			return "", fmt.Errorf("failed to authenticate: %w", err)
@@ -87,11 +87,11 @@ func (t *OAuthTransport) getValidToken(tokenIdentifier string) (string, error) {
 
 	// Check if token needs refresh (5 minute buffer)
 	if token.IsExpired(5) {
-		fmt.Fprintln(os.Stderr, "OAuth token expired, refreshing...")
+		debuglog.Log("OAuth token expired, refreshing...\n")
 		newAccessToken, err := RefreshToken(tokenIdentifier)
 		if err != nil {
 			// If refresh fails, try re-authentication
-			fmt.Fprintln(os.Stderr, "Token refresh failed, re-authenticating...")
+			debuglog.Log("Token refresh failed, re-authenticating...\n")
 			newAccessToken, err = RunOAuthFlow(tokenIdentifier)
 			if err != nil {
 				return "", fmt.Errorf("failed to refresh or re-authenticate: %w", err)
@@ -143,13 +143,13 @@ func RunOAuthFlow(tokenIdentifier string) (token string, err error) {
 		if err == nil && existingToken != nil {
 			// If token exists but is expired, try refreshing first
 			if existingToken.IsExpired(5) {
-				fmt.Fprintln(os.Stderr, "Found expired OAuth token, attempting refresh...")
+				debuglog.Log("Found expired OAuth token, attempting refresh...\n")
 				refreshedToken, refreshErr := RefreshToken(tokenIdentifier)
 				if refreshErr == nil {
-					fmt.Fprintln(os.Stderr, "Token refresh successful")
+					debuglog.Log("Token refresh successful\n")
 					return refreshedToken, nil
 				}
-				fmt.Fprintf(os.Stderr, "Token refresh failed (%v), proceeding with full OAuth flow...\n", refreshErr)
+				debuglog.Log("Token refresh failed (%v), proceeding with full OAuth flow...\n", refreshErr)
 			} else {
 				// Token exists and is still valid
 				return existingToken.AccessToken, nil
@@ -176,10 +176,10 @@ func RunOAuthFlow(tokenIdentifier string) (token string, err error) {
 		oauth2.SetAuthURLParam("state", verifier),
 	)
 
-	fmt.Fprintln(os.Stderr, "Open the following URL in your browser. Fabric would like to authorize:")
-	fmt.Fprintln(os.Stderr, authURL)
+	debuglog.Log("Open the following URL in your browser. Fabric would like to authorize:\n")
+	debuglog.Log("%s\n", authURL)
 	openBrowser(authURL)
-	fmt.Fprint(os.Stderr, "Paste the authorization code here: ")
+	debuglog.Log("Paste the authorization code here: ")
 	var code string
 	fmt.Scanln(&code)
 	parts := strings.SplitN(code, "#", 2)

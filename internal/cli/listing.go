@@ -5,6 +5,8 @@ import (
 	"os"
 	"strconv"
 
+	openai "github.com/openai/openai-go"
+
 	"github.com/danielmiessler/fabric/internal/core"
 	"github.com/danielmiessler/fabric/internal/plugins/ai"
 	"github.com/danielmiessler/fabric/internal/plugins/ai/gemini"
@@ -39,7 +41,7 @@ func handleListingCommands(currentFlags *Flags, fabricDb *fsdb.Db, registry *cor
 		if currentFlags.ShellCompleteOutput {
 			models.Print(true)
 		} else {
-			models.PrintWithVendor(false)
+			models.PrintWithVendor(false, registry.Defaults.Vendor.Value, registry.Defaults.Model.Value)
 		}
 		return true, nil
 	}
@@ -70,5 +72,30 @@ func handleListingCommands(currentFlags *Flags, fabricDb *fsdb.Db, registry *cor
 		return true, nil
 	}
 
+	if currentFlags.ListTranscriptionModels {
+		listTranscriptionModels(currentFlags.ShellCompleteOutput)
+		return true, nil
+	}
+
 	return false, nil
+}
+
+// listTranscriptionModels lists all available transcription models
+func listTranscriptionModels(shellComplete bool) {
+	models := []string{
+		string(openai.AudioModelWhisper1),
+		string(openai.AudioModelGPT4oMiniTranscribe),
+		string(openai.AudioModelGPT4oTranscribe),
+	}
+
+	if shellComplete {
+		for _, model := range models {
+			fmt.Println(model)
+		}
+	} else {
+		fmt.Println("Available transcription models:")
+		for _, model := range models {
+			fmt.Printf("  %s\n", model)
+		}
+	}
 }

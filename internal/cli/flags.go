@@ -13,6 +13,7 @@ import (
 
 	"github.com/danielmiessler/fabric/internal/chat"
 	"github.com/danielmiessler/fabric/internal/domain"
+	debuglog "github.com/danielmiessler/fabric/internal/log"
 	"github.com/danielmiessler/fabric/internal/util"
 	"github.com/jessevdk/go-flags"
 	"golang.org/x/text/language"
@@ -66,6 +67,7 @@ type Flags struct {
 	PrintSession                    string               `long:"printsession" description:"Print session"`
 	HtmlReadability                 bool                 `long:"readability" description:"Convert HTML input into a clean, readable view"`
 	InputHasVars                    bool                 `long:"input-has-vars" description:"Apply variables to user input"`
+	NoVariableReplacement           bool                 `long:"no-variable-replacement" description:"Disable pattern variable replacement"`
 	DryRun                          bool                 `long:"dry-run" description:"Show what would be sent to the model without actually sending it"`
 	Serve                           bool                 `long:"serve" description:"Serve the Fabric Rest API"`
 	ServeOllama                     bool                 `long:"serveOllama" description:"Serve the Fabric Rest API with ollama endpoints"`
@@ -91,23 +93,21 @@ type Flags struct {
 	ThinkStartTag                   string               `long:"think-start-tag" yaml:"thinkStartTag" description:"Start tag for thinking sections" default:"<think>"`
 	ThinkEndTag                     string               `long:"think-end-tag" yaml:"thinkEndTag" description:"End tag for thinking sections" default:"</think>"`
 	DisableResponsesAPI             bool                 `long:"disable-responses-api" yaml:"disableResponsesAPI" description:"Disable OpenAI Responses API (default: false)"`
+	TranscribeFile                  string               `long:"transcribe-file" yaml:"transcribeFile" description:"Audio or video file to transcribe"`
+	TranscribeModel                 string               `long:"transcribe-model" yaml:"transcribeModel" description:"Model to use for transcription (separate from chat model)"`
+	SplitMediaFile                  bool                 `long:"split-media-file" yaml:"splitMediaFile" description:"Split audio/video files larger than 25MB using ffmpeg"`
 	Voice                           string               `long:"voice" yaml:"voice" description:"TTS voice name for supported models (e.g., Kore, Charon, Puck)" default:"Kore"`
 	ListGeminiVoices                bool                 `long:"list-gemini-voices" description:"List all available Gemini TTS voices"`
+	ListTranscriptionModels         bool                 `long:"list-transcription-models" description:"List all available transcription models"`
 	Notification                    bool                 `long:"notification" yaml:"notification" description:"Send desktop notification when command completes"`
 	NotificationCommand             string               `long:"notification-command" yaml:"notificationCommand" description:"Custom command to run for notifications (overrides built-in notifications)"`
-	Thinking                        domain.ThinkingLevel `long:"thinking" yaml:"thinking" description:"Set reasoning/thinking level (e.g., off, low, medium, high, or numeric tokens for Anthropic)"`
-}
-
-var debug = false
-
-func Debugf(format string, a ...interface{}) {
-	if debug {
-		fmt.Printf("DEBUG: "+format, a...)
-	}
+	Thinking                        domain.ThinkingLevel `long:"thinking" yaml:"thinking" description:"Set reasoning/thinking level (e.g., off, low, medium, high, or numeric tokens for Anthropic or Google Gemini)"`
+	Debug                           int                  `long:"debug" description:"Set debug level (0=off, 1=basic, 2=detailed, 3=trace)" default:"0"`
 }
 
 // Init Initialize flags. returns a Flags struct and an error
 func Init() (ret *Flags, err error) {
+	debuglog.SetLevel(debuglog.LevelFromInt(parseDebugLevel(os.Args[1:])))
 	// Track which yaml-configured flags were set on CLI
 	usedFlags := make(map[string]bool)
 	yamlArgsScan := os.Args[1:]
@@ -123,11 +123,11 @@ func Init() (ret *Flags, err error) {
 			shortTag := field.Tag.Get("short")
 			if longTag != "" {
 				flagToYamlTag[longTag] = yamlTag
-				Debugf("Mapped long flag %s to yaml tag %s\n", longTag, yamlTag)
+				debuglog.Debug(debuglog.Detailed, "Mapped long flag %s to yaml tag %s\n", longTag, yamlTag)
 			}
 			if shortTag != "" {
 				flagToYamlTag[shortTag] = yamlTag
-				Debugf("Mapped short flag %s to yaml tag %s\n", shortTag, yamlTag)
+				debuglog.Debug(debuglog.Detailed, "Mapped short flag %s to yaml tag %s\n", shortTag, yamlTag)
 			}
 		}
 	}
@@ -139,7 +139,7 @@ func Init() (ret *Flags, err error) {
 		if flag != "" {
 			if yamlTag, exists := flagToYamlTag[flag]; exists {
 				usedFlags[yamlTag] = true
-				Debugf("CLI flag used: %s (yaml: %s)\n", flag, yamlTag)
+				debuglog.Debug(debuglog.Detailed, "CLI flag used: %s (yaml: %s)\n", flag, yamlTag)
 			}
 		}
 	}
@@ -151,6 +151,7 @@ func Init() (ret *Flags, err error) {
 	if args, err = parser.Parse(); err != nil {
 		return
 	}
+	debuglog.SetLevel(debuglog.LevelFromInt(ret.Debug))
 
 	// Check to see if a ~/.config/fabric/config.yaml config file exists (only when user didn't specify a config)
 	if ret.Config == "" {
@@ -158,7 +159,7 @@ func Init() (ret *Flags, err error) {
 		if defaultConfigPath, err := util.GetDefaultConfigPath(); err == nil && defaultConfigPath != "" {
 			ret.Config = defaultConfigPath
 		} else if err != nil {
-			Debugf("Could not determine default config path: %v\n", err)
+			debuglog.Debug(debuglog.Detailed, "Could not determine default config path: %v\n", err)
 		}
 	}
 
@@ -183,13 +184,13 @@ func Init() (ret *Flags, err error) {
 					if flagField.CanSet() {
 						if yamlField.Type() != flagField.Type() {
 							if err := assignWithConversion(flagField, yamlField); err != nil {
-								Debugf("Type conversion failed for %s: %v\n", yamlTag, err)
+								debuglog.Debug(debuglog.Detailed, "Type conversion failed for %s: %v\n", yamlTag, err)
 								continue
 							}
 						} else {
 							flagField.Set(yamlField)
 						}
-						Debugf("Applied YAML value for %s: %v\n", yamlTag, yamlField.Interface())
+						debuglog.Debug(debuglog.Detailed, "Applied YAML value for %s: %v\n", yamlTag, yamlField.Interface())
 					}
 				}
 			}
@@ -213,6 +214,22 @@ func Init() (ret *Flags, err error) {
 		ret.Message = AppendMessage(ret.Message, pipedMessage)
 	}
 	return
+}
+
+func parseDebugLevel(args []string) int {
+	for i := 0; i < len(args); i++ {
+		arg := args[i]
+		if arg == "--debug" && i+1 < len(args) {
+			if lvl, err := strconv.Atoi(args[i+1]); err == nil {
+				return lvl
+			}
+		} else if strings.HasPrefix(arg, "--debug=") {
+			if lvl, err := strconv.Atoi(strings.TrimPrefix(arg, "--debug=")); err == nil {
+				return lvl
+			}
+		}
+	}
+	return 0
 }
 
 func extractFlag(arg string) string {
@@ -284,7 +301,7 @@ func loadYAMLConfig(configPath string) (*Flags, error) {
 		return nil, fmt.Errorf("error parsing config file: %w", err)
 	}
 
-	Debugf("Config: %v\n", config)
+	debuglog.Debug(debuglog.Detailed, "Config: %v\n", config)
 
 	return config, nil
 }
@@ -460,13 +477,14 @@ func (o *Flags) BuildChatOptions() (ret *domain.ChatOptions, err error) {
 
 func (o *Flags) BuildChatRequest(Meta string) (ret *domain.ChatRequest, err error) {
 	ret = &domain.ChatRequest{
-		ContextName:      o.Context,
-		SessionName:      o.Session,
-		PatternName:      o.Pattern,
-		StrategyName:     o.Strategy,
-		PatternVariables: o.PatternVariables,
-		InputHasVars:     o.InputHasVars,
-		Meta:             Meta,
+		ContextName:           o.Context,
+		SessionName:           o.Session,
+		PatternName:           o.Pattern,
+		StrategyName:          o.Strategy,
+		PatternVariables:      o.PatternVariables,
+		InputHasVars:          o.InputHasVars,
+		NoVariableReplacement: o.NoVariableReplacement,
+		Meta:                  Meta,
 	}
 
 	var message *chat.ChatCompletionMessage

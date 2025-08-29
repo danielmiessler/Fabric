@@ -129,6 +129,38 @@ func TestBuildGenerateContentConfig_LanguageCodeNormalization(t *testing.T) {
 	}
 }
 
+func TestBuildGenerateContentConfig_Thinking(t *testing.T) {
+	client := &Client{}
+	opts := &domain.ChatOptions{Thinking: domain.ThinkingLow}
+
+	cfg, err := client.buildGenerateContentConfig(opts)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if cfg.ThinkingConfig == nil || !cfg.ThinkingConfig.IncludeThoughts {
+		t.Fatalf("expected thinking config with thoughts included")
+	}
+	if cfg.ThinkingConfig.ThinkingBudget == nil || *cfg.ThinkingConfig.ThinkingBudget != int32(domain.TokenBudgetLow) {
+		t.Errorf("expected thinking budget %d, got %+v", domain.TokenBudgetLow, cfg.ThinkingConfig.ThinkingBudget)
+	}
+}
+
+func TestBuildGenerateContentConfig_ThinkingTokens(t *testing.T) {
+	client := &Client{}
+	opts := &domain.ChatOptions{Thinking: domain.ThinkingLevel("123")}
+
+	cfg, err := client.buildGenerateContentConfig(opts)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if cfg.ThinkingConfig == nil || cfg.ThinkingConfig.ThinkingBudget == nil {
+		t.Fatalf("expected thinking config with budget")
+	}
+	if *cfg.ThinkingConfig.ThinkingBudget != 123 {
+		t.Errorf("expected thinking budget 123, got %d", *cfg.ThinkingConfig.ThinkingBudget)
+	}
+}
+
 func TestCitationFormatting(t *testing.T) {
 	client := &Client{}
 	response := &genai.GenerateContentResponse{

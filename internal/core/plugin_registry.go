@@ -10,6 +10,7 @@ import (
 	"strconv"
 	"strings"
 
+	debuglog "github.com/danielmiessler/fabric/internal/log"
 	"github.com/danielmiessler/fabric/internal/plugins/ai/anthropic"
 	"github.com/danielmiessler/fabric/internal/plugins/ai/azure"
 	"github.com/danielmiessler/fabric/internal/plugins/ai/bedrock"
@@ -20,7 +21,7 @@ import (
 	"github.com/danielmiessler/fabric/internal/plugins/ai/ollama"
 	"github.com/danielmiessler/fabric/internal/plugins/ai/openai"
 	"github.com/danielmiessler/fabric/internal/plugins/ai/openai_compatible"
-	"github.com/danielmiessler/fabric/internal/plugins/ai/perplexity" // Added Perplexity plugin
+	"github.com/danielmiessler/fabric/internal/plugins/ai/perplexity"
 	"github.com/danielmiessler/fabric/internal/plugins/strategy"
 
 	"github.com/samber/lo"
@@ -339,7 +340,7 @@ func (o *PluginRegistry) GetChatter(model string, modelContextLength int, vendor
 		} else {
 			availableVendors := models.FindGroupsByItem(model)
 			if len(availableVendors) > 1 {
-				fmt.Fprintf(os.Stderr, "Warning: multiple vendors provide model %s: %s. Using %s. Specify --vendor to select a vendor.\n", model, strings.Join(availableVendors, ", "), availableVendors[0])
+				debuglog.Log("Warning: multiple vendors provide model %s: %s. Using %s. Specify --vendor to select a vendor.\n", model, strings.Join(availableVendors, ", "), availableVendors[0])
 			}
 			ret.vendor = vendorManager.FindByName(models.FindGroupsByItemFirst(model))
 		}

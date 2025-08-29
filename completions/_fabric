@@ -59,6 +59,13 @@ _fabric_gemini_voices() {
   compadd -X "Gemini TTS Voices:" ${voices}
 }
 
+_fabric_transcription_models() {
+  local -a models
+  local cmd=${words[1]}
+  models=(${(f)"$($cmd --list-transcription-models --shell-complete-list 2>/dev/null)"})
+  compadd -X "Transcription Models:" ${models}
+}
+
 _fabric() {
   local curcontext="$curcontext" state line
   typeset -A opt_args
@@ -107,6 +114,7 @@ _fabric() {
     '(--printsession)--printsession[Print session]:session:_fabric_sessions' \
     '(--readability)--readability[Convert HTML input into a clean, readable view]' \
     '(--input-has-vars)--input-has-vars[Apply variables to user input]' \
+    '(--no-variable-replacement)--no-variable-replacement[Disable pattern variable replacement]' \
     '(--dry-run)--dry-run[Show what would be sent to the model without actually sending it]' \
     '(--serve)--serve[Serve the Fabric Rest API]' \
     '(--serveOllama)--serveOllama[Serve the Fabric Rest API with ollama endpoints]' \
@@ -134,6 +142,10 @@ _fabric() {
     '(--think-start-tag)--think-start-tag[Start tag for thinking sections (default: <think>)]:start tag:' \
     '(--think-end-tag)--think-end-tag[End tag for thinking sections (default: </think>)]:end tag:' \
     '(--disable-responses-api)--disable-responses-api[Disable OpenAI Responses API (default: false)]' \
+    '(--transcribe-file)--transcribe-file[Audio or video file to transcribe]:audio file:_files -g "*.mp3 *.mp4 *.mpeg *.mpga *.m4a *.wav *.webm"' \
+    '(--transcribe-model)--transcribe-model[Model to use for transcription (separate from chat model)]:transcribe model:_fabric_transcription_models' \
+    '(--split-media-file)--split-media-file[Split audio/video files larger than 25MB using ffmpeg]' \
+    '(--debug)--debug[Set debug level (0=off, 1=basic, 2=detailed, 3=trace)]:debug level:(0 1 2 3)' \
     '(--notification)--notification[Send desktop notification when command completes]' \
     '(--notification-command)--notification-command[Custom command to run for notifications]:notification command:' \
     '(-h --help)'{-h,--help}'[Show this help message]' \

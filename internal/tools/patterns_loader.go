@@ -7,6 +7,7 @@ import (
 	"sort"
 	"strings"
 
+	debuglog "github.com/danielmiessler/fabric/internal/log"
 	"github.com/danielmiessler/fabric/internal/plugins"
 	"github.com/danielmiessler/fabric/internal/plugins/db/fsdb"
 	"github.com/danielmiessler/fabric/internal/tools/githelper"
@@ -335,9 +336,9 @@ func (o *PatternsLoader) createUniquePatternsFile() (err error) {
 					patternNamesMap[entry.Name()] = true
 				}
 			}
-			fmt.Fprintf(os.Stderr, "📂 Also included patterns from custom directory: %s\n", o.Patterns.CustomPatternsDir)
+			debuglog.Log("📂 Also included patterns from custom directory: %s\n", o.Patterns.CustomPatternsDir)
 		} else {
-			fmt.Fprintf(os.Stderr, "Warning: Could not read custom patterns directory %s: %v\n", o.Patterns.CustomPatternsDir, customErr)
+			debuglog.Log("Warning: Could not read custom patterns directory %s: %v\n", o.Patterns.CustomPatternsDir, customErr)
 		}
 	}
 

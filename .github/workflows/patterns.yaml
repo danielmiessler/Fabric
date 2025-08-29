@@ -16,17 +16,23 @@ jobs:
           fetch-depth: 0
 
       - name: Verify Changes in Patterns Folder
+        id: check-changes
         run: |
           git fetch origin
           if git diff --quiet HEAD~1 -- data/patterns; then
             echo "No changes detected in patterns folder."
-            exit 1
+            echo "changes=false" >> $GITHUB_OUTPUT
+          else
+            echo "Changes detected in patterns folder."
+            echo "changes=true" >> $GITHUB_OUTPUT
           fi
 
       - name: Zip the Patterns Folder
+        if: steps.check-changes.outputs.changes == 'true'
         run: zip -r patterns.zip data/patterns/
 
       - name: Upload Patterns Artifact
+        if: steps.check-changes.outputs.changes == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: patterns

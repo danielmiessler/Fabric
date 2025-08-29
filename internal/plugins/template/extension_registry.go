@@ -10,8 +10,9 @@ import (
 	"strings"
 	"time"
 
+	debuglog "github.com/danielmiessler/fabric/internal/log"
+
 	"gopkg.in/yaml.v3"
-	// Add this import
 )
 
 // ExtensionDefinition represents a single extension configuration
@@ -87,9 +88,7 @@ func NewExtensionRegistry(configDir string) *ExtensionRegistry {
 	r.ensureConfigDir()
 
 	if err := r.loadRegistry(); err != nil {
-		if Debug {
-			fmt.Printf("Warning: could not load extension registry: %v\n", err)
-		}
+		debuglog.Log("Warning: could not load extension registry: %v\n", err)
 	}
 
 	return r

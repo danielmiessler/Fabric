@@ -4,9 +4,10 @@ import (
 	"context"
 	"fmt"
 	"os"
-	"sync" // Added sync package
+	"sync"
 
 	"github.com/danielmiessler/fabric/internal/domain"
+	debuglog "github.com/danielmiessler/fabric/internal/log"
 	"github.com/danielmiessler/fabric/internal/plugins"
 	perplexity "github.com/sgaunet/perplexity-go/v2"
 
@@ -171,7 +172,7 @@ func (c *Client) SendStream(msgs []*chat.ChatCompletionMessage, opts *domain.Cha
 		if err != nil {
 			// Log error, can't send to string channel directly.
 			// Consider a mechanism to propagate this error if needed.
-			fmt.Fprintf(os.Stderr, "perplexity streaming error: %v\\n", err) // Corrected capitalization
+			debuglog.Log("perplexity streaming error: %v\n", err)
 			// If the error occurs during stream setup, the channel might not have been closed by the receiver loop.
 			// However, closing it here might cause a panic if the receiver loop also tries to close it.
 			// close(channel) // Caution: Uncommenting this may cause panic, as channel is closed in the receiver goroutine.

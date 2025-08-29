@@ -6,6 +6,8 @@ import (
 	"path/filepath"
 	"regexp"
 	"strings"
+
+	debuglog "github.com/danielmiessler/fabric/internal/log"
 )
 
 var (
@@ -14,7 +16,6 @@ var (
 	filePlugin     = &FilePlugin{}
 	fetchPlugin    = &FetchPlugin{}
 	sysPlugin      = &SysPlugin{}
-	Debug          = false // Debug flag
 )
 
 var extensionManager *ExtensionManager
@@ -33,9 +34,7 @@ var pluginPattern = regexp.MustCompile(`\{\{plugin:([^:]+):([^:]+)(?::([^}]+))?\
 var extensionPattern = regexp.MustCompile(`\{\{ext:([^:]+):([^:]+)(?::([^}]+))?\}\}`)
 
 func debugf(format string, a ...interface{}) {
-	if Debug {
-		fmt.Printf(format, a...)
-	}
+	debuglog.Debug(debuglog.Trace, format, a...)
 }
 
 func ApplyTemplate(content string, variables map[string]string, input string) (string, error) {

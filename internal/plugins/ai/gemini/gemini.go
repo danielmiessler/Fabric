@@ -6,6 +6,7 @@ import (
 	"encoding/binary"
 	"fmt"
 	"regexp"
+	"strconv"
 	"strings"
 
 	"github.com/danielmiessler/fabric/internal/chat"
@@ -170,6 +171,25 @@ func (o *Client) NeedsRawMode(modelName string) bool {
 	return false
 }
 
+func parseThinkingConfig(level domain.ThinkingLevel) (*genai.ThinkingConfig, bool) {
+	lower := strings.ToLower(strings.TrimSpace(string(level)))
+	switch domain.ThinkingLevel(lower) {
+	case "", domain.ThinkingOff:
+		return nil, false
+	case domain.ThinkingLow, domain.ThinkingMedium, domain.ThinkingHigh:
+		if budget, ok := domain.ThinkingBudgets[domain.ThinkingLevel(lower)]; ok {
+			b := int32(budget)
+			return &genai.ThinkingConfig{IncludeThoughts: true, ThinkingBudget: &b}, true
+		}
+	default:
+		if tokens, err := strconv.ParseInt(lower, 10, 32); err == nil && tokens > 0 {
+			t := int32(tokens)
+			return &genai.ThinkingConfig{IncludeThoughts: true, ThinkingBudget: &t}, true
+		}
+	}
+	return nil, false
+}
+
 // buildGenerateContentConfig constructs the generation config with optional tools.
 // When search is enabled it injects the Google Search tool. The optional search
 // location accepts either:
@@ -199,6 +219,10 @@ func (o *Client) buildGenerateContentConfig(opts *domain.ChatOptions) (*genai.Ge
 				return nil, fmt.Errorf(errInvalidLocationFormat, loc)
 			}
 		}
+	}
+
+	if tc, ok := parseThinkingConfig(opts.Thinking); ok {
+		cfg.ThinkingConfig = tc
 	}
 
 	return cfg, nil

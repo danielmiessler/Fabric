@@ -47,6 +47,11 @@ function __fabric_get_gemini_voices
         $cmd --list-gemini-voices --shell-complete-list 2>/dev/null
 end
 
+function __fabric_get_transcription_models
+        set cmd (commandline -opc)[1]
+        $cmd --list-transcription-models --shell-complete-list 2>/dev/null
+end
+
 # Main completion function
 function __fabric_register_completions
         set cmd $argv[1]
@@ -92,6 +97,9 @@ function __fabric_register_completions
         complete -c $cmd -l think-start-tag -d "Start tag for thinking sections (default: <think>)"
         complete -c $cmd -l think-end-tag -d "End tag for thinking sections (default: </think>)"
         complete -c $cmd -l voice -d "TTS voice name for supported models (e.g., Kore, Charon, Puck)" -a "(__fabric_get_gemini_voices)"
+        complete -c $cmd -l transcribe-file -d "Audio or video file to transcribe" -r -a "*.mp3 *.mp4 *.mpeg *.mpga *.m4a *.wav *.webm"
+        complete -c $cmd -l transcribe-model -d "Model to use for transcription (separate from chat model)" -a "(__fabric_get_transcription_models)"
+        complete -c $cmd -l debug -d "Set debug level (0=off, 1=basic, 2=detailed, 3=trace)" -a "0 1 2 3"
         complete -c $cmd -l notification-command -d "Custom command to run for notifications (overrides built-in notifications)"
 
         # Boolean flags (no arguments)
@@ -113,8 +121,9 @@ function __fabric_register_completions
         complete -c $cmd -l metadata -d "Output video metadata"
         complete -c $cmd -l yt-dlp-args -d "Additional arguments to pass to yt-dlp (e.g. '--cookies-from-browser brave')"
         complete -c $cmd -l readability -d "Convert HTML input into a clean, readable view"
-        complete -c $cmd -l input-has-vars -d "Apply variables to user input"
-        complete -c $cmd -l dry-run -d "Show what would be sent to the model without actually sending it"
+       complete -c $cmd -l input-has-vars -d "Apply variables to user input"
+       complete -c $cmd -l no-variable-replacement -d "Disable pattern variable replacement"
+       complete -c $cmd -l dry-run -d "Show what would be sent to the model without actually sending it"
         complete -c $cmd -l search -d "Enable web search tool for supported models (Anthropic, OpenAI, Gemini)"
         complete -c $cmd -l serve -d "Serve the Fabric Rest API"
         complete -c $cmd -l serveOllama -d "Serve the Fabric Rest API with ollama endpoints"
@@ -126,6 +135,7 @@ function __fabric_register_completions
         complete -c $cmd -l shell-complete-list -d "Output raw list without headers/formatting (for shell completion)"
         complete -c $cmd -l suppress-think -d "Suppress text enclosed in thinking tags"
         complete -c $cmd -l disable-responses-api -d "Disable OpenAI Responses API (default: false)"
+        complete -c $cmd -l split-media-file -d "Split audio/video files larger than 25MB using ffmpeg"
         complete -c $cmd -l notification -d "Send desktop notification when command completes"
         complete -c $cmd -s h -l help -d "Show this help message"
 end

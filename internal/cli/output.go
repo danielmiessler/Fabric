@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/atotto/clipboard"
+	debuglog "github.com/danielmiessler/fabric/internal/log"
 )
 
 func CopyToClipboard(message string) (err error) {
@@ -30,7 +31,7 @@ func CreateOutputFile(message string, fileName string) (err error) {
 	if _, err = file.WriteString(message); err != nil {
 		err = fmt.Errorf("error writing to file: %v", err)
 	} else {
-		fmt.Fprintf(os.Stderr, "\n\n[Output also written to %s]\n", fileName)
+		debuglog.Log("\n\n[Output also written to %s]\n", fileName)
 	}
 	return
 }

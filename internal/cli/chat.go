@@ -9,6 +9,7 @@ import (
 
 	"github.com/danielmiessler/fabric/internal/core"
 	"github.com/danielmiessler/fabric/internal/domain"
+	debuglog "github.com/danielmiessler/fabric/internal/log"
 	"github.com/danielmiessler/fabric/internal/plugins/db/fsdb"
 	"github.com/danielmiessler/fabric/internal/tools/notifications"
 )
@@ -17,6 +18,19 @@ import (
 func handleChatProcessing(currentFlags *Flags, registry *core.PluginRegistry, messageTools string) (err error) {
 	if messageTools != "" {
 		currentFlags.AppendMessage(messageTools)
+	}
+	// Check for pattern-specific model via environment variable
+	if currentFlags.Pattern != "" && currentFlags.Model == "" {
+		envVar := "FABRIC_MODEL_" + strings.ToUpper(strings.ReplaceAll(currentFlags.Pattern, "-", "_"))
+		if modelSpec := os.Getenv(envVar); modelSpec != "" {
+			parts := strings.SplitN(modelSpec, "|", 2)
+			if len(parts) == 2 {
+				currentFlags.Vendor = parts[0]
+				currentFlags.Model = parts[1]
+			} else {
+				currentFlags.Model = modelSpec
+			}
+		}
 	}
 
 	var chatter *core.Chatter
@@ -122,7 +136,7 @@ func handleChatProcessing(currentFlags *Flags, registry *core.PluginRegistry, me
 	if chatOptions.Notification {
 		if err = sendNotification(chatOptions, chatReq.PatternName, result); err != nil {
 			// Log notification error but don't fail the main command
-			fmt.Fprintf(os.Stderr, "Failed to send notification: %v\n", err)
+			debuglog.Log("Failed to send notification: %v\n", err)
 		}
 	}
 

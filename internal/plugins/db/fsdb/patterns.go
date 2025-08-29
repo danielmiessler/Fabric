@@ -31,6 +31,27 @@ type Pattern struct {
 func (o *PatternsEntity) GetApplyVariables(
 	source string, variables map[string]string, input string) (pattern *Pattern, err error) {
 
+	if pattern, err = o.loadPattern(source); err != nil {
+		return
+	}
+
+	err = o.applyVariables(pattern, variables, input)
+	return
+}
+
+// GetWithoutVariables returns a pattern with only the {{input}} placeholder processed
+// and skips template variable replacement
+func (o *PatternsEntity) GetWithoutVariables(source, input string) (pattern *Pattern, err error) {
+
+	if pattern, err = o.loadPattern(source); err != nil {
+		return
+	}
+
+	o.applyInput(pattern, input)
+	return
+}
+
+func (o *PatternsEntity) loadPattern(source string) (pattern *Pattern, err error) {
 	// Determine if this is a file path
 	isFilePath := strings.HasPrefix(source, "\\") ||
 		strings.HasPrefix(source, "/") ||
@@ -39,8 +60,8 @@ func (o *PatternsEntity) GetApplyVariables(
 
 	if isFilePath {
 		// Resolve the file path using GetAbsolutePath
-		absPath, err := util.GetAbsolutePath(source)
-		if err != nil {
+		var absPath string
+		if absPath, err = util.GetAbsolutePath(source); err != nil {
 			return nil, fmt.Errorf("could not resolve file path: %v", err)
 		}
 
@@ -51,26 +72,27 @@ func (o *PatternsEntity) GetApplyVariables(
 		pattern, err = o.getFromDB(source)
 	}
 
-	if err != nil {
-		return
-	}
-
-	// Apply variables to the pattern
-	err = o.applyVariables(pattern, variables, input)
 	return
 }
 
-func (o *PatternsEntity) applyVariables(
-	pattern *Pattern, variables map[string]string, input string) (err error) {
-
-	// Ensure pattern has an {{input}} placeholder
-	// If not present, append it on a new line
+func (o *PatternsEntity) ensureInput(pattern *Pattern) {
 	if !strings.Contains(pattern.Pattern, "{{input}}") {
 		if !strings.HasSuffix(pattern.Pattern, "\n") {
 			pattern.Pattern += "\n"
 		}
 		pattern.Pattern += "{{input}}"
 	}
+}
+
+func (o *PatternsEntity) applyInput(pattern *Pattern, input string) {
+	o.ensureInput(pattern)
+	pattern.Pattern = strings.ReplaceAll(pattern.Pattern, "{{input}}", input)
+}
+
+func (o *PatternsEntity) applyVariables(
+	pattern *Pattern, variables map[string]string, input string) (err error) {
+
+	o.ensureInput(pattern)
 
 	// Temporarily replace {{input}} with a sentinel token to protect it
 	// from recursive variable resolution

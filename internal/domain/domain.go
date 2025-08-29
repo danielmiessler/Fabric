@@ -13,15 +13,16 @@ const (
 )
 
 type ChatRequest struct {
-	ContextName      string
-	SessionName      string
-	PatternName      string
-	PatternVariables map[string]string
-	Message          *chat.ChatCompletionMessage
-	Language         string
-	Meta             string
-	InputHasVars     bool
-	StrategyName     string
+	ContextName           string
+	SessionName           string
+	PatternName           string
+	PatternVariables      map[string]string
+	Message               *chat.ChatCompletionMessage
+	Language              string
+	Meta                  string
+	InputHasVars          bool
+	NoVariableReplacement bool
+	StrategyName          string
 }
 
 type ChatOptions struct {

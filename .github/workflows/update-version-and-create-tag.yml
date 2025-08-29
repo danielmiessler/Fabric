@@ -6,7 +6,6 @@ on:
       - main # Monitor the main branch
     paths-ignore:
       - "data/patterns/**"
-      - "**/*.md"
       - "data/strategies/**"
       - "cmd/generate_changelog/*.db"
       - "cmd/generate_changelog/incoming/*.txt"

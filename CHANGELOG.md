@@ -1,5 +1,168 @@
 # Changelog
 
+## v1.4.302 (2025-08-28)
+
+### PR [#1737](https://github.com/danielmiessler/Fabric/pull/1737) by [ksylvan](https://github.com/ksylvan) and [OmriH-Elister](https://github.com/OmriH-Elister): Add New Psychological Analysis Patterns + devalue version bump
+
+- Add create_story_about_person system pattern with narrative workflow
+- Add heal_person system pattern for compassionate healing plans
+- Update pattern_explanations to register new patterns and renumber indices
+- Extend pattern_descriptions with entries, tags, and concise descriptions
+- Bump devalue dependency from 5.1.1 to 5.3.2
+
+## v1.4.301 (2025-08-28)
+
+### PR [#1735](https://github.com/danielmiessler/Fabric/pull/1735) by [ksylvan](https://github.com/ksylvan): Fix Docker Build Path Configuration
+
+- Fix: update Docker workflow to use specific Dockerfile and monitor markdown file changes
+- Add explicit Dockerfile path to Docker build action
+- Remove markdown files from workflow paths-ignore filter
+- Enable CI triggers for documentation file changes
+- Specify Docker build context with custom file location
+
+## v1.4.300 (2025-08-28)
+
+### PR [#1732](https://github.com/danielmiessler/Fabric/pull/1732) by [ksylvan](https://github.com/ksylvan): CI Infra: Changelog Generation Tool + Docker Image Pubishing
+
+- Add GitHub Actions workflow to publish Docker images on tags
+- Build multi-arch images with Buildx and QEMU across amd64, arm64
+- Tag images using semver; push to GHCR and Docker Hub
+- Gate patterns workflow steps on detected changes instead of failing
+- Auto-detect GitHub owner and repo from git remote URL
+
+## v1.4.299 (2025-08-27)
+
+### PR [#1731](https://github.com/danielmiessler/Fabric/pull/1731) by [ksylvan](https://github.com/ksylvan): chore: upgrade ollama dependency from v0.9.0 to v0.11.7
+
+- Updated ollama package from version 0.9.0 to 0.11.7
+- Fixed 8 security vulnerabilities including 5 high-severity CVEs that could cause denial of service attacks
+- Patched Ollama server vulnerabilities related to division by zero errors and memory exhaustion
+- Resolved security flaws that allowed malicious GGUF model file uploads to crash the server
+- Enhanced system stability and security posture through comprehensive dependency upgrade
+
+## v1.4.298 (2025-08-27)
+
+### PR [#1730](https://github.com/danielmiessler/Fabric/pull/1730) by [ksylvan](https://github.com/ksylvan): Modernize Dockerfile with Best Practices Implementation
+
+- Remove docker-test framework and simplify production docker setup by eliminating complex testing infrastructure
+- Delete entire docker-test directory including test runner scripts and environment configuration files
+- Implement multi-stage build optimization in production Dockerfile to improve build efficiency
+- Remove docker-compose.yml and start-docker.sh helper scripts to streamline container workflow
+- Update README documentation with cleaner Docker usage instructions and reduced image size benefits
+
+## v1.4.297 (2025-08-26)
+
+### PR [#1729](https://github.com/danielmiessler/Fabric/pull/1729) by [ksylvan](https://github.com/ksylvan): Add GitHub Community Health Documents
+
+- Add CODE_OF_CONDUCT defining respectful, collaborative community behavior
+- Add CONTRIBUTING with setup, testing, PR, changelog requirements
+- Add SECURITY policy with reporting process and response timelines
+- Add SUPPORT guide for bugs, features, discussions, expectations
+- Add docs README indexing guides, quick starts, contributor essentials
+
+## v1.4.296 (2025-08-26)
+
+### PR [#1728](https://github.com/danielmiessler/Fabric/pull/1728) by [ksylvan](https://github.com/ksylvan): Refactor Logging System to Use Centralized Debug Logger
+
+- Replace fmt.Fprintf/os.Stderr with centralized debuglog.Log across CLI and add unconditional Log function for important messages
+- Improve OAuth flow messaging and token refresh diagnostics with better error handling
+- Update tests to capture debuglog output via SetOutput for better test coverage
+- Convert Perplexity streaming errors to unified debug logging and emit file write notifications through debuglog
+- Standardize extension registry warnings and announce large audio processing steps via centralized logger
+
+## v1.4.295 (2025-08-24)
+
+### PR [#1727](https://github.com/danielmiessler/Fabric/pull/1727) by [ksylvan](https://github.com/ksylvan): Standardize Anthropic Beta Failure Logging
+
+- Refactor: route Anthropic beta failure logs through internal debug logger
+- Replace fmt.Fprintf stderr with debuglog.Debug for beta failures
+- Import internal log package and remove os dependency
+- Standardize logging level to debuglog.Basic for beta errors
+- Preserve fallback stream behavior when beta features fail
+
+## v1.4.294 (2025-08-20)
+
+### PR [#1723](https://github.com/danielmiessler/Fabric/pull/1723) by [ksylvan](https://github.com/ksylvan): docs: update README with Venice AI provider and Windows install script
+
+- Add Venice AI provider configuration with API endpoint
+- Document Venice AI as privacy-first open-source provider
+- Include PowerShell installation script for Windows users
+- Add debug levels section to table of contents
+- Update recent major features with v1.4.294 release notes
+
+## v1.4.293 (2025-08-19)
+
+### PR [#1718](https://github.com/danielmiessler/Fabric/pull/1718) by [ksylvan](https://github.com/ksylvan): Implement Configurable Debug Logging Levels
+
+- Add --debug flag controlling runtime logging verbosity levels
+- Introduce internal/log package with Off, Basic, Detailed, Trace
+- Replace ad-hoc Debugf and globals with centralized debug logger
+- Wire debug level during early CLI argument parsing
+- Add bash, zsh, fish completions for --debug levels
+
+## v1.4.292 (2025-08-18)
+
+### PR [#1717](https://github.com/danielmiessler/Fabric/pull/1717) by [ksylvan](https://github.com/ksylvan): Highlight default vendor/model in model listing
+
+- Update PrintWithVendor signature to accept default vendor and model
+- Mark default vendor/model with asterisk in non-shell output
+- Compare vendor and model case-insensitively when marking
+- Pass registry defaults to PrintWithVendor from CLI
+- Add test ensuring default selection appears with asterisk
+### Direct commits
+
+- Docs: update version number in README updates section from v1.4.290 to v1.4.291
+
+## v1.4.291 (2025-08-18)
+
+### PR [#1715](https://github.com/danielmiessler/Fabric/pull/1715) by [ksylvan](https://github.com/ksylvan): feat: add speech-to-text via OpenAI with transcription flags and comp…
+
+- Add --transcribe-file flag to transcribe audio or video
+- Add --transcribe-model flag with model listing and completion
+- Add --split-media-file flag to chunk files over 25MB
+- Implement OpenAI transcription using Whisper and GPT-4o Transcribe
+- Integrate transcription pipeline into CLI before readability processing
+
+## v1.4.290 (2025-08-17)
+
+### PR [#1714](https://github.com/danielmiessler/Fabric/pull/1714) by [ksylvan](https://github.com/ksylvan): feat: add per-pattern model mapping support via environment variables
+
+- Add per-pattern model mapping support via environment variables
+- Implement environment variable lookup for pattern-specific models
+- Support vendor|model format in environment variable specification
+- Enable shell startup file configuration for patterns
+- Transform pattern names to uppercase environment variable format
+
+## v1.4.289 (2025-08-16)
+
+### PR [#1710](https://github.com/danielmiessler/Fabric/pull/1710) by [ksylvan](https://github.com/ksylvan): feat: add --no-variable-replacement flag to disable pattern variable …
+
+- Add --no-variable-replacement flag to disable pattern variable substitution
+- Introduce CLI flag to skip pattern variable replacement and wire it into domain request and session builder
+- Provide PatternsEntity.GetWithoutVariables for input-only pattern processing support
+- Refactor patterns code into reusable load and apply helpers
+- Update bash, zsh, fish completions with new flag and document in README and CLI help output
+
+## v1.4.288 (2025-08-16)
+
+### PR [#1709](https://github.com/danielmiessler/Fabric/pull/1709) by [ksylvan](https://github.com/ksylvan): Enhanced YouTube Subtitle Language Fallback Handling
+
+- Fix: improve YouTube subtitle language fallback handling in yt-dlp integration
+- Fix typo "Gemmini" to "Gemini" in README
+- Add "kballard" and "shellquote" to VSCode dictionary
+- Add "YTDLP" to VSCode spell checker
+- Enhance subtitle language options with fallback variants
+
+## v1.4.287 (2025-08-14)
+
+### PR [#1706](https://github.com/danielmiessler/Fabric/pull/1706) by [ksylvan](https://github.com/ksylvan): Gemini Thinking Support and README (New Features) automation
+
+- Add comprehensive "Recent Major Features" section to README
+- Introduce new readme_updates Python script for automation
+- Enable Gemini thinking configuration with token budgets
+- Update CLI help text for Gemini thinking support
+- Add comprehensive test coverage for Gemini thinking
+
 ## v1.4.286 (2025-08-14)
 
 ### PR [#1700](https://github.com/danielmiessler/Fabric/pull/1700) by [ksylvan](https://github.com/ksylvan): Introduce Thinking Config Across Anthropic and OpenAI Providers

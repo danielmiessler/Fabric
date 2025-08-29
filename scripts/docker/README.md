@@ -1,40 +1,48 @@
-# Docker Deployment
+# Fabric Docker Image
 
-This directory contains Docker configuration files for running Fabric in containers.
+This directory provides a simple Docker setup for running the [Fabric](https://github.com/danielmiessler/fabric) CLI.
 
-## Files
+## Build
 
-- `Dockerfile` - Main Docker build configuration
-- `docker-compose.yml` - Docker Compose stack configuration  
-- `start-docker.sh` - Helper script to start the stack
-- `README.md` - This documentation
-
-## Quick Start
+Build the image from the repository root:
 
 ```bash
-# Start the Docker stack
-./start-docker.sh
-
-# Or manually with docker-compose
-docker-compose up -d
-
-# View logs
-docker-compose logs -f
-
-# Stop the stack
-docker-compose down
+docker build -t fabric -f scripts/docker/Dockerfile .
 ```
 
-## Building
+## Persisting configuration
+
+Fabric stores its configuration in `~/.config/fabric/.env`. Mount this path to keep your settings on the host.
+
+### Using a host directory
 
 ```bash
-# Build the Docker image
-docker build -t fabric .
-
-# Or use docker-compose
-docker-compose build
+mkdir -p $HOME/.fabric-config
+# Run setup to create the .env and download patterns
+ docker run --rm -it -v $HOME/.fabric-config:/root/.config/fabric fabric --setup
 ```
 
-## Configuration
+Subsequent runs can reuse the same directory:
 
-Make sure to configure your environment variables and API keys before running the Docker stack. See the main README.md for setup instructions.
+```bash
+docker run --rm -it -v $HOME/.fabric-config:/root/.config/fabric fabric -p your-pattern
+```
+
+### Mounting a single .env file
+
+If you only want to persist the `.env` file:
+
+```bash
+# assuming .env exists in the current directory
+docker run --rm -it -v $PWD/.env:/root/.config/fabric/.env fabric -p your-pattern
+```
+
+## Running the server
+
+Expose port 8080 to use Fabric's REST API:
+
+```bash
+docker run --rm -it -p 8080:8080 -v $HOME/.fabric-config:/root/.config/fabric fabric --serve
+```
+
+The API will be available at `http://localhost:8080`.

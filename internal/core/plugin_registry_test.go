@@ -10,6 +10,7 @@ import (
 
 	"github.com/danielmiessler/fabric/internal/chat"
 	"github.com/danielmiessler/fabric/internal/domain"
+	debuglog "github.com/danielmiessler/fabric/internal/log"
 	"github.com/danielmiessler/fabric/internal/plugins"
 	"github.com/danielmiessler/fabric/internal/plugins/ai"
 	"github.com/danielmiessler/fabric/internal/plugins/db/fsdb"
@@ -72,7 +73,12 @@ func TestGetChatter_WarnsOnAmbiguousModel(t *testing.T) {
 	r, w, _ := os.Pipe()
 	oldStderr := os.Stderr
 	os.Stderr = w
-	defer func() { os.Stderr = oldStderr }()
+	// Redirect log output to our pipe to capture unconditional log messages
+	debuglog.SetOutput(w)
+	defer func() {
+		os.Stderr = oldStderr
+		debuglog.SetOutput(oldStderr)
+	}()
 
 	chatter, err := registry.GetChatter("shared-model", 0, "", "", false, false)
 	w.Close()
@@ -81,8 +87,10 @@ func TestGetChatter_WarnsOnAmbiguousModel(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetChatter() error = %v", err)
 	}
-	if chatter.vendor.GetName() != "VendorA" {
-		t.Fatalf("expected vendor VendorA, got %s", chatter.vendor.GetName())
+	// Verify that one of the valid vendors was selected (don't care which one due to map iteration randomness)
+	vendorName := chatter.vendor.GetName()
+	if vendorName != "VendorA" && vendorName != "VendorB" {
+		t.Fatalf("expected vendor VendorA or VendorB, got %s", vendorName)
 	}
 	if !strings.Contains(string(warning), "multiple vendors provide model shared-model") {
 		t.Fatalf("expected warning about multiple vendors, got %q", string(warning))

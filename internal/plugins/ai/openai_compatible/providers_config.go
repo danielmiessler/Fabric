@@ -102,6 +102,11 @@ var ProviderMap = map[string]ProviderConfig{
 		BaseURL:             "https://api.together.xyz/v1",
 		ImplementsResponses: false,
 	},
+	"Venice AI": {
+		Name:                "Venice AI",
+		BaseURL:             "https://api.venice.ai/api/v1",
+		ImplementsResponses: false,
+	},
 }
 
 // GetProviderByName returns the provider configuration for a given name with O(1) lookup

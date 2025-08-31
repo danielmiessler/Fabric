@@ -153,6 +153,13 @@ func (c *BedrockClient) ListModels() ([]string, error) {
 	return models, nil
 }
 
+func (c *BedrockClient) HandleSchema(opts *domain.ChatOptions) (err error) {
+	if opts.SchemaContent != "" {
+		return fmt.Errorf("structured output is not supported for bedrock")
+	}
+	return nil
+}
+
 // SendStream sends the messages to the Bedrock ConverseStream API
 func (c *BedrockClient) SendStream(msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan string) (err error) {
 	// Ensure channel is closed on all exit paths to prevent goroutine leaks

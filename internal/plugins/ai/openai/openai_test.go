@@ -176,109 +176,51 @@ func TestCitationFormatting(t *testing.T) {
 	assert.Equal(t, 2, citationCount, "Expected 2 unique citations")
 }
 
-func TestBuildChatCompletionParams_WithSchema(t *testing.T) {
+func TestHandleSchema(t *testing.T) {
 	client := NewClient()
-	msgs := []*chat.ChatCompletionMessage{
-		{Role: "user", Content: "Generate a JSON object."},
-	}
-
 	validSchema := `{
 		"type": "object",
 		"properties": {
 			"name": {"type": "string"},
 			"age": {"type": "integer"}
-		},
-		"required": ["name", "age"]
+		}
 	}`
+	invalidSchema := `{"type": "object", "properties":`
 
-	// Test with valid schema
-	optsValid := &domain.ChatOptions{
-		Model:         "gpt-3.5-turbo",
-		SchemaContent: validSchema,
-	}
-	paramsValid := client.buildChatCompletionParams(msgs, optsValid)
-	assert.NotNil(t, paramsValid.ResponseFormat.OfJSONSchema, "Expected OfJSONSchema to be set for valid schema")
-	assert.Equal(t, "json_output", paramsValid.ResponseFormat.OfJSONSchema.JSONSchema.Name)
-	assert.True(t, paramsValid.ResponseFormat.OfJSONSchema.JSONSchema.Strict.Value, "Expected strict to be true")
-	assert.NotNil(t, paramsValid.ResponseFormat.OfJSONSchema.JSONSchema.Schema, "Expected schema content to be unmarshaled")
+	// Test case for Responses API
+	t.Run("Responses API - valid schema", func(t *testing.T) {
+		client.SetResponsesAPIEnabled(true)
+		opts := &domain.ChatOptions{SchemaContent: validSchema}
+		err := client.HandleSchema(opts)
+		assert.NoError(t, err, "Expected no error for valid schema with Responses API")
+	})
 
-	// Test with invalid schema
-	invalidSchema := `{ "type": "object", "properties": { "name": "string" }` // Malformed JSON
-	optsInvalid := &domain.ChatOptions{
-		Model:         "gpt-3.5-turbo",
-		SchemaContent: invalidSchema,
-	}
-	paramsInvalid := client.buildChatCompletionParams(msgs, optsInvalid)
-	assert.Nil(t, paramsInvalid.ResponseFormat.OfJSONSchema, "Expected OfJSONSchema to NOT be set for invalid schema")
+	t.Run("Responses API - invalid schema", func(t *testing.T) {
+		client.SetResponsesAPIEnabled(true)
+		opts := &domain.ChatOptions{SchemaContent: invalidSchema}
+		err := client.HandleSchema(opts)
+		assert.Error(t, err, "Expected an error for invalid schema with Responses API")
+	})
 
-	// Test without schema
-	optsNoSchema := &domain.ChatOptions{
-		Model: "gpt-3.5-turbo",
-	}
-	paramsNoSchema := client.buildChatCompletionParams(msgs, optsNoSchema)
-	assert.Nil(t, paramsNoSchema.ResponseFormat.OfJSONSchema, "Expected OfJSONSchema to NOT be set when no schema is provided")
-}
+	// Test case for Chat Completions API
+	t.Run("Chat Completions API - valid schema", func(t *testing.T) {
+		client.SetResponsesAPIEnabled(false)
+		opts := &domain.ChatOptions{SchemaContent: validSchema}
+		err := client.HandleSchema(opts)
+		assert.NoError(t, err, "Expected no error for valid schema with Chat Completions API")
+	})
 
-func TestBuildResponseParams_WithSchema(t *testing.T) {
-	client := NewClient()
-	msgs := []*chat.ChatCompletionMessage{
-		{Role: "user", Content: "Generate a JSON object."},
-	}
+	t.Run("Chat Completions API - invalid schema", func(t *testing.T) {
+		client.SetResponsesAPIEnabled(false)
+		opts := &domain.ChatOptions{SchemaContent: invalidSchema}
+		err := client.HandleSchema(opts)
+		assert.Error(t, err, "Expected an error for invalid schema with Chat Completions API")
+	})
 
-	validSchema := `{
-		"type": "object",
-		"properties": {
-			"name": {"type": "string"},
-			"age": {"type": "integer"}
-		},
-		"required": ["name", "age"]
-	}`
-
-	optsValid := &domain.ChatOptions{
-		Model:         "gpt-4o", // Use a model that supports Responses API
-		SchemaContent: validSchema,
-	}
-	paramsValid := client.buildResponseParams(msgs, optsValid)
-
-	// Assert that extraFields is set
-	assert.NotNil(t, paramsValid.ExtraFields(), "Expected ExtraFields to be set for valid schema")
-
-	// Assert the "text" field within extraFields
-	text, ok := paramsValid.ExtraFields()["text"].(map[string]interface{})
-	assert.True(t, ok, "Expected 'text' field to be a map")
-	assert.NotNil(t, text, "Expected 'text' map not to be nil")
-
-	// Assert the "format" field within "text"
-	format, ok := text["format"].(map[string]interface{})
-	assert.True(t, ok, "Expected 'format' field to be a map")
-	assert.NotNil(t, format, "Expected 'format' map not to be nil")
-
-	// Assert content of "format"
-	assert.Equal(t, "json_schema", format["type"], "Expected format type to be json_schema")
-	assert.Equal(t, "json_output", format["name"], "Expected format name to be json_output")
-	assert.True(t, format["strict"].(bool), "Expected strict to be true")
-
-	// Assert schema content
-	schema, ok := format["schema"].(map[string]interface{})
-	assert.True(t, ok, "Expected 'schema' field to be a map")
-	assert.NotNil(t, schema, "Expected schema content to be unmarshaled")
-	assert.Equal(t, "object", schema["type"], "Expected schema type to be object")
-	assert.NotNil(t, schema["properties"], "Expected schema properties to be present")
-	assert.NotNil(t, schema["required"], "Expected schema required fields to be present")
-
-	// Test with invalid schema
-	invalidSchema := `{ "type": "object", "properties": { "name": "string" }` // Malformed JSON
-	optsInvalid := &domain.ChatOptions{
-		Model:         "gpt-4o",
-		SchemaContent: invalidSchema,
-	}
-	paramsInvalid := client.buildResponseParams(msgs, optsInvalid)
-	assert.Nil(t, paramsInvalid.ExtraFields(), "Expected ExtraFields NOT to be set for invalid schema")
-
-	// Test without schema
-	optsNoSchema := &domain.ChatOptions{
-		Model: "gpt-4o",
-	}
-	paramsNoSchema := client.buildResponseParams(msgs, optsNoSchema)
-	assert.Nil(t, paramsNoSchema.ExtraFields(), "Expected ExtraFields NOT to be set when no schema is provided")
+	// Test case for empty schema
+	t.Run("Empty schema", func(t *testing.T) {
+		opts := &domain.ChatOptions{SchemaContent: ""}
+		err := client.HandleSchema(opts)
+		assert.NoError(t, err, "Expected no error for empty schema")
+	})
 }

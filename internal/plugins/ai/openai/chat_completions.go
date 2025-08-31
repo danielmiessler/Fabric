@@ -5,8 +5,7 @@ package openai
 // that don't support the newer Responses API (e.g., Groq, Mistral, etc.).
 
 import (
-	"context"
-	"encoding/json" // Re-adding this import
+	"context" // Re-adding this import
 	"strings"
 
 	"github.com/danielmiessler/fabric/internal/chat"
@@ -66,21 +65,6 @@ func (o *Client) buildChatCompletionParams(
 	ret = openai.ChatCompletionNewParams{
 		Model:    shared.ChatModel(opts.Model),
 		Messages: messages,
-	}
-
-	if opts.SchemaContent != "" {
-		var schemaParams map[string]interface{}
-		if err := json.Unmarshal([]byte(opts.SchemaContent), &schemaParams); err == nil {
-			schemaParam := openai.ResponseFormatJSONSchemaJSONSchemaParam{
-				Name:        "json_output",
-				Description: openai.String("Formats output according to the provided JSON schema."),
-				Schema:      schemaParams,
-				Strict:      openai.Bool(true),
-			}
-			ret.ResponseFormat = openai.ChatCompletionNewParamsResponseFormatUnion{
-				OfJSONSchema: &openai.ResponseFormatJSONSchemaParam{JSONSchema: schemaParam},
-			}
-		}
 	}
 
 	if !opts.Raw {

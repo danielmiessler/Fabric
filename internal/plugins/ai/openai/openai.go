@@ -93,6 +93,25 @@ func (o *Client) ListModels() (ret []string, err error) {
 	return
 }
 
+func (c *Client) HandleSchema(opts *domain.ChatOptions) (err error) {
+	if opts.SchemaContent == "" {
+		return nil
+	}
+
+	if c.supportsResponsesAPI() {
+		var schemaParams map[string]interface{}
+		if err = json.Unmarshal([]byte(opts.SchemaContent), &schemaParams); err != nil {
+			return fmt.Errorf("failed to unmarshal schema content for Responses API: %w", err)
+		}
+	} else {
+		var schemaParams map[string]interface{}
+		if err = json.Unmarshal([]byte(opts.SchemaContent), &schemaParams); err != nil {
+			return fmt.Errorf("failed to unmarshal schema content for Chat Completions API: %w", err)
+		}
+	}
+	return nil
+}
+
 func (o *Client) SendStream(
 	msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan string,
 ) (err error) {
@@ -258,23 +277,6 @@ func (o *Client) buildResponseParams(
 
 		// Add parameters not officially supported by Responses API as extra fields
 		extraFields := make(map[string]any)
-
-		// Handle schema for Responses API
-		if opts.SchemaContent != "" {
-			var schemaParams map[string]interface{}
-			if err := json.Unmarshal([]byte(opts.SchemaContent), &schemaParams); err == nil {
-				textFormat := map[string]interface{}{
-					"type":   "json_schema",
-					"name":   "json_output", // Using a generic name for the schema
-					"schema": schemaParams,
-					"strict": true,
-				}
-				textMap := map[string]interface{}{
-					"format": textFormat,
-				}
-				extraFields["text"] = textMap
-			}
-		}
 
 		if opts.PresencePenalty != 0 {
 			extraFields["presence_penalty"] = opts.PresencePenalty

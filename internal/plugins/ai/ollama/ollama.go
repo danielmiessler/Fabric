@@ -10,16 +10,15 @@ import (
 	"time"
 
 	"github.com/danielmiessler/fabric/internal/chat"
-	ollamaapi "github.com/ollama/ollama/api"
-	"github.com/samber/lo"
-
 	"github.com/danielmiessler/fabric/internal/domain"
 	"github.com/danielmiessler/fabric/internal/plugins"
+	ollamaapi "github.com/ollama/ollama/api"
+	"github.com/samber/lo"
 )
 
-const defaultBaseUrl = "http://localhost:11434"
+const DefaultBaseUrl = "http://localhost:11434"
 
-func NewClient() (ret *Client) {
+func NewClient() (ret *Client) { // NewClient is already exported, no change needed here.
 	vendorName := "Ollama"
 	ret = &Client{}
 
@@ -31,7 +30,7 @@ func NewClient() (ret *Client) {
 
 	ret.ApiUrl = ret.AddSetupQuestionCustom("API URL", true,
 		"Enter your Ollama URL (as a reminder, it is usually http://localhost:11434')")
-	ret.ApiUrl.Value = defaultBaseUrl
+	ret.ApiUrl.Value = DefaultBaseUrl
 	ret.ApiKey = ret.PluginBase.AddSetupQuestion("API key", false)
 	ret.ApiKey.Value = ""
 	ret.ApiHttpTimeout = ret.AddSetupQuestionCustom("HTTP Timeout", true,
@@ -103,6 +102,11 @@ func (o *Client) ListModels() (ret []string, err error) {
 	return
 }
 
+func (c *Client) HandleSchema(opts *domain.ChatOptions) (err error) {
+	// Allow schema to pass through. Specific validation or handling can be added here if needed in the future.
+	return nil
+}
+
 func (o *Client) SendStream(msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan string) (err error) {
 	req := o.createChatRequest(msgs, opts)
 
@@ -159,6 +163,12 @@ func (o *Client) createChatRequest(msgs []*chat.ChatCompletionMessage, opts *dom
 		Messages: messages,
 		Options:  options,
 	}
+
+	// Add schema format if present
+	if opts.SchemaContent != "" {
+		ret.Format = []byte(opts.SchemaContent)
+	}
+
 	return
 }
 

@@ -27,7 +27,7 @@ func validateOutputWithSchema(output, schemaContent string) error {
 		for _, desc := range result.Errors() {
 			errorString += fmt.Sprintf("\n- %s", desc)
 		}
-		return fmt.Errorf(errorString)
+		return fmt.Errorf("%s", errorString)
 	}
 
 	return nil

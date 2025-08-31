@@ -2,6 +2,7 @@ package perplexity
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"os"
 	"sync"
@@ -62,6 +63,12 @@ func (c *Client) ListModels() ([]string, error) {
 	return models, nil
 }
 
+func (c *Client) HandleSchema(opts *domain.ChatOptions) (err error) {
+	// Perplexity supports JSON Schema structured outputs.
+	// We will add the schema to the request options in Send/SendStream.
+	return nil
+}
+
 func (c *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions) (string, error) {
 	if c.client == nil {
 		if err := c.Configure(); err != nil {
@@ -99,22 +106,60 @@ func (c *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, o
 		requestOptions = append(requestOptions, perplexity.WithFrequencyPenalty(opts.FrequencyPenalty))
 	}
 
+	// If schema content is provided, parse it and add the JSON schema response format option
+	if opts.SchemaContent != "" {
+		var schema map[string]interface{}
+		if err := json.Unmarshal([]byte(opts.SchemaContent), &schema); err != nil {
+			return "", fmt.Errorf("failed to parse schema content: %w", err)
+		}
+		requestOptions = append(requestOptions, perplexity.WithJSONSchemaResponseFormat(schema))
+	}
+
 	request := perplexity.NewCompletionRequest(requestOptions...)
 
-	// Corrected: Use SendCompletionRequest method from perplexity-go library
+	// Use SendCompletionRequest method from perplexity-go library
 	resp, err := c.client.SendCompletionRequest(request) // Pass request directly
 	if err != nil {
 		return "", fmt.Errorf("perplexity API request failed: %w", err) // Corrected capitalization
 	}
 
 	content := resp.GetLastContent()
+	citations := resp.GetSearchResults()
 
-	// Append citations if available
-	citations := resp.GetCitations()
-	if len(citations) > 0 {
+	// Handle structured output with citations embedded in JSON
+	if opts.SchemaContent != "" && len(citations) > 0 {
+		var contentMap map[string]interface{}
+		// Attempt to unmarshal existing content as JSON
+		if err := json.Unmarshal([]byte(content), &contentMap); err == nil {
+			citationData := make([]map[string]string, len(citations))
+			for i, citation := range citations {
+				citationData[i] = map[string]string{
+					"title": citation.Title,
+					"url":   citation.URL,
+				}
+			}
+			contentMap["citations"] = citationData                      // Add citations to the JSON object
+			newContent, err := json.MarshalIndent(contentMap, "", "  ") // Use MarshalIndent for readability
+			if err == nil {
+				content = string(newContent)
+			} else {
+				// Fallback if marshaling fails, append as plain text
+				content += "\n\n# CITATIONS\n\n"
+				for i, citation := range citations {
+					content += fmt.Sprintf("- [%d] %s %s\n", i+1, citation.Title, citation.URL)
+				}
+			}
+		} else {
+			// Fallback if unmarshaling fails (content is not valid JSON), append as plain text
+			content += "\n\n# CITATIONS\n\n"
+			for i, citation := range citations {
+				content += fmt.Sprintf("- [%d] %s %s\n", i+1, citation.Title, citation.URL)
+			}
+		}
+	} else if len(citations) > 0 { // Original logic for non-structured output
 		content += "\n\n# CITATIONS\n\n"
 		for i, citation := range citations {
-			content += fmt.Sprintf("- [%d] %s\n", i+1, citation)
+			content += fmt.Sprintf("- [%d] %s %s\n", i+1, citation.Title, citation.URL)
 		}
 	}
 
@@ -161,6 +206,16 @@ func (c *Client) SendStream(msgs []*chat.ChatCompletionMessage, opts *domain.Cha
 		requestOptions = append(requestOptions, perplexity.WithFrequencyPenalty(opts.FrequencyPenalty))
 	}
 
+	// If schema content is provided, parse it and add the JSON schema response format option
+	if opts.SchemaContent != "" {
+		var schema map[string]interface{}
+		if err := json.Unmarshal([]byte(opts.SchemaContent), &schema); err != nil {
+			close(channel)
+			return fmt.Errorf("failed to parse schema content: %w", err)
+		}
+		requestOptions = append(requestOptions, perplexity.WithJSONSchemaResponseFormat(schema))
+	}
+
 	request := perplexity.NewCompletionRequest(requestOptions...)
 
 	responseChan := make(chan perplexity.CompletionResponse)
@@ -182,30 +237,64 @@ func (c *Client) SendStream(msgs []*chat.ChatCompletionMessage, opts *domain.Cha
 	go func() {
 		defer close(channel) // Ensure the output channel is closed when this goroutine finishes
 		var lastResponse *perplexity.CompletionResponse
+		var fullContent string // Accumulate streamed content
+
 		for resp := range responseChan {
 			lastResponse = &resp
 			if len(resp.Choices) > 0 {
 				content := ""
-				// Corrected: Check Delta.Content and Message.Content directly for non-emptiness
-				// as Delta and Message are structs, not pointers, in perplexity.Choice
 				if resp.Choices[0].Delta.Content != "" {
 					content = resp.Choices[0].Delta.Content
 				} else if resp.Choices[0].Message.Content != "" {
 					content = resp.Choices[0].Message.Content
 				}
 				if content != "" {
+					fullContent += content // Accumulate
 					channel <- content
 				}
 			}
 		}
 
-		// Send citations at the end if available
+		// After the stream finishes, handle citations
 		if lastResponse != nil {
-			citations := lastResponse.GetCitations()
+			citations := lastResponse.GetSearchResults()
 			if len(citations) > 0 {
-				channel <- "\n\n# CITATIONS\n\n"
-				for i, citation := range citations {
-					channel <- fmt.Sprintf("- [%d] %s\n", i+1, citation)
+				if opts.SchemaContent != "" {
+					// Structured output: Embed citations into the JSON object
+					var contentMap map[string]interface{}
+					if err := json.Unmarshal([]byte(fullContent), &contentMap); err == nil {
+						citationData := make([]map[string]string, len(citations))
+						for i, citation := range citations {
+							citationData[i] = map[string]string{
+								"title": citation.Title,
+								"url":   citation.URL,
+							}
+						}
+						contentMap["citations"] = citationData
+						newContent, err := json.MarshalIndent(contentMap, "", "  ")
+						if err == nil {
+							// Send the complete JSON object with citations
+							channel <- string(newContent)
+						} else {
+							// Fallback to plain text if JSON marshaling fails
+							channel <- "\n\n# CITATIONS\n\n"
+							for i, citation := range citations {
+								channel <- fmt.Sprintf("- [%d] %s %s\n", i+1, citation.Title, citation.URL)
+							}
+						}
+					} else {
+						// Fallback to plain text if unmarshaling fails (fullContent not valid JSON)
+						channel <- "\n\n# CITATIONS\n\n"
+						for i, citation := range citations {
+							channel <- fmt.Sprintf("- [%d] %s %s\n", i+1, citation.Title, citation.URL)
+						}
+					}
+				} else {
+					// Non-structured output: Append citations as plain text
+					channel <- "\n\n# CITATIONS\n\n"
+					for i, citation := range citations {
+						channel <- fmt.Sprintf("- [%d] %s %s\n", i+1, citation.Title, citation.URL)
+					}
 				}
 			}
 		}

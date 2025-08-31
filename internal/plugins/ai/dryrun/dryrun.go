@@ -3,6 +3,7 @@ package dryrun
 import (
 	"bytes"
 	"context"
+	"encoding/json"
 	"fmt"
 	"strings"
 
@@ -12,7 +13,7 @@ import (
 	"github.com/danielmiessler/fabric/internal/plugins"
 )
 
-const DryRunResponse = "Dry run: Fake response sent by DryRun plugin\n"
+const DryRunTextResponse = "Dry run: Fake response sent by DryRun plugin\n"
 
 type Client struct {
 	*plugins.PluginBase
@@ -24,6 +25,17 @@ func NewClient() *Client {
 
 func (c *Client) ListModels() ([]string, error) {
 	return []string{"dry-run-model"}, nil
+}
+
+func (c *Client) HandleSchema(opts *domain.ChatOptions) (err error) {
+	// If SchemaContent is set, validate that it's a valid JSON.
+	if opts.SchemaContent != "" {
+		var js map[string]interface{}
+		if err := json.Unmarshal([]byte(opts.SchemaContent), &js); err != nil {
+			return fmt.Errorf("provided schema is not a valid JSON: %w", err)
+		}
+	}
+	return nil
 }
 
 func (c *Client) formatMultiContentMessage(msg *chat.ChatCompletionMessage) string {
@@ -95,6 +107,9 @@ func (c *Client) formatOptions(opts *domain.ChatOptions) string {
 		builder.WriteString(fmt.Sprintf("Thinking Start Tag: %s\n", opts.ThinkStartTag))
 		builder.WriteString(fmt.Sprintf("Thinking End Tag: %s\n", opts.ThinkEndTag))
 	}
+	if opts.SchemaContent != "" {
+		builder.WriteString(fmt.Sprintf("SchemaContent: %s\n", opts.SchemaContent))
+	}
 
 	return builder.String()
 }
@@ -113,14 +128,13 @@ func (c *Client) SendStream(msgs []*chat.ChatCompletionMessage, opts *domain.Cha
 	request := c.constructRequest(msgs, opts)
 	channel <- request
 	channel <- "\n"
-	channel <- DryRunResponse
+	channel <- DryRunTextResponse
 	return nil
 }
 
 func (c *Client) Send(_ context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions) (string, error) {
 	request := c.constructRequest(msgs, opts)
-
-	return request + "\n" + DryRunResponse, nil
+	return request + "\n" + DryRunTextResponse, nil
 }
 
 func (c *Client) Setup() error {

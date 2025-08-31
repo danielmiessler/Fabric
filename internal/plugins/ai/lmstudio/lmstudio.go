@@ -10,7 +10,6 @@ import (
 	"net/http"
 
 	"github.com/danielmiessler/fabric/internal/chat"
-
 	"github.com/danielmiessler/fabric/internal/domain"
 	"github.com/danielmiessler/fabric/internal/plugins"
 )
@@ -40,8 +39,9 @@ func NewClientCompatible(vendorName string, defaultBaseUrl string, configureCust
 // Client represents the LM Studio client.
 type Client struct {
 	*plugins.PluginBase
-	ApiUrl     *plugins.SetupQuestion
-	HttpClient *http.Client
+	ApiUrl       *plugins.SetupQuestion
+	HttpClient   *http.Client
+	ParsedSchema map[string]interface{}
 }
 
 // configure sets up the HTTP client.
@@ -87,6 +87,26 @@ func (c *Client) ListModels() ([]string, error) {
 	return models, nil
 }
 
+func (c *Client) HandleSchema(opts *domain.ChatOptions) (err error) {
+	if opts.SchemaContent != "" {
+		var schema map[string]interface{}
+		if err = json.Unmarshal([]byte(opts.SchemaContent), &schema); err != nil {
+			return fmt.Errorf("failed to parse schema content: %w", err)
+		}
+		c.ParsedSchema = map[string]interface{}{
+			"type": "json_schema",
+			"json_schema": map[string]interface{}{
+				"name":   "structured_output_schema", // A default name for the schema
+				"strict": true,                       // Enforce strict schema validation
+				"schema": schema,
+			},
+		}
+	} else {
+		c.ParsedSchema = nil
+	}
+	return nil
+}
+
 func (c *Client) SendStream(msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan string) (err error) {
 	url := fmt.Sprintf("%s/chat/completions", c.ApiUrl.Value)
 
@@ -94,6 +114,10 @@ func (c *Client) SendStream(msgs []*chat.ChatCompletionMessage, opts *domain.Cha
 		"messages": msgs,
 		"model":    opts.Model,
 		"stream":   true, // Enable streaming
+	}
+
+	if c.ParsedSchema != nil {
+		payload["response_format"] = c.ParsedSchema
 	}
 
 	var jsonPayload []byte
@@ -150,22 +174,26 @@ func (c *Client) SendStream(msgs []*chat.ChatCompletionMessage, opts *domain.Cha
 
 		var result map[string]interface{}
 		if err = json.Unmarshal(line, &result); err != nil {
+			continue // Skip lines that are not valid JSON
+		}
+
+		choices, ok := result["choices"].([]interface{})
+		if !ok || len(choices) == 0 {
 			continue
 		}
 
-		var choices []interface{}
-		var ok bool
-		if choices, ok = result["choices"].([]interface{}); !ok || len(choices) == 0 {
+		choiceMap, ok := choices[0].(map[string]interface{})
+		if !ok {
 			continue
 		}
 
-		var delta map[string]interface{}
-		if delta, ok = choices[0].(map[string]interface{})["delta"].(map[string]interface{}); !ok {
+		delta, ok := choiceMap["delta"].(map[string]interface{})
+		if !ok {
 			continue
 		}
 
-		var content string
-		if content, _ = delta["content"].(string); content != "" {
+		content, ok := delta["content"].(string)
+		if ok && content != "" {
 			channel <- content
 		}
 	}
@@ -180,6 +208,10 @@ func (c *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, o
 		"messages": msgs,
 		"model":    opts.Model,
 		// Add other options from opts if supported by LM Studio
+	}
+
+	if c.ParsedSchema != nil {
+		payload["response_format"] = c.ParsedSchema
 	}
 
 	var jsonPayload []byte

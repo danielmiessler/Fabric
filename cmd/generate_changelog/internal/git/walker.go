@@ -241,37 +241,8 @@ func (w *Walker) WalkHistory() (map[string]*Version, error) {
 }
 
 func (w *Walker) GetRepoInfo() (owner string, name string, err error) {
-	remotes, err := w.repo.Remotes()
-	if err != nil {
-		return "", "", fmt.Errorf("failed to get remotes: %w", err)
-	}
-
-	// First try upstream (preferred for forks)
-	for _, remote := range remotes {
-		if remote.Config().Name == "upstream" {
-			urls := remote.Config().URLs
-			if len(urls) > 0 {
-				owner, name = parseGitHubURL(urls[0])
-				if owner != "" && name != "" {
-					return owner, name, nil
-				}
-			}
-		}
-	}
-
-	// Then try origin
-	for _, remote := range remotes {
-		if remote.Config().Name == "origin" {
-			urls := remote.Config().URLs
-			if len(urls) > 0 {
-				owner, name = parseGitHubURL(urls[0])
-				if owner != "" && name != "" {
-					return owner, name, nil
-				}
-			}
-		}
-	}
-
+	// For the purpose of fetching PRs for changelog generation,
+	// we always want to query the main upstream repository.
 	return "danielmiessler", "fabric", nil
 }
 

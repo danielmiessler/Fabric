@@ -2,6 +2,7 @@ package openai
 
 import (
 	"context"
+	"encoding/json" // Added for schema handling
 	"fmt"
 	"slices"
 	"strings"
@@ -257,6 +258,24 @@ func (o *Client) buildResponseParams(
 
 		// Add parameters not officially supported by Responses API as extra fields
 		extraFields := make(map[string]any)
+
+		// Handle schema for Responses API
+		if opts.SchemaContent != "" {
+			var schemaParams map[string]interface{}
+			if err := json.Unmarshal([]byte(opts.SchemaContent), &schemaParams); err == nil {
+				textFormat := map[string]interface{}{
+					"type":   "json_schema",
+					"name":   "json_output", // Using a generic name for the schema
+					"schema": schemaParams,
+					"strict": true,
+				}
+				textMap := map[string]interface{}{
+					"format": textFormat,
+				}
+				extraFields["text"] = textMap
+			}
+		}
+
 		if opts.PresencePenalty != 0 {
 			extraFields["presence_penalty"] = opts.PresencePenalty
 		}
@@ -295,6 +314,10 @@ func convertMessage(msg chat.ChatCompletionMessage) responses.ResponseInputItemU
 		return responses.ResponseInputItemParamOfMessage(contentList, role)
 	}
 	return responses.ResponseInputItemParamOfMessage(result.Content, role)
+}
+
+func (o *Client) Name() string {
+	return o.PluginBase.Name
 }
 
 func (o *Client) extractText(resp *responses.Response) (ret string) {

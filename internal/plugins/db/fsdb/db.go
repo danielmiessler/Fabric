@@ -29,6 +29,8 @@ func NewDb(dir string) (db *Db) {
 	db.Contexts = &ContextsEntity{
 		&StorageEntity{Label: "Contexts", Dir: db.FilePath("contexts")}}
 
+	db.Schemas = &StorageEntity{Label: "Schemas", Dir: db.FilePath("schemas"), FileExtension: ".json"}
+
 	return
 }
 
@@ -38,6 +40,7 @@ type Db struct {
 	Patterns *PatternsEntity
 	Sessions *SessionsEntity
 	Contexts *ContextsEntity
+	Schemas  *StorageEntity
 
 	EnvFilePath string
 }
@@ -72,6 +75,10 @@ func (o *Db) Configure() (err error) {
 	}
 
 	if err = o.Contexts.Configure(); err != nil {
+		return
+	}
+
+	if err = o.Schemas.Configure(); err != nil {
 		return
 	}
 

@@ -39,7 +39,7 @@ func (o *Chatter) Send(request *domain.ChatRequest, opts *domain.ChatOptions) (s
 	if o.vendor.NeedsRawMode(modelToUse) {
 		opts.Raw = true
 	}
-	if session, err = o.BuildSession(request, opts.Raw); err != nil {
+	if session, err = o.BuildSession(request, opts, opts.Raw); err != nil {
 		return
 	}
 
@@ -142,7 +142,7 @@ func (o *Chatter) Send(request *domain.ChatRequest, opts *domain.ChatOptions) (s
 	return
 }
 
-func (o *Chatter) BuildSession(request *domain.ChatRequest, raw bool) (session *fsdb.Session, err error) {
+func (o *Chatter) BuildSession(request *domain.ChatRequest, opts *domain.ChatOptions, raw bool) (session *fsdb.Session, err error) {
 	if request.SessionName != "" {
 		var sess *fsdb.Session
 		if sess, err = o.db.Sessions.Get(request.SessionName); err != nil {
@@ -221,6 +221,13 @@ func (o *Chatter) BuildSession(request *domain.ChatRequest, raw bool) (session *
 	if request.Language != "" && request.Language != "en" {
 		// Refined instruction: Execute pattern using user input, then translate the entire response.
 		systemMessage = fmt.Sprintf("%s\n\nIMPORTANT: First, execute the instructions provided in this prompt using the user's input. Second, ensure your entire final response, including any section headers or titles generated as part of executing the instructions, is written ONLY in the %s language.", systemMessage, request.Language)
+	}
+
+	if request.PatternVariables == nil {
+		request.PatternVariables = make(map[string]string)
+	}
+	if opts.SchemaContent != "" {
+		request.PatternVariables["schema"] = opts.SchemaContent
 	}
 
 	if raw {

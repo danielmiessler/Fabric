@@ -44,13 +44,13 @@ type Flags struct {
 	Message                         string               `hidden:"true" description:"Messages to send to chat"`
 	Copy                            bool                 `short:"c" long:"copy" description:"Copy to clipboard"`
 	Model                           string               `short:"m" long:"model" yaml:"model" description:"Choose model"`
-	Vendor                          string               `short:"V" long:"vendor" yaml:"vendor" description:"Specify vendor for the selected model (e.g., -V \"LM Studio\" -m openai/gpt-oss-20b)"`
+	Vendor                          string               `short:"V" long:"vendor" yaml:"vendor" description:"Specify vendor for the selected model"`
 	ModelContextLength              int                  `long:"modelContextLength" yaml:"modelContextLength" description:"Model context length (only affects ollama)"`
 	Output                          string               `short:"o" long:"output" description:"Output to file" default:""`
 	OutputSession                   bool                 `long:"output-session" description:"Output the entire session (also a temporary one) to the output file"`
 	LatestPatterns                  string               `short:"n" long:"latest" description:"Number of latest patterns to list" default:"0"`
 	ChangeDefaultModel              bool                 `short:"d" long:"changeDefaultModel" description:"Change default model"`
-	YouTube                         string               `short:"y" long:"youtube" description:"YouTube video or play list \"URL\" to grab transcript, comments from it and send to chat or print it put to the console and store it in the output file"`
+	YouTube                         string               `short:"y" long:"youtube" description:"YouTube video or play list 'URL' to grab transcript, comments from it and send to chat or print it put to the console and store it in the output file"`
 	YouTubePlaylist                 bool                 `long:"playlist" description:"Prefer playlist over video if both ids are present in the URL"`
 	YouTubeTranscript               bool                 `long:"transcript" description:"Grab transcript from YouTube video and send to chat (it is used per default)."`
 	YouTubeTranscriptWithTimestamps bool                 `long:"transcript-with-timestamps" description:"Grab transcript from YouTube video with timestamps and send to chat"`
@@ -103,6 +103,7 @@ type Flags struct {
 	NotificationCommand             string               `long:"notification-command" yaml:"notificationCommand" description:"Custom command to run for notifications (overrides built-in notifications)"`
 	Thinking                        domain.ThinkingLevel `long:"thinking" yaml:"thinking" description:"Set reasoning/thinking level (e.g., off, low, medium, high, or numeric tokens for Anthropic or Google Gemini)"`
 	Debug                           int                  `long:"debug" description:"Set debug level (0=off, 1=basic, 2=detailed, 3=trace)" default:"0"`
+	Schema                          string               `long:"schema" yaml:"schema" description:"Name of a JSON schema file from the schemas folder to use for structuring the output"`
 }
 
 // Init Initialize flags. returns a Flags struct and an error
@@ -281,6 +282,35 @@ func assignWithConversion(targetField, sourceField reflect.Value) error {
 	return fmt.Errorf("unsupported conversion from %v to %v", sourceField.Kind(), targetField.Kind())
 }
 
+// readSchemaFile reads the content of a schema file from the user's Fabric configuration 'Schemas' directory.
+// It attempts to find the file with and without a '.json' extension.
+func readSchemaFile(schemaFileName string) (string, error) {
+	homeDir, err := os.UserHomeDir()
+	if err != nil {
+		return "", fmt.Errorf("could not determine user home directory: %w", err)
+	}
+
+	configSchemaDir := filepath.Join(homeDir, ".config", "fabric", "Schemas")
+
+	// Try reading the file directly
+	filePath := filepath.Join(configSchemaDir, schemaFileName)
+	content, err := os.ReadFile(filePath)
+	if err == nil {
+		return string(content), nil
+	}
+
+	// If not found, try appending .json extension
+	if filepath.Ext(schemaFileName) != ".json" {
+		filePathWithExt := filepath.Join(configSchemaDir, schemaFileName+".json")
+		content, err := os.ReadFile(filePathWithExt)
+		if err == nil {
+			return string(content), nil
+		}
+	}
+
+	return "", fmt.Errorf("could not find or read schema file '%s' in '%s'", schemaFileName, configSchemaDir)
+}
+
 func loadYAMLConfig(configPath string) (*Flags, error) {
 	absPath, err := util.GetAbsolutePath(configPath)
 	if err != nil {
@@ -448,6 +478,19 @@ func (o *Flags) BuildChatOptions() (ret *domain.ChatOptions, err error) {
 		endTag = "</think>"
 	}
 
+	if o.Schema != "" {
+		var err error
+		var schemaContent string
+		schemaContent, err = readSchemaFile(o.Schema)
+		if err != nil {
+			return nil, fmt.Errorf("failed to read schema file: %w", err)
+		}
+		if o.PatternVariables == nil {
+			o.PatternVariables = make(map[string]string)
+		}
+		o.PatternVariables["schema"] = schemaContent
+	}
+
 	ret = &domain.ChatOptions{
 		Model:               o.Model,
 		Temperature:         o.Temperature,
@@ -471,6 +514,7 @@ func (o *Flags) BuildChatOptions() (ret *domain.ChatOptions, err error) {
 		Voice:               o.Voice,
 		Notification:        o.Notification || o.NotificationCommand != "",
 		NotificationCommand: o.NotificationCommand,
+		SchemaContent:       o.PatternVariables["schema"], // Use the schema content from PatternVariables
 	}
 	return
 }
@@ -481,7 +525,7 @@ func (o *Flags) BuildChatRequest(Meta string) (ret *domain.ChatRequest, err erro
 		SessionName:           o.Session,
 		PatternName:           o.Pattern,
 		StrategyName:          o.Strategy,
-		PatternVariables:      o.PatternVariables,
+		PatternVariables:      o.PatternVariables, // PatternVariables already contains schema if set
 		InputHasVars:          o.InputHasVars,
 		NoVariableReplacement: o.NoVariableReplacement,
 		Meta:                  Meta,

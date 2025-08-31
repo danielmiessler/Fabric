@@ -161,6 +161,35 @@ func TestBuildGenerateContentConfig_ThinkingTokens(t *testing.T) {
 	}
 }
 
+func TestBuildGenerateContentConfig_WithSchema(t *testing.T) {
+	client := &Client{}
+	schemaContent := `{
+		"type": "object",
+		"properties": {
+			"name": {"type": "string"},
+			"age": {"type": "integer"}
+		}
+	}`
+	opts := &domain.ChatOptions{SchemaContent: schemaContent}
+
+	cfg, err := client.buildGenerateContentConfig(opts)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+
+	if cfg.ResponseSchema == nil {
+		t.Fatalf("expected ResponseSchema to be set")
+	}
+	if cfg.ResponseMIMEType != "application/json" {
+		t.Errorf("expected ResponseMIMEType to be 'application/json', got %s", cfg.ResponseMIMEType)
+	}
+
+	// Verify a field from the unmarshaled schema
+	if _, ok := cfg.ResponseSchema.Properties["name"]; !ok {
+		t.Errorf("expected schema to contain 'name' property")
+	}
+}
+
 func TestCitationFormatting(t *testing.T) {
 	client := &Client{}
 	response := &genai.GenerateContentResponse{

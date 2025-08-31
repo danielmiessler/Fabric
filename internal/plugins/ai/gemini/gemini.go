@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/binary"
+	"encoding/json" // Added for JSON parsing
 	"fmt"
 	"regexp"
 	"strconv"
@@ -124,7 +125,14 @@ func (o *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, o
 		return "", err
 	}
 
-	// Extract text from response
+	// If a schema was provided, the response should be a JSON string
+	if opts.SchemaContent != "" {
+		// Gemini's SDK puts the JSON directly into response.Text() when ResponseMIMEType is application/json
+		ret = response.Text()
+		return
+	}
+
+	// Otherwise, extract text and citations as usual
 	ret = o.extractTextFromResponse(response)
 	return
 }
@@ -207,14 +215,30 @@ func (o *Client) buildGenerateContentConfig(opts *domain.ChatOptions) (*genai.Ge
 		MaxOutputTokens: int32(opts.ModelContextLength),
 	}
 
+	// Handle SchemaContent for structured output
+	if opts.SchemaContent != "" {
+		var schema genai.Schema
+		if err := json.Unmarshal([]byte(opts.SchemaContent), &schema); err != nil {
+			return nil, fmt.Errorf("failed to unmarshal schema content into genai.Schema: %w", err)
+		}
+		cfg.ResponseSchema = &schema
+		cfg.ResponseMIMEType = "application/json"
+	}
+
 	if opts.Search {
-		cfg.Tools = []*genai.Tool{{GoogleSearch: &genai.GoogleSearch{}}}
+		// Ensure cfg.Tools is initialized if not already
+		if cfg.Tools == nil {
+			cfg.Tools = []*genai.Tool{}
+		}
+		cfg.Tools = append(cfg.Tools, &genai.Tool{GoogleSearch: &genai.GoogleSearch{}}) // Corrected: removed extra curly braces
 		if loc := opts.SearchLocation; loc != "" {
 			if isValidLocationFormat(loc) {
 				loc = normalizeLocation(loc)
-				cfg.ToolConfig = &genai.ToolConfig{
-					RetrievalConfig: &genai.RetrievalConfig{LanguageCode: loc},
+				// Create ToolConfig if it doesn't exist, then set RetrievalConfig
+				if cfg.ToolConfig == nil {
+					cfg.ToolConfig = &genai.ToolConfig{}
 				}
+				cfg.ToolConfig.RetrievalConfig = &genai.RetrievalConfig{LanguageCode: loc}
 			} else {
 				return nil, fmt.Errorf(errInvalidLocationFormat, loc)
 			}
@@ -505,6 +529,10 @@ func (o *Client) extractTextParts(response *genai.GenerateContentResponse) strin
 		}
 	}
 	return builder.String()
+}
+
+func (o *Client) Name() string {
+	return o.PluginBase.Name
 }
 
 func (o *Client) extractCitations(response *genai.GenerateContentResponse) []string {

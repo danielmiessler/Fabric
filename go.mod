@@ -28,7 +28,8 @@ require (
 	github.com/samber/lo v1.50.0
 	github.com/sgaunet/perplexity-go/v2 v2.8.0
 	github.com/spf13/cobra v1.9.1
-	github.com/stretchr/testify v1.10.0
+	github.com/stretchr/testify v1.11.1
+	github.com/xeipuuv/gojsonschema v1.2.0
 	golang.org/x/oauth2 v0.30.0
 	golang.org/x/text v0.27.0
 	google.golang.org/api v0.236.0
@@ -38,6 +39,8 @@ require (
 require (
 	github.com/google/go-cmp v0.7.0 // indirect
 	github.com/gorilla/websocket v1.5.3 // indirect
+	github.com/xeipuuv/gojsonpointer v0.0.0-20180127040702-4e3ac2762d5f // indirect
+	github.com/xeipuuv/gojsonreference v0.0.0-20180127040603-bd5ef7bd5415 // indirect
 )
 
 require (

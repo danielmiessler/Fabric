@@ -51,6 +51,7 @@ type ChatOptions struct {
 	Voice               string
 	Notification        bool
 	NotificationCommand string
+	SchemaContent       string
 }
 
 // NormalizeMessages remove empty messages and ensure messages order user-assist-user

@@ -7,6 +7,8 @@ import (
 	"strconv"
 	"strings"
 
+	"encoding/json" // Added for JSON parsing
+
 	"github.com/anthropics/anthropic-sdk-go"
 	"github.com/anthropics/anthropic-sdk-go/option"
 	"github.com/danielmiessler/fabric/internal/chat"
@@ -105,7 +107,7 @@ type Client struct {
 }
 
 func (an *Client) Setup() (err error) {
-	if err = an.PluginBase.Ask(an.Name); err != nil {
+	if err = an.PluginBase.Ask(an.Name()); err != nil {
 		return
 	}
 
@@ -155,6 +157,11 @@ func (an *Client) ListModels() (ret []string, err error) {
 	return an.models, nil
 }
 
+// Name returns the name of the Anthropic client.
+func (an *Client) Name() string {
+	return an.PluginBase.Name
+}
+
 func parseThinking(level domain.ThinkingLevel) (anthropic.ThinkingConfigParamUnion, bool) {
 	lower := strings.ToLower(string(level))
 	switch domain.ThinkingLevel(lower) {
@@ -168,7 +175,7 @@ func parseThinking(level domain.ThinkingLevel) (anthropic.ThinkingConfigParamUni
 	default:
 		if tokens, err := strconv.ParseInt(lower, 10, 64); err == nil {
 			if tokens >= 1 && tokens <= 10000 {
-				return anthropic.ThinkingConfigParamOfEnabled(tokens), true
+				return anthropic.ThinkingConfigParamOfEnabled(tokens), true // Pass tokens directly
 			}
 		}
 	}
@@ -187,7 +194,11 @@ func (an *Client) SendStream(
 
 	ctx := context.Background()
 
-	params := an.buildMessageParams(messages, opts)
+	params, err := an.buildMessageParams(messages, opts)
+	if err != nil {
+		return err
+	}
+	debuglog.Debug(debuglog.Basic, "Anthropic (SendStream): Final MessageNewParams before API call: %+v\n", params)
 	betas := an.modelBetas[opts.Model]
 	var reqOpts []option.RequestOption
 	if len(betas) > 0 {
@@ -210,13 +221,14 @@ func (an *Client) SendStream(
 
 	if stream.Err() != nil {
 		fmt.Printf("Messages stream error: %v\n", stream.Err())
+		debuglog.Debug(debuglog.Basic, "Anthropic (SendStream): Stream error details: %v\n", stream.Err())
 	}
 	close(channel)
 	return
 }
 
 func (an *Client) buildMessageParams(msgs []anthropic.MessageParam, opts *domain.ChatOptions) (
-	params anthropic.MessageNewParams) {
+	params anthropic.MessageNewParams, err error) {
 
 	params = anthropic.MessageNewParams{
 		Model:     anthropic.Model(opts.Model),
@@ -234,15 +246,57 @@ func (an *Client) buildMessageParams(msgs []anthropic.MessageParam, opts *domain
 		params.Temperature = anthropic.Opt(opts.Temperature)
 	}
 
+	// Ensure params.System is initialized to avoid nil slice issues when appending
+	if params.System == nil {
+		params.System = []anthropic.TextBlockParam{}
+	}
+
 	// Add Claude Code spoofing system message for OAuth authentication
 	if plugins.ParseBoolElseFalse(an.UseOAuth.Value) {
-		params.System = []anthropic.TextBlockParam{
-			{
-				Type: "text",
-				Text: "You are Claude Code, Anthropic's official CLI for Claude.",
-			},
-		}
+		params.System = append(params.System, anthropic.TextBlockParam{
+			Type: "text",
+			Text: "You are Claude Code, Anthropic's official CLI for Claude.",
+		})
+	}
 
+	// Add JSON schema content to the system message if provided
+	if opts.SchemaContent != "" {
+		schemaTextBlock := anthropic.TextBlockParam{
+			Type: "text",
+			Text: "JSON Schema:\n" + opts.SchemaContent,
+		}
+		params.System = append(params.System, schemaTextBlock)
+		debuglog.Debug(debuglog.Basic, "Anthropic: Appended JSON schema to system message. Content: %s\n", opts.SchemaContent)
+
+		// Also add JSON schema as a "mock tool" if provided (existing logic)
+		var inputSchema anthropic.ToolInputSchemaParam
+		if err = json.Unmarshal([]byte(opts.SchemaContent), &inputSchema); err != nil {
+			return params, fmt.Errorf("failed to unmarshal schema content into Anthropic ToolInputSchemaParam: %w", err)
+		} else {
+			debuglog.Debug(debuglog.Basic, "Anthropic: Successfully unmarshalled schema content.\n")
+			toolName := "get_structured_output"
+			toolDescription := "Results of data gleaned from the source"
+
+			// The name and description should come from the ToolParam itself, not the input_schema content.
+			// The user's example shows name and description directly on the ToolParam.
+
+			jsonSchemaTool := anthropic.ToolParam{
+				Name:        toolName,
+				Description: anthropic.String(toolDescription), // Use anthropic.String for *string
+				InputSchema: inputSchema,
+			}
+			debuglog.Debug(debuglog.Basic, "Anthropic: Constructed JSON schema tool: Name=%s, Description=%s, InputSchema=%+v\n", toolName, toolDescription, inputSchema)
+			params.Tools = append(params.Tools, anthropic.ToolUnionParam{OfTool: &jsonSchemaTool})
+		}
+	}
+
+	// Debug log the final system message content
+	if len(params.System) > 0 {
+		var systemMsgContent string
+		for _, block := range params.System {
+			systemMsgContent += block.Text
+		}
+		debuglog.Debug(debuglog.Basic, "Anthropic: Final System Message Content: %s\n", systemMsgContent)
 	}
 
 	if opts.Search {
@@ -268,7 +322,8 @@ func (an *Client) buildMessageParams(msgs []anthropic.MessageParam, opts *domain
 		params.Thinking = t
 	}
 
-	return
+	debuglog.Debug(debuglog.Basic, "Anthropic: Final MessageNewParams before sending: %+v\n", params)
+	return params, nil
 }
 
 func (an *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions) (
@@ -281,7 +336,11 @@ func (an *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, 
 	}
 
 	var message *anthropic.Message
-	params := an.buildMessageParams(messages, opts)
+	params, err := an.buildMessageParams(messages, opts)
+	if err != nil {
+		return "", err
+	}
+	debuglog.Debug(debuglog.Basic, "Anthropic (Send): Final MessageNewParams before API call: %+v\n", params)
 	betas := an.modelBetas[opts.Model]
 	var reqOpts []option.RequestOption
 	if len(betas) > 0 {
@@ -303,11 +362,22 @@ func (an *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, 
 	citationMap := make(map[string]bool) // To avoid duplicate citations
 
 	for _, block := range message.Content {
-		if block.Type == "text" && block.Text != "" {
-			textParts = append(textParts, block.Text)
+		switch variant := block.AsAny().(type) {
+		case anthropic.ToolUseBlock:
+			if variant.Name == "get_structured_output" {
+				jsonBytes, marshalErr := json.MarshalIndent(variant.Input, "", "  ")
+				if marshalErr != nil {
+					debuglog.Debug(debuglog.Basic, "Anthropic: Failed to marshal tool_use input: %v\n", marshalErr)
+					return "", fmt.Errorf("failed to marshal tool_use input: %w", marshalErr)
+				}
+				ret = string(jsonBytes)
+				return // Return immediately as we found the structured output
+			}
+		case anthropic.TextBlock:
+			textParts = append(textParts, variant.Text)
 
 			// Extract citations from this text block
-			for _, citation := range block.Citations {
+			for _, citation := range variant.Citations {
 				if citation.Type == "web_search_result_location" {
 					citationKey := citation.URL + "|" + citation.Title
 					if !citationMap[citationKey] {
@@ -350,7 +420,7 @@ func (an *Client) toMessages(msgs []*chat.ChatCompletionMessage) (ret []anthropi
 	// Note: Claude Code spoofing is now handled in buildMessageParams
 
 	isFirstUserMessage := true
-	lastRoleWasUser := false
+	lastRoleWasUser := false // Declare and initialize here
 
 	for _, msg := range msgs {
 		if msg.Content == "" {
@@ -406,7 +476,6 @@ func (an *Client) toMessages(msgs []*chat.ChatCompletionMessage) (ret []anthropi
 
 	return anthropicMessages
 }
-
 func (an *Client) NeedsRawMode(modelName string) bool {
 	return false
 }

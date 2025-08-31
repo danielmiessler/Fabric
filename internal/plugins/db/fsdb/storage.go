@@ -97,7 +97,16 @@ func (o *StorageEntity) Load(name string) (ret []byte, err error) {
 	if ret, err = os.ReadFile(o.BuildFilePathByName(name)); err != nil {
 		err = fmt.Errorf("could not load %s: %v", name, err)
 	}
-	return
+	return ret, nil
+}
+
+// Get implements the db.Storage interface
+func (o *StorageEntity) Get(name string) (*[]byte, error) {
+	content, err := o.Load(name)
+	if err != nil {
+		return nil, err
+	}
+	return &content, nil
 }
 
 func (o *StorageEntity) ListNames(shellCompleteList bool) (err error) {

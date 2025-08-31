@@ -92,6 +92,17 @@ func handleChatProcessing(currentFlags *Flags, registry *core.PluginRegistry, me
 
 	result := session.GetLastMessage().Content
 
+	// If a schema was provided, validate the output against it.
+	if chatOptions.SchemaContent != "" {
+		if err = validateOutputWithSchema(result, chatOptions.SchemaContent); err != nil {
+			// On validation failure, print the error and the invalid output to stderr, then exit.
+			fmt.Fprintln(os.Stderr, err)
+			fmt.Fprintln(os.Stderr, "\n--- Invalid AI Output ---")
+			fmt.Fprintln(os.Stderr, result)
+			return
+		}
+	}
+
 	if !currentFlags.Stream || currentFlags.SuppressThink {
 		// For TTS models with audio output, show a user-friendly message instead of raw data
 		if isTTSModel && isAudioOutput && strings.HasPrefix(result, "FABRIC_AUDIO_DATA:") {

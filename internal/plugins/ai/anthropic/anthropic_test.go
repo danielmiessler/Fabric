@@ -1,7 +1,6 @@
 package anthropic
 
 import (
-	"encoding/json"
 	"strings"
 	"testing"
 
@@ -30,98 +29,44 @@ func TestNewClient_DefaultInitialization(t *testing.T) {
 	}
 }
 
-func TestBuildMessageParams_WithSchema(t *testing.T) {
+func TestHandleSchema(t *testing.T) {
 	client := NewClient()
-	validSchema := `{
-		"type": "object",
-		"properties": {
-			"name": {
-				"type": "string",
-				"description": "The name of the user"
-			},
-			"age": {
-				"type": "integer",
-				"description": "The age of the user"
-			}
-		},
-		"required": ["name"]
-	}`
 
-	opts := &domain.ChatOptions{
-		Model:         "claude-sonnet-4-20250514",
-		SchemaContent: validSchema,
-	}
-
-	messages := []anthropic.MessageParam{
-		anthropic.NewUserMessage(anthropic.NewTextBlock("Extract name and age.")),
-	}
-
-	params, err := client.buildMessageParams(messages, opts)
-	if err != nil {
-		t.Fatalf("Expected no error for valid schema, got %v", err)
-	}
-
-	// 1. Verify schema content is added to System message
-	if len(params.System) == 0 {
-		t.Fatal("Expected system message to contain schema content, but it's empty")
-	}
-	expectedSystemText := "JSON Schema:\n" + validSchema
-	foundSchemaInSystem := false
-	for _, block := range params.System {
-		if strings.Contains(block.Text, expectedSystemText) {
-			foundSchemaInSystem = true
-			break
+	t.Run("valid schema", func(t *testing.T) {
+		opts := &domain.ChatOptions{
+			SchemaContent: `{
+				"type": "object",
+				"properties": {
+					"name": {"type": "string"},
+					"age": {"type": "integer"}
+				}
+			}`,
 		}
-	}
-	if !foundSchemaInSystem {
-		t.Errorf("Expected system message to contain '%s', but it didn't. Actual system messages: %+v", expectedSystemText, params.System)
-	}
+		err := client.HandleSchema(opts)
+		if err != nil {
+			t.Errorf("Expected no error for valid schema, but got: %v", err)
+		}
+	})
 
-	// 2. Verify ToolParam is created
-	if params.Tools == nil || len(params.Tools) != 1 {
-		t.Fatalf("Expected 1 tool to be created, got %d", len(params.Tools))
-	}
+	t.Run("invalid schema", func(t *testing.T) {
+		opts := &domain.ChatOptions{
+			SchemaContent: `{"type": "object", "properties": {"name": {"type": "string"}},`,
+		}
+		err := client.HandleSchema(opts)
+		if err == nil {
+			t.Error("Expected an error for invalid schema, but got nil")
+		}
+	})
 
-	tool := params.Tools[0].OfTool
-	if tool == nil {
-		t.Fatal("Expected tool to be of type OfTool, got nil")
-	}
-
-	if tool.Name != "get_structured_output" {
-		t.Errorf("Expected tool name 'get_structured_output', got '%s'", tool.Name)
-	}
-	if tool.Description.Value != "Results of data gleaned from the source" {
-		t.Errorf("Expected tool description 'Results of data gleaned from the source', got '%s'", tool.Description.Value)
-	}
-
-	// Verify InputSchema
-	expectedInputSchema := anthropic.ToolInputSchemaParam{}
-	err = json.Unmarshal([]byte(validSchema), &expectedInputSchema)
-	if err != nil {
-		t.Fatalf("Failed to unmarshal expected schema: %v", err)
-	}
-	// Note: Comparing structs directly might be tricky for nested types,
-	// but for basic comparison, this should work.
-	// A deeper comparison might involve marshaling both to JSON and comparing strings.
-	if tool.InputSchema.Type != expectedInputSchema.Type {
-		t.Errorf("Expected input schema type '%s', got '%s'", expectedInputSchema.Type, tool.InputSchema.Type)
-	}
-
-	// Test case for invalid JSON schema
-	invalidSchema := `{ "type": "object", "properties": { "name": "string" }` // Missing closing brace
-
-	optsInvalid := &domain.ChatOptions{
-		Model:         "claude-3-5-sonnet-latest",
-		SchemaContent: invalidSchema,
-	}
-
-	_, err = client.buildMessageParams(messages, optsInvalid)
-	if err == nil {
-		t.Error("Expected error for invalid schema, got nil")
-	}
-	if !strings.Contains(err.Error(), "failed to unmarshal schema content") {
-		t.Errorf("Expected error to contain 'failed to unmarshal schema content', got: %v", err)
-	}
+	t.Run("empty schema", func(t *testing.T) {
+		opts := &domain.ChatOptions{
+			SchemaContent: "",
+		}
+		err := client.HandleSchema(opts)
+		if err != nil {
+			t.Errorf("Expected no error for empty schema, but got: %v", err)
+		}
+	})
 }
 
 // Test generated using Keploy

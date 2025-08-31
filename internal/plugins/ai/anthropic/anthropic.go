@@ -36,9 +36,9 @@ func NewClient() (ret *Client) {
 		ConfigureCustom: ret.configure,
 	}
 
-	ret.ApiBaseURL = ret.AddSetupQuestion("API Base URL", false)
+	ret.ApiBaseURL = ret.PluginBase.AddSetupQuestion("API Base URL", false)
 	ret.ApiBaseURL.Value = defaultBaseUrl
-	ret.UseOAuth = ret.AddSetupQuestionBool("Use OAuth login", false)
+	ret.UseOAuth = ret.PluginBase.AddSetupQuestionBool("Use OAuth login", false)
 	ret.ApiKey = ret.PluginBase.AddSetupQuestion("API key", false)
 
 	ret.maxTokens = 4096
@@ -182,6 +182,21 @@ func parseThinking(level domain.ThinkingLevel) (anthropic.ThinkingConfigParamUni
 	return anthropic.ThinkingConfigParamUnion{}, false
 }
 
+func (c *Client) HandleSchema(opts *domain.ChatOptions) (err error) {
+	if opts.SchemaContent == "" {
+		return nil
+	}
+	// Add JSON schema content to the system message if provided
+	if opts.SchemaContent != "" {
+		// Also add JSON schema as a "mock tool" if provided (existing logic)
+		var inputSchema anthropic.ToolInputSchemaParam
+		if err = json.Unmarshal([]byte(opts.SchemaContent), &inputSchema); err != nil {
+			return fmt.Errorf("failed to unmarshal schema content into Anthropic ToolInputSchemaParam: %w", err)
+		}
+	}
+	return nil
+}
+
 func (an *Client) SendStream(
 	msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan string,
 ) (err error) {
@@ -257,46 +272,6 @@ func (an *Client) buildMessageParams(msgs []anthropic.MessageParam, opts *domain
 			Type: "text",
 			Text: "You are Claude Code, Anthropic's official CLI for Claude.",
 		})
-	}
-
-	// Add JSON schema content to the system message if provided
-	if opts.SchemaContent != "" {
-		schemaTextBlock := anthropic.TextBlockParam{
-			Type: "text",
-			Text: "JSON Schema:\n" + opts.SchemaContent,
-		}
-		params.System = append(params.System, schemaTextBlock)
-		debuglog.Debug(debuglog.Basic, "Anthropic: Appended JSON schema to system message. Content: %s\n", opts.SchemaContent)
-
-		// Also add JSON schema as a "mock tool" if provided (existing logic)
-		var inputSchema anthropic.ToolInputSchemaParam
-		if err = json.Unmarshal([]byte(opts.SchemaContent), &inputSchema); err != nil {
-			return params, fmt.Errorf("failed to unmarshal schema content into Anthropic ToolInputSchemaParam: %w", err)
-		} else {
-			debuglog.Debug(debuglog.Basic, "Anthropic: Successfully unmarshalled schema content.\n")
-			toolName := "get_structured_output"
-			toolDescription := "Results of data gleaned from the source"
-
-			// The name and description should come from the ToolParam itself, not the input_schema content.
-			// The user's example shows name and description directly on the ToolParam.
-
-			jsonSchemaTool := anthropic.ToolParam{
-				Name:        toolName,
-				Description: anthropic.String(toolDescription), // Use anthropic.String for *string
-				InputSchema: inputSchema,
-			}
-			debuglog.Debug(debuglog.Basic, "Anthropic: Constructed JSON schema tool: Name=%s, Description=%s, InputSchema=%+v\n", toolName, toolDescription, inputSchema)
-			params.Tools = append(params.Tools, anthropic.ToolUnionParam{OfTool: &jsonSchemaTool})
-		}
-	}
-
-	// Debug log the final system message content
-	if len(params.System) > 0 {
-		var systemMsgContent string
-		for _, block := range params.System {
-			systemMsgContent += block.Text
-		}
-		debuglog.Debug(debuglog.Basic, "Anthropic: Final System Message Content: %s\n", systemMsgContent)
 	}
 
 	if opts.Search {

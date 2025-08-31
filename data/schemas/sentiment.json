@@ -1,0 +1,30 @@
+{
+  "name": "Comment Sentiment Analysis",
+  "description": "Extracted sentiment analysis of a comment with confidence score and reasoning",
+  "type": "object",
+  "properties": {
+    "sentiment": {
+      "type": "string",
+      "enum": [
+        "positive",
+        "negative",
+        "neutral"
+      ],
+      "description": "The overall sentiment classification of the comment"
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Confidence score for the sentiment prediction (0-1)"
+    },
+    "reasoning": {
+      "type": "string",
+      "description": "Brief explanation of why this sentiment was assigned"
+    }
+  },
+  "required": [
+    "sentiment",
+    "confidence"
+  ]
+}

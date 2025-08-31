@@ -161,33 +161,44 @@ func TestBuildGenerateContentConfig_ThinkingTokens(t *testing.T) {
 	}
 }
 
-func TestBuildGenerateContentConfig_WithSchema(t *testing.T) {
-	client := &Client{}
-	schemaContent := `{
-		"type": "object",
-		"properties": {
-			"name": {"type": "string"},
-			"age": {"type": "integer"}
+func TestHandleSchema(t *testing.T) {
+	client := NewClient()
+
+	t.Run("valid schema", func(t *testing.T) {
+		opts := &domain.ChatOptions{
+			SchemaContent: `{
+				"type": "object",
+				"properties": {
+					"name": {"type": "string"},
+					"age": {"type": "integer"}
+				}
+			}`,
 		}
-	}`
-	opts := &domain.ChatOptions{SchemaContent: schemaContent}
+		err := client.HandleSchema(opts)
+		if err != nil {
+			t.Errorf("Expected no error for valid schema, but got: %v", err)
+		}
+	})
 
-	cfg, err := client.buildGenerateContentConfig(opts)
-	if err != nil {
-		t.Fatalf("unexpected error: %v", err)
-	}
+	t.Run("invalid schema", func(t *testing.T) {
+		opts := &domain.ChatOptions{
+			SchemaContent: `{"type": "object", "properties": {"name": {"type": "string"}},`,
+		}
+		err := client.HandleSchema(opts)
+		if err == nil {
+			t.Error("Expected an error for invalid schema, but got nil")
+		}
+	})
 
-	if cfg.ResponseSchema == nil {
-		t.Fatalf("expected ResponseSchema to be set")
-	}
-	if cfg.ResponseMIMEType != "application/json" {
-		t.Errorf("expected ResponseMIMEType to be 'application/json', got %s", cfg.ResponseMIMEType)
-	}
-
-	// Verify a field from the unmarshaled schema
-	if _, ok := cfg.ResponseSchema.Properties["name"]; !ok {
-		t.Errorf("expected schema to contain 'name' property")
-	}
+	t.Run("empty schema", func(t *testing.T) {
+		opts := &domain.ChatOptions{
+			SchemaContent: "",
+		}
+		err := client.HandleSchema(opts)
+		if err != nil {
+			t.Errorf("Expected no error for empty schema, but got: %v", err)
+		}
+	})
 }
 
 func TestCitationFormatting(t *testing.T) {

@@ -90,6 +90,17 @@ func (o *Client) ListModels() (ret []string, err error) {
 	return
 }
 
+func (c *Client) HandleSchema(opts *domain.ChatOptions) (err error) {
+	if opts.SchemaContent == "" {
+		return nil
+	}
+	var schema genai.Schema
+	if err = json.Unmarshal([]byte(opts.SchemaContent), &schema); err != nil {
+		return fmt.Errorf("failed to unmarshal schema content into genai.Schema: %w", err)
+	}
+	return nil
+}
+
 func (o *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions) (ret string, err error) {
 	// Check if this is a TTS model request
 	if o.isTTSModel(opts.Model) {
@@ -123,13 +134,6 @@ func (o *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, o
 	response, err := client.Models.GenerateContent(ctx, o.buildModelNameFull(opts.Model), contents, cfg)
 	if err != nil {
 		return "", err
-	}
-
-	// If a schema was provided, the response should be a JSON string
-	if opts.SchemaContent != "" {
-		// Gemini's SDK puts the JSON directly into response.Text() when ResponseMIMEType is application/json
-		ret = response.Text()
-		return
 	}
 
 	// Otherwise, extract text and citations as usual
@@ -215,16 +219,6 @@ func (o *Client) buildGenerateContentConfig(opts *domain.ChatOptions) (*genai.Ge
 		MaxOutputTokens: int32(opts.ModelContextLength),
 	}
 
-	// Handle SchemaContent for structured output
-	if opts.SchemaContent != "" {
-		var schema genai.Schema
-		if err := json.Unmarshal([]byte(opts.SchemaContent), &schema); err != nil {
-			return nil, fmt.Errorf("failed to unmarshal schema content into genai.Schema: %w", err)
-		}
-		cfg.ResponseSchema = &schema
-		cfg.ResponseMIMEType = "application/json"
-	}
-
 	if opts.Search {
 		// Ensure cfg.Tools is initialized if not already
 		if cfg.Tools == nil {
@@ -247,6 +241,16 @@ func (o *Client) buildGenerateContentConfig(opts *domain.ChatOptions) (*genai.Ge
 
 	if tc, ok := parseThinkingConfig(opts.Thinking); ok {
 		cfg.ThinkingConfig = tc
+	}
+
+	// Handle SchemaContent for structured output
+	if opts.SchemaContent != "" {
+		var schema genai.Schema
+		if err := json.Unmarshal([]byte(opts.SchemaContent), &schema); err != nil {
+			return nil, fmt.Errorf("failed to unmarshal schema content into genai.Schema: %w", err)
+		}
+		cfg.ResponseSchema = &schema
+		cfg.ResponseMIMEType = "application/json"
 	}
 
 	return cfg, nil

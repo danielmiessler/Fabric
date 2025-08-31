@@ -1,14 +1,5 @@
 # Changelog
 
-## v1.4.303 (2025-08-30)
-
-### Direct commits
-
-- feat: Add --schema flag for structured JSON output
-- feat: Add create_schema pattern
-- feat: Successfully integrated --schema flag with OpenAI, Anthropic, and Gemini models
-- docs: Add documentation for --schema flag and structured outputs
-
 ## v1.4.302 (2025-08-28)
 
 ### PR [#1737](https://github.com/danielmiessler/Fabric/pull/1737) by [ksylvan](https://github.com/ksylvan) and [OmriH-Elister](https://github.com/OmriH-Elister): Add New Psychological Analysis Patterns + devalue version bump

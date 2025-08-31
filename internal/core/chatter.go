@@ -39,6 +39,9 @@ func (o *Chatter) Send(request *domain.ChatRequest, opts *domain.ChatOptions) (s
 	if o.vendor.NeedsRawMode(modelToUse) {
 		opts.Raw = true
 	}
+	if err = o.vendor.HandleSchema(opts); err != nil {
+		return
+	}
 	if session, err = o.BuildSession(request, opts, opts.Raw); err != nil {
 		return
 	}

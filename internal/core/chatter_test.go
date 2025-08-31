@@ -64,6 +64,10 @@ func (m *mockVendor) Send(ctx context.Context, messages []*chat.ChatCompletionMe
 	return "test response", nil
 }
 
+func (m *mockVendor) HandleSchema(opts *domain.ChatOptions) error {
+	return nil
+}
+
 func (m *mockVendor) NeedsRawMode(modelName string) bool {
 	return false
 }

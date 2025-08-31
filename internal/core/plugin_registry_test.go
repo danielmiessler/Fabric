@@ -51,6 +51,10 @@ func (m *testVendor) Send(context.Context, []*chat.ChatCompletionMessage, *domai
 }
 func (m *testVendor) NeedsRawMode(string) bool { return false }
 
+func (m *testVendor) HandleSchema(opts *domain.ChatOptions) error {
+	return nil
+}
+
 func TestGetChatter_WarnsOnAmbiguousModel(t *testing.T) {
 	tempDir := t.TempDir()
 	db := fsdb.NewDb(tempDir)

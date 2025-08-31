@@ -92,8 +92,8 @@ func handleChatProcessing(currentFlags *Flags, registry *core.PluginRegistry, me
 
 	result := session.GetLastMessage().Content
 
-	// If a schema was provided, validate the output against it.
-	if chatOptions.SchemaContent != "" {
+	// If a schema was provided, and it's not a dry run, validate the output against it.
+	if chatOptions.SchemaContent != "" && !currentFlags.DryRun {
 		if err = validateOutputWithSchema(result, chatOptions.SchemaContent); err != nil {
 			// On validation failure, print the error and the invalid output to stderr, then exit.
 			fmt.Fprintln(os.Stderr, err)

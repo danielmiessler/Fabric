@@ -1,0 +1,6 @@
+### PR [#1739](https://github.com/danielmiessler/Fabric/pull/1739) by [2b3pro](https://github.com/2b3pro): Feature/structured outputs
+
+- Chore(release): Update version to v..1
+- Feat: Add --schema flag for structured AI outputs
+Implement the `--schema` CLI flag to enable AI models to generate structured JSON output based on a provided JSON Schema.
+This feature has been integrated with OpenAI, Anthropic, and Gemini models, allowing for predictable and parseable responses. New patterns for generating JSON schemas and extracting data according to a schema have also been added, alongside comprehensive documentation.

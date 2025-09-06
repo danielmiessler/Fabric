@@ -103,6 +103,7 @@ type Flags struct {
 	NotificationCommand             string               `long:"notification-command" yaml:"notificationCommand" description:"Custom command to run for notifications (overrides built-in notifications)"`
 	Thinking                        domain.ThinkingLevel `long:"thinking" yaml:"thinking" description:"Set reasoning/thinking level (e.g., off, low, medium, high, or numeric tokens for Anthropic or Google Gemini)"`
 	Debug                           int                  `long:"debug" description:"Set debug level (0=off, 1=basic, 2=detailed, 3=trace)" default:"0"`
+	Schema                          string               `long:"schema" yaml:"schema" description:"Name of a JSON schema file from the schemas folder to use for structuring the output"`
 }
 
 // Init Initialize flags. returns a Flags struct and an error
@@ -281,6 +282,46 @@ func assignWithConversion(targetField, sourceField reflect.Value) error {
 	return fmt.Errorf("unsupported conversion from %v to %v", sourceField.Kind(), targetField.Kind())
 }
 
+// readSchemaFile reads the content of a schema file from the user's Fabric configuration 'Schemas' directory or a full path.
+// It attempts to find the file with and without a '.json' extension in the config directory, or directly if a full path is provided.
+func readSchemaFile(schemaFileName string) (string, error) {
+	// First, check if schemaFileName is an absolute path
+	if filepath.IsAbs(schemaFileName) {
+		content, err := os.ReadFile(schemaFileName)
+		if err == nil {
+			return string(content), nil
+		}
+		// If it's an absolute path but not found, return the error directly
+		return "", fmt.Errorf("could not read schema file from absolute path '%s': %w", schemaFileName, err)
+	}
+
+	// If not an absolute path, proceed with searching in the config directory
+	homeDir, err := os.UserHomeDir()
+	if err != nil {
+		return "", fmt.Errorf("could not determine user home directory: %w", err)
+	}
+
+	configSchemaDir := filepath.Join(homeDir, ".config", "fabric", "schemas")
+
+	// Try reading the file directly from the config directory
+	filePath := filepath.Join(configSchemaDir, schemaFileName)
+	content, err := os.ReadFile(filePath)
+	if err == nil {
+		return string(content), nil
+	}
+
+	// If not found, try appending .json extension in the config directory
+	if filepath.Ext(schemaFileName) != ".json" {
+		filePathWithExt := filepath.Join(configSchemaDir, schemaFileName+".json")
+		content, err := os.ReadFile(filePathWithExt)
+		if err == nil {
+			return string(content), nil
+		}
+	}
+
+	return "", fmt.Errorf("could not find or read schema file '%s' in '%s' or as an absolute path", schemaFileName, configSchemaDir)
+}
+
 func loadYAMLConfig(configPath string) (*Flags, error) {
 	absPath, err := util.GetAbsolutePath(configPath)
 	if err != nil {
@@ -448,6 +489,19 @@ func (o *Flags) BuildChatOptions() (ret *domain.ChatOptions, err error) {
 		endTag = "</think>"
 	}
 
+	if o.Schema != "" {
+		var err error
+		var schemaContent string
+		schemaContent, err = readSchemaFile(o.Schema)
+		if err != nil {
+			return nil, fmt.Errorf("failed to read schema file: %w", err)
+		}
+		if o.PatternVariables == nil {
+			o.PatternVariables = make(map[string]string)
+		}
+		o.PatternVariables["schema"] = schemaContent
+	}
+
 	ret = &domain.ChatOptions{
 		Model:               o.Model,
 		Temperature:         o.Temperature,
@@ -471,6 +525,7 @@ func (o *Flags) BuildChatOptions() (ret *domain.ChatOptions, err error) {
 		Voice:               o.Voice,
 		Notification:        o.Notification || o.NotificationCommand != "",
 		NotificationCommand: o.NotificationCommand,
+		SchemaContent:       o.PatternVariables["schema"], // Use the schema content from PatternVariables
 	}
 	return
 }
@@ -481,7 +536,7 @@ func (o *Flags) BuildChatRequest(Meta string) (ret *domain.ChatRequest, err erro
 		SessionName:           o.Session,
 		PatternName:           o.Pattern,
 		StrategyName:          o.Strategy,
-		PatternVariables:      o.PatternVariables,
+		PatternVariables:      o.PatternVariables, // PatternVariables already contains schema if set
 		InputHasVars:          o.InputHasVars,
 		NoVariableReplacement: o.NoVariableReplacement,
 		Meta:                  Meta,

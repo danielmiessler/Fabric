@@ -1,0 +1,50 @@
+{
+  "name": "Article Schema",
+  "description": "Schema for an article with title, summary, text content, and citations",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "The title of the article"
+    },
+    "summary": {
+      "type": "string",
+      "description": "A brief summary or abstract of the article"
+    },
+    "text": {
+      "type": "string",
+      "description": "The full text content of the article"
+    },
+    "citations": {
+      "type": "array",
+      "description": "Array of citations referenced in the article",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the citation"
+          },
+          "title": {
+            "type": "string",
+            "description": "Title of the cited work"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to the cited work (if available)"
+          }
+        },
+        "required": [
+          "title"
+        ]
+      }
+    }
+  },
+  "required": [
+    "title",
+    "summary",
+    "text",
+    "citations"
+  ]
+}

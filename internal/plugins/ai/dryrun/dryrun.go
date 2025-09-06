@@ -12,7 +12,7 @@ import (
 	"github.com/danielmiessler/fabric/internal/plugins"
 )
 
-const DryRunResponse = "Dry run: Fake response sent by DryRun plugin\n"
+const DryRunTextResponse = "Dry run: Fake response sent by DryRun plugin\n"
 
 type Client struct {
 	*plugins.PluginBase
@@ -95,6 +95,12 @@ func (c *Client) formatOptions(opts *domain.ChatOptions) string {
 		builder.WriteString(fmt.Sprintf("Thinking Start Tag: %s\n", opts.ThinkStartTag))
 		builder.WriteString(fmt.Sprintf("Thinking End Tag: %s\n", opts.ThinkEndTag))
 	}
+	if opts.SchemaContent != "" {
+		builder.WriteString(fmt.Sprintf("SchemaContent: %s\n", opts.SchemaContent))
+		if opts.TransformedSchema != nil {
+			builder.WriteString(fmt.Sprintf("TransformedSchema: %+v\n", opts.TransformedSchema))
+		}
+	}
 
 	return builder.String()
 }
@@ -113,14 +119,13 @@ func (c *Client) SendStream(msgs []*chat.ChatCompletionMessage, opts *domain.Cha
 	request := c.constructRequest(msgs, opts)
 	channel <- request
 	channel <- "\n"
-	channel <- DryRunResponse
+	channel <- DryRunTextResponse
 	return nil
 }
 
 func (c *Client) Send(_ context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions) (string, error) {
 	request := c.constructRequest(msgs, opts)
-
-	return request + "\n" + DryRunResponse, nil
+	return request + "\n" + DryRunTextResponse, nil
 }
 
 func (c *Client) Setup() error {
@@ -133,4 +138,9 @@ func (c *Client) SetupFillEnvFileContent(_ *bytes.Buffer) {
 
 func (c *Client) NeedsRawMode(modelName string) bool {
 	return false
+}
+
+// GetProviderName returns the provider identifier for schema handling
+func (c *Client) GetProviderName() string {
+	return "dryrun"
 }

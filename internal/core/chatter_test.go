@@ -22,6 +22,10 @@ func (m *mockVendor) GetName() string {
 	return "mock"
 }
 
+func (m *mockVendor) GetProviderName() string {
+	return "mock"
+}
+
 func (m *mockVendor) GetSetupDescription() string {
 	return "mock vendor"
 }

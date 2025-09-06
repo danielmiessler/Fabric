@@ -51,6 +51,8 @@ type ChatOptions struct {
 	Voice               string
 	Notification        bool
 	NotificationCommand string
+	SchemaContent       string
+	TransformedSchema   interface{} // Provider-specific transformed schema
 }
 
 // NormalizeMessages remove empty messages and ensure messages order user-assist-user

@@ -410,3 +410,8 @@ func (an *Client) toMessages(msgs []*chat.ChatCompletionMessage) (ret []anthropi
 func (an *Client) NeedsRawMode(modelName string) bool {
 	return false
 }
+
+// GetProviderName returns the provider identifier for schema handling
+func (c *Client) GetProviderName() string {
+	return "anthropic"
+}

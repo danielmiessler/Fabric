@@ -12,6 +12,7 @@ import (
 	"github.com/danielmiessler/fabric/internal/domain"
 	"github.com/danielmiessler/fabric/internal/plugins/ai"
 	"github.com/danielmiessler/fabric/internal/plugins/db/fsdb"
+	"github.com/danielmiessler/fabric/internal/plugins/schema"
 	"github.com/danielmiessler/fabric/internal/plugins/strategy"
 	"github.com/danielmiessler/fabric/internal/plugins/template"
 )
@@ -28,6 +29,7 @@ type Chatter struct {
 	modelContextLength int
 	vendor             ai.Vendor
 	strategy           string
+	schemaManager      *schema.Manager
 }
 
 // Send processes a chat request and applies file changes for create_coding_feature pattern
@@ -39,7 +41,21 @@ func (o *Chatter) Send(request *domain.ChatRequest, opts *domain.ChatOptions) (s
 	if o.vendor.NeedsRawMode(modelToUse) {
 		opts.Raw = true
 	}
-	if session, err = o.BuildSession(request, opts.Raw); err != nil {
+
+	// Initialize schema manager if not already done
+	if o.schemaManager == nil {
+		o.schemaManager = schema.NewManager()
+	}
+
+	// Handle schema transformation using centralized schema manager
+	if opts.SchemaContent != "" {
+		// Determine if we need to pass special context (e.g., for OpenAI API type detection)
+		context := o.buildSchemaContext()
+		if err = o.schemaManager.HandleSchemaTransformationWithContext(o.vendor.GetProviderName(), opts, context); err != nil {
+			return
+		}
+	}
+	if session, err = o.BuildSession(request, opts, opts.Raw); err != nil {
 		return
 	}
 
@@ -101,6 +117,17 @@ func (o *Chatter) Send(request *domain.ChatRequest, opts *domain.ChatOptions) (s
 		if message, err = o.vendor.Send(context.Background(), session.GetVendorMessages(), opts); err != nil {
 			return
 		}
+
+		// Handle schema response parsing after receiving from provider
+		// TODO: Streaming responses need special handling in future phases
+		if opts.SchemaContent != "" {
+			if parsedMessage, parseErr := o.schemaManager.HandleResponseParsing(o.vendor.GetProviderName(), message, opts); parseErr != nil {
+				// Log the parsing error but don't fail completely - fall back to original response
+				fmt.Printf("Warning: Schema response parsing failed: %v\n", parseErr)
+			} else {
+				message = parsedMessage
+			}
+		}
 	}
 
 	if opts.SuppressThink && !o.DryRun {
@@ -111,6 +138,13 @@ func (o *Chatter) Send(request *domain.ChatRequest, opts *domain.ChatOptions) (s
 		session = nil
 		err = fmt.Errorf("empty response")
 		return
+	}
+
+	// Validate final output against schema if provided
+	if opts.SchemaContent != "" {
+		if validateErr := o.schemaManager.ValidateOutput(message, opts.SchemaContent, o.vendor.GetProviderName()); validateErr != nil {
+			fmt.Printf("Warning: Schema validation failed: %v\n", validateErr)
+		}
 	}
 
 	// Process file changes for create_coding_feature pattern
@@ -142,7 +176,7 @@ func (o *Chatter) Send(request *domain.ChatRequest, opts *domain.ChatOptions) (s
 	return
 }
 
-func (o *Chatter) BuildSession(request *domain.ChatRequest, raw bool) (session *fsdb.Session, err error) {
+func (o *Chatter) BuildSession(request *domain.ChatRequest, opts *domain.ChatOptions, raw bool) (session *fsdb.Session, err error) {
 	if request.SessionName != "" {
 		var sess *fsdb.Session
 		if sess, err = o.db.Sessions.Get(request.SessionName); err != nil {
@@ -223,6 +257,13 @@ func (o *Chatter) BuildSession(request *domain.ChatRequest, raw bool) (session *
 		systemMessage = fmt.Sprintf("%s\n\nIMPORTANT: First, execute the instructions provided in this prompt using the user's input. Second, ensure your entire final response, including any section headers or titles generated as part of executing the instructions, is written ONLY in the %s language.", systemMessage, request.Language)
 	}
 
+	if request.PatternVariables == nil {
+		request.PatternVariables = make(map[string]string)
+	}
+	if opts.SchemaContent != "" {
+		request.PatternVariables["schema"] = opts.SchemaContent
+	}
+
 	if raw {
 		var finalContent string
 		if systemMessage != "" {
@@ -278,4 +319,28 @@ func (o *Chatter) BuildSession(request *domain.ChatRequest, raw bool) (session *
 		err = errors.New(NoSessionPatternUserMessages)
 	}
 	return
+}
+
+// buildSchemaContext creates context for schema transformations based on vendor type
+func (o *Chatter) buildSchemaContext() map[string]interface{} {
+	context := make(map[string]interface{})
+
+	// For OpenAI providers, detect if they support Responses API
+	if o.vendor.GetProviderName() == "openai" {
+		// Try to cast to OpenAI client to check Responses API support
+		if openaiClient, ok := o.vendor.(interface {
+			SupportsResponsesAPI() bool
+		}); ok {
+			if openaiClient.SupportsResponsesAPI() {
+				context["api_type"] = "responses"
+			} else {
+				context["api_type"] = "completions"
+			}
+		} else {
+			// Default to completions API for OpenAI-compatible providers
+			context["api_type"] = "completions"
+		}
+	}
+
+	return context
 }

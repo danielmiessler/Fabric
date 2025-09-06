@@ -7,6 +7,7 @@ package bedrock
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 
 	"github.com/danielmiessler/fabric/internal/domain"
@@ -173,6 +174,27 @@ func (c *BedrockClient) SendStream(msgs []*chat.ChatCompletionMessage, opts *dom
 			TopP:        aws.Float32(float32(opts.TopP))},
 	}
 
+	if opts.TransformedSchema != nil {
+		// TransformedSchema is now a generic map[string]interface{} representing the ToolConfiguration
+		genericToolConfig, ok := opts.TransformedSchema.(map[string]interface{})
+		if !ok {
+			return fmt.Errorf("transformed schema is not a map[string]interface{}")
+		}
+
+		// Marshal the generic map back to JSON bytes
+		toolConfigBytes, err := json.Marshal(genericToolConfig)
+		if err != nil {
+			return fmt.Errorf("failed to marshal generic tool config: %w", err)
+		}
+
+		// Unmarshal JSON bytes into Bedrock's types.ToolConfiguration
+		var toolConfig types.ToolConfiguration
+		if err := json.Unmarshal(toolConfigBytes, &toolConfig); err != nil {
+			return fmt.Errorf("failed to unmarshal tool config into types.ToolConfiguration: %w", err)
+		}
+		converseInput.ToolConfig = &toolConfig
+	}
+
 	response, err := c.runtimeClient.ConverseStream(context.Background(), &converseInput)
 	if err != nil {
 		return fmt.Errorf("bedrock conversestream failed for model %s: %w", opts.Model, err)
@@ -216,6 +238,28 @@ func (c *BedrockClient) Send(ctx context.Context, msgs []*chat.ChatCompletionMes
 		ModelId:  aws.String(opts.Model),
 		Messages: messages,
 	}
+
+	if opts.TransformedSchema != nil {
+		// TransformedSchema is now a generic map[string]interface{} representing the ToolConfiguration
+		genericToolConfig, ok := opts.TransformedSchema.(map[string]interface{})
+		if !ok {
+			return "", fmt.Errorf("transformed schema is not a map[string]interface{}")
+		}
+
+		// Marshal the generic map back to JSON bytes
+		toolConfigBytes, err := json.Marshal(genericToolConfig)
+		if err != nil {
+			return "", fmt.Errorf("failed to marshal generic tool config: %w", err)
+		}
+
+		// Unmarshal JSON bytes into Bedrock's types.ToolConfiguration
+		var toolConfig types.ToolConfiguration
+		if err := json.Unmarshal(toolConfigBytes, &toolConfig); err != nil {
+			return "", fmt.Errorf("failed to unmarshal tool config into types.ToolConfiguration: %w", err)
+		}
+		converseInput.ToolConfig = &toolConfig
+	}
+
 	response, err := c.runtimeClient.Converse(ctx, &converseInput)
 	if err != nil {
 		return "", fmt.Errorf("bedrock converse failed for model %s: %w", opts.Model, err)
@@ -243,6 +287,11 @@ func (c *BedrockClient) Send(ctx context.Context, msgs []*chat.ChatCompletionMes
 // Bedrock models do not require raw mode.
 func (c *BedrockClient) NeedsRawMode(modelName string) bool {
 	return false
+}
+
+// GetProviderName returns the provider identifier for schema handling
+func (c *BedrockClient) GetProviderName() string {
+	return "bedrock"
 }
 
 // toMessages converts the array of input messages from the ChatCompletionMessageType to the

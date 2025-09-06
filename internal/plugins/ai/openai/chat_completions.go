@@ -88,6 +88,17 @@ func (o *Client) buildChatCompletionParams(
 	if eff, ok := parseReasoningEffort(opts.Thinking); ok {
 		ret.ReasoningEffort = eff
 	}
+
+	// Handle structured output via schema manager's transformed schema
+	if opts.TransformedSchema != nil {
+		// For Chat Completions API, the schema manager provides the correct format
+		if responseSchema, ok := opts.TransformedSchema.(map[string]any); ok {
+			ret.SetExtraFields(map[string]any{
+				"response_format": responseSchema,
+			})
+		}
+	}
+
 	return
 }
 

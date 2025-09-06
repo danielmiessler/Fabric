@@ -9,6 +9,7 @@ import (
 	"github.com/danielmiessler/fabric/internal/domain"
 	debuglog "github.com/danielmiessler/fabric/internal/log"
 	"github.com/danielmiessler/fabric/internal/plugins"
+	"github.com/danielmiessler/fabric/internal/plugins/schema"
 	perplexity "github.com/sgaunet/perplexity-go/v2"
 
 	"github.com/danielmiessler/fabric/internal/chat"
@@ -99,26 +100,36 @@ func (c *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, o
 		requestOptions = append(requestOptions, perplexity.WithFrequencyPenalty(opts.FrequencyPenalty))
 	}
 
-	request := perplexity.NewCompletionRequest(requestOptions...)
-
-	// Corrected: Use SendCompletionRequest method from perplexity-go library
-	resp, err := c.client.SendCompletionRequest(request) // Pass request directly
-	if err != nil {
-		return "", fmt.Errorf("perplexity API request failed: %w", err) // Corrected capitalization
-	}
-
-	content := resp.GetLastContent()
-
-	// Append citations if available
-	citations := resp.GetCitations()
-	if len(citations) > 0 {
-		content += "\n\n# CITATIONS\n\n"
-		for i, citation := range citations {
-			content += fmt.Sprintf("- [%d] %s\n", i+1, citation)
+	// If transformed schema is available, use it for JSON schema response format
+	if opts.TransformedSchema != nil {
+		if transformedSchema, ok := opts.TransformedSchema.(map[string]interface{}); ok {
+			// Check if it's a JSON schema response format (from centralized schema transformation)
+			if schemaType, exists := transformedSchema["type"]; exists && schemaType == "json_schema" {
+				if jsonSchemaSection, exists := transformedSchema["json_schema"]; exists {
+					if jsonSchemaMap, ok := jsonSchemaSection.(map[string]interface{}); ok {
+						if actualSchema, exists := jsonSchemaMap["schema"]; exists {
+							requestOptions = append(requestOptions, perplexity.WithJSONSchemaResponseFormat(actualSchema))
+						}
+					}
+				}
+			} else {
+				// Fallback: use the transformed schema directly if it's not in the expected format
+				requestOptions = append(requestOptions, perplexity.WithJSONSchemaResponseFormat(transformedSchema))
+			}
 		}
 	}
 
-	return content, nil
+	request := perplexity.NewCompletionRequest(requestOptions...)
+
+	// Use SendCompletionRequest method from perplexity-go library
+	resp, err := c.client.SendCompletionRequest(request) // Pass request directly
+	if err != nil {
+		return "", fmt.Errorf("perplexity API request failed: %w", err)
+	}
+
+	// Use the centralized schema plugin for parsing
+	schemaManager := schema.NewManager()
+	return schemaManager.HandleResponseParsing("perplexity", resp, opts)
 }
 
 func (c *Client) SendStream(msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan string) error {
@@ -161,6 +172,25 @@ func (c *Client) SendStream(msgs []*chat.ChatCompletionMessage, opts *domain.Cha
 		requestOptions = append(requestOptions, perplexity.WithFrequencyPenalty(opts.FrequencyPenalty))
 	}
 
+	// If transformed schema is available, use it for JSON schema response format
+	if opts.TransformedSchema != nil {
+		if transformedSchema, ok := opts.TransformedSchema.(map[string]interface{}); ok {
+			// Check if it's a JSON schema response format (from centralized schema transformation)
+			if schemaType, exists := transformedSchema["type"]; exists && schemaType == "json_schema" {
+				if jsonSchemaSection, exists := transformedSchema["json_schema"]; exists {
+					if jsonSchemaMap, ok := jsonSchemaSection.(map[string]interface{}); ok {
+						if actualSchema, exists := jsonSchemaMap["schema"]; exists {
+							requestOptions = append(requestOptions, perplexity.WithJSONSchemaResponseFormat(actualSchema))
+						}
+					}
+				}
+			} else {
+				// Fallback: use the transformed schema directly if it's not in the expected format
+				requestOptions = append(requestOptions, perplexity.WithJSONSchemaResponseFormat(transformedSchema))
+			}
+		}
+	}
+
 	request := perplexity.NewCompletionRequest(requestOptions...)
 
 	responseChan := make(chan perplexity.CompletionResponse)
@@ -182,31 +212,42 @@ func (c *Client) SendStream(msgs []*chat.ChatCompletionMessage, opts *domain.Cha
 	go func() {
 		defer close(channel) // Ensure the output channel is closed when this goroutine finishes
 		var lastResponse *perplexity.CompletionResponse
+		var fullContent string // Accumulate streamed content
+
+		schemaManager := schema.NewManager()
+
 		for resp := range responseChan {
 			lastResponse = &resp
-			if len(resp.Choices) > 0 {
-				content := ""
-				// Corrected: Check Delta.Content and Message.Content directly for non-emptiness
-				// as Delta and Message are structs, not pointers, in perplexity.Choice
-				if resp.Choices[0].Delta.Content != "" {
-					content = resp.Choices[0].Delta.Content
-				} else if resp.Choices[0].Message.Content != "" {
-					content = resp.Choices[0].Message.Content
-				}
-				if content != "" {
-					channel <- content
-				}
+			contentDelta, err := schemaManager.HandleStreamResponseParsing("perplexity", &resp, opts)
+			if err != nil {
+				debuglog.Log("perplexity streaming parse error: %v\n", err)
+				continue
+			}
+			if contentDelta != "" {
+				fullContent += contentDelta // Accumulate
+				channel <- contentDelta
 			}
 		}
 
-		// Send citations at the end if available
+		// After the stream finishes, handle citations for the full content
 		if lastResponse != nil {
-			citations := lastResponse.GetCitations()
-			if len(citations) > 0 {
-				channel <- "\n\n# CITATIONS\n\n"
-				for i, citation := range citations {
-					channel <- fmt.Sprintf("- [%d] %s\n", i+1, citation)
-				}
+			// To handle citations for the full content, we need to pass the full response
+			// from the last stream event along with the accumulated content.
+			// The ParseResponse method in PerplexityParser expects a *perplexity.CompletionResponse.
+			// We will create a dummy CompletionResponse with the accumulated content
+			// and the citations from the last response.
+			// This is a bit of a workaround because the streaming API doesn't give us the final
+			// complete content in one go, but rather in deltas.
+			// The citations are only available in the final response object.
+			finalContentWithCitations, err := schemaManager.HandleResponseParsing("perplexity", lastResponse, opts)
+			if err != nil {
+				debuglog.Log("perplexity streaming citation parse error: %v\n", err)
+				return
+			}
+
+			// Only send if there's a difference, otherwise we'd send the full content twice
+			if finalContentWithCitations != fullContent {
+				channel <- finalContentWithCitations[len(fullContent):] // Send only the citations part
 			}
 		}
 	}()
@@ -216,6 +257,11 @@ func (c *Client) SendStream(msgs []*chat.ChatCompletionMessage, opts *domain.Cha
 
 func (c *Client) NeedsRawMode(modelName string) bool {
 	return true
+}
+
+// GetProviderName returns the provider identifier for schema handling
+func (c *Client) GetProviderName() string {
+	return "perplexity"
 }
 
 // Setup is called by the fabric CLI framework to guide the user through configuration.

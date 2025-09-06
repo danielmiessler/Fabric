@@ -10,7 +10,6 @@ import (
 	"net/http"
 
 	"github.com/danielmiessler/fabric/internal/chat"
-
 	"github.com/danielmiessler/fabric/internal/domain"
 	"github.com/danielmiessler/fabric/internal/plugins"
 )
@@ -94,6 +93,10 @@ func (c *Client) SendStream(msgs []*chat.ChatCompletionMessage, opts *domain.Cha
 		"messages": msgs,
 		"model":    opts.Model,
 		"stream":   true, // Enable streaming
+	}
+
+	if opts.TransformedSchema != nil {
+		payload["response_format"] = opts.TransformedSchema
 	}
 
 	var jsonPayload []byte
@@ -180,6 +183,10 @@ func (c *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, o
 		"messages": msgs,
 		"model":    opts.Model,
 		// Add other options from opts if supported by LM Studio
+	}
+
+	if opts.TransformedSchema != nil {
+		payload["response_format"] = opts.TransformedSchema
 	}
 
 	var jsonPayload []byte
@@ -348,4 +355,9 @@ func (c *Client) GetEmbeddings(ctx context.Context, input string, opts *domain.C
 
 func (c *Client) NeedsRawMode(modelName string) bool {
 	return false
+}
+
+// GetProviderName returns the provider identifier for schema handling
+func (c *Client) GetProviderName() string {
+	return "lmstudio"
 }

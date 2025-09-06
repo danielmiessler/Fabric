@@ -10,9 +10,8 @@ import (
 	"strings"
 
 	"github.com/danielmiessler/fabric/internal/chat"
-	"github.com/danielmiessler/fabric/internal/plugins"
-
 	"github.com/danielmiessler/fabric/internal/domain"
+	"github.com/danielmiessler/fabric/internal/plugins"
 	"google.golang.org/genai"
 )
 
@@ -124,7 +123,7 @@ func (o *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, o
 		return "", err
 	}
 
-	// Extract text from response
+	// Otherwise, extract text and citations as usual
 	ret = o.extractTextFromResponse(response)
 	return
 }
@@ -171,6 +170,11 @@ func (o *Client) NeedsRawMode(modelName string) bool {
 	return false
 }
 
+// GetProviderName returns the provider identifier for schema handling
+func (o *Client) GetProviderName() string {
+	return "gemini"
+}
+
 func parseThinkingConfig(level domain.ThinkingLevel) (*genai.ThinkingConfig, bool) {
 	lower := strings.ToLower(strings.TrimSpace(string(level)))
 	switch domain.ThinkingLevel(lower) {
@@ -208,13 +212,19 @@ func (o *Client) buildGenerateContentConfig(opts *domain.ChatOptions) (*genai.Ge
 	}
 
 	if opts.Search {
-		cfg.Tools = []*genai.Tool{{GoogleSearch: &genai.GoogleSearch{}}}
+		// Ensure cfg.Tools is initialized if not already
+		if cfg.Tools == nil {
+			cfg.Tools = []*genai.Tool{}
+		}
+		cfg.Tools = append(cfg.Tools, &genai.Tool{GoogleSearch: &genai.GoogleSearch{}}) // Corrected: removed extra curly braces
 		if loc := opts.SearchLocation; loc != "" {
 			if isValidLocationFormat(loc) {
 				loc = normalizeLocation(loc)
-				cfg.ToolConfig = &genai.ToolConfig{
-					RetrievalConfig: &genai.RetrievalConfig{LanguageCode: loc},
+				// Create ToolConfig if it doesn't exist, then set RetrievalConfig
+				if cfg.ToolConfig == nil {
+					cfg.ToolConfig = &genai.ToolConfig{}
 				}
+				cfg.ToolConfig.RetrievalConfig = &genai.RetrievalConfig{LanguageCode: loc}
 			} else {
 				return nil, fmt.Errorf(errInvalidLocationFormat, loc)
 			}
@@ -223,6 +233,14 @@ func (o *Client) buildGenerateContentConfig(opts *domain.ChatOptions) (*genai.Ge
 
 	if tc, ok := parseThinkingConfig(opts.Thinking); ok {
 		cfg.ThinkingConfig = tc
+	}
+
+	// Handle structured output via schema manager's transformed schema
+	if opts.TransformedSchema != nil {
+		if schema, ok := opts.TransformedSchema.(*genai.Schema); ok {
+			cfg.ResponseSchema = schema
+			cfg.ResponseMIMEType = "application/json"
+		}
 	}
 
 	return cfg, nil
@@ -505,6 +523,10 @@ func (o *Client) extractTextParts(response *genai.GenerateContentResponse) strin
 		}
 	}
 	return builder.String()
+}
+
+func (o *Client) Name() string {
+	return o.PluginBase.Name
 }
 
 func (o *Client) extractCitations(response *genai.GenerateContentResponse) []string {

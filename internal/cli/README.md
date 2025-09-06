@@ -26,6 +26,7 @@ model: gpt-4
 modelContextLength: 4096
 
 # Model parameters
+maxTokens: 4096 # Optional, defaults to models max token limit; Anthropic defaults to 4096
 temperature: 0.7
 topp: 0.9
 presencepenalty: 0.0

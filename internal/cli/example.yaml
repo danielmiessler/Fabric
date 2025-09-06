@@ -11,6 +11,9 @@ model: phi3:latest
 # for models that support context length
 modelContextLength: 2048
 
+# maxTokens defaults to provider's default if not provided; Anthropic defaults to 4096
+maxTokens: 4096
+
 frequencypenalty: 0.5
 presencepenalty: 0.5
 topp: 0.67

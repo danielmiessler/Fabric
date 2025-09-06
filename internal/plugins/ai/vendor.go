@@ -15,4 +15,5 @@ type Vendor interface {
 	SendStream([]*chat.ChatCompletionMessage, *domain.ChatOptions, chan string) error
 	Send(context.Context, []*chat.ChatCompletionMessage, *domain.ChatOptions) (string, error)
 	NeedsRawMode(modelName string) bool
+	GetProviderName() string
 }

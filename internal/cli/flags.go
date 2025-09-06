@@ -102,6 +102,7 @@ type Flags struct {
 	Notification                    bool                 `long:"notification" yaml:"notification" description:"Send desktop notification when command completes"`
 	NotificationCommand             string               `long:"notification-command" yaml:"notificationCommand" description:"Custom command to run for notifications (overrides built-in notifications)"`
 	Thinking                        domain.ThinkingLevel `long:"thinking" yaml:"thinking" description:"Set reasoning/thinking level (e.g., off, low, medium, high, or numeric tokens for Anthropic or Google Gemini)"`
+	MaxTokens                       int                  `long:"max-tokens" yaml:"maxTokens" description:"Maximum number of tokens to generate (provider-specific limits apply)"`
 	Debug                           int                  `long:"debug" description:"Set debug level (0=off, 1=basic, 2=detailed, 3=trace)" default:"0"`
 }
 
@@ -457,6 +458,7 @@ func (o *Flags) BuildChatOptions() (ret *domain.ChatOptions, err error) {
 		Raw:                 o.Raw,
 		Seed:                o.Seed,
 		Thinking:            o.Thinking,
+		MaxTokens:           o.MaxTokens,
 		ModelContextLength:  o.ModelContextLength,
 		Search:              o.Search,
 		SearchLocation:      o.SearchLocation,

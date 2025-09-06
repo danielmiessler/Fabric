@@ -49,7 +49,8 @@ func (m *testVendor) SendStream([]*chat.ChatCompletionMessage, *domain.ChatOptio
 func (m *testVendor) Send(context.Context, []*chat.ChatCompletionMessage, *domain.ChatOptions) (string, error) {
 	return "", nil
 }
-func (m *testVendor) NeedsRawMode(string) bool { return false }
+func (m *testVendor) NeedsRawMode(string) bool     { return false }
+func (m *testVendor) GetProviderName() string      { return strings.ToLower(m.name) }
 
 func TestGetChatter_WarnsOnAmbiguousModel(t *testing.T) {
 	tempDir := t.TempDir()

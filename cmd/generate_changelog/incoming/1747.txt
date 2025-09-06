@@ -1,0 +1,7 @@
+### PR [#1747](https://github.com/danielmiessler/Fabric/pull/1747) by [2b3pro](https://github.com/2b3pro): feat: Add MaxTokens option for AI model output control
+
+- Add MaxTokens option for AI model output control, allowing users to specify the maximum number of tokens to generate in AI model responses
+- Integrate MaxTokens configuration across multiple AI providers including Anthropic, Gemini, and Ollama
+- Update example configuration to include maxTokens with descriptive comment
+- Resolve test issues related to MaxTokens implementation
+- Add changelog entry for MaxTokens feature

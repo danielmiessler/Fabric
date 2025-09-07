@@ -1,0 +1,69 @@
+#!/bin/sh
+# Open a PR to promote dev -> main
+# Usage: bin/promote "Title" [--draft]
+# POSIX sh-compatible; uses gh if available, else prints the command.
+
+set -eu
+
+if [ $# -lt 1 ]; then
+  echo "Usage: bin/promote \"Title\" [--draft]" >&2
+  exit 1
+fi
+
+TITLE="$1"
+DRAFT_FLAG=""
+if [ "${2-}" = "--draft" ]; then
+  DRAFT_FLAG="--draft"
+fi
+
+BASE_BRANCH="main"
+HEAD_BRANCH="dev"
+
+# Ensure current branch is dev for promotion
+CUR=$(git rev-parse --abbrev-ref HEAD)
+if [ "$CUR" != "$HEAD_BRANCH" ]; then
+  echo "Please switch to '$HEAD_BRANCH' before promoting to '$BASE_BRANCH'." >&2
+  exit 1
+fi
+
+# Push dev to origin if remote exists
+if git rev-parse --verify -q "origin/$HEAD_BRANCH" >/dev/null; then
+  git push origin "$HEAD_BRANCH"
+fi
+
+# Determine repository (owner/repo)
+REPO_URL=$(git remote get-url origin 2>/dev/null || echo "")
+REPO=""
+case "$REPO_URL" in
+  https://github.com/*) REPO=$(echo "$REPO_URL" | sed -e 's#https://github.com/##' -e 's/.git$//');;
+  git@github.com:*) REPO=$(echo "$REPO_URL" | sed -e 's#git@github.com:##' -e 's/.git$//');;
+  *) REPO="";;
+esac
+
+if command -v gh >/dev/null 2>&1; then
+  if [ -n "$REPO" ]; then
+    gh pr create --repo "$REPO" --base "$BASE_BRANCH" --head "$HEAD_BRANCH" --title "$TITLE" $DRAFT_FLAG || {
+      echo "gh failed. You can run:" >&2
+      echo "gh pr create --repo '$REPO' --base '$BASE_BRANCH' --head '$HEAD_BRANCH' --title '$TITLE' $DRAFT_FLAG" >&2
+      exit 1
+    }
+  else
+    gh pr create --base "$BASE_BRANCH" --head "$HEAD_BRANCH" --title "$TITLE" $DRAFT_FLAG || {
+      echo "gh failed. You can run (repo autodetect failed):" >&2
+      echo "gh pr create --base '$BASE_BRANCH' --head '$HEAD_BRANCH' --title '$TITLE' $DRAFT_FLAG" >&2
+      exit 1
+    }
+  fi
+  echo "Promotion PR created: $HEAD_BRANCH -> $BASE_BRANCH"
+  exit 0
+fi
+
+# Fallback: print command
+if [ -n "$REPO" ]; then
+  echo "GitHub CLI not found. Run:" >&2
+  echo "gh pr create --repo '$REPO' --base '$BASE_BRANCH' --head '$HEAD_BRANCH' --title '$TITLE' $DRAFT_FLAG" >&2
+else
+  echo "GitHub CLI not found. Run (repo autodetect failed):" >&2
+  echo "gh pr create --base '$BASE_BRANCH' --head '$HEAD_BRANCH' --title '$TITLE' $DRAFT_FLAG" >&2
+fi
+

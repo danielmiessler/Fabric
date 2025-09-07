@@ -1,0 +1,41 @@
+#!/bin/sh
+# Automate MCP-guided start_feature workflow
+# Usage: bin/feature <short-kebab-description>
+
+set -eu
+
+if [ $# -ne 1 ]; then
+  echo "Usage: bin/feature <short-kebab-description>" >&2
+  exit 1
+fi
+NAME="$1"
+
+# Safety: ensure clean working tree if required
+if git config --get workflow.requireclean | grep -qi '^true$'; then
+  if ! git diff --quiet || ! git diff --cached --quiet; then
+    echo "Working tree is not clean. Stash or commit your changes first." >&2
+    exit 1
+  fi
+fi
+
+# Ensure integration branch exists locally
+INTEGRATION_BRANCH="$(git config --get workflow.integrationbranch || echo dev)"
+
+# Switch to integration branch and update
+current_branch=$(git rev-parse --abbrev-ref HEAD)
+if [ "$current_branch" != "$INTEGRATION_BRANCH" ]; then
+  git checkout "$INTEGRATION_BRANCH"
+fi
+# Pull latest (best-effort; ignore if no remote)
+if git rev-parse --verify -q "origin/$INTEGRATION_BRANCH" >/dev/null; then
+  git pull --ff-only origin "$INTEGRATION_BRANCH" || true
+fi
+
+# Create feature branch
+FEATURE_BRANCH="feature/$NAME"
+
+git checkout -b "$FEATURE_BRANCH"
+
+echo "Created and switched to $FEATURE_BRANCH"
+echo "Next steps: make changes, git add -A, and commit with message: 'feat: ...'"
+

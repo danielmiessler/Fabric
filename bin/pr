@@ -1,0 +1,86 @@
+#!/bin/sh
+# Open a Pull Request from the current feature branch into the integration branch (dev)
+# Usage: bin/pr <title> [--draft]
+# - If GitHub CLI (gh) is available and authenticated, it will open the PR.
+# - Otherwise, it will print the exact gh command to run.
+# - POSIX sh compatible.
+
+set -eu
+
+if [ $# -lt 1 ]; then
+  echo "Usage: bin/pr <title> [--draft]" >&2
+  exit 1
+fi
+
+TITLE="$1"
+DRAFT_FLAG=""
+if [ "${2-}" = "--draft" ]; then
+  DRAFT_FLAG="--draft"
+fi
+
+# Ensure we are on a feature branch
+HEAD_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+case "$HEAD_BRANCH" in
+  feature/*) ;;
+  *)
+    echo "You must run this from a feature/* branch (current: $HEAD_BRANCH)" >&2
+    exit 1
+    ;;
+esac
+
+BASE_BRANCH="$(git config --get workflow.integrationbranch || echo dev)"
+
+# Ensure remote tracking exists for current branch (best-effort)
+if ! git rev-parse --verify -q "origin/$HEAD_BRANCH" >/dev/null; then
+  if git rev-parse --verify -q origin >/dev/null 2>&1; then
+    git push -u origin "$HEAD_BRANCH" || true
+  fi
+fi
+
+# Determine repository (owner/repo) via git
+REPO_URL=$(git remote get-url origin 2>/dev/null || echo "")
+if [ -n "$REPO_URL" ]; then
+  # Normalize to owner/repo
+  case "$REPO_URL" in
+    https://github.com/*)
+      REPO=$(echo "$REPO_URL" | sed -e 's#https://github.com/##' -e 's/.git$//')
+      ;;
+    git@github.com:*)
+      REPO=$(echo "$REPO_URL" | sed -e 's#git@github.com:##' -e 's/.git$//')
+      ;;
+    *)
+      REPO=""
+      ;;
+  esac
+else
+  REPO=""
+fi
+
+# If gh is available, try to open PR
+if command -v gh >/dev/null 2>&1; then
+  if [ -n "$REPO" ]; then
+    gh pr create --repo "$REPO" --base "$BASE_BRANCH" --head "$HEAD_BRANCH" --title "$TITLE" $DRAFT_FLAG || {
+      echo "gh failed. You can run this command manually:" >&2
+      echo "gh pr create --repo '$REPO' --base '$BASE_BRANCH' --head '$HEAD_BRANCH' --title '$TITLE' $DRAFT_FLAG" >&2
+      exit 1
+    }
+  else
+    gh pr create --base "$BASE_BRANCH" --head "$HEAD_BRANCH" --title "$TITLE" $DRAFT_FLAG || {
+      echo "gh failed. You can run this command manually (repository auto-detection failed):" >&2
+      echo "gh pr create --base '$BASE_BRANCH' --head '$HEAD_BRANCH' --title '$TITLE' $DRAFT_FLAG" >&2
+      exit 1
+    }
+  fi
+  echo "Pull request created from $HEAD_BRANCH -> $BASE_BRANCH"
+  exit 0
+fi
+
+# Otherwise, print the command to run
+if [ -n "$REPO" ]; then
+  echo "GitHub CLI not found. To open a PR, run:" >&2
+  echo "gh pr create --repo '$REPO' --base '$BASE_BRANCH' --head '$HEAD_BRANCH' --title '$TITLE' $DRAFT_FLAG" >&2
+else
+  echo "GitHub CLI not found. To open a PR (repo not auto-detected), run:" >&2
+  echo "gh pr create --base '$BASE_BRANCH' --head '$HEAD_BRANCH' --title '$TITLE' $DRAFT_FLAG" >&2
+fi
+

@@ -1,0 +1,70 @@
+#!/bin/sh
+# Merge the current feature branch into dev and delete the feature branch
+# Usage: bin/merge_feature [--no-delete]
+# - requires a clean working tree if workflow.requireclean=true
+
+set -eu
+
+NO_DELETE=0
+if [ "${1-}" = "--no-delete" ]; then
+  NO_DELETE=1
+fi
+
+# Ensure we are on a feature branch
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+case "$BRANCH" in
+  feature/*) ;;
+  *)
+    echo "You must run this from a feature/* branch (current: $BRANCH)" >&2
+    exit 1
+    ;;
+esac
+
+# Require clean working tree if configured
+if git config --get workflow.requireclean | grep -qi '^true$'; then
+  if ! git diff --quiet || ! git diff --cached --quiet; then
+    echo "Working tree is not clean. Commit or stash before merging." >&2
+    exit 1
+  fi
+fi
+
+INTEGRATION_BRANCH="$(git config --get workflow.integrationbranch || echo dev)"
+
+# Fetch and fast-forward integration branch if remote exists
+if git rev-parse --verify -q "origin/$INTEGRATION_BRANCH" >/dev/null; then
+  git fetch origin "$INTEGRATION_BRANCH" || true
+fi
+
+# Switch to integration branch
+if [ "$(git rev-parse --abbrev-ref HEAD)" != "$INTEGRATION_BRANCH" ]; then
+  git checkout "$INTEGRATION_BRANCH"
+fi
+
+# Fast-forward if possible
+if git rev-parse --verify -q "origin/$INTEGRATION_BRANCH" >/dev/null; then
+  git merge --ff-only "origin/$INTEGRATION_BRANCH" || true
+fi
+
+# Merge feature branch (no-ff for visibility)
+git merge --no-ff "$BRANCH" -m "merge: $BRANCH into $INTEGRATION_BRANCH"
+
+# Push integration branch (best-effort if remote exists)
+if git rev-parse --verify -q "origin/$INTEGRATION_BRANCH" >/dev/null; then
+  git push origin "$INTEGRATION_BRANCH"
+fi
+
+# Delete feature branch (local and remote if exists)
+if [ "$NO_DELETE" -eq 0 ]; then
+  git branch -d "$BRANCH"
+  if git rev-parse --verify -q "origin/$BRANCH" >/dev/null; then
+    git push origin --delete "$BRANCH" || true
+  fi
+fi
+
+echo "Merged $BRANCH -> $INTEGRATION_BRANCH"
+if [ "$NO_DELETE" -eq 0 ]; then
+  echo "Deleted feature branch $BRANCH (local) and remote if present."
+else
+  echo "Left feature branch intact (--no-delete)."
+fi
+

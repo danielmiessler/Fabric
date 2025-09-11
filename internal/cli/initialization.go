@@ -6,6 +6,7 @@ import (
 	"path/filepath"
 
 	"github.com/danielmiessler/fabric/internal/core"
+	"github.com/danielmiessler/fabric/internal/i18n"
 	"github.com/danielmiessler/fabric/internal/plugins/db/fsdb"
 )
 
@@ -36,20 +37,20 @@ func initializeFabric() (registry *core.PluginRegistry, err error) {
 func ensureEnvFile() (err error) {
 	var homedir string
 	if homedir, err = os.UserHomeDir(); err != nil {
-		return fmt.Errorf("could not determine user home directory: %w", err)
+		return fmt.Errorf("%s", fmt.Sprintf(i18n.T("could_not_determine_home_dir"), err))
 	}
 	configDir := filepath.Join(homedir, ".config", "fabric")
 	envPath := filepath.Join(configDir, ".env")
 
 	if _, statErr := os.Stat(envPath); statErr != nil {
 		if !os.IsNotExist(statErr) {
-			return fmt.Errorf("could not stat .env file: %w", statErr)
+			return fmt.Errorf("%s", fmt.Sprintf(i18n.T("could_not_stat_env_file"), statErr))
 		}
 		if err = os.MkdirAll(configDir, ConfigDirPerms); err != nil {
-			return fmt.Errorf("could not create config directory: %w", err)
+			return fmt.Errorf("%s", fmt.Sprintf(i18n.T("could_not_create_config_dir"), err))
 		}
 		if err = os.WriteFile(envPath, []byte{}, EnvFilePerms); err != nil {
-			return fmt.Errorf("could not create .env file: %w", err)
+			return fmt.Errorf("%s", fmt.Sprintf(i18n.T("could_not_create_env_file"), err))
 		}
 	}
 	return

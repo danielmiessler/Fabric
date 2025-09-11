@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/danielmiessler/fabric/internal/core"
+	"github.com/danielmiessler/fabric/internal/i18n"
 	debuglog "github.com/danielmiessler/fabric/internal/log"
 	"github.com/danielmiessler/fabric/internal/plugins/ai/openai"
 	"github.com/danielmiessler/fabric/internal/tools/converter"
@@ -16,6 +17,11 @@ import (
 func Cli(version string) (err error) {
 	var currentFlags *Flags
 	if currentFlags, err = Init(); err != nil {
+		return
+	}
+
+	// initialize internationalization using requested language
+	if _, err = i18n.Init(currentFlags.Language); err != nil {
 		return
 	}
 
@@ -86,7 +92,7 @@ func Cli(version string) (err error) {
 	// Process HTML readability if needed
 	if currentFlags.HtmlReadability {
 		if msg, cleanErr := converter.HtmlReadability(currentFlags.Message); cleanErr != nil {
-			fmt.Println("use original input, because can't apply html readability", cleanErr)
+			fmt.Println(i18n.T("html_readability_error"), cleanErr)
 		} else {
 			currentFlags.Message = msg
 		}

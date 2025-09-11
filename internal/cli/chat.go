@@ -9,6 +9,7 @@ import (
 
 	"github.com/danielmiessler/fabric/internal/core"
 	"github.com/danielmiessler/fabric/internal/domain"
+	"github.com/danielmiessler/fabric/internal/i18n"
 	debuglog "github.com/danielmiessler/fabric/internal/log"
 	"github.com/danielmiessler/fabric/internal/plugins/db/fsdb"
 	"github.com/danielmiessler/fabric/internal/tools/notifications"
@@ -58,12 +59,12 @@ func handleChatProcessing(currentFlags *Flags, registry *core.PluginRegistry, me
 	isTTSModel := isTTSModel(currentFlags.Model)
 
 	if isTTSModel && !isAudioOutput {
-		err = fmt.Errorf("TTS model '%s' requires audio output. Please specify an audio output file with -o flag (e.g., -o output.wav)", currentFlags.Model)
+		err = fmt.Errorf("%s", fmt.Sprintf(i18n.T("tts_model_requires_audio_output"), currentFlags.Model))
 		return
 	}
 
 	if isAudioOutput && !isTTSModel {
-		err = fmt.Errorf("audio output file '%s' specified but model '%s' is not a TTS model. Please use a TTS model like gemini-2.5-flash-preview-tts", currentFlags.Output, currentFlags.Model)
+		err = fmt.Errorf("%s", fmt.Sprintf(i18n.T("audio_output_file_specified_but_not_tts_model"), currentFlags.Output, currentFlags.Model))
 		return
 	}
 
@@ -75,7 +76,7 @@ func handleChatProcessing(currentFlags *Flags, registry *core.PluginRegistry, me
 			outputFile += ".wav"
 		}
 		if _, err = os.Stat(outputFile); err == nil {
-			err = fmt.Errorf("file %s already exists. Please choose a different filename or remove the existing file", outputFile)
+			err = fmt.Errorf("%s", fmt.Sprintf(i18n.T("file_already_exists_choose_different"), outputFile))
 			return
 		}
 	}
@@ -106,7 +107,7 @@ func handleChatProcessing(currentFlags *Flags, registry *core.PluginRegistry, me
 	if !currentFlags.Stream || currentFlags.SuppressThink {
 		// For TTS models with audio output, show a user-friendly message instead of raw data
 		if isTTSModel && isAudioOutput && strings.HasPrefix(result, "FABRIC_AUDIO_DATA:") {
-			fmt.Printf("TTS audio generated successfully and saved to: %s\n", currentFlags.Output)
+			fmt.Printf(i18n.T("tts_audio_generated_successfully"), currentFlags.Output)
 		} else {
 			// print the result if it was not streamed already or suppress-think disabled streaming output
 			fmt.Println(result)
@@ -160,20 +161,20 @@ func handleChatProcessing(currentFlags *Flags, registry *core.PluginRegistry, me
 // not grapheme clusters. As a result, complex emoji or accented characters with multiple combining
 // characters may be truncated improperly. This is a limitation of the current implementation.
 func sendNotification(options *domain.ChatOptions, patternName, result string) error {
-	title := "Fabric Command Complete"
+	title := i18n.T("fabric_command_complete")
 	if patternName != "" {
-		title = fmt.Sprintf("Fabric: %s Complete", patternName)
+		title = fmt.Sprintf(i18n.T("fabric_command_complete_with_pattern"), patternName)
 	}
 
 	// Limit message length for notification display (counts Unicode code points)
-	message := "Command completed successfully"
+	message := i18n.T("command_completed_successfully")
 	if result != "" {
 		maxLength := 100
 		runes := []rune(result)
 		if len(runes) > maxLength {
-			message = fmt.Sprintf("Output: %s...", string(runes[:maxLength]))
+			message = fmt.Sprintf(i18n.T("output_truncated"), string(runes[:maxLength]))
 		} else {
-			message = fmt.Sprintf("Output: %s", result)
+			message = fmt.Sprintf(i18n.T("output_full"), result)
 		}
 		// Clean up newlines for notification display
 		message = strings.ReplaceAll(message, "\n", " ")
@@ -195,7 +196,7 @@ func sendNotification(options *domain.ChatOptions, patternName, result string) e
 	// Use built-in notification system
 	notificationManager := notifications.NewNotificationManager()
 	if !notificationManager.IsAvailable() {
-		return fmt.Errorf("no notification system available")
+		return fmt.Errorf("%s", i18n.T("no_notification_system_available"))
 	}
 
 	return notificationManager.Send(title, message)

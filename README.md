@@ -1,7 +1,18 @@
 <div align="center">
-Fabric is graciously supported by…
+    <a href="https://go.warp.dev/fabric" target="_blank">
+        <sup>Special thanks to:</sup>
+        <br>
+        <img alt="Warp sponsorship" width="400" src="https://raw.githubusercontent.com/warpdotdev/brand-assets/refs/heads/main/Github/Sponsor/Warp-Github-LG-02.png">
+        <br>
+        <h>Warp, built for coding with multiple AI agents</b>
+        <br>
+        <sup>Available for macOS, Linux and Windows</sup>
+    </a>
+</div>
 
-[![Github Repo Tagline](https://github.com/user-attachments/assets/96ab3d81-9b13-4df4-ba09-75dee7a5c3d2)](https://warp.dev/fabric)
+<br>
+
+<div align="center">
 
 <img src="./docs/images/fabric-logo-gif.gif" alt="fabriclogo" width="400" height="400"/>
 
@@ -16,6 +27,10 @@ Fabric is graciously supported by…
 
 <div align="center">
 <h4><code>fabric</code> is an open-source framework for augmenting humans using AI.</h4>
+</div>
+
+![Screenshot of fabric](./docs/images/fabric-summarize.png)
+
 </div>
 
 [Updates](#updates) •
@@ -57,6 +72,7 @@ Below are the **new features and capabilities** we've added (newest first):
 
 ### Recent Major Features
 
+- [v1.4.309](https://github.com/danielmiessler/fabric/releases/tag/v1.4.309) (Sep 9, 2025) — **Comprehensive internationalization support**: Includes English and Spanish locale files.
 - [v1.4.303](https://github.com/danielmiessler/fabric/releases/tag/v1.4.303) (Aug 29, 2025) — **New Binary Releases**: Linux ARM and Windows ARM targets. You can run Fabric on the Raspberry PI and on your Windows Surface!
 - [v1.4.294](https://github.com/danielmiessler/fabric/releases/tag/v1.4.294) (Aug 20, 2025) — **Venice AI Support**: Added the Venice AI provider. Venice is a Privacy-First, Open-Source AI provider. See their ["About Venice"](https://docs.venice.ai/overview/about-venice) page for details.
 - [v1.4.291](https://github.com/danielmiessler/fabric/releases/tag/v1.4.291) (Aug 18, 2025) — **Speech To Text**: Add OpenAI speech-to-text support with `--transcribe-file`, `--transcribe-model`, and `--split-media-file` flags.

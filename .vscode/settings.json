@@ -7,6 +7,7 @@
 		"Anki",
 		"anthropics",
 		"Aoede",
+		"aplicar",
 		"atotto",
 		"Autonoe",
 		"badfile",
@@ -39,6 +40,7 @@
 		"Eisler",
 		"elif",
 		"Elister",
+		"entrada",
 		"envrc",
 		"Erinome",
 		"Errorf",
@@ -89,6 +91,7 @@
 		"Langdock",
 		"Laomedeia",
 		"ldflags",
+		"legibilidad",
 		"libexec",
 		"libnotify",
 		"listcontexts",
@@ -109,6 +112,7 @@
 		"modeline",
 		"modelines",
 		"mpga",
+		"nicksnyder",
 		"nometa",
 		"numpy",
 		"ollama",
@@ -125,9 +129,11 @@
 		"pipx",
 		"PKCE",
 		"pkgs",
+		"porque",
 		"presencepenalty",
 		"printcontext",
 		"printsession",
+		"puede",
 		"Pulcherrima",
 		"pycache",
 		"pyperclip",
@@ -182,7 +188,11 @@
 		"go.mod",
 		".gitignore",
 		"CHANGELOG.md",
-		"./scripts/installer/install.*"
+		"scripts/installer/install.*",
+		"web/static/data/pattern_descriptions.json",
+		"scripts/pattern_descriptions/*.json",
+		"data/patterns/pattern_explanations.md",
+		"internal/i18n/locales/es.json"
 	],
 	"markdownlint.config": {
 		"MD004": false,
@@ -197,10 +207,12 @@
 				"code",
 				"div",
 				"em",
+				"h",
 				"h4",
 				"img",
 				"module",
-				"p"
+				"p",
+				"sup"
 			]
 		},
 		"MD041": false

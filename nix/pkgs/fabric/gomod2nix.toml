@@ -223,6 +223,9 @@ schema = 3
   [mod."github.com/modern-go/reflect2"]
     version = "v1.0.2"
     hash = "sha256-+W9EIW7okXIXjWEgOaMh58eLvBZ7OshW2EhaIpNLSBU="
+  [mod."github.com/nicksnyder/go-i18n/v2"]
+    version = "v2.6.0"
+    hash = "sha256-UrSECFbpCIg5avJ+f3LkJy/ncZFHa4q8sDqDIQ3YZJM="
   [mod."github.com/ollama/ollama"]
     version = "v0.11.7"
     hash = "sha256-3Wn1JWmil0aQQ2I/r398HbnUsi8ADoroqNyPziuxn/c="

@@ -5,11 +5,12 @@ import (
 	"sort"
 	"strings"
 
+	"github.com/danielmiessler/fabric/internal/i18n"
 	"github.com/danielmiessler/fabric/internal/util"
 )
 
 func NewVendorsModels() *VendorsModels {
-	return &VendorsModels{GroupsItemsSelectorString: util.NewGroupsItemsSelectorString("Available models")}
+	return &VendorsModels{GroupsItemsSelectorString: util.NewGroupsItemsSelectorString(i18n.T("available_models_header"))}
 }
 
 type VendorsModels struct {
@@ -21,7 +22,7 @@ type VendorsModels struct {
 // Default vendor and model are highlighted with an asterisk.
 func (o *VendorsModels) PrintWithVendor(shellCompleteList bool, defaultVendor, defaultModel string) {
 	if !shellCompleteList {
-		fmt.Printf("\n%v:\n", o.SelectionLabel)
+		fmt.Printf("%s:\n\n", o.SelectionLabel)
 	}
 
 	var currentItemIndex int

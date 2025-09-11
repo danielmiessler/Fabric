@@ -12,6 +12,7 @@ on:
       - "scripts/pattern_descriptions/*.json"
       - "web/static/data/pattern_descriptions.json"
       - "**/*.md"
+      - .vscode/**
 
 permissions:
   contents: write # Ensure the workflow has write permissions

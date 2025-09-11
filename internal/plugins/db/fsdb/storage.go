@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/danielmiessler/fabric/internal/i18n"
 	"github.com/danielmiessler/fabric/internal/util"
 )
 
@@ -108,7 +109,7 @@ func (o *StorageEntity) ListNames(shellCompleteList bool) (err error) {
 
 	if len(names) == 0 {
 		if !shellCompleteList {
-			fmt.Printf("\nNo %v\n", o.Label)
+			fmt.Printf("%s\n", fmt.Sprintf(i18n.T("no_items_found"), o.Label))
 		}
 		return
 	}

@@ -10,6 +10,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/danielmiessler/fabric/internal/i18n"
 	debuglog "github.com/danielmiessler/fabric/internal/log"
 	"github.com/danielmiessler/fabric/internal/plugins/ai/anthropic"
 	"github.com/danielmiessler/fabric/internal/plugins/ai/azure"
@@ -131,7 +132,7 @@ func (o *PluginRegistry) ListVendors(out io.Writer) error {
 	vendors := lo.Map(o.VendorsAll.Vendors, func(vendor ai.Vendor, _ int) string {
 		return vendor.GetName()
 	})
-	fmt.Fprint(out, "Available Vendors:\n\n")
+	fmt.Fprintf(out, "%s\n\n", i18n.T("available_vendors_header"))
 	for _, vendor := range vendors {
 		fmt.Fprintf(out, "%s\n", vendor)
 	}

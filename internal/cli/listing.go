@@ -8,6 +8,7 @@ import (
 	openai "github.com/openai/openai-go"
 
 	"github.com/danielmiessler/fabric/internal/core"
+	"github.com/danielmiessler/fabric/internal/i18n"
 	"github.com/danielmiessler/fabric/internal/plugins/ai"
 	"github.com/danielmiessler/fabric/internal/plugins/ai/gemini"
 	"github.com/danielmiessler/fabric/internal/plugins/db/fsdb"
@@ -93,7 +94,7 @@ func listTranscriptionModels(shellComplete bool) {
 			fmt.Println(model)
 		}
 	} else {
-		fmt.Println("Available transcription models:")
+		fmt.Println(i18n.T("available_transcription_models"))
 		for _, model := range models {
 			fmt.Printf("  %s\n", model)
 		}

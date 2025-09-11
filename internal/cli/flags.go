@@ -13,6 +13,7 @@ import (
 
 	"github.com/danielmiessler/fabric/internal/chat"
 	"github.com/danielmiessler/fabric/internal/domain"
+	"github.com/danielmiessler/fabric/internal/i18n"
 	debuglog "github.com/danielmiessler/fabric/internal/log"
 	"github.com/danielmiessler/fabric/internal/util"
 	"github.com/jessevdk/go-flags"
@@ -147,9 +148,15 @@ func Init() (ret *Flags, err error) {
 
 	// Parse CLI flags first
 	ret = &Flags{}
-	parser := flags.NewParser(ret, flags.Default)
+	parser := flags.NewParser(ret, flags.HelpFlag|flags.PassDoubleDash)
+
 	var args []string
 	if args, err = parser.Parse(); err != nil {
+		// Check if this is a help request and handle it with our custom help
+		if flagsErr, ok := err.(*flags.Error); ok && flagsErr.Type == flags.ErrHelp {
+			CustomHelpHandler(parser, os.Stdout)
+			os.Exit(0)
+		}
 		return
 	}
 	debuglog.SetLevel(debuglog.LevelFromInt(ret.Debug))
@@ -276,10 +283,10 @@ func assignWithConversion(targetField, sourceField reflect.Value) error {
 				return nil
 			}
 		}
-		return fmt.Errorf("cannot convert string %q to %v", str, targetField.Kind())
+		return fmt.Errorf("%s", fmt.Sprintf(i18n.T("cannot_convert_string"), str, targetField.Kind()))
 	}
 
-	return fmt.Errorf("unsupported conversion from %v to %v", sourceField.Kind(), targetField.Kind())
+	return fmt.Errorf("%s", fmt.Sprintf(i18n.T("unsupported_conversion"), sourceField.Kind(), targetField.Kind()))
 }
 
 // readSchemaFile reads the content of a schema file from the user's Fabric configuration 'Schemas' directory or a full path.
@@ -325,21 +332,21 @@ func readSchemaFile(schemaFileName string) (string, error) {
 func loadYAMLConfig(configPath string) (*Flags, error) {
 	absPath, err := util.GetAbsolutePath(configPath)
 	if err != nil {
-		return nil, fmt.Errorf("invalid config path: %w", err)
+		return nil, fmt.Errorf("%s", fmt.Sprintf(i18n.T("invalid_config_path"), err))
 	}
 
 	data, err := os.ReadFile(absPath)
 	if err != nil {
 		if os.IsNotExist(err) {
-			return nil, fmt.Errorf("config file not found: %s", absPath)
+			return nil, fmt.Errorf("%s", fmt.Sprintf(i18n.T("config_file_not_found"), absPath))
 		}
-		return nil, fmt.Errorf("error reading config file: %w", err)
+		return nil, fmt.Errorf("%s", fmt.Sprintf(i18n.T("error_reading_config_file"), err))
 	}
 
 	// Use the existing Flags struct for YAML unmarshal
 	config := &Flags{}
 	if err := yaml.Unmarshal(data, config); err != nil {
-		return nil, fmt.Errorf("error parsing config file: %w", err)
+		return nil, fmt.Errorf("%s", fmt.Sprintf(i18n.T("error_parsing_config_file"), err))
 	}
 
 	debuglog.Debug(debuglog.Detailed, "Config: %v\n", config)
@@ -357,7 +364,7 @@ func readStdin() (ret string, err error) {
 				sb.WriteString(line)
 				break
 			}
-			err = fmt.Errorf("error reading piped message from stdin: %w", readErr)
+			err = fmt.Errorf("%s", fmt.Sprintf(i18n.T("error_reading_piped_message"), readErr))
 			return
 		} else {
 			sb.WriteString(line)
@@ -375,7 +382,7 @@ func validateImageFile(imagePath string) error {
 
 	// Check if file already exists
 	if _, err := os.Stat(imagePath); err == nil {
-		return fmt.Errorf("image file already exists: %s", imagePath)
+		return fmt.Errorf("%s", fmt.Sprintf(i18n.T("image_file_already_exists"), imagePath))
 	}
 
 	// Check file extension
@@ -388,7 +395,7 @@ func validateImageFile(imagePath string) error {
 		}
 	}
 
-	return fmt.Errorf("invalid image file extension '%s'. Supported formats: .png, .jpeg, .jpg, .webp", ext)
+	return fmt.Errorf("%s", fmt.Sprintf(i18n.T("invalid_image_file_extension"), ext))
 }
 
 // validateImageParameters validates image generation parameters
@@ -396,7 +403,7 @@ func validateImageParameters(imagePath, size, quality, background string, compre
 	if imagePath == "" {
 		// Check if any image parameters are specified without --image-file
 		if size != "" || quality != "" || background != "" || compression != 0 {
-			return fmt.Errorf("image parameters (--image-size, --image-quality, --image-background, --image-compression) can only be used with --image-file")
+			return fmt.Errorf("%s", i18n.T("image_parameters_require_image_file"))
 		}
 		return nil
 	}
@@ -412,7 +419,7 @@ func validateImageParameters(imagePath, size, quality, background string, compre
 			}
 		}
 		if !valid {
-			return fmt.Errorf("invalid image size '%s'. Supported sizes: 1024x1024, 1536x1024, 1024x1536, auto", size)
+			return fmt.Errorf("%s", fmt.Sprintf(i18n.T("invalid_image_size"), size))
 		}
 	}
 
@@ -427,7 +434,7 @@ func validateImageParameters(imagePath, size, quality, background string, compre
 			}
 		}
 		if !valid {
-			return fmt.Errorf("invalid image quality '%s'. Supported qualities: low, medium, high, auto", quality)
+			return fmt.Errorf("%s", fmt.Sprintf(i18n.T("invalid_image_quality"), quality))
 		}
 	}
 
@@ -442,7 +449,7 @@ func validateImageParameters(imagePath, size, quality, background string, compre
 			}
 		}
 		if !valid {
-			return fmt.Errorf("invalid image background '%s'. Supported backgrounds: opaque, transparent", background)
+			return fmt.Errorf("%s", fmt.Sprintf(i18n.T("invalid_image_background"), background))
 		}
 	}
 
@@ -452,17 +459,17 @@ func validateImageParameters(imagePath, size, quality, background string, compre
 	// Validate compression (only for jpeg/webp)
 	if compression != 0 { // 0 means not set
 		if ext != ".jpg" && ext != ".jpeg" && ext != ".webp" {
-			return fmt.Errorf("image compression can only be used with JPEG and WebP formats, not %s", ext)
+			return fmt.Errorf("%s", fmt.Sprintf(i18n.T("image_compression_jpeg_webp_only"), ext))
 		}
 		if compression < 0 || compression > 100 {
-			return fmt.Errorf("image compression must be between 0 and 100, got %d", compression)
+			return fmt.Errorf("%s", fmt.Sprintf(i18n.T("image_compression_range_error"), compression))
 		}
 	}
 
 	// Validate background transparency (only for png/webp)
 	if background == "transparent" {
 		if ext != ".png" && ext != ".webp" {
-			return fmt.Errorf("transparent background can only be used with PNG and WebP formats, not %s", ext)
+			return fmt.Errorf("%s", fmt.Sprintf(i18n.T("transparent_background_png_webp_only"), ext))
 		}
 	}
 

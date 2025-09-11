@@ -1,7 +1,0 @@
-### PR [#1759](https://github.com/danielmiessler/Fabric/pull/1759) by [ksylvan](https://github.com/ksylvan): Add Windows-style Flag Support for Language Detection
-
-- Feat: add Windows-style forward slash flag support to CLI argument parser
-- Add runtime OS detection for Windows platform
-- Support `/flag` syntax for Windows command line
-- Handle Windows colon delimiter `/flag:value` format
-- Maintain backward compatibility with Unix-style flags

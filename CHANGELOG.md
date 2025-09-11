@@ -1,5 +1,45 @@
 # Changelog
 
+## v1.4.310 (2025-09-11)
+
+### PR [#1759](https://github.com/danielmiessler/Fabric/pull/1759) by [ksylvan](https://github.com/ksylvan): Add Windows-style Flag Support for Language Detection
+
+- Feat: add Windows-style forward slash flag support to CLI argument parser
+- Add runtime OS detection for Windows platform
+- Support `/flag` syntax for Windows command line
+- Handle Windows colon delimiter `/flag:value` format
+- Maintain backward compatibility with Unix-style flags
+
+### PR [#1762](https://github.com/danielmiessler/Fabric/pull/1762) by [OmriH-Elister](https://github.com/OmriH-Elister): New pattern for writing interaction between two characters
+
+- Feat: add new pattern that creates story simulating interaction between two people
+- Chore: add `create_story_about_people_interaction` pattern for persona analysis
+- Add `create_story_about_people_interaction` pattern description
+- Include pattern in `ANALYSIS` and `WRITING` categories
+- Update `suggest_pattern` system and user documentation
+
+### Direct commits
+
+- Chore: update alias creation to use consistent naming
+
+- Remove redundant prefix from `pattern_name` variable
+
+- Add `alias_name` variable for consistent alias creation
+- Update alias command to use `alias_name`
+
+- Modify PowerShell function to use `aliasName`
+- Docs: add optional prefix support for fabric pattern aliases via FABRIC_ALIAS_PREFIX env var
+
+- Add FABRIC_ALIAS_PREFIX environment variable support
+
+- Update bash/zsh alias generation with prefix
+- Update PowerShell alias generation with prefix
+
+- Improve readability of alias setup instructions
+- Enable custom prefixing for pattern commands
+
+- Maintain backward compatibility without prefix
+
 ## v1.4.309 (2025-09-09)
 
 ### PR [#1756](https://github.com/danielmiessler/Fabric/pull/1756) by [ksylvan](https://github.com/ksylvan): Add Internationalization Support with Custom Help System
@@ -36,6 +76,7 @@
 - Ensure proper markdown rendering on GitHub
 🤖 Generated with [Claude Code](<https://claude.ai/code)>
 Co-Authored-By: Claude <noreply@anthropic.com>
+
 - Update Warp sponsor section with new banner and branding
 
 - Replace old banner with new warp-banner-light.png image

@@ -1,0 +1,57 @@
+{
+  "title": "Contact Information",
+  "description": "A basic schema for user contact information.",
+  "type": "object",
+  "properties": {
+    "firstName": {
+      "description": "The user's first name.",
+      "type": "string"
+    },
+    "lastName": {
+      "description": "The user's last name.",
+      "type": "string"
+    },
+    "address": {
+      "description": "The user's street address.",
+      "type": "object",
+      "properties": {
+        "addressLine1": {
+          "description": "The primary address line.",
+          "type": "string"
+        },
+        "addressLine2": {
+          "description": "The secondary address line (e.g., apartment, suite).",
+          "type": "string"
+        },
+        "city": {
+          "description": "The city.",
+          "type": "string"
+        },
+        "state": {
+          "description": "The state or province.",
+          "type": "string"
+        },
+        "zipCode": {
+          "description": "The postal code.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "addressLine1",
+        "city",
+        "state",
+        "zipCode"
+      ]
+    },
+    "phoneNumber": {
+      "description": "The user's phone number.",
+      "type": "string",
+      "pattern": "^(\\([0-9]{3}\\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$"
+    }
+  },
+  "required": [
+    "firstName",
+    "lastName",
+    "address"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "type": "object",
+  "properties": {
+    "phoneNumber": {
+      "type": "string",
+      "pattern": "^[+]?[1-9]?[0-9]{7,15}$",
+      "description": "Phone number in international format, optionally starting with + and country code"
+    }
+  },
+  "required": ["phoneNumber"]
+}

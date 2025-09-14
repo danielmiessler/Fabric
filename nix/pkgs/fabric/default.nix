@@ -22,6 +22,11 @@ buildGoApplication {
 
   inherit go;
 
+  # Prevent Go from automatically downloading newer toolchains
+  preBuild = ''
+    export GOTOOLCHAIN=local
+  '';
+
   nativeBuildInputs = [ installShellFiles ];
   postInstall = ''
     installShellCompletion --zsh ./completions/_fabric

@@ -1333,15 +1333,6 @@
       ]
     },
     {
-      "patternName": "solve_with_cot",
-      "description": "Solve problems using chain-of-thought reasoning.",
-      "tags": [
-        "AI",
-        "ANALYSIS",
-        "LEARNING"
-      ]
-    },
-    {
       "patternName": "suggest_pattern",
       "description": "Recommend Fabric patterns based on user requirements.",
       "tags": [
@@ -1878,6 +1869,14 @@
       "tags": [
         "ANALYSIS",
         "SELF"
+      ]
+    },
+    {
+      "patternName": "create_story_about_people_interaction",
+      "description": "Analyze two personas, compare their dynamics, and craft a realistic, character-driven story from those insights.",
+      "tags": [
+        "ANALYSIS",
+        "WRITING"
       ]
     }
   ]

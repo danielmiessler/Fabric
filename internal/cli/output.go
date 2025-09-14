@@ -7,29 +7,30 @@ import (
 	"strings"
 
 	"github.com/atotto/clipboard"
+	"github.com/danielmiessler/fabric/internal/i18n"
 	debuglog "github.com/danielmiessler/fabric/internal/log"
 )
 
 func CopyToClipboard(message string) (err error) {
 	if err = clipboard.WriteAll(message); err != nil {
-		err = fmt.Errorf("could not copy to clipboard: %v", err)
+		err = fmt.Errorf("%s", fmt.Sprintf(i18n.T("could_not_copy_to_clipboard"), err))
 	}
 	return
 }
 
 func CreateOutputFile(message string, fileName string) (err error) {
 	if _, err = os.Stat(fileName); err == nil {
-		err = fmt.Errorf("file %s already exists, not overwriting. Rename the existing file or choose a different name", fileName)
+		err = fmt.Errorf("%s", fmt.Sprintf(i18n.T("file_already_exists_not_overwriting"), fileName))
 		return
 	}
 	var file *os.File
 	if file, err = os.Create(fileName); err != nil {
-		err = fmt.Errorf("error creating file: %v", err)
+		err = fmt.Errorf("%s", fmt.Sprintf(i18n.T("error_creating_file"), err))
 		return
 	}
 	defer file.Close()
 	if _, err = file.WriteString(message); err != nil {
-		err = fmt.Errorf("error writing to file: %v", err)
+		err = fmt.Errorf("%s", fmt.Sprintf(i18n.T("error_writing_to_file"), err))
 	} else {
 		debuglog.Log("\n\n[Output also written to %s]\n", fileName)
 	}
@@ -46,13 +47,13 @@ func CreateAudioOutputFile(audioData []byte, fileName string) (err error) {
 	// File existence check is now done in the CLI layer before TTS generation
 	var file *os.File
 	if file, err = os.Create(fileName); err != nil {
-		err = fmt.Errorf("error creating audio file: %v", err)
+		err = fmt.Errorf("%s", fmt.Sprintf(i18n.T("error_creating_audio_file"), err))
 		return
 	}
 	defer file.Close()
 
 	if _, err = file.Write(audioData); err != nil {
-		err = fmt.Errorf("error writing audio data to file: %v", err)
+		err = fmt.Errorf("%s", fmt.Sprintf(i18n.T("error_writing_audio_data"), err))
 	}
 	// No redundant output message here - the CLI layer handles success messaging
 	return

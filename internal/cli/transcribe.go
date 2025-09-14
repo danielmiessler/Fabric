@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/danielmiessler/fabric/internal/core"
+	"github.com/danielmiessler/fabric/internal/i18n"
 )
 
 type transcriber interface {
@@ -18,15 +19,15 @@ func handleTranscription(flags *Flags, registry *core.PluginRegistry) (message s
 	}
 	vendor, ok := registry.VendorManager.VendorsByName[vendorName]
 	if !ok {
-		return "", fmt.Errorf("vendor %s not configured", vendorName)
+		return "", fmt.Errorf("%s", fmt.Sprintf(i18n.T("vendor_not_configured"), vendorName))
 	}
 	tr, ok := vendor.(transcriber)
 	if !ok {
-		return "", fmt.Errorf("vendor %s does not support audio transcription", vendorName)
+		return "", fmt.Errorf("%s", fmt.Sprintf(i18n.T("vendor_no_transcription_support"), vendorName))
 	}
 	model := flags.TranscribeModel
 	if model == "" {
-		return "", fmt.Errorf("transcription model is required (use --transcribe-model)")
+		return "", fmt.Errorf("%s", i18n.T("transcription_model_required"))
 	}
 	if message, err = tr.TranscribeFile(context.Background(), flags.TranscribeFile, model, flags.SplitMediaFile); err != nil {
 		return

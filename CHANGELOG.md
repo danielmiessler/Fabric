@@ -1,5 +1,129 @@
 # Changelog
 
+## v1.4.312 (2025-09-14)
+
+### PR [#1769](https://github.com/danielmiessler/Fabric/pull/1769) by [ksylvan](https://github.com/ksylvan): Go 1.25.1 Upgrade & Critical SDK Updates
+
+- Upgrade Go from 1.24 to 1.25.1
+- Update Anthropic SDK for web fetch tools
+- Upgrade AWS Bedrock SDK 12 versions
+- Update Azure Core and Identity SDKs
+- Fix Nix config for Go version lag
+
+## v1.4.311 (2025-09-13)
+
+### PR [#1767](https://github.com/danielmiessler/Fabric/pull/1767) by [ksylvan](https://github.com/ksylvan): feat(i18n): add de, fr, ja, pt, zh, fa locales; expand tests
+
+- Add DE, FR, JA, PT, ZH, FA i18n locale files
+- Expand i18n tests with table-driven multilingual coverage
+- Verify 'html_readability_error' translations across all supported languages
+- Update README with release notes for added languages
+- Insert blank lines between aggregated PR changelog sections
+
+### Direct commits
+
+- Chore: update changelog formatting and sync changelog database
+
+- Add line breaks to improve changelog readability
+
+- Sync changelog database with latest entries
+- Clean up whitespace in version sections
+
+- Maintain consistent formatting across entries
+- Chore: add spacing between changelog entries for improved readability
+
+- Add blank lines between PR sections
+
+- Update changelog database with  to correspond with CHANGELOG fix.
+
+## v1.4.310 (2025-09-11)
+
+### PR [#1759](https://github.com/danielmiessler/Fabric/pull/1759) by [ksylvan](https://github.com/ksylvan): Add Windows-style Flag Support for Language Detection
+
+- Feat: add Windows-style forward slash flag support to CLI argument parser
+- Add runtime OS detection for Windows platform
+- Support `/flag` syntax for Windows command line
+- Handle Windows colon delimiter `/flag:value` format
+- Maintain backward compatibility with Unix-style flags
+
+### PR [#1762](https://github.com/danielmiessler/Fabric/pull/1762) by [OmriH-Elister](https://github.com/OmriH-Elister): New pattern for writing interaction between two characters
+
+- Feat: add new pattern that creates story simulating interaction between two people
+- Chore: add `create_story_about_people_interaction` pattern for persona analysis
+- Add `create_story_about_people_interaction` pattern description
+- Include pattern in `ANALYSIS` and `WRITING` categories
+- Update `suggest_pattern` system and user documentation
+
+### Direct commits
+
+- Chore: update alias creation to use consistent naming
+
+- Remove redundant prefix from `pattern_name` variable
+
+- Add `alias_name` variable for consistent alias creation
+- Update alias command to use `alias_name`
+
+- Modify PowerShell function to use `aliasName`
+- Docs: add optional prefix support for fabric pattern aliases via FABRIC_ALIAS_PREFIX env var
+
+- Add FABRIC_ALIAS_PREFIX environment variable support
+
+- Update bash/zsh alias generation with prefix
+- Update PowerShell alias generation with prefix
+
+- Improve readability of alias setup instructions
+- Enable custom prefixing for pattern commands
+
+- Maintain backward compatibility without prefix
+
+## v1.4.309 (2025-09-09)
+
+### PR [#1756](https://github.com/danielmiessler/Fabric/pull/1756) by [ksylvan](https://github.com/ksylvan): Add Internationalization Support with Custom Help System
+
+- Add comprehensive internationalization support with English and Spanish locales
+- Replace hardcoded strings with i18n.T translations and add en and es JSON locale files
+- Implement custom translated help system with language detection from CLI args
+- Add locale download capability and localize error messages throughout codebase
+- Support TTS and notification translations
+
+## v1.4.308 (2025-09-05)
+
+### PR [#1755](https://github.com/danielmiessler/Fabric/pull/1755) by [ksylvan](https://github.com/ksylvan): Add i18n Support for Multi-Language Fabric Experience
+
+- Add Spanish localization support with i18n
+- Create contexts and sessions tutorial documentation
+- Fix broken Warp sponsorship image URL
+- Remove solve_with_cot pattern from codebase
+- Update pattern descriptions and explanations
+
+### Direct commits
+
+- Update Warp sponsor section with proper formatting
+
+- Replace with correct div structure and styling
+- Use proper Warp image URL from brand assets
+
+- Add 'Special thanks to:' text and platform availability
+- Maintains proper spacing and alignment
+- Fix unclosed div tag in README causing display issues
+
+- Close the main div container properly after fabric screenshot
+- Fix HTML structure that was causing repetitive content display
+
+- Ensure proper markdown rendering on GitHub
+🤖 Generated with [Claude Code](<https://claude.ai/code)>
+Co-Authored-By: Claude <noreply@anthropic.com>
+
+- Update Warp sponsor section with new banner and branding
+
+- Replace old banner with new warp-banner-light.png image
+- Update styling to use modern p tags with proper centering
+
+- Maintain existing go.warp.dev/fabric redirect URL
+- Add descriptive alt text and emphasis text for accessibility
+🤖 Generated with [Claude Code](<https://claude.ai/code)>
+Co-Authored-By: Claude <noreply@anthropic.com>
+
 ## v1.4.307 (2025-09-01)
 
 ### PR [#1745](https://github.com/danielmiessler/Fabric/pull/1745) by [ksylvan](https://github.com/ksylvan): Fabric Installation Improvements and Automated Release Updates
@@ -159,6 +283,7 @@
 - Compare vendor and model case-insensitively when marking
 - Pass registry defaults to PrintWithVendor from CLI
 - Add test ensuring default selection appears with asterisk
+
 ### Direct commits
 
 - Docs: update version number in README updates section from v1.4.290 to v1.4.291

@@ -78,10 +78,6 @@ Assess AI outputs against criteria, providing scores and feedback.
 
 Process direct queries by interpreting intent.
 
-### solve_with_cot
-
-Solve problems using chain-of-thought reasoning.
-
 ### suggest_pattern
 
 Recommend Fabric patterns based on user requirements.
@@ -207,6 +203,10 @@ Identify automation risks and career resilience strategies.
 ### create_better_frame
 
 Develop positive mental frameworks for challenging situations.
+
+### create_story_about_people_interaction
+
+Analyze two personas, compare their dynamics, and craft a realistic, character-driven story from those insights.
 
 ### create_idea_compass
 
@@ -573,6 +573,10 @@ Write concise newsletter content focusing on key insights.
 ### create_show_intro
 
 Craft compelling podcast/show intros to engage audience.
+
+### create_story_about_people_interaction
+
+Analyze two personas, compare their dynamics, and craft a realistic, character-driven story from those insights.
 
 ### create_story_explanation
 

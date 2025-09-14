@@ -8,12 +8,13 @@ Thanks for contributing to Fabric! Here's what you need to know to get started q
 
 - Go 1.24+ installed
 - Git configured with your details
+- GitHub CLI (`gh`)
 
 ### Getting Started
 
 ```bash
-# Clone and setup
-git clone https://github.com/danielmiessler/fabric.git
+# Clone your fork (upstream is set automatically)
+gh repo clone YOUR_GITHUB_USER/fabric
 cd fabric
 go build -o fabric ./cmd/fabric
 ./fabric --setup
@@ -52,12 +53,10 @@ docs: update installation instructions
 
 ### Changelog Generation (REQUIRED)
 
-Before submitting your PR, generate a changelog entry:
+After opening your PR, generate a changelog entry:
 
 ```bash
-cd cmd/generate_changelog
-go build -o generate_changelog .
-./generate_changelog --incoming-pr YOUR_PR_NUMBER
+go run ./cmd/generate_changelog --ai-summarize --incoming-pr YOUR_PR_NUMBER
 ```
 
 **Requirements:**

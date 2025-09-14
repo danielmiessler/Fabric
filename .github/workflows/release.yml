@@ -44,6 +44,8 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version-file: ./go.mod
+      - name: Install garble
+        run: go install mvdan.cc/garble@latest
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v6
         with:

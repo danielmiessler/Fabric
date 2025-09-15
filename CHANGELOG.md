@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.4.313 (2025-09-14)
+
+### PR [#1770](https://github.com/danielmiessler/Fabric/pull/1770) by [ksylvan](https://github.com/ksylvan): Use Garble to get around false positive Microsoft Defender virus detection
+
+- Add garble obfuscation to build process for enhanced binary protection against false positive virus detection
+- Configure goreleaser to use garble gobinary with literals obfuscation
+- Enable tiny mode for reduced binary size with random seed for build reproducibility
+- Add garble installation to release workflow
+- Update VSCode dictionary with garble-related terms
+
 ## v1.4.312 (2025-09-14)
 
 ### PR [#1769](https://github.com/danielmiessler/Fabric/pull/1769) by [ksylvan](https://github.com/ksylvan): Go 1.25.1 Upgrade & Critical SDK Updates

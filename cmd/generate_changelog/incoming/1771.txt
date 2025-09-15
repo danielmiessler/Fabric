@@ -1,0 +1,7 @@
+### PR [#1771](https://github.com/danielmiessler/Fabric/pull/1771) by [ksylvan](https://github.com/ksylvan): Integrate garble to avoid false positive virus detection on Windows
+
+- Integrate garble build tool to avoid false positive virus detection on Windows
+- Install garble in GitHub Actions release pipeline before GoReleaser
+- Configure GoReleaser to use garble with '-literals' flags and random seed
+- Enable obfuscation of string literals for smaller, safer binaries
+- Add garble-related terms to VSCode spellchecker dictionary

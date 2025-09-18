@@ -11,14 +11,30 @@ before:
     # - go generate ./...
 
 builds:
-  - env:
+  - id: default
+    env:
       - CGO_ENABLED=0
     goos:
-      - linux
-      - windows
       - darwin
+      - linux
     main: ./cmd/fabric
     binary: fabric
+  - id: windows-garbled
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - windows
+    main: ./cmd/fabric
+    binary: fabric
+    tool: garble
+    # From https://github.com/eyevanovich/garble-goreleaser-example/blob/main/.goreleaser.yaml
+    # command is a single string.
+    # garble's 'build' needs the -literals and -tiny args before it, so we
+    # trick goreleaser into using -literals as command, and pass -tiny and
+    # build as flags.
+    command: "-literals"
+    flags: [ "-tiny", "-seed=random", "build" ]
+    ldflags: [ "-s", "-w" ]
 
 archives:
   - formats: [tar.gz]

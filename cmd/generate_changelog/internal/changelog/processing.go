@@ -133,14 +133,17 @@ func (g *Generator) CreateNewChangelogEntry(version string) error {
 	var processingErrors []string
 
 	// First, aggregate all incoming PR files
-	for _, file := range files {
+	for i, file := range files {
 		data, err := os.ReadFile(file)
 		if err != nil {
 			processingErrors = append(processingErrors, fmt.Sprintf("failed to read %s: %v", file, err))
 			continue // Continue to attempt processing other files
 		}
 		content.WriteString(string(data))
-		// Note: No extra newline needed here as each incoming file already ends with a newline
+		// Add an extra newline between PR sections for proper spacing
+		if i < len(files)-1 {
+			content.WriteString("\n")
+		}
 	}
 
 	if len(processingErrors) > 0 {
@@ -177,7 +180,13 @@ func (g *Generator) CreateNewChangelogEntry(version string) error {
 	if err != nil {
 		return fmt.Errorf("failed to get direct commits since last release: %w", err)
 	}
-	content.WriteString(directCommitsContent)
+	if directCommitsContent != "" {
+		// Add spacing before direct commits section if we have PR content
+		if content.Len() > 0 {
+			content.WriteString("\n")
+		}
+		content.WriteString(directCommitsContent)
+	}
 
 	// Check if we have any content at all
 	if content.Len() == 0 {

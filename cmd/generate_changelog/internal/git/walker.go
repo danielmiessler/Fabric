@@ -180,6 +180,15 @@ func (w *Walker) WalkHistory() (map[string]*Version, error) {
 		return nil, fmt.Errorf("failed to get commit log: %w", err)
 	}
 
+	// Get the latest tag to know the boundary between released and unreleased
+	latestTag, _ := w.GetLatestTag()
+	var latestTagHash plumbing.Hash
+	if latestTag != "" {
+		if tagRef, err := w.repo.Tag(latestTag); err == nil {
+			latestTagHash = tagRef.Hash()
+		}
+	}
+
 	versions := make(map[string]*Version)
 	currentVersion := "Unreleased"
 	versions[currentVersion] = &Version{
@@ -188,8 +197,18 @@ func (w *Walker) WalkHistory() (map[string]*Version, error) {
 	}
 
 	prNumbers := make(map[string][]int)
+	passedLatestTag := false
+	// If there's no latest tag, treat all commits as belonging to their found versions
+	if latestTag == "" {
+		passedLatestTag = true
+	}
 
 	err = commitIter.ForEach(func(c *object.Commit) error {
+		// Check if we've passed the latest tag boundary
+		if !passedLatestTag && latestTagHash != (plumbing.Hash{}) && c.Hash == latestTagHash {
+			passedLatestTag = true
+		}
+
 		// c.Message = Summarize(c.Message)
 		commit := &Commit{
 			SHA:     c.Hash.String(),
@@ -203,7 +222,12 @@ func (w *Walker) WalkHistory() (map[string]*Version, error) {
 		if matches := versionPattern.FindStringSubmatch(commit.Message); len(matches) > 1 {
 			commit.IsVersion = true
 			commit.Version = matches[1]
-			currentVersion = commit.Version
+
+			// Only change currentVersion if we're past the latest tag
+			// This keeps newer commits as "Unreleased"
+			if passedLatestTag {
+				currentVersion = commit.Version
+			}
 
 			if _, exists := versions[currentVersion]; !exists {
 				versions[currentVersion] = &Version{

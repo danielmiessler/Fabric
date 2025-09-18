@@ -72,6 +72,8 @@ Below are the **new features and capabilities** we've added (newest first):
 
 ### Recent Major Features
 
+- [v1.4.311](https://github.com/danielmiessler/fabric/releases/tag/v1.4.311) (Sep 13, 2025) — **More internationalization support**: Adds de (German), fa (Persian / Farsi), fr (French), it (Italian),
+  ja (Japanese), pt (Portuguese), zh (Chinese)
 - [v1.4.309](https://github.com/danielmiessler/fabric/releases/tag/v1.4.309) (Sep 9, 2025) — **Comprehensive internationalization support**: Includes English and Spanish locale files.
 - [v1.4.303](https://github.com/danielmiessler/fabric/releases/tag/v1.4.303) (Aug 29, 2025) — **New Binary Releases**: Linux ARM and Windows ARM targets. You can run Fabric on the Raspberry PI and on your Windows Surface!
 - [v1.4.294](https://github.com/danielmiessler/fabric/releases/tag/v1.4.294) (Aug 20, 2025) — **Venice AI Support**: Added the Venice AI provider. Venice is a Privacy-First, Open-Source AI provider. See their ["About Venice"](https://docs.venice.ai/overview/about-venice) page for details.
@@ -343,17 +345,20 @@ If everything works you are good to go.
 
 ### Add aliases for all patterns
 
-In order to add aliases for all your patterns and use them directly as commands ie. `summarize` instead of `fabric --pattern summarize`
-You can add the following to your `.zshrc` or `.bashrc` file.
+In order to add aliases for all your patterns and use them directly as commands, for example, `summarize` instead of `fabric --pattern summarize`
+You can add the following to your `.zshrc` or `.bashrc` file. You
+can also optionally set the `FABRIC_ALIAS_PREFIX` environment variable
+before, if you'd prefer all the fabric aliases to start with the same prefix.
 
 ```bash
 # Loop through all files in the ~/.config/fabric/patterns directory
 for pattern_file in $HOME/.config/fabric/patterns/*; do
     # Get the base name of the file (i.e., remove the directory path)
-    pattern_name=$(basename "$pattern_file")
+    pattern_name="$(basename "$pattern_file")"
+    alias_name="${FABRIC_ALIAS_PREFIX:-}${pattern_name}"
 
     # Create an alias in the form: alias pattern_name="fabric --pattern pattern_name"
-    alias_command="alias $pattern_name='fabric --pattern $pattern_name'"
+    alias_command="alias $alias_name='fabric --pattern $pattern_name'"
 
     # Evaluate the alias command to add it to the current shell
     eval "$alias_command"
@@ -382,11 +387,13 @@ You can add the below code for the equivalent aliases inside PowerShell by runni
 # Path to the patterns directory
 $patternsPath = Join-Path $HOME ".config/fabric/patterns"
 foreach ($patternDir in Get-ChildItem -Path $patternsPath -Directory) {
-    $patternName = $patternDir.Name
-
+    # Prepend FABRIC_ALIAS_PREFIX if set; otherwise use empty string
+    $prefix = $env:FABRIC_ALIAS_PREFIX ?? ''
+    $patternName = "$($patternDir.Name)"
+    $aliasName = "$prefix$patternName"
     # Dynamically define a function for each pattern
     $functionDefinition = @"
-function $patternName {
+function $aliasName {
     [CmdletBinding()]
     param(
         [Parameter(ValueFromPipeline = `$true)]

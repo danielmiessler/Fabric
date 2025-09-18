@@ -455,3 +455,30 @@ func TestBuildChatOptionsWithImageParameters(t *testing.T) {
 		assert.Contains(t, err.Error(), "can only be used with --image-file")
 	})
 }
+
+func TestExtractFlag(t *testing.T) {
+	tests := []struct {
+		name     string
+		arg      string
+		expected string
+	}{
+		// Unix-style flags
+		{"long flag", "--help", "help"},
+		{"long flag with value", "--pattern=analyze", "pattern"},
+		{"short flag", "-h", "h"},
+		{"short flag with value", "-p=test", "p"},
+		{"single dash", "-", ""},
+		{"double dash only", "--", ""},
+
+		// Non-flags
+		{"regular arg", "analyze", ""},
+		{"path arg", "./file.txt", ""},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			result := extractFlag(tt.arg)
+			assert.Equal(t, tt.expected, result)
+		})
+	}
+}

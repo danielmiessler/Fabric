@@ -28,14 +28,21 @@
     let
       forAllSystems = nixpkgs.lib.genAttrs (import systems);
 
-      getGoVersion = system: nixpkgs.legacyPackages.${system}.go_1_24;
+      getGoVersion = system: nixpkgs.legacyPackages.${system}.go_latest;
 
       treefmtEval = forAllSystems (
         system:
         let
           pkgs = nixpkgs.legacyPackages.${system};
         in
-        treefmt-nix.lib.evalModule pkgs ./nix/treefmt.nix
+        treefmt-nix.lib.evalModule pkgs (
+          { ... }:
+          {
+            imports = [ ./nix/treefmt.nix ];
+            # Set environment variable to prevent Go toolchain auto-download
+            settings.global.excludes = [ ];
+          }
+        )
       );
     in
     {

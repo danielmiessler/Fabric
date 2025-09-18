@@ -5,6 +5,7 @@ import (
 	"io"
 	"os"
 	"reflect"
+	"runtime"
 	"strings"
 
 	"github.com/danielmiessler/fabric/internal/i18n"
@@ -179,7 +180,7 @@ func ensureI18nInitialized() {
 func detectLanguageFromArgs() string {
 	args := os.Args[1:]
 	for i, arg := range args {
-		if arg == "--language" || arg == "-g" {
+		if arg == "--language" || arg == "-g" || (runtime.GOOS == "windows" && arg == "/g") {
 			if i+1 < len(args) {
 				return args[i+1]
 			}
@@ -187,6 +188,10 @@ func detectLanguageFromArgs() string {
 			return strings.TrimPrefix(arg, "--language=")
 		} else if strings.HasPrefix(arg, "-g=") {
 			return strings.TrimPrefix(arg, "-g=")
+		} else if runtime.GOOS == "windows" && strings.HasPrefix(arg, "/g:") {
+			return strings.TrimPrefix(arg, "/g:")
+		} else if runtime.GOOS == "windows" && strings.HasPrefix(arg, "/g=") {
+			return strings.TrimPrefix(arg, "/g=")
 		}
 	}
 	return ""

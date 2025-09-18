@@ -2,6 +2,7 @@ package anthropic
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -245,6 +246,9 @@ func (an *Client) buildMessageParams(msgs []anthropic.MessageParam, opts *domain
 
 	}
 
+	// Build tools array - can include both web search and structured output tools
+	var tools []anthropic.ToolUnionParam
+
 	if opts.Search {
 		// Build the web-search tool definition:
 		webTool := anthropic.WebSearchTool20250305Param{
@@ -258,10 +262,48 @@ func (an *Client) buildMessageParams(msgs []anthropic.MessageParam, opts *domain
 			webTool.UserLocation.Timezone = anthropic.Opt(opts.SearchLocation)
 		}
 
-		// Wrap it in the union:
-		params.Tools = []anthropic.ToolUnionParam{
-			{OfWebSearchTool20250305: &webTool},
+		tools = append(tools, anthropic.ToolUnionParam{OfWebSearchTool20250305: &webTool})
+	}
+
+	// Add structured output tool if schema is provided
+	if opts.TransformedSchema != nil {
+		if schemaMap, ok := opts.TransformedSchema.(map[string]interface{}); ok {
+			if inputSchema, hasInput := schemaMap["input_schema"]; hasInput {
+				// Get name and description with defaults if not provided
+				name := "get_structured_output"
+				if n, ok := schemaMap["name"].(string); ok {
+					name = n
+				}
+
+				description := "Generate structured output according to the provided schema"
+				if d, ok := schemaMap["description"].(string); ok {
+					description = d
+				}
+
+				// Convert the input schema to JSON bytes then parse it
+				schemaBytes, err := json.Marshal(inputSchema)
+				if err == nil {
+					var schemaObj interface{}
+					if json.Unmarshal(schemaBytes, &schemaObj) == nil {
+						// Create the tool definition for structured output
+						toolParam := anthropic.ToolParam{
+							Name:        name,
+							Description: anthropic.Opt(description),
+							InputSchema: anthropic.ToolInputSchemaParam{
+								Type:       "object",
+								Properties: schemaObj,
+							},
+						}
+
+						tools = append(tools, anthropic.ToolUnionParam{OfTool: &toolParam})
+					}
+				}
+			}
 		}
+	}
+
+	if len(tools) > 0 {
+		params.Tools = tools
 	}
 
 	if t, ok := parseThinking(opts.Thinking); ok {
@@ -298,6 +340,21 @@ func (an *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, 
 		}
 	}
 
+	// Check if this is a structured output response (tool_use with get_structured_output)
+	if opts.TransformedSchema != nil {
+		for _, block := range message.Content {
+			if block.Type == "tool_use" && block.Name == "get_structured_output" {
+				// Marshal the input as JSON
+				jsonBytes, err := json.Marshal(block.Input)
+				if err != nil {
+					return "", fmt.Errorf("failed to marshal tool_use input: %w", err)
+				}
+				return string(jsonBytes), nil
+			}
+		}
+	}
+
+	// Otherwise, handle as regular text response
 	var textParts []string
 	var citations []string
 	citationMap := make(map[string]bool) // To avoid duplicate citations

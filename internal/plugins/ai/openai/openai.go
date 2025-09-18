@@ -92,6 +92,11 @@ func (o *Client) ListModels() (ret []string, err error) {
 	return
 }
 
+// GetProviderName returns the provider identifier for schema handling
+func (c *Client) GetProviderName() string {
+	return "openai"
+}
+
 func (o *Client) SendStream(
 	msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan string,
 ) (err error) {
@@ -156,6 +161,11 @@ func (o *Client) sendResponses(ctx context.Context, msgs []*chat.ChatCompletionM
 
 	ret = o.extractText(resp)
 	return
+}
+
+// SupportsResponsesAPI determines if the provider supports the new Responses API (public method)
+func (o *Client) SupportsResponsesAPI() bool {
+	return o.ImplementsResponses
 }
 
 // supportsResponsesAPI determines if the provider supports the new Responses API
@@ -257,6 +267,7 @@ func (o *Client) buildResponseParams(
 
 		// Add parameters not officially supported by Responses API as extra fields
 		extraFields := make(map[string]any)
+
 		if opts.PresencePenalty != 0 {
 			extraFields["presence_penalty"] = opts.PresencePenalty
 		}
@@ -270,6 +281,15 @@ func (o *Client) buildResponseParams(
 			ret.SetExtraFields(extraFields)
 		}
 	}
+
+	// Handle structured output via schema manager's transformed schema
+	if opts.TransformedSchema != nil {
+		if responseSchema, ok := opts.TransformedSchema.(map[string]any); ok {
+			// For Responses API, the schema manager already wrapped it in the correct format
+			ret.SetExtraFields(responseSchema)
+		}
+	}
+
 	return
 }
 
@@ -295,6 +315,10 @@ func convertMessage(msg chat.ChatCompletionMessage) responses.ResponseInputItemU
 		return responses.ResponseInputItemParamOfMessage(contentList, role)
 	}
 	return responses.ResponseInputItemParamOfMessage(result.Content, role)
+}
+
+func (o *Client) Name() string {
+	return o.PluginBase.Name
 }
 
 func (o *Client) extractText(resp *responses.Response) (ret string) {

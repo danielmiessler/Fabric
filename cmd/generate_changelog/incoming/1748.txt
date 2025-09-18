@@ -1,0 +1,7 @@
+### PR [#1748](https://github.com/danielmiessler/Fabric/pull/1748) by [2b3pro](https://github.com/2b3pro): feat: Implement structured output with JSON schema support
+
+- Add structured output support with JSON schema validation including schema plugin with validation, parsing, and management capabilities
+- Integrate structured output functionality across all AI providers (OpenAI, Anthropic, etc.)
+- Include CLI commands and flags for schema-driven interactions
+- Add system patterns for JSON schema creation and data extraction
+- Provide example schemas for common data types (article, contact, phone, sentiment)

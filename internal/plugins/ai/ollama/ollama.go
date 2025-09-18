@@ -2,6 +2,7 @@ package ollama
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -10,11 +11,10 @@ import (
 	"time"
 
 	"github.com/danielmiessler/fabric/internal/chat"
-	ollamaapi "github.com/ollama/ollama/api"
-	"github.com/samber/lo"
-
 	"github.com/danielmiessler/fabric/internal/domain"
 	"github.com/danielmiessler/fabric/internal/plugins"
+	ollamaapi "github.com/ollama/ollama/api"
+	"github.com/samber/lo"
 )
 
 const defaultBaseUrl = "http://localhost:11434"
@@ -159,6 +159,19 @@ func (o *Client) createChatRequest(msgs []*chat.ChatCompletionMessage, opts *dom
 		Messages: messages,
 		Options:  options,
 	}
+
+	// Add transformed schema format if present
+	if opts.TransformedSchema != nil {
+		if schemaObj, ok := opts.TransformedSchema.(map[string]interface{}); ok {
+			if format, ok := schemaObj["format"]; ok {
+				// Marshal the format object back to JSON bytes for Ollama API
+				if formatBytes, err := json.Marshal(format); err == nil {
+					ret.Format = formatBytes
+				}
+			}
+		}
+	}
+
 	return
 }
 
@@ -174,4 +187,9 @@ func (o *Client) NeedsRawMode(modelName string) bool {
 		}
 	}
 	return false
+}
+
+// GetProviderName returns the provider identifier for schema handling
+func (o *Client) GetProviderName() string {
+	return "ollama"
 }

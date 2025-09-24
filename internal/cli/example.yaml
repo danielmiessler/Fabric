@@ -17,6 +17,9 @@ topp: 0.67
 temperature: 0.88
 seed: 42
 
+# Maximum number of tokens to generate
+maxTokens: 1000
+
 stream: true
 raw: false
 

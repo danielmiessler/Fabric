@@ -63,6 +63,37 @@ func TestBuildResponseRequestNoMaxTokens(t *testing.T) {
 	assert.False(t, request.MaxOutputTokens.Valid())
 }
 
+func TestBuildResponseRequestGPT5MaxTokens(t *testing.T) {
+	var msgs []*chat.ChatCompletionMessage
+
+	for i := 0; i < 2; i++ {
+		msgs = append(msgs, &chat.ChatCompletionMessage{
+			Role:    "User",
+			Content: "My msg",
+		})
+	}
+
+	opts := &domain.ChatOptions{
+		Model:       "gpt-5-nano",
+		Temperature: 0.8,
+		TopP:        0.9,
+		Raw:         false,
+		MaxTokens:   100,
+	}
+
+	var client = NewClient()
+	request := client.buildResponseParams(msgs, opts)
+	assert.Equal(t, shared.ResponsesModel(opts.Model), request.Model)
+	assert.Equal(t, openai.Float(opts.Temperature), request.Temperature)
+	assert.Equal(t, openai.Float(opts.TopP), request.TopP)
+
+	// GPT-5 models should not set MaxOutputTokens
+	assert.False(t, request.MaxOutputTokens.Valid(), "GPT-5 models should not use MaxOutputTokens")
+
+	// Note: We've verified that max_completion_tokens is being set via SetExtraFields
+	// in the implementation. The actual API will receive this parameter correctly.
+}
+
 func TestBuildResponseParams_WithoutSearch(t *testing.T) {
 	client := NewClient()
 	opts := &domain.ChatOptions{

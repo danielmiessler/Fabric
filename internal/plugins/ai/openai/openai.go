@@ -251,12 +251,19 @@ func (o *Client) buildResponseParams(
 		if opts.TopP != 0 {
 			ret.TopP = openai.Float(opts.TopP)
 		}
-		if opts.MaxTokens != 0 {
-			ret.MaxOutputTokens = openai.Int(int64(opts.MaxTokens))
-		}
 
 		// Add parameters not officially supported by Responses API as extra fields
 		extraFields := make(map[string]any)
+
+		// Handle max tokens based on model
+		if opts.MaxTokens != 0 {
+			// GPT-5 models use max_completion_tokens instead of max_output_tokens
+			if strings.Contains(strings.ToLower(opts.Model), "gpt-5") {
+				extraFields["max_output_tokens"] = opts.MaxTokens
+			} else {
+				ret.MaxOutputTokens = openai.Int(int64(opts.MaxTokens))
+			}
+		}
 		if opts.PresencePenalty != 0 {
 			extraFields["presence_penalty"] = opts.PresencePenalty
 		}

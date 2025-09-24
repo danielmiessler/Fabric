@@ -23,12 +23,22 @@ type FileChange struct {
 	Content   string `json:"content"`   // New file content
 }
 
-// ParseFileChanges extracts and parses the file change marker section from LLM output
+// ParseFileChanges extracts and parses file changes from LLM output
+// Supports both JSON format (with __CREATE_CODING_FEATURE_FILE_CHANGES__ marker)
+// and markdown format (with "## File Changes" section)
 func ParseFileChanges(output string) (changeSummary string, changes []FileChange, err error) {
+	// First try the JSON format with marker
 	fileChangesStart := strings.Index(output, FileChangesMarker)
-	if fileChangesStart == -1 {
-		return output, nil, nil // No file changes section found
+	if fileChangesStart != -1 {
+		return parseJSONFileChanges(output, fileChangesStart)
 	}
+
+	// Then try the markdown format
+	return parseMarkdownFileChanges(output)
+}
+
+// parseJSONFileChanges handles the JSON format with __CREATE_CODING_FEATURE_FILE_CHANGES__ marker
+func parseJSONFileChanges(output string, fileChangesStart int) (changeSummary string, changes []FileChange, err error) {
 	changeSummary = output[:fileChangesStart] // Everything before the marker
 
 	// Extract the JSON part
@@ -79,29 +89,124 @@ func ParseFileChanges(output string) (changeSummary string, changes []FileChange
 	}
 
 	// Validate file changes
+	if err = validateFileChanges(fileChanges); err != nil {
+		return changeSummary, nil, err
+	}
+
+	return changeSummary, fileChanges, nil
+}
+
+// parseMarkdownFileChanges handles markdown format with "## File Changes" section
+func parseMarkdownFileChanges(output string) (changeSummary string, changes []FileChange, err error) {
+	// Look for "## File Changes" section
+	fileChangesStart := strings.Index(output, "## File Changes")
+	if fileChangesStart == -1 {
+		// No file changes section found
+		return output, nil, nil
+	}
+
+	// Extract the summary (everything before the file changes section)
+	changeSummary = strings.TrimSpace(output[:fileChangesStart])
+
+	// Find the end of the file changes section (next ## header or end of string)
+	fileChangesContent := output[fileChangesStart:]
+	nextSectionStart := strings.Index(fileChangesContent[1:], "\n## ")
+	var fileChangesSection string
+	if nextSectionStart == -1 {
+		fileChangesSection = fileChangesContent
+	} else {
+		fileChangesSection = fileChangesContent[:nextSectionStart+1]
+	}
+
+	// Parse individual file operations from the markdown format
+	lines := strings.Split(fileChangesSection, "\n")
+	var currentOperation string
+	var currentPath string
+	var contentLines []string
+	inCodeBlock := false
+
+	for _, line := range lines {
+		line = strings.TrimSpace(line)
+
+		// Check for operation headers like "### CREATE: filename" or "### UPDATE: filename"
+		if strings.HasPrefix(line, "### CREATE: ") || strings.HasPrefix(line, "### UPDATE: ") {
+			// Save previous file change if we have one
+			if currentPath != "" && currentOperation != "" {
+				content := strings.Join(contentLines, "\n")
+				changes = append(changes, FileChange{
+					Operation: strings.ToLower(currentOperation),
+					Path:      currentPath,
+					Content:   content,
+				})
+			}
+
+			// Parse new operation
+			if strings.HasPrefix(line, "### CREATE: ") {
+				currentOperation = "create"
+				currentPath = strings.TrimSpace(line[12:])
+			} else {
+				currentOperation = "update"
+				currentPath = strings.TrimSpace(line[12:])
+			}
+			contentLines = []string{}
+			inCodeBlock = false
+			continue
+		}
+
+		// Handle code block markers
+		if line == "```" {
+			inCodeBlock = !inCodeBlock
+			continue
+		}
+
+		// Collect content lines inside code blocks
+		if inCodeBlock {
+			contentLines = append(contentLines, line)
+		}
+	}
+
+	// Save the last file change
+	if currentPath != "" && currentOperation != "" {
+		content := strings.Join(contentLines, "\n")
+		changes = append(changes, FileChange{
+			Operation: strings.ToLower(currentOperation),
+			Path:      currentPath,
+			Content:   content,
+		})
+	}
+
+	// Validate file changes
+	if err = validateFileChanges(changes); err != nil {
+		return changeSummary, nil, err
+	}
+
+	return changeSummary, changes, nil
+}
+
+// validateFileChanges validates parsed file changes
+func validateFileChanges(fileChanges []FileChange) error {
 	for i, change := range fileChanges {
 		// Validate operation
 		if change.Operation != "create" && change.Operation != "update" {
-			return changeSummary, nil, fmt.Errorf("invalid operation for file change %d: %s", i, change.Operation)
+			return fmt.Errorf("invalid operation for file change %d: %s", i, change.Operation)
 		}
 
 		// Validate path
 		if change.Path == "" {
-			return changeSummary, nil, fmt.Errorf("empty path for file change %d", i)
+			return fmt.Errorf("empty path for file change %d", i)
 		}
 
 		// Check for suspicious paths (directory traversal)
 		if strings.Contains(change.Path, "..") {
-			return changeSummary, nil, fmt.Errorf("suspicious path for file change %d: %s", i, change.Path)
+			return fmt.Errorf("suspicious path for file change %d: %s", i, change.Path)
 		}
 
 		// Check file size
 		if len(change.Content) > MaxFileSize {
-			return changeSummary, nil, fmt.Errorf("file content too large for file change %d: %d bytes", i, len(change.Content))
+			return fmt.Errorf("file content too large for file change %d: %d bytes", i, len(change.Content))
 		}
 	}
-
-	return changeSummary, fileChanges, nil
+	return nil
 }
 
 // fixInvalidEscapes replaces invalid escape sequences in JSON strings

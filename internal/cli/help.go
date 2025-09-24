@@ -91,6 +91,7 @@ var flagDescriptionMap = map[string]string{
 	"notification":               "send_desktop_notification",
 	"notification-command":       "custom_notification_command",
 	"thinking":                   "set_reasoning_thinking_level",
+	"max-tokens":                 "maximum_tokens_to_generate",
 	"debug":                      "set_debug_level",
 }
 

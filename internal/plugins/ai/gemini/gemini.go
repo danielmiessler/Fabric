@@ -202,9 +202,12 @@ func (o *Client) buildGenerateContentConfig(opts *domain.ChatOptions) (*genai.Ge
 	temperature := float32(opts.Temperature)
 	topP := float32(opts.TopP)
 	cfg := &genai.GenerateContentConfig{
-		Temperature:     &temperature,
-		TopP:            &topP,
-		MaxOutputTokens: int32(opts.ModelContextLength),
+		Temperature: &temperature,
+		TopP:        &topP,
+	}
+
+	if opts.MaxTokens > 0 {
+		cfg.MaxOutputTokens = int32(opts.MaxTokens)
 	}
 
 	if opts.Search {

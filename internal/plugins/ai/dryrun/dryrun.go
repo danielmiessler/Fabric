@@ -78,6 +78,9 @@ func (c *Client) formatOptions(opts *domain.ChatOptions) string {
 	if opts.ModelContextLength != 0 {
 		builder.WriteString(fmt.Sprintf("ModelContextLength: %d\n", opts.ModelContextLength))
 	}
+	if opts.MaxTokens != 0 {
+		builder.WriteString(fmt.Sprintf("MaxTokens: %d\n", opts.MaxTokens))
+	}
 	if opts.Search {
 		builder.WriteString("Search: enabled\n")
 		if opts.SearchLocation != "" {

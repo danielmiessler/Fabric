@@ -36,6 +36,7 @@
   "image_compression_jpeg_webp_only": "compressão de imagem só pode ser usada com formatos JPEG e WebP, não %s",
   "image_compression_range_error": "compressão de imagem deve estar entre 0 e 100, recebido %d",
   "transparent_background_png_webp_only": "fundo transparente só pode ser usado com formatos PNG e WebP, não %s",
+  "invalid_max_tokens_negative": "número máximo de tokens não pode ser negativo, recebido %d",
   "available_transcription_models": "Modelos de transcrição disponíveis:",
   "tts_audio_generated_successfully": "Áudio TTS gerado com sucesso e guardado em: %s\n",
   "fabric_command_complete": "Comando Fabric concluído",

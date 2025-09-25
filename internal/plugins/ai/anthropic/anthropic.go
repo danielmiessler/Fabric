@@ -219,9 +219,16 @@ func (an *Client) buildMessageParams(msgs []anthropic.MessageParam, opts *domain
 	params anthropic.MessageNewParams) {
 
 	params = anthropic.MessageNewParams{
-		Model:     anthropic.Model(opts.Model),
-		MaxTokens: int64(an.maxTokens),
-		Messages:  msgs,
+		Model:    anthropic.Model(opts.Model),
+		Messages: msgs,
+	}
+
+	// Anthropic API requires MaxTokens to be explicitly set
+	// Use user-specified value if provided, otherwise use default fallback
+	if opts.MaxTokens > 0 {
+		params.MaxTokens = int64(opts.MaxTokens)
+	} else {
+		params.MaxTokens = int64(an.maxTokens) // Default: 4096
 	}
 
 	// Only set one of Temperature or TopP as some models don't allow both

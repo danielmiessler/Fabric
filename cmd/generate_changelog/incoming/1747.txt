@@ -1,0 +1,9 @@
+### PR [#1747](https://github.com/danielmiessler/Fabric/pull/1747) by [2b3pro](https://github.com/2b3pro): feat: Add MaxTokens option for AI model output control
+
+- Brought up to date for fabric-ai v1.4.317
+- Add MaxTokens configuration option allowing users to specify the maximum number of tokens to generate in AI model responses
+- Integrate MaxTokens support across multiple AI providers including Anthropic, Gemini, and Ollama with updated CLI flags and example configuration
+- Enhance ParseFileChanges function to support both JSON format and markdown format for better compatibility with different AI model outputs
+- Support max_completion_tokens for GPT-5 models with conditional logic to map MaxTokens to the appropriate parameter for OpenAI API requests
+- Add test case to validate proper parameter mapping for GPT-5 models according to their specific API requirements
+- Add internationalization support

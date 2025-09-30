@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.4.304 (2025-09-30)
+
+### Direct commits
+
+- Create produce_report.sh
+Added a script that compiles one  organized file out of all of the folder's text files. The script proceeds to use said file as  psychological data  input for Fabric's "analyze_personality" pattern, and outputs an analysis report.
+
 ## v1.4.303 (2025-09-30)
 
 ### Direct commits

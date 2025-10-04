@@ -73,6 +73,32 @@ func (r *PatternRepository) List(ctx context.Context) ([]Pattern, error) {
 	return result, err
 }
 
+func (r *PatternRepository) GetByID(ctx context.Context, id uuid.UUID) (*Pattern, error) {
+	_ = ctx
+	var result []Pattern
+	_, err := r.client.From("patterns").Select("*", "", false).Eq("id", id.String()).Limit(1, "").ExecuteTo(&result)
+	if err != nil {
+		return nil, err
+	}
+	if len(result) == 0 {
+		return nil, nil
+	}
+	return &result[0], nil
+}
+
+func (r *PatternRepository) Create(ctx context.Context, payload map[string]any) (*Pattern, error) {
+	_ = ctx
+	var result []Pattern
+	_, err := r.client.From("patterns").Insert(payload, false, "", "representation", "").ExecuteTo(&result)
+	if err != nil {
+		return nil, err
+	}
+	if len(result) == 0 {
+		return nil, nil
+	}
+	return &result[0], nil
+}
+
 func (r *PatternRepository) Upsert(ctx context.Context, payload map[string]any) (*Pattern, error) {
 	_ = ctx
 	var result []Pattern
@@ -89,6 +115,25 @@ func (r *PatternRepository) Upsert(ctx context.Context, payload map[string]any) 
 func (r *PatternRepository) DeleteByName(ctx context.Context, name string) error {
 	_ = ctx
 	_, _, err := r.client.From("patterns").Delete("", "").Eq("name", name).Execute()
+	return err
+}
+
+func (r *PatternRepository) UpdateByID(ctx context.Context, id uuid.UUID, payload map[string]any) (*Pattern, error) {
+	_ = ctx
+	var result []Pattern
+	_, err := r.client.From("patterns").Update(payload, "representation", "").Eq("id", id.String()).Limit(1, "").ExecuteTo(&result)
+	if err != nil {
+		return nil, err
+	}
+	if len(result) == 0 {
+		return nil, nil
+	}
+	return &result[0], nil
+}
+
+func (r *PatternRepository) DeleteByID(ctx context.Context, id uuid.UUID) error {
+	_ = ctx
+	_, _, err := r.client.From("patterns").Delete("", "").Eq("id", id.String()).Execute()
 	return err
 }
 

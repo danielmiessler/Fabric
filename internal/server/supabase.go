@@ -12,6 +12,14 @@ type SupabaseHandler struct {
 	client *supadb.Client
 }
 
+type patternRequest struct {
+	Name        string   `json:"name" binding:"required"`
+	Description *string  `json:"description"`
+	Body        string   `json:"body" binding:"required"`
+	Tags        []string `json:"tags"`
+	IsSystem    bool     `json:"is_system"`
+}
+
 func NewSupabaseHandler(r *gin.Engine, client *supadb.Client) *SupabaseHandler {
 	if client == nil {
 		return nil
@@ -22,6 +30,10 @@ func NewSupabaseHandler(r *gin.Engine, client *supadb.Client) *SupabaseHandler {
 	group.GET("/health", handler.Health)
 	group.GET("/sessions", handler.ListSessions)
 	group.GET("/patterns", handler.ListPatterns)
+	group.GET("/patterns/:id", handler.GetPattern)
+	group.POST("/patterns", handler.CreatePattern)
+	group.PUT("/patterns/:id", handler.UpdatePattern)
+	group.DELETE("/patterns/:id", handler.DeletePattern)
 	group.GET("/notes/:sessionId", handler.ListNotes)
 
 	return handler
@@ -53,6 +65,102 @@ func (h *SupabaseHandler) ListPatterns(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, patterns)
+}
+
+func (h *SupabaseHandler) GetPattern(c *gin.Context) {
+	idParam := c.Param("id")
+	id, err := uuid.Parse(idParam)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid pattern id"})
+		return
+	}
+
+	repo := h.client.Patterns()
+	pattern, err := repo.GetByID(c.Request.Context(), id)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	if pattern == nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "pattern not found"})
+		return
+	}
+	c.JSON(http.StatusOK, pattern)
+}
+
+func (h *SupabaseHandler) CreatePattern(c *gin.Context) {
+	var req patternRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	repo := h.client.Patterns()
+	pattern, err := repo.Create(c.Request.Context(), map[string]any{
+		"name":        req.Name,
+		"description": req.Description,
+		"body":        req.Body,
+		"tags":        req.Tags,
+		"is_system":   req.IsSystem,
+	})
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	if pattern == nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "unable to create pattern"})
+		return
+	}
+	c.JSON(http.StatusCreated, pattern)
+}
+
+func (h *SupabaseHandler) UpdatePattern(c *gin.Context) {
+	idParam := c.Param("id")
+	id, err := uuid.Parse(idParam)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid pattern id"})
+		return
+	}
+
+	var req patternRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	repo := h.client.Patterns()
+	pattern, err := repo.UpdateByID(c.Request.Context(), id, map[string]any{
+		"name":        req.Name,
+		"description": req.Description,
+		"body":        req.Body,
+		"tags":        req.Tags,
+		"is_system":   req.IsSystem,
+	})
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	if pattern == nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "pattern not found"})
+		return
+	}
+	c.JSON(http.StatusOK, pattern)
+}
+
+func (h *SupabaseHandler) DeletePattern(c *gin.Context) {
+	idParam := c.Param("id")
+	id, err := uuid.Parse(idParam)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid pattern id"})
+		return
+	}
+
+	repo := h.client.Patterns()
+	if err := repo.DeleteByID(c.Request.Context(), id); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.Status(http.StatusNoContent)
 }
 
 func (h *SupabaseHandler) ListNotes(c *gin.Context) {

@@ -1,0 +1,1051 @@
+	github.com/danielmiessler/fabric/cmd/code_helper		coverage: 0.0% of statements
+	github.com/danielmiessler/fabric/cmd/fabric		coverage: 0.0% of statements
+	github.com/danielmiessler/fabric/cmd/generate_changelog		coverage: 0.0% of statements
+	github.com/danielmiessler/fabric/cmd/generate_changelog/internal		coverage: 0.0% of statements
+	github.com/danielmiessler/fabric/cmd/generate_changelog/internal/cache		coverage: 0.0% of statements
+=== RUN   TestDetectVersionFromNix
+=== RUN   TestDetectVersionFromNix/version.nix_exists
+--- PASS: TestDetectVersionFromNix (0.00s)
+    --- PASS: TestDetectVersionFromNix/version.nix_exists (0.00s)
+=== RUN   TestEnsureIncomingDir
+--- PASS: TestEnsureIncomingDir (0.00s)
+=== RUN   TestInsertVersionAtTop
+=== RUN   TestInsertVersionAtTop/new_changelog
+=== RUN   TestInsertVersionAtTop/existing_changelog
+--- PASS: TestInsertVersionAtTop (0.00s)
+    --- PASS: TestInsertVersionAtTop/new_changelog (0.00s)
+    --- PASS: TestInsertVersionAtTop/existing_changelog (0.00s)
+=== RUN   TestIsMergeCommit
+=== RUN   TestIsMergeCommit/Regular_commit_with_single_parent
+=== RUN   TestIsMergeCommit/Merge_commit_with_multiple_parents
+=== RUN   TestIsMergeCommit/Merge_commit_detected_by_message_pattern_only
+=== RUN   TestIsMergeCommit/Merge_branch_commit_pattern
+=== RUN   TestIsMergeCommit/Regular_commit_with_no_merge_patterns
+--- PASS: TestIsMergeCommit (0.00s)
+    --- PASS: TestIsMergeCommit/Regular_commit_with_single_parent (0.00s)
+    --- PASS: TestIsMergeCommit/Merge_commit_with_multiple_parents (0.00s)
+    --- PASS: TestIsMergeCommit/Merge_commit_detected_by_message_pattern_only (0.00s)
+    --- PASS: TestIsMergeCommit/Merge_branch_commit_pattern (0.00s)
+    --- PASS: TestIsMergeCommit/Regular_commit_with_no_merge_patterns (0.00s)
+=== RUN   TestDetectVersion
+=== RUN   TestDetectVersion/valid_version.nix
+=== RUN   TestDetectVersion/version_with_extra_whitespace
+--- PASS: TestDetectVersion (0.00s)
+    --- PASS: TestDetectVersion/valid_version.nix (0.00s)
+    --- PASS: TestDetectVersion/version_with_extra_whitespace (0.00s)
+=== RUN   TestInsertVersionAtTop_ImprovedRobustness
+=== RUN   TestInsertVersionAtTop_ImprovedRobustness/header_with_trailing_spaces
+=== RUN   TestInsertVersionAtTop_ImprovedRobustness/header_with_different_line_endings
+=== RUN   TestInsertVersionAtTop_ImprovedRobustness/no_existing_header
+=== RUN   TestInsertVersionAtTop_ImprovedRobustness/new_file_creation
+--- PASS: TestInsertVersionAtTop_ImprovedRobustness (0.00s)
+    --- PASS: TestInsertVersionAtTop_ImprovedRobustness/header_with_trailing_spaces (0.00s)
+    --- PASS: TestInsertVersionAtTop_ImprovedRobustness/header_with_different_line_endings (0.00s)
+    --- PASS: TestInsertVersionAtTop_ImprovedRobustness/no_existing_header (0.00s)
+    --- PASS: TestInsertVersionAtTop_ImprovedRobustness/new_file_creation (0.00s)
+=== RUN   TestProcessIncomingPRs_FileAggregation
+--- PASS: TestProcessIncomingPRs_FileAggregation (0.00s)
+=== RUN   TestFileProcessing_ErrorHandling
+--- PASS: TestFileProcessing_ErrorHandling (0.00s)
+=== RUN   TestEnsureIncomingDirCreation
+--- PASS: TestEnsureIncomingDirCreation (0.00s)
+PASS
+coverage: 5.8% of statements
+ok  	github.com/danielmiessler/fabric/cmd/generate_changelog/internal/changelog	(cached)	coverage: 5.8% of statements
+?   	github.com/danielmiessler/fabric/cmd/generate_changelog/internal/config	[no test files]
+	github.com/danielmiessler/fabric/cmd/generate_changelog/internal/git		coverage: 0.0% of statements
+=== RUN   TestPRCommitEmailHandling
+=== RUN   TestPRCommitEmailHandling/Valid_email_field
+=== RUN   TestPRCommitEmailHandling/Empty_email_field
+=== RUN   TestPRCommitEmailHandling/Email_field_with_proper_initialization
+--- PASS: TestPRCommitEmailHandling (0.00s)
+    --- PASS: TestPRCommitEmailHandling/Valid_email_field (0.00s)
+    --- PASS: TestPRCommitEmailHandling/Empty_email_field (0.00s)
+    --- PASS: TestPRCommitEmailHandling/Email_field_with_proper_initialization (0.00s)
+PASS
+coverage: 0.0% of statements
+ok  	github.com/danielmiessler/fabric/cmd/generate_changelog/internal/github	(cached)	coverage: 0.0% of statements
+	github.com/danielmiessler/fabric/cmd/generate_changelog/util		coverage: 0.0% of statements
+	github.com/danielmiessler/fabric/cmd/to_pdf		coverage: 0.0% of statements
+	github.com/danielmiessler/fabric/internal/chat		coverage: 0.0% of statements
+=== RUN   TestSendNotification_SecurityEscaping
+=== RUN   TestSendNotification_SecurityEscaping/Normal_content
+Title: Fabric: test_pattern Complete, Message: Output: Test message content Fabric: test_pattern Complete Output: Test message content
+=== RUN   TestSendNotification_SecurityEscaping/Content_with_backticks
+Title: Fabric: test_pattern Complete, Message: Output: Test `whoami` injection Fabric: test_pattern Complete Output: Test `whoami` injection
+=== RUN   TestSendNotification_SecurityEscaping/Content_with_semicolon_injection
+Title: Fabric: test_pattern Complete, Message: Output: Test; echo INJECTED; echo end Fabric: test_pattern Complete Output: Test; echo INJECTED; echo end
+=== RUN   TestSendNotification_SecurityEscaping/Content_with_command_substitution
+Title: Fabric: test_pattern Complete, Message: Output: Test $(whoami) injection Fabric: test_pattern Complete Output: Test $(whoami) injection
+=== RUN   TestSendNotification_SecurityEscaping/Content_with_quote_injection
+Title: Fabric: test_pattern Complete, Message: Output: Test ' || echo INJECTED || echo ' end Fabric: test_pattern Complete Output: Test ' || echo INJECTED || echo ' end
+=== RUN   TestSendNotification_SecurityEscaping/Content_with_newlines
+Title: Fabric: test_pattern Complete, Message: Output: Line 1 Line 2 Line 3 Fabric: test_pattern Complete Output: Line 1 Line 2 Line 3
+--- PASS: TestSendNotification_SecurityEscaping (0.02s)
+    --- PASS: TestSendNotification_SecurityEscaping/Normal_content (0.00s)
+    --- PASS: TestSendNotification_SecurityEscaping/Content_with_backticks (0.00s)
+    --- PASS: TestSendNotification_SecurityEscaping/Content_with_semicolon_injection (0.00s)
+    --- PASS: TestSendNotification_SecurityEscaping/Content_with_command_substitution (0.00s)
+    --- PASS: TestSendNotification_SecurityEscaping/Content_with_quote_injection (0.00s)
+    --- PASS: TestSendNotification_SecurityEscaping/Content_with_newlines (0.00s)
+=== RUN   TestSendNotification_TitleGeneration
+=== RUN   TestSendNotification_TitleGeneration/No_pattern_name
+Title: Fabric Command Complete Fabric Command Complete Output: test message
+=== RUN   TestSendNotification_TitleGeneration/With_pattern_name
+Title: Fabric: summarize Complete Fabric: summarize Complete Output: test message
+=== RUN   TestSendNotification_TitleGeneration/Pattern_with_special_characters
+Title: Fabric: test_pattern-v2 Complete Fabric: test_pattern-v2 Complete Output: test message
+--- PASS: TestSendNotification_TitleGeneration (0.01s)
+    --- PASS: TestSendNotification_TitleGeneration/No_pattern_name (0.00s)
+    --- PASS: TestSendNotification_TitleGeneration/With_pattern_name (0.00s)
+    --- PASS: TestSendNotification_TitleGeneration/Pattern_with_special_characters (0.00s)
+=== RUN   TestSendNotification_MessageTruncation
+=== RUN   TestSendNotification_MessageTruncation/Short_message
+Message: Output: Short message Fabric: test Complete Output: Short message
+=== RUN   TestSendNotification_MessageTruncation/Long_message_truncation
+Message: Output: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA... Fabric: test Complete Output: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA...
+--- PASS: TestSendNotification_MessageTruncation (0.01s)
+    --- PASS: TestSendNotification_MessageTruncation/Short_message (0.00s)
+    --- PASS: TestSendNotification_MessageTruncation/Long_message_truncation (0.00s)
+=== RUN   TestCli
+    cli_test.go:13: Skipping test for now, collision with flag -t
+--- SKIP: TestCli (0.00s)
+=== RUN   TestInit
+--- PASS: TestInit (0.00s)
+=== RUN   TestReadStdin
+--- PASS: TestReadStdin (0.00s)
+=== RUN   TestBuildChatOptions
+--- PASS: TestBuildChatOptions (0.00s)
+=== RUN   TestBuildChatOptionsDefaultSeed
+--- PASS: TestBuildChatOptionsDefaultSeed (0.00s)
+=== RUN   TestBuildChatOptionsSuppressThink
+--- PASS: TestBuildChatOptionsSuppressThink (0.00s)
+=== RUN   TestInitWithYAMLConfig
+=== RUN   TestInitWithYAMLConfig/Load_YAML_config
+=== RUN   TestInitWithYAMLConfig/CLI_overrides_YAML
+=== RUN   TestInitWithYAMLConfig/Invalid_YAML_config
+--- PASS: TestInitWithYAMLConfig (0.00s)
+    --- PASS: TestInitWithYAMLConfig/Load_YAML_config (0.00s)
+    --- PASS: TestInitWithYAMLConfig/CLI_overrides_YAML (0.00s)
+    --- PASS: TestInitWithYAMLConfig/Invalid_YAML_config (0.00s)
+=== RUN   TestValidateImageFile
+=== RUN   TestValidateImageFile/Empty_path_should_be_valid
+=== RUN   TestValidateImageFile/Valid_extensions_should_pass
+=== RUN   TestValidateImageFile/Invalid_extensions_should_fail
+=== RUN   TestValidateImageFile/Existing_file_should_fail
+=== RUN   TestValidateImageFile/Non-existing_file_with_valid_extension_should_pass
+--- PASS: TestValidateImageFile (0.00s)
+    --- PASS: TestValidateImageFile/Empty_path_should_be_valid (0.00s)
+    --- PASS: TestValidateImageFile/Valid_extensions_should_pass (0.00s)
+    --- PASS: TestValidateImageFile/Invalid_extensions_should_fail (0.00s)
+    --- PASS: TestValidateImageFile/Existing_file_should_fail (0.00s)
+    --- PASS: TestValidateImageFile/Non-existing_file_with_valid_extension_should_pass (0.00s)
+=== RUN   TestBuildChatOptionsWithImageFileValidation
+=== RUN   TestBuildChatOptionsWithImageFileValidation/Valid_image_file_should_pass
+=== RUN   TestBuildChatOptionsWithImageFileValidation/Invalid_extension_should_fail
+=== RUN   TestBuildChatOptionsWithImageFileValidation/Existing_file_should_fail
+--- PASS: TestBuildChatOptionsWithImageFileValidation (0.00s)
+    --- PASS: TestBuildChatOptionsWithImageFileValidation/Valid_image_file_should_pass (0.00s)
+    --- PASS: TestBuildChatOptionsWithImageFileValidation/Invalid_extension_should_fail (0.00s)
+    --- PASS: TestBuildChatOptionsWithImageFileValidation/Existing_file_should_fail (0.00s)
+=== RUN   TestValidateImageParameters
+=== RUN   TestValidateImageParameters/No_image_file_and_no_parameters_should_pass
+=== RUN   TestValidateImageParameters/Image_parameters_without_image_file_should_fail
+=== RUN   TestValidateImageParameters/Valid_size_values_should_pass
+=== RUN   TestValidateImageParameters/Invalid_size_should_fail
+=== RUN   TestValidateImageParameters/Valid_quality_values_should_pass
+=== RUN   TestValidateImageParameters/Invalid_quality_should_fail
+=== RUN   TestValidateImageParameters/Valid_background_values_should_pass
+=== RUN   TestValidateImageParameters/Invalid_background_should_fail
+=== RUN   TestValidateImageParameters/Compression_for_JPEG_should_pass
+=== RUN   TestValidateImageParameters/Compression_for_WebP_should_pass
+=== RUN   TestValidateImageParameters/Compression_for_PNG_should_fail
+=== RUN   TestValidateImageParameters/Invalid_compression_range_should_fail
+=== RUN   TestValidateImageParameters/Transparent_background_for_PNG_should_pass
+=== RUN   TestValidateImageParameters/Transparent_background_for_WebP_should_pass
+=== RUN   TestValidateImageParameters/Transparent_background_for_JPEG_should_fail
+--- PASS: TestValidateImageParameters (0.00s)
+    --- PASS: TestValidateImageParameters/No_image_file_and_no_parameters_should_pass (0.00s)
+    --- PASS: TestValidateImageParameters/Image_parameters_without_image_file_should_fail (0.00s)
+    --- PASS: TestValidateImageParameters/Valid_size_values_should_pass (0.00s)
+    --- PASS: TestValidateImageParameters/Invalid_size_should_fail (0.00s)
+    --- PASS: TestValidateImageParameters/Valid_quality_values_should_pass (0.00s)
+    --- PASS: TestValidateImageParameters/Invalid_quality_should_fail (0.00s)
+    --- PASS: TestValidateImageParameters/Valid_background_values_should_pass (0.00s)
+    --- PASS: TestValidateImageParameters/Invalid_background_should_fail (0.00s)
+    --- PASS: TestValidateImageParameters/Compression_for_JPEG_should_pass (0.00s)
+    --- PASS: TestValidateImageParameters/Compression_for_WebP_should_pass (0.00s)
+    --- PASS: TestValidateImageParameters/Compression_for_PNG_should_fail (0.00s)
+    --- PASS: TestValidateImageParameters/Invalid_compression_range_should_fail (0.00s)
+    --- PASS: TestValidateImageParameters/Transparent_background_for_PNG_should_pass (0.00s)
+    --- PASS: TestValidateImageParameters/Transparent_background_for_WebP_should_pass (0.00s)
+    --- PASS: TestValidateImageParameters/Transparent_background_for_JPEG_should_fail (0.00s)
+=== RUN   TestBuildChatOptionsWithImageParameters
+=== RUN   TestBuildChatOptionsWithImageParameters/Valid_image_parameters_should_pass
+=== RUN   TestBuildChatOptionsWithImageParameters/Invalid_image_parameters_should_fail
+=== RUN   TestBuildChatOptionsWithImageParameters/JPEG_with_compression_should_pass
+=== RUN   TestBuildChatOptionsWithImageParameters/Image_parameters_without_image_file_should_fail_in_BuildChatOptions
+--- PASS: TestBuildChatOptionsWithImageParameters (0.00s)
+    --- PASS: TestBuildChatOptionsWithImageParameters/Valid_image_parameters_should_pass (0.00s)
+    --- PASS: TestBuildChatOptionsWithImageParameters/Invalid_image_parameters_should_fail (0.00s)
+    --- PASS: TestBuildChatOptionsWithImageParameters/JPEG_with_compression_should_pass (0.00s)
+    --- PASS: TestBuildChatOptionsWithImageParameters/Image_parameters_without_image_file_should_fail_in_BuildChatOptions (0.00s)
+=== RUN   TestExtractFlag
+=== RUN   TestExtractFlag/long_flag
+=== RUN   TestExtractFlag/long_flag_with_value
+=== RUN   TestExtractFlag/short_flag
+=== RUN   TestExtractFlag/short_flag_with_value
+=== RUN   TestExtractFlag/single_dash
+=== RUN   TestExtractFlag/double_dash_only
+=== RUN   TestExtractFlag/regular_arg
+=== RUN   TestExtractFlag/path_arg
+--- PASS: TestExtractFlag (0.00s)
+    --- PASS: TestExtractFlag/long_flag (0.00s)
+    --- PASS: TestExtractFlag/long_flag_with_value (0.00s)
+    --- PASS: TestExtractFlag/short_flag (0.00s)
+    --- PASS: TestExtractFlag/short_flag_with_value (0.00s)
+    --- PASS: TestExtractFlag/single_dash (0.00s)
+    --- PASS: TestExtractFlag/double_dash_only (0.00s)
+    --- PASS: TestExtractFlag/regular_arg (0.00s)
+    --- PASS: TestExtractFlag/path_arg (0.00s)
+=== RUN   TestCopyToClipboard
+    output_test.go:9: skipping test, because of docker env. in ci.
+--- SKIP: TestCopyToClipboard (0.00s)
+=== RUN   TestCreateOutputFile
+
+
+[Output also written to test_output.txt]
+--- PASS: TestCreateOutputFile (0.00s)
+PASS
+coverage: 23.9% of statements
+ok  	github.com/danielmiessler/fabric/internal/cli	(cached)	coverage: 23.9% of statements
+=== RUN   TestChatter_Send_SuppressThink
+--- PASS: TestChatter_Send_SuppressThink (0.00s)
+=== RUN   TestChatter_Send_StreamingErrorPropagation
+--- PASS: TestChatter_Send_StreamingErrorPropagation (0.00s)
+=== RUN   TestChatter_Send_StreamingSuccessfulAggregation
+Hello world! This is a test.--- PASS: TestChatter_Send_StreamingSuccessfulAggregation (0.00s)
+=== RUN   TestSaveEnvFile
+--- PASS: TestSaveEnvFile (0.00s)
+=== RUN   TestGetChatter_WarnsOnAmbiguousModel
+--- PASS: TestGetChatter_WarnsOnAmbiguousModel (0.00s)
+PASS
+coverage: 42.3% of statements
+ok  	github.com/danielmiessler/fabric/internal/core	(cached)	coverage: 42.3% of statements
+=== RUN   TestNormalizeMessages
+--- PASS: TestNormalizeMessages (0.00s)
+=== RUN   TestParseFileChanges
+=== RUN   TestParseFileChanges/No___CREATE_CODING_FEATURE_FILE_CHANGES___section
+=== RUN   TestParseFileChanges/Valid___CREATE_CODING_FEATURE_FILE_CHANGES___section
+=== RUN   TestParseFileChanges/Invalid_JSON_in___CREATE_CODING_FEATURE_FILE_CHANGES___section
+=== RUN   TestParseFileChanges/Invalid_operation
+=== RUN   TestParseFileChanges/Empty_path
+=== RUN   TestParseFileChanges/Suspicious_path_with_directory_traversal
+--- PASS: TestParseFileChanges (0.00s)
+    --- PASS: TestParseFileChanges/No___CREATE_CODING_FEATURE_FILE_CHANGES___section (0.00s)
+    --- PASS: TestParseFileChanges/Valid___CREATE_CODING_FEATURE_FILE_CHANGES___section (0.00s)
+    --- PASS: TestParseFileChanges/Invalid_JSON_in___CREATE_CODING_FEATURE_FILE_CHANGES___section (0.00s)
+    --- PASS: TestParseFileChanges/Invalid_operation (0.00s)
+    --- PASS: TestParseFileChanges/Empty_path (0.00s)
+    --- PASS: TestParseFileChanges/Suspicious_path_with_directory_traversal (0.00s)
+=== RUN   TestApplyFileChanges
+Applied create operation to test.txt
+Applied create operation to subdir/nested.txt
+Applied update operation to test.txt
+--- PASS: TestApplyFileChanges (0.00s)
+=== RUN   TestStripThinkBlocks
+--- PASS: TestStripThinkBlocks (0.00s)
+=== RUN   TestStripThinkBlocksCustomTags
+--- PASS: TestStripThinkBlocksCustomTags (0.00s)
+PASS
+coverage: 39.3% of statements
+ok  	github.com/danielmiessler/fabric/internal/domain	(cached)	coverage: 39.3% of statements
+=== RUN   TestTranslation
+=== RUN   TestTranslation/es
+=== RUN   TestTranslation/en
+=== RUN   TestTranslation/zh
+=== RUN   TestTranslation/de
+=== RUN   TestTranslation/ja
+=== RUN   TestTranslation/fr
+=== RUN   TestTranslation/pt
+=== RUN   TestTranslation/fa
+=== RUN   TestTranslation/it
+--- PASS: TestTranslation (0.00s)
+    --- PASS: TestTranslation/es (0.00s)
+    --- PASS: TestTranslation/en (0.00s)
+    --- PASS: TestTranslation/zh (0.00s)
+    --- PASS: TestTranslation/de (0.00s)
+    --- PASS: TestTranslation/ja (0.00s)
+    --- PASS: TestTranslation/fr (0.00s)
+    --- PASS: TestTranslation/pt (0.00s)
+    --- PASS: TestTranslation/fa (0.00s)
+    --- PASS: TestTranslation/it (0.00s)
+=== RUN   TestNormalizeToBCP47
+=== RUN   TestNormalizeToBCP47/pt
+=== RUN   TestNormalizeToBCP47/pt-BR
+=== RUN   TestNormalizeToBCP47/pt-PT
+=== RUN   TestNormalizeToBCP47/pt_BR
+=== RUN   TestNormalizeToBCP47/pt_PT
+=== RUN   TestNormalizeToBCP47/en_US
+=== RUN   TestNormalizeToBCP47/pt-br
+=== RUN   TestNormalizeToBCP47/PT-BR
+=== RUN   TestNormalizeToBCP47/Pt-Br
+=== RUN   TestNormalizeToBCP47/pT-bR
+=== RUN   TestNormalizeToBCP47/EN
+=== RUN   TestNormalizeToBCP47/Pt
+=== RUN   TestNormalizeToBCP47/ZH
+=== RUN   TestNormalizeToBCP47/#00
+--- PASS: TestNormalizeToBCP47 (0.00s)
+    --- PASS: TestNormalizeToBCP47/pt (0.00s)
+    --- PASS: TestNormalizeToBCP47/pt-BR (0.00s)
+    --- PASS: TestNormalizeToBCP47/pt-PT (0.00s)
+    --- PASS: TestNormalizeToBCP47/pt_BR (0.00s)
+    --- PASS: TestNormalizeToBCP47/pt_PT (0.00s)
+    --- PASS: TestNormalizeToBCP47/en_US (0.00s)
+    --- PASS: TestNormalizeToBCP47/pt-br (0.00s)
+    --- PASS: TestNormalizeToBCP47/PT-BR (0.00s)
+    --- PASS: TestNormalizeToBCP47/Pt-Br (0.00s)
+    --- PASS: TestNormalizeToBCP47/pT-bR (0.00s)
+    --- PASS: TestNormalizeToBCP47/EN (0.00s)
+    --- PASS: TestNormalizeToBCP47/Pt (0.00s)
+    --- PASS: TestNormalizeToBCP47/ZH (0.00s)
+    --- PASS: TestNormalizeToBCP47/#00 (0.00s)
+=== RUN   TestGetLocaleCandidates
+=== RUN   TestGetLocaleCandidates/pt-PT
+=== RUN   TestGetLocaleCandidates/pt-BR
+=== RUN   TestGetLocaleCandidates/pt
+=== RUN   TestGetLocaleCandidates/en-US
+=== RUN   TestGetLocaleCandidates/en
+=== RUN   TestGetLocaleCandidates/fr-FR
+=== RUN   TestGetLocaleCandidates/zh-CN
+=== RUN   TestGetLocaleCandidates/#00
+--- PASS: TestGetLocaleCandidates (0.00s)
+    --- PASS: TestGetLocaleCandidates/pt-PT (0.00s)
+    --- PASS: TestGetLocaleCandidates/pt-BR (0.00s)
+    --- PASS: TestGetLocaleCandidates/pt (0.00s)
+    --- PASS: TestGetLocaleCandidates/en-US (0.00s)
+    --- PASS: TestGetLocaleCandidates/en (0.00s)
+    --- PASS: TestGetLocaleCandidates/fr-FR (0.00s)
+    --- PASS: TestGetLocaleCandidates/zh-CN (0.00s)
+    --- PASS: TestGetLocaleCandidates/#00 (0.00s)
+=== RUN   TestPortugueseVariantLoading
+=== RUN   TestPortugueseVariantLoading/Portuguese_(defaults_to_Brazilian)
+=== RUN   TestPortugueseVariantLoading/Brazilian_Portuguese
+=== RUN   TestPortugueseVariantLoading/European_Portuguese
+=== RUN   TestPortugueseVariantLoading/Brazilian_Portuguese_with_underscore
+=== RUN   TestPortugueseVariantLoading/European_Portuguese_with_underscore
+--- PASS: TestPortugueseVariantLoading (0.00s)
+    --- PASS: TestPortugueseVariantLoading/Portuguese_(defaults_to_Brazilian) (0.00s)
+    --- PASS: TestPortugueseVariantLoading/Brazilian_Portuguese (0.00s)
+    --- PASS: TestPortugueseVariantLoading/European_Portuguese (0.00s)
+    --- PASS: TestPortugueseVariantLoading/Brazilian_Portuguese_with_underscore (0.00s)
+    --- PASS: TestPortugueseVariantLoading/European_Portuguese_with_underscore (0.00s)
+=== RUN   TestPortugueseVariantDistinction
+--- PASS: TestPortugueseVariantDistinction (0.00s)
+=== RUN   TestBackwardCompatibility
+--- PASS: TestBackwardCompatibility (0.00s)
+=== RUN   TestDetectSystemLocale
+=== RUN   TestDetectSystemLocale/LC_ALL_takes_highest_priority
+=== RUN   TestDetectSystemLocale/LC_MESSAGES_used_when_LC_ALL_empty
+=== RUN   TestDetectSystemLocale/LANG_used_when_LC_ALL_and_LC_MESSAGES_empty
+=== RUN   TestDetectSystemLocale/Empty_when_no_valid_locale_set
+=== RUN   TestDetectSystemLocale/Handle_C_locale
+=== RUN   TestDetectSystemLocale/Handle_POSIX_locale
+=== RUN   TestDetectSystemLocale/Handle_locale_with_modifiers
+=== RUN   TestDetectSystemLocale/Skip_invalid_locale_and_use_next_priority
+--- PASS: TestDetectSystemLocale (0.00s)
+    --- PASS: TestDetectSystemLocale/LC_ALL_takes_highest_priority (0.00s)
+    --- PASS: TestDetectSystemLocale/LC_MESSAGES_used_when_LC_ALL_empty (0.00s)
+    --- PASS: TestDetectSystemLocale/LANG_used_when_LC_ALL_and_LC_MESSAGES_empty (0.00s)
+    --- PASS: TestDetectSystemLocale/Empty_when_no_valid_locale_set (0.00s)
+    --- PASS: TestDetectSystemLocale/Handle_C_locale (0.00s)
+    --- PASS: TestDetectSystemLocale/Handle_POSIX_locale (0.00s)
+    --- PASS: TestDetectSystemLocale/Handle_locale_with_modifiers (0.00s)
+    --- PASS: TestDetectSystemLocale/Skip_invalid_locale_and_use_next_priority (0.00s)
+=== RUN   TestNormalizeLocale
+=== RUN   TestNormalizeLocale/en_US.UTF-8
+=== RUN   TestNormalizeLocale/fr_FR.ISO8859-1
+=== RUN   TestNormalizeLocale/de_DE@euro
+=== RUN   TestNormalizeLocale/zh_CN.GB2312
+=== RUN   TestNormalizeLocale/ja_JP.eucJP@traditional
+=== RUN   TestNormalizeLocale/en-US
+=== RUN   TestNormalizeLocale/fr-CA
+=== RUN   TestNormalizeLocale/en
+=== RUN   TestNormalizeLocale/fr
+=== RUN   TestNormalizeLocale/zh
+=== RUN   TestNormalizeLocale/C
+=== RUN   TestNormalizeLocale/POSIX
+=== RUN   TestNormalizeLocale/#00
+=== RUN   TestNormalizeLocale/pt_BR.UTF-8@currency=BRL
+=== RUN   TestNormalizeLocale/sr_RS.UTF-8@latin
+=== RUN   TestNormalizeLocale/uz_UZ.UTF-8@cyrillic
+--- PASS: TestNormalizeLocale (0.00s)
+    --- PASS: TestNormalizeLocale/en_US.UTF-8 (0.00s)
+    --- PASS: TestNormalizeLocale/fr_FR.ISO8859-1 (0.00s)
+    --- PASS: TestNormalizeLocale/de_DE@euro (0.00s)
+    --- PASS: TestNormalizeLocale/zh_CN.GB2312 (0.00s)
+    --- PASS: TestNormalizeLocale/ja_JP.eucJP@traditional (0.00s)
+    --- PASS: TestNormalizeLocale/en-US (0.00s)
+    --- PASS: TestNormalizeLocale/fr-CA (0.00s)
+    --- PASS: TestNormalizeLocale/en (0.00s)
+    --- PASS: TestNormalizeLocale/fr (0.00s)
+    --- PASS: TestNormalizeLocale/zh (0.00s)
+    --- PASS: TestNormalizeLocale/C (0.00s)
+    --- PASS: TestNormalizeLocale/POSIX (0.00s)
+    --- PASS: TestNormalizeLocale/#00 (0.00s)
+    --- PASS: TestNormalizeLocale/pt_BR.UTF-8@currency=BRL (0.00s)
+    --- PASS: TestNormalizeLocale/sr_RS.UTF-8@latin (0.00s)
+    --- PASS: TestNormalizeLocale/uz_UZ.UTF-8@cyrillic (0.00s)
+=== RUN   TestIsValidLocale
+=== RUN   TestIsValidLocale/en
+=== RUN   TestIsValidLocale/en-US
+=== RUN   TestIsValidLocale/fr-FR
+=== RUN   TestIsValidLocale/zh-CN
+=== RUN   TestIsValidLocale/ja-JP
+=== RUN   TestIsValidLocale/pt-BR
+=== RUN   TestIsValidLocale/es-MX
+=== RUN   TestIsValidLocale/#00
+=== RUN   TestIsValidLocale/invalid
+=== RUN   TestIsValidLocale/123
+--- PASS: TestIsValidLocale (0.00s)
+    --- PASS: TestIsValidLocale/en (0.00s)
+    --- PASS: TestIsValidLocale/en-US (0.00s)
+    --- PASS: TestIsValidLocale/fr-FR (0.00s)
+    --- PASS: TestIsValidLocale/zh-CN (0.00s)
+    --- PASS: TestIsValidLocale/ja-JP (0.00s)
+    --- PASS: TestIsValidLocale/pt-BR (0.00s)
+    --- PASS: TestIsValidLocale/es-MX (0.00s)
+    --- PASS: TestIsValidLocale/#00 (0.00s)
+    --- PASS: TestIsValidLocale/invalid (0.00s)
+    --- PASS: TestIsValidLocale/123 (0.00s)
+=== RUN   TestGetPreferredLocale
+=== RUN   TestGetPreferredLocale/Explicit_language_takes_precedence
+=== RUN   TestGetPreferredLocale/Use_environment_when_no_explicit_language
+=== RUN   TestGetPreferredLocale/Empty_when_no_explicit_and_no_environment
+--- PASS: TestGetPreferredLocale (0.00s)
+    --- PASS: TestGetPreferredLocale/Explicit_language_takes_precedence (0.00s)
+    --- PASS: TestGetPreferredLocale/Use_environment_when_no_explicit_language (0.00s)
+    --- PASS: TestGetPreferredLocale/Empty_when_no_explicit_and_no_environment (0.00s)
+=== RUN   TestIntegrationWithInit
+--- PASS: TestIntegrationWithInit (0.00s)
+PASS
+coverage: 67.8% of statements
+ok  	github.com/danielmiessler/fabric/internal/i18n	(cached)	coverage: 67.8% of statements
+	github.com/danielmiessler/fabric/internal/log		coverage: 0.0% of statements
+=== RUN   TestConfigurable_AddSetting
+--- PASS: TestConfigurable_AddSetting (0.00s)
+=== RUN   TestConfigurable_Configure
+--- PASS: TestConfigurable_Configure (0.00s)
+=== RUN   TestConfigurable_Setup
+
+[TestConfigurable]
+--- PASS: TestConfigurable_Setup (0.00s)
+=== RUN   TestSetting_IsValid
+--- PASS: TestSetting_IsValid (0.00s)
+=== RUN   TestSetting_Configure
+--- PASS: TestSetting_Configure (0.00s)
+=== RUN   TestSetting_FillEnvFileContent
+--- PASS: TestSetting_FillEnvFileContent (0.00s)
+=== RUN   TestSetting_Print
+--- PASS: TestSetting_Print (0.00s)
+=== RUN   TestSetupQuestion_Ask
+
+[TestConfigurable] Enter test setting: (leave empty to skip):
+--- PASS: TestSetupQuestion_Ask (0.00s)
+=== RUN   TestSettings_IsConfigured
+--- PASS: TestSettings_IsConfigured (0.00s)
+=== RUN   TestSettings_Configure
+--- PASS: TestSettings_Configure (0.00s)
+=== RUN   TestSettings_FillEnvFileContent
+--- PASS: TestSettings_FillEnvFileContent (0.00s)
+PASS
+coverage: 50.4% of statements
+ok  	github.com/danielmiessler/fabric/internal/plugins	(cached)	coverage: 50.4% of statements
+=== RUN   TestNewVendorsModels
+--- PASS: TestNewVendorsModels (0.00s)
+=== RUN   TestFindVendorsByModelFirst
+--- PASS: TestFindVendorsByModelFirst (0.00s)
+=== RUN   TestFindVendorsByModel
+--- PASS: TestFindVendorsByModel (0.00s)
+=== RUN   TestPrintWithVendorMarksDefault
+--- PASS: TestPrintWithVendorMarksDefault (0.00s)
+PASS
+coverage: 23.8% of statements
+ok  	github.com/danielmiessler/fabric/internal/plugins/ai	(cached)	coverage: 23.8% of statements
+=== RUN   TestNewClient_DefaultInitialization
+--- PASS: TestNewClient_DefaultInitialization (0.00s)
+=== RUN   TestClientListModels
+--- PASS: TestClientListModels (0.00s)
+=== RUN   TestClient_ListModels_ReturnsCorrectModels
+--- PASS: TestClient_ListModels_ReturnsCorrectModels (0.00s)
+=== RUN   TestBuildMessageParams_WithoutSearch
+--- PASS: TestBuildMessageParams_WithoutSearch (0.00s)
+=== RUN   TestBuildMessageParams_WithSearch
+--- PASS: TestBuildMessageParams_WithSearch (0.00s)
+=== RUN   TestBuildMessageParams_WithSearchAndLocation
+--- PASS: TestBuildMessageParams_WithSearchAndLocation (0.00s)
+=== RUN   TestModelBetasConfiguration
+--- PASS: TestModelBetasConfiguration (0.00s)
+=== RUN   TestCitationFormatting
+--- PASS: TestCitationFormatting (0.00s)
+=== RUN   TestBuildMessageParams_DefaultValues
+--- PASS: TestBuildMessageParams_DefaultValues (0.00s)
+=== RUN   TestBuildMessageParams_ExplicitTopP
+--- PASS: TestBuildMessageParams_ExplicitTopP (0.00s)
+=== RUN   TestGeneratePKCE
+--- PASS: TestGeneratePKCE (0.00s)
+=== RUN   TestExchangeToken_Success
+    oauth_test.go:142: Skipping integration test - would need URL injection for proper testing
+--- SKIP: TestExchangeToken_Success (0.00s)
+=== RUN   TestRefreshToken_Success
+    oauth_test.go:176: Skipping integration test - would need URL injection for proper testing
+--- SKIP: TestRefreshToken_Success (0.00s)
+=== RUN   TestRefreshToken_NoRefreshToken
+--- PASS: TestRefreshToken_NoRefreshToken (0.00s)
+=== RUN   TestRefreshToken_NoStoredToken
+--- PASS: TestRefreshToken_NoStoredToken (0.00s)
+=== RUN   TestOAuthTransport_RoundTrip
+--- PASS: TestOAuthTransport_RoundTrip (0.00s)
+=== RUN   TestRunOAuthFlow_ExistingValidToken
+--- PASS: TestRunOAuthFlow_ExistingValidToken (0.00s)
+=== RUN   TestCreateTestToken
+--- PASS: TestCreateTestToken (0.00s)
+=== RUN   TestCreateExpiredToken
+--- PASS: TestCreateExpiredToken (0.00s)
+=== RUN   TestTokenExpirationLogic
+--- PASS: TestTokenExpirationLogic (0.00s)
+=== RUN   TestGetValidTokenWithValidToken
+--- PASS: TestGetValidTokenWithValidToken (0.00s)
+PASS
+coverage: 22.7% of statements
+ok  	github.com/danielmiessler/fabric/internal/plugins/ai/anthropic	(cached)	coverage: 22.7% of statements
+=== RUN   TestNewClientInitialization
+--- PASS: TestNewClientInitialization (0.00s)
+=== RUN   TestClientConfigure
+--- PASS: TestClientConfigure (0.00s)
+=== RUN   TestClientConfigureDefaultAPIVersion
+--- PASS: TestClientConfigureDefaultAPIVersion (0.00s)
+=== RUN   TestListModels
+--- PASS: TestListModels (0.00s)
+PASS
+coverage: 89.3% of statements
+ok  	github.com/danielmiessler/fabric/internal/plugins/ai/azure	(cached)	coverage: 89.3% of statements
+	github.com/danielmiessler/fabric/internal/plugins/ai/bedrock		coverage: 0.0% of statements
+=== RUN   TestListModels_ReturnsExpectedModel
+--- PASS: TestListModels_ReturnsExpectedModel (0.00s)
+=== RUN   TestSetup_ReturnsNil
+--- PASS: TestSetup_ReturnsNil (0.00s)
+=== RUN   TestSendStream_SendsMessages
+--- PASS: TestSendStream_SendsMessages (0.00s)
+PASS
+coverage: 62.1% of statements
+ok  	github.com/danielmiessler/fabric/internal/plugins/ai/dryrun	(cached)	coverage: 62.1% of statements
+	github.com/danielmiessler/fabric/internal/plugins/ai/exolab		coverage: 0.0% of statements
+=== RUN   TestBuildModelNameFull
+--- PASS: TestBuildModelNameFull (0.00s)
+=== RUN   TestExtractTextFromResponse
+--- PASS: TestExtractTextFromResponse (0.00s)
+=== RUN   TestExtractTextFromResponse_Nil
+--- PASS: TestExtractTextFromResponse_Nil (0.00s)
+=== RUN   TestExtractTextFromResponse_EmptyGroundingChunks
+--- PASS: TestExtractTextFromResponse_EmptyGroundingChunks (0.00s)
+=== RUN   TestBuildGenerateContentConfig_WithSearch
+--- PASS: TestBuildGenerateContentConfig_WithSearch (0.00s)
+=== RUN   TestBuildGenerateContentConfig_WithSearchAndLocation
+--- PASS: TestBuildGenerateContentConfig_WithSearchAndLocation (0.00s)
+=== RUN   TestBuildGenerateContentConfig_InvalidLocation
+--- PASS: TestBuildGenerateContentConfig_InvalidLocation (0.00s)
+=== RUN   TestBuildGenerateContentConfig_LanguageCodeNormalization
+--- PASS: TestBuildGenerateContentConfig_LanguageCodeNormalization (0.00s)
+=== RUN   TestBuildGenerateContentConfig_Thinking
+--- PASS: TestBuildGenerateContentConfig_Thinking (0.00s)
+=== RUN   TestBuildGenerateContentConfig_ThinkingTokens
+--- PASS: TestBuildGenerateContentConfig_ThinkingTokens (0.00s)
+=== RUN   TestCitationFormatting
+--- PASS: TestCitationFormatting (0.00s)
+=== RUN   TestConvertMessagesRoles
+--- PASS: TestConvertMessagesRoles (0.00s)
+=== RUN   TestIsTTSModel
+--- PASS: TestIsTTSModel (0.00s)
+=== RUN   TestGenerateWAVFile
+--- PASS: TestGenerateWAVFile (0.00s)
+PASS
+coverage: 42.1% of statements
+ok  	github.com/danielmiessler/fabric/internal/plugins/ai/gemini	(cached)	coverage: 42.1% of statements
+	github.com/danielmiessler/fabric/internal/plugins/ai/gemini_openai		coverage: 0.0% of statements
+	github.com/danielmiessler/fabric/internal/plugins/ai/lmstudio		coverage: 0.0% of statements
+	github.com/danielmiessler/fabric/internal/plugins/ai/ollama		coverage: 0.0% of statements
+=== RUN   TestShouldUseImageGeneration
+--- PASS: TestShouldUseImageGeneration (0.00s)
+=== RUN   TestAddImageGenerationTool
+--- PASS: TestAddImageGenerationTool (0.00s)
+=== RUN   TestBuildResponseParams_WithImageGeneration
+--- PASS: TestBuildResponseParams_WithImageGeneration (0.00s)
+=== RUN   TestBuildResponseParams_WithBothSearchAndImage
+--- PASS: TestBuildResponseParams_WithBothSearchAndImage (0.00s)
+=== RUN   TestGetOutputFormatFromExtension
+=== RUN   TestGetOutputFormatFromExtension/PNG_extension
+=== RUN   TestGetOutputFormatFromExtension/WEBP_extension
+=== RUN   TestGetOutputFormatFromExtension/JPG_extension
+=== RUN   TestGetOutputFormatFromExtension/JPEG_extension
+=== RUN   TestGetOutputFormatFromExtension/Uppercase_PNG_extension
+=== RUN   TestGetOutputFormatFromExtension/Mixed_case_JPEG_extension
+=== RUN   TestGetOutputFormatFromExtension/Empty_path
+=== RUN   TestGetOutputFormatFromExtension/No_extension
+=== RUN   TestGetOutputFormatFromExtension/Unsupported_extension
+--- PASS: TestGetOutputFormatFromExtension (0.00s)
+    --- PASS: TestGetOutputFormatFromExtension/PNG_extension (0.00s)
+    --- PASS: TestGetOutputFormatFromExtension/WEBP_extension (0.00s)
+    --- PASS: TestGetOutputFormatFromExtension/JPG_extension (0.00s)
+    --- PASS: TestGetOutputFormatFromExtension/JPEG_extension (0.00s)
+    --- PASS: TestGetOutputFormatFromExtension/Uppercase_PNG_extension (0.00s)
+    --- PASS: TestGetOutputFormatFromExtension/Mixed_case_JPEG_extension (0.00s)
+    --- PASS: TestGetOutputFormatFromExtension/Empty_path (0.00s)
+    --- PASS: TestGetOutputFormatFromExtension/No_extension (0.00s)
+    --- PASS: TestGetOutputFormatFromExtension/Unsupported_extension (0.00s)
+=== RUN   TestAddImageGenerationToolWithDynamicFormat
+=== RUN   TestAddImageGenerationToolWithDynamicFormat/PNG_file
+=== RUN   TestAddImageGenerationToolWithDynamicFormat/WEBP_file
+=== RUN   TestAddImageGenerationToolWithDynamicFormat/JPG_file
+=== RUN   TestAddImageGenerationToolWithDynamicFormat/JPEG_file
+--- PASS: TestAddImageGenerationToolWithDynamicFormat (0.00s)
+    --- PASS: TestAddImageGenerationToolWithDynamicFormat/PNG_file (0.00s)
+    --- PASS: TestAddImageGenerationToolWithDynamicFormat/WEBP_file (0.00s)
+    --- PASS: TestAddImageGenerationToolWithDynamicFormat/JPG_file (0.00s)
+    --- PASS: TestAddImageGenerationToolWithDynamicFormat/JPEG_file (0.00s)
+=== RUN   TestSupportsImageGeneration
+=== RUN   TestSupportsImageGeneration/gpt-4o_supports_image_generation
+=== RUN   TestSupportsImageGeneration/gpt-4o-mini_supports_image_generation
+=== RUN   TestSupportsImageGeneration/gpt-4.1_supports_image_generation
+=== RUN   TestSupportsImageGeneration/gpt-4.1-mini_supports_image_generation
+=== RUN   TestSupportsImageGeneration/gpt-4.1-nano_supports_image_generation
+=== RUN   TestSupportsImageGeneration/o3_supports_image_generation
+=== RUN   TestSupportsImageGeneration/o1_does_not_support_image_generation
+=== RUN   TestSupportsImageGeneration/o1-mini_does_not_support_image_generation
+=== RUN   TestSupportsImageGeneration/o3-mini_does_not_support_image_generation
+=== RUN   TestSupportsImageGeneration/gpt-4_does_not_support_image_generation
+=== RUN   TestSupportsImageGeneration/gpt-3.5-turbo_does_not_support_image_generation
+=== RUN   TestSupportsImageGeneration/empty_model_does_not_support_image_generation
+--- PASS: TestSupportsImageGeneration (0.00s)
+    --- PASS: TestSupportsImageGeneration/gpt-4o_supports_image_generation (0.00s)
+    --- PASS: TestSupportsImageGeneration/gpt-4o-mini_supports_image_generation (0.00s)
+    --- PASS: TestSupportsImageGeneration/gpt-4.1_supports_image_generation (0.00s)
+    --- PASS: TestSupportsImageGeneration/gpt-4.1-mini_supports_image_generation (0.00s)
+    --- PASS: TestSupportsImageGeneration/gpt-4.1-nano_supports_image_generation (0.00s)
+    --- PASS: TestSupportsImageGeneration/o3_supports_image_generation (0.00s)
+    --- PASS: TestSupportsImageGeneration/o1_does_not_support_image_generation (0.00s)
+    --- PASS: TestSupportsImageGeneration/o1-mini_does_not_support_image_generation (0.00s)
+    --- PASS: TestSupportsImageGeneration/o3-mini_does_not_support_image_generation (0.00s)
+    --- PASS: TestSupportsImageGeneration/gpt-4_does_not_support_image_generation (0.00s)
+    --- PASS: TestSupportsImageGeneration/gpt-3.5-turbo_does_not_support_image_generation (0.00s)
+    --- PASS: TestSupportsImageGeneration/empty_model_does_not_support_image_generation (0.00s)
+=== RUN   TestModelValidationLogic
+=== RUN   TestModelValidationLogic/Unsupported_model_with_image_file_should_return_validation_error
+=== RUN   TestModelValidationLogic/Supported_model_with_image_file_should_not_trigger_validation
+=== RUN   TestModelValidationLogic/Unsupported_model_without_image_file_should_not_trigger_validation
+--- PASS: TestModelValidationLogic (0.00s)
+    --- PASS: TestModelValidationLogic/Unsupported_model_with_image_file_should_return_validation_error (0.00s)
+    --- PASS: TestModelValidationLogic/Supported_model_with_image_file_should_not_trigger_validation (0.00s)
+    --- PASS: TestModelValidationLogic/Unsupported_model_without_image_file_should_not_trigger_validation (0.00s)
+=== RUN   TestAddImageGenerationToolWithUserParameters
+=== RUN   TestAddImageGenerationToolWithUserParameters/All_parameters_specified
+=== RUN   TestAddImageGenerationToolWithUserParameters/JPEG_with_compression
+=== RUN   TestAddImageGenerationToolWithUserParameters/Only_some_parameters_specified
+=== RUN   TestAddImageGenerationToolWithUserParameters/No_parameters_specified_(defaults)
+--- PASS: TestAddImageGenerationToolWithUserParameters (0.00s)
+    --- PASS: TestAddImageGenerationToolWithUserParameters/All_parameters_specified (0.00s)
+    --- PASS: TestAddImageGenerationToolWithUserParameters/JPEG_with_compression (0.00s)
+    --- PASS: TestAddImageGenerationToolWithUserParameters/Only_some_parameters_specified (0.00s)
+    --- PASS: TestAddImageGenerationToolWithUserParameters/No_parameters_specified_(defaults) (0.00s)
+=== RUN   TestBuildResponseRequestWithMaxTokens
+--- PASS: TestBuildResponseRequestWithMaxTokens (0.00s)
+=== RUN   TestBuildResponseRequestNoMaxTokens
+--- PASS: TestBuildResponseRequestNoMaxTokens (0.00s)
+=== RUN   TestBuildResponseParams_WithoutSearch
+--- PASS: TestBuildResponseParams_WithoutSearch (0.00s)
+=== RUN   TestBuildResponseParams_WithSearch
+--- PASS: TestBuildResponseParams_WithSearch (0.00s)
+=== RUN   TestBuildResponseParams_WithSearchAndLocation
+--- PASS: TestBuildResponseParams_WithSearchAndLocation (0.00s)
+=== RUN   TestCitationFormatting
+--- PASS: TestCitationFormatting (0.00s)
+PASS
+coverage: 24.1% of statements
+ok  	github.com/danielmiessler/fabric/internal/plugins/ai/openai	(cached)	coverage: 24.1% of statements
+=== RUN   TestCreateClient
+=== RUN   TestCreateClient/Existing_provider_-_Mistral
+=== RUN   TestCreateClient/Existing_provider_-_Groq
+=== RUN   TestCreateClient/Non-existent_provider
+--- PASS: TestCreateClient (0.00s)
+    --- PASS: TestCreateClient/Existing_provider_-_Mistral (0.00s)
+    --- PASS: TestCreateClient/Existing_provider_-_Groq (0.00s)
+    --- PASS: TestCreateClient/Non-existent_provider (0.00s)
+PASS
+coverage: 14.5% of statements
+ok  	github.com/danielmiessler/fabric/internal/plugins/ai/openai_compatible	(cached)	coverage: 14.5% of statements
+	github.com/danielmiessler/fabric/internal/plugins/ai/perplexity		coverage: 0.0% of statements
+?   	github.com/danielmiessler/fabric/internal/plugins/db	[no test files]
+=== RUN   TestContexts_GetContext
+--- PASS: TestContexts_GetContext (0.00s)
+=== RUN   TestDb_Configure
+--- PASS: TestDb_Configure (0.00s)
+=== RUN   TestDb_LoadEnvFile
+--- PASS: TestDb_LoadEnvFile (0.00s)
+=== RUN   TestDb_SaveEnv
+--- PASS: TestDb_SaveEnv (0.00s)
+=== RUN   TestApplyVariables
+=== RUN   TestApplyVariables/pattern_with_explicit_input_placement
+=== RUN   TestApplyVariables/pattern_without_input_variable_gets_input_appended
+--- PASS: TestApplyVariables (0.00s)
+    --- PASS: TestApplyVariables/pattern_with_explicit_input_placement (0.00s)
+    --- PASS: TestApplyVariables/pattern_without_input_variable_gets_input_appended (0.00s)
+=== RUN   TestGetApplyVariables
+=== RUN   TestGetApplyVariables/basic_pattern_with_variables_and_input
+=== RUN   TestGetApplyVariables/pattern_with_missing_variable
+=== RUN   TestGetApplyVariables/non-existent_pattern
+--- PASS: TestGetApplyVariables (0.00s)
+    --- PASS: TestGetApplyVariables/basic_pattern_with_variables_and_input (0.00s)
+    --- PASS: TestGetApplyVariables/pattern_with_missing_variable (0.00s)
+    --- PASS: TestGetApplyVariables/non-existent_pattern (0.00s)
+=== RUN   TestGetWithoutVariables
+--- PASS: TestGetWithoutVariables (0.00s)
+=== RUN   TestPatternsEntity_Save
+--- PASS: TestPatternsEntity_Save (0.00s)
+=== RUN   TestPatternsEntity_CustomPatterns
+--- PASS: TestPatternsEntity_CustomPatterns (0.00s)
+=== RUN   TestPatternsEntity_CustomPatternsEmpty
+--- PASS: TestPatternsEntity_CustomPatternsEmpty (0.00s)
+=== RUN   TestSessions_GetOrCreateSession
+Creating new session: testSession
+--- PASS: TestSessions_GetOrCreateSession (0.00s)
+=== RUN   TestSessions_SaveSession
+--- PASS: TestSessions_SaveSession (0.00s)
+=== RUN   TestStorage_SaveAndLoad
+--- PASS: TestStorage_SaveAndLoad (0.00s)
+=== RUN   TestStorage_Exists
+--- PASS: TestStorage_Exists (0.00s)
+=== RUN   TestStorage_Delete
+--- PASS: TestStorage_Delete (0.00s)
+PASS
+coverage: 51.9% of statements
+ok  	github.com/danielmiessler/fabric/internal/plugins/db/fsdb	(cached)	coverage: 51.9% of statements
+	github.com/danielmiessler/fabric/internal/plugins/strategy		coverage: 0.0% of statements
+=== RUN   TestDateTimePlugin
+=== RUN   TestDateTimePlugin/now_returns_RFC3339
+=== RUN   TestDateTimePlugin/time_returns_HH:MM:SS
+=== RUN   TestDateTimePlugin/unix_returns_timestamp
+=== RUN   TestDateTimePlugin/today_returns_YYYY-MM-DD
+=== RUN   TestDateTimePlugin/full_returns_long_date
+=== RUN   TestDateTimePlugin/relative_positive_hours
+=== RUN   TestDateTimePlugin/relative_negative_days
+=== RUN   TestDateTimePlugin/invalid_operation
+=== RUN   TestDateTimePlugin/empty_relative_value
+=== RUN   TestDateTimePlugin/invalid_relative_format
+--- PASS: TestDateTimePlugin (0.00s)
+    --- PASS: TestDateTimePlugin/now_returns_RFC3339 (0.00s)
+    --- PASS: TestDateTimePlugin/time_returns_HH:MM:SS (0.00s)
+    --- PASS: TestDateTimePlugin/unix_returns_timestamp (0.00s)
+    --- PASS: TestDateTimePlugin/today_returns_YYYY-MM-DD (0.00s)
+    --- PASS: TestDateTimePlugin/full_returns_long_date (0.00s)
+    --- PASS: TestDateTimePlugin/relative_positive_hours (0.00s)
+    --- PASS: TestDateTimePlugin/relative_negative_days (0.00s)
+    --- PASS: TestDateTimePlugin/invalid_operation (0.00s)
+    --- PASS: TestDateTimePlugin/empty_relative_value (0.00s)
+    --- PASS: TestDateTimePlugin/invalid_relative_format (0.00s)
+=== RUN   TestExtensionExecutor
+=== RUN   TestExtensionExecutor/StdoutExecution
+Executing command: /bin/sh -c /var/folders/tq/qf0kspkx6jv0fgdw0g_hwxvw0000gn/T/fabric-ext-executor-2729763002/test-script.sh stdout World
+=== RUN   TestExtensionExecutor/FileExecution
+=== RUN   TestExtensionExecutor/ExecutionErrors
+Executing command: /bin/sh -c /var/folders/tq/qf0kspkx6jv0fgdw0g_hwxvw0000gn/T/fabric-ext-executor-2729763002/test-script.sh invalid test
+--- PASS: TestExtensionExecutor (0.63s)
+    --- PASS: TestExtensionExecutor/StdoutExecution (0.62s)
+    --- PASS: TestExtensionExecutor/FileExecution (0.01s)
+    --- PASS: TestExtensionExecutor/ExecutionErrors (0.01s)
+=== RUN   TestFixedFileExtensionExecutor
+=== RUN   TestFixedFileExtensionExecutor/BasicFixedFile
+=== RUN   TestFixedFileExtensionExecutor/NoWorkDir
+=== RUN   TestFixedFileExtensionExecutor/CleanupBehavior
+=== RUN   TestFixedFileExtensionExecutor/ErrorCases
+=== RUN   TestFixedFileExtensionExecutor/MissingOutputFile
+--- PASS: TestFixedFileExtensionExecutor (0.10s)
+    --- PASS: TestFixedFileExtensionExecutor/BasicFixedFile (0.08s)
+    --- PASS: TestFixedFileExtensionExecutor/NoWorkDir (0.01s)
+    --- PASS: TestFixedFileExtensionExecutor/CleanupBehavior (0.01s)
+    --- PASS: TestFixedFileExtensionExecutor/ErrorCases (0.01s)
+    --- PASS: TestFixedFileExtensionExecutor/MissingOutputFile (0.00s)
+=== RUN   TestExtensionManager
+=== RUN   TestExtensionManager/RegisterExtension
+Successfully registered extension:
+Name: test-extension
+  Executable: /var/folders/tq/qf0kspkx6jv0fgdw0g_hwxvw0000gn/T/fabric-ext-test-4014983268/test-script.sh
+  Type: executable
+  Timeout: 30s
+  Description: Test extension
+  Version: 1.0.0
+  Operations:
+    echo:
+      Command Template: {{executable}} echo {{1}}
+=== RUN   TestExtensionManager/ListExtensions
+Extension: test-extension
+  Status: ENABLED
+  Executable: /var/folders/tq/qf0kspkx6jv0fgdw0g_hwxvw0000gn/T/fabric-ext-test-4014983268/test-script.sh
+  Type: executable
+  Timeout: 30s
+  Description: Test extension
+  Version: 1.0.0
+  Operations:
+    echo:
+      Command Template: {{executable}} echo {{1}}
+
+=== RUN   TestExtensionManager/ProcessExtension
+Executing command: /bin/sh -c /var/folders/tq/qf0kspkx6jv0fgdw0g_hwxvw0000gn/T/fabric-ext-test-4014983268/test-script.sh echo World
+=== RUN   TestExtensionManager/RemoveExtension
+--- PASS: TestExtensionManager (0.08s)
+    --- PASS: TestExtensionManager/RegisterExtension (0.00s)
+    --- PASS: TestExtensionManager/ListExtensions (0.00s)
+    --- PASS: TestExtensionManager/ProcessExtension (0.08s)
+    --- PASS: TestExtensionManager/RemoveExtension (0.00s)
+=== RUN   TestExtensionManagerErrors
+=== RUN   TestExtensionManagerErrors/RegisterNonexistentConfig
+=== RUN   TestExtensionManagerErrors/ProcessNonexistentExtension
+=== RUN   TestExtensionManagerErrors/RemoveNonexistentExtension
+--- PASS: TestExtensionManagerErrors (0.00s)
+    --- PASS: TestExtensionManagerErrors/RegisterNonexistentConfig (0.00s)
+    --- PASS: TestExtensionManagerErrors/ProcessNonexistentExtension (0.00s)
+    --- PASS: TestExtensionManagerErrors/RemoveNonexistentExtension (0.00s)
+=== RUN   TestExtensionManagerWithInvalidConfig
+=== RUN   TestExtensionManagerWithInvalidConfig/MissingExecutable
+=== RUN   TestExtensionManagerWithInvalidConfig/InvalidTimeout
+=== RUN   TestExtensionManagerWithInvalidConfig/EmptyName
+--- PASS: TestExtensionManagerWithInvalidConfig (0.00s)
+    --- PASS: TestExtensionManagerWithInvalidConfig/MissingExecutable (0.00s)
+    --- PASS: TestExtensionManagerWithInvalidConfig/InvalidTimeout (0.00s)
+    --- PASS: TestExtensionManagerWithInvalidConfig/EmptyName (0.00s)
+=== RUN   TestRegistryPersistence
+=== RUN   TestRegistryPersistence/SaveAndReload
+=== RUN   TestRegistryPersistence/HashVerification
+--- PASS: TestRegistryPersistence (0.00s)
+    --- PASS: TestRegistryPersistence/SaveAndReload (0.00s)
+    --- PASS: TestRegistryPersistence/HashVerification (0.00s)
+=== RUN   TestFetchPlugin
+=== RUN   TestFetchPlugin/invalid_URL
+=== RUN   TestFetchPlugin/malformed_URL
+--- PASS: TestFetchPlugin (0.00s)
+    --- PASS: TestFetchPlugin/invalid_URL (0.00s)
+    --- PASS: TestFetchPlugin/malformed_URL (0.00s)
+=== RUN   TestFilePlugin
+=== RUN   TestFilePlugin/read_file
+=== RUN   TestFilePlugin/tail_file
+=== RUN   TestFilePlugin/exists_true
+=== RUN   TestFilePlugin/exists_false
+=== RUN   TestFilePlugin/size
+=== RUN   TestFilePlugin/modified
+=== RUN   TestFilePlugin/read_non-existent
+=== RUN   TestFilePlugin/invalid_operation
+=== RUN   TestFilePlugin/path_traversal_attempt
+=== RUN   TestFilePlugin/file_too_large
+=== RUN   TestFilePlugin/invalid_tail_format
+=== RUN   TestFilePlugin/invalid_tail_count
+--- PASS: TestFilePlugin (0.00s)
+    --- PASS: TestFilePlugin/read_file (0.00s)
+    --- PASS: TestFilePlugin/tail_file (0.00s)
+    --- PASS: TestFilePlugin/exists_true (0.00s)
+    --- PASS: TestFilePlugin/exists_false (0.00s)
+    --- PASS: TestFilePlugin/size (0.00s)
+    --- PASS: TestFilePlugin/modified (0.00s)
+    --- PASS: TestFilePlugin/read_non-existent (0.00s)
+    --- PASS: TestFilePlugin/invalid_operation (0.00s)
+    --- PASS: TestFilePlugin/path_traversal_attempt (0.00s)
+    --- PASS: TestFilePlugin/file_too_large (0.00s)
+    --- PASS: TestFilePlugin/invalid_tail_format (0.00s)
+    --- PASS: TestFilePlugin/invalid_tail_count (0.00s)
+=== RUN   TestComputeHash
+=== RUN   TestComputeHash/valid_file
+=== RUN   TestComputeHash/nonexistent_file
+--- PASS: TestComputeHash (0.00s)
+    --- PASS: TestComputeHash/valid_file (0.00s)
+    --- PASS: TestComputeHash/nonexistent_file (0.00s)
+=== RUN   TestComputeStringHash
+=== RUN   TestComputeStringHash/empty_string
+=== RUN   TestComputeStringHash/simple_string
+=== RUN   TestComputeStringHash/longer_string_with_spaces
+--- PASS: TestComputeStringHash (0.00s)
+    --- PASS: TestComputeStringHash/empty_string (0.00s)
+    --- PASS: TestComputeStringHash/simple_string (0.00s)
+    --- PASS: TestComputeStringHash/longer_string_with_spaces (0.00s)
+=== RUN   TestHashConsistency
+--- PASS: TestHashConsistency (0.00s)
+=== RUN   TestSysPlugin
+=== RUN   TestSysPlugin/hostname_returns_valid_name
+=== RUN   TestSysPlugin/user_returns_current_user
+=== RUN   TestSysPlugin/os_returns_valid_OS
+=== RUN   TestSysPlugin/arch_returns_valid_architecture
+=== RUN   TestSysPlugin/env_returns_environment_variable
+=== RUN   TestSysPlugin/pwd_returns_valid_directory
+=== RUN   TestSysPlugin/home_returns_valid_home_directory
+=== RUN   TestSysPlugin/unknown_operation
+=== RUN   TestSysPlugin/env_without_variable
+=== RUN   TestSysPlugin/env_with_non-existent_variable
+--- PASS: TestSysPlugin (0.00s)
+    --- PASS: TestSysPlugin/hostname_returns_valid_name (0.00s)
+    --- PASS: TestSysPlugin/user_returns_current_user (0.00s)
+    --- PASS: TestSysPlugin/os_returns_valid_OS (0.00s)
+    --- PASS: TestSysPlugin/arch_returns_valid_architecture (0.00s)
+    --- PASS: TestSysPlugin/env_returns_environment_variable (0.00s)
+    --- PASS: TestSysPlugin/pwd_returns_valid_directory (0.00s)
+    --- PASS: TestSysPlugin/home_returns_valid_home_directory (0.00s)
+    --- PASS: TestSysPlugin/unknown_operation (0.00s)
+    --- PASS: TestSysPlugin/env_without_variable (0.00s)
+    --- PASS: TestSysPlugin/env_with_non-existent_variable (0.00s)
+=== RUN   TestApplyTemplate
+=== RUN   TestApplyTemplate/simple_variable
+=== RUN   TestApplyTemplate/multiple_variables
+=== RUN   TestApplyTemplate/special_input_variable
+=== RUN   TestApplyTemplate/nested_variables
+=== RUN   TestApplyTemplate/simple_text_plugin
+=== RUN   TestApplyTemplate/text_plugin_with_variable
+=== RUN   TestApplyTemplate/plugin_with_dynamic_operation
+=== RUN   TestApplyTemplate/multiple_plugins
+=== RUN   TestApplyTemplate/nested_plugins
+=== RUN   TestApplyTemplate/missing_variable
+=== RUN   TestApplyTemplate/unknown_plugin
+=== RUN   TestApplyTemplate/unknown_plugin_operation
+=== RUN   TestApplyTemplate/nested_plugin_error
+=== RUN   TestApplyTemplate/empty_template
+=== RUN   TestApplyTemplate/no_substitutions_needed
+--- PASS: TestApplyTemplate (0.00s)
+    --- PASS: TestApplyTemplate/simple_variable (0.00s)
+    --- PASS: TestApplyTemplate/multiple_variables (0.00s)
+    --- PASS: TestApplyTemplate/special_input_variable (0.00s)
+    --- PASS: TestApplyTemplate/nested_variables (0.00s)
+    --- PASS: TestApplyTemplate/simple_text_plugin (0.00s)
+    --- PASS: TestApplyTemplate/text_plugin_with_variable (0.00s)
+    --- PASS: TestApplyTemplate/plugin_with_dynamic_operation (0.00s)
+    --- PASS: TestApplyTemplate/multiple_plugins (0.00s)
+    --- PASS: TestApplyTemplate/nested_plugins (0.00s)
+    --- PASS: TestApplyTemplate/missing_variable (0.00s)
+    --- PASS: TestApplyTemplate/unknown_plugin (0.00s)
+    --- PASS: TestApplyTemplate/unknown_plugin_operation (0.00s)
+    --- PASS: TestApplyTemplate/nested_plugin_error (0.00s)
+    --- PASS: TestApplyTemplate/empty_template (0.00s)
+    --- PASS: TestApplyTemplate/no_substitutions_needed (0.00s)
+=== RUN   TestTextPlugin
+=== RUN   TestTextPlugin/upper_basic
+=== RUN   TestTextPlugin/upper_mixed_case
+=== RUN   TestTextPlugin/lower_basic
+=== RUN   TestTextPlugin/lower_mixed_case
+=== RUN   TestTextPlugin/title_basic
+=== RUN   TestTextPlugin/title_with_apostrophe
+=== RUN   TestTextPlugin/trim_spaces
+=== RUN   TestTextPlugin/trim_newlines
+=== RUN   TestTextPlugin/empty_value
+=== RUN   TestTextPlugin/unknown_operation
+--- PASS: TestTextPlugin (0.00s)
+    --- PASS: TestTextPlugin/upper_basic (0.00s)
+    --- PASS: TestTextPlugin/upper_mixed_case (0.00s)
+    --- PASS: TestTextPlugin/lower_basic (0.00s)
+    --- PASS: TestTextPlugin/lower_mixed_case (0.00s)
+    --- PASS: TestTextPlugin/title_basic (0.00s)
+    --- PASS: TestTextPlugin/title_with_apostrophe (0.00s)
+    --- PASS: TestTextPlugin/trim_spaces (0.00s)
+    --- PASS: TestTextPlugin/trim_newlines (0.00s)
+    --- PASS: TestTextPlugin/empty_value (0.00s)
+    --- PASS: TestTextPlugin/unknown_operation (0.00s)
+PASS
+coverage: 61.5% of statements
+ok  	github.com/danielmiessler/fabric/internal/plugins/template	(cached)	coverage: 61.5% of statements
+	github.com/danielmiessler/fabric/internal/server		coverage: 0.0% of statements
+	github.com/danielmiessler/fabric/internal/tools		coverage: 0.0% of statements
+=== RUN   TestHtmlReadability
+=== RUN   TestHtmlReadability/Empty_HTML
+=== RUN   TestHtmlReadability/HTML_with_text
+=== RUN   TestHtmlReadability/HTML_with_nested_tags
+=== RUN   TestHtmlReadability/HTML_missing_tags
+--- PASS: TestHtmlReadability (0.00s)
+    --- PASS: TestHtmlReadability/Empty_HTML (0.00s)
+    --- PASS: TestHtmlReadability/HTML_with_text (0.00s)
+    --- PASS: TestHtmlReadability/HTML_with_nested_tags (0.00s)
+    --- PASS: TestHtmlReadability/HTML_missing_tags (0.00s)
+PASS
+coverage: 83.3% of statements
+ok  	github.com/danielmiessler/fabric/internal/tools/converter	(cached)	coverage: 83.3% of statements
+=== RUN   TestNewCustomPatterns
+--- PASS: TestNewCustomPatterns (0.00s)
+=== RUN   TestCustomPatterns_Configure
+--- PASS: TestCustomPatterns_Configure (0.00s)
+=== RUN   TestCustomPatterns_ConfigureWithTempDir
+--- PASS: TestCustomPatterns_ConfigureWithTempDir (0.00s)
+=== RUN   TestCustomPatterns_IsConfigured
+Warning: Could not create custom patterns directory /some/path: mkdir /some: read-only file system
+--- PASS: TestCustomPatterns_IsConfigured (0.00s)
+PASS
+coverage: 100.0% of statements
+ok  	github.com/danielmiessler/fabric/internal/tools/custom_patterns	(cached)	coverage: 100.0% of statements
+	github.com/danielmiessler/fabric/internal/tools/githelper		coverage: 0.0% of statements
+	github.com/danielmiessler/fabric/internal/tools/jina		coverage: 0.0% of statements
+	github.com/danielmiessler/fabric/internal/tools/lang		coverage: 0.0% of statements
+=== RUN   TestNewNotificationManager
+--- PASS: TestNewNotificationManager (0.00s)
+=== RUN   TestNotificationManagerIsAvailable
+--- PASS: TestNotificationManagerIsAvailable (0.00s)
+=== RUN   TestNotificationManagerSend
+--- PASS: TestNotificationManagerSend (0.08s)
+=== RUN   TestTerminalNotifierProvider
+    notifications_test.go:45: terminal-notifier available: false
+--- PASS: TestTerminalNotifierProvider (0.00s)
+=== RUN   TestOSAScriptProvider
+--- PASS: TestOSAScriptProvider (0.07s)
+=== RUN   TestNotifySendProvider
+    notifications_test.go:76: Skipping Linux notify-send test on non-Linux platform
+--- SKIP: TestNotifySendProvider (0.00s)
+=== RUN   TestPowerShellProvider
+    notifications_test.go:95: Skipping Windows PowerShell test on non-Windows platform
+--- SKIP: TestPowerShellProvider (0.00s)
+=== RUN   TestNoopProvider
+--- PASS: TestNoopProvider (0.00s)
+=== RUN   TestProviderIsAvailable
+=== RUN   TestProviderIsAvailable/TerminalNotifier
+=== RUN   TestProviderIsAvailable/OSAScript
+=== RUN   TestProviderIsAvailable/NotifySend
+=== RUN   TestProviderIsAvailable/PowerShell
+--- PASS: TestProviderIsAvailable (0.00s)
+    --- PASS: TestProviderIsAvailable/TerminalNotifier (0.00s)
+    --- PASS: TestProviderIsAvailable/OSAScript (0.00s)
+    --- PASS: TestProviderIsAvailable/NotifySend (0.00s)
+    --- PASS: TestProviderIsAvailable/PowerShell (0.00s)
+=== RUN   TestSendWithSpecialCharacters
+--- PASS: TestSendWithSpecialCharacters (0.07s)
+PASS
+coverage: 65.7% of statements
+ok  	github.com/danielmiessler/fabric/internal/tools/notifications	(cached)	coverage: 65.7% of statements
+=== RUN   TestParseTimestampToSeconds
+--- PASS: TestParseTimestampToSeconds (0.00s)
+=== RUN   TestShouldIncludeRepeat
+--- PASS: TestShouldIncludeRepeat (0.00s)
+PASS
+coverage: 8.2% of statements
+ok  	github.com/danielmiessler/fabric/internal/tools/youtube	(cached)	coverage: 8.2% of statements
+=== RUN   TestOAuthToken_IsExpired
+=== RUN   TestOAuthToken_IsExpired/token_not_expired
+=== RUN   TestOAuthToken_IsExpired/token_expired
+=== RUN   TestOAuthToken_IsExpired/token_expires_within_buffer
+=== RUN   TestOAuthToken_IsExpired/zero_expiry_time
+--- PASS: TestOAuthToken_IsExpired (0.00s)
+    --- PASS: TestOAuthToken_IsExpired/token_not_expired (0.00s)
+    --- PASS: TestOAuthToken_IsExpired/token_expired (0.00s)
+    --- PASS: TestOAuthToken_IsExpired/token_expires_within_buffer (0.00s)
+    --- PASS: TestOAuthToken_IsExpired/zero_expiry_time (0.00s)
+=== RUN   TestOAuthStorage_SaveAndLoadToken
+--- PASS: TestOAuthStorage_SaveAndLoadToken (0.00s)
+=== RUN   TestOAuthStorage_LoadNonExistentToken
+--- PASS: TestOAuthStorage_LoadNonExistentToken (0.00s)
+=== RUN   TestOAuthStorage_DeleteToken
+--- PASS: TestOAuthStorage_DeleteToken (0.00s)
+=== RUN   TestOAuthStorage_HasValidToken
+--- PASS: TestOAuthStorage_HasValidToken (0.00s)
+=== RUN   TestOAuthStorage_GetTokenPath
+--- PASS: TestOAuthStorage_GetTokenPath (0.00s)
+PASS
+coverage: 18.1% of statements
+ok  	github.com/danielmiessler/fabric/internal/util	(cached)	coverage: 18.1% of statements

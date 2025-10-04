@@ -1,52 +1,35 @@
 <script>
   import '../app.postcss';
-  import { AppShell } from '@skeletonlabs/skeleton';
   import ToastContainer from '$lib/components/ui/toast/ToastContainer.svelte';
+  import AppHeader from '$lib/components/layout/AppHeader.svelte';
+  import SessionSidebar from '$lib/components/layout/SessionSidebar.svelte';
+  import ContextPanel from '$lib/components/layout/ContextPanel.svelte';
   import Footer from '$lib/components/home/Footer.svelte';
-  import Header from '$lib/components/home/Header.svelte';
-  import { initializeStores, getDrawerStore } from '@skeletonlabs/skeleton';
-  import { page } from '$app/stores';
-  import { fly } from 'svelte/transition';
   import { onMount } from 'svelte';
   import { toastStore } from '$lib/store/toast-store';
+  import { initializeStores } from '@skeletonlabs/skeleton';
 
-  // Initialize stores
   initializeStores();
-  const drawerStore = getDrawerStore();
 
   onMount(() => {
-    toastStore.info("👋 Welcome to the site! Tell people about yourself and what you do.");
+    toastStore.info('Welcome to Fabric — connect your workflows and share insights.');
   });
 </script>
 
-<ToastContainer />
-
-{#key $page.url.pathname}
-  <AppShell class="relative">
-    <div class="fixed inset-0 bg-gradient-to-br from-primary-500/20 via-tertiary-500/20 to-secondary-500/20 -z-10"></div>
-    <svelte:fragment slot="header">
-      <Header />
-
-      <div class="h-2 py-4">
-    </svelte:fragment>
-    <div 
-      in:fly={{ duration: 500, delay: 100, y: 100 }}
-    >
-      <main class="main m-auto">
-        <slot />
+<div class="relative min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-foreground">
+  <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(59,130,246,0.12),_transparent_55%)]"></div>
+  <div class="relative z-10 flex min-h-screen flex-col">
+    <ToastContainer />
+    <AppHeader />
+    <div class="flex flex-1 overflow-hidden">
+      <SessionSidebar />
+      <main class="flex-1 overflow-hidden">
+        <div class="h-full overflow-y-auto px-6 py-8">
+          <slot />
+        </div>
       </main>
+      <ContextPanel />
     </div>
-
-    <svelte:fragment slot="footer">
-      <Footer />
-    </svelte:fragment>
-  </AppShell>
-{/key}
-
-<style>
-main {
-  padding: 2rem;
-  box-sizing: border-box;
-  overflow-y: auto;
-}
-</style>
+    <Footer />
+  </div>
+</div>

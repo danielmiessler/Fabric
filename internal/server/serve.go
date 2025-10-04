@@ -30,6 +30,9 @@ func Serve(registry *core.PluginRegistry, address string, apiKey string) (err er
 	NewConfigHandler(r, fabricDb)
 	NewModelsHandler(r, registry.VendorManager)
 	NewStrategiesHandler(r)
+	if registry.Supabase != nil {
+		NewSupabaseHandler(r, registry.Supabase)
+	}
 
 	// Start server
 	err = r.Run(address)

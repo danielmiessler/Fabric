@@ -2,6 +2,7 @@ package core
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 	"io"
 	"os"
@@ -30,6 +31,7 @@ import (
 	"github.com/danielmiessler/fabric/internal/plugins"
 	"github.com/danielmiessler/fabric/internal/plugins/ai"
 	"github.com/danielmiessler/fabric/internal/plugins/db/fsdb"
+	"github.com/danielmiessler/fabric/internal/plugins/db/supadb"
 	"github.com/danielmiessler/fabric/internal/plugins/template"
 	"github.com/danielmiessler/fabric/internal/tools"
 	"github.com/danielmiessler/fabric/internal/tools/custom_patterns"
@@ -81,6 +83,15 @@ func NewPluginRegistry(db *fsdb.Db) (ret *PluginRegistry, err error) {
 		Language:       lang.NewLanguage(),
 		Jina:           jina.NewClient(),
 		Strategies:     strategy.NewStrategiesManager(),
+	}
+
+	if supabaseClient, supErr := supadb.NewClientFromEnv(); supErr == nil {
+		ret.Supabase = supabaseClient
+		if pingErr := supabaseClient.Ping(context.Background()); pingErr != nil {
+			debuglog.Log("Supabase ping failed: %s\n", pingErr)
+		}
+	} else if os.Getenv("SUPABASE_URL") != "" || os.Getenv("SUPABASE_SERVICE_ROLE_KEY") != "" {
+		debuglog.Log("Supabase initialization error: %s\n", supErr)
 	}
 
 	var homedir string
@@ -141,6 +152,8 @@ func (o *PluginRegistry) ListVendors(out io.Writer) error {
 
 type PluginRegistry struct {
 	Db *fsdb.Db
+
+	Supabase *supadb.Client
 
 	VendorManager      *ai.VendorsManager
 	VendorsAll         *ai.VendorsManager

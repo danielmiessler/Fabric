@@ -1,0 +1,46 @@
+version: "3.9"
+
+services:
+  supabase:
+    image: supabase/postgres:15.1.0
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: ${SUPABASE_DB_PASSWORD:-fabric-dev}
+      POSTGRES_USER: supabase_admin
+      POSTGRES_DB: fabric
+    ports:
+      - "5432:5432"
+    volumes:
+      - supabase-data:/var/lib/postgresql/data
+
+  api:
+    build:
+      context: .
+      dockerfile: docker/api.Dockerfile
+    environment:
+      SUPABASE_URL: ${SUPABASE_URL:-}
+      SUPABASE_SERVICE_ROLE_KEY: ${SUPABASE_SERVICE_ROLE_KEY:-}
+      FABRIC_API_KEY: ${FABRIC_API_KEY:-}
+    ports:
+      - "8080:8080"
+    depends_on:
+      - supabase
+    volumes:
+      - fabric-data:/home/fabric/.config/fabric
+
+  web:
+    build:
+      context: ./web
+      dockerfile: ../docker/web.Dockerfile
+    environment:
+      VITE_API_BASE_URL: ${VITE_API_BASE_URL:-http://api:8080}
+      VITE_SUPABASE_URL: ${VITE_SUPABASE_URL:-}
+      VITE_SUPABASE_ANON_KEY: ${VITE_SUPABASE_ANON_KEY:-}
+    ports:
+      - "5173:5173"
+    depends_on:
+      - api
+
+volumes:
+  fabric-data:
+  supabase-data:

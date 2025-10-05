@@ -5,6 +5,7 @@
   import { chatState, clearMessages, revertLastMessage, currentSession, messageStore } from '$lib/store/chat-store';
   import { Button } from '$lib/components/ui/button';
   import { toastService } from '$lib/services/toast-service';
+  import Tooltip from '$lib/components/ui/tooltip/Tooltip.svelte';
   
   let sessionsList: string[] = [];
   $: sessionName = $currentSession;
@@ -16,7 +17,6 @@
     try {
       await sessionAPI.loadSessions();
     } catch (error) {
-      console.error('Failed to load sessions:', error);
     }
   });
   
@@ -24,7 +24,6 @@
     try {
       await sessionAPI.exportToFile($chatState.messages);
     } catch (error) {
-      console.error('Failed to save session:', error);
     }
   }
 
@@ -33,7 +32,6 @@
       const messages = await sessionAPI.importFromFile();
       messageStore.set(messages);
     } catch (error) {
-      console.error('Failed to load session:', error);
     }
   }
 
@@ -49,20 +47,34 @@
 
 <div class="p-1 m-1 mr-2">
   <div class="flex gap-2">
-    <Button variant="outline" size="icon" aria-label="Revert Last Message" on:click={revertLastMessage}>
+    <Tooltip text="Revert Last Message" position="top">
+      <Button variant="outline" size="icon" aria-label="Revert Last Message" on:click={revertLastMessage}>
         <RotateCcw class="h-4 w-4" />
-    </Button>
-    <Button variant="outline" size="icon" aria-label="Clear Chat" on:click={clearMessages}>
+      </Button>
+    </Tooltip>
+    
+    <Tooltip text="Clear Chat" position="top">
+      <Button variant="outline" size="icon" aria-label="Clear Chat" on:click={clearMessages}>
         <Trash2 class="h-4 w-4" />
-    </Button>
-    <Button variant="outline" size="icon" aria-label="Copy Chat" on:click={copyToClipboard}>
+      </Button>
+    </Tooltip>
+    
+    <Tooltip text="Copy Chat to Clipboard" position="top">
+      <Button variant="outline" size="icon" aria-label="Copy Chat" on:click={copyToClipboard}>
         <Copy class="h-4 w-4" />
-    </Button>
-    <Button variant="outline" size="icon" aria-label="Load Session" on:click={loadSession}>
+      </Button>
+    </Tooltip>
+    
+    <Tooltip text="Load Session from File" position="top">
+      <Button variant="outline" size="icon" aria-label="Load Session" on:click={loadSession}>
         <FileIcon class="h-4 w-4" />
-    </Button>
-    <Button variant="outline" size="icon" aria-label="Save Session" on:click={saveSession}>
+      </Button>
+    </Tooltip>
+    
+    <Tooltip text="Save Session to File" position="top">
+      <Button variant="outline" size="icon" aria-label="Save Session" on:click={saveSession}>
         <Save class="h-4 w-4" />
-    </Button>
+      </Button>
+    </Tooltip>
   </div>
 </div>

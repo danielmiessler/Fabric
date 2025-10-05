@@ -49,10 +49,12 @@ func NewClient() (ret *Client) {
 		string(anthropic.ModelClaude_3_Opus_20240229), string(anthropic.ModelClaude_3_Haiku_20240307),
 		string(anthropic.ModelClaudeOpus4_20250514), string(anthropic.ModelClaudeSonnet4_20250514),
 		string(anthropic.ModelClaudeOpus4_1_20250805),
+		string(anthropic.ModelClaudeSonnet4_5),
 	}
 
 	ret.modelBetas = map[string][]string{
 		string(anthropic.ModelClaudeSonnet4_20250514): {"context-1m-2025-08-07"},
+		string(anthropic.ModelClaudeSonnet4_5):        {"context-1m-2025-08-07"},
 	}
 
 	return

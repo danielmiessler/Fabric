@@ -132,7 +132,7 @@ func TestPortugueseVariantDistinction(t *testing.T) {
 	}
 
 	// Check a key that should differ between variants
-	// "output_to_file" should be "Saída para arquivo" in pt-BR and "Saída para ficheiro" in pt-PT
+	// "output_to_file" should be "Exportar para arquivo" in pt-BR and "Saída para ficheiro" in pt-PT
 	msgBR := localizerBR.MustLocalize(&goi18n.LocalizeConfig{MessageID: "output_to_file"})
 	msgPT := localizerPT.MustLocalize(&goi18n.LocalizeConfig{MessageID: "output_to_file"})
 
@@ -141,8 +141,8 @@ func TestPortugueseVariantDistinction(t *testing.T) {
 	}
 
 	// Verify specific expected values
-	if msgBR != "Saída para arquivo" {
-		t.Errorf("pt-BR 'output_to_file' = %q; want 'Saída para arquivo'", msgBR)
+	if msgBR != "Exportar para arquivo" {
+		t.Errorf("pt-BR 'output_to_file' = %q; want 'Exportar para arquivo'", msgBR)
 	}
 	if msgPT != "Saída para ficheiro" {
 		t.Errorf("pt-PT 'output_to_file' = %q; want 'Saída para ficheiro'", msgPT)
@@ -169,7 +169,7 @@ func TestBackwardCompatibility(t *testing.T) {
 		t.Errorf("'pt' and 'pt-BR' returned different translations: %q vs %q", msgPT, msgBR)
 	}
 
-	if msgPT != "Saída para arquivo" {
-		t.Errorf("'pt' did not default to Brazilian Portuguese. Got %q, want 'Saída para arquivo'", msgPT)
+	if msgPT != "Exportar para arquivo" {
+		t.Errorf("'pt' did not default to Brazilian Portuguese. Got %q, want 'Exportar para arquivo'", msgPT)
 	}
 }

@@ -3,7 +3,7 @@ module github.com/danielmiessler/fabric
 go 1.25.1
 
 require (
-	github.com/anthropics/anthropic-sdk-go v1.12.0
+	github.com/anthropics/anthropic-sdk-go v1.13.0
 	github.com/atotto/clipboard v0.1.4
 	github.com/aws/aws-sdk-go-v2 v1.39.0
 	github.com/aws/aws-sdk-go-v2/config v1.31.8

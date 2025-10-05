@@ -32,8 +32,8 @@ schema = 3
     version = "v1.3.3"
     hash = "sha256-jv7ZshpSd7FZzKKN6hqlUgiR8C3y85zNIS/hq7g76Ho="
   [mod."github.com/anthropics/anthropic-sdk-go"]
-    version = "v1.12.0"
-    hash = "sha256-Oy6/7s6KHguTg2fmVGD3m0HxcaqQn1mDCUMwD5vq/eE="
+    version = "v1.13.0"
+    hash = "sha256-Mbi37aubaObndySkfO3tE6c8bUJaJugG1E8IM4AxW84="
   [mod."github.com/araddon/dateparse"]
     version = "v0.0.0-20210429162001-6b43995a97de"
     hash = "sha256-UuX84naeRGMsFOgIgRoBHG5sNy1CzBkWPKmd6VbLwFw="

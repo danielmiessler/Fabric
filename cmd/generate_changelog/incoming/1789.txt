@@ -1,0 +1,3 @@
+### PR [#1789](https://github.com/danielmiessler/Fabric/pull/1789) by [JasonToups](https://github.com/JasonToups): Bug #1790: Tooltips Not rendering / Fix: Tooltip Update and added to Chat UI
+
+- Fix: updating Tooltip positioning and styling to render Visible Tooltips

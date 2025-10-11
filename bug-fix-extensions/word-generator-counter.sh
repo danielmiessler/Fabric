@@ -19,7 +19,9 @@ sed -i '' 's|/usr/local/bin/word-generator.py|/Users/ourdecisions/.config/fabric
 
 echo "Word-generator extension has been updated successfully!"
 
-echo "Generate with Word-generator"
+echo "Generate with Word-generator and it works as expected:"
 
-# Run (generate 3 random words)
-echo "{{ext:word-generator:generate:3}}" | fabric
+# Run (generate 3 random words) with debug logging
+echo "{{ext:word-generator:generate:3}}" | fabric --debug=3
+
+####### Now we will add word-counter extension #########

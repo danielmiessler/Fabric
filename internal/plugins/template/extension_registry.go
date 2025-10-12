@@ -140,6 +140,11 @@ func (r *ExtensionRegistry) Register(configPath string) error {
 		return fmt.Errorf("failed to hash executable: %w", err)
 	}
 
+	// Validate full extension definition (ensures operations and cmd_template present)
+	if err := r.validateExtensionDefinition(&ext); err != nil {
+		return fmt.Errorf("invalid extension definition: %w", err)
+	}
+
 	// Store entry
 	r.registry.Extensions[ext.Name] = &RegistryEntry{
 		ConfigPath:     absPath,

@@ -10,6 +10,10 @@ import (
 	debuglog "github.com/danielmiessler/fabric/internal/log"
 )
 
+// inputSentinel is used to temporarily replace {{input}} during template processing
+// to prevent recursive variable resolution
+const inputSentinel = "__FABRIC_INPUT_SENTINEL_TOKEN__"
+
 var (
 	textPlugin     = &TextPlugin{}
 	datetimePlugin = &DateTimePlugin{}
@@ -37,152 +41,65 @@ func debugf(format string, a ...interface{}) {
 	debuglog.Debug(debuglog.Trace, format, a...)
 }
 
-func ApplyTemplate(content string, variables map[string]string, input string) (string, error) {
-
-	var missingVars []string
-	r := regexp.MustCompile(`\{\{([^{}]+)\}\}`)
-
-	debugf("Starting template processing\n")
-	for strings.Contains(content, "{{") {
-		matches := r.FindAllStringSubmatch(content, -1)
-		if len(matches) == 0 {
-			break
+// matchTriple extracts the first two required and optional third value from a token
+// pattern of the form {{type:part1:part2(:part3)?}} returning part1, part2, part3 (possibly empty)
+func matchTriple(r *regexp.Regexp, full string) (string, string, string, bool) {
+	parts := r.FindStringSubmatch(full)
+	if len(parts) >= 3 {
+		v := ""
+		if len(parts) == 4 {
+			v = parts[3]
 		}
-
-		replaced := false
-		for _, match := range matches {
-			fullMatch := match[0]
-			varName := match[1]
-
-			// Check if this is a plugin call
-			if strings.HasPrefix(varName, "plugin:") {
-				pluginMatches := pluginPattern.FindStringSubmatch(fullMatch)
-				if len(pluginMatches) >= 3 {
-					namespace := pluginMatches[1]
-					operation := pluginMatches[2]
-					value := ""
-					if len(pluginMatches) == 4 {
-						value = pluginMatches[3]
-					}
-
-					debugf("\nPlugin call:\n")
-					debugf("  Namespace: %s\n", namespace)
-					debugf("  Operation: %s\n", operation)
-					debugf("  Value: %s\n", value)
-
-					var result string
-					var err error
-
-					switch namespace {
-					case "text":
-						debugf("Executing text plugin\n")
-						result, err = textPlugin.Apply(operation, value)
-					case "datetime":
-						debugf("Executing datetime plugin\n")
-						result, err = datetimePlugin.Apply(operation, value)
-					case "file":
-						debugf("Executing file plugin\n")
-						result, err = filePlugin.Apply(operation, value)
-						debugf("File plugin result: %#v\n", result)
-					case "fetch":
-						debugf("Executing fetch plugin\n")
-						result, err = fetchPlugin.Apply(operation, value)
-					case "sys":
-						debugf("Executing sys plugin\n")
-						result, err = sysPlugin.Apply(operation, value)
-					default:
-						return "", fmt.Errorf("unknown plugin namespace: %s", namespace)
-					}
-
-					if err != nil {
-						debugf("Plugin error: %v\n", err)
-						return "", fmt.Errorf("plugin %s error: %v", namespace, err)
-					}
-
-					debugf("Plugin result: %s\n", result)
-					content = strings.ReplaceAll(content, fullMatch, result)
-					debugf("Content after replacement: %s\n", content)
-					continue
-				}
-			}
-
-			if pluginMatches := extensionPattern.FindStringSubmatch(fullMatch); len(pluginMatches) >= 3 {
-				name := pluginMatches[1]
-				operation := pluginMatches[2]
-				value := ""
-				if len(pluginMatches) == 4 {
-					value = pluginMatches[3]
-				}
-
-				debugf("\nExtension call:\n")
-				debugf("  Name: %s\n", name)
-				debugf("  Operation: %s\n", operation)
-				debugf("  Value: %s\n", value)
-
-				result, err := extensionManager.ProcessExtension(name, operation, value)
-				if err != nil {
-					return "", fmt.Errorf("extension %s error: %v", name, err)
-				}
-
-				content = strings.ReplaceAll(content, fullMatch, result)
-				replaced = true
-				continue
-			}
-
-			// Handle regular variables and input
-			debugf("Processing variable: %s\n", varName)
-			if varName == "input" {
-				debugf("Replacing {{input}}\n")
-				replaced = true
-				content = strings.ReplaceAll(content, fullMatch, input)
-			} else {
-				if val, ok := variables[varName]; !ok {
-					debugf("Missing variable: %s\n", varName)
-					missingVars = append(missingVars, varName)
-					return "", fmt.Errorf("missing required variable: %s", varName)
-				} else {
-					debugf("Replacing variable %s with value: %s\n", varName, val)
-					content = strings.ReplaceAll(content, fullMatch, val)
-					replaced = true
-				}
-			}
-			if !replaced {
-				return "", fmt.Errorf("template processing stuck - potential infinite loop")
-			}
-		}
+		return parts[1], parts[2], v, true
 	}
+	return "", "", "", false
+}
+
+func ApplyTemplate(content string, variables map[string]string, input string) (string, error) {
+	tokenPattern := regexp.MustCompile(`\{\{([^{}]+)\}\}`)
 
 	debugf("Starting template processing\n")
-	for strings.Contains(content, "{{") {
-		matches := r.FindAllStringSubmatch(content, -1)
+
+	for {
+		if !strings.Contains(content, "{{") {
+			break
+		}
+		matches := tokenPattern.FindAllStringSubmatch(content, -1)
 		if len(matches) == 0 {
 			break
 		}
 
-		replaced := false
-		for _, match := range matches {
-			fullMatch := match[0]
-			varName := match[1]
+		progress := false
+		for _, m := range matches {
+			full := m[0]
+			raw := m[1]
 
-			// Check if this is a plugin call
-			if strings.HasPrefix(varName, "plugin:") {
-				pluginMatches := pluginPattern.FindStringSubmatch(fullMatch)
-				if len(pluginMatches) >= 3 {
-					namespace := pluginMatches[1]
-					operation := pluginMatches[2]
-					value := ""
-					if len(pluginMatches) == 4 {
-						value = pluginMatches[3]
+			// Extension call
+			if strings.HasPrefix(raw, "ext:") {
+				if name, operation, value, ok := matchTriple(extensionPattern, full); ok {
+					if strings.Contains(value, inputSentinel) {
+						value = strings.ReplaceAll(value, inputSentinel, input)
+						debugf("Replaced sentinel in extension value with input\n")
 					}
+					debugf("Extension call: name=%s operation=%s value=%s\n", name, operation, value)
+					result, err := extensionManager.ProcessExtension(name, operation, value)
+					if err != nil {
+						return "", fmt.Errorf("extension %s error: %v", name, err)
+					}
+					content = strings.ReplaceAll(content, full, result)
+					progress = true
+					continue
+				}
+			}
 
-					debugf("\nPlugin call:\n")
-					debugf("  Namespace: %s\n", namespace)
-					debugf("  Operation: %s\n", operation)
-					debugf("  Value: %s\n", value)
-
-					var result string
-					var err error
-
+			// Plugin call
+			if strings.HasPrefix(raw, "plugin:") {
+				if namespace, operation, value, ok := matchTriple(pluginPattern, full); ok {
+					debugf("Plugin call: namespace=%s operation=%s value=%s\n", namespace, operation, value)
+					var (
+						result string
+						err    error
+					)
 					switch namespace {
 					case "text":
 						debugf("Executing text plugin\n")
@@ -203,39 +120,33 @@ func ApplyTemplate(content string, variables map[string]string, input string) (s
 					default:
 						return "", fmt.Errorf("unknown plugin namespace: %s", namespace)
 					}
-
 					if err != nil {
 						debugf("Plugin error: %v\n", err)
 						return "", fmt.Errorf("plugin %s error: %v", namespace, err)
 					}
-
-					debugf("Plugin result: %s\n", result)
-					content = strings.ReplaceAll(content, fullMatch, result)
-					debugf("Content after replacement: %s\n", content)
+					content = strings.ReplaceAll(content, full, result)
+					progress = true
 					continue
 				}
 			}
 
-			// Handle regular variables and input
-			debugf("Processing variable: %s\n", varName)
-			if varName == "input" {
-				debugf("Replacing {{input}}\n")
-				replaced = true
-				content = strings.ReplaceAll(content, fullMatch, input)
-			} else {
-				if val, ok := variables[varName]; !ok {
-					debugf("Missing variable: %s\n", varName)
-					missingVars = append(missingVars, varName)
-					return "", fmt.Errorf("missing required variable: %s", varName)
-				} else {
-					debugf("Replacing variable %s with value: %s\n", varName, val)
-					content = strings.ReplaceAll(content, fullMatch, val)
-					replaced = true
+			// Variables / input / sentinel
+			switch raw {
+			case "input", inputSentinel:
+				content = strings.ReplaceAll(content, full, input)
+				progress = true
+			default:
+				val, ok := variables[raw]
+				if !ok {
+					return "", fmt.Errorf("missing required variable: %s", raw)
 				}
+				content = strings.ReplaceAll(content, full, val)
+				progress = true
 			}
-			if !replaced {
-				return "", fmt.Errorf("template processing stuck - potential infinite loop")
-			}
+		}
+
+		if !progress {
+			return "", fmt.Errorf("template processing stuck - potential infinite loop")
 		}
 	}
 

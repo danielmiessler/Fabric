@@ -394,6 +394,10 @@ Extract novel ideas from books to inspire new projects.
 
 Extract/prioritize practical advice from books.
 
+### extract_characters
+
+Identify all characters (human and non-human), resolve their aliases and pronouns into canonical names, and produce detailed descriptions of each character's role, motivations, and interactions ranked by narrative importance.
+
 ### extract_controversial_ideas
 
 Analyze contentious viewpoints while maintaining objective analysis.

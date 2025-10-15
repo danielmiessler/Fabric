@@ -114,111 +114,112 @@
 110. **extract_book_ideas**: Extracts and outputs 50 to 100 of the most surprising, insightful, and interesting ideas from a book's content.
 111. **extract_book_recommendations**: Extracts and outputs 50 to 100 practical, actionable recommendations from a book's content.
 112. **extract_business_ideas**: Extracts top business ideas from content and elaborates on the best 10 with unique differentiators.
-113. **extract_controversial_ideas**: Extracts and outputs controversial statements and supporting quotes from the input in a structured Markdown list.
-114. **extract_core_message**: Extracts and outputs a clear, concise sentence that articulates the core message of a given text or body of work.
-115. **extract_ctf_writeup**: Extracts a short writeup from a warstory-like text about a cyber security engagement.
-116. **extract_domains**: Extracts domains and URLs from content to identify sources used for articles, newsletters, and other publications.
-117. **extract_extraordinary_claims**: Extracts and outputs a list of extraordinary claims from conversations, focusing on scientifically disputed or false statements.
-118. **extract_ideas**: Extracts and outputs all the key ideas from input, presented as 15-word bullet points in Markdown.
-119. **extract_insights**: Extracts and outputs the most powerful and insightful ideas from text, formatted as 16-word bullet points in the INSIGHTS section, also IDEAS section.
-120. **extract_insights_dm**: Extracts and outputs all valuable insights and a concise summary of the content, including key points and topics discussed.
-121. **extract_instructions**: Extracts clear, actionable step-by-step instructions and main objectives from instructional video transcripts, organizing them into a concise list.
-122. **extract_jokes**: Extracts jokes from text content, presenting each joke with its punchline in separate bullet points.
-123. **extract_latest_video**: Extracts the latest video URL from a YouTube RSS feed and outputs the URL only.
-124. **extract_main_activities**: Extracts key events and activities from transcripts or logs, providing a summary of what happened.
-125. **extract_main_idea**: Extracts the main idea and key recommendation from the input, summarizing them in 15-word sentences.
-126. **extract_most_redeeming_thing**: Extracts the most redeeming aspect from an input, summarizing it in a single 15-word sentence.
-127. **extract_patterns**: Extracts and analyzes recurring, surprising, and insightful patterns from input, providing detailed analysis and advice for builders.
-128. **extract_poc**: Extracts proof of concept URLs and validation methods from security reports, providing the URL and command to run.
-129. **extract_predictions**: Extracts predictions from input, including specific details such as date, confidence level, and verification method.
-130. **extract_primary_problem**: Extracts the primary problem with the world as presented in a given text or body of work.
-131. **extract_primary_solution**: Extracts the primary solution for the world as presented in a given text or body of work.
-132. **extract_product_features**: Extracts and outputs a list of product features from the provided input in a bulleted format.
-133. **extract_questions**: Extracts and outputs all questions asked by the interviewer in a conversation or interview.
-134. **extract_recipe**: Extracts and outputs a recipe with a short meal description, ingredients with measurements, and preparation steps.
-135. **extract_recommendations**: Extracts and outputs concise, practical recommendations from a given piece of content in a bulleted list.
-136. **extract_references**: Extracts and outputs a bulleted list of references to art, stories, books, literature, and other sources from content.
-137. **extract_skills**: Extracts and classifies skills from a job description into a table, separating each skill and classifying it as either hard or soft.
-138. **extract_song_meaning**: Analyzes a song to provide a summary of its meaning, supported by detailed evidence from lyrics, artist commentary, and fan analysis.
-139. **extract_sponsors**: Extracts and lists official sponsors and potential sponsors from a provided transcript.
-140. **extract_videoid**: Extracts and outputs the video ID from any given URL.
-141. **extract_wisdom**: Extracts surprising, insightful, and interesting information from text on topics like human flourishing, AI, learning, and more.
-142. **extract_wisdom_agents**: Extracts valuable insights, ideas, quotes, and references from content, emphasizing topics like human flourishing, AI, learning, and technology.
-143. **extract_wisdom_dm**: Extracts all valuable, insightful, and thought-provoking information from content, focusing on topics like human flourishing, AI, learning, and technology.
-144. **extract_wisdom_nometa**: Extracts insights, ideas, quotes, habits, facts, references, and recommendations from content, focusing on human flourishing, AI, technology, and related topics.
-145. **find_female_life_partner**: Analyzes criteria for finding a female life partner and provides clear, direct, and poetic descriptions.
-146. **find_hidden_message**: Extracts overt and hidden political messages, justifications, audience actions, and a cynical analysis from content.
-147. **find_logical_fallacies**: Identifies and analyzes fallacies in arguments, classifying them as formal or informal with detailed reasoning.
-148. **get_wow_per_minute**: Determines the wow-factor of content per minute based on surprise, novelty, insight, value, and wisdom, measuring how rewarding the content is for the viewer.
-149. **get_youtube_rss**: Returns the RSS URL for a given YouTube channel based on the channel ID or URL.
-150. **heal_person**: Develops a comprehensive plan for spiritual and mental healing based on psychological profiles, providing personalized recommendations for mental health improvement and overall life enhancement.
-151. **humanize**: Rewrites AI-generated text to sound natural, conversational, and easy to understand, maintaining clarity and simplicity.
-152. **identify_dsrp_distinctions**: Encourages creative, systems-based thinking by exploring distinctions, boundaries, and their implications, drawing on insights from prominent systems thinkers.
-153. **identify_dsrp_perspectives**: Explores the concept of distinctions in systems thinking, focusing on how boundaries define ideas, influence understanding, and reveal or obscure insights.
-154. **identify_dsrp_relationships**: Encourages exploration of connections, distinctions, and boundaries between ideas, inspired by systems thinkers to reveal new insights and patterns in complex systems.
-155. **identify_dsrp_systems**: Encourages organizing ideas into systems of parts and wholes, inspired by systems thinkers to explore relationships and how changes in organization impact meaning and understanding.
-156. **identify_job_stories**: Identifies key job stories or requirements for roles.
-157. **improve_academic_writing**: Refines text into clear, concise academic language while improving grammar, coherence, and clarity, with a list of changes.
-158. **improve_prompt**: Improves an LLM/AI prompt by applying expert prompt writing strategies for better results and clarity.
-159. **improve_report_finding**: Improves a penetration test security finding by providing detailed descriptions, risks, recommendations, references, quotes, and a concise summary in markdown format.
-160. **improve_writing**: Refines text by correcting grammar, enhancing style, improving clarity, and maintaining the original meaning. skills.
-161. **judge_output**: Evaluates Honeycomb queries by judging their effectiveness, providing critiques and outcomes based on language nuances and analytics relevance.
-162. **label_and_rate**: Labels content with up to 20 single-word tags and rates it based on idea count and relevance to human meaning, AI, and other related themes, assigning a tier (S, A, B, C, D) and a quality score.
-163. **md_callout**: Classifies content and generates a markdown callout based on the provided text, selecting the most appropriate type.
-164. **official_pattern_template**: Template to use if you want to create new fabric patterns.
-165. **prepare_7s_strategy**: Prepares a comprehensive briefing document from 7S's strategy capturing organizational profile, strategic elements, and market dynamics with clear, concise, and organized content.
-166. **provide_guidance**: Provides psychological and life coaching advice, including analysis, recommendations, and potential diagnoses, with a compassionate and honest tone.
-167. **rate_ai_response**: Rates the quality of AI responses by comparing them to top human expert performance, assigning a letter grade, reasoning, and providing a 1-100 score based on the evaluation.
-168. **rate_ai_result**: Assesses the quality of AI/ML/LLM work by deeply analyzing content, instructions, and output, then rates performance based on multiple dimensions, including coverage, creativity, and interdisciplinary thinking.
-169. **rate_content**: Labels content with up to 20 single-word tags and rates it based on idea count and relevance to human meaning, AI, and other related themes, assigning a tier (S, A, B, C, D) and a quality score.
-170. **rate_value**: Produces the best possible output by deeply analyzing and understanding the input and its intended purpose.
-171. **raw_query**: Fully digests and contemplates the input to produce the best possible result based on understanding the sender's intent.
-172. **recommend_artists**: Recommends a personalized festival schedule with artists aligned to your favorite styles and interests, including rationale.
-173. **recommend_pipeline_upgrades**: Optimizes vulnerability-checking pipelines by incorporating new information and improving their efficiency, with detailed explanations of changes.
-174. **recommend_talkpanel_topics**: Produces a clean set of proposed talks or panel talking points for a person based on their interests and goals, formatted for submission to a conference organizer.
-175. **refine_design_document**: Refines a design document based on a design review by analyzing, mapping concepts, and implementing changes using valid Markdown.
-176. **review_design**: Reviews and analyzes architecture design, focusing on clarity, component design, system integrations, security, performance, scalability, and data management.
-177. **sanitize_broken_html_to_markdown**: Converts messy HTML into clean, properly formatted Markdown, applying custom styling and ensuring compatibility with Vite.
-178. **suggest_pattern**: Suggests appropriate fabric patterns or commands based on user input, providing clear explanations and options for users.
-179. **summarize**: Summarizes content into a 20-word sentence, main points, and takeaways, formatted with numbered lists in Markdown.
-180. **summarize_board_meeting**: Creates formal meeting notes from board meeting transcripts for corporate governance documentation.
-181. **summarize_debate**: Summarizes debates, identifies primary disagreement, extracts arguments, and provides analysis of evidence and argument strength to predict outcomes.
-182. **summarize_git_changes**: Summarizes recent project updates from the last 7 days, focusing on key changes with enthusiasm.
-183. **summarize_git_diff**: Summarizes and organizes Git diff changes with clear, succinct commit messages and bullet points.
-184. **summarize_lecture**: Extracts relevant topics, definitions, and tools from lecture transcripts, providing structured summaries with timestamps and key takeaways.
-185. **summarize_legislation**: Summarizes complex political proposals and legislation by analyzing key points, proposed changes, and providing balanced, positive, and cynical characterizations.
-186. **summarize_meeting**: Analyzes meeting transcripts to extract a structured summary, including an overview, key points, tasks, decisions, challenges, timeline, references, and next steps.
-187. **summarize_micro**: Summarizes content into a 20-word sentence, 3 main points, and 3 takeaways, formatted in clear, concise Markdown.
-188. **summarize_newsletter**: Extracts the most meaningful, interesting, and useful content from a newsletter, summarizing key sections such as content, opinions, tools, companies, and follow-up items in clear, structured Markdown.
-189. **summarize_paper**: Summarizes an academic paper by detailing its title, authors, technical approach, distinctive features, experimental setup, results, advantages, limitations, and conclusion in a clear, structured format using human-readable Markdown.
-190. **summarize_prompt**: Summarizes AI chat prompts by describing the primary function, unique approach, and expected output in a concise paragraph. The summary is focused on the prompt's purpose without unnecessary details or formatting.
-191. **summarize_pull-requests**: Summarizes pull requests for a coding project by providing a summary and listing the top PRs with human-readable descriptions.
-192. **summarize_rpg_session**: Summarizes a role-playing game session by extracting key events, combat stats, character changes, quotes, and more.
-193. **t_analyze_challenge_handling**: Provides 8-16 word bullet points evaluating how well challenges are being addressed, calling out any lack of effort.
-194. **t_check_metrics**: Analyzes deep context from the TELOS file and input instruction, then provides a wisdom-based output while considering metrics and KPIs to assess recent improvements.
-195. **t_create_h3_career**: Summarizes context and produces wisdom-based output by deeply analyzing both the TELOS File and the input instruction, considering the relationship between the two.
-196. **t_create_opening_sentences**: Describes from TELOS file the person's identity, goals, and actions in 4 concise, 32-word bullet points, humbly.
-197. **t_describe_life_outlook**: Describes from TELOS file a person's life outlook in 5 concise, 16-word bullet points.
-198. **t_extract_intro_sentences**: Summarizes from TELOS file a person's identity, work, and current projects in 5 concise and grounded bullet points.
-199. **t_extract_panel_topics**: Creates 5 panel ideas with titles and descriptions based on deep context from a TELOS file and input.
-200. **t_find_blindspots**: Identify potential blindspots in thinking, frames, or models that may expose the individual to error or risk.
-201. **t_find_negative_thinking**: Analyze a TELOS file and input to identify negative thinking in documents or journals, followed by tough love encouragement.
-202. **t_find_neglected_goals**: Analyze a TELOS file and input instructions to identify goals or projects that have not been worked on recently.
-203. **t_give_encouragement**: Analyze a TELOS file and input instructions to evaluate progress, provide encouragement, and offer recommendations for continued effort.
-204. **t_red_team_thinking**: Analyze a TELOS file and input instructions to red-team thinking, models, and frames, then provide recommendations for improvement.
-205. **t_threat_model_plans**: Analyze a TELOS file and input instructions to create threat models for a life plan and recommend improvements.
-206. **t_visualize_mission_goals_projects**: Analyze a TELOS file and input instructions to create an ASCII art diagram illustrating the relationship of missions, goals, and projects.
-207. **t_year_in_review**: Analyze a TELOS file to create insights about a person or entity, then summarize accomplishments and visualizations in bullet points.
-208. **to_flashcards**: Create Anki flashcards from a given text, focusing on concise, optimized questions and answers without external context.
-209. **transcribe_minutes**: Extracts (from meeting transcription) meeting minutes, identifying actionables, insightful ideas, decisions, challenges, and next steps in a structured format.
-210. **translate**: Translates sentences or documentation into the specified language code while maintaining the original formatting and tone.
-211. **tweet**: Provides a step-by-step guide on crafting engaging tweets with emojis, covering Twitter basics, account creation, features, and audience targeting.
-212. **write_essay**: Writes essays in the style of a specified author, embodying their unique voice, vocabulary, and approach. Uses `author_name` variable.
-213. **write_essay_pg**: Writes concise, clear essays in the style of Paul Graham, focusing on simplicity, clarity, and illumination of the provided topic.
-214. **write_hackerone_report**: Generates concise, clear, and reproducible bug bounty reports, detailing vulnerability impact, steps to reproduce, and exploit details for triagers.
-215. **write_latex**: Generates syntactically correct LaTeX code for a new.tex document, ensuring proper formatting and compatibility with pdflatex.
-216. **write_micro_essay**: Writes concise, clear, and illuminating essays on the given topic in the style of Paul Graham.
-217. **write_nuclei_template_rule**: Generates Nuclei YAML templates for detecting vulnerabilities using HTTP requests, matchers, extractors, and dynamic data extraction.
-218. **write_pull-request**: Drafts detailed pull request descriptions, explaining changes, providing reasoning, and identifying potential bugs from the git diff command output.
-219. **write_semgrep_rule**: Creates accurate and working Semgrep rules based on input, following syntax guidelines and specific language considerations.
-220. **youtube_summary**: Create concise, timestamped Youtube video summaries that highlight key points.
+113. **extract_characters**: Identify all characters (human and non-human), resolve their aliases and pronouns into canonical names, and produce detailed descriptions of each character's role, motivations, and interactions ranked by narrative importance.
+114. **extract_controversial_ideas**: Extracts and outputs controversial statements and supporting quotes from the input in a structured Markdown list.
+115. **extract_core_message**: Extracts and outputs a clear, concise sentence that articulates the core message of a given text or body of work.
+116. **extract_ctf_writeup**: Extracts a short writeup from a warstory-like text about a cyber security engagement.
+117. **extract_domains**: Extracts domains and URLs from content to identify sources used for articles, newsletters, and other publications.
+118. **extract_extraordinary_claims**: Extracts and outputs a list of extraordinary claims from conversations, focusing on scientifically disputed or false statements.
+119. **extract_ideas**: Extracts and outputs all the key ideas from input, presented as 15-word bullet points in Markdown.
+120. **extract_insights**: Extracts and outputs the most powerful and insightful ideas from text, formatted as 16-word bullet points in the INSIGHTS section, also IDEAS section.
+121. **extract_insights_dm**: Extracts and outputs all valuable insights and a concise summary of the content, including key points and topics discussed.
+122. **extract_instructions**: Extracts clear, actionable step-by-step instructions and main objectives from instructional video transcripts, organizing them into a concise list.
+123. **extract_jokes**: Extracts jokes from text content, presenting each joke with its punchline in separate bullet points.
+124. **extract_latest_video**: Extracts the latest video URL from a YouTube RSS feed and outputs the URL only.
+125. **extract_main_activities**: Extracts key events and activities from transcripts or logs, providing a summary of what happened.
+126. **extract_main_idea**: Extracts the main idea and key recommendation from the input, summarizing them in 15-word sentences.
+127. **extract_most_redeeming_thing**: Extracts the most redeeming aspect from an input, summarizing it in a single 15-word sentence.
+128. **extract_patterns**: Extracts and analyzes recurring, surprising, and insightful patterns from input, providing detailed analysis and advice for builders.
+129. **extract_poc**: Extracts proof of concept URLs and validation methods from security reports, providing the URL and command to run.
+130. **extract_predictions**: Extracts predictions from input, including specific details such as date, confidence level, and verification method.
+131. **extract_primary_problem**: Extracts the primary problem with the world as presented in a given text or body of work.
+132. **extract_primary_solution**: Extracts the primary solution for the world as presented in a given text or body of work.
+133. **extract_product_features**: Extracts and outputs a list of product features from the provided input in a bulleted format.
+134. **extract_questions**: Extracts and outputs all questions asked by the interviewer in a conversation or interview.
+135. **extract_recipe**: Extracts and outputs a recipe with a short meal description, ingredients with measurements, and preparation steps.
+136. **extract_recommendations**: Extracts and outputs concise, practical recommendations from a given piece of content in a bulleted list.
+137. **extract_references**: Extracts and outputs a bulleted list of references to art, stories, books, literature, and other sources from content.
+138. **extract_skills**: Extracts and classifies skills from a job description into a table, separating each skill and classifying it as either hard or soft.
+139. **extract_song_meaning**: Analyzes a song to provide a summary of its meaning, supported by detailed evidence from lyrics, artist commentary, and fan analysis.
+140. **extract_sponsors**: Extracts and lists official sponsors and potential sponsors from a provided transcript.
+141. **extract_videoid**: Extracts and outputs the video ID from any given URL.
+142. **extract_wisdom**: Extracts surprising, insightful, and interesting information from text on topics like human flourishing, AI, learning, and more.
+143. **extract_wisdom_agents**: Extracts valuable insights, ideas, quotes, and references from content, emphasizing topics like human flourishing, AI, learning, and technology.
+144. **extract_wisdom_dm**: Extracts all valuable, insightful, and thought-provoking information from content, focusing on topics like human flourishing, AI, learning, and technology.
+145. **extract_wisdom_nometa**: Extracts insights, ideas, quotes, habits, facts, references, and recommendations from content, focusing on human flourishing, AI, technology, and related topics.
+146. **find_female_life_partner**: Analyzes criteria for finding a female life partner and provides clear, direct, and poetic descriptions.
+147. **find_hidden_message**: Extracts overt and hidden political messages, justifications, audience actions, and a cynical analysis from content.
+148. **find_logical_fallacies**: Identifies and analyzes fallacies in arguments, classifying them as formal or informal with detailed reasoning.
+149. **get_wow_per_minute**: Determines the wow-factor of content per minute based on surprise, novelty, insight, value, and wisdom, measuring how rewarding the content is for the viewer.
+150. **get_youtube_rss**: Returns the RSS URL for a given YouTube channel based on the channel ID or URL.
+151. **heal_person**: Develops a comprehensive plan for spiritual and mental healing based on psychological profiles, providing personalized recommendations for mental health improvement and overall life enhancement.
+152. **humanize**: Rewrites AI-generated text to sound natural, conversational, and easy to understand, maintaining clarity and simplicity.
+153. **identify_dsrp_distinctions**: Encourages creative, systems-based thinking by exploring distinctions, boundaries, and their implications, drawing on insights from prominent systems thinkers.
+154. **identify_dsrp_perspectives**: Explores the concept of distinctions in systems thinking, focusing on how boundaries define ideas, influence understanding, and reveal or obscure insights.
+155. **identify_dsrp_relationships**: Encourages exploration of connections, distinctions, and boundaries between ideas, inspired by systems thinkers to reveal new insights and patterns in complex systems.
+156. **identify_dsrp_systems**: Encourages organizing ideas into systems of parts and wholes, inspired by systems thinkers to explore relationships and how changes in organization impact meaning and understanding.
+157. **identify_job_stories**: Identifies key job stories or requirements for roles.
+158. **improve_academic_writing**: Refines text into clear, concise academic language while improving grammar, coherence, and clarity, with a list of changes.
+159. **improve_prompt**: Improves an LLM/AI prompt by applying expert prompt writing strategies for better results and clarity.
+160. **improve_report_finding**: Improves a penetration test security finding by providing detailed descriptions, risks, recommendations, references, quotes, and a concise summary in markdown format.
+161. **improve_writing**: Refines text by correcting grammar, enhancing style, improving clarity, and maintaining the original meaning. skills.
+162. **judge_output**: Evaluates Honeycomb queries by judging their effectiveness, providing critiques and outcomes based on language nuances and analytics relevance.
+163. **label_and_rate**: Labels content with up to 20 single-word tags and rates it based on idea count and relevance to human meaning, AI, and other related themes, assigning a tier (S, A, B, C, D) and a quality score.
+164. **md_callout**: Classifies content and generates a markdown callout based on the provided text, selecting the most appropriate type.
+165. **official_pattern_template**: Template to use if you want to create new fabric patterns.
+166. **prepare_7s_strategy**: Prepares a comprehensive briefing document from 7S's strategy capturing organizational profile, strategic elements, and market dynamics with clear, concise, and organized content.
+167. **provide_guidance**: Provides psychological and life coaching advice, including analysis, recommendations, and potential diagnoses, with a compassionate and honest tone.
+168. **rate_ai_response**: Rates the quality of AI responses by comparing them to top human expert performance, assigning a letter grade, reasoning, and providing a 1-100 score based on the evaluation.
+169. **rate_ai_result**: Assesses the quality of AI/ML/LLM work by deeply analyzing content, instructions, and output, then rates performance based on multiple dimensions, including coverage, creativity, and interdisciplinary thinking.
+170. **rate_content**: Labels content with up to 20 single-word tags and rates it based on idea count and relevance to human meaning, AI, and other related themes, assigning a tier (S, A, B, C, D) and a quality score.
+171. **rate_value**: Produces the best possible output by deeply analyzing and understanding the input and its intended purpose.
+172. **raw_query**: Fully digests and contemplates the input to produce the best possible result based on understanding the sender's intent.
+173. **recommend_artists**: Recommends a personalized festival schedule with artists aligned to your favorite styles and interests, including rationale.
+174. **recommend_pipeline_upgrades**: Optimizes vulnerability-checking pipelines by incorporating new information and improving their efficiency, with detailed explanations of changes.
+175. **recommend_talkpanel_topics**: Produces a clean set of proposed talks or panel talking points for a person based on their interests and goals, formatted for submission to a conference organizer.
+176. **refine_design_document**: Refines a design document based on a design review by analyzing, mapping concepts, and implementing changes using valid Markdown.
+177. **review_design**: Reviews and analyzes architecture design, focusing on clarity, component design, system integrations, security, performance, scalability, and data management.
+178. **sanitize_broken_html_to_markdown**: Converts messy HTML into clean, properly formatted Markdown, applying custom styling and ensuring compatibility with Vite.
+179. **suggest_pattern**: Suggests appropriate fabric patterns or commands based on user input, providing clear explanations and options for users.
+180. **summarize**: Summarizes content into a 20-word sentence, main points, and takeaways, formatted with numbered lists in Markdown.
+181. **summarize_board_meeting**: Creates formal meeting notes from board meeting transcripts for corporate governance documentation.
+182. **summarize_debate**: Summarizes debates, identifies primary disagreement, extracts arguments, and provides analysis of evidence and argument strength to predict outcomes.
+183. **summarize_git_changes**: Summarizes recent project updates from the last 7 days, focusing on key changes with enthusiasm.
+184. **summarize_git_diff**: Summarizes and organizes Git diff changes with clear, succinct commit messages and bullet points.
+185. **summarize_lecture**: Extracts relevant topics, definitions, and tools from lecture transcripts, providing structured summaries with timestamps and key takeaways.
+186. **summarize_legislation**: Summarizes complex political proposals and legislation by analyzing key points, proposed changes, and providing balanced, positive, and cynical characterizations.
+187. **summarize_meeting**: Analyzes meeting transcripts to extract a structured summary, including an overview, key points, tasks, decisions, challenges, timeline, references, and next steps.
+188. **summarize_micro**: Summarizes content into a 20-word sentence, 3 main points, and 3 takeaways, formatted in clear, concise Markdown.
+189. **summarize_newsletter**: Extracts the most meaningful, interesting, and useful content from a newsletter, summarizing key sections such as content, opinions, tools, companies, and follow-up items in clear, structured Markdown.
+190. **summarize_paper**: Summarizes an academic paper by detailing its title, authors, technical approach, distinctive features, experimental setup, results, advantages, limitations, and conclusion in a clear, structured format using human-readable Markdown.
+191. **summarize_prompt**: Summarizes AI chat prompts by describing the primary function, unique approach, and expected output in a concise paragraph. The summary is focused on the prompt's purpose without unnecessary details or formatting.
+192. **summarize_pull-requests**: Summarizes pull requests for a coding project by providing a summary and listing the top PRs with human-readable descriptions.
+193. **summarize_rpg_session**: Summarizes a role-playing game session by extracting key events, combat stats, character changes, quotes, and more.
+194. **t_analyze_challenge_handling**: Provides 8-16 word bullet points evaluating how well challenges are being addressed, calling out any lack of effort.
+195. **t_check_metrics**: Analyzes deep context from the TELOS file and input instruction, then provides a wisdom-based output while considering metrics and KPIs to assess recent improvements.
+196. **t_create_h3_career**: Summarizes context and produces wisdom-based output by deeply analyzing both the TELOS File and the input instruction, considering the relationship between the two.
+197. **t_create_opening_sentences**: Describes from TELOS file the person's identity, goals, and actions in 4 concise, 32-word bullet points, humbly.
+198. **t_describe_life_outlook**: Describes from TELOS file a person's life outlook in 5 concise, 16-word bullet points.
+199. **t_extract_intro_sentences**: Summarizes from TELOS file a person's identity, work, and current projects in 5 concise and grounded bullet points.
+200. **t_extract_panel_topics**: Creates 5 panel ideas with titles and descriptions based on deep context from a TELOS file and input.
+201. **t_find_blindspots**: Identify potential blindspots in thinking, frames, or models that may expose the individual to error or risk.
+202. **t_find_negative_thinking**: Analyze a TELOS file and input to identify negative thinking in documents or journals, followed by tough love encouragement.
+203. **t_find_neglected_goals**: Analyze a TELOS file and input instructions to identify goals or projects that have not been worked on recently.
+204. **t_give_encouragement**: Analyze a TELOS file and input instructions to evaluate progress, provide encouragement, and offer recommendations for continued effort.
+205. **t_red_team_thinking**: Analyze a TELOS file and input instructions to red-team thinking, models, and frames, then provide recommendations for improvement.
+206. **t_threat_model_plans**: Analyze a TELOS file and input instructions to create threat models for a life plan and recommend improvements.
+207. **t_visualize_mission_goals_projects**: Analyze a TELOS file and input instructions to create an ASCII art diagram illustrating the relationship of missions, goals, and projects.
+208. **t_year_in_review**: Analyze a TELOS file to create insights about a person or entity, then summarize accomplishments and visualizations in bullet points.
+209. **to_flashcards**: Create Anki flashcards from a given text, focusing on concise, optimized questions and answers without external context.
+210. **transcribe_minutes**: Extracts (from meeting transcription) meeting minutes, identifying actionables, insightful ideas, decisions, challenges, and next steps in a structured format.
+211. **translate**: Translates sentences or documentation into the specified language code while maintaining the original formatting and tone.
+212. **tweet**: Provides a step-by-step guide on crafting engaging tweets with emojis, covering Twitter basics, account creation, features, and audience targeting.
+213. **write_essay**: Writes essays in the style of a specified author, embodying their unique voice, vocabulary, and approach. Uses `author_name` variable.
+214. **write_essay_pg**: Writes concise, clear essays in the style of Paul Graham, focusing on simplicity, clarity, and illumination of the provided topic.
+215. **write_hackerone_report**: Generates concise, clear, and reproducible bug bounty reports, detailing vulnerability impact, steps to reproduce, and exploit details for triagers.
+216. **write_latex**: Generates syntactically correct LaTeX code for a new.tex document, ensuring proper formatting and compatibility with pdflatex.
+217. **write_micro_essay**: Writes concise, clear, and illuminating essays on the given topic in the style of Paul Graham.
+218. **write_nuclei_template_rule**: Generates Nuclei YAML templates for detecting vulnerabilities using HTTP requests, matchers, extractors, and dynamic data extraction.
+219. **write_pull-request**: Drafts detailed pull request descriptions, explaining changes, providing reasoning, and identifying potential bugs from the git diff command output.
+220. **write_semgrep_rule**: Creates accurate and working Semgrep rules based on input, following syntax guidelines and specific language considerations.
+221. **youtube_summary**: Create concise, timestamped Youtube video summaries that highlight key points.

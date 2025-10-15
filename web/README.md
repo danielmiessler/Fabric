@@ -1,83 +1,124 @@
-# The Fabric Web App
+# Fabric Web App
 
-- [The Fabric Web App](#the-fabric-web-app)
-  - [Installing](#installing)
-    - [From Source](#from-source)
-      - [TL;DR: Convenience Scripts](#tldr-convenience-scripts)
-  - [Tips](#tips)
-  - [Obsidian](#obsidian)
+A user-friendly web interface for [Fabric](https://github.com/danielmiessler/Fabric) built with [Svelte](https://svelte.dev/), [Skeleton UI](https://www.skeleton.dev/), and [Mdsvex](https://mdsvex.pngwn.io/).
 
-This is a web app for Fabric. It was built using [Svelte][svelte], [SkeletonUI][skeleton], and [Mdsvex][mdsvex].
+![Fabric Web App Preview](../docs/images/svelte-preview.png)
+*Alt: Screenshot of the Fabric web app dashboard showing pattern inputs and outputs.*
 
-The goal of this app is to not only provide a user interface for Fabric, but also an out-of-the-box website for those who want to get started with web development, blogging, or to just have a web interface for fabric. You can use this app as a GUI interface for Fabric, a ready to go blog-site, or a website template for your own projects.
+## Table of Contents
 
-![Preview](../docs/images/svelte-preview.png)
+- [Fabric Web App](#fabric-web-app)
+  - [Table of Contents](#table-of-contents)
+  - [Installation](#installation)
+  - [Running the App](#running-the-app)
+    - [Prerequisites](#prerequisites)
+    - [Launch the Svelte App](#launch-the-svelte-app)
+  - [Streamlit UI](#streamlit-ui)
+    - [Key Features](#key-features)
+    - [Setup and Run](#setup-and-run)
+  - [Obsidian Integration](#obsidian-integration)
+    - [Quick Setup](#quick-setup)
+  - [Contributing](#contributing)
 
-## Installing
+## Installation
 
-There are a few days to install and run the Web UI.
+> [!NOTE]
+> Requires Node.js ≥18 and Fabric installed globally (`fabric --version` to check).
 
-### From Source
+From the Fabric root directory:
 
-#### TL;DR: Convenience Scripts
-
-To install the Web UI using `npm`, from the top-level directory:
+**Using npm:**
 
 ```bash
 ./web/scripts/npm-install.sh
 ```
 
-To use pnpm (preferred and recommended for a huge speed improvement):
+**Or using pnpm (recommended for speed):**
 
 ```bash
 ./web/scripts/pnpm-install.sh
 ```
 
-The app can be run by navigating to the `web` directory and using `npm install`, `pnpm install`, or your preferred package manager. Then simply run `npm run dev`, `pnpm run dev`, or your equivalent command to start the app. *You will need to run fabric in a separate terminal with the `fabric --serve` command.*
+These scripts install Svelte dependencies and patch PDF-to-Markdown libraries (e.g., pdfjs-dist, pdf-to-markdown). Link to scripts:[npm-install.sh](./scripts/npm-install.sh) and [pnpm-install.sh](./scripts/pnpm-install.sh)
 
-Using npm:
+## Running the App
+
+### Prerequisites
+
+Start Fabric's server in a separate terminal:
 
 ```bash
-# Install the GUI and its dependencies
-npm install
-# Install PDF-to-Markdown components in this order
-npm install -D patch-package
-npm install -D pdfjs-dist
-npm install -D github:jzillmann/pdf-to-markdown#modularize
+fabric --serve
+```
 
-npx svelte-kit sync
+(This exposes Fabric's API at <http://localhost:8080>)
 
-# Now, with "fabric --serve" running already, you can run the GUI
+### Launch the Svelte App
+
+In the `web/` directory:
+
+**Using npm:**
+
+```bash
 npm run dev
 ```
 
-Using pnpm:
+**Or using pnpm:**
 
 ```bash
-# Install the GUI and its dependencies
-pnpm install
-# Install PDF-to-Markdown components in this order
-pnpm install -D patch-package
-pnpm install -D pdfjs-dist
-pnpm install -D github:jzillmann/pdf-to-markdown#modularize
-
-pnpm exec svelte-kit sync
-
-# Now, with "fabric --serve" running already, you can run the GUI
 pnpm run dev
 ```
 
-## Tips
+Visit [http://localhost:5173](http://localhost:5173) (default port).
 
-When creating new posts make sure to include a date, description, tags, and aliases. Only a date is needed to display a note.
+> [!TIP]
+>
+> Sync Svelte types if needed: `npx svelte-kit sync`
 
-You can include images, tags to other articles, code blocks, and more all within your markdown files.
+## Streamlit UI
 
-## Obsidian
+For Python enthusiasts, this alternative UI excels at data visualization and chaining complex patterns. It supports clipboard ops across platforms (install pyperclip on Windows, xclip on Linux).
 
-If you choose to use Obsidian alongside this app,
-you can design and order your vault however you like, though a `posts` folder should be kept in your vault to house any articles you'd like to post.
+- **macOS**: Uses `pbcopy` and `pbpaste` (built-in)
+- **Windows**: Uses `pyperclip` library (install with `pip install pyperclip`)
+- **Linux**: Uses `xclip` (install with `sudo apt-get install xclip` or equivalent for your Linux distribution)
 
-[svelte]: https://svelte.dev/
-[skeleton]: https://skeleton.dev/
-[mdsvex]: https://mdsvex.pngwn.io/
+### Key Features
+
+<!-- - Running and chaining patterns
+- Managing pattern outputs
+- Creating and editing patterns
+- Analyzing pattern results -->
+
+- Run and edit patterns with real-time previews.
+- Analyze outputs with charts (via Matplotlib/Seaborn).
+- Export results to Markdown or CSV.
+
+### Setup and Run
+
+From `web/`:
+
+```bash
+pip install -r requirements.txt #Or: pip install streamlit pandas matplotlib seaborn numpy python-dotenv pyperclip
+streamlit run streamlit.py
+```
+
+Access at [http://localhost:8501](http://localhost:8501) (default port).
+
+## Obsidian Integration
+
+Turn `web/src/lib/content/` into an [Obsidian](https://obsidian.md) vault for note-taking synced with Fabric patterns. It includes pre-configured `.obsidian/` and `templates/` folders.
+
+### Quick Setup
+
+1. Open Obsidian: File > Open folder as vault > Select `web/src/lib/content/`
+2. To publish posts, move them to the posts directory (`web/src/lib/content/posts`).
+3. Use Fabric patterns to generate content directly in Markdown files.
+
+> [!TIP]
+>
+> When creating new posts, make sure to include a date (YYYY-MM-DD), description, tags (e.g., #ai #patterns), and aliases for SEO. Only a date is needed to display a note. Embed images `(![alt](path))`, link patterns `([[pattern-name]])`, or code blocks for reusable snippets—all in standard Markdown.
+
+## Contributing
+
+Refer to the [Contributing Guide](/docs/CONTRIBUTING.md) for details on how to improve this content.

@@ -1,0 +1,7 @@
+### PR [#1780](https://github.com/danielmiessler/Fabric/pull/1780) by [marcas756](https://github.com/marcas756): feat: add extract_characters pattern
+
+- Define character extraction goals and steps with canonical naming and deduplication rules
+- Outline interaction mapping and narrative importance analysis
+- Provide comprehensive output schema with proper formatting guidelines
+- Include positive and negative examples for pattern clarity
+- Enforce restrictions on speculative motivations and non-actor inclusion

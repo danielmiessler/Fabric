@@ -1,0 +1,4 @@
+### PR [#1794](https://github.com/danielmiessler/Fabric/pull/1794) by [starfish456](https://github.com/starfish456): Enhance web app docs
+
+- Remove duplicate content from the main readme and link to the web app readme
+- Update table of contents with proper nesting and fix minor formatting issues

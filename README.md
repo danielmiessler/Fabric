@@ -44,8 +44,6 @@
 [Helper Apps](#helper-apps) •
 [Meta](#meta)
 
-![Screenshot of fabric](./docs/images/fabric-summarize.png)
-
 </div>
 
 ## What and why
@@ -63,6 +61,9 @@ It's all really exciting and powerful, but _it's not easy to integrate this func
 Fabric organizes prompts by real-world task, allowing people to create, collect, and organize their most important AI solutions in a single place for use in their favorite tools. And if you're command-line focused, you can use Fabric itself as the interface!
 
 ## Updates
+
+<details>
+<summary>Click to view recent updates</summary>
 
 Dear Users,
 
@@ -113,6 +114,8 @@ Below are the **new features and capabilities** we've added (newest first):
 - [v1.4.203](https://github.com/danielmiessler/fabric/releases/tag/v1.4.203) (Jun 14, 2025) — **Add Amazon Bedrock**: Add support for Amazon Bedrock
 
 These features represent our commitment to making Fabric the most powerful and flexible AI augmentation framework available!
+
+</details>
 
 ## Intro videos
 
@@ -171,10 +174,7 @@ Keep in mind that many of these were recorded when Fabric was Python-based, so r
     - [`to_pdf` Installation](#to_pdf-installation)
     - [`code_helper`](#code_helper)
   - [pbpaste](#pbpaste)
-  - [Web Interface](#web-interface)
-    - [Installing](#installing)
-    - [Streamlit UI](#streamlit-ui)
-      - [Clipboard Support](#clipboard-support)
+  - [Web Interface (Fabric Web App)](#web-interface-fabric-web-app)
   - [Meta](#meta)
     - [Primary contributors](#primary-contributors)
     - [Contributors](#contributors)
@@ -901,60 +901,9 @@ You can also create an alias by editing `~/.bashrc` or `~/.zshrc` and adding the
 alias pbpaste='xclip -selection clipboard -o'
 ```
 
-## Web Interface
+## Web Interface (Fabric Web App)
 
-Fabric now includes a built-in web interface that provides a GUI alternative to the command-line interface and an out-of-the-box website for those who want to get started with web development or blogging.
-You can use this app as a GUI interface for Fabric, a ready to go blog-site, or a website template for your own projects.
-
-The `web/src/lib/content` directory includes starter `.obsidian/` and `templates/` directories, allowing you to open up the `web/src/lib/content/` directory as an [Obsidian.md](https://obsidian.md) vault. You can place your posts in the posts directory when you're ready to publish.
-
-### Installing
-
-The GUI can be installed by navigating to the `web` directory and using `npm install`, `pnpm install`, or your favorite package manager. Then simply run the development server to start the app.
-
-_You will need to run fabric in a separate terminal with the `fabric --serve` command._
-
-**From the fabric project `web/` directory:**
-
-```shell
-npm run dev
-
-## or ##
-
-pnpm run dev
-
-## or your equivalent
-```
-
-### Streamlit UI
-
-To run the Streamlit user interface:
-
-```bash
-# Install required dependencies
-pip install -r requirements.txt
-
-# Or manually install dependencies
-pip install streamlit pandas matplotlib seaborn numpy python-dotenv pyperclip
-
-# Run the Streamlit app
-streamlit run streamlit.py
-```
-
-The Streamlit UI provides a user-friendly interface for:
-
-- Running and chaining patterns
-- Managing pattern outputs
-- Creating and editing patterns
-- Analyzing pattern results
-
-#### Clipboard Support
-
-The Streamlit UI supports clipboard operations across different platforms:
-
-- **macOS**: Uses `pbcopy` and `pbpaste` (built-in)
-- **Windows**: Uses `pyperclip` library (install with `pip install pyperclip`)
-- **Linux**: Uses `xclip` (install with `sudo apt-get install xclip` or equivalent for your Linux distribution)
+Fabric now includes a built-in web interface that provides a GUI alternative to the command-line interface. Refer to [Web App README](/web/README.md) for installation instructions and an overview of features.
 
 ## Meta
 

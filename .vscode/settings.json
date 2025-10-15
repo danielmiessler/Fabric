@@ -113,6 +113,7 @@
 		"matplotlib",
 		"mattn",
 		"mbed",
+		"Mdsvex",
 		"metacharacters",
 		"Miessler",
 		"modeline",
@@ -221,6 +222,7 @@
 				"a",
 				"br",
 				"code",
+				"details",
 				"div",
 				"em",
 				"h",
@@ -228,6 +230,7 @@
 				"img",
 				"module",
 				"p",
+				"summary",
 				"sup"
 			]
 		},

@@ -1878,6 +1878,14 @@
         "ANALYSIS",
         "WRITING"
       ]
+    },
+    {
+      "patternName": "extract_characters",
+      "description": "Identify all characters (human and non-human), resolve their aliases and pronouns into canonical names, and produce detailed descriptions of each character's role, motivations, and interactions ranked by narrative importance.",
+      "tags": [
+        "ANALYSIS",
+        "WRITING"
+      ]
     }
   ]
 }

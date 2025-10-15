@@ -77,7 +77,7 @@ Match the request to one or more of these primary categories:
 
 **BILL**: analyze_bill, analyze_bill_short
 
-**BUSINESS**: check_agreement, create_ai_jobs_analysis, create_formal_email, create_hormozi_offer, create_loe_document, create_logo, create_newsletter_entry, create_prd, explain_project, extract_business_ideas, extract_product_features, extract_skills, extract_sponsors, identify_job_stories, prepare_7s_strategy, rate_value, t_check_metrics, t_create_h3_career, t_visualize_mission_goals_projects, t_year_in_review, transcribe_minutes
+**BUSINESS**: check_agreement, create_ai_jobs_analysis, create_formal_email, create_hormozi_offer, create_loe_document, create_logo, create_newsletter_entry, create_prd, explain_project, extract_business_ideas, extract_characters, extract_product_features, extract_skills, extract_sponsors, identify_job_stories, prepare_7s_strategy, rate_value, t_check_metrics, t_create_h3_career, t_visualize_mission_goals_projects, t_year_in_review, transcribe_minutes
 
 **CLASSIFICATION**: apply_ul_tags
 
@@ -91,7 +91,7 @@ Match the request to one or more of these primary categories:
 
 **DEVOPS**: analyze_terraform_plan
 
-**EXTRACT**: analyze_comments, create_aphorisms, create_tags, create_video_chapters, extract_algorithm_update_recommendations, extract_alpha, extract_article_wisdom, extract_book_ideas, extract_book_recommendations, extract_business_ideas, extract_controversial_ideas, extract_core_message, extract_ctf_writeup, extract_domains, extract_extraordinary_claims, extract_ideas, extract_insights, extract_insights_dm, extract_instructions, extract_jokes, extract_latest_video, extract_main_activities, extract_main_idea, extract_mcp_servers, extract_most_redeeming_thing, extract_patterns, extract_poc, extract_predictions, extract_primary_problem, extract_primary_solution, extract_product_features, extract_questions, extract_recipe, extract_recommendations, extract_references, extract_skills, extract_song_meaning, extract_sponsors, extract_videoid, extract_wisdom, extract_wisdom_agents, extract_wisdom_dm, extract_wisdom_nometa, extract_wisdom_short, generate_code_rules, t_extract_intro_sentences, t_extract_panel_topics
+**EXTRACT**: analyze_comments, create_aphorisms, create_tags, create_video_chapters, extract_algorithm_update_recommendations, extract_alpha, extract_article_wisdom, extract_book_ideas, extract_book_recommendations, extract_business_ideas, extract_characters, extract_controversial_ideas, extract_core_message, extract_ctf_writeup, extract_domains, extract_extraordinary_claims, extract_ideas, extract_insights, extract_insights_dm, extract_instructions, extract_jokes, extract_latest_video, extract_main_activities, extract_main_idea, extract_mcp_servers, extract_most_redeeming_thing, extract_patterns, extract_poc, extract_predictions, extract_primary_problem, extract_primary_solution, extract_product_features, extract_questions, extract_recipe, extract_recommendations, extract_references, extract_skills, extract_song_meaning, extract_sponsors, extract_videoid, extract_wisdom, extract_wisdom_agents, extract_wisdom_dm, extract_wisdom_nometa, extract_wisdom_short, generate_code_rules, t_extract_intro_sentences, t_extract_panel_topics
 
 **GAMING**: create_npc, create_rpg_summary, summarize_rpg_session
 

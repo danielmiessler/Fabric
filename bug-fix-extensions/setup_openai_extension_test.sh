@@ -70,6 +70,10 @@ if [[ -z "${ANTHROPIC_API_BASE_URL:-}" ]]; then
     export ANTHROPIC_API_BASE_URL="https://api.anthropic.com/v1"
 fi
 
+# Strip trailing slashes from base URLs
+OPENAI_API_BASE_URL="${OPENAI_API_BASE_URL%/}"
+ANTHROPIC_API_BASE_URL="${ANTHROPIC_API_BASE_URL%/}"
+
 # === Wrapper script ===
 echo "✅ Creating OpenAI wrapper script at $WRAPPER ..."
 cat > "$WRAPPER" <<'EOF'
@@ -105,12 +109,16 @@ cat > "$CLAUDE_WRAPPER" <<'EOF'
 set -euo pipefail
 
 INPUT="$*"
-RESPONSE=$(curl "$ANTHROPIC_API_BASE_URL/messages" \
+
+# Strip trailing slash from base URL if present
+BASE_URL="${ANTHROPIC_API_BASE_URL%/}"
+
+RESPONSE=$(curl "${BASE_URL}/v1/messages" \
   -s -w "\n%{http_code}" \
   -H "Content-Type: application/json" \
   -H "x-api-key: $ANTHROPIC_API_KEY" \
   -H "anthropic-version: 2023-06-01" \
-  -d "{\"model\":\"claude-3-5-sonnet-20241022\",\"max_tokens\":1024,\"messages\":[{\"role\":\"user\",\"content\":\"$INPUT\"}]}")
+  -d "{\"model\":\"claude-3-5-sonnet-20240620\",\"max_tokens\":1024,\"messages\":[{\"role\":\"user\",\"content\":\"$INPUT\"}]}")
 
 HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
 BODY=$(echo "$RESPONSE" | sed '$d')

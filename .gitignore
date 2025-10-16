@@ -354,3 +354,7 @@ tmp/
 # Ignore .claude/
 .claude/
 fabric-debug
+
+# Ignore compiled binaries (can be rebuilt with 'go build')
+fabric-fix
+fabric-before-fix

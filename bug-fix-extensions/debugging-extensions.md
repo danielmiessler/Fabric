@@ -1,5 +1,7 @@
 # Debugging Fabric Extensions
 
+> **Note:** For information about the `{{input}}` in extensions bug fix, see [input-extension-bug-fix.md](./input-extension-bug-fix.md).
+
 ## Method 1: Built-in Debug Logging
 
 Use the `--debug` flag with levels 0-3:

@@ -89,6 +89,10 @@ All existing tests continue to pass:
 - `TestApplyVariables` ✅
 - `TestGetApplyVariables` ✅
 
+## Additional Resources
+
+For general extension debugging techniques, see [debugging-extensions.md](./debugging-extensions.md).
+
 ## NOTES
 
 - diff two repos with bc

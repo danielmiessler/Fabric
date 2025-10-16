@@ -24,4 +24,3 @@ echo "Generate with Word-generator and it works as expected:"
 # Run (generate 3 random words) with debug logging
 echo "{{ext:word-generator:generate:3}}" | fabric --debug=3
 
-####### Now we will add word-counter extension #########

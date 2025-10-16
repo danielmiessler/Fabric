@@ -58,7 +58,7 @@ func matchTriple(r *regexp.Regexp, full string) (string, string, string, bool) {
 func ApplyTemplate(content string, variables map[string]string, input string) (string, error) {
 	tokenPattern := regexp.MustCompile(`\{\{([^{}]+)\}\}`)
 
-	debugf("Starting template processing\n")
+	debugf("Starting template processing with input='%s'\n", input)
 
 	for {
 		if !strings.Contains(content, "{{") {

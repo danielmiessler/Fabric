@@ -99,9 +99,9 @@ func (o *PatternsEntity) applyVariables(
 	withSentinel := strings.ReplaceAll(pattern.Pattern, "{{input}}", inputSentinel)
 
 	// Process all other template variables in the pattern
-	// At this point, our sentinel ensures {{input}} won't be affected
+	// Pass the actual input so extension calls can use {{input}} within their value parameter
 	var processed string
-	if processed, err = template.ApplyTemplate(withSentinel, variables, ""); err != nil {
+	if processed, err = template.ApplyTemplate(withSentinel, variables, input); err != nil {
 		return
 	}
 

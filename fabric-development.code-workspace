@@ -1,0 +1,25 @@
+{
+  "folders": [
+    {
+      "path": "/Users/ourdecisions/devHelp/Fabric-fix",
+      "name": "Fabric-fix"
+    },
+    {
+      "path": "/Users/ourdecisions/.config/fabric",
+      "name": "fabric-config"
+    }
+  ],
+  "settings": {
+    "go.toolsManagement.checkForUpdates": "local",
+    "go.useLanguageServer": true,
+    "go.lintOnSave": "package",
+    "go.formatTool": "goimports"
+ },
+  "extensions": {
+    "recommendations": [
+      "golang.go",
+      "ms-vscode.test-adapter-converter",
+      "streetsidesoftware.code-spell-checker"
+    ]
+  }
+}

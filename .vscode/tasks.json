@@ -1,0 +1,29 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "go: build binary",
+      "type": "shell",
+      "command": "go",
+      "args": [
+        "build",
+        "-gcflags=all=-N -l",
+        "-o",
+        "fabric-debug/fabric",
+        "${workspaceFolder}/${input:fabricMainDir}"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {
+      "id": "fabricMainDir",
+      "type": "promptString",
+      "description": "Enter the relative path to the main package folder (e.g. cmd/fabric)",
+      "default": "cmd/fabric"
+    }
+  ]
+}

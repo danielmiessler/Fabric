@@ -7,6 +7,10 @@
     {
       "path": "/Users/ourdecisions/.config/fabric",
       "name": "fabric-config"
+    },
+    {
+      "path": "/Users/ourdecisions/devHelp/Fabric-integration",
+      "name": "Fabric-integration"
     }
   ],
   "settings": {

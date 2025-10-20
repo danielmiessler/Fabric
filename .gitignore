@@ -356,5 +356,6 @@ tmp/
 fabric-debug
 
 # Ignore compiled binaries (can be rebuilt with 'go build')
+fabric
 fabric-fix
 fabric-before-fix

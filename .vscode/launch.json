@@ -1,77 +1,24 @@
 {
   "version": "0.2.0",
   "configurations": [
+    // Debug a specific unit test
+    // Change the test name in args to debug different tests
     {
       "type": "go",
       "request": "launch",
-      "name": "Debug Fabric CLI",
-      "mode": "debug",
-      "program": "${workspaceFolder}/${input:fabricMainDir}",
-      "cwd": "${workspaceFolder}",
-      "stopOnEntry": false,
-      "showLog": false,
-      "env": {},
-      "args": []
-    },
-    {
-      "type": "go",
-      "request": "launch",
-      "name": "Test Package",
-      "mode": "test",
-      "program": "${workspaceFolder}/${input:testPackageDir}",
-      "cwd": "${workspaceFolder}",
-      "showLog": false,
-      "env": {},
-      "args": []
-    },
-    {
-      "type": "go",
-      "request": "launch",
-      "name": "Debug Single TestSysPlugin",
+      "name": "Debug unit test",
       "mode": "test",
       "program": "${workspaceFolder}/internal/plugins/template",
       "cwd": "${workspaceFolder}",
-      "showLog": false,
+      "showLog": true,
       "env": {},
       "args": [
         "-test.run",
-        "^TestSysPlugin$"
+        "^TestNestedInputInExtension$"
       ],
       "buildFlags": [
         "-gcflags=all=-N -l"
-      ],
-      "stopOnEntry": true
-    },
-    {
-      "type": "go",
-      "request": "launch",
-      "name": "Debug Built Binary (exec)",
-      "mode": "exec",
-      "program": "${workspaceFolder}/${input:builtBinaryPath}",
-      "cwd": "${workspaceFolder}",
-      "stopOnEntry": false,
-      "showLog": false,
-      "preLaunchTask": "go: build binary"
-    }
-  ],
-  "inputs": [
-    {
-      "id": "fabricMainDir",
-      "type": "promptString",
-      "description": "Enter the relative path to the main package folder (e.g. cmd/fabric)",
-      "default": "cmd/fabric"
-    },
-    {
-      "id": "testPackageDir",
-      "type": "promptString",
-      "description": "Enter the relative path to the Go package you want to test (e.g. internal/plugins/template)",
-      "default": "internal/plugins/template"
-    },
-    {
-      "id": "builtBinaryPath",
-      "type": "promptString",
-      "description": "Enter the relative path to a pre-built Fabric binary to debug (e.g. fabric-debug/fabric)",
-      "default": "fabric-debug/fabric"
+      ]
     }
   ]
 }

@@ -8,7 +8,6 @@ import (
 	"strings"
 
 	"github.com/danielmiessler/fabric/internal/chat"
-
 	"github.com/danielmiessler/fabric/internal/domain"
 	"github.com/danielmiessler/fabric/internal/plugins/ai"
 	"github.com/danielmiessler/fabric/internal/plugins/db/fsdb"
@@ -65,16 +64,17 @@ func (o *Chatter) Send(request *domain.ChatRequest, opts *domain.ChatOptions) (s
 
 	message := ""
 
+	// --- FIXED STREAM HANDLING START ---
 	if o.Stream {
 		responseChan := make(chan string)
 		errChan := make(chan error, 1)
-		done := make(chan struct{})
 
 		go func() {
-			defer close(done)
+			defer close(responseChan)
 			if streamErr := o.vendor.SendStream(session.GetVendorMessages(), opts, responseChan); streamErr != nil {
 				errChan <- streamErr
 			}
+			close(errChan)
 		}()
 
 		for response := range responseChan {
@@ -84,24 +84,17 @@ func (o *Chatter) Send(request *domain.ChatRequest, opts *domain.ChatOptions) (s
 			}
 		}
 
-		// Wait for goroutine to finish
-		<-done
-
-		// Check for errors in errChan
-		select {
-		case streamErr := <-errChan:
-			if streamErr != nil {
-				err = streamErr
-				return
-			}
-		default:
-			// No errors, continue
+		// Wait for potential errors after streaming finishes
+		if streamErr, ok := <-errChan; ok && streamErr != nil {
+			err = streamErr
+			return
 		}
 	} else {
 		if message, err = o.vendor.Send(context.Background(), session.GetVendorMessages(), opts); err != nil {
 			return
 		}
 	}
+	// --- FIXED STREAM HANDLING END ---
 
 	if opts.SuppressThink && !o.DryRun {
 		message = domain.StripThinkBlocks(message, opts.ThinkStartTag, opts.ThinkEndTag)
@@ -142,6 +135,7 @@ func (o *Chatter) Send(request *domain.ChatRequest, opts *domain.ChatOptions) (s
 	return
 }
 
+// BuildSession builds the chat session from the provided request
 func (o *Chatter) BuildSession(request *domain.ChatRequest, raw bool) (session *fsdb.Session, err error) {
 	if request.SessionName != "" {
 		var sess *fsdb.Session
@@ -170,8 +164,6 @@ func (o *Chatter) BuildSession(request *domain.ChatRequest, raw bool) (session *
 	}
 
 	// Process template variables in message content
-	// Double curly braces {{variable}} indicate template substitution
-	// Ensure we have a message before processing
 	if request.Message == nil {
 		request.Message = &chat.ChatCompletionMessage{
 			Role:    chat.ChatMessageRoleUser,
@@ -179,7 +171,6 @@ func (o *Chatter) BuildSession(request *domain.ChatRequest, raw bool) (session *
 		}
 	}
 
-	// Now we know request.Message is not nil, process template variables
 	if request.InputHasVars && !request.NoVariableReplacement {
 		request.Message.Content, err = template.ApplyTemplate(request.Message.Content, request.PatternVariables, "")
 		if err != nil {
@@ -212,14 +203,11 @@ func (o *Chatter) BuildSession(request *domain.ChatRequest, raw bool) (session *
 			return nil, fmt.Errorf("could not load strategy %s: %v", request.StrategyName, err)
 		}
 		if strategy != nil && strategy.Prompt != "" {
-			// prepend the strategy prompt to the system message
 			systemMessage = fmt.Sprintf("%s\n%s", strategy.Prompt, systemMessage)
 		}
 	}
 
-	// Apply refined language instruction if specified
 	if request.Language != "" && request.Language != "en" {
-		// Refined instruction: Execute pattern using user input, then translate the entire response.
 		systemMessage = fmt.Sprintf("%s\n\nIMPORTANT: First, execute the instructions provided in this prompt using the user's input. Second, ensure your entire final response, including any section headers or titles generated as part of executing the instructions, is written ONLY in the %s language.", systemMessage, request.Language)
 	}
 
@@ -232,16 +220,13 @@ func (o *Chatter) BuildSession(request *domain.ChatRequest, raw bool) (session *
 				finalContent = fmt.Sprintf("%s\n\n%s", systemMessage, request.Message.Content)
 			}
 
-			// Handle MultiContent properly in raw mode
 			if len(request.Message.MultiContent) > 0 {
-				// When we have attachments, add the text as a text part in MultiContent
 				newMultiContent := []chat.ChatMessagePart{
 					{
 						Type: chat.ChatMessagePartTypeText,
 						Text: finalContent,
 					},
 				}
-				// Add existing non-text parts (like images)
 				for _, part := range request.Message.MultiContent {
 					if part.Type != chat.ChatMessagePartTypeText {
 						newMultiContent = append(newMultiContent, part)
@@ -252,7 +237,6 @@ func (o *Chatter) BuildSession(request *domain.ChatRequest, raw bool) (session *
 					MultiContent: newMultiContent,
 				}
 			} else {
-				// No attachments, use regular Content field
 				request.Message = &chat.ChatCompletionMessage{
 					Role:    chat.ChatMessageRoleUser,
 					Content: finalContent,
@@ -266,8 +250,6 @@ func (o *Chatter) BuildSession(request *domain.ChatRequest, raw bool) (session *
 		if systemMessage != "" {
 			session.Append(&chat.ChatCompletionMessage{Role: chat.ChatMessageRoleSystem, Content: systemMessage})
 		}
-		// If multi-part content, it is in the user message, and should be added.
-		// Otherwise, we should only add it if we have not already used it in the systemMessage.
 		if len(request.Message.MultiContent) > 0 || (request.Message != nil && !inputUsed) {
 			session.Append(request.Message)
 		}

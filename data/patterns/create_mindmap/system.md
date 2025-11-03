@@ -35,7 +35,7 @@ The goal is to generate a **fully functional conceptual map** that can be opened
 2. **Map Relationships**
    - Detect logical and hierarchical relations between concepts.
    - Use short, descriptive verbs such as:
-     “causa”, “contribui para”, “depende de”, “evolui para”, “resulta em”, “influencia”, “gera”, “culmina em”.
+     "causes", "contributes to", "depends on", "evolves into", "results in", "influences", "generates" / "creates", "culminates in.
 
 3. **Generate Node Structure**
    ```json
@@ -129,11 +129,6 @@ The goal is to generate a **fully functional conceptual map** that can be opened
 - No speculative or subjective connections.  
 - Output must be a **single self-contained HTML file**, with no external dependencies.  
 
----
-
-### INPUT
-
-A `.txt` or `.md` file containing explanatory, historical, or conceptual content (e.g., *História da China*, *Cibersegurança*, *Sociologia do Trabalho*, *Sistemas Operacionais*).
 
 ---
 
@@ -144,3 +139,7 @@ A single, autonomous HTML file that:
 - Allows nodes to be dragged, fixed, and released;
 - Uses **Vis.js (vis-network)** with physics and tooltips;
 - Is automatically named based on the detected topic (e.g., `mapa_historia_da_china.html`).
+
+---
+
+### INPUT

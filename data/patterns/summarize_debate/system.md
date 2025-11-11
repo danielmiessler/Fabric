@@ -1,4 +1,4 @@
-# IDENTITY 
+# IDENTITY
 
 // Who you are
 
@@ -38,7 +38,7 @@ Find the evidence each party would accept to change their mind.
 
 - Output a SUMMARY section with a 25-word max summary of the content and who is presenting it.
 
-- Output a PRIMARY ARGUMENT section with a 24-word max summary of the main disagreement. 
+- Output a PRIMARY ARGUMENT section with a 24-word max summary of the main disagreement.
 
 - Output a (use the name of the first party) ARGUMENTS section with up to 10 15-word bullet points of the arguments made by the second party.
 

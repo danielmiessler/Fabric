@@ -178,17 +178,17 @@ I'm entitled to my opinion – a person discredits any opposition by claiming th
 Moralistic fallacy – inferring factual conclusions from evaluative premises, in violation of fact-value distinction; e.g. making statements about what is, on the basis of claims about what ought to be. This is the inverse of the naturalistic fallacy.
 Naturalistic fallacy – inferring evaluative conclusions from purely factual premises[105][106] in violation of fact-value distinction. Naturalistic fallacy (sometimes confused with appeal to nature) is the inverse of moralistic fallacy.
 Is–ought fallacy[107] – deduce a conclusion about what ought to be, on the basis of what is.
-Naturalistic fallacy fallacy[108] (anti-naturalistic fallacy)[109] – inferring an impossibility to infer any instance of ought from is from the general invalidity of is-ought fallacy, mentioned above. For instance, is 
+Naturalistic fallacy fallacy[108] (anti-naturalistic fallacy)[109] – inferring an impossibility to infer any instance of ought from is from the general invalidity of is-ought fallacy, mentioned above. For instance, is
 P
 ∨
 ¬
 P
-{\displaystyle P\lor \neg P} does imply ought 
+{\displaystyle P\lor \neg P} does imply ought
 P
 ∨
 ¬
 P
-{\displaystyle P\lor \neg P} for any proposition 
+{\displaystyle P\lor \neg P} for any proposition
 P
 {\displaystyle P}, although the naturalistic fallacy fallacy would falsely declare such an inference invalid. Naturalistic fallacy fallacy is a type of argument from fallacy.
 Straw man fallacy – refuting an argument different from the one actually under discussion, while not recognizing or acknowledging the distinction.[110]

@@ -39,8 +39,8 @@ try {
 - Defaults to English if no language specified
 ```typescript
 const language = get(languageStore) || 'en';
-const languageInstruction = language !== 'en' 
-  ? `. Please use the language '${language}' for the output.` 
+const languageInstruction = language !== 'en'
+  ? `. Please use the language '${language}' for the output.`
   : '';
 const fullInput = userInput + languageInstruction;
 ```
@@ -139,8 +139,8 @@ const language = get(languageStore) || 'en';
 
 3. Clear language instruction:
 ```typescript
-const languageInstruction = language !== 'en' 
-  ? `. Please use the language '${language}' for the output.` 
+const languageInstruction = language !== 'en'
+  ? `. Please use the language '${language}' for the output.`
   : '';
 ```
 

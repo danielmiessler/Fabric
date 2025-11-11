@@ -23,8 +23,8 @@ export class PdfConversionService {
     console.log('Buffer created:', buffer.byteLength);
 
     const pipeline = createPipeline(pdfjs, {
-      transformConfig: { 
-        transformers 
+      transformConfig: {
+        transformers
       }
     });
     console.log('Pipeline created');
@@ -49,27 +49,26 @@ export class PdfConversionService {
             firstItem: items[0],
             schema: PARSE_SCHEMA  // ['transform', 'width', 'height', 'str', 'fontName', 'dir']
           });
-      
+
           const text = items
             .map(item => item.value('str'))  // Using 'str' instead of 'text' based on PARSE_SCHEMA
             .filter(Boolean)
             .join('\n');
-      
+
           console.log('Converted text:', {
             length: text.length,
             preview: text.substring(0, 100)
           });
-      
+
           return text;
         }
       });
-      
+
 
     return markdown;
   }
 }
 
-    
 
 
 

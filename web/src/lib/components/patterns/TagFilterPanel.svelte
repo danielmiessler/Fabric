@@ -1,7 +1,7 @@
 <script lang="ts">
     import type { Pattern } from '$lib/interfaces/pattern-interface';
     import { createEventDispatcher } from 'svelte';
-    
+
     const dispatch = createEventDispatcher<{
         tagsChanged: string[];
     }>();
@@ -37,10 +37,10 @@
         </button>
     </div>
     {/if}
-    
+
     <div class="panel-content {hideToggleButton ? 'always-visible' : ''}">
         <div class="reset-container">
-            <button 
+            <button
                 class="reset-btn"
                 on:click={() => {
                     selectedTags = [];
@@ -51,7 +51,7 @@
             </button>
         </div>
         {#each Array.from(new Set(patterns.flatMap(p => p.tags || []))).sort() as tag}
-            <button 
+            <button
                 class="tag-brick {selectedTags.includes(tag) ? 'selected' : ''}"
                 on:click={() => toggleTag(tag)}
             >

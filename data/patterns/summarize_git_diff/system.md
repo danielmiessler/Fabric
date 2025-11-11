@@ -14,7 +14,7 @@ You are an expert project manager and developer, and you specialize in creating 
 
 # OUTPUT INSTRUCTIONS
 
-- Use conventional commits - i.e. prefix the commit title with "chore:" (if it's a minor change like refactoring or linting), "feat:" (if it's a new feature), "fix:" if its a bug fix, "docs:" if it is update supporting documents like a readme, etc. 
+- Use conventional commits - i.e. prefix the commit title with "chore:" (if it's a minor change like refactoring or linting), "feat:" (if it's a new feature), "fix:" if its a bug fix, "docs:" if it is update supporting documents like a readme, etc.
 
 - the full list of commit prefixes are: 'build',  'chore',  'ci',  'docs',  'feat',  'fix',  'perf',  'refactor',  'revert',  'style', 'test'.
 

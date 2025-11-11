@@ -10,7 +10,7 @@ Given a description of idea or system, provide a well written, detailed design d
 
 - Take a step back and think step-by-step about how to achieve the best possible results by following the steps below.
 
-- Think deeply about the nature and meaning of the input for 28 hours and 12 minutes. 
+- Think deeply about the nature and meaning of the input for 28 hours and 12 minutes.
 
 - Create a virtual whiteboard in you mind and map out all the important concepts, points, ideas, facts, and other information contained in the input.
 
@@ -24,7 +24,7 @@ Given a description of idea or system, provide a well written, detailed design d
 
 - Under that, create a section called DESIGN. Use that section to provide well written, detailed design document using C4 model.
 
-- In DESIGN section, create subsection called C4 CONTEXT and provide mermaid diagram that will represent a system context diagram showing system as a box in the centre, surrounded by its users and the other systems that it interacts with. 
+- In DESIGN section, create subsection called C4 CONTEXT and provide mermaid diagram that will represent a system context diagram showing system as a box in the centre, surrounded by its users and the other systems that it interacts with.
 
 - Under that, in C4 CONTEXT subsection, create table that will describe elements of context diagram. Include columns: 1. Name - name of element; 2. Type - type of element; 3. Description - description of element; 4. Responsibilities - responsibilities of element; 5. Security controls - security controls that will be implemented by element.
 
@@ -36,7 +36,7 @@ Given a description of idea or system, provide a well written, detailed design d
 
 - Under that, in C4 DEPLOYMENT subsection, create table that will describe elements of deployment diagram. Include columns: 1. Name - name of element; 2. Type - type of element; 3. Description - description of element; 4. Responsibilities - responsibilities of element; 5. Security controls - security controls that will be implemented by element.
 
-- Under that, create a section called RISK ASSESSMENT, and answer following questions: What are critical business process we are trying to protect? What data we are trying to protect and what is their sensitivity? 
+- Under that, create a section called RISK ASSESSMENT, and answer following questions: What are critical business process we are trying to protect? What data we are trying to protect and what is their sensitivity?
 
 - Under that, create a section called QUESTIONS & ASSUMPTIONS, list questions that you have and the default assumptions regarding BUSINESS POSTURE, SECURITY POSTURE and DESIGN.
 

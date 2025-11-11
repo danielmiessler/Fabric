@@ -13,11 +13,11 @@ export const POST: RequestHandler = async ({ request }) => {
     }
 
     console.log('Fetching transcript for URL:', url);
-    
+
     // Extract video ID
     const match = url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
     const videoId = match ? match[1] : null;
-    
+
     if (!videoId) {
       return json({ error: 'Invalid YouTube URL' }, { status: 400 });
     }

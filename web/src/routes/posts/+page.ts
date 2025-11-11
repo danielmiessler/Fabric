@@ -17,7 +17,7 @@ export const load: PageLoad = async () => {
         }));
 
         // Sort posts by date, newest first
-        allPosts.sort((a, b) => 
+        allPosts.sort((a, b) =>
             new Date(b.metadata.date).getTime() - new Date(a.metadata.date).getTime()
         );
 

@@ -65,24 +65,24 @@
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
   } */
-  
+
   /* Enhanced Typography */
 /*   h1, h2, h3, h4, h5, h6 {
     @apply font-semibold tracking-tight;
   }
-  
+
   h1 {
     @apply text-4xl lg:text-5xl;
   }
-  
+
   h2 {
     @apply text-3xl lg:text-4xl;
   }
-  
+
   h3 {
     @apply text-2xl lg:text-3xl;
   }
-  
+
   p {
     @apply leading-7;
   }
@@ -91,12 +91,12 @@
 /*   a {
     @apply text-primary hover:text-primary/80 transition-colors;
   } */
-  
+
   /* Code blocks */
 /*   pre {
     @apply p-4 rounded-lg bg-muted/50 font-mono text-sm;
   }
-  
+
   code {
     @apply font-mono text-sm;
   }
@@ -105,7 +105,7 @@
 /*   .terminal-window {
     @apply rounded-lg border bg-card shadow-lg overflow-hidden;
   }
-  
+
   .terminal-text {
     @apply font-mono text-sm;
   }
@@ -114,7 +114,7 @@
 /*   input, textarea, select {
     @apply rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
   }
-  
+
   button {
     @apply inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
   }

@@ -80,4 +80,3 @@ The colony’s AI system that actively reallocates power during the dust storm. 
 
 # INPUT
 
-

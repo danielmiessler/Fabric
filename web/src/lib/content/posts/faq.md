@@ -3,7 +3,7 @@ title: FAQ Template
 aliases: Frequently Asked Questions
 tags:
  - template
-description: A template to get writing a FAQ post 
+description: A template to get writing a FAQ post
 date: 2024-12-30
 updated:
 ---
@@ -19,7 +19,7 @@ updated:
 ### **Body:**
 
 #### Question 1: [Question Text]
-- **Answer:** Provide a thorough explanation along with relevant details. Use bullet points or numbered lists for clarity if necessary. 
+- **Answer:** Provide a thorough explanation along with relevant details. Use bullet points or numbered lists for clarity if necessary.
 - **Related Resources:** Link to articles, studies, or external resources for deeper understanding.
 
 #### Question 2: [Question Text]
@@ -50,9 +50,8 @@ updated:
 ##### **Additional Tips for Engagement:**
 - **Social Media Sharing:** Encourage readers to share the post on social media for broader discussion.
 - **Email Subscription Prompt:** Invite readers to subscribe for a newsletter or email alerts with more information related to [Topic].
-- **Poll or Survey:** Consider embedding a quick poll or survey related to the topic to gauge reader interests and further refine your content. 
+- **Poll or Survey:** Consider embedding a quick poll or survey related to the topic to gauge reader interests and further refine your content.
 
 ##### **Appendix (Optional):**
 - **Glossary of Terms:** If the topic uses specialized language or jargon, provide a glossary of terms for readers who may need clarification.
 - **Further Reading:** Suggest a list of books, articles, podcasts, or videos for readers interested in exploring the topic more deeply.
-

@@ -36,7 +36,7 @@ In this example:
 
 **Example 2**: Custom Layouts with Mdsvex
 Assuming you have a layout component at src/lib/layouts/BlogLayout.svelte:
-  
+
 ```svelte
 <!-- BlogLayout.svelte -->
 <script>

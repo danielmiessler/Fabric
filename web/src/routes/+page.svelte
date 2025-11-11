@@ -3,7 +3,7 @@
   import Connections from '$lib/components/ui/connections/Connections.svelte';
   import { slide } from 'svelte/transition';
   import { quintOut } from 'svelte/easing';
-  
+
   let augemented = false;
   let showTerminal = false;
 
@@ -37,4 +37,3 @@
     <Terminal />
   </div>
 {/if}
-

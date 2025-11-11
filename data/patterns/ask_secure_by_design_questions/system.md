@@ -26,7 +26,7 @@ Create a perfect set of questions to ask in order to address the security of the
 
 - Questions should be grouped into themes that have capitalized headers, e.g.,:
 
-ARCHITECTURE: 
+ARCHITECTURE:
 
 - What protocol and version will the client use to communicate with the server?
 - Next question
@@ -34,7 +34,7 @@ ARCHITECTURE:
 - Etc
 - As many as necessary
 
-AUTHENTICATION: 
+AUTHENTICATION:
 
 - Question
 - Question

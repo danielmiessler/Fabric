@@ -14,9 +14,9 @@
   import { languageStore } from '$lib/store/language-store';
   import { obsidianSettings, updateObsidianSettings } from '$lib/store/obsidian-store';
   import { PdfConversionService } from '$lib/services/PdfConversionService';
-  
+
   const pdfService = new PdfConversionService();
-  
+
 
 
 
@@ -45,9 +45,9 @@
     console.log('\n=== Handle Input ===');
     const target = event.target as HTMLTextAreaElement;
     userInput = target.value;
-    
+
     const currentLanguage = get(languageStore);
-    
+
     const languageQualifiers = {
       '--en': 'en',
       '--fr': 'fr',
@@ -108,7 +108,7 @@
       const content = await readFileContent(file);
       fileContents.push(content);
       uploadedFiles = [...uploadedFiles, file.name];
-      
+
       // Update processing status per file
       messageStore.update(messages => {
         const newMessages = [...messages];
@@ -121,7 +121,7 @@
     }
 
     // Remove processing message on completion
-    messageStore.update(messages => 
+    messageStore.update(messages =>
       messages.filter(m => m.format !== 'loading')
     );
 
@@ -130,9 +130,9 @@
       message: 'Error processing files: ' + (error as Error).message,
       background: 'variant-filled-error'
     });
-    
+
     // Clean up processing message on error
-    messageStore.update(messages => 
+    messageStore.update(messages =>
       messages.filter(m => m.format !== 'loading')
     );
   } finally {
@@ -141,7 +141,7 @@
 }
 
 
-  
+
 
 
 
@@ -161,7 +161,7 @@ async function readFileContent(file: File): Promise<string> {
       // Start PDF processing
       console.log('Starting PDF conversion process');
       const markdown = await pdfService.convertToMarkdown(file);
-      
+
       // Validate conversion result
       console.log('PDF conversion completed:', {
         resultLength: markdown.length,
@@ -174,16 +174,16 @@ async function readFileContent(file: File): Promise<string> {
       }
 
 
-      
+
       // Add to fileContents for pattern processing
       fileContents.push(markdown);
 
       // Prepare enhanced prompt with system instructions
       const enhancedPrompt = `${$systemPrompt}\nAnalyze and process the provided content according to these instructions.`;
-      
+
       // Format final content with proper labeling
       const finalContent = `${userInput}\n\nFile Contents (PDF):\n${markdown}`;
-      
+
       // Process through pattern system
       await sendMessage(finalContent, enhancedPrompt);
 
@@ -195,11 +195,11 @@ async function readFileContent(file: File): Promise<string> {
     fileName: file.name,
     fileSize: file.size
   });
-  
-  const errorMessage = error instanceof Error 
+
+  const errorMessage = error instanceof Error
     ? error.message
     : 'Unknown error during PDF conversion';
-    
+
   throw new Error(`Failed to convert PDF ${file.name}: ${errorMessage}`);
 }
   }
@@ -207,7 +207,7 @@ async function readFileContent(file: File): Promise<string> {
   // Handle text files
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
-    
+
     reader.onload = async (e) => {
       const content = e.target?.result as string;
       console.log('Text file processed:', {
@@ -221,7 +221,7 @@ async function readFileContent(file: File): Promise<string> {
       await sendMessage(finalContent, enhancedPrompt);
       resolve(content);
     };
-    
+
     reader.onerror = (e) => {
       console.error('FileReader error:', {
         error: reader.error,
@@ -244,7 +244,7 @@ async function readFileContent(file: File): Promise<string> {
       console.log('Obsidian saving is disabled');
       return;
     }
-    
+
     if (!$obsidianSettings.noteName) {
       toastStore.trigger({
         message: 'Please enter a note name in Obsidian settings',
@@ -283,12 +283,12 @@ async function readFileContent(file: File): Promise<string> {
       });
 
       const responseData = await response.json();
-      
+
       if (!response.ok) {
         throw new Error(responseData.error || 'Failed to save to Obsidian');
       }
       // Add this after successful save
-      updateObsidianSettings({ 
+      updateObsidianSettings({
       saveToObsidian: false,  // Reset the save flag
       noteName: ''           // Clear the note name
       });
@@ -342,7 +342,7 @@ async function readFileContent(file: File): Promise<string> {
                   });
               },
               (error) => {
-                  messageStore.update(messages => 
+                  messageStore.update(messages =>
                       messages.filter(m => m.format !== 'loading')
                   );
                   throw error;
@@ -366,7 +366,7 @@ async function readFileContent(file: File): Promise<string> {
           fileContents = [];
       } catch (error) {
           console.error('Error processing YouTube URL:', error);
-          messageStore.update(messages => 
+          messageStore.update(messages =>
               messages.filter(m => m.format !== 'loading')
           );
           throw error;
@@ -378,31 +378,31 @@ async function readFileContent(file: File): Promise<string> {
 
   try {
     console.log('\n=== Submit Handler Start ===');
-    
+
     // Store the user input before any processing
     const inputText = userInput.trim();
     console.log('Captured user input:', inputText);
-    
+
     // Handle YouTube URLs with the existing flow
     if (isYouTubeURL) {
       console.log('2a. Starting YouTube flow');
       await processYouTubeURL(inputText);
       return;
     }
-    
+
     // For regular text input, add the user message to the UI first
     messageStore.update(messages => [...messages, {
       role: 'user',
       content: inputText
     }]);
-    
+
     // Add loading indicator
     messageStore.update(messages => [...messages, {
       role: 'system',
       content: 'Processing...',
       format: 'loading'
     }]);
-    
+
     // Clear input fields
     userInput = "";
     const filesForProcessing = [...uploadedFiles];
@@ -410,27 +410,27 @@ async function readFileContent(file: File): Promise<string> {
     uploadedFiles = [];
     fileContents = [];
     fileButtonKey = !fileButtonKey;
-    
+
     // Prepare content with file attachments if any
-    const contentWithFiles = contentsForProcessing.length > 0 
+    const contentWithFiles = contentsForProcessing.length > 0
       ? `${inputText}\n\nFile Contents (${filesForProcessing.map(f => f.endsWith('.pdf') ? 'PDF' : 'Text').join(', ')}):\n${contentsForProcessing.join('\n\n---\n\n')}`
       : inputText;
-    
+
     // Get the enhanced prompt
-    const enhancedPrompt = contentsForProcessing.length > 0 
+    const enhancedPrompt = contentsForProcessing.length > 0
       ? `${$systemPrompt}\nAnalyze and process the provided content according to these instructions.`
       : $systemPrompt;
-    
+
     console.log('Content to send:', {
       text: contentWithFiles.substring(0, 100) + '...',
       length: contentWithFiles.length,
       hasFiles: contentsForProcessing.length > 0
     });
-    
+
     try {
       // Get the chat stream
       const stream = await chatService.streamChat(contentWithFiles, enhancedPrompt);
-      
+
       // Process the stream
       await chatService.processStream(
         stream,
@@ -442,7 +442,7 @@ async function readFileContent(file: File): Promise<string> {
             if (loadingIndex !== -1) {
               newMessages.splice(loadingIndex, 1);
             }
-            
+
             // Always append a new assistant message
             newMessages.push({
               role: 'assistant',
@@ -455,11 +455,11 @@ async function readFileContent(file: File): Promise<string> {
 
         (error) => {
           // Make sure to remove loading message on error
-          messageStore.update(messages => 
+          messageStore.update(messages =>
             messages.filter(m => m.format !== 'loading')
           );
           console.error('Stream processing error:', error);
-          
+
           // Show error message using a valid format type
           messageStore.update(messages => [...messages, {
             role: 'system',
@@ -470,19 +470,19 @@ async function readFileContent(file: File): Promise<string> {
       );
     } catch (error) {
       // Make sure to remove loading message on error
-      messageStore.update(messages => 
+      messageStore.update(messages =>
         messages.filter(m => m.format !== 'loading')
       );
       throw error; // Re-throw to be caught by the outer try/catch
     }
   } catch (error) {
     console.error('Chat submission error:', error);
-    
+
     // Make sure to remove loading message on error (redundant but safe)
-    messageStore.update(messages => 
+    messageStore.update(messages =>
       messages.filter(m => m.format !== 'loading')
     );
-    
+
     // Show error message using a valid format type
     messageStore.update(messages => [...messages, {
       role: 'system',
@@ -491,58 +491,58 @@ async function readFileContent(file: File): Promise<string> {
     }]);
   } finally {
     // As a final safety measure, ensure loading message is removed
-    messageStore.update(messages => 
+    messageStore.update(messages =>
       messages.filter(m => m.format !== 'loading')
     );
   }
 }
 
-  
+
 /* async function handleSubmit() {
   if (!userInput.trim()) return;
 
   try {
     console.log('\n=== Submit Handler Start ===');
-    
+
     if (isYouTubeURL) {
       console.log('2a. Starting YouTube flow');
       await processYouTubeURL(userInput);
       return;
     }
-    
-    const enhancedPrompt = fileContents.length > 0 
+
+    const enhancedPrompt = fileContents.length > 0
       ? `${$systemPrompt}\nAnalyze and process the provided content according to these instructions.`
       : $systemPrompt;
-    
+
     // Hide raw content from display but keep it for processing
     messageStore.update(messages => [...messages, {
       role: 'system',
       content: 'Processing content...',
       format: 'loading'
     }]);
-    
+
     // Store the user input before clearing it
     const inputText = userInput;
-    
+
     // Construct finalContent BEFORE clearing userInput
-    const finalContent = fileContents.length > 0 
+    const finalContent = fileContents.length > 0
       ? `${inputText}\n\nFile Contents (${uploadedFiles.map(f => f.endsWith('.pdf') ? 'PDF' : 'Text').join(', ')}):\n${fileContents.join('\n\n---\n\n')}`
       : inputText;
-    
+
     // Now clear the input fields
-    userInput = ""; 
-    uploadedFiles = []; 
-    fileContents = []; 
-    fileButtonKey = !fileButtonKey; 
-     
+    userInput = "";
+    uploadedFiles = [];
+    fileContents = [];
+    fileButtonKey = !fileButtonKey;
+
     await sendMessage(finalContent, enhancedPrompt);
-    
+
   } catch (error) {
     console.error('Chat submission error:', error);
   }
 } */
 
- 
+
 
 
   function handleKeydown(event: KeyboardEvent) {
@@ -582,8 +582,8 @@ async function readFileContent(file: File): Promise<string> {
           disabled={isProcessingFiles || uploadedFiles.length >= 5}
           class="h-10 w-10 bg-primary-800/30 hover:bg-primary-800/50 rounded-full transition-colors"
         >
-        <Paperclip class="w-5 h-5" /> 
-       
+        <Paperclip class="w-5 h-5" />
+
         </FileButton>
       {/key}
         <Button

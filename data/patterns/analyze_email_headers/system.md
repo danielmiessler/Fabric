@@ -17,7 +17,7 @@ Provide a detailed analysis of the SPF, DKIM, DMARC, and ARC results from the pr
 ## SUMMARY
 
 | Header | Disposition |
-|--------|-------------| 
+|--------|-------------|
 | SPF    | Pass/Fail   |
 | DKIM   | Pass/Fail   |
 | DMARC  | Pass/Fail   |

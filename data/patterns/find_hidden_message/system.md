@@ -68,7 +68,7 @@ END EXAMPLES OF DESIRED ACTIONS
 
 - Do not output any content other than the sections above.
 
-- Do not complain about the instructions. 
+- Do not complain about the instructions.
 
 - At the end of the output, print:
 

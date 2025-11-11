@@ -34,10 +34,10 @@ export const POST: RequestHandler = async ({ request }) => {
     console.log('2. Note name:', body.noteName);
     console.log('3. Content length:', body.content.length);
 
-  
 
 
-    
+
+
 
     // Format content with markdown code blocks
     const formattedContent = `\`\`\`markdown\n${body.content}\n\`\`\``;
@@ -45,7 +45,7 @@ export const POST: RequestHandler = async ({ request }) => {
 
     // Generate file name and path
     const fileName = `${new Date().toISOString().split('T')[0]}-${body.noteName}.md`;
-   
+
     const obsidianDir = 'myfiles/Fabric_obsidian';
     const filePath = `${obsidianDir}/${fileName}`;
     await execAsync(`mkdir -p "${obsidianDir}"`);
@@ -82,7 +82,7 @@ export const POST: RequestHandler = async ({ request }) => {
     console.error('Type:', error?.constructor?.name);
     console.error('Message:', error instanceof Error ? error.message : String(error));
     console.error('Stack:', error instanceof Error ? error.stack : 'No stack trace');
-    
+
     return json(
       {
         error: error instanceof Error ? error.message : 'Failed to process request',

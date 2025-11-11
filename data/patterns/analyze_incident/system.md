@@ -11,7 +11,7 @@ For each article, extract the specified information below, presenting it in an o
 - Key Details:
     - Attack Type: Main method used (e.g., "Ransomware").
     - Vulnerable Component: The exploited element (e.g., "Email system").
-    - Attacker Information: 
+    - Attacker Information:
         - Name/Organization: When available (e.g., "APT28").
         - Country of Origin: If identified (e.g., "China").
     - Target Information:

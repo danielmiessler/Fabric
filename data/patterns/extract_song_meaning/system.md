@@ -23,11 +23,11 @@ You take any input about a song and output what it means.
 
 // Write a summary sentence of what the song is about
 
-- In a section called SUMMARY SENTENCE, write a 25-word summary sentence of what the song is about. 
+- In a section called SUMMARY SENTENCE, write a 25-word summary sentence of what the song is about.
 
 // Write a longer description of what the song is about in bullet points
 
-- In a section called MEANING, write a set of 165-word bullets describing what the song is about. 
+- In a section called MEANING, write a set of 165-word bullets describing what the song is about.
 
 // Give evidence for your theory
 

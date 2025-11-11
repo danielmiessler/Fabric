@@ -46,13 +46,13 @@ echo Installing yt helper...
 go install github.com/danielmiessler/yt@latest
 
 :: Prompt user for YouTube API Key
-set /p YOUTUBE_API_KEY=Enter your YouTube API Key (press Enter to skip): 
+set /p YOUTUBE_API_KEY=Enter your YouTube API Key (press Enter to skip):
 if not "!YOUTUBE_API_KEY!"=="" (
     echo YOUTUBE_API_KEY=!YOUTUBE_API_KEY!>> %USERPROFILE%\.config\fabric\.env
 )
 
 :: Prompt user for OpenAI API Key
-set /p OPENAI_API_KEY=Enter your OpenAI API Key (press Enter to skip): 
+set /p OPENAI_API_KEY=Enter your OpenAI API Key (press Enter to skip):
 if not "!OPENAI_API_KEY!"=="" (
     echo OPENAI_API_KEY=!OPENAI_API_KEY!>> %USERPROFILE%\.config\fabric\.env
 )
@@ -69,15 +69,15 @@ echo 3. List models
 echo 4. Update patterns
 echo 5. Exit
 echo.
-set /p CHOICE=Enter your choice (1-5): 
+set /p CHOICE=Enter your choice (1-5):
 
 if "%CHOICE%"=="1" (
-    set /p PATTERN=Enter pattern (or press Enter to skip): 
-    set /p CONTEXT=Enter context (or press Enter to skip): 
-    set /p SESSION=Enter session (or press Enter to skip): 
-    set /p MODEL=Enter model (or press Enter to skip): 
-    set /p TEMPERATURE=Enter temperature (or press Enter for default): 
-    set /p STREAM=Do you want to stream output? (Y/N): 
+    set /p PATTERN=Enter pattern (or press Enter to skip):
+    set /p CONTEXT=Enter context (or press Enter to skip):
+    set /p SESSION=Enter session (or press Enter to skip):
+    set /p MODEL=Enter model (or press Enter to skip):
+    set /p TEMPERATURE=Enter temperature (or press Enter for default):
+    set /p STREAM=Do you want to stream output? (Y/N):
 
     set "FABRIC_CMD=fabric"
     if not "!PATTERN!"=="" set "FABRIC_CMD=!FABRIC_CMD! --pattern !PATTERN!"

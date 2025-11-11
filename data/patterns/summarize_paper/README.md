@@ -5,17 +5,17 @@ This pattern generates a summary of an academic paper based on the provided text
 **Title and authors of the Paper**
 
 **Main Goal and Fundamental Concept**
-   
+
 **Technical Approach**
-   
+
 **Distinctive Features**
-   
+
 **Experimental Setup and Results**
-   
+
 **Advantages and Limitations**
-   
+
 **Conclusion**
-   
+
 
 # Example run in MacOS/Linux:
 
@@ -26,7 +26,7 @@ pbpaste | fabric --pattern summarize_paper
 ```
 
 or
-    
+
 ```bash
 pbpaste | summarize_paper
 ```
@@ -35,7 +35,7 @@ pbpaste | summarize_paper
 
 ```markdown
 ### Title and authors of the Paper:
-**Internet of Paint (IoP): Channel Modeling and Capacity Analysis for Terahertz Electromagnetic Nanonetworks Embedded in Paint**  
+**Internet of Paint (IoP): Channel Modeling and Capacity Analysis for Terahertz Electromagnetic Nanonetworks Embedded in Paint**
 Authors: Lasantha Thakshila Wedage, Mehmet C. Vuran, Bernard Butler, Yevgeni Koucheryavy, Sasitharan Balasubramaniam
 
 ### Main Goal and Fundamental Concept

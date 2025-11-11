@@ -21,4 +21,3 @@ ssh -i "$cert_path" "$host" "rm ~/security-report.sh ${temp_file}" >&2
 
 # Output the local file path for fabric to read
 echo "${temp_file}"
-

@@ -2,7 +2,7 @@
 
 ## Description
 
-The `write_hackerone_report` pattern is designed to assist a bug bounty hunter with writing a bug bounty report for the HackerOne platform. It knows the structure that is normally in place on HackerOne, and is instructed on how to extrapolate from requests, responses, and comments, what the report should be about and how to create steps to reproduce for that vulnerability. 
+The `write_hackerone_report` pattern is designed to assist a bug bounty hunter with writing a bug bounty report for the HackerOne platform. It knows the structure that is normally in place on HackerOne, and is instructed on how to extrapolate from requests, responses, and comments, what the report should be about and how to create steps to reproduce for that vulnerability.
 
 **This is version 0.1**. Please improve this prompt.
 
@@ -51,4 +51,3 @@ So, in the end, this usage will be `bbReportFormatter --print-report | fabric -s
 - **Author**: Justin Gardner (@Rhynorater)
 - **Version Information**: 0.1
 - **Published**: Jul 3, 2024
-

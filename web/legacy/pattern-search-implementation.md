@@ -33,7 +33,7 @@
 let searchText = ""; // For pattern filtering
 
 // Modify sortedPatterns to include search
-$: filteredPatterns = patterns.filter(p => 
+$: filteredPatterns = patterns.filter(p =>
   p.patternName.toLowerCase().includes(searchText.toLowerCase())
 );
 

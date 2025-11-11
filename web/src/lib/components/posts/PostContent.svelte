@@ -4,7 +4,7 @@
   import Spinner from '$lib/components/ui/spinner/spinner.svelte';
   import Toc from '$lib/components/ui/toc/Toc.svelte';
 
-  export let post: Post; 
+  export let post: Post;
 </script>
 
 <article class="py-6">
@@ -19,7 +19,7 @@
     <div class="space-y-4 pl-8 ml-8">
       <h1 class="inline-block text-4xl font-bold inherit-colors lg:text-5xl">{post.metadata.title}</h1>
       <PostMeta data={post.metadata} />
-    </div> 
+    </div>
     <div class="items-center py-8 mx-auto gap-8 max-w-7xl relative prose prose-slate dark:prose-invert">
       {#if typeof post.content === 'function'}
         <Toc />

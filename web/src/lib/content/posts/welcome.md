@@ -2,12 +2,12 @@
 title: Welcome to Your Blog
 description: First post of your new SvelteKit blog
 date: 2024-01-17
-tags: 
+tags:
   - welcome
   - blog
 updated: 2024-01-17
 author: Your Name Here
-aliases: 
+aliases:
   - Welcome!
 ---
 <script>
@@ -16,7 +16,7 @@ aliases:
   import { getDrawerStore } from '@skeletonlabs/skeleton';
   import { page } from '$app/stores';
   import { beforeNavigate } from '$app/navigation';
-  
+
   const drawerStore = getDrawerStore();
   function openDrawer() {
     drawerStore.open({});
@@ -51,7 +51,6 @@ This part of the application is edited in <a href="http://localhost:5173/posts/o
 - How to use Fabric and Obsidian to write and publish
 - More ways to use Obsidian and Fabric together!
 
-Stay tuned for more content! 
+Stay tuned for more content!
 
 
- 

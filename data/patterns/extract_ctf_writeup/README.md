@@ -5,7 +5,7 @@
 
 ## Description
 
-This pattern is used to create quickly readable CTF Writeups to help the user decide, if it is beneficial for them to read/watch the full writeup. It extracts the exploited vulnerabilities, references that have been made and a timeline of the CTF. 
+This pattern is used to create quickly readable CTF Writeups to help the user decide, if it is beneficial for them to read/watch the full writeup. It extracts the exploited vulnerabilities, references that have been made and a timeline of the CTF.
 
 
 ## Meta

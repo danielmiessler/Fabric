@@ -128,11 +128,11 @@ npm run dev
 If you get an ** ERROR **.
 It would be much appreciated that you copy /paste your error in your favorite LLM before opening a ticket, 90% of the time your llm will point you to the solution.
 
-Also if you modify patterns, descriptions or tags in  Pattern_Descriptions/pattern_descriptions.json, make sure to copy the file over in  web/static/data/pattern_descriptions.json  
+Also if you modify patterns, descriptions or tags in  Pattern_Descriptions/pattern_descriptions.json, make sure to copy the file over in  web/static/data/pattern_descriptions.json
 
 _____   ______   ______
 
-OPTIONAL: Create Start/Stop Scripts 
+OPTIONAL: Create Start/Stop Scripts
 You can create scripts to start/stop both servers at once.
 
 ### For Mac Users
@@ -153,7 +153,7 @@ When creating scripts on Windows:
 
 ACTUAL SCRIPTS (Mac example)
 
-Start Script 
+Start Script
 1. Create a new file named start-fabric.command on your Desktop:
 
 #!/bin/bash

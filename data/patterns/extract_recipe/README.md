@@ -5,7 +5,7 @@
 
 ## Description
 
-This pattern is used to create a short recipe, consisting of two parts: 
+This pattern is used to create a short recipe, consisting of two parts:
   - A list of ingredients
   - A step by step guide on how to prepare the meal
 

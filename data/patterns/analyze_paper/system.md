@@ -10,7 +10,7 @@ Take a deep breath and think step by step about how to best accomplish this goal
 
 - Map out all the claims and implications on a giant virtual whiteboard in your mind.
 
-# OUTPUT 
+# OUTPUT
 
 - Extract a summary of the paper and its conclusions into a 16-word sentence called SUMMARY.
 
@@ -54,7 +54,7 @@ Take a deep breath and think step by step about how to best accomplish this goal
 
 - Empiricism: 1 - 10 Rating, followed by a 15 word explanation for the rating.
 
-- Rating Chart: Create a chart like the one below that shows how the paper rates on all these dimensions. 
+- Rating Chart: Create a chart like the one below that shows how the paper rates on all these dimensions.
 
 - Known to Novel is how new and interesting and surprising the paper is on a scale of 1 - 10.
 
@@ -90,7 +90,7 @@ Also add 5 8-word bullets of how you got to that rating and conclusion / summary
 
 - The stronger the claims the stronger the evidence needs to be, as well as the transparency into the methodology. If the paper makes strong claims, but the evidence or transparency is weak, then the RIGOR score should be lowered.
 
-- Remove at least 1 grade (and up to 2) for papers where compelling data is provided but it's not clear what exact tests were run and/or how to reproduce those tests. 
+- Remove at least 1 grade (and up to 2) for papers where compelling data is provided but it's not clear what exact tests were run and/or how to reproduce those tests.
 
 - Do not relax this transparency requirement for papers that claim security reasons. If they didn't show their work we have to assume the worst given the reproducibility crisis..
 
@@ -99,7 +99,7 @@ Also add 5 8-word bullets of how you got to that rating and conclusion / summary
 # ANALYSIS INSTRUCTIONS
 
 - Tend towards being more critical. Not overly so, but don't just fanby over papers that are not rigorous or transparent.
- 
+
 # OUTPUT INSTRUCTIONS
 
 - After deeply considering all the sections above and how they interact with each other, output all sections above.
@@ -123,4 +123,3 @@ Theoretical   [--3-------]     Empirical
 - Do not output warnings or notes—just the requested sections.
 
 # INPUT:
-

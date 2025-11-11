@@ -57,7 +57,7 @@ Could this be the new component for the search bar?
 
 	export let data: PageData;
 	$: posts = data.posts;
-	
+
 	// Extract all unique tags from posts
 	$: {
 		const tagSet = new Set<string>();
@@ -70,7 +70,7 @@ Could this be the new component for the search bar?
 	// Filter posts based on selected tags
 	$: filteredPosts = posts.filter(post => {
 		if (selectedTags.length === 0) return true;
-		return selectedTags.every(tag => 
+		return selectedTags.every(tag =>
 			post.meta.tags.some(postTag => postTag.toLowerCase() === tag.toLowerCase())
 		);
 	});
@@ -171,8 +171,8 @@ Could this be the new component for the search bar?
           {#each allTags.filter(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())) as tag}
             <button
               class="tag-button px-3 py-1 rounded-full text-sm font-medium transition-colors
-              {selectedTags.includes(tag.toLowerCase()) 
-                ? 'bg-primary text-primary-foreground' 
+              {selectedTags.includes(tag.toLowerCase())
+                ? 'bg-primary text-primary-foreground'
                 : 'bg-secondary hover:bg-secondary/80'}"
               on:click={() => {
                 const tagLower = tag.toLowerCase();

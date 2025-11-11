@@ -1,4 +1,4 @@
-# IDENTITY 
+# IDENTITY
 
 // Who you are
 
@@ -90,7 +90,7 @@ If you see anything like "click here for full size" or "click for full image", t
 </template>
 
 <script lang="ts" setup>
-</script> 
+</script>
 
 <style>
 
@@ -486,7 +486,7 @@ const currentYear = new Date().getFullYear()
     padding: 0;
   }
 }
-</style> 
+</style>
 <script setup lang="ts">
 import { type Ref, inject } from 'vue'
 import type { DefaultTheme } from 'vitepress/theme'
@@ -827,7 +827,7 @@ const heroImageSlotExists = inject('hero-image-slot-exists') as Ref<boolean>
           <p class="text-center text-xl sm:text-2xl mb-8 sm:mb-12 font-concourse-t3">
             {{ frontmatter.hero.tagline }}
           </p>
-  
+
           <div class="flex flex-wrap justify-center gap-4 sm:gap-x-8 font-concourse-t3 text-base sm:text-lg">
             <a v-for="action in frontmatter.hero.actions"
                :key="action.link"
@@ -846,7 +846,7 @@ const heroImageSlotExists = inject('hero-image-slot-exists') as Ref<boolean>
       </div>
     </div>
   </template>
-  
+
   <script setup lang="ts">
   import { useData } from "vitepress";
   const { frontmatter } = useData();
@@ -3697,7 +3697,7 @@ defineProps<{
       </span>
     </button>
   </template>
-  
+
   <style scoped>
   .VPSwitch {
     position: relative;
@@ -3710,11 +3710,11 @@ defineProps<{
     background-color: var(--vp-input-switch-bg-color);
     transition: border-color 0.25s !important;
   }
-  
+
   .VPSwitch:hover {
     border-color: var(--vp-c-brand-1);
   }
-  
+
   .check {
     position: absolute;
     top: 1px;
@@ -3727,7 +3727,7 @@ defineProps<{
     box-shadow: var(--vp-shadow-1);
     transition: transform 0.25s !important;
   }
-  
+
   .icon {
     position: relative;
     display: block;
@@ -3736,7 +3736,7 @@ defineProps<{
     border-radius: 50%;
     overflow: hidden;
   }
-  
+
   .icon :deep([class^='vpi-']) {
     position: absolute;
     top: 3px;
@@ -3745,7 +3745,7 @@ defineProps<{
     height: 12px;
     color: var(--vp-c-text-2);
   }
-  
+
   .dark .icon :deep([class^='vpi-']) {
     color: var(--vp-c-text-1);
     transition: opacity 0.25s !important;
@@ -3869,7 +3869,7 @@ const formatDate = (dateString) => {
 </template>
 
 <script lang="ts" setup>
-</script> 
+</script>
 
 <style>
 
@@ -3950,7 +3950,7 @@ NOTE: Those were just to show you how all my custom stuff is actually implemente
 - The markdown should be super clean because all the trash HTML should have been removed. Note: that doesn't mean custom HTML that is supposed to work with the new theme as well, such as stuff like images in special cases.
 
 - Ensure YOU HAVE NOT CHANGED THE INPUT CONTENT—only the formatting. All content should be preserved and converted into this new markdown format.
- 
+
 # INPUT
 
 {{input}}

@@ -11,8 +11,8 @@ const chatService = new ChatService();
 const MESSAGES_STORAGE_KEY = 'chat_messages';
 
 // Load initial messages from local storage
-const initialMessages = typeof localStorage !== 'undefined' 
-  ? JSON.parse(localStorage.getItem(MESSAGES_STORAGE_KEY) || '[]') 
+const initialMessages = typeof localStorage !== 'undefined'
+  ? JSON.parse(localStorage.getItem(MESSAGES_STORAGE_KEY) || '[]')
   : [];
 
 // Separate stores for different concerns
@@ -39,10 +39,10 @@ export const chatState = derived(
 
 // Error handling utility
 function handleError(error: Error | string) {
-  const errorMessage = error instanceof ChatError 
+  const errorMessage = error instanceof ChatError
     ? `${error.code}: ${error.message}`
-    : error instanceof Error 
-      ? error.message 
+    : error instanceof Error
+      ? error.message
       : error;
 
   errorStore.set(errorMessage);

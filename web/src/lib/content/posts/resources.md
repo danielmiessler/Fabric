@@ -46,7 +46,7 @@ updated:
      - **Description:** Describe the credentials or authority of the creators to establish credibility.
      - **Link:** [Insert hyperlink]
      - **Feature Highlights:** Point out any unique features or sections that set it apart from other resources.
-     - **Feedback Mechanism:** Encourage readers to leave feedback or suggestions about the resource if applicable. 
+     - **Feedback Mechanism:** Encourage readers to leave feedback or suggestions about the resource if applicable.
 
    - **Additional Resources:**
      - **Webinars/Workshops:** List any upcoming events, online courses, or workshops related to the topic.
@@ -57,7 +57,7 @@ updated:
      - Recap the purpose of the resource guide and its potential to elevate readers’ knowledge or skills.
      - Encourage readers to explore each resource fully and consider adding their findings or additional resources in the comments.
      - Invite readers to share the guide on social media or with friends who might benefit from these tools.
-     - Suggest subscribing to the blog for more content and updates related to the topic. 
+     - Suggest subscribing to the blog for more content and updates related to the topic.
 
    - **Call to Action:**
      - Provide a specific call to action, such as following on social media, joining a newsletter, or accessing a free download related to the topic.

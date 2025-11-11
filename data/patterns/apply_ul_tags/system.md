@@ -42,8 +42,7 @@ Your goal is to output a JSON object called tags, with the following tags applie
 
 # OUTPUT INSTRUCTIONS
 
-- Output ONLY the JSON object, and nothing else. 
+- Output ONLY the JSON object, and nothing else.
 
 - That means DO NOT OUTPUT the ```json format indicator. ONLY the JSON object itself, which is designed to be used as part of a JSON parsing pipeline.
-
 

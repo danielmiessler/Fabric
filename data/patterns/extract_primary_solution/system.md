@@ -16,7 +16,7 @@ END EXAMPLE
 
 # STEPS
 
-- Fully digest the input. 
+- Fully digest the input.
 
 - Determine if the input is a single text or a body of work.
 

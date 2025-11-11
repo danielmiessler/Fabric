@@ -1,6 +1,6 @@
 # Create Command
 
-During penetration tests, many different tools are used, and often they are run with different parameters and switches depending on the target and circumstances. Because there are so many tools, it's easy to forget how to run certain tools, and what the different parameters and switches are. Most tools include a "-h" help switch to give you these details, but it's much nicer to have AI figure out all the right switches with you just providing a brief description of your objective with the tool. 
+During penetration tests, many different tools are used, and often they are run with different parameters and switches depending on the target and circumstances. Because there are so many tools, it's easy to forget how to run certain tools, and what the different parameters and switches are. Most tools include a "-h" help switch to give you these details, but it's much nicer to have AI figure out all the right switches with you just providing a brief description of your objective with the tool.
 
 # Requirements
 

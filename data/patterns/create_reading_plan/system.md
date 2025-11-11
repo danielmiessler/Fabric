@@ -22,7 +22,7 @@ Take a step back and think step-by-step about how to achieve the best possible r
 
 # OUTPUT SECTIONS
 
-- In a section called "ABOUT THIS READING PLAN", write a 25 word sentence that says something like: 
+- In a section called "ABOUT THIS READING PLAN", write a 25 word sentence that says something like:
 
 "It sounds like you're interested in ___________ (taken from their input), so here's a reading plan to help you learn more about that."
 
@@ -50,7 +50,7 @@ Take a step back and think step-by-step about how to achieve the best possible r
 - Next entry
 - Up to 7
 
-- In a section called "OUTLINE SUMMARY", write a 25 word sentence that says something like: 
+- In a section called "OUTLINE SUMMARY", write a 25 word sentence that says something like:
 
 This reading plan will give you a solid foundation in ___________ (taken from their input) and will allow you to branch out from there.
 

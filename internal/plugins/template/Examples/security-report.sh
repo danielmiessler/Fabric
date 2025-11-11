@@ -16,7 +16,7 @@ output_file=${1:-/tmp/security-report.txt}
     echo "Last update: $(stat -c %y /var/cache/apt/pkgcache.bin | cut -d' ' -f1)"
     echo "Pending updates:"
     apt list --upgradable 2>/dev/null
-    
+
     echo -e "\n=== Security Updates ==="
     echo "Pending security updates:"
     apt list --upgradable 2>/dev/null | grep -i security
@@ -42,7 +42,7 @@ output_file=${1:-/tmp/security-report.txt}
         echo "Key SSH settings:"
         grep -E '^(PermitRootLogin|PasswordAuthentication|Port|Protocol|X11Forwarding|MaxAuthTries|PermitEmptyPasswords)' /etc/ssh/sshd_config
     fi
-    
+
     echo -e "\n=== SSH Keys ==="
     echo "Authorized keys found:"
     find /home -name "authorized_keys" -ls 2>/dev/null
@@ -110,4 +110,3 @@ output_file=${1:-/tmp/security-report.txt}
 
 # Output the file path for fabric to read
 echo "$output_file"
-

@@ -43,9 +43,8 @@ updated:
 
    - **Engagement Prompt:**
      - Ask specific questions at the end of the post to invite readers to share their perspectives, fostering community discussion.
-     - Consider a poll or survey linked to the topic for readers to express their views quantitatively. 
+     - Consider a poll or survey linked to the topic for readers to express their views quantitatively.
 
    - **Visuals and Multimedia:**
      - Incorporate relevant images, infographics, or charts to illustrate your points and keep the reader engaged.
      - Consider adding video clips or podcasts that further explore the topic or offer different viewpoints.
-

@@ -19,10 +19,10 @@ https://youtu.be/fcVitd4Kb98
 - Better handling of Youtube url
 - Multilingual Support
 - Web UI refinements for clearer interaction
-- Help section via modal  
+- Help section via modal
 
 ### 2. Multilingual Support System
-- Seamless language switching via UI dropdown 
+- Seamless language switching via UI dropdown
 - Persistent language state management
 - Pattern processing now use the selected language seamlessly
 
@@ -37,7 +37,7 @@ The tag filtering system has been deeply integrated into the Pattern Selection i
 
 ### 5. Strategy flags
 - strategies are fetch from .config/fabric/strategies for server processing
-- for gui, they are fetched from static/strategies 
+- for gui, they are fetched from static/strategies
 
 
 1. **Dual-Position Tag Panel**
@@ -70,18 +70,18 @@ The tag filtering system has been deeply integrated into the Pattern Selection i
 - Conversion to markdown format for LLM processing
 - Installation instructions from the pdf-to-markdown repository
 
-The PDF conversion module has been integrated in the svelte web browser interface. Once installed, it will automatically detect pdf files in the chat interface and convert them to markdown 
+The PDF conversion module has been integrated in the svelte web browser interface. Once installed, it will automatically detect pdf files in the chat interface and convert them to markdown
 
 
 ## HOW TO INSTALL PDF-TO-MARKDOWN
-If you need to update the web component follow the instructions in "Web Interface MOD Readme Files/WEB V2 Install Guide.md".  
+If you need to update the web component follow the instructions in "Web Interface MOD Readme Files/WEB V2 Install Guide.md".
 
-Assuming your web install is up to date and web svelte config complete, you can simply follow these steps to add Pdf-to-mardown. 
+Assuming your web install is up to date and web svelte config complete, you can simply follow these steps to add Pdf-to-mardown.
 
 # FROM FABRIC ROOT DIRECTORY
   cd .. web
 
-# Install in this sequence: 
+# Install in this sequence:
 # Step 1
 npm install -D patch-package
 # Step 2
@@ -107,8 +107,8 @@ if (qualifier === 'fr') {
 
 // Service layer integration
 const language = get(languageStore) || 'en';
-const languageInstruction = language !== 'en' 
-  ? `. Please use the language '${language}' for the output.` 
+const languageInstruction = language !== 'en'
+  ? `. Please use the language '${language}' for the output.`
   : '';
 ```
 
@@ -178,11 +178,11 @@ Pattern descriptions and tags are managed in pattern_descriptions.json:
 1. Check pattern_descriptions.json for "[Description pending]" entries
 2. Reference pattern_extracts.json for context
 
-3. How to update Pattern short descriptions (one sentence). 
+3. How to update Pattern short descriptions (one sentence).
 
-You can update your descriptions in pattern_descriptions.json manually or using LLM assistance (prefered approach). 
+You can update your descriptions in pattern_descriptions.json manually or using LLM assistance (prefered approach).
 
-Tell AI to look for "Description pending" entries in this file and write a short description based on the extract info in the pattern_extracts.json file. You can also ask your LLM to add tags for those newly added patterns, using other patterns tag assignments as example.    
+Tell AI to look for "Description pending" entries in this file and write a short description based on the extract info in the pattern_extracts.json file. You can also ask your LLM to add tags for those newly added patterns, using other patterns tag assignments as example.
 
 ### Managing Tags
 1. Add appropriate tags to new patterns
@@ -300,4 +300,3 @@ AI: [Provides analysis in French, maintaining language throughout the transcript
    - Clear language instructions
    - Consistent state management
    - Robust error handling
-

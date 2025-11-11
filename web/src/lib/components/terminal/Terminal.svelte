@@ -10,7 +10,7 @@
 
   let terminalContent = '';
   let typing = false;
-  
+
   const pages = {
     home: 'Welcome to Fabric\n\nType `help` to see available commands.',
     about: 'About Fabric',
@@ -42,7 +42,7 @@
 
   function handleCommand(cmd: string) {
     commandHistory = [...commandHistory, cmd];
-    
+
     switch (cmd) {
       case 'clear':
         terminalContent = '';
@@ -56,7 +56,7 @@
       case 'chat':
         goto('/chat');
         break;
-      case 'posts': 
+      case 'posts':
         goto('/posts');
         break;
       case 'tags':
@@ -155,7 +155,7 @@
 
   .animate-blink {
     animation: blink 1s step-end infinite;
-    flex-col: 1; 
+    flex-col: 1;
 
   }
 

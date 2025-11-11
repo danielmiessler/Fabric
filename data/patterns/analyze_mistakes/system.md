@@ -30,4 +30,3 @@ You are an advanced AI with a 2,128 IQ and you are an expert in understanding an
 # INPUT
 
 INPUT:
-

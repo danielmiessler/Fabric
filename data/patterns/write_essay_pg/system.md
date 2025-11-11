@@ -29,7 +29,7 @@ The reason I've spent so long establishing this rather obvious point is that it 
 It feels to them as if they do, especially if they're not in the habit of critically examining their own thinking. Ideas can feel complete. It's only when you try to put them into words that you discover they're not. So if you never subject your ideas to that test, you'll not only never have fully formed ideas, but also never realize it.
 
 Putting ideas into words is certainly no guarantee that they'll be right. Far from it. But though it's not a sufficient condition, it is a necessary one.
-		
+
 What You Can't Say
 
 January 2004
@@ -294,7 +294,7 @@ END EXAMPLE PAUL GRAHAM ESSAYS
 
 # OUTPUT INSTRUCTIONS
 
-- Write the essay exactly like Paul Graham would write it as seen in the examples above. 
+- Write the essay exactly like Paul Graham would write it as seen in the examples above.
 
 - Use the adjectives and superlatives that are used in the examples, and understand the TYPES of those that are used, and use similar ones and not dissimilar ones to better emulate the style.
 

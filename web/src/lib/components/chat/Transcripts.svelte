@@ -88,7 +88,7 @@
     {#if loading}
       <div class="spinner-border" />
     {:else}
-      Get 
+      Get
     {/if}
   </Button>
 </div>

@@ -76,7 +76,7 @@ function shouldRenderAsMarkdown(message: Message): boolean {
 // Keep the original renderContent function
 function renderContent(message: Message): string {
     const content = message.content.replace(/\\n/g, '\n');
-    
+
     if (shouldRenderAsMarkdown(message)) {
         try {
             return marked.parse(content, { async: false }) as string;
@@ -90,7 +90,7 @@ function renderContent(message: Message): string {
 
 
 
-  
+
 </script>
 
 <div class="bg-primary-800/30 rounded-lg flex flex-col h-full shadow-lg">
@@ -116,19 +116,19 @@ function renderContent(message: Message): string {
     </div>
   {/if}
 
-  <div 
-    class="messages-container p-3 flex-1 overflow-y-auto max-h-dvh relative" 
+  <div
+    class="messages-container p-3 flex-1 overflow-y-auto max-h-dvh relative"
     bind:this={messagesContainer}
   >
     <div class="messages-content flex flex-col gap-3">
       {#each $chatState.messages as message}
-        <div 
+        <div
           class="message-item {message.role === 'system' ? 'w-full bg-blue-900/20' : message.role === 'assistant' ? 'bg-primary/5 rounded-lg p-3' : 'ml-auto'}"
           transition:fade
-          class:loading-message={message.format === 'loading'}       
+          class:loading-message={message.format === 'loading'}
         >
 
-        
+
           <div class="message-header flex items-center gap-2 mb-1 {message.role === 'assistant' || message.role === 'system' ? '' : 'justify-end'}">
             <span class="text-xs text-muted-foreground rounded-lg p-1 variant-glass-secondary font-bold uppercase">
               {#if message.role === 'system'}

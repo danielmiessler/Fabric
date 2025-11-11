@@ -77,13 +77,13 @@ Then resolves: {{plugin:text:upper:john}} -> "JOHN"
 3. **Complex Nesting Example**
    ```markdown
    {{plugin:text:{{case}}:{{plugin:sys:env:{{varname}}}}}}
-   
+
    With variables:
    {
      "case": "upper",
      "varname": "USER"
    }
-   
+
    Resolution steps:
    1. {{varname}} -> "USER"
    2. {{plugin:sys:env:USER}} -> "john"
@@ -107,10 +107,10 @@ Then resolves: {{plugin:text:upper:john}} -> "JOHN"
    ```markdown
    # Valid:
    {{plugin:text:upper:{{plugin:sys:env:USER}}}}
-   
+
    # Also Valid:
    {{plugin:text:{{operation}}:{{value}}}}
-   
+
    # Invalid (plugin namespace cannot be dynamic):
    {{plugin:{{namespace}}:operation:value}}
    ```
@@ -118,7 +118,7 @@ Then resolves: {{plugin:text:upper:john}} -> "JOHN"
 4. **Debugging Nested Templates**
    ```go
    Debug = true  // Enable debug logging
-   
+
    Template: {{plugin:text:upper:{{user}}}}
    Debug output:
    > Processing variable: user
@@ -135,36 +135,36 @@ Then resolves: {{plugin:text:upper:john}} -> "JOHN"
 1. **Dynamic Operation Selection**
    ```markdown
    {{plugin:text:{{operation}}:hello}}
-   
+
    With variables:
    {
      "operation": "upper"
    }
-   
+
    Result: HELLO
    ```
 
 2. **Dynamic Environment Variable Lookup**
    ```markdown
    {{plugin:sys:env:{{env_var}}}}
-   
+
    With variables:
    {
      "env_var": "HOME"
    }
-   
+
    Result: /home/user
    ```
 
 3. **Nested Date Formatting**
    ```markdown
    {{plugin:datetime:{{format}}:{{plugin:datetime:now}}}}
-   
+
    With variables:
    {
      "format": "full"
    }
-   
+
    Result: Wednesday, November 20, 2024
    ```
 
@@ -251,7 +251,7 @@ func (p *MathPlugin) Apply(operation string, value string) (string, error) {
             return "", err
         }
         return fmt.Sprintf("%d", a+b), nil
-    
+
     default:
         return "", fmt.Errorf("unknown math operation: %s", operation)
     }
@@ -268,7 +268,7 @@ var (
     // Existing plugins
     textPlugin = &TextPlugin{}
     datetimePlugin = &DateTimePlugin{}
-    
+
     // Add your new plugin
     mathPlugin = &MathPlugin{}
 )
@@ -326,7 +326,7 @@ Create tests for your plugin in `plugin_test.go`:
 ```go
 func TestMathPlugin(t *testing.T) {
     plugin := &MathPlugin{}
-    
+
     tests := []struct {
         operation string
         value     string
@@ -337,7 +337,7 @@ func TestMathPlugin(t *testing.T) {
         {"add", "bad,input", "", true},
         {"unknown", "value", "", true},
     }
-    
+
     for _, tt := range tests {
         result, err := plugin.Apply(tt.operation, tt.value)
         if (err != nil) != tt.wantErr {

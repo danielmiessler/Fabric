@@ -8,7 +8,7 @@
     <p class="text-sm text-muted-foreground">
       Built in {year} by @Fabric <!-- Feel free to put your name here -->
     </p>
-    
+
     <nav class="flex items-center gap-4 ">
       <BuyMeCoffee url="https://www.buymeacoffee.com/" /> <!-- And here -->
     </nav>

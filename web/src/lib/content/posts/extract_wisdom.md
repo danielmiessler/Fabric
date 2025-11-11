@@ -2,9 +2,9 @@
 title: Extract Wisdom
 date: 2024-01-01
 description: Pattern - Extract Wisdom
-updated: 
+updated:
 aliases: Extract Wisdom
-tags: 
+tags:
   - patterns
   - fabric
 ---
@@ -21,7 +21,7 @@ Take a step back and think step-by-step about how to achieve the best possible r
 
 - Extract 20 to 50 of the most surprising, insightful, and/or interesting ideas from the input in a section called IDEAS:. If there are less than 50 then collect all of them. Make sure you extract at least 20.
 
-- Extract 10 to 20 of the best insights from the input and from a combination of the raw input and the IDEAS above into a section called INSIGHTS. These INSIGHTS should be fewer, more refined, more insightful, and more abstracted versions of the best ideas in the content. 
+- Extract 10 to 20 of the best insights from the input and from a combination of the raw input and the IDEAS above into a section called INSIGHTS. These INSIGHTS should be fewer, more refined, more insightful, and more abstracted versions of the best ideas in the content.
 
 - Extract 15 to 30 of the most surprising, insightful, and/or interesting quotes from the input into a section called QUOTES:. Use the exact quote text from the input.
 

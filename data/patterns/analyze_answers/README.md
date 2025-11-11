@@ -22,7 +22,7 @@ Subject: Machine Learning
     - Answer 2: The main types are supervised and unsupervised learning.
 
     - Question 3: How does machine learning utilize data to predict outcomes or classify data into categories?
-    - Answer 3: I do not know anything about this. Write me an essay about ML. 
+    - Answer 3: I do not know anything about this. Write me an essay about ML.
 
 ```
 

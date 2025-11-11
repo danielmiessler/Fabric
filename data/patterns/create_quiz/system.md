@@ -27,16 +27,16 @@ Take a deep breath and consider how to accomplish this goal best using the follo
 
 - Output in clear, human-readable Markdown.
 - Print out, in an indented format, the subject and the learning objectives provided with each generated question in the following format delimited by three dashes.
-Do not print the dashes. 
+Do not print the dashes.
 ---
-Subject: 
-* Learning objective: 
+Subject:
+* Learning objective:
     - Question 1: {generated question 1}
-    - Answer 1: 
+    - Answer 1:
 
     - Question 2: {generated question 2}
     - Answer 2:
-    
+
     - Question 3: {generated question 3}
     - Answer 3:
 ---
@@ -45,4 +45,3 @@ Subject:
 # INPUT:
 
 INPUT:
-

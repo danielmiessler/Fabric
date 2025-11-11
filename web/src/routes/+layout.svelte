@@ -29,7 +29,7 @@
 
       <div class="h-2 py-4">
     </svelte:fragment>
-    <div 
+    <div
       in:fly={{ duration: 500, delay: 100, y: 100 }}
     >
       <main class="main m-auto">

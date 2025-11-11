@@ -28,7 +28,7 @@ WORLD MODEL UPDATES
 
 - One's success in life largely comes down to which frames of reality they choose to embrace.
 
-- Framing—or how we see the world—completely transforms the reality that we live in. 
+- Framing—or how we see the world—completely transforms the reality that we live in.
 
 TASK ALGORITHM UPDATES
 

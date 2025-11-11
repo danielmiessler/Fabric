@@ -9,14 +9,14 @@ The PDF conversion module has been integrated in the svelte web browser interfac
 
 
 ## HOW TO INSTALL
-If you need to update the web component follow the instructions in "Web Interface MOD Readme Files/WEB V2 Install Guide.md".  
+If you need to update the web component follow the instructions in "Web Interface MOD Readme Files/WEB V2 Install Guide.md".
 
-Assuming your install is up to date and web svelte config complete, you can simply follow these steps to add Pdf-to-mardown. 
+Assuming your install is up to date and web svelte config complete, you can simply follow these steps to add Pdf-to-mardown.
 
 # FROM FABRIC ROOT DIRECTORY
   cd .. web
 
-# Install in this sequence: 
+# Install in this sequence:
 # Step 1
 npm install -D patch-package
 # Step 2
@@ -77,4 +77,3 @@ The following files were added or modified to implement the PDF to Markdown conv
     *   Modified `readFileContent` to call `pdfService.convertToMarkdown` for PDF files.
 
 These file changes introduce the new PDF to Markdown conversion functionality and integrate it into the chat input component of the web interface.
-

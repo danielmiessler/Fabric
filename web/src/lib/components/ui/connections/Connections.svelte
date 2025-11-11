@@ -118,7 +118,7 @@
     cancelAnimationFrame(animationFrame);
   });
 </script>
-  
+
 <canvas
   bind:this={canvas}
   on:mousemove={handleMouseMove}
@@ -126,7 +126,7 @@
   on:mouseleave={handleMouseLeave}
   class="particle-wave"
 />
-  
+
 <style>
 .particle-wave {
   position: fixed;

@@ -27,7 +27,7 @@
   // Filter posts based on selected tags
   $: filteredPosts = posts?.filter(post => {
     if (selectedTags.length === 0) return true;
-    return selectedTags.every(tag => 
+    return selectedTags.every(tag =>
       post.metadata?.tags?.some(postTag => postTag.toLowerCase() === tag.toLowerCase())
     );
   }) || [];
@@ -70,7 +70,7 @@
       <br>
       <Youtube id="UbDyjIIGaxQ" title="Network Chuck Explains fabric" />
       <br>
-        <p>Leverage the power of the patterns. Use AI assistance to amplify your creativity. The templates are designed to 
+        <p>Leverage the power of the patterns. Use AI assistance to amplify your creativity. The templates are designed to
           help you focus on what matters most - your ideas. Start with structured frameworks, then make them your own.
         </p>
       <br>
@@ -82,12 +82,12 @@
         <h4 class=""><b>Find your interests, build your knowledge</b></h4>
       </div>
       <div class="container mx-auto md:col-start-1 pt-4">
-        <p>Embark on an enriching journey of self-discovery through the power of words! Sharing your unique voice and experiences isn't just 
+        <p>Embark on an enriching journey of self-discovery through the power of words! Sharing your unique voice and experiences isn't just
           about expressing yourself; it's about connecting, inspiring, and empowering others with your story.
         </p>
         <br>
-        <p>Regular writing is more than just a means to share; it's a tool that deepens your self-awareness, helping you understand yourself 
-          better and grow in the process. 
+        <p>Regular writing is more than just a means to share; it's a tool that deepens your self-awareness, helping you understand yourself
+          better and grow in the process.
         </p>
       </div>
       <div class="md:col-start-2">
@@ -120,8 +120,8 @@
           There are many patterns for different use cases. How will you use them to your advantage?
         </blockquote>
         <br>
-        <p>AI isn't just a tool - it's your creative companion. Use it to explore ideas, generate outlines, or refine your writing. 
-          But remember, the authentic voice, the unique insights, and the valuable experiences - those come from you. This is where 
+        <p>AI isn't just a tool - it's your creative companion. Use it to explore ideas, generate outlines, or refine your writing.
+          But remember, the authentic voice, the unique insights, and the valuable experiences - those come from you. This is where
           technology meets creativity to help you build something truly meaningful.
         </p>
       </div>
@@ -138,7 +138,7 @@
           authorName="Your Name Here"
           authorAvatarUrl="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLXVzZXIiPjxwYXRoIGQ9Ik0xOSAyMXYtMmE0IDQgMCAwIDAtNC00SDlhNCA0IDAgMCAwLTQgNHYyIi8+PGNpcmNsZSBjeD0iMTIiIGN5PSI3IiByPSI0Ii8+PC9zdmc+"
           link="/posts/obsidian"
-        /> 
+        />
       </div>
       <div class="container mx-auto md:col-start-2 justify-left">
         <hr class="!border-t-4" />
@@ -169,7 +169,7 @@
   </div>
   <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
     {#each searchResults as post}
-      <PostCard {post} /> <!-- TODO: Add images to post metadata --> 
+      <PostCard {post} /> <!-- TODO: Add images to post metadata -->
     {/each}
   </div>
 </div>

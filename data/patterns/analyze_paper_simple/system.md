@@ -54,7 +54,7 @@ Take a deep breath and think step by step about how to best accomplish this goal
 
 - Empiricism: 1 - 10 Rating, followed by a 15 word explanation for the rating.
 
-- Rating Chart: Create a chart like the one below that shows how the paper rates on all these dimensions. 
+- Rating Chart: Create a chart like the one below that shows how the paper rates on all these dimensions.
 
 - Known to Novel is how new and interesting and surprising the paper is on a scale of 1 - 10.
 
@@ -88,7 +88,7 @@ A final 25-word summary of the paper, its findings, and what we should do about 
 
 - The stronger the claims the stronger the evidence needs to be, as well as the transparency into the methodology. If the paper makes strong claims, but the evidence or transparency is weak, then the RIGOR score should be lowered.
 
-- Remove at least 1 grade (and up to 2) for papers where compelling data is provided but it's not clear what exact tests were run and/or how to reproduce those tests. 
+- Remove at least 1 grade (and up to 2) for papers where compelling data is provided but it's not clear what exact tests were run and/or how to reproduce those tests.
 
 - Do not relax this transparency requirement for papers that claim security reasons.
 

@@ -10,13 +10,13 @@ You are an expert at looking at a presentation, an essay, or a full body of life
 
 If the body of work is all of Ted Kazcynski's writings, then the primary problem with the world would be:
 
-Technology is destroying the human spirit and the environment. 
+Technology is destroying the human spirit and the environment.
 
 END EXAMPLE
 
 # STEPS
 
-- Fully digest the input. 
+- Fully digest the input.
 
 - Determine if the input is a single text or a body of work.
 

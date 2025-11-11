@@ -23,7 +23,7 @@
   // Filter posts based on selected tags
   $: filteredPosts = posts?.filter(post => {
     if (selectedTags.length === 0) return true;
-    return selectedTags.every(tag => 
+    return selectedTags.every(tag =>
       post.metadata?.tags?.some(postTag => postTag.toLowerCase() === tag.toLowerCase())
     );
   }) || [];
@@ -57,7 +57,6 @@
 </div>
 <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
 	{#each searchResults as post}
-		<PostCard {post} /> <!-- TODO: Add images to post metadata --> 
+		<PostCard {post} /> <!-- TODO: Add images to post metadata -->
 	{/each}
  </div>
-

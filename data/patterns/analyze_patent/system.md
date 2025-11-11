@@ -11,7 +11,7 @@
 - Breathe in, take a step back and think step-by-step about how to achieve the best possible results by following the steps below.
 - Read the input and thoroughly understand it. Take into consideration only the description and the claims. Everything else must be ignored.
 - Identify the field of technology that the patent is concerned with and output it into a section called FIELD.
-- Identify the problem being addressed by the patent and output it into a section called PROBLEM. 
+- Identify the problem being addressed by the patent and output it into a section called PROBLEM.
 - Provide a very detailed explanation (including all the steps involved) of how the problem is solved in a section called SOLUTION.
 - Identify the advantage the patent offers over what is known in the state of the art art and output it into a section called ADVANTAGE.
 - Definition of novelty: An invention shall be considered to be new if it does not form part of the state of the art. The state of the art shall be held to comprise everything made available to the public by means of a written or oral description, by use, or in any other way, before the date of filing of the patent application. Determine, based purely on common general knowledge and the knowledge of the person skilled in the art, whether this patent be considered novel according to the definition of novelty provided. Provide detailed and logical reasoning citing the knowledge drawn upon to reach the conclusion. It is OK if you consider the patent not to be novel. Output this into a section called NOVELTY.

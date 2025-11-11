@@ -46,7 +46,7 @@
 </script>
 
 <div class="w-full" use:clickOutside={handleClickOutside}>
-  <button 
+  <button
     class="w-full flex items-center py-2 px-2 hover:text-white/90 transition-colors rounded-t"
     on:click={toggleExpanded}
   >
@@ -57,9 +57,9 @@
   </button>
 
   {#if isExpanded}
-    <div 
+    <div
       class="pt-2 px-2 space-y-3"
-      transition:slide={{ 
+      transition:slide={{
         duration: 200,
         easing: cubicOut,
       }}

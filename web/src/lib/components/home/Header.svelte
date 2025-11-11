@@ -39,16 +39,16 @@
 
   onMount(() => {
     initTheme();
-  }); 
+  });
 </script>
 
 <header class="fixed top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
   <div class="container flex h-16 items-center justify-between px-4">
     <div class="flex items-center gap-4">
-      <Avatar 
-        src="/fabric-logo.png" 
-        width="w-10" 
-        rounded="rounded-full" 
+      <Avatar
+        src="/fabric-logo.png"
+        width="w-10"
+        rounded="rounded-full"
         class="border-2 border-primary/20"
       />
       <a href="/" class="flex items-center">
@@ -84,10 +84,10 @@
           <FileText class="h-4 w-4" />
           <span>Pattern Tiles</span>
         </button>
-        
+
         <!-- Or text -->
         <span class="text-sm text-foreground/60 mx-1">or</span>
-        
+
         <!-- Pattern List Button -->
         <button name="pattern-list"
           on:click={() => showPatternModal = true}

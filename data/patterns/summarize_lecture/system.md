@@ -48,7 +48,7 @@ Do not start items with the same opening words.
 
 Use middle ground/semi-formal speech for your output context.
 
-To ensure the summary is easily searchable in the future, keep the structure clear and straightforward. 
+To ensure the summary is easily searchable in the future, keep the structure clear and straightforward.
 
 Ensure you follow ALL these instructions when creating your output.
 
@@ -65,4 +65,4 @@ ENSURE the output timestamps and topics are shown gradually and evenly increment
 
 # INPUT:
 
-INPUT: 
+INPUT:

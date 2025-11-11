@@ -15,9 +15,9 @@
 </script>
 
 <article class="card card-hover group relative rounded-lg border p-6 hover:bg-primary-500/50 {className}">
-  <a 
+  <a
     href="/posts/{post.slug}"
-    class="absolute inset-0" 
+    class="absolute inset-0"
     data-sveltekit-preload-data="off"
   >
     <span class="sr-only">View {post.metadata?.title}</span>

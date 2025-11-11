@@ -5,13 +5,13 @@
   import { chatState, clearMessages, revertLastMessage, currentSession, messageStore } from '$lib/store/chat-store';
   import { Button } from '$lib/components/ui/button';
   import { toastService } from '$lib/services/toast-service';
-  
+
   let sessionsList: string[] = [];
   $: sessionName = $currentSession;
   $: if ($sessions) {
     sessionsList = $sessions.map(s => s.Name);
   }
-  
+
   onMount(async () => {
     try {
       await sessionAPI.loadSessions();
@@ -19,7 +19,7 @@
       console.error('Failed to load sessions:', error);
     }
   });
-  
+
   async function saveSession() {
     try {
       await sessionAPI.exportToFile($chatState.messages);

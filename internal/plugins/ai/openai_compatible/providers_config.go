@@ -12,17 +12,21 @@ import (
 type ProviderConfig struct {
 	Name                string
 	BaseURL             string
-	ImplementsResponses bool // Whether the provider supports OpenAI's new Responses API
+	ModelsURL           string // Optional: Custom endpoint for listing models (if different from BaseURL/models)
+	ImplementsResponses bool   // Whether the provider supports OpenAI's new Responses API
 }
 
 // Client is the common structure for all OpenAI-compatible providers
 type Client struct {
 	*openai.Client
+	modelsURL string // Custom URL for listing models (if different from BaseURL/models)
 }
 
 // NewClient creates a new OpenAI-compatible client for the specified provider
 func NewClient(providerConfig ProviderConfig) *Client {
-	client := &Client{}
+	client := &Client{
+		modelsURL: providerConfig.ModelsURL,
+	}
 	client.Client = openai.NewClientCompatibleWithResponses(
 		providerConfig.Name,
 		providerConfig.BaseURL,
@@ -34,14 +38,20 @@ func NewClient(providerConfig ProviderConfig) *Client {
 
 // ListModels overrides the default ListModels to handle different response formats
 func (c *Client) ListModels() ([]string, error) {
+	// If a custom models URL is provided, use direct fetch with that URL
+	if c.modelsURL != "" {
+		// TODO: Handle context properly in Fabric by accepting and propagating a context.Context
+		// instead of creating a new one here.
+		return openai.FetchModelsDirectly(context.Background(), c.modelsURL, c.Client.ApiKey.Value, c.GetName())
+	}
+
 	// First try the standard OpenAI SDK approach
 	models, err := c.Client.ListModels()
 	if err == nil && len(models) > 0 { // only return if OpenAI SDK returns models
 		return models, nil
 	}
 
-	// TODO: Handle context properly in Fabric by accepting and propagating a context.Context
-	// instead of creating a new one here.
+	// Fall back to direct API fetch
 	return c.DirectlyGetModels(context.Background())
 }
 
@@ -60,6 +70,12 @@ var ProviderMap = map[string]ProviderConfig{
 	"DeepSeek": {
 		Name:                "DeepSeek",
 		BaseURL:             "https://api.deepseek.com",
+		ImplementsResponses: false,
+	},
+	"GitHub": {
+		Name:                "GitHub",
+		BaseURL:             "https://models.github.ai/inference",
+		ModelsURL:           "https://models.github.ai/catalog", // FetchModelsDirectly will append /models
 		ImplementsResponses: false,
 	},
 	"GrokAI": {

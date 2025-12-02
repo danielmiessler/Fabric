@@ -38,11 +38,24 @@ func NewClient(providerConfig ProviderConfig) *Client {
 
 // ListModels overrides the default ListModels to handle different response formats
 func (c *Client) ListModels() ([]string, error) {
+	// Special handling for Z.AI - if no API key is provided, return known models
+	if c.GetName() == "Z AI" && c.Client.ApiKey.Value == "" {
+		return c.getZAIKnownModels(), nil
+	}
+
 	// If a custom models URL is provided, use direct fetch with that URL
 	if c.modelsURL != "" {
-		// TODO: Handle context properly in Fabric by accepting and propagating a context.Context
-		// instead of creating a new one here.
-		return openai.FetchModelsDirectly(context.Background(), c.modelsURL, c.Client.ApiKey.Value, c.GetName())
+		models, err := openai.FetchModelsDirectly(context.Background(), c.modelsURL, c.Client.ApiKey.Value, c.GetName())
+		if err == nil && len(models) > 0 {
+			return models, nil
+		}
+
+		// Special handling for Z.AI - provide known models when API call fails
+		if c.GetName() == "Z AI" {
+			return c.getZAIKnownModels(), nil
+		}
+
+		return models, err
 	}
 
 	// First try the standard OpenAI SDK approach
@@ -52,7 +65,44 @@ func (c *Client) ListModels() ([]string, error) {
 	}
 
 	// Fall back to direct API fetch
-	return c.DirectlyGetModels(context.Background())
+	models, err = c.DirectlyGetModels(context.Background())
+	if err == nil && len(models) > 0 {
+		return models, nil
+	}
+
+	// Special handling for Z.AI - provide known models when all attempts fail
+	if c.GetName() == "Z AI" {
+		return c.getZAIKnownModels(), nil
+	}
+
+	return models, err
+}
+
+// getZAIKnownModels returns a list of known Z.AI (智谱AI) models
+func (c *Client) getZAIKnownModels() []string {
+	return []string{
+		"glm-4.5",
+		"glm-4.5-air",
+		"glm-4.6",
+		"glm-4-plus",
+		"glm-4-0520",
+		"glm-4",
+		"glm-4-air",
+		"glm-4-airx",
+		"glm-4-long",
+		"glm-4-flashx",
+		"glm-4-flash",
+		"glm-4v-plus",
+		"glm-4v",
+		"glm-4v-flash",
+		"glm-3-turbo",
+		"characterglm",
+		"embedding-2",
+		"embedding-3",
+		"cogview-3-plus",
+		"cogview-3",
+		"cogviewx",
+	}
 }
 
 // ProviderMap is a map of provider name to ProviderConfig for O(1) lookup
@@ -125,9 +175,9 @@ var ProviderMap = map[string]ProviderConfig{
 	},
 	"ZAI": {
 		Name:                "Z AI",
-		BaseURL:             "https://api.z.ai/v1",
-		ModelsURL:           "https://api.z.ai/v1/models", // FetchModelsDirectly will append /models
-		ImplementsResponses: true,
+		BaseURL:             "https://open.bigmodel.cn/api/paas/v4",
+		ModelsURL:           "https://open.bigmodel.cn/api/paas/v4/models",
+		ImplementsResponses: false,
 	},
 }
 

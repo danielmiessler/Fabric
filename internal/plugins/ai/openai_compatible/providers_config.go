@@ -123,6 +123,12 @@ var ProviderMap = map[string]ProviderConfig{
 		BaseURL:             "https://api.venice.ai/api/v1",
 		ImplementsResponses: false,
 	},
+	"ZAI": {
+		Name:                "Z AI",
+		BaseURL:             "https://api.z.ai/v1",
+		ModelsURL:           "https://api.z.ai/v1/models", // FetchModelsDirectly will append /models
+		ImplementsResponses: true,
+	},
 }
 
 // GetProviderByName returns the provider configuration for a given name with O(1) lookup

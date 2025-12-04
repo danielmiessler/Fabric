@@ -154,6 +154,10 @@ func (o *Client) createChatRequest(msgs []*chat.ChatCompletionMessage, opts *dom
 		options["num_ctx"] = opts.ModelContextLength
 	}
 
+	if opts.MaxTokens > 0 {
+		options["num_predict"] = opts.MaxTokens
+	}
+
 	ret = ollamaapi.ChatRequest{
 		Model:    opts.Model,
 		Messages: messages,

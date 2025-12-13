@@ -1,4 +1,5 @@
 import { writable, derived, get } from 'svelte/store';
+import { browser } from '$app/environment';
 import type { ChatState, Message, StreamResponse } from '$lib/interfaces/chat-interface';
 import { ChatService, ChatError } from '$lib/services/ChatService';
 import { languageStore } from '$lib/store/language-store';
@@ -10,9 +11,9 @@ const chatService = new ChatService();
 // Local storage key for persisting messages
 const MESSAGES_STORAGE_KEY = 'chat_messages';
 
-// Load initial messages from local storage
-const initialMessages = typeof localStorage !== 'undefined' 
-  ? JSON.parse(localStorage.getItem(MESSAGES_STORAGE_KEY) || '[]') 
+// Load initial messages from local storage (only in browser)
+const initialMessages = browser
+  ? JSON.parse(localStorage.getItem(MESSAGES_STORAGE_KEY) || '[]')
   : [];
 
 // Separate stores for different concerns
@@ -21,8 +22,8 @@ export const streamingStore = writable<boolean>(false);
 export const errorStore = writable<string | null>(null);
 export const currentSession = writable<string | null>(null);
 
-// Subscribe to messageStore changes to persist messages
-if (typeof localStorage !== 'undefined') {
+// Subscribe to messageStore changes to persist messages (only in browser)
+if (browser) {
   messageStore.subscribe($messages => {
     localStorage.setItem(MESSAGES_STORAGE_KEY, JSON.stringify($messages));
   });
@@ -60,7 +61,7 @@ export const setSession = (sessionName: string | null) => {
 export const clearMessages = () => {
   messageStore.set([]);
   errorStore.set(null);
-  if (typeof localStorage !== 'undefined') {
+  if (browser) {
     localStorage.removeItem(MESSAGES_STORAGE_KEY);
   }
 };

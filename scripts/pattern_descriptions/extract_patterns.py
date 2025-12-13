@@ -3,6 +3,7 @@
 """Extracts pattern information from the ~/.config/fabric/patterns directory,
 creates JSON files for pattern extracts and descriptions, and updates web static files.
 """
+
 import os
 import json
 import shutil
@@ -33,7 +34,13 @@ def get_pattern_extract(pattern_path):
 def extract_pattern_info():
     """Extract pattern information from the patterns directory"""
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    patterns_dir = os.path.expanduser("~/.config/fabric/patterns")
+    local_patterns_dir = os.path.join(script_dir, "..", "..", "data", "patterns")
+
+    if os.path.exists(local_patterns_dir):
+        patterns_dir = local_patterns_dir
+    else:
+        patterns_dir = os.path.expanduser("~/.config/fabric/patterns")
+
     print(f"\nScanning patterns directory: {patterns_dir}")
 
     extracts_path = os.path.join(script_dir, "pattern_extracts.json")

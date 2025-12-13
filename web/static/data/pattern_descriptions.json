@@ -1102,14 +1102,6 @@
       ]
     },
     {
-      "patternName": "get_youtube_rss",
-      "description": "Generate RSS feed URLs for YouTube channels.",
-      "tags": [
-        "CONVERSION",
-        "DEVELOPMENT"
-      ]
-    },
-    {
       "patternName": "humanize",
       "description": "Transform technical content into approachable language.",
       "tags": [
@@ -1931,6 +1923,14 @@
       "description": "Transforms unstructured text or markdown content into an interactive HTML concept map using Vis.js by extracting key concepts and their logical relationships.",
       "tags": [
         "VISUALIZE"
+      ]
+    },
+    {
+      "patternName": "concall_summary",
+      "description": "Extract strategic insights from earnings transcripts for investors.",
+      "tags": [
+        "SUMMARIZE",
+        "BUSINESS"
       ]
     }
   ]

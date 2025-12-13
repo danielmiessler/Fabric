@@ -316,7 +316,7 @@ Application Options:
   -T, --topp=                Set top P (default: 0.9)
   -s, --stream               Stream
   -P, --presencepenalty=     Set presence penalty (default: 0.0)
-  -r, --raw                  Use the defaults of the model without sending chat options (like temperature etc.) and use the user role instead of the system role for patterns.
+  -r, --raw                  Use the defaults of the model without sending chat options (temperature, top_p, etc.). Only affects OpenAI-compatible providers. Anthropic models always use smart parameter selection to comply with model-specific requirements.
   -F, --frequencypenalty=    Set frequency penalty (default: 0.0)
   -l, --listpatterns         List all patterns
   -L, --listmodels           List all available models

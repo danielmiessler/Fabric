@@ -222,9 +222,8 @@ func (o *PluginRegistry) Setup() (err error) {
 				}
 			}
 
-			if _, ok := o.VendorManager.VendorsByName[plugin.GetName()]; !ok {
-				var vendor ai.Vendor
-				if vendor, ok = plugin.(ai.Vendor); ok {
+			if o.VendorManager.FindByName(plugin.GetName()) == nil {
+				if vendor, ok := plugin.(ai.Vendor); ok {
 					o.VendorManager.AddVendors(vendor)
 				}
 			}
@@ -330,11 +329,22 @@ func (o *PluginRegistry) GetChatter(model string, modelContextLength int, vendor
 		if models, err = vendorManager.GetModels(); err != nil {
 			return
 		}
+
+		// Normalize model name to match actual available model (case-insensitive)
+		// This must be done BEFORE checking vendor availability
+		actualModelName := models.FindModelNameCaseInsensitive(model)
+		if actualModelName != "" {
+			model = actualModelName // Use normalized name for all subsequent checks
+		}
+
 		if vendorName != "" {
 			// ensure vendor exists and provides model
 			ret.vendor = vendorManager.FindByName(vendorName)
 			availableVendors := models.FindGroupsByItem(model)
-			if ret.vendor == nil || !lo.Contains(availableVendors, vendorName) {
+			vendorAvailable := lo.ContainsBy(availableVendors, func(name string) bool {
+				return strings.EqualFold(name, vendorName)
+			})
+			if ret.vendor == nil || !vendorAvailable {
 				err = fmt.Errorf("model %s not available for vendor %s", model, vendorName)
 				return
 			}
@@ -345,6 +355,7 @@ func (o *PluginRegistry) GetChatter(model string, modelContextLength int, vendor
 			}
 			ret.vendor = vendorManager.FindByName(models.FindGroupsByItemFirst(model))
 		}
+
 		ret.model = model
 	}
 

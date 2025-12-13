@@ -105,7 +105,7 @@ function __fabric_register_completions
         # Boolean flags (no arguments)
         complete -c $cmd -s S -l setup -d "Run setup for all reconfigurable parts of fabric"
         complete -c $cmd -s s -l stream -d "Stream"
-        complete -c $cmd -s r -l raw -d "Use the defaults of the model without sending chat options"
+        complete -c $cmd -s r -l raw -d "Use the defaults of the model without sending chat options. Only affects OpenAI-compatible providers. Anthropic models always use smart parameter selection to comply with model-specific requirements."
         complete -c $cmd -s l -l listpatterns -d "List all patterns"
         complete -c $cmd -s L -l listmodels -d "List all available models"
         complete -c $cmd -s x -l listcontexts -d "List all contexts"

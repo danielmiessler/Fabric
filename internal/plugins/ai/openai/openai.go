@@ -8,6 +8,7 @@ import (
 
 	"github.com/danielmiessler/fabric/internal/chat"
 	"github.com/danielmiessler/fabric/internal/domain"
+	debuglog "github.com/danielmiessler/fabric/internal/log"
 	"github.com/danielmiessler/fabric/internal/plugins"
 	openai "github.com/openai/openai-go"
 	"github.com/openai/openai-go/option"
@@ -83,13 +84,19 @@ func (o *Client) configure() (ret error) {
 
 func (o *Client) ListModels() (ret []string, err error) {
 	var page *pagination.Page[openai.Model]
-	if page, err = o.ApiClient.Models.List(context.Background()); err != nil {
-		return
+	if page, err = o.ApiClient.Models.List(context.Background()); err == nil {
+		for _, mod := range page.Data {
+			ret = append(ret, mod.ID)
+		}
+		// SDK succeeded - return the result even if empty
+		return ret, nil
 	}
-	for _, mod := range page.Data {
-		ret = append(ret, mod.ID)
-	}
-	return
+
+	// SDK returned an error - fall back to direct API fetch.
+	// Some providers (e.g., GitHub Models) return non-standard response formats
+	// that the SDK fails to parse.
+	debuglog.Debug(debuglog.Basic, "SDK Models.List failed for %s: %v, falling back to direct API fetch\n", o.GetName(), err)
+	return FetchModelsDirectly(context.Background(), o.ApiBaseURL.Value, o.ApiKey.Value, o.GetName())
 }
 
 func (o *Client) SendStream(
@@ -165,10 +172,11 @@ func (o *Client) supportsResponsesAPI() bool {
 
 func (o *Client) NeedsRawMode(modelName string) bool {
 	openaiModelsPrefixes := []string{
+		"glm",
+		"gpt-5",
 		"o1",
 		"o3",
 		"o4",
-		"gpt-5",
 	}
 	openAIModelsNeedingRaw := []string{
 		"gpt-4o-mini-search-preview",

@@ -116,6 +116,91 @@ func TestSetupQuestion_Ask(t *testing.T) {
 	assert.Equal(t, "user_value", setting.Value)
 }
 
+func TestSetupQuestion_Ask_Reset(t *testing.T) {
+	// Test that resetting a required field doesn't produce an error
+	setting := &Setting{
+		EnvVariable: "TEST_RESET_SETTING",
+		Value:       "existing_value",
+		Required:    true,
+	}
+	question := &SetupQuestion{
+		Setting:  setting,
+		Question: "Enter test setting:",
+	}
+	input := "reset\n"
+	fmtInput := captureInput(input)
+	defer fmtInput()
+	err := question.Ask("TestConfigurable")
+	// Should NOT return an error even though the field is required
+	assert.NoError(t, err)
+	// Value should be cleared
+	assert.Equal(t, "", setting.Value)
+}
+
+func TestSetupQuestion_OnAnswerWithReset(t *testing.T) {
+	tests := []struct {
+		name        string
+		setting     *Setting
+		answer      string
+		isReset     bool
+		expectError bool
+		expectValue string
+	}{
+		{
+			name: "reset required field should not error",
+			setting: &Setting{
+				EnvVariable: "TEST_SETTING",
+				Value:       "old_value",
+				Required:    true,
+			},
+			answer:      "",
+			isReset:     true,
+			expectError: false,
+			expectValue: "",
+		},
+		{
+			name: "empty answer on required field should error",
+			setting: &Setting{
+				EnvVariable: "TEST_SETTING",
+				Value:       "",
+				Required:    true,
+			},
+			answer:      "",
+			isReset:     false,
+			expectError: true,
+			expectValue: "",
+		},
+		{
+			name: "valid answer on required field should not error",
+			setting: &Setting{
+				EnvVariable: "TEST_SETTING",
+				Value:       "",
+				Required:    true,
+			},
+			answer:      "new_value",
+			isReset:     false,
+			expectError: false,
+			expectValue: "new_value",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			question := &SetupQuestion{
+				Setting:  tt.setting,
+				Question: "Test question",
+			}
+			err := question.OnAnswerWithReset(tt.answer, tt.isReset)
+			if tt.expectError {
+				assert.Error(t, err)
+			} else {
+				assert.NoError(t, err)
+			}
+			assert.Equal(t, tt.expectValue, tt.setting.Value)
+		})
+	}
+}
+
 func TestSettings_IsConfigured(t *testing.T) {
 	settings := Settings{
 		{EnvVariable: "TEST_SETTING1", Value: "value1", Required: true},

@@ -17,6 +17,35 @@ type VendorsModels struct {
 	*util.GroupsItemsSelectorString
 }
 
+// FilterByVendor returns a new VendorsModels containing only the specified vendor's models.
+// Vendor matching is case-insensitive (e.g., "OpenAI", "openai", and "OPENAI" all match).
+// If the vendor is not found, an empty VendorsModels is returned.
+func (o *VendorsModels) FilterByVendor(vendor string) *VendorsModels {
+	filtered := NewVendorsModels()
+	for _, groupItems := range o.GroupsItems {
+		if strings.EqualFold(groupItems.Group, vendor) {
+			filtered.AddGroupItems(groupItems.Group, groupItems.Items...)
+			break
+		}
+	}
+	return filtered
+}
+
+// FindModelNameCaseInsensitive returns the actual model name from available models,
+// matching case-insensitively. Returns empty string if not found.
+// For example, if the available models contain "gpt-4o" and user queries "GPT-4O",
+// this returns "gpt-4o" (the actual model name that should be sent to the API).
+func (o *VendorsModels) FindModelNameCaseInsensitive(modelQuery string) string {
+	for _, groupItems := range o.GroupsItems {
+		for _, item := range groupItems.Items {
+			if strings.EqualFold(item, modelQuery) {
+				return item
+			}
+		}
+	}
+	return ""
+}
+
 // PrintWithVendor prints models including their vendor on each line.
 // When shellCompleteList is true, output is suitable for shell completion.
 // Default vendor and model are highlighted with an asterisk.

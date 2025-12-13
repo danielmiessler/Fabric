@@ -133,7 +133,7 @@ func (o *GroupsItemsSelector[I]) Print(shellCompleteList bool) {
 
 func (o *GroupsItemsSelector[I]) HasGroup(group string) (ret bool) {
 	for _, groupItems := range o.GroupsItems {
-		if ret = groupItems.Group == group; ret {
+		if ret = strings.EqualFold(groupItems.Group, group); ret {
 			break
 		}
 	}
@@ -146,7 +146,7 @@ func (o *GroupsItemsSelector[I]) FindGroupsByItemFirst(item I) (ret string) {
 	for _, groupItems := range o.GroupsItems {
 		if groupItems.ContainsItemBy(func(groupItem I) bool {
 			groupItemKey := o.GetItemKey(groupItem)
-			return groupItemKey == itemKey
+			return strings.EqualFold(groupItemKey, itemKey)
 		}) {
 			ret = groupItems.Group
 			break
@@ -161,7 +161,7 @@ func (o *GroupsItemsSelector[I]) FindGroupsByItem(item I) (groups []string) {
 	for _, groupItems := range o.GroupsItems {
 		if groupItems.ContainsItemBy(func(groupItem I) bool {
 			groupItemKey := o.GetItemKey(groupItem)
-			return groupItemKey == itemKey
+			return strings.EqualFold(groupItemKey, itemKey)
 		}) {
 			groups = append(groups, groupItems.Group)
 		}

@@ -35,7 +35,7 @@ type Flags struct {
 	TopP                            float64              `short:"T" long:"topp" yaml:"topp" description:"Set top P" default:"0.9"`
 	Stream                          bool                 `short:"s" long:"stream" yaml:"stream" description:"Stream"`
 	PresencePenalty                 float64              `short:"P" long:"presencepenalty" yaml:"presencepenalty" description:"Set presence penalty" default:"0.0"`
-	Raw                             bool                 `short:"r" long:"raw" yaml:"raw" description:"Use the defaults of the model without sending chat options (like temperature etc.) and use the user role instead of the system role for patterns."`
+	Raw                             bool                 `short:"r" long:"raw" yaml:"raw" description:"Use the defaults of the model without sending chat options (temperature, top_p, etc.). Only affects OpenAI-compatible providers. Anthropic models always use smart parameter selection to comply with model-specific requirements."`
 	FrequencyPenalty                float64              `short:"F" long:"frequencypenalty" yaml:"frequencypenalty" description:"Set frequency penalty" default:"0.0"`
 	ListPatterns                    bool                 `short:"l" long:"listpatterns" description:"List all patterns"`
 	ListAllModels                   bool                 `short:"L" long:"listmodels" description:"List all available models"`

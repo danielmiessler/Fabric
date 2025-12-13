@@ -1,5 +1,196 @@
 # Changelog
 
+## v1.4.342 (2025-12-13)
+
+### PR [#1866](https://github.com/danielmiessler/Fabric/pull/1866) by [ksylvan](https://github.com/ksylvan): fix: write CLI and streaming errors to stderr
+
+- Fix: write CLI and streaming errors to stderr
+- Route CLI execution errors to standard error output
+- Print Anthropic stream errors to stderr consistently
+- Add os import to support stderr error writes
+- Preserve help-output suppression and exit behavior
+
+## v1.4.341 (2025-12-10)
+
+### PR [#1860](https://github.com/danielmiessler/Fabric/pull/1860) by [ksylvan](https://github.com/ksylvan): fix: allow resetting required settings without validation errors
+
+- Fix: allow resetting required settings without validation errors
+- Update `Ask` to detect reset command and bypass validation
+- Refactor `OnAnswer` to support new `isReset` parameter logic
+- Invoke `ConfigureCustom` in `Setup` to avoid redundant re-validation
+- Add unit tests ensuring required fields can be reset
+
+## v1.4.340 (2025-12-08)
+
+### PR [#1856](https://github.com/danielmiessler/Fabric/pull/1856) by [ksylvan](https://github.com/ksylvan): Add support for new ClaudeHaiku 4.5 models
+
+- Add support for new ClaudeHaiku models in client
+- Add `ModelClaudeHaiku4_5` to supported models
+- Add `ModelClaudeHaiku4_5_20251001` to supported models
+
+## v1.4.339 (2025-12-08)
+
+### PR [#1855](https://github.com/danielmiessler/Fabric/pull/1855) by [ksylvan](https://github.com/ksylvan): feat: add image attachment support for Ollama vision models
+
+- Add multi-modal image support to Ollama client
+- Implement convertMessage to handle multi-content chat messages
+- Add loadImageBytes to fetch images from URLs
+- Support base64 data URLs for inline images
+- Handle HTTP image URLs with context propagation
+
+## v1.4.338 (2025-12-04)
+
+### PR [#1852](https://github.com/danielmiessler/Fabric/pull/1852) by [ksylvan](https://github.com/ksylvan): Add Abacus vendor for ChatLLM models with static model list
+
+- Add static model support and register Abacus provider
+- Detect modelsURL starting with 'static:' and route appropriately
+- Implement getStaticModels returning curated Abacus model list
+- Register Abacus provider with ModelsURL 'static:abacus'
+- Extend provider tests to include Abacus existence
+
+## v1.4.337 (2025-12-04)
+
+### PR [#1851](https://github.com/danielmiessler/Fabric/pull/1851) by [ksylvan](https://github.com/ksylvan): Add Z AI provider and glm model support
+
+- Add Z AI provider configuration to ProviderMap
+- Include BaseURL for Z AI API endpoint
+- Add test case for Z AI provider existence
+- Add glm to OpenAI model prefixes list
+- Support new Z AI provider in OpenAI compatible plugins
+
+## v1.4.336 (2025-12-01)
+
+### PR [#1848](https://github.com/danielmiessler/Fabric/pull/1848) by [zeddy303](https://github.com/zeddy303): Fix localStorage SSR error in favorites-store
+
+- Fix localStorage SSR error in favorites-store by using SvelteKit's browser constant instead of typeof localStorage check to properly handle server-side rendering and prevent 'localStorage.getItem is not a function' error when running dev server
+
+## v1.4.335 (2025-11-28)
+
+### PR [#1847](https://github.com/danielmiessler/Fabric/pull/1847) by [ksylvan](https://github.com/ksylvan): Improve model name matching for NeedsRaw in Ollama plugin
+
+- Improved model name matching in Ollama plugin by replacing prefix-based matching with substring matching
+- Enhanced NeedsRaw functionality to support more flexible model name detection
+- Renamed `ollamaPrefixes` variable to `ollamaSearchStrings` for better code clarity
+- Replaced `HasPrefix` function with `Contains` for more comprehensive model matching
+- Added "conceptmap" to VSCode dictionary settings
+
+### Direct commits
+
+- Merge branch 'danielmiessler:main' into main
+- Docs: Fix typo in README
+
+## v1.4.334 (2025-11-26)
+
+### PR [#1845](https://github.com/danielmiessler/Fabric/pull/1845) by [ksylvan](https://github.com/ksylvan): Add Claude Opus 4.5 Support
+
+- Add Claude Opus 4.5 model variants to Anthropic client
+- Upgrade anthropic-sdk-go from v1.16.0 to v1.19.0
+- Update golang.org/x/crypto from v0.41.0 to v0.45.0
+- Upgrade golang.org/x/net from v0.43.0 to v0.47.0
+- Bump golang.org/x/text from v0.28.0 to v0.31.0
+
+## v1.4.333 (2025-11-25)
+
+### PR [#1833](https://github.com/danielmiessler/Fabric/pull/1833) by [junaid18183](https://github.com/junaid18183): Added concall_summary
+
+- Added concall_summery pattern to extract strategic insights from earnings transcripts for investors.
+
+### PR [#1844](https://github.com/danielmiessler/Fabric/pull/1844) by [ksylvan](https://github.com/ksylvan): Correct directory name from `concall_summery` to `concall_summary`
+
+- Fix: correct directory name from `concall_summery` to `concall_summary`
+- Rename pattern directory to fix spelling error
+- Update suggest_pattern system with concall_summary references
+- Add concall_summary to BUSINESS and SUMMARIZE category listings
+- Add user documentation for earnings call analysis
+
+## v1.4.332 (2025-11-24)
+
+### PR [#1843](https://github.com/danielmiessler/Fabric/pull/1843) by [ksylvan](https://github.com/ksylvan): Implement case-insensitive vendor and model name matching
+
+- Fix: implement case-insensitive vendor and model name matching across the application
+- Add case-insensitive vendor lookup in VendorsManager
+- Implement model name normalization in GetChatter method
+- Add FilterByVendor method with case-insensitive matching
+- Add FindModelNameCaseInsensitive helper for model queries
+
+## v1.4.331 (2025-11-22)
+
+### PR [#1839](https://github.com/danielmiessler/Fabric/pull/1839) by [ksylvan](https://github.com/ksylvan): Add GitHub Models Provider and Refactor Fetching Fallback Logic
+
+- Add GitHub Models provider and refactor model fetching with direct API fallback
+- Add GitHub Models to supported OpenAI-compatible providers list
+- Implement direct HTTP fallback for non-standard model responses
+- Centralize model fetching logic in openai package
+- Upgrade openai-go SDK dependency from v1.8.2 to v1.12.0
+
+## v1.4.330 (2025-11-23)
+
+### PR [#1840](https://github.com/danielmiessler/Fabric/pull/1840) by [ZackaryWelch](https://github.com/ZackaryWelch): Replace deprecated bash function in completion script
+
+- Replace deprecated bash function in completion script to use `_comp_get_words` instead of `__get_comp_words_by_ref`, fixing compatibility issues with latest bash versions and preventing script breakage on updated distributions like Fedora 42+
+
+## v1.4.329 (2025-11-20)
+
+### PR [#1838](https://github.com/danielmiessler/fabric/pull/1838) by [ksylvan](https://github.com/ksylvan): refactor: implement i18n support for YouTube tool error messages
+
+- Replace hardcoded error strings with i18n translation calls
+- Add localization keys for YouTube errors to all locale files
+- Introduce `extractAndValidateVideoId` helper to reduce code duplication
+- Update timestamp parsing logic to handle localized error formats
+- Standardize error handling in `yt-dlp` execution with i18n
+
+## v1.4.328 (2025-11-18)
+
+### PR [#1836](https://github.com/danielmiessler/Fabric/pull/1836) by [ksylvan](https://github.com/ksylvan): docs: clarify `--raw` flag behavior for OpenAI and Anthropic providers
+
+- Update `--raw` flag description across all documentation files
+- Clarify flag only affects OpenAI-compatible providers behavior
+- Document Anthropic models use smart parameter selection
+- Remove outdated reference to system/user role changes
+- Update help text in CLI flags definition
+
+## v1.4.327 (2025-11-16)
+
+### PR [#1831](https://github.com/danielmiessler/Fabric/pull/1831) by [ksylvan](https://github.com/ksylvan): Remove `get_youtube_rss` pattern
+
+- Chore: remove `get_youtube_rss` pattern from multiple files
+- Remove `get_youtube_rss` from `pattern_explanations.md`
+- Delete `get_youtube_rss` entry in `pattern_descriptions.json`
+- Delete `get_youtube_rss` entry in `pattern_extracts.json`
+- Remove `get_youtube_rss` from `suggest_pattern/system.md`
+
+### PR [#1832](https://github.com/danielmiessler/Fabric/pull/1832) by [ksylvan](https://github.com/ksylvan): Improve channel management in Gemini provider
+
+- Fix: improve channel management in Gemini streaming method
+- Add deferred channel close at function start
+- Return error immediately instead of breaking loop
+- Remove redundant channel close statements from loop
+- Ensure channel closes on all exit paths consistently
+
+## v1.4.326 (2025-11-16)
+
+### PR [#1830](https://github.com/danielmiessler/Fabric/pull/1830) by [ksylvan](https://github.com/ksylvan): Ensure final newline in model generated outputs
+
+- Feat: ensure newline in `CreateOutputFile` and improve tests
+- Add newline to `CreateOutputFile` if missing
+- Use `t.Cleanup` for file removal in tests
+- Add test for message with trailing newline
+- Introduce `printedStream` flag in `Chatter.Send`
+
+### Direct commits
+
+- Chore: update README with recent features and extensions
+
+- Add v1.4.322 release with concept maps
+
+- Introduce WELLNESS category with psychological analysis
+- Upgrade to Claude Sonnet 4.5
+
+- Add Portuguese language variants with BCP 47 support
+- Migrate to `openai-go/azure` SDK for Azure
+
+- Add Extensions section to README navigation
+
 ## v1.4.325 (2025-11-15)
 
 ### PR [#1828](https://github.com/danielmiessler/Fabric/pull/1828) by [ksylvan](https://github.com/ksylvan): Fix empty string detection in chatter and AI clients

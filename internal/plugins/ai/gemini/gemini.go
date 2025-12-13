@@ -131,6 +131,8 @@ func (o *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, o
 
 func (o *Client) SendStream(msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan string) (err error) {
 	ctx := context.Background()
+	defer close(channel)
+
 	var client *genai.Client
 	if client, err = genai.NewClient(ctx, &genai.ClientConfig{
 		APIKey:  o.ApiKey.Value,
@@ -153,8 +155,7 @@ func (o *Client) SendStream(msgs []*chat.ChatCompletionMessage, opts *domain.Cha
 	for response, err := range stream {
 		if err != nil {
 			channel <- fmt.Sprintf("Error: %v\n", err)
-			close(channel)
-			break
+			return err
 		}
 
 		text := o.extractTextFromResponse(response)
@@ -162,7 +163,6 @@ func (o *Client) SendStream(msgs []*chat.ChatCompletionMessage, opts *domain.Cha
 			channel <- text
 		}
 	}
-	close(channel)
 
 	return
 }

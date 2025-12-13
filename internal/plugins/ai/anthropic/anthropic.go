@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"os"
 	"strconv"
 	"strings"
 
@@ -50,6 +51,10 @@ func NewClient() (ret *Client) {
 		string(anthropic.ModelClaudeOpus4_1_20250805),
 		string(anthropic.ModelClaudeSonnet4_5),
 		string(anthropic.ModelClaudeSonnet4_5_20250929),
+		string(anthropic.ModelClaudeOpus4_5_20251101),
+		string(anthropic.ModelClaudeOpus4_5),
+		string(anthropic.ModelClaudeHaiku4_5),
+		string(anthropic.ModelClaudeHaiku4_5_20251001),
 	}
 
 	ret.modelBetas = map[string][]string{
@@ -212,7 +217,7 @@ func (an *Client) SendStream(
 	}
 
 	if stream.Err() != nil {
-		fmt.Printf("Messages stream error: %v\n", stream.Err())
+		fmt.Fprintf(os.Stderr, "Messages stream error: %v\n", stream.Err())
 	}
 	close(channel)
 	return

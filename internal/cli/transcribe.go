@@ -17,8 +17,9 @@ func handleTranscription(flags *Flags, registry *core.PluginRegistry) (message s
 	if vendorName == "" {
 		vendorName = "OpenAI"
 	}
-	vendor, ok := registry.VendorManager.VendorsByName[vendorName]
-	if !ok {
+
+	vendor := registry.VendorManager.FindByName(vendorName)
+	if vendor == nil {
 		return "", fmt.Errorf("%s", fmt.Sprintf(i18n.T("vendor_not_configured"), vendorName))
 	}
 	tr, ok := vendor.(transcriber)

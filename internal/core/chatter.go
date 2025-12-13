@@ -32,11 +32,9 @@ type Chatter struct {
 
 // Send processes a chat request and applies file changes for create_coding_feature pattern
 func (o *Chatter) Send(request *domain.ChatRequest, opts *domain.ChatOptions) (session *fsdb.Session, err error) {
-	modelToUse := opts.Model
-	if modelToUse == "" {
-		modelToUse = o.model
-	}
-	if o.vendor.NeedsRawMode(modelToUse) {
+	// Use o.model (normalized) for NeedsRawMode check instead of opts.Model
+	// This ensures case-insensitive model names work correctly (e.g., "GPT-5" → "gpt-5")
+	if o.vendor.NeedsRawMode(o.model) {
 		opts.Raw = true
 	}
 	if session, err = o.BuildSession(request, opts.Raw); err != nil {
@@ -57,6 +55,10 @@ func (o *Chatter) Send(request *domain.ChatRequest, opts *domain.ChatOptions) (s
 
 	if opts.Model == "" {
 		opts.Model = o.model
+	} else {
+		// Ensure opts.Model uses the normalized name from o.model if they refer to the same model
+		// This handles cases where user provides "GPT-5" but we've normalized it to "gpt-5"
+		opts.Model = o.model
 	}
 
 	if opts.ModelContextLength == 0 {
@@ -69,6 +71,7 @@ func (o *Chatter) Send(request *domain.ChatRequest, opts *domain.ChatOptions) (s
 		responseChan := make(chan string)
 		errChan := make(chan error, 1)
 		done := make(chan struct{})
+		printedStream := false
 
 		go func() {
 			defer close(done)
@@ -81,7 +84,12 @@ func (o *Chatter) Send(request *domain.ChatRequest, opts *domain.ChatOptions) (s
 			message += response
 			if !opts.SuppressThink {
 				fmt.Print(response)
+				printedStream = true
 			}
+		}
+
+		if printedStream && !opts.SuppressThink && !strings.HasSuffix(message, "\n") {
+			fmt.Println()
 		}
 
 		// Wait for goroutine to finish

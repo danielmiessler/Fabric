@@ -25,9 +25,12 @@ type VendorsManager struct {
 	Models        *VendorsModels
 }
 
+// AddVendors registers one or more vendors with the manager.
+// Vendors are stored with lowercase keys to enable case-insensitive lookup.
 func (o *VendorsManager) AddVendors(vendors ...Vendor) {
 	for _, vendor := range vendors {
-		o.VendorsByName[vendor.GetName()] = vendor
+		name := strings.ToLower(vendor.GetName())
+		o.VendorsByName[name] = vendor
 		o.Vendors = append(o.Vendors, vendor)
 	}
 }
@@ -63,8 +66,10 @@ func (o *VendorsManager) HasVendors() bool {
 	return len(o.Vendors) > 0
 }
 
+// FindByName returns a vendor by name. Lookup is case-insensitive.
+// For example, "OpenAI", "openai", and "OPENAI" all match the same vendor.
 func (o *VendorsManager) FindByName(name string) Vendor {
-	return o.VendorsByName[name]
+	return o.VendorsByName[strings.ToLower(name)]
 }
 
 func (o *VendorsManager) readModels() (err error) {
@@ -143,9 +148,9 @@ func (o *VendorsManager) SetupVendor(vendorName string, configuredVendors map[st
 func (o *VendorsManager) setupVendorTo(vendor Vendor, configuredVendors map[string]Vendor) {
 	if vendorErr := vendor.Setup(); vendorErr == nil {
 		fmt.Printf("[%v] configured\n", vendor.GetName())
-		configuredVendors[vendor.GetName()] = vendor
+		configuredVendors[strings.ToLower(vendor.GetName())] = vendor
 	} else {
-		delete(configuredVendors, vendor.GetName())
+		delete(configuredVendors, strings.ToLower(vendor.GetName()))
 		fmt.Printf("[%v] skipped\n", vendor.GetName())
 	}
 }

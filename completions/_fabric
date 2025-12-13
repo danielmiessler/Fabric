@@ -81,7 +81,7 @@ _fabric() {
     '(-T --topp)'{-T,--topp}'[Set top P (default: 0.9)]:topp:' \
     '(-s --stream)'{-s,--stream}'[Stream]' \
     '(-P --presencepenalty)'{-P,--presencepenalty}'[Set presence penalty (default: 0.0)]:presence penalty:' \
-    '(-r --raw)'{-r,--raw}'[Use the defaults of the model without sending chat options]' \
+    '(-r --raw)'{-r,--raw}'[Use the defaults of the model without sending chat options. Only affects OpenAI-compatible providers. Anthropic models always use smart parameter selection to comply with model-specific requirements.]' \
     '(-F --frequencypenalty)'{-F,--frequencypenalty}'[Set frequency penalty (default: 0.0)]:frequency penalty:' \
     '(-l --listpatterns)'{-l,--listpatterns}'[List all patterns]' \
     '(-L --listmodels)'{-L,--listmodels}'[List all available models]' \

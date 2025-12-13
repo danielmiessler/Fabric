@@ -92,7 +92,11 @@ func (o *PluginBase) Setup() (err error) {
 		return
 	}
 
-	err = o.Configure()
+	// After Setup, run ConfigureCustom if present, but skip re-validation
+	// since Ask() already validated user input (or allowed explicit reset)
+	if o.ConfigureCustom != nil {
+		err = o.ConfigureCustom()
+	}
 	return
 }
 
@@ -198,16 +202,21 @@ func (o *SetupQuestion) Ask(label string) (err error) {
 	var answer string
 	fmt.Scanln(&answer)
 	answer = strings.TrimRight(answer, "\n")
+	isReset := strings.ToLower(answer) == AnswerReset
 	if answer == "" {
 		answer = o.Value
-	} else if strings.ToLower(answer) == AnswerReset {
+	} else if isReset {
 		answer = ""
 	}
-	err = o.OnAnswer(answer)
+	err = o.OnAnswerWithReset(answer, isReset)
 	return
 }
 
 func (o *SetupQuestion) OnAnswer(answer string) (err error) {
+	return o.OnAnswerWithReset(answer, false)
+}
+
+func (o *SetupQuestion) OnAnswerWithReset(answer string, isReset bool) (err error) {
 	if o.Type == SettingTypeBool {
 		if answer == "" {
 			o.Value = ""
@@ -225,6 +234,11 @@ func (o *SetupQuestion) OnAnswer(answer string) (err error) {
 		if err = os.Setenv(o.EnvVariable, o.Value); err != nil {
 			return
 		}
+	}
+	// Skip validation when explicitly resetting a value - the user intentionally
+	// wants to clear the value even if it's required
+	if isReset {
+		return nil
 	}
 	err = o.IsValidErr()
 	return

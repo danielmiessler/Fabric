@@ -196,6 +196,10 @@ Review contract to identify stipulations, issues, and changes for negotiation.
 
 Create comparisons table, highlighting key differences and similarities.
 
+### concall_summary
+
+Analyze earnings call transcripts to extract management insights, financial metrics, and investment implications.
+
 ### create_ai_jobs_analysis
 
 Identify automation risks and career resilience strategies.
@@ -941,10 +945,6 @@ Convert content to markdown, preserving original content and structure.
 ### export_data_as_csv
 
 Extract data and convert to CSV, preserving data integrity.
-
-### get_youtube_rss
-
-Generate RSS feed URLs for YouTube channels.
 
 ### sanitize_broken_html_to_markdown
 

@@ -29,6 +29,9 @@ func CreateOutputFile(message string, fileName string) (err error) {
 		return
 	}
 	defer file.Close()
+	if !strings.HasSuffix(message, "\n") {
+		message += "\n"
+	}
 	if _, err = file.WriteString(message); err != nil {
 		err = fmt.Errorf("%s", fmt.Sprintf(i18n.T("error_writing_to_file"), err))
 	} else {

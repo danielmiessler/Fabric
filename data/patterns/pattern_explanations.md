@@ -46,117 +46,117 @@
 42. **clean_text**: Fix broken or malformatted text by correcting line breaks, punctuation, capitalization, and paragraphs without altering content or spelling.
 43. **coding_master**: Explain a coding concept to a beginner, providing examples, and formatting code in markdown with specific output sections like ideas, recommendations, facts, and insights.
 44. **compare_and_contrast**: Compare and contrast a list of items in a markdown table, with items on the left and topics on top.
-45. **convert_to_markdown**: Convert content to clean, complete Markdown format, preserving all original structure, formatting, links, and code blocks without alterations.
-46. **create_5_sentence_summary**: Create concise summaries or answers to input at 5 different levels of depth, from 5 words to 1 word.
-47. **create_academic_paper**: Generate a high-quality academic paper in LaTeX format with clear concepts, structured content, and a professional layout.
-48. **create_ai_jobs_analysis**: Analyze job categories' susceptibility to automation, identify resilient roles, and provide strategies for personal adaptation to AI-driven changes in the workforce.
-49. **create_aphorisms**: Find and generate a list of brief, witty statements.
-50. **create_art_prompt**: Generates a detailed, compelling visual description of a concept, including stylistic references and direct AI instructions for creating art.
-51. **create_better_frame**: Identifies and analyzes different frames of interpreting reality, emphasizing the power of positive, productive lenses in shaping outcomes.
-52. **create_coding_feature**: Generates secure and composable code features using modern technology and best practices from project specifications.
-53. **create_coding_project**: Generate wireframes and starter code for any coding ideas that you have.
-54. **create_command**: Helps determine the correct parameters and switches for penetration testing tools based on a brief description of the objective.
-55. **create_conceptmap**: Transforms unstructured text or markdown content into an interactive HTML concept map using Vis.js by extracting key concepts and their logical relationships.
-56. **create_cyber_summary**: Summarizes cybersecurity threats, vulnerabilities, incidents, and malware with a 25-word summary and categorized bullet points, after thoroughly analyzing and mapping the provided input.
-57. **create_design_document**: Creates a detailed design document for a system using the C4 model, addressing business and security postures, and including a system context diagram.
-58. **create_diy**: Creates structured "Do It Yourself" tutorial patterns by analyzing prompts, organizing requirements, and providing step-by-step instructions in Markdown format.
-59. **create_excalidraw_visualization**: Creates complex Excalidraw diagrams to visualize relationships between concepts and ideas in structured format.
-60. **create_flash_cards**: Creates flashcards for key concepts, definitions, and terms with question-answer format for educational purposes.
-61. **create_formal_email**: Crafts professional, clear, and respectful emails by analyzing context, tone, and purpose, ensuring proper structure and formatting.
-62. **create_git_diff_commit**: Generates Git commands and commit messages for reflecting changes in a repository, using conventional commits and providing concise shell commands for updates.
-63. **create_graph_from_input**: Generates a CSV file with progress-over-time data for a security program, focusing on relevant metrics and KPIs.
-64. **create_hormozi_offer**: Creates a customized business offer based on principles from Alex Hormozi's book, "$100M Offers."
-65. **create_idea_compass**: Organizes and structures ideas by exploring their definition, evidence, sources, and related themes or consequences.
-66. **create_investigation_visualization**: Creates detailed Graphviz visualizations of complex input, highlighting key aspects and providing clear, well-annotated diagrams for investigative analysis and conclusions.
-67. **create_keynote**: Creates TED-style keynote presentations with a clear narrative, structured slides, and speaker notes, emphasizing impactful takeaways and cohesive flow.
-68. **create_loe_document**: Creates detailed Level of Effort documents for estimating work effort, resources, and costs for tasks or projects.
-69. **create_logo**: Creates simple, minimalist company logos without text, generating AI prompts for vector graphic logos based on input.
-70. **create_markmap_visualization**: Transforms complex ideas into clear visualizations using MarkMap syntax, simplifying concepts into diagrams with relationships, boxes, arrows, and labels.
-71. **create_mermaid_visualization**: Creates detailed, standalone visualizations of concepts using Mermaid (Markdown) syntax, ensuring clarity and coherence in diagrams.
-72. **create_mermaid_visualization_for_github**: Creates standalone, detailed visualizations using Mermaid (Markdown) syntax to effectively explain complex concepts, ensuring clarity and precision.
-73. **create_micro_summary**: Summarizes content into a concise, 20-word summary with main points and takeaways, formatted in Markdown.
-74. **create_mnemonic_phrases**: Creates memorable mnemonic sentences from given words to aid in memory retention and learning.
-75. **create_network_threat_landscape**: Analyzes open ports and services from a network scan and generates a comprehensive, insightful, and detailed security threat report in Markdown.
-76. **create_newsletter_entry**: Condenses provided article text into a concise, objective, newsletter-style summary with a title in the style of Frontend Weekly.
-77. **create_npc**: Generates a detailed D&D 5E NPC, including background, flaws, stats, appearance, personality, goals, and more in Markdown format.
-78. **create_pattern**: Extracts, organizes, and formats LLM/AI prompts into structured sections, detailing the AI's role, instructions, output format, and any provided examples for clarity and accuracy.
-79. **create_prd**: Creates a precise Product Requirements Document (PRD) in Markdown based on input.
-80. **create_prediction_block**: Extracts and formats predictions from input into a structured Markdown block for a blog post.
-81. **create_quiz**: Creates a three-phase reading plan based on an author or topic to help the user become significantly knowledgeable, including core, extended, and supplementary readings.
-82. **create_reading_plan**: Generates review questions based on learning objectives from the input, adapted to the specified student level, and outputs them in a clear markdown format.
-83. **create_recursive_outline**: Breaks down complex tasks or projects into manageable, hierarchical components with recursive outlining for clarity and simplicity.
-84. **create_report_finding**: Creates a detailed, structured security finding report in markdown, including sections on Description, Risk, Recommendations, References, One-Sentence-Summary, and Quotes.
-85. **create_rpg_summary**: Summarizes an in-person RPG session with key events, combat details, player stats, and role-playing highlights in a structured format.
-86. **create_security_update**: Creates concise security updates for newsletters, covering stories, threats, advisories, vulnerabilities, and a summary of key issues.
-87. **create_show_intro**: Creates compelling short intros for podcasts, summarizing key topics and themes discussed in the episode.
-88. **create_sigma_rules**: Extracts Tactics, Techniques, and Procedures (TTPs) from security news and converts them into Sigma detection rules for host-based detections.
-89. **create_story_about_people_interaction**: Analyze two personas, compare their dynamics, and craft a realistic, character-driven story from those insights.
-90. **create_story_about_person**: Creates compelling, realistic short stories based on psychological profiles, showing how characters navigate everyday problems using strategies consistent with their personality traits.
-91. **create_story_explanation**: Summarizes complex content in a clear, approachable story format that makes the concepts easy to understand.
-92. **create_stride_threat_model**: Create a STRIDE-based threat model for a system design, identifying assets, trust boundaries, data flows, and prioritizing threats with mitigations.
-93. **create_summary**: Summarizes content into a 20-word sentence, 10 main points (16 words max), and 5 key takeaways in Markdown format.
-94. **create_tags**: Identifies at least 5 tags from text content for mind mapping tools, including authors and existing tags if present.
-95. **create_threat_scenarios**: Identifies likely attack methods for any system by providing a narrative-based threat model, balancing risk and opportunity.
-96. **create_ttrc_graph**: Creates a CSV file showing the progress of Time to Remediate Critical Vulnerabilities over time using given data.
-97. **create_ttrc_narrative**: Creates a persuasive narrative highlighting progress in reducing the Time to Remediate Critical Vulnerabilities metric over time.
-98. **create_upgrade_pack**: Extracts world model and task algorithm updates from content, providing beliefs about how the world works and task performance.
-99. **create_user_story**: Writes concise and clear technical user stories for new features in complex software programs, formatted for all stakeholders.
-100. **create_video_chapters**: Extracts interesting topics and timestamps from a transcript, providing concise summaries of key moments.
-101. **create_visualization**: Transforms complex ideas into visualizations using intricate ASCII art, simplifying concepts where necessary.
-102. **dialog_with_socrates**: Engages in deep, meaningful dialogues to explore and challenge beliefs using the Socratic method.
-103. **enrich_blog_post**: Enhances Markdown blog files by applying instructions to improve structure, visuals, and readability for HTML rendering.
-104. **explain_code**: Explains code, security tool output, configuration text, and answers questions based on the provided input.
-105. **explain_docs**: Improves and restructures tool documentation into clear, concise instructions, including overviews, usage, use cases, and key features.
-106. **explain_math**: Helps you understand mathematical concepts in a clear and engaging way.
-107. **explain_project**: Summarizes project documentation into clear, concise sections covering the project, problem, solution, installation, usage, and examples.
-108. **explain_terms**: Produces a glossary of advanced terms from content, providing a definition, analogy, and explanation of why each term matters.
-109. **export_data_as_csv**: Extracts and outputs all data structures from the input in properly formatted CSV data.
-110. **extract_algorithm_update_recommendations**: Extracts concise, practical algorithm update recommendations from the input and outputs them in a bulleted list.
-111. **extract_article_wisdom**: Extracts surprising, insightful, and interesting information from content, categorizing it into sections like summary, ideas, quotes, facts, references, and recommendations.
-112. **extract_book_ideas**: Extracts and outputs 50 to 100 of the most surprising, insightful, and interesting ideas from a book's content.
-113. **extract_book_recommendations**: Extracts and outputs 50 to 100 practical, actionable recommendations from a book's content.
-114. **extract_business_ideas**: Extracts top business ideas from content and elaborates on the best 10 with unique differentiators.
-115. **extract_characters**: Identify all characters (human and non-human), resolve their aliases and pronouns into canonical names, and produce detailed descriptions of each character's role, motivations, and interactions ranked by narrative importance.
-116. **extract_controversial_ideas**: Extracts and outputs controversial statements and supporting quotes from the input in a structured Markdown list.
-117. **extract_core_message**: Extracts and outputs a clear, concise sentence that articulates the core message of a given text or body of work.
-118. **extract_ctf_writeup**: Extracts a short writeup from a warstory-like text about a cyber security engagement.
-119. **extract_domains**: Extracts domains and URLs from content to identify sources used for articles, newsletters, and other publications.
-120. **extract_extraordinary_claims**: Extracts and outputs a list of extraordinary claims from conversations, focusing on scientifically disputed or false statements.
-121. **extract_ideas**: Extracts and outputs all the key ideas from input, presented as 15-word bullet points in Markdown.
-122. **extract_insights**: Extracts and outputs the most powerful and insightful ideas from text, formatted as 16-word bullet points in the INSIGHTS section, also IDEAS section.
-123. **extract_insights_dm**: Extracts and outputs all valuable insights and a concise summary of the content, including key points and topics discussed.
-124. **extract_instructions**: Extracts clear, actionable step-by-step instructions and main objectives from instructional video transcripts, organizing them into a concise list.
-125. **extract_jokes**: Extracts jokes from text content, presenting each joke with its punchline in separate bullet points.
-126. **extract_latest_video**: Extracts the latest video URL from a YouTube RSS feed and outputs the URL only.
-127. **extract_main_activities**: Extracts key events and activities from transcripts or logs, providing a summary of what happened.
-128. **extract_main_idea**: Extracts the main idea and key recommendation from the input, summarizing them in 15-word sentences.
-129. **extract_mcp_servers**: Identify and summarize Model Context Protocol (MCP) servers referenced in the input along with their key details.
-130. **extract_most_redeeming_thing**: Extracts the most redeeming aspect from an input, summarizing it in a single 15-word sentence.
-131. **extract_patterns**: Extracts and analyzes recurring, surprising, and insightful patterns from input, providing detailed analysis and advice for builders.
-132. **extract_poc**: Extracts proof of concept URLs and validation methods from security reports, providing the URL and command to run.
-133. **extract_predictions**: Extracts predictions from input, including specific details such as date, confidence level, and verification method.
-134. **extract_primary_problem**: Extracts the primary problem with the world as presented in a given text or body of work.
-135. **extract_primary_solution**: Extracts the primary solution for the world as presented in a given text or body of work.
-136. **extract_product_features**: Extracts and outputs a list of product features from the provided input in a bulleted format.
-137. **extract_questions**: Extracts and outputs all questions asked by the interviewer in a conversation or interview.
-138. **extract_recipe**: Extracts and outputs a recipe with a short meal description, ingredients with measurements, and preparation steps.
-139. **extract_recommendations**: Extracts and outputs concise, practical recommendations from a given piece of content in a bulleted list.
-140. **extract_references**: Extracts and outputs a bulleted list of references to art, stories, books, literature, and other sources from content.
-141. **extract_skills**: Extracts and classifies skills from a job description into a table, separating each skill and classifying it as either hard or soft.
-142. **extract_song_meaning**: Analyzes a song to provide a summary of its meaning, supported by detailed evidence from lyrics, artist commentary, and fan analysis.
-143. **extract_sponsors**: Extracts and lists official sponsors and potential sponsors from a provided transcript.
-144. **extract_videoid**: Extracts and outputs the video ID from any given URL.
-145. **extract_wisdom**: Extracts surprising, insightful, and interesting information from text on topics like human flourishing, AI, learning, and more.
-146. **extract_wisdom_agents**: Extracts valuable insights, ideas, quotes, and references from content, emphasizing topics like human flourishing, AI, learning, and technology.
-147. **extract_wisdom_dm**: Extracts all valuable, insightful, and thought-provoking information from content, focusing on topics like human flourishing, AI, learning, and technology.
-148. **extract_wisdom_nometa**: Extracts insights, ideas, quotes, habits, facts, references, and recommendations from content, focusing on human flourishing, AI, technology, and related topics.
-149. **find_female_life_partner**: Analyzes criteria for finding a female life partner and provides clear, direct, and poetic descriptions.
-150. **find_hidden_message**: Extracts overt and hidden political messages, justifications, audience actions, and a cynical analysis from content.
-151. **find_logical_fallacies**: Identifies and analyzes fallacies in arguments, classifying them as formal or informal with detailed reasoning.
-152. **fix_typos**: Proofreads and corrects typos, spelling, grammar, and punctuation errors in text.
-153. **generate_code_rules**: Compile best-practice coding rules and guardrails for AI-assisted development workflows from the provided content.
-154. **get_wow_per_minute**: Determines the wow-factor of content per minute based on surprise, novelty, insight, value, and wisdom, measuring how rewarding the content is for the viewer.
-155. **get_youtube_rss**: Returns the RSS URL for a given YouTube channel based on the channel ID or URL.
+45. **concall_summary**: Analyzes earnings and conference call transcripts to extract management commentary, analyst Q&A, financial insights, risks, and executive summaries.
+46. **convert_to_markdown**: Convert content to clean, complete Markdown format, preserving all original structure, formatting, links, and code blocks without alterations.
+47. **create_5_sentence_summary**: Create concise summaries or answers to input at 5 different levels of depth, from 5 words to 1 word.
+48. **create_academic_paper**: Generate a high-quality academic paper in LaTeX format with clear concepts, structured content, and a professional layout.
+49. **create_ai_jobs_analysis**: Analyze job categories' susceptibility to automation, identify resilient roles, and provide strategies for personal adaptation to AI-driven changes in the workforce.
+50. **create_aphorisms**: Find and generate a list of brief, witty statements.
+51. **create_art_prompt**: Generates a detailed, compelling visual description of a concept, including stylistic references and direct AI instructions for creating art.
+52. **create_better_frame**: Identifies and analyzes different frames of interpreting reality, emphasizing the power of positive, productive lenses in shaping outcomes.
+53. **create_coding_feature**: Generates secure and composable code features using modern technology and best practices from project specifications.
+54. **create_coding_project**: Generate wireframes and starter code for any coding ideas that you have.
+55. **create_command**: Helps determine the correct parameters and switches for penetration testing tools based on a brief description of the objective.
+56. **create_conceptmap**: Transforms unstructured text or markdown content into an interactive HTML concept map using Vis.js by extracting key concepts and their logical relationships.
+57. **create_cyber_summary**: Summarizes cybersecurity threats, vulnerabilities, incidents, and malware with a 25-word summary and categorized bullet points, after thoroughly analyzing and mapping the provided input.
+58. **create_design_document**: Creates a detailed design document for a system using the C4 model, addressing business and security postures, and including a system context diagram.
+59. **create_diy**: Creates structured "Do It Yourself" tutorial patterns by analyzing prompts, organizing requirements, and providing step-by-step instructions in Markdown format.
+60. **create_excalidraw_visualization**: Creates complex Excalidraw diagrams to visualize relationships between concepts and ideas in structured format.
+61. **create_flash_cards**: Creates flashcards for key concepts, definitions, and terms with question-answer format for educational purposes.
+62. **create_formal_email**: Crafts professional, clear, and respectful emails by analyzing context, tone, and purpose, ensuring proper structure and formatting.
+63. **create_git_diff_commit**: Generates Git commands and commit messages for reflecting changes in a repository, using conventional commits and providing concise shell commands for updates.
+64. **create_graph_from_input**: Generates a CSV file with progress-over-time data for a security program, focusing on relevant metrics and KPIs.
+65. **create_hormozi_offer**: Creates a customized business offer based on principles from Alex Hormozi's book, "$100M Offers."
+66. **create_idea_compass**: Organizes and structures ideas by exploring their definition, evidence, sources, and related themes or consequences.
+67. **create_investigation_visualization**: Creates detailed Graphviz visualizations of complex input, highlighting key aspects and providing clear, well-annotated diagrams for investigative analysis and conclusions.
+68. **create_keynote**: Creates TED-style keynote presentations with a clear narrative, structured slides, and speaker notes, emphasizing impactful takeaways and cohesive flow.
+69. **create_loe_document**: Creates detailed Level of Effort documents for estimating work effort, resources, and costs for tasks or projects.
+70. **create_logo**: Creates simple, minimalist company logos without text, generating AI prompts for vector graphic logos based on input.
+71. **create_markmap_visualization**: Transforms complex ideas into clear visualizations using MarkMap syntax, simplifying concepts into diagrams with relationships, boxes, arrows, and labels.
+72. **create_mermaid_visualization**: Creates detailed, standalone visualizations of concepts using Mermaid (Markdown) syntax, ensuring clarity and coherence in diagrams.
+73. **create_mermaid_visualization_for_github**: Creates standalone, detailed visualizations using Mermaid (Markdown) syntax to effectively explain complex concepts, ensuring clarity and precision.
+74. **create_micro_summary**: Summarizes content into a concise, 20-word summary with main points and takeaways, formatted in Markdown.
+75. **create_mnemonic_phrases**: Creates memorable mnemonic sentences from given words to aid in memory retention and learning.
+76. **create_network_threat_landscape**: Analyzes open ports and services from a network scan and generates a comprehensive, insightful, and detailed security threat report in Markdown.
+77. **create_newsletter_entry**: Condenses provided article text into a concise, objective, newsletter-style summary with a title in the style of Frontend Weekly.
+78. **create_npc**: Generates a detailed D&D 5E NPC, including background, flaws, stats, appearance, personality, goals, and more in Markdown format.
+79. **create_pattern**: Extracts, organizes, and formats LLM/AI prompts into structured sections, detailing the AI's role, instructions, output format, and any provided examples for clarity and accuracy.
+80. **create_prd**: Creates a precise Product Requirements Document (PRD) in Markdown based on input.
+81. **create_prediction_block**: Extracts and formats predictions from input into a structured Markdown block for a blog post.
+82. **create_quiz**: Creates a three-phase reading plan based on an author or topic to help the user become significantly knowledgeable, including core, extended, and supplementary readings.
+83. **create_reading_plan**: Generates review questions based on learning objectives from the input, adapted to the specified student level, and outputs them in a clear markdown format.
+84. **create_recursive_outline**: Breaks down complex tasks or projects into manageable, hierarchical components with recursive outlining for clarity and simplicity.
+85. **create_report_finding**: Creates a detailed, structured security finding report in markdown, including sections on Description, Risk, Recommendations, References, One-Sentence-Summary, and Quotes.
+86. **create_rpg_summary**: Summarizes an in-person RPG session with key events, combat details, player stats, and role-playing highlights in a structured format.
+87. **create_security_update**: Creates concise security updates for newsletters, covering stories, threats, advisories, vulnerabilities, and a summary of key issues.
+88. **create_show_intro**: Creates compelling short intros for podcasts, summarizing key topics and themes discussed in the episode.
+89. **create_sigma_rules**: Extracts Tactics, Techniques, and Procedures (TTPs) from security news and converts them into Sigma detection rules for host-based detections.
+90. **create_story_about_people_interaction**: Analyze two personas, compare their dynamics, and craft a realistic, character-driven story from those insights.
+91. **create_story_about_person**: Creates compelling, realistic short stories based on psychological profiles, showing how characters navigate everyday problems using strategies consistent with their personality traits.
+92. **create_story_explanation**: Summarizes complex content in a clear, approachable story format that makes the concepts easy to understand.
+93. **create_stride_threat_model**: Create a STRIDE-based threat model for a system design, identifying assets, trust boundaries, data flows, and prioritizing threats with mitigations.
+94. **create_summary**: Summarizes content into a 20-word sentence, 10 main points (16 words max), and 5 key takeaways in Markdown format.
+95. **create_tags**: Identifies at least 5 tags from text content for mind mapping tools, including authors and existing tags if present.
+96. **create_threat_scenarios**: Identifies likely attack methods for any system by providing a narrative-based threat model, balancing risk and opportunity.
+97. **create_ttrc_graph**: Creates a CSV file showing the progress of Time to Remediate Critical Vulnerabilities over time using given data.
+98. **create_ttrc_narrative**: Creates a persuasive narrative highlighting progress in reducing the Time to Remediate Critical Vulnerabilities metric over time.
+99. **create_upgrade_pack**: Extracts world model and task algorithm updates from content, providing beliefs about how the world works and task performance.
+100. **create_user_story**: Writes concise and clear technical user stories for new features in complex software programs, formatted for all stakeholders.
+101. **create_video_chapters**: Extracts interesting topics and timestamps from a transcript, providing concise summaries of key moments.
+102. **create_visualization**: Transforms complex ideas into visualizations using intricate ASCII art, simplifying concepts where necessary.
+103. **dialog_with_socrates**: Engages in deep, meaningful dialogues to explore and challenge beliefs using the Socratic method.
+104. **enrich_blog_post**: Enhances Markdown blog files by applying instructions to improve structure, visuals, and readability for HTML rendering.
+105. **explain_code**: Explains code, security tool output, configuration text, and answers questions based on the provided input.
+106. **explain_docs**: Improves and restructures tool documentation into clear, concise instructions, including overviews, usage, use cases, and key features.
+107. **explain_math**: Helps you understand mathematical concepts in a clear and engaging way.
+108. **explain_project**: Summarizes project documentation into clear, concise sections covering the project, problem, solution, installation, usage, and examples.
+109. **explain_terms**: Produces a glossary of advanced terms from content, providing a definition, analogy, and explanation of why each term matters.
+110. **export_data_as_csv**: Extracts and outputs all data structures from the input in properly formatted CSV data.
+111. **extract_algorithm_update_recommendations**: Extracts concise, practical algorithm update recommendations from the input and outputs them in a bulleted list.
+112. **extract_article_wisdom**: Extracts surprising, insightful, and interesting information from content, categorizing it into sections like summary, ideas, quotes, facts, references, and recommendations.
+113. **extract_book_ideas**: Extracts and outputs 50 to 100 of the most surprising, insightful, and interesting ideas from a book's content.
+114. **extract_book_recommendations**: Extracts and outputs 50 to 100 practical, actionable recommendations from a book's content.
+115. **extract_business_ideas**: Extracts top business ideas from content and elaborates on the best 10 with unique differentiators.
+116. **extract_characters**: Identify all characters (human and non-human), resolve their aliases and pronouns into canonical names, and produce detailed descriptions of each character's role, motivations, and interactions ranked by narrative importance.
+117. **extract_controversial_ideas**: Extracts and outputs controversial statements and supporting quotes from the input in a structured Markdown list.
+118. **extract_core_message**: Extracts and outputs a clear, concise sentence that articulates the core message of a given text or body of work.
+119. **extract_ctf_writeup**: Extracts a short writeup from a warstory-like text about a cyber security engagement.
+120. **extract_domains**: Extracts domains and URLs from content to identify sources used for articles, newsletters, and other publications.
+121. **extract_extraordinary_claims**: Extracts and outputs a list of extraordinary claims from conversations, focusing on scientifically disputed or false statements.
+122. **extract_ideas**: Extracts and outputs all the key ideas from input, presented as 15-word bullet points in Markdown.
+123. **extract_insights**: Extracts and outputs the most powerful and insightful ideas from text, formatted as 16-word bullet points in the INSIGHTS section, also IDEAS section.
+124. **extract_insights_dm**: Extracts and outputs all valuable insights and a concise summary of the content, including key points and topics discussed.
+125. **extract_instructions**: Extracts clear, actionable step-by-step instructions and main objectives from instructional video transcripts, organizing them into a concise list.
+126. **extract_jokes**: Extracts jokes from text content, presenting each joke with its punchline in separate bullet points.
+127. **extract_latest_video**: Extracts the latest video URL from a YouTube RSS feed and outputs the URL only.
+128. **extract_main_activities**: Extracts key events and activities from transcripts or logs, providing a summary of what happened.
+129. **extract_main_idea**: Extracts the main idea and key recommendation from the input, summarizing them in 15-word sentences.
+130. **extract_mcp_servers**: Identify and summarize Model Context Protocol (MCP) servers referenced in the input along with their key details.
+131. **extract_most_redeeming_thing**: Extracts the most redeeming aspect from an input, summarizing it in a single 15-word sentence.
+132. **extract_patterns**: Extracts and analyzes recurring, surprising, and insightful patterns from input, providing detailed analysis and advice for builders.
+133. **extract_poc**: Extracts proof of concept URLs and validation methods from security reports, providing the URL and command to run.
+134. **extract_predictions**: Extracts predictions from input, including specific details such as date, confidence level, and verification method.
+135. **extract_primary_problem**: Extracts the primary problem with the world as presented in a given text or body of work.
+136. **extract_primary_solution**: Extracts the primary solution for the world as presented in a given text or body of work.
+137. **extract_product_features**: Extracts and outputs a list of product features from the provided input in a bulleted format.
+138. **extract_questions**: Extracts and outputs all questions asked by the interviewer in a conversation or interview.
+139. **extract_recipe**: Extracts and outputs a recipe with a short meal description, ingredients with measurements, and preparation steps.
+140. **extract_recommendations**: Extracts and outputs concise, practical recommendations from a given piece of content in a bulleted list.
+141. **extract_references**: Extracts and outputs a bulleted list of references to art, stories, books, literature, and other sources from content.
+142. **extract_skills**: Extracts and classifies skills from a job description into a table, separating each skill and classifying it as either hard or soft.
+143. **extract_song_meaning**: Analyzes a song to provide a summary of its meaning, supported by detailed evidence from lyrics, artist commentary, and fan analysis.
+144. **extract_sponsors**: Extracts and lists official sponsors and potential sponsors from a provided transcript.
+145. **extract_videoid**: Extracts and outputs the video ID from any given URL.
+146. **extract_wisdom**: Extracts surprising, insightful, and interesting information from text on topics like human flourishing, AI, learning, and more.
+147. **extract_wisdom_agents**: Extracts valuable insights, ideas, quotes, and references from content, emphasizing topics like human flourishing, AI, learning, and technology.
+148. **extract_wisdom_dm**: Extracts all valuable, insightful, and thought-provoking information from content, focusing on topics like human flourishing, AI, learning, and technology.
+149. **extract_wisdom_nometa**: Extracts insights, ideas, quotes, habits, facts, references, and recommendations from content, focusing on human flourishing, AI, technology, and related topics.
+150. **find_female_life_partner**: Analyzes criteria for finding a female life partner and provides clear, direct, and poetic descriptions.
+151. **find_hidden_message**: Extracts overt and hidden political messages, justifications, audience actions, and a cynical analysis from content.
+152. **find_logical_fallacies**: Identifies and analyzes fallacies in arguments, classifying them as formal or informal with detailed reasoning.
+153. **fix_typos**: Proofreads and corrects typos, spelling, grammar, and punctuation errors in text.
+154. **generate_code_rules**: Compile best-practice coding rules and guardrails for AI-assisted development workflows from the provided content.
+155. **get_wow_per_minute**: Determines the wow-factor of content per minute based on surprise, novelty, insight, value, and wisdom, measuring how rewarding the content is for the viewer.
 156. **heal_person**: Develops a comprehensive plan for spiritual and mental healing based on psychological profiles, providing personalized recommendations for mental health improvement and overall life enhancement.
 157. **humanize**: Rewrites AI-generated text to sound natural, conversational, and easy to understand, maintaining clarity and simplicity.
 158. **identify_dsrp_distinctions**: Encourages creative, systems-based thinking by exploring distinctions, boundaries, and their implications, drawing on insights from prominent systems thinkers.

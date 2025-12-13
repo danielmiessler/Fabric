@@ -1,13 +1,14 @@
 import { writable } from 'svelte/store';
+import { browser } from '$app/environment';
 
 // Load favorites from localStorage if available
-const storedFavorites = typeof localStorage !== 'undefined' 
+const storedFavorites = browser
   ? JSON.parse(localStorage.getItem('favoritePatterns') || '[]')
   : [];
 
 const createFavoritesStore = () => {
   const { subscribe, set, update } = writable<string[]>(storedFavorites);
-
+  
   return {
     subscribe,
     toggleFavorite: (patternName: string) => {
@@ -17,7 +18,7 @@ const createFavoritesStore = () => {
           : [...favorites, patternName];
         
         // Save to localStorage
-        if (typeof localStorage !== 'undefined') {
+        if (browser) {
           localStorage.setItem('favoritePatterns', JSON.stringify(newFavorites));
         }
         
@@ -26,7 +27,7 @@ const createFavoritesStore = () => {
     },
     reset: () => {
       set([]);
-      if (typeof localStorage !== 'undefined') {
+      if (browser) {
         localStorage.removeItem('favoritePatterns');
       }
     }

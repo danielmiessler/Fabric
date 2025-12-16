@@ -198,8 +198,8 @@ func (o *PatternsEntity) GetNames() (ret []string, err error) {
 		// Create a temporary StorageEntity for the custom directory
 		customStorage := &StorageEntity{
 			Dir:           o.CustomPatternsDir,
-			ItemIsDir:     o.StorageEntity.ItemIsDir,
-			FileExtension: o.StorageEntity.FileExtension,
+			ItemIsDir:     o.ItemIsDir,
+			FileExtension: o.FileExtension,
 		}
 
 		customNames, customErr := customStorage.GetNames()
@@ -233,7 +233,7 @@ func (o *PatternsEntity) ListNames(shellCompleteList bool) (err error) {
 
 	if len(names) == 0 {
 		if !shellCompleteList {
-			fmt.Printf("\nNo %v\n", o.StorageEntity.Label)
+			fmt.Printf("\nNo %v\n", o.Label)
 		}
 		return err
 	}

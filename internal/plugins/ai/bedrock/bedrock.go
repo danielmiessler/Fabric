@@ -58,7 +58,7 @@ func NewClient() (ret *BedrockClient) {
 				return fmt.Errorf("unable to load AWS Config: %w", err)
 			},
 		}
-		ret.bedrockRegion = ret.PluginBase.AddSetupQuestion("AWS Region", true)
+		ret.bedrockRegion = ret.AddSetupQuestion("AWS Region", true)
 		return ret
 	}
 
@@ -76,7 +76,7 @@ func NewClient() (ret *BedrockClient) {
 	ret.runtimeClient = runtimeClient
 	ret.controlPlaneClient = controlPlaneClient
 
-	ret.bedrockRegion = ret.PluginBase.AddSetupQuestion("AWS Region", true)
+	ret.bedrockRegion = ret.AddSetupQuestion("AWS Region", true)
 
 	if cfg.Region != "" {
 		ret.bedrockRegion.Value = cfg.Region

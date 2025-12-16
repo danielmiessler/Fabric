@@ -40,7 +40,7 @@ func NewClient() (ret *Client) {
 	ret.ApiBaseURL = ret.AddSetupQuestion("API Base URL", false)
 	ret.ApiBaseURL.Value = defaultBaseUrl
 	ret.UseOAuth = ret.AddSetupQuestionBool("Use OAuth login", false)
-	ret.ApiKey = ret.PluginBase.AddSetupQuestion("API key", false)
+	ret.ApiKey = ret.AddSetupQuestion("API key", false)
 
 	ret.maxTokens = 4096
 	ret.defaultRequiredUserMessage = "Hi"
@@ -115,7 +115,7 @@ type Client struct {
 }
 
 func (an *Client) Setup() (err error) {
-	if err = an.PluginBase.Ask(an.Name); err != nil {
+	if err = an.Ask(an.Name); err != nil {
 		return err
 	}
 

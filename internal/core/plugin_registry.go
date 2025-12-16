@@ -158,7 +158,7 @@ func (o *PluginRegistry) SaveEnvFile() (err error) {
 	// Now create the .env with all configured VendorsController info
 	var envFileContent bytes.Buffer
 
-	o.Defaults.Settings.FillEnvFileContent(&envFileContent)
+	o.Defaults.FillEnvFileContent(&envFileContent)
 	o.PatternsLoader.SetupFillEnvFileContent(&envFileContent)
 	o.CustomPatterns.SetupFillEnvFileContent(&envFileContent)
 	o.Strategies.SetupFillEnvFileContent(&envFileContent)

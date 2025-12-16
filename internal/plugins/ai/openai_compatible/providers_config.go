@@ -47,7 +47,7 @@ func (c *Client) ListModels() ([]string, error) {
 		}
 		// TODO: Handle context properly in Fabric by accepting and propagating a context.Context
 		// instead of creating a new one here.
-		return openai.FetchModelsDirectly(context.Background(), c.modelsURL, c.Client.ApiKey.Value, c.GetName())
+		return openai.FetchModelsDirectly(context.Background(), c.modelsURL, c.ApiKey.Value, c.GetName())
 	}
 
 	// First try the standard OpenAI SDK approach

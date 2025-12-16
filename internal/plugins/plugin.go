@@ -110,7 +110,7 @@ func (o *PluginBase) SetupOrSkip() (err error) {
 }
 
 func (o *PluginBase) SetupFillEnvFileContent(fileEnvFileContent *bytes.Buffer) {
-	o.Settings.FillEnvFileContent(fileEnvFileContent)
+	o.FillEnvFileContent(fileEnvFileContent)
 }
 
 func NewSetting(envVariable string, required bool) *Setting {
@@ -152,7 +152,7 @@ func (o *Setting) FillEnvFileContent(buffer *bytes.Buffer) {
 		buffer.WriteString("=")
 		if o.Type == SettingTypeBool {
 			v, _ := ParseBool(o.Value)
-			buffer.WriteString(fmt.Sprintf("%v", v))
+			fmt.Fprintf(buffer, "%v", v)
 		} else {
 			buffer.WriteString(o.Value)
 		}

@@ -33,7 +33,7 @@ func NewClient() (ret *Client) {
 	ret.ApiUrl = ret.AddSetupQuestionCustom("API URL", true,
 		"Enter your Ollama URL (as a reminder, it is usually http://localhost:11434')")
 	ret.ApiUrl.Value = defaultBaseUrl
-	ret.ApiKey = ret.PluginBase.AddSetupQuestion("API key", false)
+	ret.ApiKey = ret.AddSetupQuestion("API key", false)
 	ret.ApiKey.Value = ""
 	ret.ApiHttpTimeout = ret.AddSetupQuestionCustom("HTTP Timeout", true,
 		"Specify HTTP timeout duration for Ollama requests (e.g. 30s, 5m, 1h)")

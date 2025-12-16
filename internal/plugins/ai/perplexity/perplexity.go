@@ -227,13 +227,13 @@ func (c *Client) Setup() error {
 
 // GetName returns the name of the plugin.
 func (c *Client) GetName() string {
-	return c.PluginBase.Name
+	return c.Name
 }
 
 // GetEnvNamePrefix returns the environment variable prefix for the plugin.
 // Corrected: Receiver name
 func (c *Client) GetEnvNamePrefix() string {
-	return c.PluginBase.EnvNamePrefix
+	return c.EnvNamePrefix
 }
 
 // AddSetupQuestion adds a setup question to the plugin.
@@ -245,5 +245,5 @@ func (c *Client) AddSetupQuestion(text string, isSensitive bool) *plugins.SetupQ
 // GetSetupQuestions returns the setup questions for the plugin.
 // Corrected: Return the slice of setup questions from PluginBase
 func (c *Client) GetSetupQuestions() []*plugins.SetupQuestion {
-	return c.PluginBase.SetupQuestions
+	return c.SetupQuestions
 }

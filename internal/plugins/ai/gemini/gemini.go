@@ -55,7 +55,7 @@ func NewClient() (ret *Client) {
 		EnvNamePrefix: plugins.BuildEnvVariablePrefix(vendorName),
 	}
 
-	ret.ApiKey = ret.PluginBase.AddSetupQuestion("API key", true)
+	ret.ApiKey = ret.AddSetupQuestion("API key", true)
 
 	return ret
 }

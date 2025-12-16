@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"os"
+	"strings"
 	"sync"
 
 	"github.com/danielmiessler/fabric/internal/domain"
@@ -107,18 +108,19 @@ func (c *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, o
 		return "", fmt.Errorf("perplexity API request failed: %w", err) // Corrected capitalization
 	}
 
-	content := resp.GetLastContent()
+	var content strings.Builder
+	content.WriteString(resp.GetLastContent())
 
 	// Append citations if available
 	citations := resp.GetCitations()
 	if len(citations) > 0 {
-		content += "\n\n# CITATIONS\n\n"
+		content.WriteString("\n\n# CITATIONS\n\n")
 		for i, citation := range citations {
-			content += fmt.Sprintf("- [%d] %s\n", i+1, citation)
+			content.WriteString(fmt.Sprintf("- [%d] %s\n", i+1, citation))
 		}
 	}
 
-	return content, nil
+	return content.String(), nil
 }
 
 func (c *Client) SendStream(msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan string) error {

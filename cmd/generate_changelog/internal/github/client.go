@@ -333,7 +333,7 @@ func (c *Client) FetchAllMergedPRsGraphQL(since time.Time) ([]*PR, error) {
 
 	for {
 		// Prepare variables
-		variables := map[string]interface{}{
+		variables := map[string]any{
 			"owner": graphql.String(c.owner),
 			"repo":  graphql.String(c.repo),
 			"after": (*graphql.String)(after),

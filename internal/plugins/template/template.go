@@ -33,7 +33,7 @@ func init() {
 var pluginPattern = regexp.MustCompile(`\{\{plugin:([^:]+):([^:]+)(?::([^}]+))?\}\}`)
 var extensionPattern = regexp.MustCompile(`\{\{ext:([^:]+):([^:]+)(?::([^}]+))?\}\}`)
 
-func debugf(format string, a ...interface{}) {
+func debugf(format string, a ...any) {
 	debuglog.Debug(debuglog.Trace, format, a...)
 }
 

@@ -52,7 +52,7 @@ func createExpiredToken(accessToken, refreshToken string) *util.OAuthToken {
 }
 
 // mockTokenServer creates a mock OAuth token server for testing
-func mockTokenServer(_ *testing.T, responses map[string]interface{}) *httptest.Server {
+func mockTokenServer(_ *testing.T, responses map[string]any) *httptest.Server {
 	return httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if r.URL.Path != "/v1/oauth/token" {
 			http.NotFound(w, r)
@@ -80,7 +80,7 @@ func mockTokenServer(_ *testing.T, responses map[string]interface{}) *httptest.S
 
 		w.Header().Set("Content-Type", "application/json")
 
-		if errorResp, ok := response.(map[string]interface{}); ok && errorResp["error"] != nil {
+		if errorResp, ok := response.(map[string]any); ok && errorResp["error"] != nil {
 			w.WriteHeader(http.StatusBadRequest)
 		}
 
@@ -114,8 +114,8 @@ func TestGeneratePKCE(t *testing.T) {
 
 func TestExchangeToken_Success(t *testing.T) {
 	// Create mock server
-	server := mockTokenServer(t, map[string]interface{}{
-		"authorization_code": map[string]interface{}{
+	server := mockTokenServer(t, map[string]any{
+		"authorization_code": map[string]any{
 			"access_token":  "test_access_token",
 			"refresh_token": "test_refresh_token",
 			"expires_in":    3600,
@@ -161,8 +161,8 @@ func TestRefreshToken_Success(t *testing.T) {
 	os.WriteFile(tokenPath, data, 0600)
 
 	// Create mock server for refresh
-	server := mockTokenServer(t, map[string]interface{}{
-		"refresh_token": map[string]interface{}{
+	server := mockTokenServer(t, map[string]any{
+		"refresh_token": map[string]any{
 			"access_token":  "new_access_token",
 			"refresh_token": "new_refresh_token",
 			"expires_in":    3600,
@@ -416,7 +416,7 @@ func TestGetValidTokenWithValidToken(t *testing.T) {
 
 // Benchmark tests
 func BenchmarkGeneratePKCE(b *testing.B) {
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		_, _, err := generatePKCE()
 		if err != nil {
 			b.Fatal(err)
@@ -427,8 +427,7 @@ func BenchmarkGeneratePKCE(b *testing.B) {
 func BenchmarkTokenIsExpired(b *testing.B) {
 	token := createTestToken("access", "refresh", 3600)
 
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		token.IsExpired(5)
 	}
 }

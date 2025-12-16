@@ -90,7 +90,7 @@ func (c *Client) ListModels() ([]string, error) {
 func (c *Client) SendStream(msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan string) (err error) {
 	url := fmt.Sprintf("%s/chat/completions", c.ApiUrl.Value)
 
-	payload := map[string]interface{}{
+	payload := map[string]any{
 		"messages": msgs,
 		"model":    opts.Model,
 		"stream":   true, // Enable streaming
@@ -140,27 +140,27 @@ func (c *Client) SendStream(msgs []*chat.ChatCompletionMessage, opts *domain.Cha
 			continue
 		}
 
-		if bytes.HasPrefix(line, []byte("data: ")) {
-			line = bytes.TrimPrefix(line, []byte("data: "))
+		if after, ok := bytes.CutPrefix(line, []byte("data: ")); ok {
+			line = after
 		}
 
 		if string(line) == "[DONE]" {
 			break
 		}
 
-		var result map[string]interface{}
+		var result map[string]any
 		if err = json.Unmarshal(line, &result); err != nil {
 			continue
 		}
 
-		var choices []interface{}
+		var choices []any
 		var ok bool
-		if choices, ok = result["choices"].([]interface{}); !ok || len(choices) == 0 {
+		if choices, ok = result["choices"].([]any); !ok || len(choices) == 0 {
 			continue
 		}
 
-		var delta map[string]interface{}
-		if delta, ok = choices[0].(map[string]interface{})["delta"].(map[string]interface{}); !ok {
+		var delta map[string]any
+		if delta, ok = choices[0].(map[string]any)["delta"].(map[string]any); !ok {
 			continue
 		}
 
@@ -176,7 +176,7 @@ func (c *Client) SendStream(msgs []*chat.ChatCompletionMessage, opts *domain.Cha
 func (c *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions) (content string, err error) {
 	url := fmt.Sprintf("%s/chat/completions", c.ApiUrl.Value)
 
-	payload := map[string]interface{}{
+	payload := map[string]any{
 		"messages": msgs,
 		"model":    opts.Model,
 		// Add other options from opts if supported by LM Studio
@@ -208,21 +208,21 @@ func (c *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, o
 		return
 	}
 
-	var result map[string]interface{}
+	var result map[string]any
 	if err = json.NewDecoder(resp.Body).Decode(&result); err != nil {
 		err = fmt.Errorf("failed to decode response: %w", err)
 		return
 	}
 
-	var choices []interface{}
+	var choices []any
 	var ok bool
-	if choices, ok = result["choices"].([]interface{}); !ok || len(choices) == 0 {
+	if choices, ok = result["choices"].([]any); !ok || len(choices) == 0 {
 		err = fmt.Errorf("invalid response format: missing or empty choices")
 		return
 	}
 
-	var message map[string]interface{}
-	if message, ok = choices[0].(map[string]interface{})["message"].(map[string]interface{}); !ok {
+	var message map[string]any
+	if message, ok = choices[0].(map[string]any)["message"].(map[string]any); !ok {
 		err = fmt.Errorf("invalid response format: missing message in first choice")
 		return
 	}
@@ -238,7 +238,7 @@ func (c *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, o
 func (c *Client) Complete(ctx context.Context, prompt string, opts *domain.ChatOptions) (text string, err error) {
 	url := fmt.Sprintf("%s/completions", c.ApiUrl.Value)
 
-	payload := map[string]interface{}{
+	payload := map[string]any{
 		"prompt": prompt,
 		"model":  opts.Model,
 		// Add other options from opts if supported by LM Studio
@@ -270,20 +270,20 @@ func (c *Client) Complete(ctx context.Context, prompt string, opts *domain.ChatO
 		return
 	}
 
-	var result map[string]interface{}
+	var result map[string]any
 	if err = json.NewDecoder(resp.Body).Decode(&result); err != nil {
 		err = fmt.Errorf("failed to decode response: %w", err)
 		return
 	}
 
-	var choices []interface{}
+	var choices []any
 	var ok bool
-	if choices, ok = result["choices"].([]interface{}); !ok || len(choices) == 0 {
+	if choices, ok = result["choices"].([]any); !ok || len(choices) == 0 {
 		err = fmt.Errorf("invalid response format: missing or empty choices")
 		return
 	}
 
-	if text, ok = choices[0].(map[string]interface{})["text"].(string); !ok {
+	if text, ok = choices[0].(map[string]any)["text"].(string); !ok {
 		err = fmt.Errorf("invalid response format: missing or non-string text in first choice")
 		return
 	}
@@ -294,7 +294,7 @@ func (c *Client) Complete(ctx context.Context, prompt string, opts *domain.ChatO
 func (c *Client) GetEmbeddings(ctx context.Context, input string, opts *domain.ChatOptions) (embeddings []float64, err error) {
 	url := fmt.Sprintf("%s/embeddings", c.ApiUrl.Value)
 
-	payload := map[string]interface{}{
+	payload := map[string]any{
 		"input": input,
 		"model": opts.Model,
 		// Add other options from opts if supported by LM Studio

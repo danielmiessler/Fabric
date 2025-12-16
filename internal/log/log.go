@@ -51,7 +51,7 @@ func LevelFromInt(i int) Level {
 }
 
 // Debug writes a debug message if the global level permits.
-func Debug(l Level, format string, a ...interface{}) {
+func Debug(l Level, format string, a ...any) {
 	mu.RLock()
 	current := level
 	w := output
@@ -63,7 +63,7 @@ func Debug(l Level, format string, a ...interface{}) {
 
 // Log writes a message unconditionally to stderr.
 // This is for important messages that should always be shown regardless of debug level.
-func Log(format string, a ...interface{}) {
+func Log(format string, a ...any) {
 	mu.RLock()
 	w := output
 	mu.RUnlock()

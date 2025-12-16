@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"slices"
 	"strings"
 )
 
@@ -146,14 +147,7 @@ func fixInvalidEscapes(jsonStr string) string {
 		// Check for escape sequences only inside strings
 		if inQuotes && ch == '\\' && i+1 < len(jsonStr) {
 			nextChar := jsonStr[i+1]
-			isValid := false
-
-			for _, validEscape := range validEscapes {
-				if nextChar == validEscape {
-					isValid = true
-					break
-				}
-			}
+			isValid := slices.Contains(validEscapes, nextChar)
 
 			if !isValid {
 				// Invalid escape sequence - add an extra backslash

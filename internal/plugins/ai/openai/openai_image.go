@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"slices"
 	"strings"
 
 	"github.com/danielmiessler/fabric/internal/domain"
@@ -31,12 +32,7 @@ var ImageGenerationSupportedModels = []string{
 
 // supportsImageGeneration checks if the given model supports the image_generation tool
 func supportsImageGeneration(model string) bool {
-	for _, supportedModel := range ImageGenerationSupportedModels {
-		if model == supportedModel {
-			return true
-		}
-	}
-	return false
+	return slices.Contains(ImageGenerationSupportedModels, model)
 }
 
 // getOutputFormatFromExtension determines the API output format based on file extension

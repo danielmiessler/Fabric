@@ -109,11 +109,11 @@ func ScanDirectory(rootDir string, maxDepth int, instructions string, ignoreList
 	}
 
 	// Create final data structure
-	var data []interface{}
+	var data []any
 	data = append(data, rootItem)
 
 	// Add report
-	reportItem := map[string]interface{}{
+	reportItem := map[string]any{
 		"type":        "report",
 		"directories": dirCount,
 		"files":       fileCount,
@@ -121,7 +121,7 @@ func ScanDirectory(rootDir string, maxDepth int, instructions string, ignoreList
 	data = append(data, reportItem)
 
 	// Add instructions
-	instructionsItem := map[string]interface{}{
+	instructionsItem := map[string]any{
 		"type":    "instructions",
 		"name":    "code_change_instructions",
 		"details": instructions,

@@ -137,8 +137,7 @@ func (h *TranslatedHelpWriter) getTranslatedDescription(flagName string) string 
 
 // getOriginalDescription retrieves the original description from struct tags
 func (h *TranslatedHelpWriter) getOriginalDescription(flagName string) string {
-	flags := &Flags{}
-	flagsType := reflect.TypeOf(flags).Elem()
+	flagsType := reflect.TypeFor[Flags]()
 
 	for i := 0; i < flagsType.NumField(); i++ {
 		field := flagsType.Field(i)
@@ -184,10 +183,10 @@ func detectLanguageFromArgs() string {
 			if i+1 < len(args) {
 				return args[i+1]
 			}
-		} else if strings.HasPrefix(arg, "--language=") {
-			return strings.TrimPrefix(arg, "--language=")
-		} else if strings.HasPrefix(arg, "-g=") {
-			return strings.TrimPrefix(arg, "-g=")
+		} else if after, ok := strings.CutPrefix(arg, "--language="); ok {
+			return after
+		} else if after, ok := strings.CutPrefix(arg, "-g="); ok {
+			return after
 		} else if runtime.GOOS == "windows" && strings.HasPrefix(arg, "/g:") {
 			return strings.TrimPrefix(arg, "/g:")
 		} else if runtime.GOOS == "windows" && strings.HasPrefix(arg, "/g=") {
@@ -218,8 +217,7 @@ func detectLanguageFromEnv() string {
 // writeAllFlags writes all flags with translated descriptions
 func (h *TranslatedHelpWriter) writeAllFlags() {
 	// Use direct reflection on the Flags struct to get all flag definitions
-	flags := &Flags{}
-	flagsType := reflect.TypeOf(flags).Elem()
+	flagsType := reflect.TypeFor[Flags]()
 
 	for i := 0; i < flagsType.NumField(); i++ {
 		field := flagsType.Field(i)
@@ -274,10 +272,7 @@ func (h *TranslatedHelpWriter) writeAllFlags() {
 
 		// Pad to align descriptions
 		flagStr := flagLine.String()
-		padding := 34 - len(flagStr)
-		if padding < 2 {
-			padding = 2
-		}
+		padding := max(34-len(flagStr), 2)
 
 		fmt.Fprintf(h.writer, "%s%s%s", flagStr, strings.Repeat(" ", padding), description)
 

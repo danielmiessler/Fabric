@@ -3,6 +3,7 @@ package gemini
 import (
 	"fmt"
 	"sort"
+	"strings"
 )
 
 // GeminiVoice represents a Gemini TTS voice with its characteristics
@@ -126,16 +127,17 @@ func ListGeminiVoices(shellCompleteMode bool) string {
 	if shellCompleteMode {
 		// For shell completion, just return voice names
 		names := GetGeminiVoiceNames()
-		result := ""
+		var result strings.Builder
 		for _, name := range names {
-			result += name + "\n"
+			result.WriteString(name + "\n")
 		}
-		return result
+		return result.String()
 	}
 
 	// For human-readable output
 	voices := GetGeminiVoices()
-	result := "Available Gemini Text-to-Speech voices:\n\n"
+	var result strings.Builder
+	result.WriteString("Available Gemini Text-to-Speech voices:\n\n")
 
 	// Group by characteristics for better readability
 	groups := map[string][]GeminiVoice{
@@ -186,22 +188,22 @@ func ListGeminiVoices(shellCompleteMode bool) string {
 	// Output grouped voices
 	for groupName, groupVoices := range groups {
 		if len(groupVoices) > 0 {
-			result += fmt.Sprintf("%s:\n", groupName)
+			result.WriteString(fmt.Sprintf("%s:\n", groupName))
 			for _, voice := range groupVoices {
 				defaultStr := ""
 				if voice.Name == "Kore" {
 					defaultStr = " (default)"
 				}
-				result += fmt.Sprintf("  %-15s - %s%s\n", voice.Name, voice.Description, defaultStr)
+				result.WriteString(fmt.Sprintf("  %-15s - %s%s\n", voice.Name, voice.Description, defaultStr))
 			}
-			result += "\n"
+			result.WriteString("\n")
 		}
 	}
 
-	result += "Use --voice <voice_name> to select a specific voice.\n"
-	result += "Example: fabric --voice Charon -m gemini-2.5-flash-preview-tts -o output.wav \"Hello world\"\n"
+	result.WriteString("Use --voice <voice_name> to select a specific voice.\n")
+	result.WriteString("Example: fabric --voice Charon -m gemini-2.5-flash-preview-tts -o output.wav \"Hello world\"\n")
 
-	return result
+	return result.String()
 }
 
 // NOTE: This implementation maintains a curated list based on official Google documentation.

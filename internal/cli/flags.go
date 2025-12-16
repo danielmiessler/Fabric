@@ -8,6 +8,7 @@ import (
 	"os"
 	"path/filepath"
 	"reflect"
+	"slices"
 	"strconv"
 	"strings"
 
@@ -115,7 +116,7 @@ func Init() (ret *Flags, err error) {
 
 	// Create mapping from flag names (both short and long) to yaml tag names
 	flagToYamlTag := make(map[string]string)
-	t := reflect.TypeOf(Flags{})
+	t := reflect.TypeFor[Flags]()
 	for i := 0; i < t.NumField(); i++ {
 		field := t.Field(i)
 		yamlTag := field.Tag.Get("yaml")
@@ -224,14 +225,14 @@ func Init() (ret *Flags, err error) {
 }
 
 func parseDebugLevel(args []string) int {
-	for i := 0; i < len(args); i++ {
+	for i := range args {
 		arg := args[i]
 		if arg == "--debug" && i+1 < len(args) {
 			if lvl, err := strconv.Atoi(args[i+1]); err == nil {
 				return lvl
 			}
-		} else if strings.HasPrefix(arg, "--debug=") {
-			if lvl, err := strconv.Atoi(strings.TrimPrefix(arg, "--debug=")); err == nil {
+		} else if after, ok := strings.CutPrefix(arg, "--debug="); ok {
+			if lvl, err := strconv.Atoi(after); err == nil {
 				return lvl
 			}
 		}
@@ -241,8 +242,8 @@ func parseDebugLevel(args []string) int {
 
 func extractFlag(arg string) string {
 	var flag string
-	if strings.HasPrefix(arg, "--") {
-		flag = strings.TrimPrefix(arg, "--")
+	if after, ok := strings.CutPrefix(arg, "--"); ok {
+		flag = after
 		if i := strings.Index(flag, "="); i > 0 {
 			flag = flag[:i]
 		}
@@ -348,10 +349,8 @@ func validateImageFile(imagePath string) error {
 	ext := strings.ToLower(filepath.Ext(imagePath))
 	validExtensions := []string{".png", ".jpeg", ".jpg", ".webp"}
 
-	for _, validExt := range validExtensions {
-		if ext == validExt {
-			return nil // Valid extension found
-		}
+	if slices.Contains(validExtensions, ext) {
+		return nil // Valid extension found
 	}
 
 	return fmt.Errorf("%s", fmt.Sprintf(i18n.T("invalid_image_file_extension"), ext))
@@ -370,13 +369,7 @@ func validateImageParameters(imagePath, size, quality, background string, compre
 	// Validate size
 	if size != "" {
 		validSizes := []string{"1024x1024", "1536x1024", "1024x1536", "auto"}
-		valid := false
-		for _, validSize := range validSizes {
-			if size == validSize {
-				valid = true
-				break
-			}
-		}
+		valid := slices.Contains(validSizes, size)
 		if !valid {
 			return fmt.Errorf("%s", fmt.Sprintf(i18n.T("invalid_image_size"), size))
 		}
@@ -385,13 +378,7 @@ func validateImageParameters(imagePath, size, quality, background string, compre
 	// Validate quality
 	if quality != "" {
 		validQualities := []string{"low", "medium", "high", "auto"}
-		valid := false
-		for _, validQuality := range validQualities {
-			if quality == validQuality {
-				valid = true
-				break
-			}
-		}
+		valid := slices.Contains(validQualities, quality)
 		if !valid {
 			return fmt.Errorf("%s", fmt.Sprintf(i18n.T("invalid_image_quality"), quality))
 		}
@@ -400,13 +387,7 @@ func validateImageParameters(imagePath, size, quality, background string, compre
 	// Validate background
 	if background != "" {
 		validBackgrounds := []string{"opaque", "transparent"}
-		valid := false
-		for _, validBackground := range validBackgrounds {
-			if background == validBackground {
-				valid = true
-				break
-			}
-		}
+		valid := slices.Contains(validBackgrounds, background)
 		if !valid {
 			return fmt.Errorf("%s", fmt.Sprintf(i18n.T("invalid_image_background"), background))
 		}

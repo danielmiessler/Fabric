@@ -345,7 +345,7 @@ func TestAddImageGenerationToolWithUserParameters(t *testing.T) {
 	tests := []struct {
 		name     string
 		opts     *domain.ChatOptions
-		expected map[string]interface{}
+		expected map[string]any
 	}{
 		{
 			name: "All parameters specified",
@@ -356,7 +356,7 @@ func TestAddImageGenerationToolWithUserParameters(t *testing.T) {
 				ImageBackground:  "transparent",
 				ImageCompression: 0, // Not applicable for PNG
 			},
-			expected: map[string]interface{}{
+			expected: map[string]any{
 				"size":          "1536x1024",
 				"quality":       "high",
 				"background":    "transparent",
@@ -372,7 +372,7 @@ func TestAddImageGenerationToolWithUserParameters(t *testing.T) {
 				ImageBackground:  "opaque",
 				ImageCompression: 75,
 			},
-			expected: map[string]interface{}{
+			expected: map[string]any{
 				"size":               "1024x1024",
 				"quality":            "medium",
 				"background":         "opaque",
@@ -386,7 +386,7 @@ func TestAddImageGenerationToolWithUserParameters(t *testing.T) {
 				ImageFile:    "/tmp/test.webp",
 				ImageQuality: "low",
 			},
-			expected: map[string]interface{}{
+			expected: map[string]any{
 				"quality":       "low",
 				"output_format": "webp",
 			},
@@ -396,7 +396,7 @@ func TestAddImageGenerationToolWithUserParameters(t *testing.T) {
 			opts: &domain.ChatOptions{
 				ImageFile: "/tmp/test.png",
 			},
-			expected: map[string]interface{}{
+			expected: map[string]any{
 				"output_format": "png",
 			},
 		},

@@ -159,7 +159,7 @@ func (g *Generator) CreateNewChangelogEntry(version string) error {
 	for _, file := range files {
 		// Extract PR number from filename (e.g., "1640.txt" -> 1640)
 		filename := filepath.Base(file)
-		if prNumStr := strings.TrimSuffix(filename, ".txt"); prNumStr != filename {
+		if prNumStr, ok := strings.CutSuffix(filename, ".txt"); ok {
 			if prNum, err := strconv.Atoi(prNumStr); err == nil {
 				processedPRs[prNum] = true
 				prNumbers = append(prNumbers, prNum)

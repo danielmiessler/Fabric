@@ -30,7 +30,7 @@ type ExtensionDefinition struct {
 	Operations map[string]OperationConfig `yaml:"operations"`
 
 	// Additional config
-	Config map[string]interface{} `yaml:"config"`
+	Config map[string]any `yaml:"config"`
 }
 
 type OperationConfig struct {
@@ -53,7 +53,7 @@ type ExtensionRegistry struct {
 
 // Helper methods for Config access
 func (e *ExtensionDefinition) GetOutputMethod() string {
-	if output, ok := e.Config["output"].(map[string]interface{}); ok {
+	if output, ok := e.Config["output"].(map[string]any); ok {
 		if method, ok := output["method"].(string); ok {
 			return method
 		}
@@ -61,9 +61,9 @@ func (e *ExtensionDefinition) GetOutputMethod() string {
 	return "stdout" // default to stdout if not specified
 }
 
-func (e *ExtensionDefinition) GetFileConfig() map[string]interface{} {
-	if output, ok := e.Config["output"].(map[string]interface{}); ok {
-		if fileConfig, ok := output["file_config"].(map[string]interface{}); ok {
+func (e *ExtensionDefinition) GetFileConfig() map[string]any {
+	if output, ok := e.Config["output"].(map[string]any); ok {
+		if fileConfig, ok := output["file_config"].(map[string]any); ok {
 			return fileConfig
 		}
 	}

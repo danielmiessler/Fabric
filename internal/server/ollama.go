@@ -102,7 +102,7 @@ func ServeOllama(registry *core.PluginRegistry, address string, version string) 
 	// Ollama Endpoints
 	r.GET("/api/tags", typeConversion.ollamaTags)
 	r.GET("/api/version", func(c *gin.Context) {
-		c.Data(200, "application/json", []byte(fmt.Sprintf("{\"%s\"}", version)))
+		c.Data(200, "application/json", fmt.Appendf(nil, "{\"%s\"}", version))
 	})
 	r.POST("/api/chat", typeConversion.ollamaChat)
 
@@ -224,7 +224,7 @@ func (f APIConvert) ollamaChat(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "testing endpoint"})
 		return
 	}
-	for _, word := range strings.Split(fabricResponse.Content, " ") {
+	for word := range strings.SplitSeq(fabricResponse.Content, " ") {
 		forwardedResponse = OllamaResponse{
 			Model:     "",
 			CreatedAt: "",

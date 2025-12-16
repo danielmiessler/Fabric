@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"slices"
 	"strings"
 
 	"github.com/atotto/clipboard"
@@ -66,10 +67,5 @@ func CreateAudioOutputFile(audioData []byte, fileName string) (err error) {
 func IsAudioFormat(fileName string) bool {
 	ext := strings.ToLower(filepath.Ext(fileName))
 	audioExts := []string{".wav", ".mp3", ".m4a", ".aac", ".ogg", ".flac"}
-	for _, audioExt := range audioExts {
-		if ext == audioExt {
-			return true
-		}
-	}
-	return false
+	return slices.Contains(audioExts, ext)
 }

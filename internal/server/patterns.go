@@ -1,6 +1,7 @@
 package restapi
 
 import (
+	"maps"
 	"net/http"
 
 	"github.com/danielmiessler/fabric/internal/plugins/db/fsdb"
@@ -74,9 +75,7 @@ func (h *PatternsHandler) ApplyPattern(c *gin.Context) {
 			variables[key] = values[0]
 		}
 	}
-	for key, value := range request.Variables {
-		variables[key] = value
-	}
+	maps.Copy(variables, request.Variables)
 
 	pattern, err := h.patterns.GetApplyVariables(name, variables, request.Input)
 	if err != nil {

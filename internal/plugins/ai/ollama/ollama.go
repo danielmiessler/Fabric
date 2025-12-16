@@ -155,7 +155,7 @@ func (o *Client) createChatRequest(ctx context.Context, msgs []*chat.ChatComplet
 		}
 	}
 
-	options := map[string]interface{}{
+	options := map[string]any{
 		"temperature":       opts.Temperature,
 		"presence_penalty":  opts.PresencePenalty,
 		"frequency_penalty": opts.FrequencyPenalty,

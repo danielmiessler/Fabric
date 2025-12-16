@@ -134,7 +134,7 @@ func (o *StorageEntity) buildFileName(name string) string {
 	return fmt.Sprintf("%s%v", name, o.FileExtension)
 }
 
-func (o *StorageEntity) SaveAsJson(name string, item interface{}) (err error) {
+func (o *StorageEntity) SaveAsJson(name string, item any) (err error) {
 	var jsonString []byte
 	if jsonString, err = json.Marshal(item); err == nil {
 		err = o.Save(name, jsonString)
@@ -145,7 +145,7 @@ func (o *StorageEntity) SaveAsJson(name string, item interface{}) (err error) {
 	return err
 }
 
-func (o *StorageEntity) LoadAsJson(name string, item interface{}) (err error) {
+func (o *StorageEntity) LoadAsJson(name string, item any) (err error) {
 	var content []byte
 	if content, err = o.Load(name); err != nil {
 		return

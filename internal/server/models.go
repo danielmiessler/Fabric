@@ -24,7 +24,7 @@ func (h *ModelsHandler) GetModelNames(c *gin.Context) {
 		return
 	}
 
-	response := make(map[string]interface{})
+	response := make(map[string]any)
 	vendors := make(map[string][]string)
 
 	for _, groupItems := range vendorsModels.GroupsItems {

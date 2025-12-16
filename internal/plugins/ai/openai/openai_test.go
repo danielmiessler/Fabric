@@ -16,7 +16,7 @@ func TestBuildResponseRequestWithMaxTokens(t *testing.T) {
 
 	var msgs []*chat.ChatCompletionMessage
 
-	for i := 0; i < 2; i++ {
+	for range 2 {
 		msgs = append(msgs, &chat.ChatCompletionMessage{
 			Role:    "User",
 			Content: "My msg",
@@ -42,7 +42,7 @@ func TestBuildResponseRequestNoMaxTokens(t *testing.T) {
 
 	var msgs []*chat.ChatCompletionMessage
 
-	for i := 0; i < 2; i++ {
+	for range 2 {
 		msgs = append(msgs, &chat.ChatCompletionMessage{
 			Role:    "User",
 			Content: "My msg",

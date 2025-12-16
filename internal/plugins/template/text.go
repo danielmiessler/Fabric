@@ -16,7 +16,7 @@ func toTitle(s string) string {
 	lower := strings.ToLower(s)
 	runes := []rune(lower)
 
-	for i := 0; i < len(runes); i++ {
+	for i := range runes {
 		// Capitalize if previous char is non-letter AND
 		// (we're at the end OR next char is not space)
 		if i == 0 || !unicode.IsLetter(runes[i-1]) {

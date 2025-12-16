@@ -574,8 +574,8 @@ func (g *Generator) extractChanges(pr *github.PR) []string {
 	}
 
 	if len(changes) == 0 && pr.Body != "" {
-		lines := strings.Split(pr.Body, "\n")
-		for _, line := range lines {
+		lines := strings.SplitSeq(pr.Body, "\n")
+		for line := range lines {
 			line = strings.TrimSpace(line)
 			if strings.HasPrefix(line, "- ") || strings.HasPrefix(line, "* ") {
 				change := strings.TrimPrefix(strings.TrimPrefix(line, "- "), "* ")

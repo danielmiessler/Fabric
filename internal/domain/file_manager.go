@@ -65,7 +65,7 @@ func ParseFileChanges(output string) (changeSummary string, changes []FileChange
 
 	// Fix specific invalid escape sequences
 	// First try with the common \C issue
-	jsonStr = strings.Replace(jsonStr, `\C`, `\\C`, -1)
+	jsonStr = strings.ReplaceAll(jsonStr, `\C`, `\\C`)
 
 	// Parse the JSON
 	var fileChanges []FileChange

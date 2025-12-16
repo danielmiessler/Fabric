@@ -58,10 +58,8 @@ func ApplyTemplate(content string, variables map[string]string, input string) (s
 
 	debugf("Starting template processing with input='%s'\n", input)
 
-	for {
-		if !strings.Contains(content, "{{") {
-			break
-		}
+	for strings.Contains(content, "{{") {
+
 		matches := tokenPattern.FindAllStringSubmatch(content, -1)
 		if len(matches) == 0 {
 			break

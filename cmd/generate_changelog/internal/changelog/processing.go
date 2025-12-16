@@ -110,7 +110,7 @@ func (g *Generator) ProcessIncomingPR(prNumber int) error {
 	// Ensure content ends with a single newline
 	content = strings.TrimSpace(content) + "\n"
 
-	if err := os.WriteFile(filename, []byte(content), 0644); err != nil {
+	if err := os.WriteFile(filename, []byte(content), 0o644); err != nil {
 		return fmt.Errorf("failed to write incoming file: %w", err)
 	}
 
@@ -399,7 +399,7 @@ func (g *Generator) validateGitStatus() error {
 
 // ensureIncomingDir creates the incoming directory if it doesn't exist
 func (g *Generator) ensureIncomingDir() error {
-	if err := os.MkdirAll(g.cfg.IncomingDir, 0755); err != nil {
+	if err := os.MkdirAll(g.cfg.IncomingDir, 0o755); err != nil {
 		return fmt.Errorf("failed to create directory %s: %w", g.cfg.IncomingDir, err)
 	}
 	return nil
@@ -477,7 +477,7 @@ func (g *Generator) insertVersionAtTop(entry string) error {
 		}
 		// File doesn't exist, create it.
 		newContent := fmt.Sprintf("%s\n\n%s\n", header, entry)
-		return os.WriteFile(changelogPath, []byte(newContent), 0644)
+		return os.WriteFile(changelogPath, []byte(newContent), 0o644)
 	}
 
 	contentStr := string(existingContent)
@@ -497,7 +497,7 @@ func (g *Generator) insertVersionAtTop(entry string) error {
 		newContent = fmt.Sprintf("%s\n\n%s\n\n%s", header, entry, contentStr)
 	}
 
-	return os.WriteFile(changelogPath, []byte(newContent), 0644)
+	return os.WriteFile(changelogPath, []byte(newContent), 0o644)
 }
 
 // stageChangesForRelease stages the modified files for the release commit

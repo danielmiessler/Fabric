@@ -20,9 +20,9 @@ type StorageEntity struct {
 
 func (o *StorageEntity) Configure() (err error) {
 	if err = os.MkdirAll(o.Dir, os.ModePerm); err != nil {
-		return
+		return err
 	}
-	return
+	return err
 }
 
 // GetNames finds all patterns in the patterns directory and enters the id, name, and pattern into a slice of Entry structs. it returns these entries or an error
@@ -71,63 +71,63 @@ func (o *StorageEntity) Delete(name string) (err error) {
 	if err = os.RemoveAll(o.BuildFilePathByName(name)); err != nil {
 		err = fmt.Errorf("could not delete %s: %v", name, err)
 	}
-	return
+	return err
 }
 
 func (o *StorageEntity) Exists(name string) (ret bool) {
 	_, err := os.Stat(o.BuildFilePathByName(name))
 	ret = !os.IsNotExist(err)
-	return
+	return ret
 }
 
 func (o *StorageEntity) Rename(oldName, newName string) (err error) {
 	if err = os.Rename(o.BuildFilePathByName(oldName), o.BuildFilePathByName(newName)); err != nil {
 		err = fmt.Errorf("could not rename %s to %s: %v", oldName, newName, err)
 	}
-	return
+	return err
 }
 
 func (o *StorageEntity) Save(name string, content []byte) (err error) {
-	if err = os.WriteFile(o.BuildFilePathByName(name), content, 0644); err != nil {
+	if err = os.WriteFile(o.BuildFilePathByName(name), content, 0o644); err != nil {
 		err = fmt.Errorf("could not save %s: %v", name, err)
 	}
-	return
+	return err
 }
 
 func (o *StorageEntity) Load(name string) (ret []byte, err error) {
 	if ret, err = os.ReadFile(o.BuildFilePathByName(name)); err != nil {
 		err = fmt.Errorf("could not load %s: %v", name, err)
 	}
-	return
+	return ret, err
 }
 
 func (o *StorageEntity) ListNames(shellCompleteList bool) (err error) {
 	var names []string
 	if names, err = o.GetNames(); err != nil {
-		return
+		return err
 	}
 
 	if len(names) == 0 {
 		if !shellCompleteList {
 			fmt.Printf("%s\n", fmt.Sprintf(i18n.T("no_items_found"), o.Label))
 		}
-		return
+		return err
 	}
 
 	for _, item := range names {
 		fmt.Printf("%s\n", item)
 	}
-	return
+	return err
 }
 
 func (o *StorageEntity) BuildFilePathByName(name string) (ret string) {
 	ret = o.BuildFilePath(o.buildFileName(name))
-	return
+	return ret
 }
 
 func (o *StorageEntity) BuildFilePath(fileName string) (ret string) {
 	ret = filepath.Join(o.Dir, fileName)
-	return
+	return ret
 }
 
 func (o *StorageEntity) buildFileName(name string) string {
@@ -148,11 +148,11 @@ func (o *StorageEntity) SaveAsJson(name string, item any) (err error) {
 func (o *StorageEntity) LoadAsJson(name string, item any) (err error) {
 	var content []byte
 	if content, err = o.Load(name); err != nil {
-		return
+		return err
 	}
 
 	if err = json.Unmarshal(content, &item); err != nil {
 		err = fmt.Errorf("could not unmarshal %s: %s", name, err)
 	}
-	return
+	return err
 }

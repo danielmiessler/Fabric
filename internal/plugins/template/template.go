@@ -30,8 +30,10 @@ func init() {
 	// Extensions will work if registry exists, otherwise they'll just fail gracefully
 }
 
-var pluginPattern = regexp.MustCompile(`\{\{plugin:([^:]+):([^:]+)(?::([^}]+))?\}\}`)
-var extensionPattern = regexp.MustCompile(`\{\{ext:([^:]+):([^:]+)(?::([^}]+))?\}\}`)
+var (
+	pluginPattern    = regexp.MustCompile(`\{\{plugin:([^:]+):([^:]+)(?::([^}]+))?\}\}`)
+	extensionPattern = regexp.MustCompile(`\{\{ext:([^:]+):([^:]+)(?::([^}]+))?\}\}`)
+)
 
 func debugf(format string, a ...any) {
 	debuglog.Debug(debuglog.Trace, format, a...)

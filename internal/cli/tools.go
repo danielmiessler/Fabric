@@ -13,13 +13,13 @@ func handleToolProcessing(currentFlags *Flags, registry *core.PluginRegistry) (m
 	if currentFlags.YouTube != "" {
 		if !registry.YouTube.IsConfigured() {
 			err = fmt.Errorf("%s", i18n.T("youtube_not_configured"))
-			return
+			return messageTools, err
 		}
 
 		var videoId string
 		var playlistId string
 		if videoId, playlistId, err = registry.YouTube.GetVideoOrPlaylistId(currentFlags.YouTube); err != nil {
-			return
+			return messageTools, err
 		} else if (videoId == "" || currentFlags.YouTubePlaylist) && playlistId != "" {
 			if currentFlags.Output != "" {
 				err = registry.YouTube.FetchAndSavePlaylist(playlistId, currentFlags.Output)
@@ -27,46 +27,46 @@ func handleToolProcessing(currentFlags *Flags, registry *core.PluginRegistry) (m
 				var videos []*youtube.VideoMeta
 				if videos, err = registry.YouTube.FetchPlaylistVideos(playlistId); err != nil {
 					err = fmt.Errorf("%s", fmt.Sprintf(i18n.T("error_fetching_playlist_videos"), err))
-					return
+					return messageTools, err
 				}
 
 				for _, video := range videos {
 					var message string
 					if message, err = processYoutubeVideo(currentFlags, registry, video.Id); err != nil {
-						return
+						return messageTools, err
 					}
 
 					if !currentFlags.IsChatRequest() {
 						if err = WriteOutput(message, fmt.Sprintf("%v.md", video.TitleNormalized)); err != nil {
-							return
+							return messageTools, err
 						}
 					} else {
 						messageTools = AppendMessage(messageTools, message)
 					}
 				}
 			}
-			return
+			return messageTools, err
 		}
 
 		if messageTools, err = processYoutubeVideo(currentFlags, registry, videoId); err != nil {
-			return
+			return messageTools, err
 		}
 		if !currentFlags.IsChatRequest() {
 			err = currentFlags.WriteOutput(messageTools)
-			return
+			return messageTools, err
 		}
 	}
 
 	if currentFlags.ScrapeURL != "" || currentFlags.ScrapeQuestion != "" {
 		if !registry.Jina.IsConfigured() {
 			err = fmt.Errorf("%s", i18n.T("scraping_not_configured"))
-			return
+			return messageTools, err
 		}
 		// Check if the scrape_url flag is set and call ScrapeURL
 		if currentFlags.ScrapeURL != "" {
 			var website string
 			if website, err = registry.Jina.ScrapeURL(currentFlags.ScrapeURL); err != nil {
-				return
+				return messageTools, err
 			}
 			messageTools = AppendMessage(messageTools, website)
 		}
@@ -75,7 +75,7 @@ func handleToolProcessing(currentFlags *Flags, registry *core.PluginRegistry) (m
 		if currentFlags.ScrapeQuestion != "" {
 			var website string
 			if website, err = registry.Jina.ScrapeQuestion(currentFlags.ScrapeQuestion); err != nil {
-				return
+				return messageTools, err
 			}
 
 			messageTools = AppendMessage(messageTools, website)
@@ -83,9 +83,9 @@ func handleToolProcessing(currentFlags *Flags, registry *core.PluginRegistry) (m
 
 		if !currentFlags.IsChatRequest() {
 			err = currentFlags.WriteOutput(messageTools)
-			return
+			return messageTools, err
 		}
 	}
 
-	return
+	return messageTools, err
 }

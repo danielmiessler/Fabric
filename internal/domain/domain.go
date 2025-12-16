@@ -71,5 +71,5 @@ func NormalizeMessages(msgs []*chat.ChatCompletionMessage, defaultUserMessage st
 		ret = append(ret, message)
 		fullMessageIndex++
 	}
-	return
+	return ret
 }

@@ -13,8 +13,10 @@ import (
 	"github.com/danielmiessler/fabric/internal/tools/githelper"
 )
 
-const DefaultStrategiesGitRepoUrl = "https://github.com/danielmiessler/fabric.git"
-const DefaultStrategiesGitRepoFolder = "data/strategies"
+const (
+	DefaultStrategiesGitRepoUrl    = "https://github.com/danielmiessler/fabric.git"
+	DefaultStrategiesGitRepoFolder = "data/strategies"
+)
 
 func NewStrategiesManager() (sm *StrategiesManager) {
 	label := "Prompt Strategies"
@@ -40,7 +42,7 @@ func NewStrategiesManager() (sm *StrategiesManager) {
 		"Enter the default folder in the Git repository where strategies are stored")
 	sm.DefaultFolder.Value = DefaultStrategiesGitRepoFolder
 
-	return
+	return sm
 }
 
 type StrategiesManager struct {
@@ -61,7 +63,7 @@ func LoadAllFiles() (strategies map[string]Strategy, err error) {
 	strategies = make(map[string]Strategy)
 	strategyDir, err := getStrategyDir()
 	if err != nil {
-		return
+		return strategies, err
 	}
 	filepath.WalkDir(strategyDir, func(path string, d fs.DirEntry, err error) error {
 		if err != nil {
@@ -82,8 +84,7 @@ func LoadAllFiles() (strategies map[string]Strategy, err error) {
 		}
 		return nil
 	})
-	return
-
+	return strategies, err
 }
 
 func (sm *StrategiesManager) IsConfigured() (ret bool) {
@@ -93,17 +94,17 @@ func (sm *StrategiesManager) IsConfigured() (ret bool) {
 			ret = false
 		}
 	}
-	return
+	return ret
 }
 
 func (sm *StrategiesManager) Setup() (err error) {
 	if err = sm.PluginBase.Setup(); err != nil {
-		return
+		return err
 	}
 	if err = sm.PopulateDB(); err != nil {
-		return
+		return err
 	}
-	return
+	return err
 }
 
 // PopulateDB downloads strategies from the internet and populates the strategies folder
@@ -112,16 +113,16 @@ func (sm *StrategiesManager) PopulateDB() (err error) {
 	fmt.Printf("Downloading strategies and Populating %s...\n", stageDir)
 	fmt.Println()
 	if err = sm.gitCloneAndCopy(); err != nil {
-		return
+		return err
 	}
-	return
+	return err
 }
 
 func (sm *StrategiesManager) gitCloneAndCopy() (err error) {
 	homeDir, err := os.UserHomeDir()
 	if err != nil {
 		err = fmt.Errorf("could not get home directory: %v", err)
-		return
+		return err
 	}
 	strategyDir := filepath.Join(homeDir, ".config", "fabric", "strategies")
 
@@ -146,7 +147,7 @@ func (sm *StrategiesManager) gitCloneAndCopy() (err error) {
 
 func (sm *StrategiesManager) configure() (err error) {
 	sm.Strategies, err = LoadAllFiles()
-	return
+	return err
 }
 
 // getStrategyDir returns the path to the strategies directory
@@ -155,7 +156,7 @@ func getStrategyDir() (ret string, err error) {
 	if err != nil {
 		err = fmt.Errorf("could not get home directory: %v, using current directory instead", err)
 		ret = filepath.Join(".", "data/strategies")
-		return
+		return ret, err
 	}
 	return filepath.Join(homeDir, ".config", "fabric", "strategies"), nil
 }

@@ -13,9 +13,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	cfg = &config.Config{}
-)
+var cfg = &config.Config{}
 
 var rootCmd = &cobra.Command{
 	Use:   "generate_changelog",
@@ -90,7 +88,7 @@ func run(cmd *cobra.Command, args []string) error {
 	}
 
 	if cfg.OutputFile != "" {
-		if err := os.WriteFile(cfg.OutputFile, []byte(output), 0644); err != nil {
+		if err := os.WriteFile(cfg.OutputFile, []byte(output), 0o644); err != nil {
 			return fmt.Errorf("failed to write output file: %w", err)
 		}
 		fmt.Printf("Changelog written to %s\n", cfg.OutputFile)

@@ -27,26 +27,25 @@ type Pattern struct {
 
 // GetApplyVariables main entry point for getting patterns from any source
 func (o *PatternsEntity) GetApplyVariables(
-	source string, variables map[string]string, input string) (pattern *Pattern, err error) {
-
+	source string, variables map[string]string, input string,
+) (pattern *Pattern, err error) {
 	if pattern, err = o.loadPattern(source); err != nil {
-		return
+		return pattern, err
 	}
 
 	err = o.applyVariables(pattern, variables, input)
-	return
+	return pattern, err
 }
 
 // GetWithoutVariables returns a pattern with only the {{input}} placeholder processed
 // and skips template variable replacement
 func (o *PatternsEntity) GetWithoutVariables(source, input string) (pattern *Pattern, err error) {
-
 	if pattern, err = o.loadPattern(source); err != nil {
-		return
+		return pattern, err
 	}
 
 	o.applyInput(pattern, input)
-	return
+	return pattern, err
 }
 
 func (o *PatternsEntity) loadPattern(source string) (pattern *Pattern, err error) {
@@ -70,7 +69,7 @@ func (o *PatternsEntity) loadPattern(source string) (pattern *Pattern, err error
 		pattern, err = o.getFromDB(source)
 	}
 
-	return
+	return pattern, err
 }
 
 func (o *PatternsEntity) ensureInput(pattern *Pattern) {
@@ -88,8 +87,8 @@ func (o *PatternsEntity) applyInput(pattern *Pattern, input string) {
 }
 
 func (o *PatternsEntity) applyVariables(
-	pattern *Pattern, variables map[string]string, input string) (err error) {
-
+	pattern *Pattern, variables map[string]string, input string,
+) (err error) {
 	o.ensureInput(pattern)
 
 	// Temporarily replace {{input}} with a sentinel token to protect it
@@ -100,13 +99,13 @@ func (o *PatternsEntity) applyVariables(
 	// Pass the actual input so extension calls can use {{input}} within their value parameter
 	var processed string
 	if processed, err = template.ApplyTemplate(withSentinel, variables, input); err != nil {
-		return
+		return err
 	}
 
 	// Finally, replace our sentinel with the actual user input
 	// The input has already been processed for variables if InputHasVars was true
 	pattern.Pattern = strings.ReplaceAll(processed, template.InputSentinel, input)
-	return
+	return err
 }
 
 // retrieves a pattern from the database by name
@@ -128,7 +127,7 @@ func (o *PatternsEntity) getFromDB(name string) (ret *Pattern, err error) {
 
 	var pattern []byte
 	if pattern, err = os.ReadFile(patternPath); err != nil {
-		return
+		return ret, err
 	}
 
 	patternStr := string(pattern)
@@ -136,14 +135,14 @@ func (o *PatternsEntity) getFromDB(name string) (ret *Pattern, err error) {
 		Name:    name,
 		Pattern: patternStr,
 	}
-	return
+	return ret, err
 }
 
 func (o *PatternsEntity) PrintLatestPatterns(latestNumber int) (err error) {
 	var contents []byte
 	if contents, err = os.ReadFile(o.UniquePatternsFilePath); err != nil {
 		err = fmt.Errorf("could not read unique patterns file. Please run --updatepatterns (%s)", err)
-		return
+		return err
 	}
 	uniquePatterns := strings.Split(string(contents), "\n")
 	if latestNumber > len(uniquePatterns) {
@@ -153,7 +152,7 @@ func (o *PatternsEntity) PrintLatestPatterns(latestNumber int) (err error) {
 	for i := len(uniquePatterns) - 1; i > len(uniquePatterns)-latestNumber-1; i-- {
 		fmt.Println(uniquePatterns[i])
 	}
-	return
+	return err
 }
 
 // reads a pattern from a file path and returns it
@@ -163,7 +162,7 @@ func (o *PatternsEntity) getFromFile(pathStr string) (pattern *Pattern, err erro
 		var homedir string
 		if homedir, err = os.UserHomeDir(); err != nil {
 			err = fmt.Errorf("could not get home directory: %v", err)
-			return
+			return pattern, err
 		}
 		pathStr = filepath.Join(homedir, pathStr[2:])
 	}
@@ -171,13 +170,13 @@ func (o *PatternsEntity) getFromFile(pathStr string) (pattern *Pattern, err erro
 	var content []byte
 	if content, err = os.ReadFile(pathStr); err != nil {
 		err = fmt.Errorf("could not read pattern file %s: %v", pathStr, err)
-		return
+		return pattern, err
 	}
 	pattern = &Pattern{
 		Name:    pathStr,
 		Pattern: string(content),
 	}
-	return
+	return pattern, err
 }
 
 // GetNames overrides StorageEntity.GetNames to include custom patterns directory
@@ -229,20 +228,20 @@ func (o *PatternsEntity) GetNames() (ret []string, err error) {
 func (o *PatternsEntity) ListNames(shellCompleteList bool) (err error) {
 	var names []string
 	if names, err = o.GetNames(); err != nil {
-		return
+		return err
 	}
 
 	if len(names) == 0 {
 		if !shellCompleteList {
 			fmt.Printf("\nNo %v\n", o.StorageEntity.Label)
 		}
-		return
+		return err
 	}
 
 	for _, item := range names {
 		fmt.Printf("%s\n", item)
 	}
-	return
+	return err
 }
 
 // Get required for Storage interface
@@ -250,13 +249,14 @@ func (o *PatternsEntity) Get(name string) (*Pattern, error) {
 	// Use GetPattern with no variables
 	return o.GetApplyVariables(name, nil, "")
 }
+
 func (o *PatternsEntity) Save(name string, content []byte) (err error) {
 	patternDir := filepath.Join(o.Dir, name)
 	if err = os.MkdirAll(patternDir, os.ModePerm); err != nil {
 		return fmt.Errorf("could not create pattern directory: %v", err)
 	}
 	patternPath := filepath.Join(patternDir, o.SystemPatternFile)
-	if err = os.WriteFile(patternPath, content, 0644); err != nil {
+	if err = os.WriteFile(patternPath, content, 0o644); err != nil {
 		return fmt.Errorf("could not save pattern: %v", err)
 	}
 	return nil

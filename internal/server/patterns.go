@@ -29,7 +29,7 @@ func NewPatternsHandler(r *gin.Engine, patterns *fsdb.PatternsEntity) (ret *Patt
 	r.POST("/patterns/:name", ret.Save)                     // From StorageHandler
 	// Add POST route for patterns with variables in request body
 	r.POST("/patterns/:name/apply", ret.ApplyPattern)
-	return
+	return ret
 }
 
 // Get handles the GET /patterns/:name route - returns raw pattern without variable processing

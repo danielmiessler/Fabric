@@ -15,7 +15,7 @@ func TestDetectVersionFromNix(t *testing.T) {
 	t.Run("version.nix exists", func(t *testing.T) {
 		versionNixContent := `"1.2.3"`
 		versionNixPath := filepath.Join(tempDir, "version.nix")
-		err := os.WriteFile(versionNixPath, []byte(versionNixContent), 0644)
+		err := os.WriteFile(versionNixPath, []byte(versionNixContent), 0o644)
 		if err != nil {
 			t.Fatalf("Failed to write version.nix: %v", err)
 		}
@@ -90,7 +90,7 @@ func TestInsertVersionAtTop(t *testing.T) {
 
 	t.Run("existing changelog", func(t *testing.T) {
 		existingContent := "# Changelog\n\n## v0.9.0 (2024-12-01)\n\n- Previous release"
-		err := os.WriteFile(changelogPath, []byte(existingContent), 0644)
+		err := os.WriteFile(changelogPath, []byte(existingContent), 0o644)
 		if err != nil {
 			t.Fatalf("Failed to write existing changelog: %v", err)
 		}

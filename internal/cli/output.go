@@ -16,18 +16,18 @@ func CopyToClipboard(message string) (err error) {
 	if err = clipboard.WriteAll(message); err != nil {
 		err = fmt.Errorf("%s", fmt.Sprintf(i18n.T("could_not_copy_to_clipboard"), err))
 	}
-	return
+	return err
 }
 
-func CreateOutputFile(message string, fileName string) (err error) {
+func CreateOutputFile(message, fileName string) (err error) {
 	if _, err = os.Stat(fileName); err == nil {
 		err = fmt.Errorf("%s", fmt.Sprintf(i18n.T("file_already_exists_not_overwriting"), fileName))
-		return
+		return err
 	}
 	var file *os.File
 	if file, err = os.Create(fileName); err != nil {
 		err = fmt.Errorf("%s", fmt.Sprintf(i18n.T("error_creating_file"), err))
-		return
+		return err
 	}
 	defer file.Close()
 	if !strings.HasSuffix(message, "\n") {
@@ -38,7 +38,7 @@ func CreateOutputFile(message string, fileName string) (err error) {
 	} else {
 		debuglog.Log("\n\n[Output also written to %s]\n", fileName)
 	}
-	return
+	return err
 }
 
 // CreateAudioOutputFile creates a binary file for audio data
@@ -52,7 +52,7 @@ func CreateAudioOutputFile(audioData []byte, fileName string) (err error) {
 	var file *os.File
 	if file, err = os.Create(fileName); err != nil {
 		err = fmt.Errorf("%s", fmt.Sprintf(i18n.T("error_creating_audio_file"), err))
-		return
+		return err
 	}
 	defer file.Close()
 
@@ -60,7 +60,7 @@ func CreateAudioOutputFile(audioData []byte, fileName string) (err error) {
 		err = fmt.Errorf("%s", fmt.Sprintf(i18n.T("error_writing_audio_data"), err))
 	}
 	// No redundant output message here - the CLI layer handles success messaging
-	return
+	return err
 }
 
 // IsAudioFormat checks if the filename suggests an audio format

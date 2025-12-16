@@ -504,7 +504,6 @@ func (g *Generator) generateRawVersionContent(version *git.Version) string {
 }
 
 func fixMarkdown(content string) string {
-
 	// Fix MD032/blank-around-lists: Lists should be surrounded by blank lines
 	lines := strings.Split(content, "\n")
 	inList := false

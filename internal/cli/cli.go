@@ -17,27 +17,27 @@ import (
 func Cli(version string) (err error) {
 	var currentFlags *Flags
 	if currentFlags, err = Init(); err != nil {
-		return
+		return err
 	}
 
 	// initialize internationalization using requested language
 	if _, err = i18n.Init(currentFlags.Language); err != nil {
-		return
+		return err
 	}
 
 	if currentFlags.Setup {
 		if err = ensureEnvFile(); err != nil {
-			return
+			return err
 		}
 	}
 
 	if currentFlags.Version {
 		fmt.Println(version)
-		return
+		return err
 	}
 
 	// Initialize database and registry
-	var registry, err2 = initializeFabric()
+	registry, err2 := initializeFabric()
 	if err2 != nil {
 		if !currentFlags.Setup {
 			debuglog.Log("%s\n", err2.Error())
@@ -57,34 +57,34 @@ func Cli(version string) (err error) {
 	// Handle setup and server commands
 	var handled bool
 	if handled, err = handleSetupAndServerCommands(currentFlags, registry, version); err != nil || handled {
-		return
+		return err
 	}
 
 	// Handle configuration commands
 	if handled, err = handleConfigurationCommands(currentFlags, registry); err != nil || handled {
-		return
+		return err
 	}
 
 	// Handle listing commands
 	if handled, err = handleListingCommands(currentFlags, registry.Db, registry); err != nil || handled {
-		return
+		return err
 	}
 
 	// Handle management commands
 	if handled, err = handleManagementCommands(currentFlags, registry.Db); err != nil || handled {
-		return
+		return err
 	}
 
 	// Handle extension commands
 	if handled, err = handleExtensionCommands(currentFlags, registry); err != nil || handled {
-		return
+		return err
 	}
 
 	// Handle transcription if specified
 	if currentFlags.TranscribeFile != "" {
 		var transcriptionMessage string
 		if transcriptionMessage, err = handleTranscription(currentFlags, registry); err != nil {
-			return
+			return err
 		}
 		currentFlags.Message = AppendMessage(currentFlags.Message, transcriptionMessage)
 	}
@@ -101,7 +101,7 @@ func Cli(version string) (err error) {
 	// Handle tool-based message processing
 	var messageTools string
 	if messageTools, err = handleToolProcessing(currentFlags, registry); err != nil {
-		return
+		return err
 	}
 
 	// Return early for non-chat tool operations
@@ -111,15 +111,15 @@ func Cli(version string) (err error) {
 
 	// Handle chat processing
 	err = handleChatProcessing(currentFlags, registry, messageTools)
-	return
+	return err
 }
 
 func processYoutubeVideo(
-	flags *Flags, registry *core.PluginRegistry, videoId string) (message string, err error) {
-
+	flags *Flags, registry *core.PluginRegistry, videoId string,
+) (message string, err error) {
 	if (!flags.YouTubeComments && !flags.YouTubeMetadata) || flags.YouTubeTranscript || flags.YouTubeTranscriptWithTimestamps {
 		var transcript string
-		var language = "en"
+		language := "en"
 		if flags.Language != "" || registry.Language.DefaultLanguage.Value != "" {
 			if flags.Language != "" {
 				language = flags.Language
@@ -129,11 +129,11 @@ func processYoutubeVideo(
 		}
 		if flags.YouTubeTranscriptWithTimestamps {
 			if transcript, err = registry.YouTube.GrabTranscriptWithTimestampsWithArgs(videoId, language, flags.YtDlpArgs); err != nil {
-				return
+				return message, err
 			}
 		} else {
 			if transcript, err = registry.YouTube.GrabTranscriptWithArgs(videoId, language, flags.YtDlpArgs); err != nil {
-				return
+				return message, err
 			}
 		}
 		message = AppendMessage(message, transcript)
@@ -142,7 +142,7 @@ func processYoutubeVideo(
 	if flags.YouTubeComments {
 		var comments []string
 		if comments, err = registry.YouTube.GrabComments(videoId); err != nil {
-			return
+			return message, err
 		}
 
 		commentsString := strings.Join(comments, "\n")
@@ -153,21 +153,21 @@ func processYoutubeVideo(
 	if flags.YouTubeMetadata {
 		var metadata *youtube.VideoMetadata
 		if metadata, err = registry.YouTube.GrabMetadata(videoId); err != nil {
-			return
+			return message, err
 		}
 		metadataJson, _ := json.MarshalIndent(metadata, "", "  ")
 		message = AppendMessage(message, string(metadataJson))
 	}
 
-	return
+	return message, err
 }
 
-func WriteOutput(message string, outputFile string) (err error) {
+func WriteOutput(message, outputFile string) (err error) {
 	fmt.Println(message)
 	if outputFile != "" {
 		err = CreateOutputFile(message, outputFile)
 	}
-	return
+	return err
 }
 
 // configureOpenAIResponsesAPI configures the OpenAI client's Responses API setting based on the CLI flag

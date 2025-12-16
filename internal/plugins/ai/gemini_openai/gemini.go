@@ -7,7 +7,7 @@ import (
 func NewClient() (ret *Client) {
 	ret = &Client{}
 	ret.Client = openai.NewClientCompatible("GeminiOpenAI", "https://generativelanguage.googleapis.com/v1beta", nil)
-	return
+	return ret
 }
 
 type Client struct {

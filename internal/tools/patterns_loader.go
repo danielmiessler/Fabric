@@ -15,8 +15,10 @@ import (
 	"github.com/otiai10/copy"
 )
 
-const DefaultPatternsGitRepoUrl = "https://github.com/danielmiessler/fabric.git"
-const DefaultPatternsGitRepoFolder = "data/patterns"
+const (
+	DefaultPatternsGitRepoUrl    = "https://github.com/danielmiessler/fabric.git"
+	DefaultPatternsGitRepoFolder = "data/patterns"
+)
 
 func NewPatternsLoader(patterns *fsdb.PatternsEntity) (ret *PatternsLoader) {
 	label := "Patterns Loader"
@@ -40,7 +42,7 @@ func NewPatternsLoader(patterns *fsdb.PatternsEntity) (ret *PatternsLoader) {
 		"Enter the default folder in the Git repository where patterns are stored")
 	ret.DefaultFolder.Value = DefaultPatternsGitRepoFolder
 
-	return
+	return ret
 }
 
 type PatternsLoader struct {
@@ -65,7 +67,7 @@ func (o *PatternsLoader) configure() (err error) {
 	}
 	o.tempPatternsFolder = tempDir
 
-	return
+	return err
 }
 
 func (o *PatternsLoader) IsConfigured() (ret bool) {
@@ -75,18 +77,18 @@ func (o *PatternsLoader) IsConfigured() (ret bool) {
 			ret = false
 		}
 	}
-	return
+	return ret
 }
 
 func (o *PatternsLoader) Setup() (err error) {
 	if err = o.PluginBase.Setup(); err != nil {
-		return
+		return err
 	}
 
 	if err = o.PopulateDB(); err != nil {
-		return
+		return err
 	}
-	return
+	return err
 }
 
 // PopulateDB downloads patterns from the internet and populates the patterns folder
@@ -116,7 +118,7 @@ func (o *PatternsLoader) PopulateDB() (err error) {
 		return fmt.Errorf("failed to create unique patterns file: %w", err)
 	}
 
-	return
+	return err
 }
 
 // PersistPatterns copies custom patterns to the updated patterns directory
@@ -133,13 +135,13 @@ func (o *PatternsLoader) PersistPatterns() (err error) {
 
 	var currentPatterns []os.DirEntry
 	if currentPatterns, err = os.ReadDir(o.Patterns.Dir); err != nil {
-		return
+		return err
 	}
 
 	newPatternsFolder := o.tempPatternsFolder
 	var newPatterns []os.DirEntry
 	if newPatterns, err = os.ReadDir(newPatternsFolder); err != nil {
-		return
+		return err
 	}
 
 	// Create a map of new patterns for faster lookup
@@ -169,22 +171,22 @@ func (o *PatternsLoader) PersistPatterns() (err error) {
 // movePatterns copies the new patterns into the config directory
 func (o *PatternsLoader) movePatterns() (err error) {
 	if err = os.MkdirAll(o.Patterns.Dir, os.ModePerm); err != nil {
-		return
+		return err
 	}
 
 	patternsDir := o.tempPatternsFolder
 	if err = o.PersistPatterns(); err != nil {
-		return
+		return err
 	}
 
 	if err = copy.Copy(patternsDir, o.Patterns.Dir); err != nil { // copies the patterns to the config directory
-		return
+		return err
 	}
 
 	// Verify that patterns were actually copied before creating the loaded marker
 	var entries []os.DirEntry
 	if entries, err = os.ReadDir(o.Patterns.Dir); err != nil {
-		return
+		return err
 	}
 
 	// Count actual pattern directories (exclude the loaded file itself)
@@ -197,16 +199,16 @@ func (o *PatternsLoader) movePatterns() (err error) {
 
 	if patternCount == 0 {
 		err = fmt.Errorf("no patterns were successfully copied to %s", o.Patterns.Dir)
-		return
+		return err
 	}
 
-	//create an empty file to indicate that the patterns have been updated if not exists
+	// create an empty file to indicate that the patterns have been updated if not exists
 	if _, err = os.Create(o.loadedFilePath); err != nil {
 		return fmt.Errorf("failed to create loaded marker file '%s': %w", o.loadedFilePath, err)
 	}
 
 	err = os.RemoveAll(patternsDir)
-	return
+	return err
 }
 
 func (o *PatternsLoader) gitCloneAndCopy() (err error) {
@@ -360,7 +362,7 @@ func (o *PatternsLoader) createUniquePatternsFile() (err error) {
 
 	// Join pattern names with newlines
 	content := strings.Join(patternNames, "\n") + "\n"
-	if err = os.WriteFile(o.Patterns.UniquePatternsFilePath, []byte(content), 0644); err != nil {
+	if err = os.WriteFile(o.Patterns.UniquePatternsFilePath, []byte(content), 0o644); err != nil {
 		return fmt.Errorf("failed to write unique patterns file: %w", err)
 	}
 

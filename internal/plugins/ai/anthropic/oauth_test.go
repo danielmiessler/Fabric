@@ -90,7 +90,6 @@ func mockTokenServer(_ *testing.T, responses map[string]any) *httptest.Server {
 
 func TestGeneratePKCE(t *testing.T) {
 	verifier, challenge, err := generatePKCE()
-
 	if err != nil {
 		t.Fatalf("Expected no error, got %v", err)
 	}
@@ -134,19 +133,20 @@ func TestExchangeToken_Success(t *testing.T) {
 
 	// Set up a fake home directory
 	fakeHome := filepath.Join(tempDir, "home")
-	os.MkdirAll(filepath.Join(fakeHome, ".config", "fabric"), 0755)
+	os.MkdirAll(filepath.Join(fakeHome, ".config", "fabric"), 0o755)
 	os.Setenv("HOME", fakeHome)
 
 	// This test would need the actual exchangeToken function to be modified to accept a custom URL
 	// For now, we'll test the logic without the actual HTTP call
 	t.Skip("Skipping integration test - would need URL injection for proper testing")
 }
+
 func TestRefreshToken_Success(t *testing.T) {
 	// Create temporary directory and set up fake home
 	tempDir := t.TempDir()
 	fakeHome := filepath.Join(tempDir, "home")
 	configDir := filepath.Join(fakeHome, ".config", "fabric")
-	os.MkdirAll(configDir, 0755)
+	os.MkdirAll(configDir, 0o755)
 
 	originalHome := os.Getenv("HOME")
 	defer os.Setenv("HOME", originalHome)
@@ -158,7 +158,7 @@ func TestRefreshToken_Success(t *testing.T) {
 	// Save the expired token
 	tokenPath := filepath.Join(configDir, ".test_oauth")
 	data, _ := json.MarshalIndent(expiredToken, "", "  ")
-	os.WriteFile(tokenPath, data, 0600)
+	os.WriteFile(tokenPath, data, 0o600)
 
 	// Create mock server for refresh
 	server := mockTokenServer(t, map[string]any{
@@ -181,7 +181,7 @@ func TestRefreshToken_NoRefreshToken(t *testing.T) {
 	tempDir := t.TempDir()
 	fakeHome := filepath.Join(tempDir, "home")
 	configDir := filepath.Join(fakeHome, ".config", "fabric")
-	os.MkdirAll(configDir, 0755)
+	os.MkdirAll(configDir, 0o755)
 
 	originalHome := os.Getenv("HOME")
 	defer os.Setenv("HOME", originalHome)
@@ -199,7 +199,7 @@ func TestRefreshToken_NoRefreshToken(t *testing.T) {
 	// Save the token
 	tokenPath := filepath.Join(configDir, ".test_oauth")
 	data, _ := json.MarshalIndent(tokenWithoutRefresh, "", "  ")
-	os.WriteFile(tokenPath, data, 0600)
+	os.WriteFile(tokenPath, data, 0o600)
 
 	// Test RefreshToken
 	_, err := RefreshToken("test")
@@ -218,7 +218,7 @@ func TestRefreshToken_NoStoredToken(t *testing.T) {
 	tempDir := t.TempDir()
 	fakeHome := filepath.Join(tempDir, "home")
 	configDir := filepath.Join(fakeHome, ".config", "fabric")
-	os.MkdirAll(configDir, 0755)
+	os.MkdirAll(configDir, 0o755)
 
 	originalHome := os.Getenv("HOME")
 	defer os.Setenv("HOME", originalHome)
@@ -249,7 +249,7 @@ func TestOAuthTransport_RoundTrip(t *testing.T) {
 	tempDir := t.TempDir()
 	fakeHome := filepath.Join(tempDir, "home")
 	configDir := filepath.Join(fakeHome, ".config", "fabric")
-	os.MkdirAll(configDir, 0755)
+	os.MkdirAll(configDir, 0o755)
 
 	originalHome := os.Getenv("HOME")
 	defer os.Setenv("HOME", originalHome)
@@ -259,7 +259,7 @@ func TestOAuthTransport_RoundTrip(t *testing.T) {
 	validToken := createTestToken("valid_access_token", "refresh_token", 3600)
 	tokenPath := filepath.Join(configDir, fmt.Sprintf(".%s_oauth", authTokenIdentifier))
 	data, _ := json.MarshalIndent(validToken, "", "  ")
-	os.WriteFile(tokenPath, data, 0600)
+	os.WriteFile(tokenPath, data, 0o600)
 
 	// Create a mock server to handle the request
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -310,7 +310,7 @@ func TestRunOAuthFlow_ExistingValidToken(t *testing.T) {
 	tempDir := t.TempDir()
 	fakeHome := filepath.Join(tempDir, "home")
 	configDir := filepath.Join(fakeHome, ".config", "fabric")
-	os.MkdirAll(configDir, 0755)
+	os.MkdirAll(configDir, 0o755)
 
 	originalHome := os.Getenv("HOME")
 	defer os.Setenv("HOME", originalHome)
@@ -320,11 +320,10 @@ func TestRunOAuthFlow_ExistingValidToken(t *testing.T) {
 	validToken := createTestToken("existing_valid_token", "refresh_token", 3600)
 	tokenPath := filepath.Join(configDir, ".test_oauth")
 	data, _ := json.MarshalIndent(validToken, "", "  ")
-	os.WriteFile(tokenPath, data, 0600)
+	os.WriteFile(tokenPath, data, 0o600)
 
 	// Test RunOAuthFlow - should return existing token without starting OAuth flow
 	token, err := RunOAuthFlow("test")
-
 	if err != nil {
 		t.Fatalf("Expected no error, got %v", err)
 	}
@@ -386,7 +385,7 @@ func TestGetValidTokenWithValidToken(t *testing.T) {
 	tempDir := t.TempDir()
 	fakeHome := filepath.Join(tempDir, "home")
 	configDir := filepath.Join(fakeHome, ".config", "fabric")
-	os.MkdirAll(configDir, 0755)
+	os.MkdirAll(configDir, 0o755)
 
 	originalHome := os.Getenv("HOME")
 	defer os.Setenv("HOME", originalHome)
@@ -396,7 +395,7 @@ func TestGetValidTokenWithValidToken(t *testing.T) {
 	validToken := createTestToken("valid_access_token", "refresh_token", 3600)
 	tokenPath := filepath.Join(configDir, ".test_oauth")
 	data, _ := json.MarshalIndent(validToken, "", "  ")
-	os.WriteFile(tokenPath, data, 0600)
+	os.WriteFile(tokenPath, data, 0o600)
 
 	// Create transport
 	client := &Client{}
@@ -404,7 +403,6 @@ func TestGetValidTokenWithValidToken(t *testing.T) {
 
 	// Test getValidToken - this should return the valid token without any OAuth flow
 	token, err := transport.getValidToken("test")
-
 	if err != nil {
 		t.Fatalf("Expected no error with valid token, got: %v", err)
 	}

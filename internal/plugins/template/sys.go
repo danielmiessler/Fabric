@@ -21,7 +21,7 @@ type SysPlugin struct{}
 //   - env:VALUE: Environment variable lookup
 //   - pwd: Current working directory
 //   - home: User's home directory
-func (p *SysPlugin) Apply(operation string, value string) (string, error) {
+func (p *SysPlugin) Apply(operation, value string) (string, error) {
 	debugf("Sys: operation=%q value=%q", operation, value)
 
 	switch operation {

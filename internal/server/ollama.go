@@ -45,9 +45,8 @@ type APIConvert struct {
 type OllamaRequestBody struct {
 	Messages []OllamaMessage `json:"messages"`
 	Model    string          `json:"model"`
-	Options  struct {
-	} `json:"options"`
-	Stream bool `json:"stream"`
+	Options  struct{}        `json:"options"`
+	Stream   bool            `json:"stream"`
 }
 
 type OllamaMessage struct {
@@ -78,7 +77,7 @@ type FabricResponseFormat struct {
 	Content string `json:"content"`
 }
 
-func ServeOllama(registry *core.PluginRegistry, address string, version string) (err error) {
+func ServeOllama(registry *core.PluginRegistry, address, version string) (err error) {
 	r := gin.New()
 
 	// Middleware
@@ -112,7 +111,7 @@ func ServeOllama(registry *core.PluginRegistry, address string, version string) 
 		return err
 	}
 
-	return
+	return err
 }
 
 func (f APIConvert) ollamaTags(c *gin.Context) {
@@ -143,7 +142,6 @@ func (f APIConvert) ollamaTags(c *gin.Context) {
 	}
 
 	c.JSON(200, response)
-
 }
 
 func (f APIConvert) ollamaChat(c *gin.Context) {
@@ -266,5 +264,5 @@ func (f APIConvert) ollamaChat(c *gin.Context) {
 	}
 	c.Data(200, "application/json", res)
 
-	//c.JSON(200, forwardedResponse)
+	// c.JSON(200, forwardedResponse)
 }

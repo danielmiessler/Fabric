@@ -228,7 +228,6 @@ func (w *Walker) WalkHistory() (map[string]*Version, error) {
 
 		return nil
 	})
-
 	if err != nil {
 		return nil, fmt.Errorf("failed to walk commits: %w", err)
 	}
@@ -240,7 +239,7 @@ func (w *Walker) WalkHistory() (map[string]*Version, error) {
 	return versions, nil
 }
 
-func (w *Walker) GetRepoInfo() (owner string, name string, err error) {
+func (w *Walker) GetRepoInfo() (owner, name string, err error) {
 	remotes, err := w.repo.Remotes()
 	if err != nil {
 		return "", "", fmt.Errorf("failed to get remotes: %w", err)

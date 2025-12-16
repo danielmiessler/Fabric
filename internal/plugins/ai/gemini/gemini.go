@@ -57,7 +57,7 @@ func NewClient() (ret *Client) {
 
 	ret.ApiKey = ret.PluginBase.AddSetupQuestion("API key", true)
 
-	return
+	return ret
 }
 
 type Client struct {
@@ -72,7 +72,7 @@ func (o *Client) ListModels() (ret []string, err error) {
 		APIKey:  o.ApiKey.Value,
 		Backend: genai.BackendGeminiAPI,
 	}); err != nil {
-		return
+		return ret, err
 	}
 
 	// List available models using the correct API
@@ -86,7 +86,7 @@ func (o *Client) ListModels() (ret []string, err error) {
 		modelName := strings.TrimPrefix(model.Name, "models/")
 		ret = append(ret, modelName)
 	}
-	return
+	return ret, err
 }
 
 func (o *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions) (ret string, err error) {
@@ -94,7 +94,7 @@ func (o *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, o
 	if o.isTTSModel(opts.Model) {
 		if !opts.AudioOutput {
 			err = fmt.Errorf("TTS model '%s' requires audio output. Please specify an audio output file with -o flag ending in .wav", opts.Model)
-			return
+			return ret, err
 		}
 
 		// Handle TTS generation
@@ -107,7 +107,7 @@ func (o *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, o
 		APIKey:  o.ApiKey.Value,
 		Backend: genai.BackendGeminiAPI,
 	}); err != nil {
-		return
+		return ret, err
 	}
 
 	// Convert messages to new SDK format
@@ -126,7 +126,7 @@ func (o *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, o
 
 	// Extract text from response
 	ret = o.extractTextFromResponse(response)
-	return
+	return ret, err
 }
 
 func (o *Client) SendStream(msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan string) (err error) {
@@ -138,7 +138,7 @@ func (o *Client) SendStream(msgs []*chat.ChatCompletionMessage, opts *domain.Cha
 		APIKey:  o.ApiKey.Value,
 		Backend: genai.BackendGeminiAPI,
 	}); err != nil {
-		return
+		return err
 	}
 
 	// Convert messages to new SDK format
@@ -164,7 +164,7 @@ func (o *Client) SendStream(msgs []*chat.ChatCompletionMessage, opts *domain.Cha
 		}
 	}
 
-	return
+	return err
 }
 
 func (o *Client) NeedsRawMode(modelName string) bool {
@@ -317,7 +317,6 @@ func (o *Client) generateTTSAudio(ctx context.Context, msgs []*chat.ChatCompleti
 
 // performTTSGeneration performs the actual TTS generation and audio processing
 func (o *Client) performTTSGeneration(ctx context.Context, client *genai.Client, textToSpeak string, opts *domain.ChatOptions) (string, error) {
-
 	// Create content for TTS
 	contents := []*genai.Content{{
 		Parts: []*genai.Part{{Text: textToSpeak}},

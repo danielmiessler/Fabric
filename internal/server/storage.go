@@ -23,7 +23,7 @@ func NewStorageHandler[T any](r *gin.Engine, entityType string, storage db.Stora
 	r.GET(fmt.Sprintf("/%s/exists/:name", entityType), ret.Exists)
 	r.PUT(fmt.Sprintf("/%s/rename/:oldName/:newName", entityType), ret.Rename)
 	r.POST(fmt.Sprintf("/%s/:name", entityType), ret.Save)
-	return
+	return ret
 }
 
 // Get handles the GET /storage/:name route

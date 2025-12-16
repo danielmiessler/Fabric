@@ -17,6 +17,7 @@ func TestNewCustomPatterns(t *testing.T) {
 	assert.Equal(t, "Custom Patterns - Set directory for your custom patterns (optional)", plugin.GetSetupDescription())
 	assert.False(t, plugin.IsConfigured()) // Should not be configured initially
 }
+
 func TestCustomPatterns_Configure(t *testing.T) {
 	plugin := NewCustomPatterns()
 

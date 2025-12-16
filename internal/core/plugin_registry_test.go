@@ -46,6 +46,7 @@ func (m *testVendor) ListModels() ([]string, error)         { return m.models, n
 func (m *testVendor) SendStream([]*chat.ChatCompletionMessage, *domain.ChatOptions, chan string) error {
 	return nil
 }
+
 func (m *testVendor) Send(context.Context, []*chat.ChatCompletionMessage, *domain.ChatOptions) (string, error) {
 	return "", nil
 }

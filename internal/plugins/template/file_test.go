@@ -16,13 +16,13 @@ func TestFilePlugin(t *testing.T) {
 
 	testFile := filepath.Join(tmpDir, "test.txt")
 	content := "line1\nline2\nline3\nline4\nline5\n"
-	err := os.WriteFile(testFile, []byte(content), 0644)
+	err := os.WriteFile(testFile, []byte(content), 0o644)
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	bigFile := filepath.Join(tmpDir, "big.txt")
-	err = os.WriteFile(bigFile, []byte(strings.Repeat("x", MaxFileSize+1)), 0644)
+	err = os.WriteFile(bigFile, []byte(strings.Repeat("x", MaxFileSize+1)), 0o644)
 	if err != nil {
 		t.Fatal(err)
 	}

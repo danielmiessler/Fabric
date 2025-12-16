@@ -82,7 +82,7 @@ func TestOAuthStorage_SaveAndLoadToken(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Token file not created: %v", err)
 	}
-	if info.Mode().Perm() != 0600 {
+	if info.Mode().Perm() != 0o600 {
 		t.Errorf("Token file has wrong permissions: %v, want 0600", info.Mode().Perm())
 	}
 

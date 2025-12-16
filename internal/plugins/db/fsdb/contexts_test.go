@@ -14,7 +14,7 @@ func TestContexts_GetContext(t *testing.T) {
 	contextName := "testContext"
 	contextPath := filepath.Join(dir, contextName)
 	contextContent := "test content"
-	err := os.WriteFile(contextPath, []byte(contextContent), 0644)
+	err := os.WriteFile(contextPath, []byte(contextContent), 0o644)
 	if err != nil {
 		t.Fatalf("failed to write context file: %v", err)
 	}

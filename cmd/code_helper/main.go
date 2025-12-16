@@ -39,7 +39,7 @@ func main() {
 
 	// Output result
 	if *outputFile != "" {
-		if err := os.WriteFile(*outputFile, jsonData, 0644); err != nil {
+		if err := os.WriteFile(*outputFile, jsonData, 0o644); err != nil {
 			fmt.Fprintf(os.Stderr, "Error writing file: %v\n", err)
 			os.Exit(1)
 		}

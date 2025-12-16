@@ -52,7 +52,7 @@ func (p *FilePlugin) safePath(path string) (string, error) {
 //   - exists:PATH - Check if file exists
 //   - size:PATH - Get file size in bytes
 //   - modified:PATH - Get last modified time
-func (p *FilePlugin) Apply(operation string, value string) (string, error) {
+func (p *FilePlugin) Apply(operation, value string) (string, error) {
 	debugf("File: operation=%q value=%q", operation, value)
 
 	switch operation {

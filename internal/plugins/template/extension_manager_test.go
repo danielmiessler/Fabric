@@ -25,7 +25,7 @@ if [ "$1" = "echo" ]; then
     echo "Hello, $2!"
 fi`
 
-	err = os.WriteFile(testScript, []byte(scriptContent), 0755)
+	err = os.WriteFile(testScript, []byte(scriptContent), 0o755)
 	if err != nil {
 		t.Fatalf("Failed to create test script: %v", err)
 	}
@@ -42,7 +42,7 @@ operations:
     cmd_template: "{{executable}} echo {{1}}"
 `
 
-	err = os.WriteFile(testConfig, []byte(configContent), 0644)
+	err = os.WriteFile(testConfig, []byte(configContent), 0o644)
 	if err != nil {
 		t.Fatalf("Failed to create test config: %v", err)
 	}
@@ -168,7 +168,7 @@ timeout: 30s`,
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			err := os.WriteFile(invalidConfig, []byte(tc.config), 0644)
+			err := os.WriteFile(invalidConfig, []byte(tc.config), 0o644)
 			if err != nil {
 				t.Fatalf("Failed to create invalid config file: %v", err)
 			}

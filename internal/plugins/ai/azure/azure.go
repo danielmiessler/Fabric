@@ -18,7 +18,7 @@ func NewClient() (ret *Client) {
 	ret.ApiVersion = ret.AddSetupQuestionCustom("API Version", false,
 		"Enter the Azure API version (optional)")
 
-	return
+	return ret
 }
 
 type Client struct {
@@ -71,7 +71,7 @@ func parseDeployments(value string) []string {
 
 func (oi *Client) ListModels() (ret []string, err error) {
 	ret = oi.apiDeployments
-	return
+	return ret, err
 }
 
 func (oi *Client) NeedsRawMode(modelName string) bool {

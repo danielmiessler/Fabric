@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func Serve(registry *core.PluginRegistry, address string, apiKey string) (err error) {
+func Serve(registry *core.PluginRegistry, address, apiKey string) (err error) {
 	r := gin.New()
 
 	// Middleware
@@ -37,5 +37,5 @@ func Serve(registry *core.PluginRegistry, address string, apiKey string) (err er
 		return err
 	}
 
-	return
+	return err
 }

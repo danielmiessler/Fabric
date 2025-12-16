@@ -96,7 +96,7 @@ func NewExtensionRegistry(configDir string) *ExtensionRegistry {
 
 func (r *ExtensionRegistry) ensureConfigDir() error {
 	extDir := filepath.Join(r.configDir, "extensions")
-	return os.MkdirAll(extDir, 0755)
+	return os.MkdirAll(extDir, 0o755)
 }
 
 // Update the Register method in extension_registry.go
@@ -311,7 +311,7 @@ func (r *ExtensionRegistry) saveRegistry() error {
 	}
 
 	registryPath := filepath.Join(r.configDir, "extensions", "extensions.yaml")
-	return os.WriteFile(registryPath, data, 0644)
+	return os.WriteFile(registryPath, data, 0o644)
 }
 
 func (r *ExtensionRegistry) loadRegistry() error {

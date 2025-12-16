@@ -19,7 +19,7 @@ func (o *SessionsEntity) Get(name string) (session *Session, err error) {
 	} else {
 		fmt.Printf("Creating new session: %s\n", name)
 	}
-	return
+	return session, err
 }
 
 func (o *SessionsEntity) PrintSession(name string) (err error) {
@@ -29,7 +29,7 @@ func (o *SessionsEntity) PrintSession(name string) (err error) {
 			fmt.Println(session.String())
 		}
 	}
-	return
+	return err
 }
 
 func (o *SessionsEntity) SaveSession(session *Session) (err error) {
@@ -65,7 +65,7 @@ func (o *Session) GetVendorMessages() (ret []*chat.ChatCompletionMessage) {
 		}
 	}
 	ret = o.vendorMessages
-	return
+	return ret
 }
 
 func (o *Session) appendVendorMessage(message *chat.ChatCompletionMessage) {
@@ -78,7 +78,7 @@ func (o *Session) GetLastMessage() (ret *chat.ChatCompletionMessage) {
 	if len(o.Messages) > 0 {
 		ret = o.Messages[len(o.Messages)-1]
 	}
-	return
+	return ret
 }
 
 func (o *Session) String() (ret string) {
@@ -95,5 +95,5 @@ func (o *Session) String() (ret string) {
 			}
 		}
 	}
-	return
+	return ret
 }

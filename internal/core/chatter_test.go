@@ -201,7 +201,6 @@ func TestChatter_Send_StreamingSuccessfulAggregation(t *testing.T) {
 
 	// Call Send and expect successful aggregation
 	session, err := chatter.Send(request, opts)
-
 	// Verify no error occurred
 	if err != nil {
 		t.Fatalf("Expected no error, but got: %v", err)

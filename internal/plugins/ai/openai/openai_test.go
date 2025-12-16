@@ -13,7 +13,6 @@ import (
 )
 
 func TestBuildResponseRequestWithMaxTokens(t *testing.T) {
-
 	var msgs []*chat.ChatCompletionMessage
 
 	for range 2 {
@@ -30,7 +29,7 @@ func TestBuildResponseRequestWithMaxTokens(t *testing.T) {
 		MaxTokens:   50,
 	}
 
-	var client = NewClient()
+	client := NewClient()
 	request := client.buildResponseParams(msgs, opts)
 	assert.Equal(t, shared.ResponsesModel(opts.Model), request.Model)
 	assert.Equal(t, openai.Float(opts.Temperature), request.Temperature)
@@ -39,7 +38,6 @@ func TestBuildResponseRequestWithMaxTokens(t *testing.T) {
 }
 
 func TestBuildResponseRequestNoMaxTokens(t *testing.T) {
-
 	var msgs []*chat.ChatCompletionMessage
 
 	for range 2 {
@@ -55,7 +53,7 @@ func TestBuildResponseRequestNoMaxTokens(t *testing.T) {
 		Raw:         false,
 	}
 
-	var client = NewClient()
+	client := NewClient()
 	request := client.buildResponseParams(msgs, opts)
 	assert.Equal(t, shared.ResponsesModel(opts.Model), request.Model)
 	assert.Equal(t, openai.Float(opts.Temperature), request.Temperature)

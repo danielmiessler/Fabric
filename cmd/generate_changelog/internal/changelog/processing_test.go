@@ -36,7 +36,7 @@ func TestDetectVersion(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			// Create version.nix file
 			versionNixPath := filepath.Join(tempDir, "version.nix")
-			if err := os.WriteFile(versionNixPath, []byte(tt.versionNixContent), 0644); err != nil {
+			if err := os.WriteFile(versionNixPath, []byte(tt.versionNixContent), 0o644); err != nil {
 				t.Fatalf("Failed to create version.nix: %v", err)
 			}
 
@@ -109,7 +109,7 @@ func TestInsertVersionAtTop_ImprovedRobustness(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			// Write existing content (or create empty file)
 			if tt.existingContent != "" {
-				if err := os.WriteFile(changelogPath, []byte(tt.existingContent), 0644); err != nil {
+				if err := os.WriteFile(changelogPath, []byte(tt.existingContent), 0o644); err != nil {
 					t.Fatalf("Failed to write existing content: %v", err)
 				}
 			} else {
@@ -140,7 +140,7 @@ func TestProcessIncomingPRs_FileAggregation(t *testing.T) {
 	incomingDir := filepath.Join(tempDir, "incoming")
 
 	// Create incoming directory and files
-	if err := os.MkdirAll(incomingDir, 0755); err != nil {
+	if err := os.MkdirAll(incomingDir, 0o755); err != nil {
 		t.Fatalf("Failed to create incoming dir: %v", err)
 	}
 
@@ -148,10 +148,10 @@ func TestProcessIncomingPRs_FileAggregation(t *testing.T) {
 	file1Content := "## PR #1\n- Feature A"
 	file2Content := "## PR #2\n- Feature B"
 
-	if err := os.WriteFile(filepath.Join(incomingDir, "1.txt"), []byte(file1Content), 0644); err != nil {
+	if err := os.WriteFile(filepath.Join(incomingDir, "1.txt"), []byte(file1Content), 0o644); err != nil {
 		t.Fatalf("Failed to create test file: %v", err)
 	}
-	if err := os.WriteFile(filepath.Join(incomingDir, "2.txt"), []byte(file2Content), 0644); err != nil {
+	if err := os.WriteFile(filepath.Join(incomingDir, "2.txt"), []byte(file2Content), 0o644); err != nil {
 		t.Fatalf("Failed to create test file: %v", err)
 	}
 
@@ -196,21 +196,21 @@ func TestFileProcessing_ErrorHandling(t *testing.T) {
 	incomingDir := filepath.Join(tempDir, "incoming")
 
 	// Create incoming directory with one good file and one unreadable file
-	if err := os.MkdirAll(incomingDir, 0755); err != nil {
+	if err := os.MkdirAll(incomingDir, 0o755); err != nil {
 		t.Fatalf("Failed to create incoming dir: %v", err)
 	}
 
 	// Create a good file
-	if err := os.WriteFile(filepath.Join(incomingDir, "1.txt"), []byte("content"), 0644); err != nil {
+	if err := os.WriteFile(filepath.Join(incomingDir, "1.txt"), []byte("content"), 0o644); err != nil {
 		t.Fatalf("Failed to create test file: %v", err)
 	}
 
 	// Create an unreadable file (simulate permission error)
 	unreadableFile := filepath.Join(incomingDir, "2.txt")
-	if err := os.WriteFile(unreadableFile, []byte("content"), 0000); err != nil {
+	if err := os.WriteFile(unreadableFile, []byte("content"), 0o000); err != nil {
 		t.Fatalf("Failed to create unreadable file: %v", err)
 	}
-	defer os.Chmod(unreadableFile, 0644) // Clean up
+	defer os.Chmod(unreadableFile, 0o644) // Clean up
 
 	// Test error aggregation logic
 	files, err := filepath.Glob(filepath.Join(incomingDir, "*.txt"))

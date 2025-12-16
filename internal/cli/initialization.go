@@ -10,26 +10,28 @@ import (
 	"github.com/danielmiessler/fabric/internal/plugins/db/fsdb"
 )
 
-const ConfigDirPerms os.FileMode = 0755
-const EnvFilePerms os.FileMode = 0644
+const (
+	ConfigDirPerms os.FileMode = 0o755
+	EnvFilePerms   os.FileMode = 0o644
+)
 
 // initializeFabric initializes the fabric database and plugin registry
 func initializeFabric() (registry *core.PluginRegistry, err error) {
 	var homedir string
 	if homedir, err = os.UserHomeDir(); err != nil {
-		return
+		return registry, err
 	}
 
 	fabricDb := fsdb.NewDb(filepath.Join(homedir, ".config/fabric"))
 	if err = fabricDb.Configure(); err != nil {
-		return
+		return registry, err
 	}
 
 	if registry, err = core.NewPluginRegistry(fabricDb); err != nil {
-		return
+		return registry, err
 	}
 
-	return
+	return registry, err
 }
 
 // ensureEnvFile checks for the default ~/.config/fabric/.env file and creates it
@@ -53,5 +55,5 @@ func ensureEnvFile() (err error) {
 			return fmt.Errorf("%s", fmt.Sprintf(i18n.T("could_not_create_env_file"), err))
 		}
 	}
-	return
+	return err
 }

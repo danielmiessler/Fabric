@@ -34,10 +34,10 @@ func setupTestPatternsEntity(t *testing.T) (*PatternsEntity, func()) {
 // Helper to create a test pattern file
 func createTestPattern(t *testing.T, entity *PatternsEntity, name, content string) {
 	patternDir := filepath.Join(entity.Dir, name)
-	err := os.MkdirAll(patternDir, 0755)
+	err := os.MkdirAll(patternDir, 0o755)
 	require.NoError(t, err)
 
-	err = os.WriteFile(filepath.Join(patternDir, entity.SystemPatternFile), []byte(content), 0644)
+	err = os.WriteFile(filepath.Join(patternDir, entity.SystemPatternFile), []byte(content), 0o644)
 	require.NoError(t, err)
 }
 

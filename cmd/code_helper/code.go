@@ -103,7 +103,6 @@ func ScanDirectory(rootDir string, maxDepth int, instructions string, ignoreList
 
 		return nil
 	})
-
 	if err != nil {
 		return nil, err
 	}

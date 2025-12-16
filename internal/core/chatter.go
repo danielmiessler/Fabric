@@ -38,7 +38,7 @@ func (o *Chatter) Send(request *domain.ChatRequest, opts *domain.ChatOptions) (s
 		opts.Raw = true
 	}
 	if session, err = o.BuildSession(request, opts.Raw); err != nil {
-		return
+		return session, err
 	}
 
 	vendorMessages := session.GetVendorMessages()
@@ -46,11 +46,11 @@ func (o *Chatter) Send(request *domain.ChatRequest, opts *domain.ChatOptions) (s
 		if session.Name != "" {
 			err = o.db.Sessions.SaveSession(session)
 			if err != nil {
-				return
+				return session, err
 			}
 		}
 		err = fmt.Errorf("no messages provided")
-		return
+		return session, err
 	}
 
 	if opts.Model == "" {
@@ -100,14 +100,14 @@ func (o *Chatter) Send(request *domain.ChatRequest, opts *domain.ChatOptions) (s
 		case streamErr := <-errChan:
 			if streamErr != nil {
 				err = streamErr
-				return
+				return session, err
 			}
 		default:
 			// No errors, continue
 		}
 	} else {
 		if message, err = o.vendor.Send(context.Background(), session.GetVendorMessages(), opts); err != nil {
-			return
+			return session, err
 		}
 	}
 
@@ -118,7 +118,7 @@ func (o *Chatter) Send(request *domain.ChatRequest, opts *domain.ChatOptions) (s
 	if message == "" {
 		session = nil
 		err = fmt.Errorf("empty response")
-		return
+		return session, err
 	}
 
 	// Process file changes for create_coding_feature pattern
@@ -147,7 +147,7 @@ func (o *Chatter) Send(request *domain.ChatRequest, opts *domain.ChatOptions) (s
 	if session.Name != "" {
 		err = o.db.Sessions.SaveSession(session)
 	}
-	return
+	return session, err
 }
 
 func (o *Chatter) BuildSession(request *domain.ChatRequest, raw bool) (session *fsdb.Session, err error) {
@@ -155,7 +155,7 @@ func (o *Chatter) BuildSession(request *domain.ChatRequest, raw bool) (session *
 		var sess *fsdb.Session
 		if sess, err = o.db.Sessions.Get(request.SessionName); err != nil {
 			err = fmt.Errorf("could not find session %s: %v", request.SessionName, err)
-			return
+			return session, err
 		}
 		session = sess
 	} else {
@@ -172,7 +172,7 @@ func (o *Chatter) BuildSession(request *domain.ChatRequest, raw bool) (session *
 		var ctx *fsdb.Context
 		if ctx, err = o.db.Contexts.Get(request.ContextName); err != nil {
 			err = fmt.Errorf("could not find context %s: %v", request.ContextName, err)
-			return
+			return session, err
 		}
 		contextContent = ctx.Content
 	}
@@ -285,5 +285,5 @@ func (o *Chatter) BuildSession(request *domain.ChatRequest, raw bool) (session *
 		session = nil
 		err = errors.New(NoSessionPatternUserMessages)
 	}
-	return
+	return session, err
 }

@@ -30,119 +30,119 @@ func (a *Attachment) GetId() (ret string, err error) {
 		} else if a.Path != nil {
 			var content []byte
 			if content, err = os.ReadFile(*a.Path); err != nil {
-				return
+				return ret, err
 			}
 			hash = fmt.Sprintf("%x", sha256.Sum256(content))
 		} else if a.URL != nil {
 			data := map[string]string{"url": *a.URL}
 			var jsonData []byte
 			if jsonData, err = json.Marshal(data); err != nil {
-				return
+				return ret, err
 			}
 			hash = fmt.Sprintf("%x", sha256.Sum256(jsonData))
 		}
 		a.ID = &hash
 	}
 	ret = *a.ID
-	return
+	return ret, err
 }
 
 func (a *Attachment) ResolveType() (ret string, err error) {
 	if a.Type != nil {
 		ret = *a.Type
-		return
+		return ret, err
 	}
 	if a.Path != nil {
 		var mime *mimetype.MIME
 		if mime, err = mimetype.DetectFile(*a.Path); err != nil {
-			return
+			return ret, err
 		}
 		ret = mime.String()
-		return
+		return ret, err
 	}
 	if a.URL != nil {
 		var resp *http.Response
 		if resp, err = http.Head(*a.URL); err != nil {
-			return
+			return ret, err
 		}
 		defer resp.Body.Close()
 		ret = resp.Header.Get("Content-Type")
-		return
+		return ret, err
 	}
 	if a.Content != nil {
 		ret = mimetype.Detect(a.Content).String()
-		return
+		return ret, err
 	}
 	err = fmt.Errorf("attachment has no type and no content to derive it from")
-	return
+	return ret, err
 }
 
 func (a *Attachment) ContentBytes() (ret []byte, err error) {
 	if a.Content != nil {
 		ret = a.Content
-		return
+		return ret, err
 	}
 	if a.Path != nil {
 		if ret, err = os.ReadFile(*a.Path); err != nil {
-			return
+			return ret, err
 		}
-		return
+		return ret, err
 	}
 	if a.URL != nil {
 		var resp *http.Response
 		if resp, err = http.Get(*a.URL); err != nil {
-			return
+			return ret, err
 		}
 		defer resp.Body.Close()
 		if ret, err = io.ReadAll(resp.Body); err != nil {
-			return
+			return ret, err
 		}
-		return
+		return ret, err
 	}
 	err = fmt.Errorf("no content available")
-	return
+	return ret, err
 }
 
 func (a *Attachment) Base64Content() (ret string, err error) {
 	var content []byte
 	if content, err = a.ContentBytes(); err != nil {
-		return
+		return ret, err
 	}
 	ret = base64.StdEncoding.EncodeToString(content)
-	return
+	return ret, err
 }
 
 func NewAttachment(value string) (ret *Attachment, err error) {
 	if isURL(value) {
 		var mimeType string
 		if mimeType, err = detectMimeTypeFromURL(value); err != nil {
-			return
+			return ret, err
 		}
 		ret = &Attachment{
 			Type: &mimeType,
 			URL:  &value,
 		}
-		return
+		return ret, err
 	}
 
 	var absPath string
 	if absPath, err = filepath.Abs(value); err != nil {
-		return
+		return ret, err
 	}
 	if _, err = os.Stat(absPath); os.IsNotExist(err) {
 		err = fmt.Errorf("file %s does not exist", value)
-		return
+		return ret, err
 	}
 
 	var mimeType string
 	if mimeType, err = detectMimeTypeFromFile(absPath); err != nil {
-		return
+		return ret, err
 	}
 	ret = &Attachment{
 		Type: &mimeType,
 		Path: &absPath,
 	}
-	return
+	return ret, err
 }
 
 func detectMimeTypeFromURL(url string) (string, error) {

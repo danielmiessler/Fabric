@@ -51,7 +51,7 @@ func (e *ExtensionExecutor) Execute(name, operation, value string) (string, erro
 
 	// Create command with the Executable and formatted arguments
 	cmd := exec.Command("sh", "-c", cmdStr)
-	//cmd := exec.Command(cmdParts[0], cmdParts[1:]...)
+	// cmd := exec.Command(cmdParts[0], cmdParts[1:]...)
 
 	// Set up environment if specified
 	if len(ext.Env) > 0 {
@@ -68,7 +68,7 @@ func (e *ExtensionExecutor) Execute(name, operation, value string) (string, erro
 
 // formatCommand uses fabric's template system to format the command
 // It creates a variables map for the template system using the input values
-func (e *ExtensionExecutor) formatCommand(ext *ExtensionDefinition, operation string, value string) (string, error) {
+func (e *ExtensionExecutor) formatCommand(ext *ExtensionDefinition, operation, value string) (string, error) {
 	// Get operation config
 	opConfig, exists := ext.Operations[operation]
 	if !exists {
@@ -96,7 +96,7 @@ func (e *ExtensionExecutor) executeStdout(cmd *exec.Cmd, ext *ExtensionDefinitio
 	cmd.Stdout = &stdout
 	cmd.Stderr = &stderr
 
-	//debug output
+	// debug output
 	fmt.Printf("Executing command: %s\n", cmd.String())
 
 	if err := cmd.Run(); err != nil {

@@ -23,7 +23,7 @@ func NewCustomPatterns() (ret *CustomPatterns) {
 	ret.CustomPatternsDir = ret.AddSetupQuestionCustom("Directory", false,
 		"Enter the path to your custom patterns directory (leave empty to skip)")
 
-	return
+	return ret
 }
 
 type CustomPatterns struct {
@@ -47,7 +47,7 @@ func (o *CustomPatterns) configure() error {
 
 		// Check if directory exists, create only if it doesn't
 		if _, err := os.Stat(o.CustomPatternsDir.Value); os.IsNotExist(err) {
-			if err := os.MkdirAll(o.CustomPatternsDir.Value, 0755); err != nil {
+			if err := os.MkdirAll(o.CustomPatternsDir.Value, 0o755); err != nil {
 				// Log the error but don't clear the value - let it persist in env file
 				fmt.Printf("Warning: Could not create custom patterns directory %s: %v\n", o.CustomPatternsDir.Value, err)
 			}

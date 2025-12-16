@@ -9,7 +9,7 @@ import (
 )
 
 // withTestExtension creates a temporary test extension and runs the test function
-func withTestExtension(t *testing.T, name string, scriptContent string, testFunc func(*ExtensionManager, string)) {
+func withTestExtension(t *testing.T, name, scriptContent string, testFunc func(*ExtensionManager, string)) {
 	t.Helper()
 
 	// Create a temporary directory for test extension
@@ -19,18 +19,18 @@ func withTestExtension(t *testing.T, name string, scriptContent string, testFunc
 	binDir := filepath.Join(extensionsDir, "bin")
 	configsDir := filepath.Join(extensionsDir, "configs")
 
-	err := os.MkdirAll(binDir, 0755)
+	err := os.MkdirAll(binDir, 0o755)
 	if err != nil {
 		t.Fatalf("Failed to create bin directory: %v", err)
 	}
-	err = os.MkdirAll(configsDir, 0755)
+	err = os.MkdirAll(configsDir, 0o755)
 	if err != nil {
 		t.Fatalf("Failed to create configs directory: %v", err)
 	}
 
 	// Create a test script
 	scriptPath := filepath.Join(binDir, name+".sh")
-	err = os.WriteFile(scriptPath, []byte(scriptContent), 0755)
+	err = os.WriteFile(scriptPath, []byte(scriptContent), 0o755)
 	if err != nil {
 		t.Fatalf("Failed to create test script: %v", err)
 	}
@@ -52,7 +52,7 @@ config:
   output:
     method: stdout
 `, name, scriptPath)
-	err = os.WriteFile(configPath, []byte(configContent), 0644)
+	err = os.WriteFile(configPath, []byte(configContent), 0o644)
 	if err != nil {
 		t.Fatalf("Failed to create extension config: %v", err)
 	}

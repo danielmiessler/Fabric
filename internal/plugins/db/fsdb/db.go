@@ -11,7 +11,6 @@ import (
 )
 
 func NewDb(dir string) (db *Db) {
-
 	db = &Db{Dir: dir}
 
 	db.EnvFilePath = db.FilePath(".env")
@@ -24,12 +23,14 @@ func NewDb(dir string) (db *Db) {
 	}
 
 	db.Sessions = &SessionsEntity{
-		&StorageEntity{Label: "Sessions", Dir: db.FilePath("sessions"), FileExtension: ".json"}}
+		&StorageEntity{Label: "Sessions", Dir: db.FilePath("sessions"), FileExtension: ".json"},
+	}
 
 	db.Contexts = &ContextsEntity{
-		&StorageEntity{Label: "Contexts", Dir: db.FilePath("contexts")}}
+		&StorageEntity{Label: "Contexts", Dir: db.FilePath("contexts")},
+	}
 
-	return
+	return db
 }
 
 type Db struct {
@@ -44,11 +45,11 @@ type Db struct {
 
 func (o *Db) Configure() (err error) {
 	if err = os.MkdirAll(o.Dir, os.ModePerm); err != nil {
-		return
+		return err
 	}
 
 	if err = o.LoadEnvFile(); err != nil {
-		return
+		return err
 	}
 
 	// Set custom patterns directory after loading .env file
@@ -64,36 +65,36 @@ func (o *Db) Configure() (err error) {
 	}
 
 	if err = o.Patterns.Configure(); err != nil {
-		return
+		return err
 	}
 
 	if err = o.Sessions.Configure(); err != nil {
-		return
+		return err
 	}
 
 	if err = o.Contexts.Configure(); err != nil {
-		return
+		return err
 	}
 
-	return
+	return err
 }
 
 func (o *Db) LoadEnvFile() (err error) {
 	if err = godotenv.Load(o.EnvFilePath); err != nil {
 		err = fmt.Errorf("error loading .env file: %s", err)
 	}
-	return
+	return err
 }
 
 func (o *Db) IsEnvFileExists() (ret bool) {
 	_, err := os.Stat(o.EnvFilePath)
 	ret = !os.IsNotExist(err)
-	return
+	return ret
 }
 
 func (o *Db) SaveEnv(content string) (err error) {
-	err = os.WriteFile(o.EnvFilePath, []byte(content), 0644)
-	return
+	err = os.WriteFile(o.EnvFilePath, []byte(content), 0o644)
+	return err
 }
 
 func (o *Db) FilePath(fileName string) (ret string) {

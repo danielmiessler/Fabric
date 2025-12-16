@@ -35,12 +35,14 @@ import (
 	"google.golang.org/api/youtube/v3"
 )
 
-var timestampRegex *regexp.Regexp
-var languageFileRegex *regexp.Regexp
-var videoPatternRegex *regexp.Regexp
-var playlistPatternRegex *regexp.Regexp
-var vttTagRegex *regexp.Regexp
-var durationRegex *regexp.Regexp
+var (
+	timestampRegex       *regexp.Regexp
+	languageFileRegex    *regexp.Regexp
+	videoPatternRegex    *regexp.Regexp
+	playlistPatternRegex *regexp.Regexp
+	vttTagRegex          *regexp.Regexp
+	durationRegex        *regexp.Regexp
+)
 
 const TimeGapForRepeats = 10 // seconds
 
@@ -60,7 +62,6 @@ func init() {
 }
 
 func NewYouTube() (ret *YouTube) {
-
 	label := "YouTube"
 	ret = &YouTube{}
 
@@ -72,7 +73,7 @@ func NewYouTube() (ret *YouTube) {
 
 	ret.ApiKey = ret.AddSetupQuestion("API key", false)
 
-	return
+	return ret
 }
 
 type YouTube struct {
@@ -87,16 +88,16 @@ func (o *YouTube) initService() (err error) {
 	if o.service == nil {
 		if o.ApiKey.Value == "" {
 			err = fmt.Errorf("%s", i18n.T("youtube_api_key_required"))
-			return
+			return err
 		}
 		o.normalizeRegex = regexp.MustCompile(`[^a-zA-Z0-9]+`)
 		ctx := context.Background()
 		o.service, err = youtube.NewService(ctx, option.WithAPIKey(o.ApiKey.Value))
 	}
-	return
+	return err
 }
 
-func (o *YouTube) GetVideoOrPlaylistId(url string) (videoId string, playlistId string, err error) {
+func (o *YouTube) GetVideoOrPlaylistId(url string) (videoId, playlistId string, err error) {
 	// Extract video ID using pre-compiled regex
 	videoMatch := videoPatternRegex.FindStringSubmatch(url)
 	if len(videoMatch) > 1 {
@@ -112,7 +113,7 @@ func (o *YouTube) GetVideoOrPlaylistId(url string) (videoId string, playlistId s
 	if videoId == "" && playlistId == "" {
 		err = fmt.Errorf("%s", fmt.Sprintf(i18n.T("youtube_invalid_url"), url))
 	}
-	return
+	return videoId, playlistId, err
 }
 
 // extractAndValidateVideoId extracts a video ID from the given URL and validates
@@ -132,10 +133,10 @@ func (o *YouTube) extractAndValidateVideoId(url string) (videoId string, err err
 	return videoId, nil
 }
 
-func (o *YouTube) GrabTranscriptForUrl(url string, language string) (ret string, err error) {
+func (o *YouTube) GrabTranscriptForUrl(url, language string) (ret string, err error) {
 	var videoId string
 	if videoId, err = o.extractAndValidateVideoId(url); err != nil {
-		return
+		return ret, err
 	}
 	return o.GrabTranscript(videoId, language)
 }
@@ -143,7 +144,7 @@ func (o *YouTube) GrabTranscriptForUrl(url string, language string) (ret string,
 // GrabTranscript retrieves the transcript for the specified video ID using yt-dlp.
 // The language parameter specifies the preferred subtitle language code (e.g., "en", "es").
 // It returns the transcript text or an error if the transcript cannot be retrieved.
-func (o *YouTube) GrabTranscript(videoId string, language string) (ret string, err error) {
+func (o *YouTube) GrabTranscript(videoId, language string) (ret string, err error) {
 	return o.GrabTranscriptWithArgs(videoId, language, "")
 }
 
@@ -152,7 +153,7 @@ func (o *YouTube) GrabTranscript(videoId string, language string) (ret string, e
 // language code. The additionalArgs parameter allows passing extra yt-dlp options like
 // "--cookies-from-browser brave" for authentication.
 // It returns the transcript text or an error if the transcript cannot be retrieved.
-func (o *YouTube) GrabTranscriptWithArgs(videoId string, language string, additionalArgs string) (ret string, err error) {
+func (o *YouTube) GrabTranscriptWithArgs(videoId, language, additionalArgs string) (ret string, err error) {
 	return o.tryMethodYtDlp(videoId, language, additionalArgs)
 }
 
@@ -160,7 +161,7 @@ func (o *YouTube) GrabTranscriptWithArgs(videoId string, language string, additi
 // video ID using yt-dlp. The language parameter specifies the preferred subtitle language code.
 // Each line in the returned transcript is prefixed with a timestamp in [HH:MM:SS] format.
 // It returns the timestamped transcript text or an error if the transcript cannot be retrieved.
-func (o *YouTube) GrabTranscriptWithTimestamps(videoId string, language string) (ret string, err error) {
+func (o *YouTube) GrabTranscriptWithTimestamps(videoId, language string) (ret string, err error) {
 	return o.GrabTranscriptWithTimestampsWithArgs(videoId, language, "")
 }
 
@@ -169,7 +170,7 @@ func (o *YouTube) GrabTranscriptWithTimestamps(videoId string, language string) 
 // preferred subtitle language code. The additionalArgs parameter allows passing extra yt-dlp options.
 // Each line in the returned transcript is prefixed with a timestamp in [HH:MM:SS] format.
 // It returns the timestamped transcript text or an error if the transcript cannot be retrieved.
-func (o *YouTube) GrabTranscriptWithTimestampsWithArgs(videoId string, language string, additionalArgs string) (ret string, err error) {
+func (o *YouTube) GrabTranscriptWithTimestampsWithArgs(videoId, language, additionalArgs string) (ret string, err error) {
 	return o.tryMethodYtDlpWithTimestamps(videoId, language, additionalArgs)
 }
 
@@ -215,18 +216,18 @@ func noLangs(args []string) []string {
 
 // tryMethodYtDlpInternal is a helper function to reduce duplication between
 // tryMethodYtDlp and tryMethodYtDlpWithTimestamps.
-func (o *YouTube) tryMethodYtDlpInternal(videoId string, language string, additionalArgs string, processVTTFileFunc func(filename string) (string, error)) (ret string, err error) {
+func (o *YouTube) tryMethodYtDlpInternal(videoId, language, additionalArgs string, processVTTFileFunc func(filename string) (string, error)) (ret string, err error) {
 	// Check if yt-dlp is available
 	if _, err = exec.LookPath("yt-dlp"); err != nil {
 		err = fmt.Errorf("%s", i18n.T("youtube_ytdlp_not_found"))
-		return
+		return ret, err
 	}
 
 	// Create a temporary directory for yt-dlp output (cross-platform)
 	tempDir := filepath.Join(os.TempDir(), "fabric-youtube-"+videoId)
-	if err = os.MkdirAll(tempDir, 0755); err != nil {
+	if err = os.MkdirAll(tempDir, 0o755); err != nil {
 		err = fmt.Errorf("%s", fmt.Sprintf(i18n.T("youtube_failed_create_temp_dir"), err))
-		return
+		return ret, err
 	}
 	defer os.RemoveAll(tempDir)
 
@@ -276,7 +277,7 @@ func (o *YouTube) tryMethodYtDlpInternal(videoId string, language string, additi
 		args = noLangs(args)
 	}
 	if err != nil {
-		return
+		return ret, err
 	}
 	// Find VTT files using cross-platform approach
 	// Try to find files with the requested language first, but fall back to any VTT file
@@ -287,18 +288,18 @@ func (o *YouTube) tryMethodYtDlpInternal(videoId string, language string, additi
 	return processVTTFileFunc(vttFiles[0])
 }
 
-func (o *YouTube) tryMethodYtDlp(videoId string, language string, additionalArgs string) (ret string, err error) {
+func (o *YouTube) tryMethodYtDlp(videoId, language, additionalArgs string) (ret string, err error) {
 	return o.tryMethodYtDlpInternal(videoId, language, additionalArgs, o.readAndCleanVTTFile)
 }
 
-func (o *YouTube) tryMethodYtDlpWithTimestamps(videoId string, language string, additionalArgs string) (ret string, err error) {
+func (o *YouTube) tryMethodYtDlpWithTimestamps(videoId, language, additionalArgs string) (ret string, err error) {
 	return o.tryMethodYtDlpInternal(videoId, language, additionalArgs, o.readAndFormatVTTWithTimestamps)
 }
 
 func (o *YouTube) readAndCleanVTTFile(filename string) (ret string, err error) {
 	var content []byte
 	if content, err = os.ReadFile(filename); err != nil {
-		return
+		return ret, err
 	}
 
 	// Convert VTT to plain text
@@ -330,13 +331,13 @@ func (o *YouTube) readAndCleanVTTFile(filename string) (ret string, err error) {
 	if ret == "" {
 		err = fmt.Errorf("%s", i18n.T("youtube_no_transcript_content"))
 	}
-	return
+	return ret, err
 }
 
 func (o *YouTube) readAndFormatVTTWithTimestamps(filename string) (ret string, err error) {
 	var content []byte
 	if content, err = os.ReadFile(filename); err != nil {
-		return
+		return ret, err
 	}
 
 	// Parse VTT and preserve timestamps
@@ -400,7 +401,7 @@ func (o *YouTube) readAndFormatVTTWithTimestamps(filename string) (ret string, e
 	if ret == "" {
 		err = fmt.Errorf("%s", i18n.T("youtube_no_transcript_content"))
 	}
-	return
+	return ret, err
 }
 
 func formatVTTTimestamp(vttTime string) string {
@@ -500,14 +501,14 @@ func parseSeconds(secondsStr string) (int, error) {
 
 func (o *YouTube) GrabComments(videoId string) (ret []string, err error) {
 	if err = o.initService(); err != nil {
-		return
+		return ret, err
 	}
 
 	call := o.service.CommentThreads.List([]string{"snippet", "replies"}).VideoId(videoId).TextFormat("plainText").MaxResults(100)
 	var response *youtube.CommentThreadListResponse
 	if response, err = call.Do(); err != nil {
 		log.Printf("Failed to fetch comments: %v", err)
-		return
+		return ret, err
 	}
 
 	for _, item := range response.Items {
@@ -521,17 +522,17 @@ func (o *YouTube) GrabComments(videoId string) (ret []string, err error) {
 			}
 		}
 	}
-	return
+	return ret, err
 }
 
 func (o *YouTube) GrabDurationForUrl(url string) (ret int, err error) {
 	if err = o.initService(); err != nil {
-		return
+		return ret, err
 	}
 
 	var videoId string
 	if videoId, err = o.extractAndValidateVideoId(url); err != nil {
-		return
+		return ret, err
 	}
 	return o.GrabDuration(videoId)
 }
@@ -540,7 +541,7 @@ func (o *YouTube) GrabDuration(videoId string) (ret int, err error) {
 	var videoResponse *youtube.VideoListResponse
 	if videoResponse, err = o.service.Videos.List([]string{"contentDetails"}).Id(videoId).Do(); err != nil {
 		err = fmt.Errorf("%s", fmt.Sprintf(i18n.T("youtube_error_getting_video_details"), err))
-		return
+		return ret, err
 	}
 
 	durationStr := videoResponse.Items[0].ContentDetails.Duration
@@ -556,13 +557,13 @@ func (o *YouTube) GrabDuration(videoId string) (ret int, err error) {
 
 	ret = hours*60 + minutes + seconds/60
 
-	return
+	return ret, err
 }
 
 func (o *YouTube) Grab(url string, options *Options) (ret *VideoInfo, err error) {
 	var videoId string
 	if videoId, err = o.extractAndValidateVideoId(url); err != nil {
-		return
+		return ret, err
 	}
 
 	ret = &VideoInfo{}
@@ -570,44 +571,43 @@ func (o *YouTube) Grab(url string, options *Options) (ret *VideoInfo, err error)
 	if options.Metadata {
 		if ret.Metadata, err = o.GrabMetadata(videoId); err != nil {
 			err = fmt.Errorf("%s", fmt.Sprintf(i18n.T("youtube_error_getting_metadata"), err))
-			return
+			return ret, err
 		}
 	}
 
 	if options.Duration {
 		if ret.Duration, err = o.GrabDuration(videoId); err != nil {
 			err = fmt.Errorf("%s", fmt.Sprintf(i18n.T("youtube_error_parsing_duration"), err))
-			return
+			return ret, err
 		}
-
 	}
 
 	if options.Comments {
 		if ret.Comments, err = o.GrabComments(videoId); err != nil {
 			err = fmt.Errorf("%s", fmt.Sprintf(i18n.T("youtube_error_getting_comments"), err))
-			return
+			return ret, err
 		}
 	}
 
 	if options.Transcript {
 		if ret.Transcript, err = o.GrabTranscript(videoId, "en"); err != nil {
-			return
+			return ret, err
 		}
 	}
 
 	if options.TranscriptWithTimestamps {
 		if ret.Transcript, err = o.GrabTranscriptWithTimestamps(videoId, "en"); err != nil {
-			return
+			return ret, err
 		}
 	}
 
-	return
+	return ret, err
 }
 
 // FetchPlaylistVideos fetches all videos from a YouTube playlist.
 func (o *YouTube) FetchPlaylistVideos(playlistID string) (ret []*VideoMeta, err error) {
 	if err = o.initService(); err != nil {
-		return
+		return ret, err
 	}
 
 	nextPageToken := ""
@@ -619,7 +619,7 @@ func (o *YouTube) FetchPlaylistVideos(playlistID string) (ret []*VideoMeta, err 
 
 		var response *youtube.PlaylistItemListResponse
 		if response, err = call.Do(); err != nil {
-			return
+			return ret, err
 		}
 
 		for _, item := range response.Items {
@@ -635,14 +635,14 @@ func (o *YouTube) FetchPlaylistVideos(playlistID string) (ret []*VideoMeta, err 
 
 		time.Sleep(1 * time.Second) // Pause to respect API rate limit
 	}
-	return
+	return ret, err
 }
 
 // SaveVideosToCSV saves the list of videos to a CSV file.
 func (o *YouTube) SaveVideosToCSV(filename string, videos []*VideoMeta) (err error) {
 	var file *os.File
 	if file, err = os.Create(filename); err != nil {
-		return
+		return err
 	}
 	defer file.Close()
 
@@ -651,17 +651,17 @@ func (o *YouTube) SaveVideosToCSV(filename string, videos []*VideoMeta) (err err
 
 	// Write headers
 	if err = writer.Write([]string{"VideoID", "Title"}); err != nil {
-		return
+		return err
 	}
 
 	// Write video data
 	for _, record := range videos {
 		if err = writer.Write([]string{record.Id, record.Title}); err != nil {
-			return
+			return err
 		}
 	}
 
-	return
+	return err
 }
 
 // FetchAndSavePlaylist fetches all videos in a playlist and saves them to a CSV file.
@@ -669,23 +669,23 @@ func (o *YouTube) FetchAndSavePlaylist(playlistID, filename string) (err error) 
 	var videos []*VideoMeta
 	if videos, err = o.FetchPlaylistVideos(playlistID); err != nil {
 		err = fmt.Errorf("%s", fmt.Sprintf(i18n.T("error_fetching_playlist_videos"), err))
-		return
+		return err
 	}
 
 	if err = o.SaveVideosToCSV(filename, videos); err != nil {
 		err = fmt.Errorf("%s", fmt.Sprintf(i18n.T("youtube_error_saving_csv"), err))
-		return
+		return err
 	}
 
 	fmt.Println("Playlist saved to", filename)
-	return
+	return err
 }
 
 func (o *YouTube) FetchAndPrintPlaylist(playlistID string) (err error) {
 	var videos []*VideoMeta
 	if videos, err = o.FetchPlaylistVideos(playlistID); err != nil {
 		err = fmt.Errorf("%s", fmt.Sprintf(i18n.T("error_fetching_playlist_videos"), err))
-		return
+		return err
 	}
 
 	fmt.Printf("Playlist: %s\n", playlistID)
@@ -693,12 +693,11 @@ func (o *YouTube) FetchAndPrintPlaylist(playlistID string) (err error) {
 	for _, video := range videos {
 		fmt.Printf("%s: %s\n", video.Id, video.Title)
 	}
-	return
+	return err
 }
 
 func (o *YouTube) normalizeFileName(name string) string {
 	return o.normalizeRegex.ReplaceAllString(name, "_")
-
 }
 
 // findVTTFilesWithFallback searches for VTT files, handling fallback scenarios
@@ -717,7 +716,6 @@ func (o *YouTube) findVTTFilesWithFallback(dir, requestedLanguage string) ([]str
 		}
 		return nil
 	})
-
 	if err != nil {
 		return nil, fmt.Errorf("%s", fmt.Sprintf(i18n.T("youtube_failed_walk_directory"), err))
 	}
@@ -788,7 +786,7 @@ type VideoMetadata struct {
 
 func (o *YouTube) GrabMetadata(videoId string) (metadata *VideoMetadata, err error) {
 	if err = o.initService(); err != nil {
-		return
+		return metadata, err
 	}
 
 	call := o.service.Videos.List([]string{"snippet", "statistics"}).Id(videoId)
@@ -817,7 +815,7 @@ func (o *YouTube) GrabMetadata(videoId string) (metadata *VideoMetadata, err err
 		ViewCount:    viewCount,
 		LikeCount:    likeCount,
 	}
-	return
+	return metadata, err
 }
 
 func (o *YouTube) GrabByFlags() (ret *VideoInfo, err error) {
@@ -836,5 +834,5 @@ func (o *YouTube) GrabByFlags() (ret *VideoInfo, err error) {
 
 	url := flag.Arg(0)
 	ret, err = o.Grab(url, options)
-	return
+	return ret, err
 }

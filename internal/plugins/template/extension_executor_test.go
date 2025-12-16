@@ -31,7 +31,7 @@ case "$1" in
         ;;
 esac`
 
-	if err := os.WriteFile(testScript, []byte(scriptContent), 0755); err != nil {
+	if err := os.WriteFile(testScript, []byte(scriptContent), 0o755); err != nil {
 		t.Fatalf("Failed to create test script: %v", err)
 	}
 
@@ -53,7 +53,7 @@ config:
   output:
     method: stdout`
 
-		if err := os.WriteFile(configPath, []byte(configContent), 0644); err != nil {
+		if err := os.WriteFile(configPath, []byte(configContent), 0o644); err != nil {
 			t.Fatalf("Failed to create config: %v", err)
 		}
 
@@ -89,7 +89,7 @@ config:
       cleanup: true
       path_from_stdout: true`
 
-		if err := os.WriteFile(configPath, []byte(configContent), 0644); err != nil {
+		if err := os.WriteFile(configPath, []byte(configContent), 0o644); err != nil {
 			t.Fatalf("Failed to create config: %v", err)
 		}
 
@@ -129,7 +129,7 @@ config:
   output:
     method: stdout`
 
-		if err := os.WriteFile(configPath, []byte(configContent), 0644); err != nil {
+		if err := os.WriteFile(configPath, []byte(configContent), 0o644); err != nil {
 			t.Fatalf("Failed to create config: %v", err)
 		}
 
@@ -179,7 +179,7 @@ case "$1" in
         ;;
 esac`
 
-	if err := os.WriteFile(testScript, []byte(scriptContent), 0755); err != nil {
+	if err := os.WriteFile(testScript, []byte(scriptContent), 0o755); err != nil {
 		t.Fatalf("Failed to create test script: %v", err)
 	}
 
@@ -207,7 +207,7 @@ config:
 			configContent.WriteString("\n      " + k + ": " + strings.TrimSpace(v.(string)))
 		}
 
-		if err := os.WriteFile(configPath, []byte(configContent.String()), 0644); err != nil {
+		if err := os.WriteFile(configPath, []byte(configContent.String()), 0o644); err != nil {
 			return err
 		}
 

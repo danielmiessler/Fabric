@@ -31,7 +31,7 @@ func TestDb_LoadEnvFile(t *testing.T) {
 	dir := t.TempDir()
 	db := NewDb(dir)
 	content := "KEY=VALUE\n"
-	err := os.WriteFile(db.EnvFilePath, []byte(content), 0644)
+	err := os.WriteFile(db.EnvFilePath, []byte(content), 0o644)
 	if err != nil {
 		t.Fatalf("failed to write .env file: %v", err)
 	}

@@ -173,12 +173,12 @@ func ApplyFileChanges(projectRoot string, changes []FileChange) error {
 
 		// Create directories if necessary
 		dir := filepath.Dir(absPath)
-		if err := os.MkdirAll(dir, 0755); err != nil {
+		if err := os.MkdirAll(dir, 0o755); err != nil {
 			return fmt.Errorf("failed to create directory %s for file change %d: %w", dir, i, err)
 		}
 
 		// Write the file
-		if err := os.WriteFile(absPath, []byte(change.Content), 0644); err != nil {
+		if err := os.WriteFile(absPath, []byte(change.Content), 0o644); err != nil {
 			return fmt.Errorf("failed to write file %s for file change %d: %w", absPath, i, err)
 		}
 

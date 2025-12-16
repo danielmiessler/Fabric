@@ -31,7 +31,7 @@ func handleTranscription(flags *Flags, registry *core.PluginRegistry) (message s
 		return "", fmt.Errorf("%s", i18n.T("transcription_model_required"))
 	}
 	if message, err = tr.TranscribeFile(context.Background(), flags.TranscribeFile, model, flags.SplitMediaFile); err != nil {
-		return
+		return message, err
 	}
-	return
+	return message, err
 }

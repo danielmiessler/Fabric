@@ -41,7 +41,7 @@ func NewOAuthStorage() (*OAuthStorage, error) {
 	configDir := filepath.Join(homeDir, ".config", "fabric")
 
 	// Ensure config directory exists
-	if err := os.MkdirAll(configDir, 0755); err != nil {
+	if err := os.MkdirAll(configDir, 0o755); err != nil {
 		return nil, fmt.Errorf("failed to create config directory: %w", err)
 	}
 
@@ -65,7 +65,7 @@ func (s *OAuthStorage) SaveToken(provider string, token *OAuthToken) error {
 
 	// Write to temporary file first for atomic operation
 	tempPath := tokenPath + ".tmp"
-	if err := os.WriteFile(tempPath, data, 0600); err != nil {
+	if err := os.WriteFile(tempPath, data, 0o600); err != nil {
 		return fmt.Errorf("failed to write token file: %w", err)
 	}
 

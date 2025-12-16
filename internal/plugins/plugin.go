@@ -7,8 +7,10 @@ import (
 	"strings"
 )
 
-const AnswerReset = "reset"
-const SettingTypeBool = "bool"
+const (
+	AnswerReset     = "reset"
+	SettingTypeBool = "bool"
+)
 
 type Plugin interface {
 	GetName() string
@@ -38,13 +40,13 @@ func (o *PluginBase) GetSetupDescription() (ret string) {
 	if ret = o.SetupDescription; ret == "" {
 		ret = o.GetName()
 	}
-	return
+	return ret
 }
 
 func (o *PluginBase) AddSetting(name string, required bool) (ret *Setting) {
 	ret = NewSetting(fmt.Sprintf("%v%v", o.EnvNamePrefix, BuildEnvVariable(name)), required)
 	o.Settings = append(o.Settings, ret)
-	return
+	return ret
 }
 
 func (o *PluginBase) AddSetupQuestion(name string, required bool) (ret *SetupQuestion) {
@@ -58,7 +60,7 @@ func (o *PluginBase) AddSetupQuestionCustom(name string, required bool, question
 		ret.Question = fmt.Sprintf("Enter your %v %v", o.Name, strings.ToUpper(name))
 	}
 	o.SetupQuestions = append(o.SetupQuestions, ret)
-	return
+	return ret
 }
 
 func (o *PluginBase) AddSetupQuestionBool(name string, required bool) (ret *SetupQuestion) {
@@ -73,23 +75,23 @@ func (o *PluginBase) AddSetupQuestionCustomBool(name string, required bool, ques
 		ret.Question = fmt.Sprintf("Enable %v %v (true/false)", o.Name, strings.ToUpper(name))
 	}
 	o.SetupQuestions = append(o.SetupQuestions, ret)
-	return
+	return ret
 }
 
 func (o *PluginBase) Configure() (err error) {
 	if err = o.Settings.Configure(); err != nil {
-		return
+		return err
 	}
 
 	if o.ConfigureCustom != nil {
 		err = o.ConfigureCustom()
 	}
-	return
+	return err
 }
 
 func (o *PluginBase) Setup() (err error) {
 	if err = o.Ask(o.Name); err != nil {
-		return
+		return err
 	}
 
 	// After Setup, run ConfigureCustom if present, but skip re-validation
@@ -97,14 +99,14 @@ func (o *PluginBase) Setup() (err error) {
 	if o.ConfigureCustom != nil {
 		err = o.ConfigureCustom()
 	}
-	return
+	return err
 }
 
 func (o *PluginBase) SetupOrSkip() (err error) {
 	if err = o.Setup(); err != nil {
 		fmt.Printf("[%v] skipped\n", o.GetName())
 	}
-	return
+	return err
 }
 
 func (o *PluginBase) SetupFillEnvFileContent(fileEnvFileContent *bytes.Buffer) {
@@ -160,7 +162,7 @@ func (o *Setting) FillEnvFileContent(buffer *bytes.Buffer) {
 
 func ParseBoolElseFalse(val string) (ret bool) {
 	ret, _ = ParseBool(val)
-	return
+	return ret
 }
 
 func ParseBool(val string) (bool, error) {
@@ -209,7 +211,7 @@ func (o *SetupQuestion) Ask(label string) (err error) {
 		answer = ""
 	}
 	err = o.OnAnswerWithReset(answer, isReset)
-	return
+	return err
 }
 
 func (o *SetupQuestion) OnAnswer(answer string) (err error) {
@@ -232,7 +234,7 @@ func (o *SetupQuestion) OnAnswerWithReset(answer string, isReset bool) (err erro
 	}
 	if o.EnvVariable != "" {
 		if err = os.Setenv(o.EnvVariable, o.Value); err != nil {
-			return
+			return err
 		}
 	}
 	// Skip validation when explicitly resetting a value - the user intentionally
@@ -241,14 +243,14 @@ func (o *SetupQuestion) OnAnswerWithReset(answer string, isReset bool) (err erro
 		return nil
 	}
 	err = o.IsValidErr()
-	return
+	return err
 }
 
 func (o *Setting) IsValidErr() (err error) {
 	if !o.IsValid() {
 		err = fmt.Errorf("%v=%v, is not valid", o.EnvVariable, o.Value)
 	}
-	return
+	return err
 }
 
 func (o *Setting) IsDefined() bool {
@@ -276,7 +278,7 @@ func (o Settings) IsConfigured() (ret bool) {
 			break
 		}
 	}
-	return
+	return ret
 }
 
 func (o Settings) Configure() (err error) {
@@ -285,7 +287,7 @@ func (o Settings) Configure() (err error) {
 			break
 		}
 	}
-	return
+	return err
 }
 
 func (o Settings) FillEnvFileContent(buffer *bytes.Buffer) {
@@ -304,7 +306,7 @@ func (o SetupQuestions) Ask(label string) (err error) {
 			break
 		}
 	}
-	return
+	return err
 }
 
 func BuildEnvVariablePrefix(name string) (ret string) {
@@ -312,7 +314,7 @@ func BuildEnvVariablePrefix(name string) (ret string) {
 	if ret != "" {
 		ret += "_"
 	}
-	return
+	return ret
 }
 
 func BuildEnvVariable(name string) string {

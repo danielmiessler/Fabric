@@ -165,7 +165,6 @@ func (c *Client) buildPRWithCommits(ctx context.Context, ghPR *github.PullReques
 
 // convertGitHubPR transforms GitHub API data into our internal PR struct (pure function)
 func (c *Client) convertGitHubPR(ghPR *github.PullRequest, commits []*github.RepositoryCommit) *PR {
-
 	result := &PR{
 		Number:  *ghPR.Number,
 		Title:   getString(ghPR.Title),

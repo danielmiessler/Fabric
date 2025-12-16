@@ -63,7 +63,7 @@ func FetchFilesFromRepo(opts FetchOptions) error {
 	}
 
 	// Ensure destination directory exists
-	if err := os.MkdirAll(opts.DestDir, 0755); err != nil {
+	if err := os.MkdirAll(opts.DestDir, 0o755); err != nil {
 		return fmt.Errorf("failed to create destination directory: %w", err)
 	}
 
@@ -87,7 +87,7 @@ func FetchFilesFromRepo(opts FetchOptions) error {
 		localPath := filepath.Join(opts.DestDir, relativePath)
 
 		// Ensure directory structure exists
-		if err := os.MkdirAll(filepath.Dir(localPath), 0755); err != nil {
+		if err := os.MkdirAll(filepath.Dir(localPath), 0o755); err != nil {
 			return err
 		}
 

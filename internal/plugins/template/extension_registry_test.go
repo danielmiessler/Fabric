@@ -16,7 +16,7 @@ func TestRegistryPersistence(t *testing.T) {
 	// Create test executable
 	execPath := filepath.Join(tmpDir, "test-exec.sh")
 	execContent := []byte("#!/bin/bash\necho \"test\"")
-	err = os.WriteFile(execPath, execContent, 0755)
+	err = os.WriteFile(execPath, execContent, 0o755)
 	if err != nil {
 		t.Fatalf("Failed to create test executable: %v", err)
 	}
@@ -31,7 +31,7 @@ operations:
     cmd_template: "{{executable}} {{operation}}"`
 
 	configPath := filepath.Join(tmpDir, "test-extension.yaml")
-	err = os.WriteFile(configPath, []byte(configContent), 0644)
+	err = os.WriteFile(configPath, []byte(configContent), 0o644)
 	if err != nil {
 		t.Fatalf("Failed to create test config: %v", err)
 	}
@@ -62,7 +62,7 @@ operations:
 
 		// Modify executable after registration
 		modifiedExecContent := []byte("#!/bin/bash\necho \"modified\"")
-		err := os.WriteFile(execPath, modifiedExecContent, 0755)
+		err := os.WriteFile(execPath, modifiedExecContent, 0o755)
 		if err != nil {
 			t.Fatalf("Failed to modify executable: %v", err)
 		}

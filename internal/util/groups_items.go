@@ -9,11 +9,12 @@ import (
 )
 
 func NewGroupsItemsSelector[I any](selectionLabel string,
-	getItemLabel func(I) string) *GroupsItemsSelector[I] {
-
-	return &GroupsItemsSelector[I]{SelectionLabel: selectionLabel,
-		GetItemKey:  getItemLabel,
-		GroupsItems: make([]*GroupItems[I], 0),
+	getItemLabel func(I) string,
+) *GroupsItemsSelector[I] {
+	return &GroupsItemsSelector[I]{
+		SelectionLabel: selectionLabel,
+		GetItemKey:     getItemLabel,
+		GroupsItems:    make([]*GroupItems[I], 0),
 	}
 }
 
@@ -28,7 +29,7 @@ func (o *GroupItems[I]) Count() int {
 
 func (o *GroupItems[I]) ContainsItemBy(predicate func(item I) bool) (ret bool) {
 	ret = lo.ContainsBy(o.Items, predicate)
-	return
+	return ret
 }
 
 type GroupsItemsSelector[I any] struct {
@@ -100,7 +101,7 @@ func (o *GroupsItemsSelector[I]) GetGroupAndItemByItemNumber(number int) (group 
 	if !found {
 		err = fmt.Errorf("number %d is out of range", number)
 	}
-	return
+	return group, item, err
 }
 
 func (o *GroupsItemsSelector[I]) Print(shellCompleteList bool) {
@@ -137,7 +138,7 @@ func (o *GroupsItemsSelector[I]) HasGroup(group string) (ret bool) {
 			break
 		}
 	}
-	return
+	return ret
 }
 
 func (o *GroupsItemsSelector[I]) FindGroupsByItemFirst(item I) (ret string) {
@@ -152,7 +153,7 @@ func (o *GroupsItemsSelector[I]) FindGroupsByItemFirst(item I) (ret string) {
 			break
 		}
 	}
-	return
+	return ret
 }
 
 func (o *GroupsItemsSelector[I]) FindGroupsByItem(item I) (groups []string) {
@@ -166,7 +167,7 @@ func (o *GroupsItemsSelector[I]) FindGroupsByItem(item I) (groups []string) {
 			groups = append(groups, groupItems.Group)
 		}
 	}
-	return
+	return groups
 }
 
 func ReturnItem(item string) string {

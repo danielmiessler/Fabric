@@ -52,7 +52,6 @@ func TestClientListModels(t *testing.T) {
 func TestClient_ListModels_ReturnsCorrectModels(t *testing.T) {
 	client := NewClient()
 	models, err := client.ListModels()
-
 	if err != nil {
 		t.Fatalf("Expected no error, got %v", err)
 	}

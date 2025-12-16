@@ -21,7 +21,7 @@ func NewClient() (ret *Client) {
 }
 
 // NewClientCompatible creates a new LM Studio client with custom configuration.
-func NewClientCompatible(vendorName string, defaultBaseUrl string, configureCustom func() error) (ret *Client) {
+func NewClientCompatible(vendorName, defaultBaseUrl string, configureCustom func() error) (ret *Client) {
 	ret = &Client{}
 
 	if configureCustom == nil {
@@ -34,7 +34,7 @@ func NewClientCompatible(vendorName string, defaultBaseUrl string, configureCust
 	}
 	ret.ApiUrl = ret.AddSetupQuestionCustom("API URL", true,
 		fmt.Sprintf("Enter your %v URL (as a reminder, it is usually %v')", vendorName, defaultBaseUrl))
-	return
+	return ret
 }
 
 // Client represents the LM Studio client.
@@ -99,13 +99,13 @@ func (c *Client) SendStream(msgs []*chat.ChatCompletionMessage, opts *domain.Cha
 	var jsonPayload []byte
 	if jsonPayload, err = json.Marshal(payload); err != nil {
 		err = fmt.Errorf("failed to marshal payload: %w", err)
-		return
+		return err
 	}
 
 	var req *http.Request
 	if req, err = http.NewRequest("POST", url, bytes.NewBuffer(jsonPayload)); err != nil {
 		err = fmt.Errorf("failed to create request: %w", err)
-		return
+		return err
 	}
 
 	req.Header.Set("Content-Type", "application/json")
@@ -113,13 +113,13 @@ func (c *Client) SendStream(msgs []*chat.ChatCompletionMessage, opts *domain.Cha
 	var resp *http.Response
 	if resp, err = c.HttpClient.Do(req); err != nil {
 		err = fmt.Errorf("failed to send request: %w", err)
-		return
+		return err
 	}
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
 		err = fmt.Errorf("unexpected status code: %d", resp.StatusCode)
-		return
+		return err
 	}
 
 	defer close(channel)
@@ -133,7 +133,7 @@ func (c *Client) SendStream(msgs []*chat.ChatCompletionMessage, opts *domain.Cha
 				break
 			}
 			err = fmt.Errorf("error reading response: %w", err)
-			return
+			return err
 		}
 
 		if len(line) == 0 {
@@ -170,7 +170,7 @@ func (c *Client) SendStream(msgs []*chat.ChatCompletionMessage, opts *domain.Cha
 		}
 	}
 
-	return
+	return err
 }
 
 func (c *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions) (content string, err error) {
@@ -185,13 +185,13 @@ func (c *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, o
 	var jsonPayload []byte
 	if jsonPayload, err = json.Marshal(payload); err != nil {
 		err = fmt.Errorf("failed to marshal payload: %w", err)
-		return
+		return content, err
 	}
 
 	var req *http.Request
 	if req, err = http.NewRequestWithContext(ctx, "POST", url, bytes.NewBuffer(jsonPayload)); err != nil {
 		err = fmt.Errorf("failed to create request: %w", err)
-		return
+		return content, err
 	}
 
 	req.Header.Set("Content-Type", "application/json")
@@ -199,40 +199,40 @@ func (c *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, o
 	var resp *http.Response
 	if resp, err = c.HttpClient.Do(req); err != nil {
 		err = fmt.Errorf("failed to send request: %w", err)
-		return
+		return content, err
 	}
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
 		err = fmt.Errorf("unexpected status code: %d", resp.StatusCode)
-		return
+		return content, err
 	}
 
 	var result map[string]any
 	if err = json.NewDecoder(resp.Body).Decode(&result); err != nil {
 		err = fmt.Errorf("failed to decode response: %w", err)
-		return
+		return content, err
 	}
 
 	var choices []any
 	var ok bool
 	if choices, ok = result["choices"].([]any); !ok || len(choices) == 0 {
 		err = fmt.Errorf("invalid response format: missing or empty choices")
-		return
+		return content, err
 	}
 
 	var message map[string]any
 	if message, ok = choices[0].(map[string]any)["message"].(map[string]any); !ok {
 		err = fmt.Errorf("invalid response format: missing message in first choice")
-		return
+		return content, err
 	}
 
 	if content, ok = message["content"].(string); !ok {
 		err = fmt.Errorf("invalid response format: missing or non-string content in message")
-		return
+		return content, err
 	}
 
-	return
+	return content, err
 }
 
 func (c *Client) Complete(ctx context.Context, prompt string, opts *domain.ChatOptions) (text string, err error) {
@@ -247,13 +247,13 @@ func (c *Client) Complete(ctx context.Context, prompt string, opts *domain.ChatO
 	var jsonPayload []byte
 	if jsonPayload, err = json.Marshal(payload); err != nil {
 		err = fmt.Errorf("failed to marshal payload: %w", err)
-		return
+		return text, err
 	}
 
 	var req *http.Request
 	if req, err = http.NewRequestWithContext(ctx, "POST", url, bytes.NewBuffer(jsonPayload)); err != nil {
 		err = fmt.Errorf("failed to create request: %w", err)
-		return
+		return text, err
 	}
 
 	req.Header.Set("Content-Type", "application/json")
@@ -261,34 +261,34 @@ func (c *Client) Complete(ctx context.Context, prompt string, opts *domain.ChatO
 	var resp *http.Response
 	if resp, err = c.HttpClient.Do(req); err != nil {
 		err = fmt.Errorf("failed to send request: %w", err)
-		return
+		return text, err
 	}
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
 		err = fmt.Errorf("unexpected status code: %d", resp.StatusCode)
-		return
+		return text, err
 	}
 
 	var result map[string]any
 	if err = json.NewDecoder(resp.Body).Decode(&result); err != nil {
 		err = fmt.Errorf("failed to decode response: %w", err)
-		return
+		return text, err
 	}
 
 	var choices []any
 	var ok bool
 	if choices, ok = result["choices"].([]any); !ok || len(choices) == 0 {
 		err = fmt.Errorf("invalid response format: missing or empty choices")
-		return
+		return text, err
 	}
 
 	if text, ok = choices[0].(map[string]any)["text"].(string); !ok {
 		err = fmt.Errorf("invalid response format: missing or non-string text in first choice")
-		return
+		return text, err
 	}
 
-	return
+	return text, err
 }
 
 func (c *Client) GetEmbeddings(ctx context.Context, input string, opts *domain.ChatOptions) (embeddings []float64, err error) {
@@ -303,13 +303,13 @@ func (c *Client) GetEmbeddings(ctx context.Context, input string, opts *domain.C
 	var jsonPayload []byte
 	if jsonPayload, err = json.Marshal(payload); err != nil {
 		err = fmt.Errorf("failed to marshal payload: %w", err)
-		return
+		return embeddings, err
 	}
 
 	var req *http.Request
 	if req, err = http.NewRequestWithContext(ctx, "POST", url, bytes.NewBuffer(jsonPayload)); err != nil {
 		err = fmt.Errorf("failed to create request: %w", err)
-		return
+		return embeddings, err
 	}
 
 	req.Header.Set("Content-Type", "application/json")
@@ -317,13 +317,13 @@ func (c *Client) GetEmbeddings(ctx context.Context, input string, opts *domain.C
 	var resp *http.Response
 	if resp, err = c.HttpClient.Do(req); err != nil {
 		err = fmt.Errorf("failed to send request: %w", err)
-		return
+		return embeddings, err
 	}
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
 		err = fmt.Errorf("unexpected status code: %d", resp.StatusCode)
-		return
+		return embeddings, err
 	}
 
 	var result struct {
@@ -334,16 +334,16 @@ func (c *Client) GetEmbeddings(ctx context.Context, input string, opts *domain.C
 
 	if err = json.NewDecoder(resp.Body).Decode(&result); err != nil {
 		err = fmt.Errorf("failed to decode response: %w", err)
-		return
+		return embeddings, err
 	}
 
 	if len(result.Data) == 0 {
 		err = fmt.Errorf("no embeddings returned")
-		return
+		return embeddings, err
 	}
 
 	embeddings = result.Data[0].Embedding
-	return
+	return embeddings, err
 }
 
 func (c *Client) NeedsRawMode(modelName string) bool {

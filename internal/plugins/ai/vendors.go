@@ -52,14 +52,14 @@ func (o *VendorsManager) GetModels() (ret *VendorsModels, err error) {
 		err = o.readModels()
 	}
 	ret = o.Models
-	return
+	return ret, err
 }
 
 func (o *VendorsManager) Configure() (err error) {
 	for _, vendor := range o.Vendors {
 		_ = vendor.Configure()
 	}
-	return
+	return err
 }
 
 func (o *VendorsManager) HasVendors() bool {
@@ -76,7 +76,7 @@ func (o *VendorsManager) readModels() (err error) {
 	if len(o.Vendors) == 0 {
 
 		err = fmt.Errorf("no AI vendors configured to read models from. Please configure at least one AI vendor")
-		return
+		return err
 	}
 
 	o.Models = NewVendorsModels()
@@ -108,12 +108,12 @@ func (o *VendorsManager) readModels() (err error) {
 			o.Models.AddGroupItems(result.vendorName, result.models...)
 		}
 	}
-	return
+	return err
 }
 
 func (o *VendorsManager) fetchVendorModels(
-	ctx context.Context, wg *sync.WaitGroup, vendor Vendor, resultsChan chan<- modelResult) {
-
+	ctx context.Context, wg *sync.WaitGroup, vendor Vendor, resultsChan chan<- modelResult,
+) {
 	defer wg.Done()
 
 	models, err := vendor.ListModels()
@@ -132,17 +132,17 @@ func (o *VendorsManager) Setup() (ret map[string]Vendor, err error) {
 		fmt.Println()
 		o.setupVendorTo(vendor, ret)
 	}
-	return
+	return ret, err
 }
 
 func (o *VendorsManager) SetupVendor(vendorName string, configuredVendors map[string]Vendor) (err error) {
 	vendor := o.FindByName(vendorName)
 	if vendor == nil {
 		err = fmt.Errorf("vendor %s not found", vendorName)
-		return
+		return err
 	}
 	o.setupVendorTo(vendor, configuredVendors)
-	return
+	return err
 }
 
 func (o *VendorsManager) setupVendorTo(vendor Vendor, configuredVendors map[string]Vendor) {

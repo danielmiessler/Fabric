@@ -22,17 +22,17 @@ func NewClient() (ret *Client) {
 	return NewClientCompatibleWithResponses("OpenAI", "https://api.openai.com/v1", true, nil)
 }
 
-func NewClientCompatible(vendorName string, defaultBaseUrl string, configureCustom func() error) (ret *Client) {
+func NewClientCompatible(vendorName, defaultBaseUrl string, configureCustom func() error) (ret *Client) {
 	ret = NewClientCompatibleNoSetupQuestions(vendorName, configureCustom)
 
 	ret.ApiKey = ret.AddSetupQuestion("API Key", true)
 	ret.ApiBaseURL = ret.AddSetupQuestion("API Base URL", false)
 	ret.ApiBaseURL.Value = defaultBaseUrl
 
-	return
+	return ret
 }
 
-func NewClientCompatibleWithResponses(vendorName string, defaultBaseUrl string, implementsResponses bool, configureCustom func() error) (ret *Client) {
+func NewClientCompatibleWithResponses(vendorName, defaultBaseUrl string, implementsResponses bool, configureCustom func() error) (ret *Client) {
 	ret = NewClientCompatibleNoSetupQuestions(vendorName, configureCustom)
 
 	ret.ApiKey = ret.AddSetupQuestion("API Key", true)
@@ -40,7 +40,7 @@ func NewClientCompatibleWithResponses(vendorName string, defaultBaseUrl string, 
 	ret.ApiBaseURL.Value = defaultBaseUrl
 	ret.ImplementsResponses = implementsResponses
 
-	return
+	return ret
 }
 
 func NewClientCompatibleNoSetupQuestions(vendorName string, configureCustom func() error) (ret *Client) {
@@ -56,7 +56,7 @@ func NewClientCompatibleNoSetupQuestions(vendorName string, configureCustom func
 		ConfigureCustom: configureCustom,
 	}
 
-	return
+	return ret
 }
 
 type Client struct {
@@ -79,7 +79,7 @@ func (o *Client) configure() (ret error) {
 	}
 	client := openai.NewClient(opts...)
 	o.ApiClient = &client
-	return
+	return ret
 }
 
 func (o *Client) ListModels() (ret []string, err error) {
@@ -153,16 +153,16 @@ func (o *Client) sendResponses(ctx context.Context, msgs []*chat.ChatCompletionM
 
 	var resp *responses.Response
 	if resp, err = o.ApiClient.Responses.New(ctx, req); err != nil {
-		return
+		return ret, err
 	}
 
 	// Extract and save images if requested
 	if err = o.extractAndSaveImages(resp, opts); err != nil {
-		return
+		return ret, err
 	}
 
 	ret = o.extractText(resp)
-	return
+	return ret, err
 }
 
 // supportsResponsesAPI determines if the provider supports the new Responses API
@@ -208,7 +208,6 @@ func parseReasoningEffort(level domain.ThinkingLevel) (shared.ReasoningEffort, b
 func (o *Client) buildResponseParams(
 	inputMsgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions,
 ) (ret responses.ResponseNewParams) {
-
 	items := make([]responses.ResponseInputItemUnionParam, len(inputMsgs))
 	for i, msgPtr := range inputMsgs {
 		msg := *msgPtr
@@ -278,7 +277,7 @@ func (o *Client) buildResponseParams(
 			ret.SetExtraFields(extraFields)
 		}
 	}
-	return
+	return ret
 }
 
 func convertMessage(msg chat.ChatCompletionMessage) responses.ResponseInputItemUnionParam {
@@ -342,5 +341,5 @@ func (o *Client) extractText(resp *responses.Response) (ret string) {
 		ret += "\n\n## Sources\n\n" + strings.Join(citations, "\n")
 	}
 
-	return
+	return ret
 }

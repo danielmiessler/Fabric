@@ -23,6 +23,7 @@ func (v *stubVendor) ListModels() ([]string, error)         { return nil, nil }
 func (v *stubVendor) SendStream([]*chat.ChatCompletionMessage, *domain.ChatOptions, chan string) error {
 	return nil
 }
+
 func (v *stubVendor) Send(context.Context, []*chat.ChatCompletionMessage, *domain.ChatOptions) (string, error) {
 	return "", nil
 }

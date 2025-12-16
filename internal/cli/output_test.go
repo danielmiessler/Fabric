@@ -16,7 +16,6 @@ func TestCopyToClipboard(t *testing.T) {
 }
 
 func TestCreateOutputFile(t *testing.T) {
-
 	fileName := "test_output.txt"
 	message := "test message"
 	err := CreateOutputFile(message, fileName)

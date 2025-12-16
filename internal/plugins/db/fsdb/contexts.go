@@ -10,20 +10,20 @@ type ContextsEntity struct {
 func (o *ContextsEntity) Get(name string) (ret *Context, err error) {
 	var content []byte
 	if content, err = o.Load(name); err != nil {
-		return
+		return ret, err
 	}
 
 	ret = &Context{Name: name, Content: string(content)}
-	return
+	return ret, err
 }
 
 func (o *ContextsEntity) PrintContext(name string) (err error) {
 	var context *Context
 	if context, err = o.Get(name); err != nil {
-		return
+		return err
 	}
 	fmt.Println(context.Content)
-	return
+	return err
 }
 
 type Context struct {

@@ -19,8 +19,8 @@ func HtmlReadability(html string) (ret string, err error) {
 	buf := bytes.NewBufferString(html)
 	var article readability.Article
 	if article, err = readability.FromReader(buf, nil); err != nil {
-		return
+		return ret, err
 	}
 	ret = article.TextContent
-	return
+	return ret, err
 }

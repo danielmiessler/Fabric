@@ -29,7 +29,7 @@ func NeeDefaults(getVendorsModels func() (*ai.VendorsModels, error)) (ret *Defau
 	ret.ModelContextLength = ret.AddSetupQuestionCustom("Model Context Length", false,
 		"Enter model context length")
 
-	return
+	return ret
 }
 
 type Defaults struct {
@@ -44,34 +44,34 @@ type Defaults struct {
 func (o *Defaults) Setup() (err error) {
 	var vendorsModels *ai.VendorsModels
 	if vendorsModels, err = o.GetVendorsModels(); err != nil {
-		return
+		return err
 	}
 
 	vendorsModels.Print(false)
 
 	if err = o.Ask(o.Name); err != nil {
-		return
+		return err
 	}
 
 	index, parseErr := strconv.Atoi(o.Model.Value)
 	if parseErr == nil {
 		if o.Vendor.Value, o.Model.Value, err = vendorsModels.GetGroupAndItemByItemNumber(index); err != nil {
-			return
+			return err
 		}
 	} else {
 		o.Vendor.Value = vendorsModels.FindGroupsByItemFirst(o.Model.Value)
 	}
 
-	//verify
+	// verify
 	vendorNames := vendorsModels.FindGroupsByItem(o.Model.Value)
 	if len(vendorNames) == 0 {
 		err = errors.Errorf("You need to chose an available default model.")
-		return
+		return err
 	}
 
 	fmt.Println()
 	o.Vendor.Print()
 	o.Model.Print()
 
-	return
+	return err
 }

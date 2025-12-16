@@ -39,7 +39,7 @@ func NewClient() (ret *Client) {
 		"Specify HTTP timeout duration for Ollama requests (e.g. 30s, 5m, 1h)")
 	ret.ApiHttpTimeout.Value = "20m"
 
-	return
+	return ret
 }
 
 type Client struct {
@@ -72,7 +72,7 @@ func (o *Client) IsConfigured() bool {
 func (o *Client) configure() (err error) {
 	if o.apiUrl, err = url.Parse(o.ApiUrl.Value); err != nil {
 		fmt.Printf("cannot parse URL: %s: %v\n", o.ApiUrl.Value, err)
-		return
+		return err
 	}
 
 	timeout := 20 * time.Minute // Default timeout
@@ -89,7 +89,7 @@ func (o *Client) configure() (err error) {
 	o.httpClient = &http.Client{Timeout: timeout, Transport: &transport_sec{underlyingTransport: http.DefaultTransport, ApiKey: o.ApiKey}}
 	o.client = ollamaapi.NewClient(o.apiUrl, o.httpClient)
 
-	return
+	return err
 }
 
 func (o *Client) ListModels() (ret []string, err error) {
@@ -97,13 +97,13 @@ func (o *Client) ListModels() (ret []string, err error) {
 
 	var listResp *ollamaapi.ListResponse
 	if listResp, err = o.client.List(ctx); err != nil {
-		return
+		return ret, err
 	}
 
 	for _, mod := range listResp.Models {
 		ret = append(ret, mod.Model)
 	}
-	return
+	return ret, err
 }
 
 func (o *Client) SendStream(msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan string) (err error) {
@@ -111,20 +111,20 @@ func (o *Client) SendStream(msgs []*chat.ChatCompletionMessage, opts *domain.Cha
 
 	var req ollamaapi.ChatRequest
 	if req, err = o.createChatRequest(ctx, msgs, opts); err != nil {
-		return
+		return err
 	}
 
 	respFunc := func(resp ollamaapi.ChatResponse) (streamErr error) {
 		channel <- resp.Message.Content
-		return
+		return streamErr
 	}
 
 	if err = o.client.Chat(ctx, &req, respFunc); err != nil {
-		return
+		return err
 	}
 
 	close(channel)
-	return
+	return err
 }
 
 func (o *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions) (ret string, err error) {
@@ -132,26 +132,26 @@ func (o *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, o
 
 	var req ollamaapi.ChatRequest
 	if req, err = o.createChatRequest(ctx, msgs, opts); err != nil {
-		return
+		return ret, err
 	}
 	req.Stream = &bf
 
 	respFunc := func(resp ollamaapi.ChatResponse) (streamErr error) {
 		ret = resp.Message.Content
-		return
+		return streamErr
 	}
 
 	if err = o.client.Chat(ctx, &req, respFunc); err != nil {
 		debuglog.Debug(debuglog.Basic, "Ollama chat request failed: %v\n", err)
 	}
-	return
+	return ret, err
 }
 
 func (o *Client) createChatRequest(ctx context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions) (ret ollamaapi.ChatRequest, err error) {
 	messages := make([]ollamaapi.Message, len(msgs))
 	for i, message := range msgs {
 		if messages[i], err = o.convertMessage(ctx, message); err != nil {
-			return
+			return ret, err
 		}
 	}
 
@@ -171,14 +171,14 @@ func (o *Client) createChatRequest(ctx context.Context, msgs []*chat.ChatComplet
 		Messages: messages,
 		Options:  options,
 	}
-	return
+	return ret, err
 }
 
 func (o *Client) convertMessage(ctx context.Context, message *chat.ChatCompletionMessage) (ret ollamaapi.Message, err error) {
 	ret = ollamaapi.Message{Role: message.Role, Content: message.Content}
 
 	if len(message.MultiContent) == 0 {
-		return
+		return ret, err
 	}
 
 	// Pre-allocate with capacity hint
@@ -200,14 +200,14 @@ func (o *Client) convertMessage(ctx context.Context, message *chat.ChatCompletio
 			}
 			var img []byte
 			if img, err = o.loadImageBytes(ctx, part.ImageURL.URL); err != nil {
-				return
+				return ret, err
 			}
 			ret.Images = append(ret.Images, ollamaapi.ImageData(img))
 		}
 	}
 
 	ret.Content = strings.Join(textParts, "\n")
-	return
+	return ret, err
 }
 
 func (o *Client) loadImageBytes(ctx context.Context, imageURL string) (ret []byte, err error) {
@@ -216,33 +216,33 @@ func (o *Client) loadImageBytes(ctx context.Context, imageURL string) (ret []byt
 		parts := strings.SplitN(imageURL, ",", 2)
 		if len(parts) != 2 {
 			err = fmt.Errorf("invalid data URL format")
-			return
+			return ret, err
 		}
 		if ret, err = base64.StdEncoding.DecodeString(parts[1]); err != nil {
 			err = fmt.Errorf("failed to decode data URL: %w", err)
 		}
-		return
+		return ret, err
 	}
 
 	// Handle HTTP URLs with context
 	var req *http.Request
 	if req, err = http.NewRequestWithContext(ctx, http.MethodGet, imageURL, nil); err != nil {
-		return
+		return ret, err
 	}
 
 	var resp *http.Response
 	if resp, err = o.httpClient.Do(req); err != nil {
-		return
+		return ret, err
 	}
 	defer resp.Body.Close()
 
 	if resp.StatusCode >= http.StatusBadRequest {
 		err = fmt.Errorf("failed to fetch image %s: %s", imageURL, resp.Status)
-		return
+		return ret, err
 	}
 
 	ret, err = io.ReadAll(resp.Body)
-	return
+	return ret, err
 }
 
 func (o *Client) NeedsRawMode(modelName string) bool {

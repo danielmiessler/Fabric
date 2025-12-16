@@ -17,8 +17,10 @@ import (
 )
 
 // ImageGenerationResponseType is the type used for image generation calls in responses
-const ImageGenerationResponseType = "image_generation_call"
-const ImageGenerationToolType = "image_generation"
+const (
+	ImageGenerationResponseType = "image_generation_call"
+	ImageGenerationToolType     = "image_generation"
+)
 
 // ImageGenerationSupportedModels lists all models that support image generation
 var ImageGenerationSupportedModels = []string{
@@ -122,13 +124,13 @@ func (o *Client) extractAndSaveImages(resp *responses.Response, opts *domain.Cha
 				// Ensure directory exists
 				dir := filepath.Dir(opts.ImageFile)
 				if dir != "." {
-					if err := os.MkdirAll(dir, 0755); err != nil {
+					if err := os.MkdirAll(dir, 0o755); err != nil {
 						return fmt.Errorf("failed to create directory %s: %w", dir, err)
 					}
 				}
 
 				// Save image to file
-				if err := os.WriteFile(opts.ImageFile, imageData, 0644); err != nil {
+				if err := os.WriteFile(opts.ImageFile, imageData, 0o644); err != nil {
 					return fmt.Errorf("failed to save image to %s: %w", opts.ImageFile, err)
 				}
 

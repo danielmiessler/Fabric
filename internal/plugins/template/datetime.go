@@ -16,7 +16,7 @@ type DateTimePlugin struct{}
 // Date: today (YYYY-MM-DD), full (Monday, January 2, 2006)
 // Period: startofweek, endofweek, startofmonth, endofmonth
 // Relative: rel:-1h, rel:-2d, rel:1w, rel:3m, rel:1y
-func (p *DateTimePlugin) Apply(operation string, value string) (string, error) {
+func (p *DateTimePlugin) Apply(operation, value string) (string, error) {
 	debugf("DateTime: operation=%q value=%q", operation, value)
 
 	now := time.Now()

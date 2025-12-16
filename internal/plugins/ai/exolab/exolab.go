@@ -20,7 +20,7 @@ func NewClient() (ret *Client) {
 	ret.ApiModels = ret.AddSetupQuestionCustom("models", true,
 		"Enter your deployed Exolab models (comma separated)")
 
-	return
+	return ret
 }
 
 type Client struct {
@@ -39,12 +39,12 @@ func (oi *Client) configure() (err error) {
 	}
 	client := openaiapi.NewClient(opts...)
 	oi.ApiClient = &client
-	return
+	return err
 }
 
 func (oi *Client) ListModels() (ret []string, err error) {
 	ret = oi.apiModels
-	return
+	return ret, err
 }
 
 func (oi *Client) NeedsRawMode(modelName string) bool {

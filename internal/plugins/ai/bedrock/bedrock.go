@@ -59,7 +59,7 @@ func NewClient() (ret *BedrockClient) {
 			},
 		}
 		ret.bedrockRegion = ret.PluginBase.AddSetupQuestion("AWS Region", true)
-		return
+		return ret
 	}
 
 	cfg.APIOptions = append(cfg.APIOptions, middleware.AddUserAgentKeyValue(userAgentKey, userAgentValue))
@@ -82,7 +82,7 @@ func NewClient() (ret *BedrockClient) {
 		ret.bedrockRegion.Value = cfg.Region
 	}
 
-	return
+	return ret
 }
 
 // isValidAWSRegion validates AWS region format
@@ -165,12 +165,13 @@ func (c *BedrockClient) SendStream(msgs []*chat.ChatCompletionMessage, opts *dom
 
 	messages := c.toMessages(msgs)
 
-	var converseInput = bedrockruntime.ConverseStreamInput{
+	converseInput := bedrockruntime.ConverseStreamInput{
 		ModelId:  aws.String(opts.Model),
 		Messages: messages,
 		InferenceConfig: &types.InferenceConfiguration{
 			Temperature: aws.Float32(float32(opts.Temperature)),
-			TopP:        aws.Float32(float32(opts.TopP))},
+			TopP:        aws.Float32(float32(opts.TopP)),
+		},
 	}
 
 	response, err := c.runtimeClient.ConverseStream(context.Background(), &converseInput)
@@ -209,10 +210,9 @@ func (c *BedrockClient) SendStream(msgs []*chat.ChatCompletionMessage, opts *dom
 
 // Send sends the messages the Bedrock Converse API
 func (c *BedrockClient) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions) (ret string, err error) {
-
 	messages := c.toMessages(msgs)
 
-	var converseInput = bedrockruntime.ConverseInput{
+	converseInput := bedrockruntime.ConverseInput{
 		ModelId:  aws.String(opts.Model),
 		Messages: messages,
 	}
@@ -270,5 +270,5 @@ func (c *BedrockClient) toMessages(inputMessages []*chat.ChatCompletionMessage) 
 
 	}
 
-	return
+	return messages
 }

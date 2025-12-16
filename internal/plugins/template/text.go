@@ -30,7 +30,7 @@ func toTitle(s string) string {
 }
 
 // Apply executes the requested text operation on the provided value
-func (p *TextPlugin) Apply(operation string, value string) (string, error) {
+func (p *TextPlugin) Apply(operation, value string) (string, error) {
 	debugf("TextPlugin: operation=%s value=%q", operation, value)
 
 	if value == "" {

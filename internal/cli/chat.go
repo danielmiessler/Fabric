@@ -37,13 +37,13 @@ func handleChatProcessing(currentFlags *Flags, registry *core.PluginRegistry, me
 	var chatter *core.Chatter
 	if chatter, err = registry.GetChatter(currentFlags.Model, currentFlags.ModelContextLength,
 		currentFlags.Vendor, currentFlags.Strategy, currentFlags.Stream, currentFlags.DryRun); err != nil {
-		return
+		return err
 	}
 
 	var session *fsdb.Session
 	var chatReq *domain.ChatRequest
 	if chatReq, err = currentFlags.BuildChatRequest(strings.Join(os.Args[1:], " ")); err != nil {
-		return
+		return err
 	}
 
 	if chatReq.Language == "" {
@@ -51,7 +51,7 @@ func handleChatProcessing(currentFlags *Flags, registry *core.PluginRegistry, me
 	}
 	var chatOptions *domain.ChatOptions
 	if chatOptions, err = currentFlags.BuildChatOptions(); err != nil {
-		return
+		return err
 	}
 
 	// Check if user is requesting audio output or using a TTS model
@@ -60,12 +60,12 @@ func handleChatProcessing(currentFlags *Flags, registry *core.PluginRegistry, me
 
 	if isTTSModel && !isAudioOutput {
 		err = fmt.Errorf("%s", fmt.Sprintf(i18n.T("tts_model_requires_audio_output"), currentFlags.Model))
-		return
+		return err
 	}
 
 	if isAudioOutput && !isTTSModel {
 		err = fmt.Errorf("%s", fmt.Sprintf(i18n.T("audio_output_file_specified_but_not_tts_model"), currentFlags.Output, currentFlags.Model))
-		return
+		return err
 	}
 
 	// For TTS models, check if output file already exists BEFORE processing
@@ -77,7 +77,7 @@ func handleChatProcessing(currentFlags *Flags, registry *core.PluginRegistry, me
 		}
 		if _, err = os.Stat(outputFile); err == nil {
 			err = fmt.Errorf("%s", fmt.Sprintf(i18n.T("file_already_exists_choose_different"), outputFile))
-			return
+			return err
 		}
 	}
 
@@ -88,7 +88,7 @@ func handleChatProcessing(currentFlags *Flags, registry *core.PluginRegistry, me
 	}
 
 	if session, err = chatter.Send(chatReq, chatOptions); err != nil {
-		return
+		return err
 	}
 
 	result := session.GetLastMessage().Content
@@ -106,7 +106,7 @@ func handleChatProcessing(currentFlags *Flags, registry *core.PluginRegistry, me
 	// if the copy flag is set, copy the message to the clipboard
 	if currentFlags.Copy {
 		if err = CopyToClipboard(result); err != nil {
-			return
+			return err
 		}
 	}
 
@@ -141,7 +141,7 @@ func handleChatProcessing(currentFlags *Flags, registry *core.PluginRegistry, me
 		}
 	}
 
-	return
+	return err
 }
 
 // sendNotification sends a desktop notification about command completion.

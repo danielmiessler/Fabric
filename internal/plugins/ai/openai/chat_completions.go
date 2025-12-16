@@ -20,12 +20,12 @@ func (o *Client) sendChatCompletions(ctx context.Context, msgs []*chat.ChatCompl
 
 	var resp *openai.ChatCompletion
 	if resp, err = o.ApiClient.Chat.Completions.New(ctx, req); err != nil {
-		return
+		return ret, err
 	}
 	if len(resp.Choices) > 0 {
 		ret = resp.Choices[0].Message.Content
 	}
-	return
+	return ret, err
 }
 
 // sendStreamChatCompletions sends a streaming request using the Chat Completions API
@@ -52,7 +52,6 @@ func (o *Client) sendStreamChatCompletions(
 func (o *Client) buildChatCompletionParams(
 	inputMsgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions,
 ) (ret openai.ChatCompletionNewParams) {
-
 	messages := make([]openai.ChatCompletionMessageParamUnion, len(inputMsgs))
 	for i, msgPtr := range inputMsgs {
 		msg := *msgPtr
@@ -88,7 +87,7 @@ func (o *Client) buildChatCompletionParams(
 	if eff, ok := parseReasoningEffort(opts.Thinking); ok {
 		ret.ReasoningEffort = eff
 	}
-	return
+	return ret
 }
 
 // convertChatMessage converts fabric chat message to OpenAI chat completion message

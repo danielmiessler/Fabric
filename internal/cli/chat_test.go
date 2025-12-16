@@ -122,7 +122,6 @@ func TestSendNotification_TitleGeneration(t *testing.T) {
 			// We're testing the title generation logic
 			// The actual notification command would echo the title
 			err := sendNotification(options, tt.patternName, "test message")
-
 			// The function should not error for valid inputs
 			if err != nil {
 				t.Errorf("Unexpected error: %v", err)

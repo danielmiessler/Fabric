@@ -85,7 +85,7 @@ func NewPluginRegistry(db *fsdb.Db) (ret *PluginRegistry, err error) {
 
 	var homedir string
 	if homedir, err = os.UserHomeDir(); err != nil {
-		return
+		return ret, err
 	}
 	ret.TemplateExtensions = template.NewExtensionManager(filepath.Join(homedir, ".config/fabric"))
 
@@ -125,7 +125,7 @@ func NewPluginRegistry(db *fsdb.Db) (ret *PluginRegistry, err error) {
 	ret.VendorsAll.AddVendors(vendors...)
 	_ = ret.Configure()
 
-	return
+	return ret, err
 }
 
 func (o *PluginRegistry) ListVendors(out io.Writer) error {
@@ -172,7 +172,7 @@ func (o *PluginRegistry) SaveEnvFile() (err error) {
 	o.Language.SetupFillEnvFileContent(&envFileContent)
 
 	err = o.Db.SaveEnv(envFileContent.String())
-	return
+	return err
 }
 
 func (o *PluginRegistry) Setup() (err error) {
@@ -211,7 +211,7 @@ func (o *PluginRegistry) Setup() (err error) {
 		if parseErr == nil {
 			var plugin plugins.Plugin
 			if _, plugin, err = groupsPlugins.GetGroupAndItemByItemNumber(number); err != nil {
-				return
+				return err
 			}
 
 			if pluginSetupErr := plugin.Setup(); pluginSetupErr != nil {
@@ -234,15 +234,15 @@ func (o *PluginRegistry) Setup() (err error) {
 
 	err = o.SaveEnvFile()
 
-	return
+	return err
 }
 
 func (o *PluginRegistry) SetupVendor(vendorName string) (err error) {
 	if err = o.VendorsAll.SetupVendor(vendorName, o.VendorManager.VendorsByName); err != nil {
-		return
+		return err
 	}
 	err = o.SaveEnvFile()
-	return
+	return err
 }
 
 func (o *PluginRegistry) ConfigureVendors() {
@@ -257,7 +257,7 @@ func (o *PluginRegistry) ConfigureVendors() {
 func (o *PluginRegistry) GetModels() (ret *ai.VendorsModels, err error) {
 	o.ConfigureVendors()
 	ret, err = o.VendorManager.GetModels()
-	return
+	return ret, err
 }
 
 // Configure buildClient VendorsController based on the environment variables
@@ -282,14 +282,14 @@ func (o *PluginRegistry) Configure() (err error) {
 		o.PatternsLoader.Patterns.CustomPatternsDir = customPatternsDir
 	}
 
-	//YouTube and Jina are not mandatory, so ignore not configured error
+	// YouTube and Jina are not mandatory, so ignore not configured error
 	_ = o.YouTube.Configure()
 	_ = o.Jina.Configure()
 	_ = o.Language.Configure()
-	return
+	return err
 }
 
-func (o *PluginRegistry) GetChatter(model string, modelContextLength int, vendorName string, strategy string, stream bool, dryRun bool) (ret *Chatter, err error) {
+func (o *PluginRegistry) GetChatter(model string, modelContextLength int, vendorName, strategy string, stream, dryRun bool) (ret *Chatter, err error) {
 	ret = &Chatter{
 		db:     o.Db,
 		Stream: stream,
@@ -327,7 +327,7 @@ func (o *PluginRegistry) GetChatter(model string, modelContextLength int, vendor
 	} else {
 		var models *ai.VendorsModels
 		if models, err = vendorManager.GetModels(); err != nil {
-			return
+			return ret, err
 		}
 
 		// Normalize model name to match actual available model (case-insensitive)
@@ -346,7 +346,7 @@ func (o *PluginRegistry) GetChatter(model string, modelContextLength int, vendor
 			})
 			if ret.vendor == nil || !vendorAvailable {
 				err = fmt.Errorf("model %s not available for vendor %s", model, vendorName)
-				return
+				return ret, err
 			}
 		} else {
 			availableVendors := models.FindGroupsByItem(model)
@@ -369,8 +369,8 @@ func (o *PluginRegistry) GetChatter(model string, modelContextLength int, vendor
 		err = fmt.Errorf(
 			" Requested Model = %s\n Default Model = %s\n Default Vendor = %s.\n\n%s",
 			model, defaultModel, defaultVendor, errMsg)
-		return
+		return ret, err
 	}
 	ret.strategy = strategy
-	return
+	return ret, err
 }

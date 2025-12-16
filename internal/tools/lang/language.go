@@ -6,7 +6,6 @@ import (
 )
 
 func NewLanguage() (ret *Language) {
-
 	label := "Language"
 	ret = &Language{}
 
@@ -20,7 +19,7 @@ func NewLanguage() (ret *Language) {
 	ret.DefaultLanguage = ret.AddSetupQuestionCustom("Output", false,
 		"Enter your default output language (for example: zh_CN)")
 
-	return
+	return ret
 }
 
 type Language struct {

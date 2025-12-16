@@ -116,12 +116,12 @@ func NewOAuthTransport(client *Client, base http.RoundTripper) *OAuthTransport {
 func generatePKCE() (verifier, challenge string, err error) {
 	b := make([]byte, 32)
 	if _, err = rand.Read(b); err != nil {
-		return
+		return verifier, challenge, err
 	}
 	verifier = base64.RawURLEncoding.EncodeToString(b)
 	sum := sha256.Sum256([]byte(verifier))
 	challenge = base64.RawURLEncoding.EncodeToString(sum[:])
-	return
+	return verifier, challenge, err
 }
 
 // openBrowser attempts to open the given URL in the default browser
@@ -159,7 +159,7 @@ func RunOAuthFlow(tokenIdentifier string) (token string, err error) {
 
 	verifier, challenge, err := generatePKCE()
 	if err != nil {
-		return
+		return token, err
 	}
 
 	cfg := oauth2.Config{
@@ -199,26 +199,26 @@ func RunOAuthFlow(tokenIdentifier string) (token string, err error) {
 	}
 
 	token, err = exchangeToken(tokenIdentifier, tokenReq)
-	return
+	return token, err
 }
 
 // exchangeToken exchanges authorization code for access token
 func exchangeToken(tokenIdentifier string, params map[string]string) (token string, err error) {
 	reqBody, err := json.Marshal(params)
 	if err != nil {
-		return
+		return token, err
 	}
 
 	resp, err := http.Post(oauthTokenURL, "application/json", bytes.NewBuffer(reqBody))
 	if err != nil {
-		return
+		return token, err
 	}
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
 		body, _ := io.ReadAll(resp.Body)
 		err = fmt.Errorf("token exchange failed: %s - %s", resp.Status, string(body))
-		return
+		return token, err
 	}
 
 	var result struct {
@@ -229,7 +229,7 @@ func exchangeToken(tokenIdentifier string, params map[string]string) (token stri
 		Scope        string `json:"scope"`
 	}
 	if err = json.NewDecoder(resp.Body).Decode(&result); err != nil {
-		return
+		return token, err
 	}
 
 	// Save the complete token information
@@ -251,7 +251,7 @@ func exchangeToken(tokenIdentifier string, params map[string]string) (token stri
 	}
 
 	token = result.AccessToken
-	return
+	return token, err
 }
 
 // RefreshToken refreshes an expired OAuth token using the refresh token

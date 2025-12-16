@@ -30,7 +30,7 @@ type FetchPlugin struct{}
 
 // Apply executes fetch operations:
 //   - get:URL: Fetches content from URL, returns text content
-func (p *FetchPlugin) Apply(operation string, value string) (string, error) {
+func (p *FetchPlugin) Apply(operation, value string) (string, error) {
 	debugf("Fetch: operation=%q value=%q", operation, value)
 
 	switch operation {

@@ -157,7 +157,7 @@ func Init() (ret *Flags, err error) {
 			CustomHelpHandler(parser, os.Stdout)
 			os.Exit(0)
 		}
-		return
+		return ret, err
 	}
 	debuglog.SetLevel(debuglog.LevelFromInt(ret.Debug))
 
@@ -175,7 +175,7 @@ func Init() (ret *Flags, err error) {
 	if ret.Config != "" {
 		var yamlFlags *Flags
 		if yamlFlags, err = loadYAMLConfig(ret.Config); err != nil {
-			return
+			return ret, err
 		}
 
 		// Apply YAML values where CLI flags weren't used
@@ -217,11 +217,11 @@ func Init() (ret *Flags, err error) {
 	if pipedToStdin {
 		var pipedMessage string
 		if pipedMessage, err = readStdin(); err != nil {
-			return
+			return ret, err
 		}
 		ret.Message = AppendMessage(ret.Message, pipedMessage)
 	}
-	return
+	return ret, err
 }
 
 func parseDebugLevel(args []string) int {
@@ -325,13 +325,13 @@ func readStdin() (ret string, err error) {
 				break
 			}
 			err = fmt.Errorf("%s", fmt.Sprintf(i18n.T("error_reading_piped_message"), readErr))
-			return
+			return ret, err
 		} else {
 			sb.WriteString(line)
 		}
 	}
 	ret = sb.String()
-	return
+	return ret, err
 }
 
 // validateImageFile validates the image file path and extension
@@ -460,7 +460,7 @@ func (o *Flags) BuildChatOptions() (ret *domain.ChatOptions, err error) {
 		Notification:        o.Notification || o.NotificationCommand != "",
 		NotificationCommand: o.NotificationCommand,
 	}
-	return
+	return ret, err
 }
 
 func (o *Flags) BuildChatRequest(Meta string) (ret *domain.ChatRequest, err error) {
@@ -491,17 +491,17 @@ func (o *Flags) BuildChatRequest(Meta string) (ret *domain.ChatRequest, err erro
 		for _, attachmentValue := range o.Attachments {
 			var attachment *domain.Attachment
 			if attachment, err = domain.NewAttachment(attachmentValue); err != nil {
-				return
+				return ret, err
 			}
 			url := attachment.URL
 			if url == nil {
 				var base64Image string
 				if base64Image, err = attachment.Base64Content(); err != nil {
-					return
+					return ret, err
 				}
 				var mimeType string
 				if mimeType, err = attachment.ResolveType(); err != nil {
-					return
+					return ret, err
 				}
 				dataURL := fmt.Sprintf("data:%s;base64,%s", mimeType, base64Image)
 				url = &dataURL
@@ -527,7 +527,7 @@ func (o *Flags) BuildChatRequest(Meta string) (ret *domain.ChatRequest, err erro
 			ret.Language = langTag.String()
 		}
 	}
-	return
+	return ret, err
 }
 
 func (o *Flags) AppendMessage(message string) {
@@ -536,7 +536,7 @@ func (o *Flags) AppendMessage(message string) {
 
 func (o *Flags) IsChatRequest() (ret bool) {
 	ret = o.Message != "" || len(o.Attachments) > 0 || o.Context != "" || o.Session != "" || o.Pattern != ""
-	return
+	return ret
 }
 
 func (o *Flags) WriteOutput(message string) (err error) {
@@ -544,14 +544,14 @@ func (o *Flags) WriteOutput(message string) (err error) {
 	if o.Output != "" {
 		err = CreateOutputFile(message, o.Output)
 	}
-	return
+	return err
 }
 
-func AppendMessage(message string, newMessage string) (ret string) {
+func AppendMessage(message, newMessage string) (ret string) {
 	if message != "" {
 		ret = message + "\n" + newMessage
 	} else {
 		ret = newMessage
 	}
-	return
+	return ret
 }

@@ -14,6 +14,7 @@ type SessionsHandler struct {
 // NewSessionsHandler creates a new SessionsHandler
 func NewSessionsHandler(r *gin.Engine, sessions *fsdb.SessionsEntity) (ret *SessionsHandler) {
 	ret = &SessionsHandler{
-		StorageHandler: NewStorageHandler(r, "sessions", sessions), sessions: sessions}
+		StorageHandler: NewStorageHandler(r, "sessions", sessions), sessions: sessions,
+	}
 	return ret
 }

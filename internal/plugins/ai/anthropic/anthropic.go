@@ -19,9 +19,11 @@ import (
 
 const defaultBaseUrl = "https://api.anthropic.com/"
 
-const webSearchToolName = "web_search"
-const webSearchToolType = "web_search_20250305"
-const sourcesHeader = "## Sources"
+const (
+	webSearchToolName = "web_search"
+	webSearchToolType = "web_search_20250305"
+	sourcesHeader     = "## Sources"
+)
 
 const authTokenIdentifier = "claude"
 
@@ -63,7 +65,7 @@ func NewClient() (ret *Client) {
 		string(anthropic.ModelClaudeSonnet4_5_20250929): {"context-1m-2025-08-07"},
 	}
 
-	return
+	return ret
 }
 
 // IsConfigured returns true if either the API key or OAuth is configured
@@ -114,7 +116,7 @@ type Client struct {
 
 func (an *Client) Setup() (err error) {
 	if err = an.PluginBase.Ask(an.Name); err != nil {
-		return
+		return err
 	}
 
 	if plugins.ParseBoolElseFalse(an.UseOAuth.Value) {
@@ -133,7 +135,7 @@ func (an *Client) Setup() (err error) {
 	}
 
 	err = an.configure()
-	return
+	return err
 }
 
 func (an *Client) configure() (err error) {
@@ -156,7 +158,7 @@ func (an *Client) configure() (err error) {
 	}
 
 	an.client = anthropic.NewClient(opts...)
-	return
+	return err
 }
 
 func (an *Client) ListModels() (ret []string, err error) {
@@ -190,7 +192,7 @@ func (an *Client) SendStream(
 	if len(messages) == 0 {
 		close(channel)
 		// No messages to send after normalization, consider this a non-error condition for streaming.
-		return
+		return err
 	}
 
 	ctx := context.Background()
@@ -220,12 +222,12 @@ func (an *Client) SendStream(
 		fmt.Fprintf(os.Stderr, "Messages stream error: %v\n", stream.Err())
 	}
 	close(channel)
-	return
+	return err
 }
 
 func (an *Client) buildMessageParams(msgs []anthropic.MessageParam, opts *domain.ChatOptions) (
-	params anthropic.MessageNewParams) {
-
+	params anthropic.MessageNewParams,
+) {
 	params = anthropic.MessageNewParams{
 		Model:     anthropic.Model(opts.Model),
 		MaxTokens: int64(an.maxTokens),
@@ -250,7 +252,6 @@ func (an *Client) buildMessageParams(msgs []anthropic.MessageParam, opts *domain
 				Text: "You are Claude Code, Anthropic's official CLI for Claude.",
 			},
 		}
-
 	}
 
 	if opts.Search {
@@ -276,16 +277,16 @@ func (an *Client) buildMessageParams(msgs []anthropic.MessageParam, opts *domain
 		params.Thinking = t
 	}
 
-	return
+	return params
 }
 
 func (an *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions) (
-	ret string, err error) {
-
+	ret string, err error,
+) {
 	messages := an.toMessages(msgs)
 	if len(messages) == 0 {
 		// No messages to send after normalization, return empty string and no error.
-		return
+		return ret, err
 	}
 
 	var message *anthropic.Message
@@ -299,10 +300,10 @@ func (an *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, 
 		if len(betas) > 0 {
 			debuglog.Debug(debuglog.Basic, "Anthropic beta feature %s failed: %v\n", strings.Join(betas, ","), err)
 			if message, err = an.client.Messages.New(ctx, params); err != nil {
-				return
+				return ret, err
 			}
 		} else {
-			return
+			return ret, err
 		}
 	}
 
@@ -343,7 +344,7 @@ func (an *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, 
 	}
 	ret = resultBuilder.String()
 
-	return
+	return ret, err
 }
 
 func (an *Client) toMessages(msgs []*chat.ChatCompletionMessage) (ret []anthropic.MessageParam) {

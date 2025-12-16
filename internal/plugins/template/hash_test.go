@@ -100,7 +100,7 @@ func TestHashConsistency(t *testing.T) {
 	}
 	defer os.Remove(tmpfile.Name())
 
-	if err := os.WriteFile(tmpfile.Name(), []byte(content), 0644); err != nil {
+	if err := os.WriteFile(tmpfile.Name(), []byte(content), 0o644); err != nil {
 		t.Fatalf("failed to write to temp file: %v", err)
 	}
 

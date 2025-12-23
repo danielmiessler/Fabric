@@ -1,7 +1,8 @@
-import { json } from '@sveltejs/kit';
+import { json, error } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { exec } from 'child_process';
 import { promisify } from 'util';
+import path from 'path';
 
 const execAsync = promisify(exec);
 
@@ -16,10 +17,41 @@ function escapeShellArg(arg: string): string {
   return `'${arg.replace(/'/g, "'\\''")}'`;
 }
 
-export const POST: RequestHandler = async ({ request }) => {
+// Helper function to get and validate user's vault path
+function getUserVaultPath(userId: string): string {
+  // Validate userId to prevent path traversal
+  if (!userId || /[\/\\]|\.\./.test(userId)) {
+    throw new Error('Invalid user identifier');
+  }
+  
+  // Construct user-specific vault directory
+  const baseDir = path.join(process.cwd(), 'user_vaults');
+  const userVaultPath = path.join(baseDir, userId);
+  
+  // Ensure the resolved path is within baseDir to prevent escape attempts
+  const resolvedPath = path.resolve(userVaultPath);
+  const resolvedBaseDir = path.resolve(baseDir);
+  
+  if (!resolvedPath.startsWith(resolvedBaseDir)) {
+    throw new Error('Access denied: Invalid vault path');
+  }
+  
+  return userVaultPath;
+}
+
+export const POST: RequestHandler = async ({ request, locals }) => {
   let tempFile: string | undefined;
 
   try {
+    // Check if user is authenticated
+    const userId = locals?.user?.id;
+    if (!userId) {
+      return json(
+        { error: 'Unauthorized: User must be authenticated' },
+        { status: 401 }
+      );
+    }
+
     // Parse and validate request
     const body = await request.json() as ObsidianRequest;
     if (!body.pattern || !body.noteName || !body.content) {
@@ -29,10 +61,14 @@ export const POST: RequestHandler = async ({ request }) => {
       );
     }
 
+    // Get user's vault path with authorization checks
+    const userVaultDir = getUserVaultPath(userId);
+
     console.log('\n=== Obsidian Request ===');
-    console.log('1. Pattern:', body.pattern);
-    console.log('2. Note name:', body.noteName);
-    console.log('3. Content length:', body.content.length);
+    console.log('1. User ID:', userId);
+    console.log('2. Pattern:', body.pattern);
+    console.log('3. Note name:', body.noteName);
+    console.log('4. Content length:', body.content.length);
 
   
 
@@ -43,13 +79,12 @@ export const POST: RequestHandler = async ({ request }) => {
     const formattedContent = `\`\`\`markdown\n${body.content}\n\`\`\``;
     const escapedFormattedContent = escapeShellArg(formattedContent);
 
-    // Generate file name and path
+    // Generate file name and path using user's vault directory
     const fileName = `${new Date().toISOString().split('T')[0]}-${body.noteName}.md`;
-   
-    const obsidianDir = 'myfiles/Fabric_obsidian';
-    const filePath = `${obsidianDir}/${fileName}`;
-    await execAsync(`mkdir -p "${obsidianDir}"`);
-    console.log('4. Ensured Obsidian directory exists');
+    const filePath = path.join(userVaultDir, fileName);
+    
+    await execAsync(`mkdir -p "${userVaultDir}"`);
+    console.log('5. Ensured user vault directory exists');
 
 
     // Create temp file
@@ -57,17 +92,17 @@ export const POST: RequestHandler = async ({ request }) => {
 
     // Write formatted content to temp file
     await execAsync(`echo ${escapedFormattedContent} > "${tempFile}"`);
-    console.log('5. Wrote formatted content to temp file');
+    console.log('6. Wrote formatted content to temp file');
 
     // Copy from temp file to final location (safer than direct write)
     await execAsync(`cp "${tempFile}" "${filePath}"`);
-    console.log('6. Copied content to final location:', filePath);
+    console.log('7. Copied content to final location:', filePath);
 
     // Verify file was created and has content
     const { stdout: lsOutput } = await execAsync(`ls -l "${filePath}"`);
     const { stdout: wcOutput } = await execAsync(`wc -l "${filePath}"`);
-    console.log('7. File verification:', lsOutput);
-    console.log('8. Line count:', wcOutput);
+    console.log('8. File verification:', lsOutput);
+    console.log('9. Line count:', wcOutput);
 
     // Return success response with file details
     return json({
@@ -96,7 +131,7 @@ export const POST: RequestHandler = async ({ request }) => {
     if (tempFile) {
       try {
         await execAsync(`rm -f "${tempFile}"`);
-        console.log('9. Cleaned up temp file');
+        console.log('10. Cleaned up temp file');
       } catch (cleanupError) {
         console.error('Failed to clean up temp file:', cleanupError);
       }

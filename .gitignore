@@ -354,3 +354,5 @@ tmp/
 # Ignore .claude/
 .claude/
 node_modules
+# pnpm store
+.pnpm-store/

@@ -1,0 +1,4 @@
+### PR [#1909](https://github.com/danielmiessler/Fabric/pull/1909) by [copyleftdev](https://github.com/copyleftdev): feat: add greybeard_secure_prompt_engineer pattern
+
+- Added greybeard_secure_prompt_engineer pattern
+- Updated changelog with incoming entry

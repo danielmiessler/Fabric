@@ -131,6 +131,75 @@ func ScanDirectory(rootDir string, maxDepth int, instructions string, ignoreList
 	return json.MarshalIndent(data, "", "  ")
 }
 
+// ScanFiles scans specific files and returns a JSON representation
+func ScanFiles(files []string, instructions string) ([]byte, error) {
+	fileCount := 0
+	dirSet := make(map[string]bool)
+
+	// Create root directory item
+	rootItem := FileItem{
+		Type:     "directory",
+		Name:     ".",
+		Contents: []FileItem{},
+	}
+
+	for _, filePath := range files {
+		// Skip directories
+		info, err := os.Stat(filePath)
+		if err != nil {
+			return nil, fmt.Errorf("error accessing file %s: %v", filePath, err)
+		}
+		if info.IsDir() {
+			continue
+		}
+
+		// Track unique directories
+		dir := filepath.Dir(filePath)
+		if dir != "." {
+			dirSet[dir] = true
+		}
+
+		fileCount++
+
+		// Read file content
+		content, err := os.ReadFile(filePath)
+		if err != nil {
+			return nil, fmt.Errorf("error reading file %s: %v", filePath, err)
+		}
+
+		// Clean path for consistent handling
+		cleanPath := filepath.Clean(filePath)
+		if strings.HasPrefix(cleanPath, "./") {
+			cleanPath = cleanPath[2:]
+		}
+
+		// Add file to the structure
+		addFileToDirectory(&rootItem, cleanPath, string(content), ".")
+	}
+
+	// Create final data structure
+	var data []any
+	data = append(data, rootItem)
+
+	// Add report
+	reportItem := map[string]any{
+		"type":        "report",
+		"directories": len(dirSet) + 1,
+		"files":       fileCount,
+	}
+	data = append(data, reportItem)
+
+	// Add instructions
+	instructionsItem := map[string]any{
+		"type":    "instructions",
+		"name":    "code_change_instructions",
+		"details": instructions,
+	}
+	data = append(data, instructionsItem)
+
+	return json.MarshalIndent(data, "", "  ")
+}
+
 // addFileToDirectory adds a file to the correct directory in the structure
 func addFileToDirectory(root *FileItem, path, content, rootDir string) {
 	parts := strings.Split(path, string(filepath.Separator))

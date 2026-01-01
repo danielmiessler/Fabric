@@ -1,0 +1,55 @@
+{
+  "name": "@sveltejs/acorn-typescript",
+  "version": "1.0.8",
+  "description": "Acorn plugin that parses TypeScript",
+  "type": "module",
+  "types": "index.d.ts",
+  "files": [
+    "index.js",
+    "index.d.ts"
+  ],
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sveltejs/acorn-typescript.git"
+  },
+  "author": "tyrealhu and the Svelte team",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sveltejs/acorn-typescript/issues"
+  },
+  "homepage": "https://github.com/sveltejs/acorn-typescript#readme",
+  "devDependencies": {
+    "@changesets/cli": "^2.27.11",
+    "@svitejs/changesets-changelog-github-compact": "^1.1.0",
+    "acorn": "^8.14.0",
+    "acorn-jsx": "~5.3.2",
+    "cross-env": "^7.0.3",
+    "esbuild": "^0.25.0",
+    "prettier": "~3.5.2",
+    "test262": "git+https://github.com/tc39/test262.git#88ebb1e3755198cd08757bca1698effbbf360345",
+    "test262-parser-runner": "^0.5.0",
+    "typescript": "^5.7.3",
+    "vitest": "^3.0.7"
+  },
+  "peerDependencies": {
+    "acorn": "^8.9.0"
+  },
+  "scripts": {
+    "build": "esbuild src/index.ts --bundle --format=esm --outfile=index.js --platform=node --external:acorn",
+    "format": "prettier --write .",
+    "check": "tsc --noEmit",
+    "lint": "prettier --check .",
+    "test": "vitest run",
+    "test:update": "cross-env UPDATE_SNAPSHOT=true vitest run && pnpm run format",
+    "test:test262": "pnpm run build && node ./test/run_test262.js",
+    "changeset:version": "changeset version && git add --all",
+    "changeset:release": "changeset publish",
+    "playground": "pnpm build && node ./playground/index.js"
+  }
+}

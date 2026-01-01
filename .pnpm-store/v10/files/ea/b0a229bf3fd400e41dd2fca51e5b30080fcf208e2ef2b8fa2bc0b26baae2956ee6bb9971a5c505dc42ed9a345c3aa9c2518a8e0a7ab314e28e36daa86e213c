@@ -1,0 +1,40 @@
+{
+  "pages": 7,
+  "items": 282,
+  "groupedItems": 152,
+  "changes": 21,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":0,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"\u0000 1","line":5,"x":294,"y":45,"width":"6.67","height":"12.00","fontName":["QACXPP+Helvetica","JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":1,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"\u0000 2","line":0,"x":294,"y":45,"width":"6.67","height":"12.00","fontName":["QACXPP+Helvetica","JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":2,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"\u0000 3","line":27,"x":294,"y":45,"width":"6.67","height":"12.00","fontName":["QACXPP+Helvetica","JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":3,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"\u0000 4","line":32,"x":294,"y":45,"width":"6.67","height":"12.00","fontName":["QACXPP+Helvetica","JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":4,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"\u0000 5","line":40,"x":294,"y":45,"width":"6.67","height":"12.00","fontName":["QACXPP+Helvetica","JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":5,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"\u0000 6","line":23,"x":294,"y":45,"width":"6.67","height":"12.00","fontName":["QACXPP+Helvetica","JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":6,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"\u0000 7","line":18,"x":294,"y":45,"width":"6.67","height":"12.00","fontName":["QACXPP+Helvetica","JBRMKS+Helvetica"],"dir":["ltr"]}

@@ -1,0 +1,36 @@
+{
+  "pages": 648,
+  "items": 27824,
+  "groupedItems": 21530,
+  "changes": 0,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "token types"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}

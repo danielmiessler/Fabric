@@ -1,0 +1,45 @@
+{
+  "name": "string",
+  "version": "1.4.0",
+  "description": "string contains methods that aren't included in the vanilla JavaScript string such as escaping html, decoding html entities, stripping tags, etc.",
+  "homepage": "http://stringjs.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jprichardson/string.js"
+  },
+  "keywords": [
+    "string",
+    "strings",
+    "string.js",
+    "stringjs",
+    "S",
+    "s",
+    "csv",
+    "html",
+    "entities",
+    "parse",
+    "html",
+    "tags",
+    "strip",
+    "trim",
+    "encode",
+    "decode",
+    "escape",
+    "unescape"
+  ],
+  "author": "JP Richardson <jprichardson@gmail.com>",
+  "licenses": [
+    {
+      "type": "MIT"
+    }
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "mocha": "*",
+    "uglify-js": "1.3.x"
+  },
+  "main": "lib/string",
+  "scripts": {
+    "test": "mocha test"
+  }
+}

@@ -1,0 +1,7 @@
+import Item from '../Item';
+import { Converter } from '../convert';
+import { TextType } from '../text-types';
+export default class MarkdownConverter implements Converter {
+    convert(items: Item[]): string;
+}
+export declare function lineToText(lineItems: Item[], blockTypes: TextType[]): string;

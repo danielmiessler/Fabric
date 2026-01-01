@@ -1,0 +1,48 @@
+{
+  "pages": 7,
+  "items": 282,
+  "groupedItems": 152,
+  "changes": 54,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":0,"change":"ContentChange","str":"Dies ist eine Test-PDF 1 .","line":2,"x":240,"y":585,"width":"115.75","height":"11.00","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":0,"change":"ContentChange","str":"1 In Deutsch.","line":4,"x":57,"y":59,"width":"59.72","height":"11.00","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":2,"change":"ContentChange","str":"Das ist ein Paragraph. Ein einfacher Paragraph mit Schrift in Normalgröße 2 . Damit wir  sehen  wie ","line":1,"x":57,"y":740,"width":"472.99","height":"11.00","fontName":["JBRMKS+Helvetica","SVUOCV+Helvetica-Oblique"],"dir":["ltr"]}
+{"page":2,"change":"ContentChange","str":"ultrices magna. Sed egestas mi nec rutrum iaculis. Phasellus condimentum 3 , urna sit amet sodales ","line":14,"x":57,"y":545,"width":"483.43","height":"11.00","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":2,"change":"ContentChange","str":"Und jetzt 4  einfach nochmal Text 5  um die Fussnoten in zweistellige Bereiche 6  vorranzutreiben!","line":20,"x":57,"y":428,"width":"452.29","height":"11.00","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":2,"change":"ContentChange","str":"2 Was immer auch ‘normal’ ist...","line":21,"x":57,"y":164,"width":"152.41","height":"11.00","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":2,"change":"ContentChange","str":"3 Nicht zu verwechseln mit ‘condimenta’. Meine Lateinkenntnisse sind zwar schon so alt das ich ","line":22,"x":57,"y":141,"width":"464.48","height":"11.00","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":2,"change":"ContentChange","str":"4 Hier & Jetzt!","line":24,"x":57,"y":105,"width":"63.98","height":"11.00","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":2,"change":"ContentChange","str":"5 Nicht viel mehr als ein Satz.","line":25,"x":57,"y":82,"width":"139.80","height":"11.00","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":2,"change":"ContentChange","str":"6 Weil dann wird's komplizierter!","line":26,"x":57,"y":59,"width":"152.09","height":"11.00","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":3,"change":"ContentChange","str":"7 Fussnote in einer Liste","line":31,"x":57,"y":59,"width":"114.75","height":"11.00","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":6,"change":"ContentChange","str":"Phantasie ist wichtiger als  Wissen , denn Wissen 9  ist  begrenzt .  - Albert Einstein 10","line":6,"x":101,"y":623,"width":"392.96","height":"11.00","fontName":["JBRMKS+Helvetica","OMUGKQ+Helvetica-Bold","SVUOCV+Helvetica-Oblique"],"dir":["ltr"]}
+{"page":6,"change":"ContentChange","str":"8 Eine Überschrifts-Fussnote... so was gibts auch!","line":15,"x":57,"y":105,"width":"241.29","height":"11.00","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":6,"change":"ContentChange","str":"9 Wisse, dass ist eine Fussnote in einem Zitat!","line":16,"x":57,"y":82,"width":"221.73","height":"11.00","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":6,"change":"ContentChange","str":"10 Der Albert Einstein (Fussnote im Zitat, am Ende der Zeile)","line":17,"x":57,"y":59,"width":"290.00","height":"11.00","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}

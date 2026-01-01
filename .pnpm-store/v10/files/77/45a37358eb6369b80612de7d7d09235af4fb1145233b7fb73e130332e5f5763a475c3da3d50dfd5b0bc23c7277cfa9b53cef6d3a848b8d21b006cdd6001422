@@ -1,0 +1,75 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const ItemTransformer_1 = require("./ItemTransformer");
+const LineItemMerger_1 = require("../debug/LineItemMerger");
+const groupingUtils_1 = require("../support/groupingUtils");
+const stringFunctions_1 = require("../support/stringFunctions");
+class DetectFootnotes extends ItemTransformer_1.default {
+    constructor() {
+        super('Detect Footnotes', 'Detect footnotes in text and link them to the references', {
+            requireColumns: ['str', 'y'],
+            debug: {
+                itemMerger: new LineItemMerger_1.default(false),
+            },
+        }, (incomingSchema) => {
+            return incomingSchema.reduce((schema, column) => {
+                if (column === 'x') {
+                    return [...schema, 'token types', 'x'];
+                }
+                return [...schema, column];
+            }, new Array());
+        });
+    }
+    transform(context, inputItems) {
+        const stash = [];
+        const footnoteLinks = new Set();
+        const footnotes = new Set();
+        (0, groupingUtils_1.groupByLine)(inputItems).forEach((lineItems) => {
+            const firstY = lineItems[0].data['y'];
+            lineItems.forEach((item, lineIndex) => {
+                const itemText = item.data['str'].trim();
+                const itemY = item.data['y'];
+                if ((0, stringFunctions_1.isNumber)(itemText)) {
+                    if (hasPreceedingText(lineItems, lineIndex) && itemY > firstY) {
+                        footnoteLinks.add(item.uuid);
+                    }
+                    else if (isFollowedByText(lineItems, lineIndex)) {
+                        footnotes.add(item.uuid);
+                    }
+                    stash.push(item);
+                }
+            });
+        });
+        return {
+            items: inputItems.map((item) => {
+                if (footnoteLinks.has(item.uuid)) {
+                    return item.withTokenType('FOOTNOTE_LINK');
+                }
+                if (footnotes.has(item.uuid)) {
+                    return item.withTokenType('FOOTNOTE');
+                }
+                return item;
+            }),
+            messages: [`Detected ${footnoteLinks.size}/${footnotes.size} footnotes.`],
+        };
+    }
+}
+exports.default = DetectFootnotes;
+function hasPreceedingText(lineItems, lineIndex) {
+    for (let index = lineIndex - 1; index >= 0; index--) {
+        const itemText = lineItems[index].data['str'].trim();
+        if (!(0, stringFunctions_1.isNumber)(itemText)) {
+            return true;
+        }
+    }
+    return false;
+}
+function isFollowedByText(lineItems, lineIndex) {
+    for (let index = lineIndex + 1; index < lineItems.length; index++) {
+        const itemText = lineItems[index].data['str'].trim();
+        if (!(0, stringFunctions_1.isNumber)(itemText)) {
+            return true;
+        }
+    }
+    return false;
+}

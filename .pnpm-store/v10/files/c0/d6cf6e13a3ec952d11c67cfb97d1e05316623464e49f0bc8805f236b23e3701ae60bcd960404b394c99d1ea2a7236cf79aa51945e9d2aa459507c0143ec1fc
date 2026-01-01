@@ -1,0 +1,93 @@
+{
+  "pages": 60,
+  "items": 4344,
+  "groupedItems": 1499,
+  "changes": 414,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":0,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd. ","dir":"ltr","width":"155.86","height":"11.04","transform":["11.04","0.00","0.00","11.04","99.26","30.72"],"x":99.264,"y":30.72,"line":0}
+{"page":1,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  2 August 2015","line":0,"x":99.264,"y":30.84,"width":"261.24","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":2,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  3 August 2015","line":0,"x":99.264,"y":30.84,"width":"261.24","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":3,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  4 August 2015","line":0,"x":99.264,"y":30.84,"width":"261.24","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":4,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  5 August 2015","line":0,"x":99.264,"y":30.84,"width":"261.24","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":5,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  6 August 2015","line":0,"x":99.264,"y":30.84,"width":"261.24","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":6,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  7 August 2015","line":0,"x":99.264,"y":30.84,"width":"261.24","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":7,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  8 August 2015","line":0,"x":99.264,"y":30.84,"width":"261.24","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":8,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  9 August 2015","line":0,"x":99.264,"y":30.84,"width":"261.24","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":9,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  10 August 2015","line":0,"x":99.264,"y":30.84,"width":"267.35","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":10,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  11 August 2015","line":0,"x":99.264,"y":30.84,"width":"267.35","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":11,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  12 August 2015","line":0,"x":99.264,"y":30.84,"width":"267.35","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":12,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  13 August 2015","line":0,"x":99.264,"y":30.84,"width":"267.35","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":13,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  14 August 2015","line":0,"x":99.264,"y":30.84,"width":"267.35","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":14,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  15 August 2015","line":0,"x":99.264,"y":30.84,"width":"267.35","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":15,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  16 August 2015","line":0,"x":99.264,"y":30.84,"width":"267.35","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":16,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  17 August 2015","line":0,"x":99.264,"y":30.84,"width":"267.35","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":17,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  18 August 2015","line":0,"x":99.264,"y":30.84,"width":"267.35","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":18,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  19 August 2015","line":0,"x":99.264,"y":30.84,"width":"267.35","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":19,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  20 August 2015","line":0,"x":99.264,"y":30.84,"width":"267.35","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":20,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  21 August 2015","line":0,"x":99.264,"y":30.84,"width":"267.35","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":21,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  22 August 2015","line":0,"x":99.264,"y":30.84,"width":"267.35","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":22,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  23 August 2015","line":0,"x":99.264,"y":30.84,"width":"267.35","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":23,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  24 August 2015","line":0,"x":99.264,"y":30.84,"width":"267.35","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":24,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  25 August 2015","line":0,"x":99.264,"y":30.84,"width":"267.35","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":25,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  26 August 2015","line":0,"x":99.264,"y":30.84,"width":"267.35","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":26,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  27 August 2015","line":0,"x":99.264,"y":30.84,"width":"267.35","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":27,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  28 August 2015","line":0,"x":99.264,"y":30.84,"width":"267.35","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":28,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  29 August 2015","line":0,"x":99.264,"y":30.84,"width":"267.35","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":29,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  30 August 2015","line":0,"x":99.264,"y":30.84,"width":"267.35","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":30,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  31 August 2015","line":0,"x":99.264,"y":30.84,"width":"267.35","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":31,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  32 August 2015","line":0,"x":99.264,"y":30.84,"width":"267.35","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":32,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  33 August 2015","line":0,"x":99.264,"y":30.84,"width":"267.35","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":33,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  34 August 2015","line":0,"x":99.264,"y":30.84,"width":"267.35","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":34,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  35 August 2015","line":0,"x":99.264,"y":30.84,"width":"267.35","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":35,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  36 August 2015","line":0,"x":99.264,"y":30.84,"width":"267.35","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":36,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  37 August 2015","line":0,"x":99.264,"y":30.84,"width":"267.35","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":37,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  38 August 2015","line":0,"x":99.264,"y":30.84,"width":"267.35","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":38,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  39 August 2015","line":0,"x":99.264,"y":30.84,"width":"267.35","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":39,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  40 August 2015","line":0,"x":53.88,"y":30.84,"width":"267.35","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":40,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  41 August 2015","line":0,"x":53.88,"y":30.84,"width":"267.35","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":41,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  42 August 2015","line":0,"x":53.88,"y":30.84,"width":"267.35","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":42,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  43 August 2015","line":0,"x":53.88,"y":30.84,"width":"267.35","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":43,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  44 August 2015","line":0,"x":53.88,"y":30.84,"width":"267.35","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":44,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  45 August 2015","line":0,"x":53.88,"y":30.84,"width":"267.35","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":45,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  46 August 2015","line":0,"x":53.88,"y":30.84,"width":"267.35","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":46,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  47 August 2015","line":0,"x":53.88,"y":30.84,"width":"267.35","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":47,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  48 August 2015","line":0,"x":53.88,"y":30.84,"width":"267.35","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":48,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  49 August 2015","line":0,"x":53.88,"y":30.84,"width":"267.35","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":49,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  50 August 2015","line":0,"x":53.88,"y":30.84,"width":"267.35","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":50,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  51 August 2015","line":0,"x":53.88,"y":30.84,"width":"267.35","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":51,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  52 August 2015","line":0,"x":53.88,"y":30.84,"width":"267.35","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":52,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  53 August 2015","line":0,"x":53.88,"y":30.84,"width":"267.35","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":53,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  54 August 2015","line":0,"x":53.88,"y":30.84,"width":"267.35","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":54,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  55 August 2015","line":0,"x":53.88,"y":30.84,"width":"267.35","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":55,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  56 August 2015","line":0,"x":53.88,"y":30.84,"width":"267.35","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":56,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  57 August 2015","line":0,"x":53.88,"y":30.84,"width":"267.35","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":57,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  58 August 2015","line":0,"x":53.88,"y":30.84,"width":"267.35","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":58,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  59 August 2015","line":0,"x":53.88,"y":30.84,"width":"267.35","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":59,"change":"Removal","score":"1.98: (0.98 + 1.00)","str":"Quality Improvement Clinic Ltd.  P a g e |  60 August 2015","line":0,"x":53.88,"y":30.84,"width":"267.35","height":"11.04","fontName":[null],"dir":["ltr"]}

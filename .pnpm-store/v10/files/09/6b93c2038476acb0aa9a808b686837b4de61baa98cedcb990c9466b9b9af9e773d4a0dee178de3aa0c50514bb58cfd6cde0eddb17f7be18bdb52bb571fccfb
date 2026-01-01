@@ -1,0 +1,107 @@
+{
+  "pages": 76,
+  "items": 3205,
+  "groupedItems": 2652,
+  "changes": 194,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":1,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"1","dir":"ltr","width":"5.98","height":"11.96","transform":["11.96","0.00","0.00","11.96","294.17","95.55"],"fontName":"FZVLIH+NimbusRomNo9L-Regu","x":294.167,"y":95.545,"line":14}
+{"page":3,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"3","dir":"ltr","width":"5.98","height":"11.96","transform":["11.96","0.00","0.00","11.96","294.17","95.55"],"fontName":"FZVLIH+NimbusRomNo9L-Regu","x":294.16700000000003,"y":95.545,"line":43}
+{"page":4,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"4","dir":"ltr","width":"5.98","height":"11.96","transform":["11.96","0.00","0.00","11.96","294.17","95.55"],"fontName":"FZVLIH+NimbusRomNo9L-Regu","x":294.167,"y":95.545,"line":30}
+{"page":5,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER I.  DOWN THE RABBIT-HOLE 5","line":0,"x":102.884,"y":735.021,"width":"220.95","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":6,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER I.  DOWN THE RABBIT-HOLE 6","line":0,"x":102.884,"y":735.021,"width":"220.95","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":7,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER I.  DOWN THE RABBIT-HOLE 7","line":0,"x":102.884,"y":735.021,"width":"220.95","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":8,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER I.  DOWN THE RABBIT-HOLE 8","line":0,"x":102.884,"y":735.021,"width":"220.95","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":9,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"9","dir":"ltr","width":"5.98","height":"11.96","transform":["11.96","0.00","0.00","11.96","294.17","95.55"],"fontName":"FZVLIH+NimbusRomNo9L-Regu","x":294.167,"y":95.545,"line":28}
+{"page":10,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER II.  THE POOL OF TEARS 10","line":0,"x":102.884,"y":735.021,"width":"202.90","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":11,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER II.  THE POOL OF TEARS 11","line":0,"x":102.884,"y":735.021,"width":"202.90","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":12,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER II.  THE POOL OF TEARS 12","line":0,"x":102.884,"y":735.021,"width":"202.90","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":13,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER II.  THE POOL OF TEARS 13","line":0,"x":102.884,"y":735.021,"width":"202.90","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":14,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"14","dir":"ltr","width":"11.96","height":"11.96","transform":["11.96","0.00","0.00","11.96","291.18","95.55"],"fontName":"FZVLIH+NimbusRomNo9L-Regu","x":291.178,"y":95.545,"line":30}
+{"page":15,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER III.  A CAUCUS-RACE AND A LONG TALE 15","line":0,"x":102.884,"y":735.021,"width":"294.27","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":16,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER III.  A CAUCUS-RACE AND A LONG TALE 16","line":0,"x":102.884,"y":735.021,"width":"294.27","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":17,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER III.  A CAUCUS-RACE AND A LONG TALE 17","line":0,"x":102.884,"y":735.021,"width":"294.27","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":18,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER III.  A CAUCUS-RACE AND A LONG TALE 18","line":0,"x":102.884,"y":735.021,"width":"294.27","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":19,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"19","dir":"ltr","width":"11.96","height":"11.96","transform":["11.96","0.00","0.00","11.96","291.18","95.55"],"fontName":"FZVLIH+NimbusRomNo9L-Regu","x":291.178,"y":95.545,"line":29}
+{"page":20,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER IV.  THE RABBIT SENDS IN A LITTLE BILL 20","line":0,"x":102.884,"y":735.021,"width":"300.63","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":21,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER IV.  THE RABBIT SENDS IN A LITTLE BILL 21","line":0,"x":102.884,"y":735.021,"width":"300.63","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":22,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER IV.  THE RABBIT SENDS IN A LITTLE BILL 22","line":0,"x":102.884,"y":735.021,"width":"300.63","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":23,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER IV.  THE RABBIT SENDS IN A LITTLE BILL 23","line":0,"x":102.884,"y":735.021,"width":"300.63","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":24,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER IV.  THE RABBIT SENDS IN A LITTLE BILL 24","line":0,"x":102.884,"y":735.021,"width":"300.63","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":25,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"25","dir":"ltr","width":"11.96","height":"11.96","transform":["11.96","0.00","0.00","11.96","291.18","95.55"],"fontName":"FZVLIH+NimbusRomNo9L-Regu","x":291.178,"y":95.545,"line":30}
+{"page":26,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER V.  ADVICE FROM A CATERPILLAR 26","line":0,"x":102.884,"y":735.021,"width":"260.85","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":27,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER V.  ADVICE FROM A CATERPILLAR 27","line":0,"x":102.884,"y":735.021,"width":"260.85","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":28,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER V.  ADVICE FROM A CATERPILLAR 28","line":0,"x":102.884,"y":735.021,"width":"260.85","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":29,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER V.  ADVICE FROM A CATERPILLAR 29","line":0,"x":102.884,"y":735.021,"width":"260.85","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":30,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER V.  ADVICE FROM A CATERPILLAR 30","line":0,"x":102.884,"y":735.021,"width":"260.85","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":31,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER V.  ADVICE FROM A CATERPILLAR 31","line":0,"x":102.884,"y":735.021,"width":"260.85","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":32,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"32","dir":"ltr","width":"11.96","height":"11.96","transform":["11.96","0.00","0.00","11.96","291.18","95.55"],"fontName":"FZVLIH+NimbusRomNo9L-Regu","x":291.178,"y":95.545,"line":30}
+{"page":33,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER VI.  PIG AND PEPPER 33","line":0,"x":102.884,"y":735.021,"width":"184.64","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":34,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER VI.  PIG AND PEPPER 34","line":0,"x":102.884,"y":735.021,"width":"184.64","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":35,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER VI.  PIG AND PEPPER 35","line":0,"x":102.884,"y":735.021,"width":"184.64","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":36,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER VI.  PIG AND PEPPER 36","line":0,"x":102.884,"y":735.021,"width":"184.64","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":37,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER VI.  PIG AND PEPPER 37","line":0,"x":102.884,"y":735.021,"width":"184.64","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":38,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER VI.  PIG AND PEPPER 38","line":0,"x":102.884,"y":735.021,"width":"184.64","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":39,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"39","dir":"ltr","width":"11.96","height":"11.96","transform":["11.96","0.00","0.00","11.96","291.18","95.55"],"fontName":"FZVLIH+NimbusRomNo9L-Regu","x":291.178,"y":95.545,"line":30}
+{"page":40,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER VII.  A MAD TEA-PARTY 40","line":0,"x":102.884,"y":735.021,"width":"202.06","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":41,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER VII.  A MAD TEA-PARTY 41","line":0,"x":102.884,"y":735.021,"width":"202.06","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":42,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER VII.  A MAD TEA-PARTY 42","line":0,"x":102.884,"y":735.021,"width":"202.06","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":43,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER VII.  A MAD TEA-PARTY 43","line":0,"x":102.884,"y":735.021,"width":"202.06","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":44,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER VII.  A MAD TEA-PARTY 44","line":0,"x":102.884,"y":735.021,"width":"202.06","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":45,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER VII.  A MAD TEA-PARTY 45","line":0,"x":102.884,"y":735.021,"width":"202.06","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":46,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"46","dir":"ltr","width":"11.96","height":"11.96","transform":["11.96","0.00","0.00","11.96","291.18","95.55"],"fontName":"FZVLIH+NimbusRomNo9L-Regu","x":291.178,"y":95.545,"line":30}
+{"page":47,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER VIII.  THE QUEEN’S CROQUET-GROUND 47","line":0,"x":102.884,"y":735.021,"width":"288.57","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":48,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER VIII.  THE QUEEN’S CROQUET-GROUND 48","line":0,"x":102.884,"y":735.021,"width":"288.57","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":49,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER VIII.  THE QUEEN’S CROQUET-GROUND 49","line":0,"x":102.884,"y":735.021,"width":"288.57","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":50,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER VIII.  THE QUEEN’S CROQUET-GROUND 50","line":0,"x":102.884,"y":735.021,"width":"288.57","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":51,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER VIII.  THE QUEEN’S CROQUET-GROUND 51","line":0,"x":102.884,"y":735.021,"width":"288.57","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":52,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER VIII.  THE QUEEN’S CROQUET-GROUND 52","line":0,"x":102.884,"y":735.021,"width":"288.57","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":53,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"53","dir":"ltr","width":"11.96","height":"11.96","transform":["11.96","0.00","0.00","11.96","291.18","95.55"],"fontName":"FZVLIH+NimbusRomNo9L-Regu","x":291.178,"y":95.545,"line":30}
+{"page":54,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER IX.  THE MOCK TURTLE’S STORY 54","line":0,"x":102.884,"y":735.021,"width":"252.99","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":55,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER IX.  THE MOCK TURTLE’S STORY 55","line":0,"x":102.884,"y":735.021,"width":"252.99","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":56,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER IX.  THE MOCK TURTLE’S STORY 56","line":0,"x":102.884,"y":735.021,"width":"252.99","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":57,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER IX.  THE MOCK TURTLE’S STORY 57","line":0,"x":102.884,"y":735.021,"width":"252.99","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":58,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER IX.  THE MOCK TURTLE’S STORY 58","line":0,"x":102.884,"y":735.021,"width":"252.99","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":59,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"59","dir":"ltr","width":"11.96","height":"11.96","transform":["11.96","0.00","0.00","11.96","291.18","95.55"],"fontName":"FZVLIH+NimbusRomNo9L-Regu","x":291.178,"y":95.545,"line":30}
+{"page":60,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER X.  THE LOBSTER QUADRILLE 60","line":0,"x":102.884,"y":735.021,"width":"237.16","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":61,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER X.  THE LOBSTER QUADRILLE 61","line":0,"x":102.884,"y":735.021,"width":"237.16","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":62,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER X.  THE LOBSTER QUADRILLE 62","line":0,"x":102.884,"y":735.021,"width":"237.16","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":63,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER X.  THE LOBSTER QUADRILLE 63","line":0,"x":102.884,"y":735.021,"width":"237.16","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":64,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER X.  THE LOBSTER QUADRILLE 64","line":0,"x":102.884,"y":735.021,"width":"237.16","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":65,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"65","dir":"ltr","width":"11.96","height":"11.96","transform":["11.96","0.00","0.00","11.96","291.18","95.55"],"fontName":"FZVLIH+NimbusRomNo9L-Regu","x":291.178,"y":95.545,"line":30}
+{"page":66,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER XI.  WHO STOLE THE TARTS? 66","line":0,"x":102.884,"y":735.021,"width":"230.06","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":67,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER XI.  WHO STOLE THE TARTS? 67","line":0,"x":102.884,"y":735.021,"width":"230.06","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":68,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER XI.  WHO STOLE THE TARTS? 68","line":0,"x":102.884,"y":735.021,"width":"230.06","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":69,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER XI.  WHO STOLE THE TARTS? 69","line":0,"x":102.884,"y":735.021,"width":"230.06","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":70,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"70","dir":"ltr","width":"11.96","height":"11.96","transform":["11.96","0.00","0.00","11.96","291.18","95.55"],"fontName":"FZVLIH+NimbusRomNo9L-Regu","x":291.178,"y":95.545,"line":29}
+{"page":71,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER XII.  ALICE’S EVIDENCE 71","line":0,"x":102.884,"y":735.021,"width":"203.55","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":72,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER XII.  ALICE’S EVIDENCE 72","line":0,"x":102.884,"y":735.021,"width":"203.55","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":73,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER XII.  ALICE’S EVIDENCE 73","line":0,"x":102.884,"y":735.021,"width":"203.55","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":74,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER XII.  ALICE’S EVIDENCE 74","line":0,"x":102.884,"y":735.021,"width":"203.55","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":75,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"CHAPTER XII.  ALICE’S EVIDENCE 75","line":0,"x":102.884,"y":735.021,"width":"203.55","height":"11.96","fontName":["NGYXVM+NimbusRomNo9L-Regu-Slant_167","FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}

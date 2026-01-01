@@ -1,0 +1,89 @@
+{
+    "name": "@types/marked",
+    "version": "5.0.2",
+    "description": "TypeScript definitions for Marked",
+    "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/marked",
+    "license": "MIT",
+    "contributors": [
+        {
+            "name": "William Orr",
+            "url": "https://github.com/worr",
+            "githubUsername": "worr"
+        },
+        {
+            "name": "BendingBender",
+            "url": "https://github.com/BendingBender",
+            "githubUsername": "BendingBender"
+        },
+        {
+            "name": "CrossR",
+            "url": "https://github.com/CrossR",
+            "githubUsername": "CrossR"
+        },
+        {
+            "name": "Mike Wickett",
+            "url": "https://github.com/mwickett",
+            "githubUsername": "mwickett"
+        },
+        {
+            "name": "Hitomi Hatsukaze",
+            "url": "https://github.com/htkzhtm",
+            "githubUsername": "htkzhtm"
+        },
+        {
+            "name": "Ezra Celli",
+            "url": "https://github.com/ezracelli",
+            "githubUsername": "ezracelli"
+        },
+        {
+            "name": "Romain LE BARO",
+            "url": "https://github.com/scandinave",
+            "githubUsername": "scandinave"
+        },
+        {
+            "name": "Sarun Intaralawan",
+            "url": "https://github.com/sarunint",
+            "githubUsername": "sarunint"
+        },
+        {
+            "name": "Tony Brix",
+            "url": "https://github.com/UziTech",
+            "githubUsername": "UziTech"
+        },
+        {
+            "name": "Anatolii Titov",
+            "url": "https://github.com/Toliak",
+            "githubUsername": "Toliak"
+        },
+        {
+            "name": "Jean-Francois Cere",
+            "url": "https://github.com/jfcere",
+            "githubUsername": "jfcere"
+        },
+        {
+            "name": "Mykhaylo Stolyarchuk",
+            "url": "https://github.com/MykSto",
+            "githubUsername": "MykSto"
+        }
+    ],
+    "main": "",
+    "types": "index.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "directory": "types/marked"
+    },
+    "scripts": {},
+    "dependencies": {},
+    "typesPublisherContentHash": "16be8ba4196d8d4bf0e717e331a9e711d2dcd9da855c277bd57f9e82f6b55ce6",
+    "typeScriptVersion": "4.5",
+    "exports": {
+        ".": {
+            "types": {
+                "import": "./index.d.mts",
+                "default": "./index.d.ts"
+            }
+        },
+        "./package.json": "./package.json"
+    }
+}

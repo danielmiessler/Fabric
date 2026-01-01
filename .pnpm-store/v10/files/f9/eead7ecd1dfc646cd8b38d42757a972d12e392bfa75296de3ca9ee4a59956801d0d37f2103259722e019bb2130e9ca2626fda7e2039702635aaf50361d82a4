@@ -1,0 +1,25 @@
+{
+	"name": "esm-env",
+	"version": "1.0.0",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/benmccann/esm-env.git"
+	},
+	"license": "MIT",
+	"homepage": "https://github.com/benmccann/esm-env",
+	"author": "Ben McCann (https://www.benmccann.com)",
+	"type": "module",
+	"exports": {
+		".": {
+			"types": "./index.d.ts",
+			"browser": {
+				"development": "./dev-browser.js",
+				"default": "./prod-browser.js"
+			},
+			"default": {
+				"development": "./dev-ssr.js",
+				"default": "./prod-ssr.js"
+			}
+		}
+	}
+}

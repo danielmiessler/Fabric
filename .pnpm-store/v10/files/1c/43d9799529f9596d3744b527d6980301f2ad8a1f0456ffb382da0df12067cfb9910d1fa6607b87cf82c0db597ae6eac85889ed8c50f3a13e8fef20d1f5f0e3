@@ -1,0 +1,33 @@
+import { SvelteComponentTyped } from "svelte";
+declare const __propDef: {
+    props: {
+        /**
+             * YouTube video ID
+             */ id: string;
+        /**
+             * Appears in the iframe's title attribute and in the top section of the preview
+             */ title?: string | undefined;
+        /**
+             * Thumbnail quality to use for the preview image.
+             * mqdefault: lowest quality
+             * hqdefault : medium quality
+             * sddefault : standard quality (default)
+             * maxresdefault: highest quality (may not be available for every video)
+             */ thumbnail?: ("mqdefault" | "hqdefault" | "sddefault" | "maxresdefault") | undefined;
+        /**
+             * Show or hide the title section in the top section of the preview
+             */ showTitle?: boolean | undefined;
+    };
+    events: {
+        [evt: string]: CustomEvent<any>;
+    };
+    slots: {
+        playButton: {};
+    };
+};
+export type YoutubeProps = typeof __propDef.props;
+export type YoutubeEvents = typeof __propDef.events;
+export type YoutubeSlots = typeof __propDef.slots;
+export default class Youtube extends SvelteComponentTyped<YoutubeProps, YoutubeEvents, YoutubeSlots> {
+}
+export {};

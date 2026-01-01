@@ -1,0 +1,100 @@
+{
+  "name": "svelte-inview",
+  "version": "4.0.4",
+  "description": "A Svelte action that monitors an element enters or leaves the viewport or a parent element. Performant and efficient thanks to using Intersection Observer under the hood.",
+  "homepage": "https://github.com/maciekgrzybek/svelte-inview",
+  "bugs": "https://github.com/maciekgrzybek/svelte-inview/issues",
+  "license": "MIT",
+  "author": {
+    "email": "maciekgrzybek1@gmail.com",
+    "name": "Maciek Grzybek",
+    "url": "https://maciekgrzybek.dev"
+  },
+  "module": "dist/index.mjs",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "rollup -c",
+    "format": "prettier --write --plugin-search-dir=. **/*.svelte *.ts",
+    "prepublishOnly": "npm run build",
+    "build-test-app": "cd test-app && npm i && npm run build",
+    "start-server": "cd test-app && PORT=5555 npm run dev",
+    "test": "npx playwright test",
+    "test-app": " npm run build && start-server-and-test start-server http://localhost:5555 test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.29.1",
+    "@rollup/plugin-node-resolve": "^11.2.1",
+    "@rollup/plugin-typescript": "^8.2.1",
+    "@tsconfig/svelte": "^1.0.10",
+    "@types/node": "^18.11.18",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.23.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-svelte3": "^3.1.2",
+    "husky": "^4.2.5",
+    "prettier": "^2.0.5",
+    "prettier-plugin-svelte": "^2.2.0",
+    "rollup": "^2.44.0",
+    "rollup-plugin-copy": "^3.4.0",
+    "rollup-plugin-svelte": "^7.1.0",
+    "rollup-plugin-typescript2": "^0.34.1",
+    "start-server-and-test": "^1.15.2",
+    "svelte-check": "3.0.1",
+    "svelte-preprocess": "^4.7.2",
+    "typescript": "^4.2.4"
+  },
+  "keywords": [
+    "svelte",
+    "observer",
+    "observing",
+    "intersection",
+    "viewport",
+    "inviewport",
+    "in-view",
+    "in-viewport",
+    "inview",
+    "observe",
+    "waypoint",
+    "intersection-observer",
+    "intersection-observer-api",
+    "performance",
+    "monitor",
+    "scroll-direction",
+    "scroll",
+    "direction",
+    "lazy",
+    "lazy-loading",
+    "scrolling",
+    "animations",
+    "compile",
+    "compiler",
+    "root",
+    "root-margin",
+    "threshold",
+    "visibility",
+    "visible",
+    "infinite-scrolling",
+    "infinite",
+    "scrolling",
+    "intersecting",
+    "async",
+    "asynchronously",
+    "asynchronous",
+    "preload",
+    "detect"
+  ],
+  "files": [
+    "src",
+    "dist"
+  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run format"
+    }
+  },
+  "peerDependencies": {
+    "svelte": "^3.0.0 || ^4.0.0 || ^5.0.0 || ^5.0.0-next"
+  }
+}

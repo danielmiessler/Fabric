@@ -1,0 +1,79 @@
+{
+  "pages": 60,
+  "items": 3967,
+  "groupedItems": 1429,
+  "changes": 118,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "token types"
+    },
+    {
+      "name": "types"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":0,"change":"ContentChange","types":["H1"],"str":"Safe C ommun i cation","line":2,"x":99.264,"y":436.9,"width":"395.03","height":"36.00","fontName":["ABCDEE+Lucida Calligraphy"],"dir":["ltr"]}
+{"page":0,"change":"ContentChange","types":["H2"],"str":"Design, implement and measure:  A guide to ","line":3,"x":99.264,"y":387.31,"width":"549.00","height":"26.04","fontName":[null],"dir":["ltr"]}
+{"page":0,"change":"ContentChange","types":["H2"],"str":"improving transfers of care and handover","line":4,"x":99.264,"y":352.99,"width":"507.23","height":"26.04","fontName":[null],"dir":["ltr"]}
+{"page":0,"change":"ContentChange","types":["H3"],"str":"Authors :","line":5,"x":526.63,"y":111.26,"width":"66.46","height":"15.96","fontName":[null],"dir":["ltr"]}
+{"page":0,"change":"ContentChange","types":["H3"],"str":"Nicola Davey & Ali Cole","line":6,"x":526.63,"y":80.04,"width":"175.03","height":"15.96","fontName":[null],"dir":["ltr"]}
+{"page":1,"change":"ContentChange","types":["H2"],"str":"Contents :","line":1,"x":99.264,"y":512.26,"width":"130.55","height":"27.96","fontName":[null],"dir":["ltr"]}
+{"page":2,"change":"ContentChange","types":["H3"],"str":"Creative Commons Attribution  – non - commercial ","line":25,"x":99.264,"y":130.34,"width":"344.85","height":"15.96","fontName":[null,"Arial"],"dir":["ltr"]}
+{"page":4,"change":"ContentChange","types":["H3"],"str":"Why use this guide?","dir":"ltr","width":"155.37","height":"15.96","transform":["15.96","0.00","0.00","15.96","99.26","284.57"],"x":99.264,"y":284.57,"line":13}
+{"page":6,"change":"ContentChange","types":["H3"],"str":"‘Passing the baton’","dir":"ltr","width":"146.56","height":"15.96","transform":["15.96","0.00","0.00","15.96","99.26","523.66"],"fontName":"Arial,Bold","x":99.264,"y":523.66,"line":1}
+{"page":7,"change":"ContentChange","types":["H2"],"str":"P lanned, structured  transfer  of care : what does ","line":1,"x":99.264,"y":512.26,"width":"636.03","height":"27.96","fontName":[null],"dir":["ltr"]}
+{"page":7,"change":"ContentChange","types":["H2"],"str":"it look like?","dir":"ltr","width":"153.92","height":"27.96","transform":["27.96","0.00","0.00","27.96","99.26","479.98"],"x":99.264,"y":479.98,"line":2}
+{"page":8,"change":"ContentChange","types":["H2"],"str":"How do you achieve it?","dir":"ltr","width":"311.11","height":"27.96","transform":["27.96","0.00","0.00","27.96","99.26","512.26"],"x":99.264,"y":512.26,"line":1}
+{"page":9,"change":"ContentChange","types":["H2"],"str":"Start out","dir":"ltr","width":"98.74","height":"24.00","transform":["24.00","0.00","0.00","24.00","155.18","484.18"],"x":155.18,"y":484.18,"line":1}
+{"page":11,"change":"ContentChange","types":["H3"],"str":"What does  ‘good’ look like?","line":1,"x":99.264,"y":523.66,"width":"207.10","height":"15.96","fontName":[null,"Arial,Bold"],"dir":["ltr"]}
+{"page":12,"change":"ContentChange","types":["H2"],"str":"Define and scope","dir":"ltr","width":"198.62","height":"24.00","transform":["24.00","0.00","0.00","24.00","156.26","488.50"],"x":156.26,"y":488.5,"line":1}
+{"page":12,"change":"ContentChange","types":["H3"],"str":"What are we trying to accomplish?","dir":"ltr","width":"263.95","height":"15.96","transform":["15.96","0.00","0.00","15.96","99.26","276.65"],"x":99.264,"y":276.65,"line":11}
+{"page":13,"change":"ContentChange","types":["H3"],"str":"Link your improvement project to  your  organisation ’s  strategic aims ","line":1,"x":99.264,"y":523.66,"width":"523.31","height":"15.96","fontName":[null,"Arial,Bold"],"dir":["ltr"]}
+{"page":15,"change":"ContentChange","types":["H3"],"str":"What is the scale of your improvement project?","line":1,"x":99.264,"y":523.66,"width":"356.43","height":"15.96","fontName":[null],"dir":["ltr"]}
+{"page":15,"change":"ContentChange","types":["H3"],"str":"E ngage staff, patients and users and s et up your project team ","line":6,"x":99.264,"y":432.22,"width":"469.06","height":"15.96","fontName":[null],"dir":["ltr"]}
+{"page":16,"change":"ContentChange","types":["H3"],"str":"Who to include in your team?","dir":"ltr","width":"223.84","height":"15.96","transform":["15.96","0.00","0.00","15.96","99.26","523.66"],"x":99.264,"y":523.66,"line":1}
+{"page":17,"change":"ContentChange","types":["H3"],"str":"P utting it all together","line":1,"x":99.264,"y":495.1,"width":"159.71","height":"15.96","fontName":[null],"dir":["ltr"]}
+{"page":18,"change":"ContentChange","types":["H2"],"str":"Measure and understand","dir":"ltr","width":"284.04","height":"24.00","transform":["24.00","0.00","0.00","24.00","158.42","478.18"],"x":158.42,"y":478.18,"line":1}
+{"page":20,"change":"ContentChange","types":["H3"],"str":"Choose your measures and start collecting your baseline data","line":1,"x":99.264,"y":523.66,"width":"468.22","height":"15.96","fontName":[null],"dir":["ltr"]}
+{"page":22,"change":"ContentChange","types":["H3"],"str":"Capture and display the data","dir":"ltr","width":"218.57","height":"15.96","transform":["15.96","0.00","0.00","15.96","99.26","523.66"],"x":99.264,"y":523.66,"line":1}
+{"page":23,"change":"ContentChange","types":["H2"],"str":"Design and plan","dir":"ltr","width":"185.38","height":"24.00","transform":["24.00","0.00","0.00","24.00","154.82","484.18"],"x":154.82,"y":484.18,"line":1}
+{"page":24,"change":"ContentChange","types":["H3"],"str":"Where to s tart?","line":4,"x":99.264,"y":453.46,"width":"117.23","height":"15.96","fontName":[null],"dir":["ltr"]}
+{"page":26,"change":"ContentChange","types":["H3"],"str":"Generate  imp rovement ideas","line":1,"x":99.264,"y":523.66,"width":"219.53","height":"15.96","fontName":[null],"dir":["ltr"]}
+{"page":27,"change":"ContentChange","types":["H3"],"str":"Design your change intervention ( s )","line":1,"x":99.264,"y":523.66,"width":"268.18","height":"15.96","fontName":[null],"dir":["ltr"]}
+{"page":28,"change":"ContentChange","types":["H3"],"str":"Make it your own","dir":"ltr","width":"129.68","height":"15.96","transform":["15.96","0.00","0.00","15.96","99.26","523.66"],"x":99.264,"y":523.66,"line":1}
+{"page":29,"change":"ContentChange","types":["H3"],"str":"Use ‘d ot  v oting ’ to  define your  ‘ minimum data set ’","line":1,"x":99.264,"y":523.66,"width":"374.53","height":"15.96","fontName":["Arial,Bold",null],"dir":["ltr"]}
+{"page":30,"change":"ContentChange","types":["H3"],"str":"Using ‘structured communication t ool s","line":1,"x":99.264,"y":523.66,"width":"293.07","height":"15.96","fontName":[null,"Arial,Bold"],"dir":["ltr"]}
+{"page":32,"change":"ContentChange","types":["H3"],"str":"Document y our  s tandard  p rocess","line":8,"x":99.264,"y":402.31,"width":"255.06","height":"15.96","fontName":[null],"dir":["ltr"]}
+{"page":32,"change":"ContentChange","types":["H3"],"str":"Choose  and review  your measures ","line":13,"x":99.264,"y":310.85,"width":"268.19","height":"15.96","fontName":[null],"dir":["ltr"]}
+{"page":33,"change":"ContentChange","types":["H2"],"str":"Pilot and implement","dir":"ltr","width":"228.10","height":"24.00","transform":["24.00","0.00","0.00","24.00","155.18","488.50"],"x":155.18,"y":488.5,"line":1}
+{"page":35,"change":"ContentChange","types":["H3"],"str":"Plan for implementation","dir":"ltr","width":"182.10","height":"15.96","transform":["15.96","0.00","0.00","15.96","99.26","523.66"],"x":99.264,"y":523.66,"line":1}
+{"page":37,"change":"ContentChange","types":["H2"],"str":"Sustain and share","dir":"ltr","width":"206.64","height":"24.00","transform":["24.00","0.00","0.00","24.00","159.38","480.82"],"x":159.38,"y":480.82,"line":1}
+{"page":38,"change":"ContentChange","types":["H3"],"str":"Share and celebrate success","line":1,"x":99.264,"y":523.66,"width":"215.03","height":"15.96","fontName":[null],"dir":["ltr"]}
+{"page":38,"change":"ContentChange","types":["H3"],"str":"Keep measuring ....","line":11,"x":99.264,"y":332.11,"width":"142.18","height":"15.96","fontName":[null],"dir":["ltr"]}
+{"page":48,"change":"ContentChange","types":["H4"],"str":"Acute example","dir":"ltr","width":"86.67","height":"14.40","transform":["14.44","0.00","0.00","14.40","367.83","485.36"],"fontName":"ABCDEE+Calibri","x":367.828903554016,"y":485.358469,"line":4}
+{"page":59,"change":"ContentChange","types":["H3"],"str":"Product timeline ","dir":"ltr","width":"119.09","height":"15.96","transform":["15.96","0.00","0.00","15.96","53.88","520.78"],"x":53.88,"y":520.78,"line":1}

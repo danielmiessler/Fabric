@@ -1,0 +1,47 @@
+{
+  "name": "klaw-sync",
+  "version": "6.0.0",
+  "description": "Recursive, synchronous, and fast file system walker",
+  "main": "klaw-sync.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/manidlou/node-klaw-sync.git"
+  },
+  "keywords": [
+    "fs",
+    "walk",
+    "walker",
+    "walk-sync",
+    "klaw",
+    "readdir-sync"
+  ],
+  "author": "Mani Maghsoudlou",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/manidlou/node-klaw-sync/issues"
+  },
+  "homepage": "https://github.com/manidlou/node-klaw-sync#readme",
+  "dependencies": {
+    "graceful-fs": "^4.1.11"
+  },
+  "devDependencies": {
+    "benchmark": "^2.1.4",
+    "fs-extra": "^5.0.0",
+    "memory-fs": "^0.4.1",
+    "mkp": "^1.0.1",
+    "mocha": "^5.1.1",
+    "standard": "^11.0.1",
+    "walk-sync": "^0.3.3"
+  },
+  "standard": {
+    "env": [
+      "mocha"
+    ]
+  },
+  "scripts": {
+    "lint": "standard",
+    "unit": "mocha",
+    "test": "npm run lint && npm run unit",
+    "benchmark": "node ./benchmark/bm.js"
+  }
+}

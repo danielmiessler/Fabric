@@ -1,0 +1,37 @@
+{
+  "name": "devalue",
+  "description": "Gets the job done when JSON.stringify can't",
+  "version": "5.3.2",
+  "repository": "sveltejs/devalue",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./types/index.d.ts",
+      "import": "./index.js",
+      "default": "./index.js"
+    }
+  },
+  "files": [
+    "index.js",
+    "src",
+    "types"
+  ],
+  "types": "./types/index.d.ts",
+  "devDependencies": {
+    "@changesets/cli": "^2.29.6",
+    "@js-temporal/polyfill": "^0.5.1",
+    "dts-buddy": "^0.6.2",
+    "publint": "^0.3.12",
+    "typescript": "^5.9.2",
+    "uvu": "^0.5.6"
+  },
+  "license": "MIT",
+  "type": "module",
+  "packageManager": "pnpm@8.15.9",
+  "scripts": {
+    "changeset:version": "changeset version",
+    "changeset:publish": "changeset publish",
+    "build": "dts-buddy",
+    "test": "uvu test"
+  }
+}

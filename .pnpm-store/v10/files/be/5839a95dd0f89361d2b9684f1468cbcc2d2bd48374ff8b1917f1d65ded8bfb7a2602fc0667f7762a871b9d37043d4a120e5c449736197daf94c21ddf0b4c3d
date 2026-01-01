@@ -1,0 +1,85 @@
+{
+  "pages": 76,
+  "items": 3071,
+  "groupedItems": 2578,
+  "changes": 53,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "token types"
+    },
+    {
+      "name": "types",
+      "annotation": "ADDED"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {
+    "toc": {
+      "tocHeadlineItems": [
+        {
+          "page": 1,
+          "text": "Contents"
+        }
+      ],
+      "pages": [
+        1
+      ],
+      "detectedHeadlineLevels": {}
+    },
+    "headlineTypeToHeightRange": {
+      "H2": {
+        "min": 24.787,
+        "max": 24.787
+      }
+    }
+  }
+}
+{"page":1,"change":"Removal","str":"Contents","dir":"ltr","width":"95.01","height":"24.79","transform":["24.79","0.00","0.00","24.79","102.88","623.57"],"fontName":"TBCMKD+NimbusRomNo9L-Medi","x":102.884,"y":623.565,"line":0}
+{"page":1,"change":"Removal","str":"Poem. All in the golden afternoon . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3","line":1,"x":102.884,"y":557.313,"width":"381.07","height":"11.96","fontName":["FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":1,"change":"Removal","str":"I Down the Rabbit-Hole . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .   4","line":2,"x":102.884,"y":530.912,"width":"353.22","height":"11.96","fontName":["FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":1,"change":"Removal","str":"II    The Pool of Tears . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  9","line":3,"x":102.884,"y":504.511,"width":"380.55","height":"11.96","fontName":["FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":1,"change":"Removal","str":"III   A Caucus-Race and a Long Tale . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14","line":4,"x":102.884,"y":478.11,"width":"381.15","height":"11.96","fontName":["FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":1,"change":"Removal","str":"IV   The Rabbit Sends in a Little Bill . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  19","line":5,"x":102.884,"y":451.709,"width":"378.87","height":"11.96","fontName":["FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":1,"change":"Removal","str":"V    Advice from a Caterpillar . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 25","line":6,"x":102.884,"y":425.308,"width":"381.15","height":"11.96","fontName":["FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":1,"change":"Removal","str":"VI   Pig and Pepper . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  32","line":7,"x":102.884,"y":398.907,"width":"379.43","height":"11.96","fontName":["FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":1,"change":"Removal","str":"VII  A Mad Tea-Party . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  39","line":8,"x":102.884,"y":372.506,"width":"379.30","height":"11.96","fontName":["FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":1,"change":"Removal","str":"VIII  The Queen’s Croquet-Ground . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 46","line":9,"x":102.884,"y":346.105,"width":"380.42","height":"11.96","fontName":["FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":1,"change":"Removal","str":"IX   The Mock Turtle’s Story . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 53","line":10,"x":102.884,"y":319.704,"width":"381.20","height":"11.96","fontName":["FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":1,"change":"Removal","str":"X    The Lobster Quadrille . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 59","line":11,"x":102.884,"y":293.303,"width":"380.58","height":"11.96","fontName":["FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":1,"change":"Removal","str":"XI   Who Stole the Tarts? . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 65","line":12,"x":102.884,"y":266.902,"width":"380.24","height":"11.96","fontName":["FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":1,"change":"Removal","str":"XII  Alice’s Evidence . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 70","line":13,"x":102.884,"y":240.501,"width":"381.27","height":"11.96","fontName":["FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":4,"change":"ContentChange","types":["H2"],"str":"Down the Rabbit-Hole","dir":"ltr","width":"237.73","height":"24.79","transform":["24.79","0.00","0.00","24.79","102.88","573.75"],"fontName":"TBCMKD+NimbusRomNo9L-Medi","x":102.884,"y":573.7510000000001,"line":1}
+{"page":9,"change":"ContentChange","types":["H2"],"str":"The Pool of Tears","dir":"ltr","width":"185.18","height":"24.79","transform":["24.79","0.00","0.00","24.79","102.88","573.75"],"fontName":"TBCMKD+NimbusRomNo9L-Medi","x":102.884,"y":573.7510000000001,"line":1}
+{"page":14,"change":"ContentChange","types":["H2"],"str":"A Caucus-Race and a Long Tale","dir":"ltr","width":"339.93","height":"24.79","transform":["24.79","0.00","0.00","24.79","102.88","573.75"],"fontName":"TBCMKD+NimbusRomNo9L-Medi","x":102.884,"y":573.7510000000001,"line":1}
+{"page":19,"change":"ContentChange","types":["H2"],"str":"The Rabbit Sends in a Little Bill","dir":"ltr","width":"341.34","height":"24.79","transform":["24.79","0.00","0.00","24.79","102.88","573.75"],"fontName":"TBCMKD+NimbusRomNo9L-Medi","x":102.884,"y":573.7510000000001,"line":1}
+{"page":25,"change":"ContentChange","types":["H2"],"str":"Advice from a Caterpillar","dir":"ltr","width":"273.97","height":"24.79","transform":["24.79","0.00","0.00","24.79","102.88","573.75"],"fontName":"TBCMKD+NimbusRomNo9L-Medi","x":102.884,"y":573.7510000000001,"line":1}
+{"page":32,"change":"ContentChange","types":["H2"],"str":"Pig and Pepper","dir":"ltr","width":"162.01","height":"24.79","transform":["24.79","0.00","0.00","24.79","102.88","573.75"],"fontName":"TBCMKD+NimbusRomNo9L-Medi","x":102.884,"y":573.7510000000001,"line":1}
+{"page":39,"change":"ContentChange","types":["H2"],"str":"A Mad Tea-Party","dir":"ltr","width":"184.71","height":"24.79","transform":["24.79","0.00","0.00","24.79","102.88","573.75"],"fontName":"TBCMKD+NimbusRomNo9L-Medi","x":102.884,"y":573.7510000000001,"line":1}
+{"page":46,"change":"ContentChange","types":["H2"],"str":"The Queen’s Croquet-Ground","dir":"ltr","width":"319.06","height":"24.79","transform":["24.79","0.00","0.00","24.79","102.88","573.75"],"fontName":"TBCMKD+NimbusRomNo9L-Medi","x":102.884,"y":573.7510000000001,"line":1}
+{"page":53,"change":"ContentChange","types":["H2"],"str":"The Mock Turtle’s Story","dir":"ltr","width":"260.49","height":"24.79","transform":["24.79","0.00","0.00","24.79","102.88","573.75"],"fontName":"TBCMKD+NimbusRomNo9L-Medi","x":102.884,"y":573.7510000000001,"line":1}
+{"page":59,"change":"ContentChange","types":["H2"],"str":"The Lobster Quadrille","dir":"ltr","width":"238.25","height":"24.79","transform":["24.79","0.00","0.00","24.79","102.88","573.75"],"fontName":"TBCMKD+NimbusRomNo9L-Medi","x":102.884,"y":573.7510000000001,"line":1}
+{"page":65,"change":"ContentChange","types":["H2"],"str":"Who Stole the Tarts?","dir":"ltr","width":"222.86","height":"24.79","transform":["24.79","0.00","0.00","24.79","102.88","573.75"],"fontName":"TBCMKD+NimbusRomNo9L-Medi","x":102.884,"y":573.7510000000001,"line":1}
+{"page":70,"change":"ContentChange","types":["H2"],"str":"Alice’s Evidence","dir":"ltr","width":"173.26","height":"24.79","transform":["24.79","0.00","0.00","24.79","102.88","573.75"],"fontName":"TBCMKD+NimbusRomNo9L-Medi","x":102.884,"y":573.7510000000001,"line":1}

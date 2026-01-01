@@ -1,0 +1,11 @@
+import Item from '../Item';
+import EvaluationIndex from './EvaluationIndex';
+export default class EvaluationTracker implements EvaluationIndex {
+    private evaluations;
+    private scored;
+    evaluationCount(): number;
+    hasScores(): boolean;
+    evaluated(item: Item): boolean;
+    evaluationScore(item: Item): unknown;
+    trackEvaluation(item: Item, score?: unknown): void;
+}

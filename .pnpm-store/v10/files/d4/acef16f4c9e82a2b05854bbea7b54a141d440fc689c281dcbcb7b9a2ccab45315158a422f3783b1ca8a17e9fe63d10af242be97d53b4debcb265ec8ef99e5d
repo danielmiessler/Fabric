@@ -1,0 +1,6 @@
+declare enum FontType {
+    BOLD = "BOLD",
+    OBLIQUE = "OBLIQUE"
+}
+export default FontType;
+export declare function declaredFontTypes(fontName: string): FontType[];

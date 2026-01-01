@@ -1,0 +1,54 @@
+{
+  "pages": 7,
+  "items": 532,
+  "groupedItems": 238,
+  "changes": 63,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":0,"change":"Removal","score":"1.00: (0.00 + 1.00)","str":"Systematic Identification of MicroPLastics in the Environment","line":0,"x":148.16,"y":796.02,"width":"278.17","height":"10.98","fontName":["BCDEEE+Calibri-Bold"],"dir":["ltr"]}
+{"page":0,"change":"Removal","score":"1.00: (0.00 + 1.00)","str":"Developed by Aalborg University, Denmark and Alfred Wegener Institute, Germany","dir":"ltr","width":"371.19","height":"10.98","transform":["10.98","0.00","0.00","10.98","148.16","782.58"],"fontName":"BCDFEE+Calibri","x":148.16,"y":782.58,"line":1}
+{"page":0,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"Page  1 / 7","line":2,"x":35.34,"y":38.1,"width":"39.46","height":"10.98","fontName":["BCDFEE+Calibri"],"dir":["ltr"]}
+{"page":1,"change":"Removal","score":"1.00: (0.00 + 1.00)","str":"Systematic Identification of MicroPLastics in the Environment","line":0,"x":148.16,"y":796.02,"width":"278.17","height":"10.98","fontName":["BCDEEE+Calibri-Bold"],"dir":["ltr"]}
+{"page":1,"change":"Removal","score":"1.00: (0.00 + 1.00)","str":"Developed by Aalborg University, Denmark and Alfred Wegener Institute, Germany","dir":"ltr","width":"371.19","height":"10.98","transform":["10.98","0.00","0.00","10.98","148.16","782.58"],"fontName":"BCDFEE+Calibri","x":148.16,"y":782.58,"line":1}
+{"page":1,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"Page  2 / 7","line":2,"x":35.34,"y":38.1,"width":"39.46","height":"10.98","fontName":["BCDFEE+Calibri"],"dir":["ltr"]}
+{"page":2,"change":"Removal","score":"1.00: (0.00 + 1.00)","str":"Systematic Identification of MicroPLastics in the Environment","line":0,"x":148.16,"y":796.02,"width":"278.17","height":"10.98","fontName":["BCDEEE+Calibri-Bold"],"dir":["ltr"]}
+{"page":2,"change":"Removal","score":"1.00: (0.00 + 1.00)","str":"Developed by Aalborg University, Denmark and Alfred Wegener Institute, Germany","dir":"ltr","width":"371.19","height":"10.98","transform":["10.98","0.00","0.00","10.98","148.16","782.58"],"fontName":"BCDFEE+Calibri","x":148.16,"y":782.58,"line":1}
+{"page":2,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"Page  3 / 7","line":2,"x":35.34,"y":38.1,"width":"39.46","height":"10.98","fontName":["BCDFEE+Calibri"],"dir":["ltr"]}
+{"page":3,"change":"Removal","score":"1.00: (0.00 + 1.00)","str":"Systematic Identification of MicroPLastics in the Environment","line":0,"x":148.16,"y":796.02,"width":"278.17","height":"10.98","fontName":["BCDEEE+Calibri-Bold"],"dir":["ltr"]}
+{"page":3,"change":"Removal","score":"1.00: (0.00 + 1.00)","str":"Developed by Aalborg University, Denmark and Alfred Wegener Institute, Germany","dir":"ltr","width":"371.19","height":"10.98","transform":["10.98","0.00","0.00","10.98","148.16","782.58"],"fontName":"BCDFEE+Calibri","x":148.16,"y":782.58,"line":1}
+{"page":3,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"Page  4 / 7","line":2,"x":35.34,"y":38.1,"width":"39.46","height":"10.98","fontName":["BCDFEE+Calibri"],"dir":["ltr"]}
+{"page":4,"change":"Removal","score":"1.00: (0.00 + 1.00)","str":"Systematic Identification of MicroPLastics in the Environment","line":0,"x":148.16,"y":796.02,"width":"278.17","height":"10.98","fontName":["BCDEEE+Calibri-Bold"],"dir":["ltr"]}
+{"page":4,"change":"Removal","score":"1.00: (0.00 + 1.00)","str":"Developed by Aalborg University, Denmark and Alfred Wegener Institute, Germany","dir":"ltr","width":"371.19","height":"10.98","transform":["10.98","0.00","0.00","10.98","148.16","782.58"],"fontName":"BCDFEE+Calibri","x":148.16,"y":782.58,"line":1}
+{"page":4,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"Page  5 / 7","line":2,"x":35.34,"y":38.1,"width":"39.46","height":"10.98","fontName":["BCDFEE+Calibri"],"dir":["ltr"]}
+{"page":5,"change":"Removal","score":"1.00: (0.00 + 1.00)","str":"Systematic Identification of MicroPLastics in the Environment","line":0,"x":148.16,"y":796.02,"width":"278.17","height":"10.98","fontName":["BCDEEE+Calibri-Bold"],"dir":["ltr"]}
+{"page":5,"change":"Removal","score":"1.00: (0.00 + 1.00)","str":"Developed by Aalborg University, Denmark and Alfred Wegener Institute, Germany","dir":"ltr","width":"371.19","height":"10.98","transform":["10.98","0.00","0.00","10.98","148.16","782.58"],"fontName":"BCDFEE+Calibri","x":148.16,"y":782.58,"line":1}
+{"page":5,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"Page  6 / 7","line":2,"x":35.34,"y":38.1,"width":"39.46","height":"10.98","fontName":["BCDFEE+Calibri"],"dir":["ltr"]}
+{"page":6,"change":"Removal","score":"1.00: (0.00 + 1.00)","str":"Systematic Identification of MicroPLastics in the Environment","line":0,"x":148.16,"y":796.02,"width":"278.17","height":"10.98","fontName":["BCDEEE+Calibri-Bold"],"dir":["ltr"]}
+{"page":6,"change":"Removal","score":"1.00: (0.00 + 1.00)","str":"Developed by Aalborg University, Denmark and Alfred Wegener Institute, Germany","dir":"ltr","width":"371.19","height":"10.98","transform":["10.98","0.00","0.00","10.98","148.16","782.58"],"fontName":"BCDFEE+Calibri","x":148.16,"y":782.58,"line":1}
+{"page":6,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"Page  7 / 7","line":2,"x":35.34,"y":38.1,"width":"39.46","height":"10.98","fontName":["BCDFEE+Calibri"],"dir":["ltr"]}

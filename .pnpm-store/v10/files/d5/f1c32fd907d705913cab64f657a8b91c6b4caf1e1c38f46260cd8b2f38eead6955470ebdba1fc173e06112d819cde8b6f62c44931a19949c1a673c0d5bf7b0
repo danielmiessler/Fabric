@@ -1,0 +1,26 @@
+{
+  "author": "Joyent, Inc",
+  "name": "http-signature",
+  "description": "Reference implementation of Joyent's HTTP Signature Scheme",
+  "version": "0.9.11",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/joyent/node-http-signature.git"
+  },
+  "engines": {
+    "node": ">=0.8"
+  },
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/tap tst/*.js"
+  },
+  "dependencies": {
+    "assert-plus": "0.1.2",
+    "asn1": "0.1.11",
+    "ctype": "0.5.2"
+  },
+  "devDependencies": {
+    "node-uuid": "1.4.0",
+    "tap": "0.3.1"
+  }
+}

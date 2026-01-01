@@ -1,0 +1,19 @@
+{
+	"version": 3,
+	"file": "index.d.ts",
+	"names": [
+		"getLocator",
+		"locate",
+		"Location",
+		"Options"
+	],
+	"sources": [
+		"../src/index.js",
+		"../src/types.d.ts"
+	],
+	"sourcesContent": [
+		null,
+		null
+	],
+	"mappings": ";iBAcgBA,UAAUA;;iBAuDVC,MAAMA;aCzDLC,QAAQA;WAZRC,OAAOA"
+}

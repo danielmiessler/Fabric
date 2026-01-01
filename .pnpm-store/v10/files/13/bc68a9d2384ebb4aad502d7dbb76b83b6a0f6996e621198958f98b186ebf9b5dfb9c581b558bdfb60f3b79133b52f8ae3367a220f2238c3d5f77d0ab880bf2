@@ -1,0 +1,353 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.HEADLINE_TYPE_TO_HEIGHT_RANGE = exports.TOC_GLOBAL = void 0;
+const string_similarity_1 = require("string-similarity");
+const ItemTransformer_1 = require("./ItemTransformer");
+const GlobalDefinition_1 = require("../GlobalDefinition");
+const LineItemMerger_1 = require("../debug/LineItemMerger");
+const groupingUtils_1 = require("../support/groupingUtils");
+const CacluclateStatistics_1 = require("./CacluclateStatistics");
+const stringFunctions_1 = require("../support/stringFunctions");
+const numberFunctions_1 = require("../support/numberFunctions");
+const TOC_1 = require("../TOC");
+const FontType_1 = require("../FontType");
+const functional_1 = require("../support/functional");
+const items_1 = require("../support/items");
+const text_types_1 = require("../text-types");
+const config = {
+    // How many characters a line with a ending number needs to have minimally to be a valid link
+    linkMinLength: 4,
+    // How much bigger (height) then a 'normal' text a headline must be
+    // TODO sync with DetectHeadline ??
+    minHeadlineDistance: 1.5,
+};
+exports.TOC_GLOBAL = new GlobalDefinition_1.default('toc');
+exports.HEADLINE_TYPE_TO_HEIGHT_RANGE = new GlobalDefinition_1.default('headlineTypeToHeightRange');
+class DetectToc extends ItemTransformer_1.default {
+    constructor() {
+        super('Detect TOC', 'Detect table of contents.', {
+            requireColumns: ['x', 'y', 'str', 'line'],
+            producesGlobels: [exports.TOC_GLOBAL.key, exports.HEADLINE_TYPE_TO_HEIGHT_RANGE.key],
+            debug: {
+                itemMerger: new LineItemMerger_1.default(),
+            },
+        }, (incomingSchema) => {
+            return incomingSchema.reduce((schema, column) => {
+                if (column === 'x') {
+                    return [...schema, 'types', 'x'];
+                }
+                return [...schema, column];
+            }, new Array());
+        });
+    }
+    transform(context, inputItems) {
+        const pageMapping = context.getGlobal(CacluclateStatistics_1.PAGE_MAPPING);
+        const mostUsedHeight = context.getGlobal(CacluclateStatistics_1.MOST_USED_HEIGHT);
+        const maxPageToEvaluate = Math.min(context.pageCount / 2, 5 + Math.abs(pageMapping.pageFactor));
+        const pagesToEvaluate = (0, groupingUtils_1.groupByPage)(inputItems.filter((item) => item.page <= maxPageToEvaluate));
+        const maxPageToBeLinkedTo = context.pageCount + pageMapping.pageFactor - 1;
+        const tocArea = findTocArea(pagesToEvaluate, context.pageCount, maxPageToBeLinkedTo);
+        if (!tocArea) {
+            return { items: inputItems, messages: ['No Table of Contents found!'] };
+        }
+        const itemsInTocArea = inputItems.filter((item) => tocArea.pages.includes(item.page));
+        const rawTocEntries = selectRawTocEntries(tocArea, itemsInTocArea);
+        const headlineLevels = findTocEntryHeadlineLevels(rawTocEntries);
+        const tocItemUuids = new Set((0, functional_1.flatten)((0, functional_1.flatten)(rawTocEntries.map((e) => e.entryLines))).map((item) => item.uuid));
+        const tocHeadline = findTocHeadline(context.fontMap, mostUsedHeight, tocArea, itemsInTocArea, tocItemUuids);
+        const notFoundHeadlines = [];
+        const foundHeadlines = [];
+        const headlineTypeToHeightRange = {}; //H1={min:23, max:25}
+        rawTocEntries.forEach((rawEntry, index) => {
+            const itemType = headlineLevels[index];
+            const uuids = findHeadline(context.fontMap, inputItems, mostUsedHeight, rawEntry.linkedPage, rawEntry.linkedPage - pageMapping.pageFactor, rawEntry.entryLines);
+            if (uuids) {
+                foundHeadlines.push({ level: itemType, uuids });
+                // add headline height
+                const headlineHeight = inputItems
+                    .filter((item) => uuids.has(item.uuid))
+                    .reduce((maxHeight, item) => Math.max(maxHeight, item.data['height']), 0);
+                let range = headlineTypeToHeightRange[itemType];
+                if (range) {
+                    range.min = Math.min(range.min, headlineHeight);
+                    range.max = Math.max(range.max, headlineHeight);
+                }
+                else {
+                    range = {
+                        min: headlineHeight,
+                        max: headlineHeight,
+                    };
+                    headlineTypeToHeightRange[itemType] = range;
+                }
+            }
+            else {
+                notFoundHeadlines.push(rawEntry);
+            }
+        });
+        const headlineUuidToLevelMap = foundHeadlines.reduce((uidToLevel, headline) => {
+            headline.uuids.forEach((uuid) => {
+                uidToLevel.set(uuid, headline.level);
+            });
+            return uidToLevel;
+        }, new Map());
+        const headlineTypes = foundHeadlines.reduce((allLevels, headline) => {
+            allLevels.add(headline.level);
+            return allLevels;
+        }, new Set());
+        const tocHeadlineUuids = new Set(tocHeadline.map((item) => item.uuid));
+        return {
+            items: inputItems
+                .filter((item) => !tocHeadlineUuids.has(item.uuid))
+                .filter((item) => !tocArea.pages.includes(item.page) || !tocItemUuids.has(item.uuid))
+                .map((item) => {
+                const itemType = headlineUuidToLevelMap.get(item.uuid);
+                if (itemType) {
+                    return (0, items_1.itemWithType)(item, itemType);
+                }
+                return item;
+            }),
+            messages: [
+                `Detected and removed ${rawTocEntries.length} TOC entries`,
+                `Found ${foundHeadlines.length} matching headlines`,
+            ],
+            globals: [
+                exports.TOC_GLOBAL.value(new TOC_1.default(tocHeadline, tocArea.pages, headlineTypes)),
+                exports.HEADLINE_TYPE_TO_HEIGHT_RANGE.value(headlineTypeToHeightRange),
+            ],
+        };
+    }
+}
+exports.default = DetectToc;
+function findTocArea(pagesToEvaluate, pageCount, maxPageToBeLinkedTo) {
+    const linesWithNumber = [];
+    pagesToEvaluate.forEach((pageItems) => {
+        const itemsGroupedByLine = (0, groupingUtils_1.groupByLine)(pageItems);
+        itemsGroupedByLine.forEach((lineItems) => {
+            const number = findEndingNumber(lineItems);
+            if (number &&
+                Number.isInteger(number) &&
+                number > 0 &&
+                number <= maxPageToBeLinkedTo &&
+                lineItems.map((item) => item.data['str']).join('').length > config.linkMinLength) {
+                const page = lineItems[0].page;
+                const startItemUuid = lineItems[0].uuid;
+                const y = lineItems[0].data['y'];
+                linesWithNumber.push({ page, startItemUuid, y, number });
+            }
+        });
+    });
+    if (linesWithNumber.length <= 0) {
+        return undefined;
+    }
+    const lineNumberClusters = linesWithNumber.reduce((arrayOfAscendingNumberArrays, lineWithNumber) => {
+        if (arrayOfAscendingNumberArrays.length == 0) {
+            return [[lineWithNumber]];
+        }
+        const lastArray = arrayOfAscendingNumberArrays[arrayOfAscendingNumberArrays.length - 1];
+        const lastNumber = lastArray[lastArray.length - 1];
+        if (lineWithNumber.number >= lastNumber.number) {
+            lastArray.push(lineWithNumber);
+        }
+        else {
+            arrayOfAscendingNumberArrays.push([lineWithNumber]);
+        }
+        return arrayOfAscendingNumberArrays;
+    }, []);
+    lineNumberClusters.sort((a, b) => b.length - a.length);
+    if (lineNumberClusters[0].length < 3) {
+        return undefined;
+    }
+    const selectedLines = lineNumberClusters[0];
+    const pages = selectedLines.map((l) => l.page).filter(groupingUtils_1.onlyUniques);
+    if (!(0, numberFunctions_1.numbersAreConsecutive)(pages)) {
+        return undefined;
+    }
+    if (pages.length > selectedLines.length / 5) {
+        return undefined;
+    }
+    return {
+        pages,
+        linesWithNumbers: selectedLines,
+    };
+}
+function findEndingNumber(lineItems) {
+    const text = lineItems
+        .reduce((text, item) => {
+        return text + item.data['str'];
+    }, '')
+        .trim();
+    return (0, stringFunctions_1.extractEndingNumber)(text);
+}
+function selectRawTocEntries(tocArea, itemsInTocArea) {
+    const numbersByStartUuid = tocArea.linesWithNumbers.reduce((map, l) => {
+        map.set(l.startItemUuid, l.number);
+        return map;
+    }, new Map());
+    const itemsInTocAreaByLine = (0, groupingUtils_1.groupByLine)(itemsInTocArea);
+    const maxHeightOfNumberedLines = Math.max(...itemsInTocAreaByLine
+        .reduce((lineHeights, lineItems) => {
+        if (numbersByStartUuid.has(lineItems[0].uuid)) {
+            lineHeights.push(Math.max(...lineItems.map((line) => line.data['height'])));
+        }
+        return lineHeights;
+    }, [])
+        .filter(groupingUtils_1.onlyUniques));
+    const maxLinesBetweenLinesWithNumbers = Math.max(...itemsInTocAreaByLine
+        .reduce((lineDistance, lineItems) => {
+        if (numbersByStartUuid.has(lineItems[0].uuid)) {
+            lineDistance.push(-1);
+        }
+        if (lineDistance.length > 0) {
+            lineDistance[lineDistance.length - 1]++;
+        }
+        return lineDistance;
+    }, [])
+        .filter(groupingUtils_1.onlyUniques));
+    const linesWithNumbersByPage = (0, functional_1.groupBy)(tocArea.linesWithNumbers, (line) => line.page);
+    const maxYBetweenLinesWithNumbers = Math.max(...linesWithNumbersByPage.map((pageLines) => {
+        return pageLines.reduce((previous, line) => {
+            const y = line.y;
+            if (previous.y == -1) {
+                return { y, distance: -1 };
+            }
+            return {
+                y,
+                distance: Math.max(Math.abs(y - previous.y), previous.distance),
+            };
+        }, { y: -1, distance: -1 }).distance;
+    }));
+    const rawTocEntries = [];
+    itemsInTocAreaByLine.reduce((beforeLines, lineItems) => {
+        const number = numbersByStartUuid.get(lineItems[0].uuid);
+        if (!number) {
+            beforeLines.push(lineItems);
+            return beforeLines;
+        }
+        const validBeforeLines = beforeLines.filter((beforLine, beforeIndex) => {
+            const yDistance = Math.abs(beforLine[0].data['y'] - lineItems[0].data['y']);
+            const beforLineHeight = Math.max(...beforLine.map((item) => item.data['height']));
+            const beforeLineMuchLarger = beforLineHeight > maxHeightOfNumberedLines;
+            return (!beforeLineMuchLarger &&
+                beforeLines.length - beforeIndex <= maxLinesBetweenLinesWithNumbers &&
+                yDistance <= maxYBetweenLinesWithNumbers);
+        });
+        const entryLines = [...validBeforeLines, lineItems];
+        rawTocEntries.push({
+            linkedPage: number,
+            entryLines,
+        });
+        return [];
+    }, []);
+    return rawTocEntries;
+}
+function findTocHeadline(fontMap, mostUsedHeight, tocArea, itemsInTocArea, tocItemUuids) {
+    const firstPageNonTocItems = itemsInTocArea
+        .filter((item) => item.page == tocArea.pages[0])
+        .filter((item) => !tocItemUuids.has(item.uuid));
+    const itemsGroupedByLine = (0, groupingUtils_1.groupByLine)(firstPageNonTocItems).filter((lineItems) => hasHeadlineSymptoms(fontMap, mostUsedHeight, lineItems));
+    if (itemsGroupedByLine.length == 0) {
+        return [];
+    }
+    return itemsGroupedByLine[itemsGroupedByLine.length - 1];
+}
+function findTocEntryHeadlineLevels(rawTocEntries) {
+    // We focus on heights since it seems the most consistent metric to determining levels so far.
+    //Other options would be looking at X-coordinates (per page), or at leading numbering (e.g. /^(\d)+.(\d)+.(\d)+/).
+    const height = (entry) => Math.round((0, items_1.getHeight)(entry.entryLines[0][0]));
+    const allHeights = rawTocEntries.map(height).filter(groupingUtils_1.onlyUniques).sort(groupingUtils_1.descending);
+    // we start with H2 (H1 is reserved for the document title)
+    if (allHeights.length > 3) {
+        return rawTocEntries.map(() => 'H2');
+    }
+    return rawTocEntries.map((entry) => {
+        const index = allHeights.indexOf(height(entry));
+        return (0, text_types_1.toHeadlineType)(index + 2);
+    });
+}
+/**
+ * @param fontMap
+ * @param items
+ * @param mostUsedHeight
+ * @param targetPage
+ * @param targetPageIndex
+ * @param entryLines
+ * @returns set of uuids
+ */
+function findHeadline(fontMap, items, mostUsedHeight, targetPage, targetPageIndex, entryLines) {
+    const tocEntryText = normalizeHeadlineChars(entryLines)
+        .replace(new RegExp(targetPage + '$', 'g'), '')
+        .replace(new RegExp('\\.\\.*$', 'g'), '');
+    const pageItems = items.filter((item) => item.page == targetPageIndex);
+    const canditate = fineMatchingHeadlineCanditate(tocEntryText, pageItems, fontMap, mostUsedHeight);
+    if (canditate.length > 0) {
+        return canditate.reduce((itemUuids, lineItems) => {
+            lineItems.forEach((item) => itemUuids.add(item.uuid));
+            return itemUuids;
+        }, new Set());
+    }
+    return undefined;
+}
+function fineMatchingHeadlineCanditate(tocEntryText, pageItems, fontMap, mostUsedHeight) {
+    const itemsByLine = (0, groupingUtils_1.groupByLine)(pageItems);
+    let headlineCanditates = [];
+    let currentLines = [];
+    let currentScore = 0;
+    let currentText = '';
+    for (let lineIdx = 0; lineIdx < itemsByLine.length; lineIdx++) {
+        const lineItems = itemsByLine[lineIdx];
+        const lineText = normalizeHeadlineChars([lineItems]);
+        const lineInLink = tocEntryText.includes(lineText);
+        const headlineSymptoms = hasHeadlineSymptoms(fontMap, mostUsedHeight, lineItems);
+        if (lineInLink && headlineSymptoms) {
+            const newText = currentText + lineText;
+            const newScore = (0, string_similarity_1.compareTwoStrings)(newText, tocEntryText);
+            if (newScore > currentScore) {
+                currentScore = newScore;
+                currentText = newText;
+                currentLines.push(lineItems);
+                if (newScore == 1) {
+                    return currentLines;
+                }
+            }
+            else if (currentScore > 0.95) {
+                return currentLines;
+            }
+        }
+        else {
+            if (currentLines.length > 0) {
+                headlineCanditates.push({ score: currentScore, lines: currentLines });
+                currentLines = [];
+                currentScore = 0;
+                currentText = '';
+            }
+        }
+    }
+    // console.log(
+    //   'headlineCanditates',
+    //   tocEntryText,
+    //   pageItems[0].page,
+    //   headlineCanditates
+    //     .sort((a, b) => a.score - b.score)
+    //     .map((canditate) => canditate.score + ': ' + joinText(flatten(canditate.lines), '')),
+    // );
+    headlineCanditates = headlineCanditates.filter((candidate) => candidate.score > 0.5);
+    if (headlineCanditates.length == 0) {
+        return [];
+    }
+    return headlineCanditates.sort((a, b) => a.score - b.score)[0].lines;
+}
+function hasHeadlineSymptoms(fontMap, mostUsedHeight, lineItems) {
+    return ((0, items_1.getHeight)(lineItems[0]) >= mostUsedHeight + config.minHeadlineDistance ||
+        (0, FontType_1.declaredFontTypes)((0, items_1.getFontName)(fontMap, lineItems[0])).includes(FontType_1.default.BOLD));
+}
+function normalizeHeadlineChars(lines) {
+    const text = (0, functional_1.flatten)(lines)
+        .map((item) => (0, items_1.getText)(item))
+        .join('');
+    return (0, stringFunctions_1.filterOut)(text, [
+        stringFunctions_1.WHITESPACE_CHAR_CODE,
+        stringFunctions_1.TAB_CHAR_CODE,
+        ...stringFunctions_1.DASHS_CHAR_CODES,
+        ...stringFunctions_1.PERIOD_CHAR_CODES,
+    ]).toLowerCase();
+}

@@ -1,0 +1,44 @@
+{
+  "name": "svelte-hmr",
+  "version": "0.16.0",
+  "description": "Bundler agnostic HMR utils for Svelte 3",
+  "main": "index.js",
+  "author": "rixo <rixo@rixo.fr>",
+  "license": "ISC",
+  "homepage": "https://github.com/sveltejs/svelte-hmr",
+  "bugs": {
+    "url": "https://github.com/sveltejs/svelte-hmr/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sveltejs/svelte-hmr",
+    "directory": "packages/svelte-hmr"
+  },
+  "files": [
+    "index.js",
+    "lib",
+    "runtime"
+  ],
+  "engines": {
+    "node": "^12.20 || ^14.13.1 || >= 16"
+  },
+  "peerDependencies": {
+    "svelte": "^3.19.0 || ^4.0.0"
+  },
+  "devDependencies": {
+    "dotenv": "^10.0.0",
+    "prettier": "^1.19.1",
+    "svelte": "^3.59.2",
+    "tap-mocha-reporter": "^5.0.3",
+    "zoar": "^0.3.0",
+    "zorax": "^0.0.14"
+  },
+  "scripts": {
+    "lint": "eslint '**/*.{js,cjs,mjs}'",
+    "lint:fix": "pnpm run lint --fix",
+    "format": "prettier '**/*.{js,cjs,mjs}' --check",
+    "format:fix": "pnpm run format --write",
+    "test:fancy": "zoar --pipe 'tap-mocha-reporter spec'",
+    "test": "zoar --exit"
+  }
+}

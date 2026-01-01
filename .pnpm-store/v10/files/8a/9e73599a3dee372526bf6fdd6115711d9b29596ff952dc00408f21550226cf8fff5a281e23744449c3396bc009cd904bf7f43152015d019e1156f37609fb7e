@@ -1,0 +1,144 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.minXFromPageItems = void 0;
+const ItemTransformer_1 = require("./ItemTransformer");
+const LineItemMerger_1 = require("../debug/LineItemMerger");
+const groupingUtils_1 = require("../support/groupingUtils");
+const CacluclateStatistics_1 = require("./CacluclateStatistics");
+const functional_1 = require("../support/functional");
+const text_types_1 = require("../text-types");
+const assert_1 = require("../assert");
+class DetectBlocks extends ItemTransformer_1.default {
+    constructor() {
+        super('Detect Blocks', 'Like paragraphs, a list, etc...', {
+            requireColumns: ['str', 'x', 'y'],
+            debug: {
+                showAll: false,
+                itemMerger: new LineItemMerger_1.default(false),
+            },
+        }, (incomingSchema) => {
+            return incomingSchema.reduce((schema, column) => {
+                if (column === 'line') {
+                    return [...schema, 'block', 'line'];
+                }
+                return [...schema, column];
+            }, new Array());
+        });
+    }
+    transform(context, inputItems) {
+        const mostUsedDistance = context.getGlobal(CacluclateStatistics_1.MOST_USED_DISTANCE);
+        let createdBlocks = 0;
+        let lineItemCount = 0;
+        const blocks = [];
+        let currentBlock = new Block();
+        (0, groupingUtils_1.groupByPage)(inputItems).forEach((pageItems) => {
+            const flushStashedItems = () => {
+                if (currentBlock.entries.size > 0) {
+                    blocks.push(currentBlock);
+                    currentBlock = new Block();
+                    createdBlocks++;
+                }
+            };
+            const minX = minXFromPageItems(pageItems);
+            (0, groupingUtils_1.groupByLine)(pageItems).forEach((lineItems) => {
+                lineItemCount++;
+                if (currentBlock.entries.size > 0 && shouldFlushBlock(currentBlock, lineItems, minX, mostUsedDistance)) {
+                    flushStashedItems();
+                }
+                currentBlock.addLine(lineItems);
+            });
+            if (currentBlock.entries.size > 0) {
+                flushStashedItems();
+            }
+        });
+        return {
+            items: inputItems.map((item) => {
+                for (let i = 0; i < blocks.length; i++) {
+                    const isInBlock = blocks[i].entries.has(item.uuid);
+                    if (isInBlock) {
+                        return item.withDataAddition({ block: i });
+                    }
+                }
+                throw new Error('Item not in any block');
+            }),
+            messages: ['Gathered ' + createdBlocks + ' blocks out of ' + lineItemCount + ' line items'],
+        };
+    }
+}
+exports.default = DetectBlocks;
+function minXFromPageItems(items) {
+    let minX = 999;
+    items.forEach((item) => {
+        minX = Math.min(minX, item.data['x']);
+    });
+    if (minX == 999) {
+        return null;
+    }
+    return minX;
+}
+exports.minXFromPageItems = minXFromPageItems;
+function shouldFlushBlock(stashedBlock, lineItems, minX, mostUsedDistance) {
+    const lineType = toLineType(lineItems);
+    if (stashedBlock.type && (0, text_types_1.mergeFollowingNonTypedItems)(stashedBlock.type) && !lineType) {
+        return false;
+    }
+    const hasBigDistance = bigDistance(stashedBlock, lineItems, minX, mostUsedDistance);
+    if (stashedBlock.type &&
+        (0, text_types_1.mergeFollowingNonTypedItemsWithSmallDistance)(stashedBlock.type) &&
+        !lineType &&
+        !hasBigDistance) {
+        return false;
+    }
+    if ((0, text_types_1.toBlockType)(lineType) !== (0, text_types_1.toBlockType)(stashedBlock.type)) {
+        return true;
+    }
+    if (lineType) {
+        return !(0, text_types_1.mergeToBlock)(lineType);
+    }
+    else {
+        return hasBigDistance;
+    }
+}
+function bigDistance(block, lineItems, minX, mostUsedDistance) {
+    const lineX = Math.min(...lineItems.map((item) => item.data['x']));
+    const lineY = Math.min(...lineItems.map((item) => item.data['y']));
+    const distance = block.minY - lineY;
+    if (distance < 0 - mostUsedDistance / 2) {
+        //distance is negative - and not only a bit
+        return true;
+    }
+    let allowedDisctance = mostUsedDistance + 1;
+    if (block.minX > minX && lineX > minX) {
+        //intended elements like lists often have greater spacing
+        allowedDisctance = mostUsedDistance + mostUsedDistance / 2;
+    }
+    if (distance > allowedDisctance) {
+        return true;
+    }
+    return false;
+}
+function toLineType(lineItems) {
+    const types = (0, functional_1.flatten)(lineItems.map((item) => item.data['types'] || [])).filter(groupingUtils_1.onlyUniques);
+    if (types.length > 1) {
+        throw `more than 1 type: ${types}`;
+    }
+    return types.length == 1 ? types[0] : null;
+}
+class Block {
+    constructor() {
+        this.type = null;
+        this.entries = new Set();
+    }
+    addLine(items) {
+        const lineType = toLineType(items);
+        if (this.type) {
+            (0, assert_1.assert)(!lineType || (0, text_types_1.toBlockType)(lineType) === this.type, `Adding line of type ${lineType} to block of type ${this.type}`);
+        }
+        else {
+            this.type = (0, text_types_1.toBlockType)(lineType);
+        }
+        this.minX = (0, groupingUtils_1.min)(items.map((item) => item.data['x']), this.minX);
+        this.minY = (0, groupingUtils_1.min)(items.map((item) => item.data['y']), this.minY);
+        items.forEach((item) => this.entries.add(item.uuid));
+    }
+}

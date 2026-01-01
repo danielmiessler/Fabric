@@ -1,0 +1,61 @@
+{
+  "name": "@tailwindcss/typography",
+  "version": "0.5.16",
+  "description": "A Tailwind CSS plugin for automatically styling plain HTML content with beautiful typographic defaults.",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
+  "files": [
+    "src/*.js",
+    "src/*.d.ts",
+    "dist/"
+  ],
+  "repository": "https://github.com/tailwindlabs/tailwindcss-typography",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "prettier": {
+    "printWidth": 100,
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "scripts": {
+    "test": "jest",
+    "dev": "next dev demo",
+    "build": "next build demo",
+    "export": "next export demo",
+    "start": "next start demo",
+    "release-channel": "node ./scripts/release-channel.js",
+    "release-notes": "node ./scripts/release-notes.js"
+  },
+  "peerDependencies": {
+    "tailwindcss": ">=3.0.0 || insiders || >=4.0.0-alpha.20 || >=4.0.0-beta.1"
+  },
+  "devDependencies": {
+    "@mdx-js/loader": "^1.0.19",
+    "@mdx-js/mdx": "^1.6.6",
+    "@next/mdx": "^8.1.0",
+    "autoprefixer": "^10.2.1",
+    "highlight.js": "^10.4.1",
+    "jest": "^29.7.0",
+    "jest-diff": "^27.3.1",
+    "next": "^12.0.1",
+    "postcss": "^8.2.3",
+    "prettier": "^2.1.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "tailwindcss": "^3.2.2"
+  },
+  "dependencies": {
+    "lodash.castarray": "^4.4.0",
+    "lodash.isplainobject": "^4.0.6",
+    "lodash.merge": "^4.6.2",
+    "postcss-selector-parser": "6.0.10"
+  },
+  "jest": {
+    "setupFilesAfterEnv": [
+      "<rootDir>/jest/customMatchers.js"
+    ]
+  }
+}

@@ -1,0 +1,29 @@
+import TransformConfig from './Config';
+import type ProgressListenFunction from './ProgressListenFunction';
+import ParseProgressReporter from './ParseProgressReporter';
+import PdfPipeline from './PdfPipeline';
+import AdjustHeight from './transformer/AdjustHeight';
+import UnwrapCoordinates from './transformer/UnwrapCoordinates';
+import RemoveEmptyItems from './transformer/RemoveEmptyItems';
+import CalculateStatistics from './transformer/CacluclateStatistics';
+import CompactLines from './transformer/CompactLines';
+import SortXWithinLines from './transformer/SortXWithinLines';
+import RemoveRepetitiveItems from './transformer/RemoveRepetitiveItems';
+import DetectToc from './transformer/DetectToc';
+import DetectHeaders from './transformer/DetectHeaders';
+import NoOpTransformer from './transformer/NoOpTransformer';
+import { type ParseConfig } from './parse';
+import DetectListItems from './transformer/DetectListItems';
+import DetectBlocks from './transformer/DetectBlocks';
+import DetectListLevels from './transformer/DetectListLevels';
+import DetectFootnotes from './transformer/DetectFootnotes';
+import DetectFontStyles from './transformer/DetectFontStyles';
+import DetectLinks from './transformer/DetectLinks';
+import DetectCodeQuoteBlocks from './transformer/DetectCodeQuoteBlocks';
+export declare const transformers: (AdjustHeight | UnwrapCoordinates | RemoveEmptyItems | CalculateStatistics | CompactLines | SortXWithinLines | RemoveRepetitiveItems | DetectToc | DetectHeaders | NoOpTransformer | DetectListItems | DetectBlocks | DetectListLevels | DetectFootnotes | DetectFontStyles | DetectLinks | DetectCodeQuoteBlocks)[];
+export interface Options {
+    parseConfig?: ParseConfig;
+    transformConfig?: TransformConfig;
+}
+export declare function parseReporter(progressListener: ProgressListenFunction): ParseProgressReporter;
+export declare function createPipeline(pdfJs: any, options?: Options): PdfPipeline;

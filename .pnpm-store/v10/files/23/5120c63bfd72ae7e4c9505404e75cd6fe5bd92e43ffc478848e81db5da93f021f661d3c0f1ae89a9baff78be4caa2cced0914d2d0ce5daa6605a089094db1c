@@ -1,0 +1,53 @@
+{
+  "pages": 153,
+  "items": 14949,
+  "groupedItems": 10624,
+  "changes": 14,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "token types"
+    },
+    {
+      "name": "types"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":31,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"93.","dir":"ltr","width":"15.29","height":"11.00","transform":["11.00","0.00","0.00","11.00","65.01","357.30"],"fontName":"AMIDOT+OpenSans","x":65.0147,"y":357.2980999999999,"line":21}
+{"page":32,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"273.","dir":"ltr","width":"21.89","height":"11.00","transform":["11.00","0.00","0.00","11.00","93.35","91.26"],"fontName":"AMIDOT+OpenSans","x":93.35010000000011,"y":91.26009999999992,"line":38}
+{"page":51,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"64. ","dir":"ltr","width":"18.85","height":"11.00","transform":["11.00","0.00","0.00","11.00","69.52","329.29"],"fontName":"AMIDOT+OpenSans","x":69.52469999999997,"y":329.2920999999998,"line":23}
+{"page":52,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"202.","dir":"ltr","width":"21.56","height":"11.00","transform":["11.00","0.00","0.00","11.00","97.87","679.30"],"fontName":"AMIDOT+OpenSans","x":97.87110000000001,"y":679.2980999999999,"line":4}
+{"page":52,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"109.","dir":"ltr","width":"20.71","height":"11.00","transform":["11.00","0.00","0.00","11.00","97.83","301.34"],"fontName":"AMIDOT+OpenSans","x":97.82710000000003,"y":301.3380999999998,"line":20}
+{"page":95,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"2012.","dir":"ltr","width":"26.38","height":"11.00","transform":["11.00","0.00","0.00","11.00","303.82","525.12"],"fontName":"AMIDOT+OpenSans","x":303.8217,"y":525.1220999999991,"line":62}
+{"page":135,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"2016.","dir":"ltr","width":"26.75","height":"11.00","transform":["11.00","0.00","0.00","11.00","42.52","539.29"],"fontName":"AMIDOT+OpenSans","x":42.51740000000001,"y":539.2920999999998,"line":14}
+{"page":162,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"2010. ","dir":"ltr","width":"29.65","height":"11.00","transform":["11.00","0.00","0.00","11.00","350.19","357.15"],"fontName":"AMIDOT+OpenSans","x":350.18909999999994,"y":357.14610000000016,"line":58}
+{"page":162,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"2006.","dir":"ltr","width":"28.60","height":"11.00","transform":["11.00","0.00","0.00","11.00","350.21","119.10"],"fontName":"AMIDOT+OpenSans","x":350.21109999999993,"y":119.09510000000039,"line":75}
+{"page":163,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"2013.","dir":"ltr","width":"26.46","height":"11.00","transform":["11.00","0.00","0.00","11.00","321.82","581.13"],"fontName":"AMIDOT+OpenSans","x":321.8247000000001,"y":581.1340999999993,"line":59}
+{"page":164,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"2015.","dir":"ltr","width":"26.49","height":"11.00","transform":["11.00","0.00","0.00","11.00","88.88","623.29"],"fontName":"AMIDOT+OpenSans","x":88.87710000000004,"y":623.2860999999997,"line":8}
+{"page":164,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"2014. A preview of the book is available at ","dir":"ltr","width":"217.17","height":"11.00","transform":["11.00","0.00","0.00","11.00","88.88","427.24"],"fontName":"AMIDOT+OpenSans","x":88.87710000000001,"y":427.2440999999995,"line":22}
+{"page":164,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"2015.","dir":"ltr","width":"26.49","height":"11.00","transform":["11.00","0.00","0.00","11.00","350.19","441.10"],"fontName":"AMIDOT+OpenSans","x":350.1931000000001,"y":441.1040999999992,"line":69}
+{"page":164,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"2015. ","dir":"ltr","width":"29.35","height":"11.00","transform":["11.00","0.00","0.00","11.00","350.19","357.09"],"fontName":"AMIDOT+OpenSans","x":350.1931000000001,"y":357.0860999999993,"line":75}

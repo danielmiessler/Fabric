@@ -1,0 +1,18 @@
+import { TokenType } from './token-types';
+export default class Item {
+    page: number;
+    data: object;
+    uuid: string;
+    listLevel: number;
+    tokenTypes: TokenType[];
+    constructor(page: number, data: object, tokenTypes?: TokenType[], uuid?: string);
+    value(column: string): object;
+    withTokenType(tokenType: TokenType): Item;
+    withTokenTypes(tokenTypes: TokenType[]): Item;
+    withDataAddition(data: object): Item;
+    withData(data: object): Item;
+    /**
+     * Returns the item without a uuid.
+     */
+    withoutUuid(): Item;
+}

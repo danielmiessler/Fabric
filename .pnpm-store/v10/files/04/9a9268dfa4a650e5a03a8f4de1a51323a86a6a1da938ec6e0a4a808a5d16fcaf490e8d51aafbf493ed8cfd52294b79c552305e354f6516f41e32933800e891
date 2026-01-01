@@ -1,0 +1,46 @@
+{
+  "pages": 293,
+  "items": 9255,
+  "groupedItems": 6520,
+  "changes": 7,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "token types"
+    },
+    {
+      "name": "types"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":0,"change":"ContentChange","types":["H1"],"str":"The War of the Worlds ","dir":"ltr","width":"240.30","height":"24.00","transform":["24.00","0.00","0.00","24.00","80.64","445.62"],"x":80.64,"y":445.62,"line":0}
+{"page":2,"change":"ContentChange","types":["H2"],"str":"BOOK ONE ","dir":"ltr","width":"102.07","height":"18.00","transform":["18.00","0.00","0.00","18.00","149.22","437.22"],"x":149.22,"y":437.22,"line":2}
+{"page":2,"change":"ContentChange","types":["H2"],"str":"THE COMING OF THE ","dir":"ltr","width":"197.00","height":"18.00","transform":["18.00","0.00","0.00","18.00","101.76","395.88"],"x":101.7594,"y":395.87940000000003,"line":3}
+{"page":2,"change":"ContentChange","types":["H2"],"str":"MARTIANS ","dir":"ltr","width":"102.61","height":"18.00","transform":["18.00","0.00","0.00","18.00","148.92","375.12"],"x":148.9194,"y":375.12,"line":4}
+{"page":180,"change":"ContentChange","types":["H2"],"str":"BOOK TWO ","dir":"ltr","width":"107.03","height":"18.00","transform":["18.00","0.00","0.00","18.00","146.76","437.22"],"x":146.76,"y":437.22,"line":2}
+{"page":180,"change":"ContentChange","types":["H2"],"str":"THE EARTH UNDER THE ","dir":"ltr","width":"222.03","height":"18.00","transform":["18.00","0.00","0.00","18.00","89.22","395.88"],"x":89.22119999999998,"y":395.87940000000003,"line":3}
+{"page":180,"change":"ContentChange","types":["H2"],"str":"MARTIANS ","dir":"ltr","width":"102.61","height":"18.00","transform":["18.00","0.00","0.00","18.00","148.92","375.12"],"x":148.9218,"y":375.12,"line":4}

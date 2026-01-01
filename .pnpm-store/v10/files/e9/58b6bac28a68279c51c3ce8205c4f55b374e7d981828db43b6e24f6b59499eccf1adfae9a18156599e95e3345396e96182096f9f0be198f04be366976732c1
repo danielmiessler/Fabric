@@ -1,0 +1,443 @@
+<p>
+  <a href="https://tailwindcss.com/docs/typography-plugin" target="_blank">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/tailwindlabs/tailwindcss-typography/HEAD/.github/logo-dark.svg">
+      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/tailwindlabs/tailwindcss-typography/HEAD/.github/logo-light.svg">
+      <img alt="Tailwind CSS Typography" src="https://raw.githubusercontent.com/tailwindlabs/tailwindcss-typography/HEAD/.github/logo-light.svg" width="450" height="70" style="max-width: 100%;">
+    </picture>
+  </a>
+</p>
+
+The official Tailwind CSS Typography plugin provides a set of `prose` classes you can use to add beautiful typographic defaults to any vanilla HTML you don’t control, like HTML rendered from Markdown, or pulled from a CMS.
+
+```html
+<article class="prose lg:prose-xl">{{ markdown }}</article>
+```
+
+To see what it looks like in action, check out our [live demo](https://play.tailwindcss.com/uj1vGACRJA?layout=preview) on Tailwind Play.
+
+---
+
+## Installation
+
+Install the plugin from npm:
+
+```shell
+npm install -D @tailwindcss/typography
+```
+
+Then add the plugin to your main `style.css` file:
+
+```diff
+  @import "tailwindcss";
++ @plugin "@tailwindcss/typography";
+```
+
+If you are still using **Tailwind CSS v3**, add the plugin to your `tailwind.config.js` file:
+
+```js
+// tailwind.config.js
+module.exports = {
+  theme: {
+    // ...
+  },
+  plugins: [
+    require('@tailwindcss/typography'),
+    // ...
+  ],
+}
+```
+
+---
+
+## Basic usage
+
+Now you can use the `prose` classes to add sensible typography styles to any vanilla HTML:
+
+```html
+<article class="prose lg:prose-xl">
+  <h1>Garlic bread with cheese: What the science tells us</h1>
+  <p>
+    For years parents have espoused the health benefits of eating garlic bread with cheese to their
+    children, with the food earning such an iconic status in our culture that kids will often dress
+    up as warm, cheesy loaf for Halloween.
+  </p>
+  <p>
+    But a recent study shows that the celebrated appetizer may be linked to a series of rabies cases
+    springing up around the country.
+  </p>
+  <!-- ... -->
+</article>
+```
+
+### Choosing a gray scale
+
+This plugin includes a modifier class for each of the five gray scales Tailwind includes by default so you can easily style your content to match the grays you're using in your project.
+
+```html
+<article class="prose prose-slate">{{ markdown }}</article>
+```
+
+Here are the classes that are generated using a totally default Tailwind CSS v2.0 build:
+
+| Class                    | Gray scale |
+| ------------------------ | ---------- |
+| `prose-gray` _(default)_ | Gray       |
+| `prose-slate`            | Slate      |
+| `prose-zinc`             | Zinc       |
+| `prose-neutral`          | Neutral    |
+| `prose-stone`            | Stone      |
+
+Modifier classes are designed to be used with the [multi-class modifier pattern](http://nicolasgallagher.com/about-html-semantics-front-end-architecture/#component-modifiers) and must be used in conjunction with the base `prose` class.
+
+> [!NOTE]
+> Always include the `prose` class when adding a gray scale modifier
+
+```html
+<article class="prose prose-stone">{{ markdown }}</article>
+```
+
+To learn about creating your own color themes, read the [adding custom color themes](#adding-custom-color-themes) documentation.
+
+### Applying a type scale
+
+Size modifiers allow you to adjust the overall size of your typography for different contexts.
+
+```html
+<article class="prose prose-xl">{{ markdown }}</article>
+```
+
+Five different typography sizes are included out of the box:
+
+| Class                    | Body font size    |
+| ------------------------ | ----------------- |
+| `prose-sm`               | 0.875rem _(14px)_ |
+| `prose-base` _(default)_ | 1rem _(16px)_     |
+| `prose-lg`               | 1.125rem _(18px)_ |
+| `prose-xl`               | 1.25rem _(20px)_  |
+| `prose-2xl`              | 1.5rem _(24px)_   |
+
+These can be used in combination with Tailwind's [breakpoint modifiers](https://tailwindcss.com/docs/responsive-design) to change the overall font size of a piece of content at different viewport sizes:
+
+```html
+<article class="prose md:prose-lg lg:prose-xl">{{ markdown }}</article>
+```
+
+Everything about the provided size modifiers has been hand-tuned by professional designers to look as beautiful as possible, including the relationships between font sizes, heading spacing, code block padding, and more.
+
+Size modifiers are designed to be used with the [multi-class modifier pattern](http://nicolasgallagher.com/about-html-semantics-front-end-architecture/#component-modifiers) and must be used in conjunction with the base `prose` class.
+
+> [!NOTE]
+> Always include the `prose` class when adding a size modifier
+
+```html
+<article class="prose prose-lg">{{ markdown }}</article>
+```
+
+To learn about customizing the included type scales, read the documentation on [customizing the CSS](#customizing-the-css).
+
+### Adapting to dark mode
+
+Each default color theme includes a hand-designed dark mode version that you can trigger by adding the `prose-invert` class:
+
+```html
+<article class="prose dark:prose-invert">{{ markdown }}</article>
+```
+
+To learn about creating your own color themes, read the [adding custom color themes](#adding-custom-color-themes) documentation.
+
+### Element modifiers
+
+Use element modifiers to customize the style of individual elements in your content directly in your HTML:
+
+```html
+<article class="prose prose-img:rounded-xl prose-headings:underline prose-a:text-blue-600">
+  {{ markdown }}
+</article>
+```
+
+This makes it easy to do things like style links to match your brand, add a border radius to images, and tons more.
+
+Here's a complete list of available element modifiers:
+
+| Modifier                     | Target                       |
+| ---------------------------- | ---------------------------- |
+| `prose-headings:{utility}`   | `h1`, `h2`, `h3`, `h4`, `th` |
+| `prose-lead:{utility}`       | `[class~="lead"]`            |
+| `prose-h1:{utility}`         | `h1`                         |
+| `prose-h2:{utility}`         | `h2`                         |
+| `prose-h3:{utility}`         | `h3`                         |
+| `prose-h4:{utility}`         | `h4`                         |
+| `prose-p:{utility}`          | `p`                          |
+| `prose-a:{utility}`          | `a`                          |
+| `prose-blockquote:{utility}` | `blockquote`                 |
+| `prose-figure:{utility}`     | `figure`                     |
+| `prose-figcaption:{utility}` | `figcaption`                 |
+| `prose-strong:{utility}`     | `strong`                     |
+| `prose-em:{utility}`         | `em`                         |
+| `prose-kbd:{utility}`        | `kbd`                        |
+| `prose-code:{utility}`       | `code`                       |
+| `prose-pre:{utility}`        | `pre`                        |
+| `prose-ol:{utility}`         | `ol`                         |
+| `prose-ul:{utility}`         | `ul`                         |
+| `prose-li:{utility}`         | `li`                         |
+| `prose-dl:{utility}`         | `dl`                         |
+| `prose-dt:{utility}`         | `dt`                         |
+| `prose-dd:{utiddty}`         | `dd`                         |
+| `prose-table:{utility}`      | `table`                      |
+| `prose-thead:{utility}`      | `thead`                      |
+| `prose-tr:{utility}`         | `tr`                         |
+| `prose-th:{utility}`         | `th`                         |
+| `prose-td:{utility}`         | `td`                         |
+| `prose-img:{utility}`        | `img`                        |
+| `prose-picture:{utility}`    | `picture`                    |
+| `prose-video:{utility}`      | `video`                      |
+| `prose-hr:{utility}`         | `hr`                         |
+
+When stacking these modifiers with other modifiers like `hover`, you most likely want the other modifier to come last:
+
+```html
+<article class="prose prose-a:text-blue-600 prose-a:hover:text-blue-500">{{ markdown }}</article>
+```
+
+If you are still using in Tailwind CSS v3, the modifier order is the opposite:
+
+```html
+<article class="prose prose-a:text-blue-600 hover:prose-a:text-blue-500">{{ markdown }}</article>
+```
+
+Read the Tailwind CSS documentation on [stacked modifiers](https://tailwindcss.com/docs/hover-focus-and-other-states) to learn more.
+
+### Overriding max-width
+
+Each size modifier comes with a baked in `max-width` designed to keep the content as readable as possible. This isn't always what you want though, and sometimes you'll want the content to just fill the width of its container.
+
+In those cases, all you need to do is add `max-w-none` to your content to override the embedded max-width:
+
+```html
+<div class="grid grid-cols-4">
+  <div class="col-span-1">
+    <!-- ... -->
+  </div>
+  <div class="col-span-3">
+    <article class="prose max-w-none">{{ markdown }}</article>
+  </div>
+</div>
+```
+
+---
+
+## Advanced topics
+
+### Undoing typography styles
+
+If you have a block of markup embedded in some content that shouldn't inherit the `prose` styles, use the `not-prose` class to sandbox it:
+
+```html
+<article class="prose">
+  <h1>My Heading</h1>
+  <p>...</p>
+
+  <div class="not-prose">
+    <!-- Some example or demo that needs to be prose-free -->
+  </div>
+
+  <p>...</p>
+  <!-- ... -->
+</article>
+```
+
+Note that you can't nest new `prose` instances within a `not-prose` block at this time.
+
+Even when using a prefix for your utilities `not-prose` should not have a prefix.
+
+### Adding custom color themes
+
+To customize the color theme beyond simple CSS overrides, add a `@utility` directive to your CSS file:
+
+```css
+@utility prose-pink {
+  --tw-prose-body: var(--color-pink-800);
+  --tw-prose-headings: var(--color-pink-900);
+  --tw-prose-lead: var(--color-pink-700);
+  --tw-prose-links: var(--color-pink-900);
+  --tw-prose-bold: var(--color-pink-900);
+  --tw-prose-counters: var(--color-pink-600);
+  --tw-prose-bullets: var(--color-pink-400);
+  --tw-prose-hr: var(--color-pink-300);
+  --tw-prose-quotes: var(--color-pink-900);
+  --tw-prose-quote-borders: var(--color-pink-300);
+  --tw-prose-captions: var(--color-pink-700);
+  --tw-prose-code: var(--color-pink-900);
+  --tw-prose-pre-code: var(--color-pink-100);
+  --tw-prose-pre-bg: var(--color-pink-900);
+  --tw-prose-th-borders: var(--color-pink-300);
+  --tw-prose-td-borders: var(--color-pink-200);
+  --tw-prose-invert-body: var(--color-pink-200);
+  --tw-prose-invert-headings: var(--color-white);
+  --tw-prose-invert-lead: var(--color-pink-300);
+  --tw-prose-invert-links: var(--color-white);
+  --tw-prose-invert-bold: var(--color-white);
+  --tw-prose-invert-counters: var(--color-pink-400);
+  --tw-prose-invert-bullets: var(--color-pink-600);
+  --tw-prose-invert-hr: var(--color-pink-700);
+  --tw-prose-invert-quotes: var(--color-pink-100);
+  --tw-prose-invert-quote-borders: var(--color-pink-700);
+  --tw-prose-invert-captions: var(--color-pink-400);
+  --tw-prose-invert-code: var(--color-white);
+  --tw-prose-invert-pre-code: var(--color-pink-300);
+  --tw-prose-invert-pre-bg: rgb(0 0 0 / 50%);
+  --tw-prose-invert-th-borders: var(--color-pink-600);
+  --tw-prose-invert-td-borders: var(--color-pink-700);
+}
+```
+
+For Tailwind v3, update the `typography` section in the JavaScript config file and provide your colors under the `css` key:
+
+```js {{ filename: 'tailwind.config.js' }}
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  theme: {
+    extend: {
+      typography: () => ({
+        pink: {
+          css: {
+            '--tw-prose-body': 'var(--color-pink-800)',
+            '--tw-prose-headings': 'var(--color-pink-900)',
+            '--tw-prose-lead': 'var(--color-pink-700)',
+            '--tw-prose-links': 'var(--color-pink-900)',
+            '--tw-prose-bold': 'var(--color-pink-900)',
+            '--tw-prose-counters': 'var(--color-pink-600)',
+            '--tw-prose-bullets': 'var(--color-pink-400)',
+            '--tw-prose-hr': 'var(--color-pink-300)',
+            '--tw-prose-quotes': 'var(--color-pink-900)',
+            '--tw-prose-quote-borders': 'var(--color-pink-300)',
+            '--tw-prose-captions': 'var(--color-pink-700)',
+            '--tw-prose-code': 'var(--color-pink-900)',
+            '--tw-prose-pre-code': 'var(--color-pink-100)',
+            '--tw-prose-pre-bg': 'var(--color-pink-900)',
+            '--tw-prose-th-borders': 'var(--color-pink-300)',
+            '--tw-prose-td-borders': 'var(--color-pink-200)',
+            '--tw-prose-invert-body': 'var(--color-pink-200)',
+            '--tw-prose-invert-headings': 'var(--color-white)',
+            '--tw-prose-invert-lead': 'var(--color-pink-300)',
+            '--tw-prose-invert-links': 'var(--color-white)',
+            '--tw-prose-invert-bold': 'var(--color-white)',
+            '--tw-prose-invert-counters': 'var(--color-pink-400)',
+            '--tw-prose-invert-bullets': 'var(--color-pink-600)',
+            '--tw-prose-invert-hr': 'var(--color-pink-700)',
+            '--tw-prose-invert-quotes': 'var(--color-pink-100)',
+            '--tw-prose-invert-quote-borders': 'var(--color-pink-700)',
+            '--tw-prose-invert-captions': 'var(--color-pink-400)',
+            '--tw-prose-invert-code': 'var(--color-white)',
+            '--tw-prose-invert-pre-code': 'var(--color-pink-300)',
+            '--tw-prose-invert-pre-bg': 'rgb(0 0 0 / 50%)',
+            '--tw-prose-invert-th-borders': 'var(--color-pink-600)',
+            '--tw-prose-invert-td-borders': 'var(--color-pink-700)',
+          },
+        },
+      }),
+    },
+  },
+}
+```
+
+See our internal [style definitions](https://github.com/tailwindlabs/tailwindcss-typography/blob/main/src/styles.js) for some more examples.
+
+### Changing the default class name
+
+If you need to use a class name other than `prose` for any reason, you can do so using the `className` option when registering the plugin:
+
+```css
+@import 'tailwindcss';
+@plugin "@tailwindcss/typography" {
+  classname: wysiwyg;
+}
+```
+
+Now every instance of `prose` in the default class names will be replaced by your custom class name:
+
+```html
+<article class="wysiwyg wysiwyg-slate lg:wysiwyg-xl">
+  <h1>My Heading</h1>
+  <p>...</p>
+
+  <div class="not-wysiwyg">
+    <!-- Some example or demo that needs to be prose-free -->
+  </div>
+
+  <p>...</p>
+  <!-- ... -->
+</article>
+```
+
+### Customizing the CSS
+
+If you want to customize the raw CSS generated by this plugin, you can use the JavaScript based theme API. To do that, use the `@config` directive:
+
+```diff
+  @import "tailwindcss";
+  @plugin "@tailwindcss/typography";
++ @config "./tailwind.config.js";
+```
+
+You can then create your own config by adding a new `tailwind.config.js` file with the `typography` section and providing your styles under the `css` key:
+
+```js {{ filename: 'tailwind.config.js' }}
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  theme: {
+    extend: {
+      typography: {
+        DEFAULT: {
+          css: {
+            color: '#333',
+            a: {
+              color: '#3182ce',
+              '&:hover': {
+                color: '#2c5282',
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+}
+```
+
+Like with all theme customizations in Tailwind, you can use CSS variables if you need access to access your theme configuration:
+
+```js {{ filename: 'tailwind.config.js' }}
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  theme: {
+    extend: {
+      typography: {
+        DEFAULT: {
+          css: {
+            color: 'var(--color-gray-800)',
+            // ...
+          },
+        },
+      },
+    },
+  },
+}
+```
+
+Customizations should be applied to a specific modifier like `DEFAULT` or `xl`, and must be added under the `css` property. Customizations are authored in the same [CSS-in-JS syntax](https://v3.tailwindcss.com/docs/plugins#css-in-js-syntax) used to write Tailwind v3 plugins.
+
+See [the default styles](https://github.com/tailwindlabs/tailwindcss-typography/blob/main/src/styles.js) for this plugin for more in-depth examples of configuring each modifier.
+
+---
+
+## Community
+
+For help, discussion about best practices, or any other conversation that would benefit from being searchable:
+
+[Discuss the Tailwind CSS Typography plugin on GitHub](https://github.com/tailwindlabs/tailwindcss/discussions)
+
+For casual chit-chat with others using the framework:
+
+[Join the Tailwind CSS Discord Server](https://tailwindcss.com/discord)

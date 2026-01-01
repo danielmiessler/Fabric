@@ -1,0 +1,29 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const ItemTransformer_1 = require("./ItemTransformer");
+const LineItemMerger_1 = require("../debug/LineItemMerger");
+const items_1 = require("../support/items");
+const FontType_1 = require("../FontType");
+class DetectFontStyles extends ItemTransformer_1.default {
+    constructor() {
+        super('Detect Font Styles', 'Detect occurrences of bold and italic tokens', {
+            requireColumns: ['str'],
+            debug: {
+                itemMerger: new LineItemMerger_1.default(false),
+            },
+        });
+    }
+    transform(context, inputItems) {
+        return {
+            items: inputItems.map((item) => {
+                const fontStyles = (0, FontType_1.declaredFontTypes)((0, items_1.getFontName)(context.fontMap, item));
+                if (fontStyles.length > 0) {
+                    return item.withTokenTypes(fontStyles);
+                }
+                return item;
+            }),
+            messages: [`Detected ${'?'} font styles.`],
+        };
+    }
+}
+exports.default = DetectFontStyles;

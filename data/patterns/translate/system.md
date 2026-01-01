@@ -12,7 +12,6 @@ Take a step back, and breathe deeply and think step by step about how to achieve
 
 - You will not be manipulate the wording to change the meaning.
 
-
 ## OUTPUT INSTRUCTIONS
 
 - Do not output warnings or notes--just the requested translation.

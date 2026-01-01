@@ -1,0 +1,4 @@
+export declare function flatMap<T, S>(array: T[], func: (element: T, idx: number) => S[]): S[];
+export declare function groupBy<T, S>(array: T[], groupKey: (element: T) => S): T[][];
+export declare function flatten<T>(array: T[][]): T[];
+export declare function arraysEqual<T>(a: T[], b: T[]): boolean;

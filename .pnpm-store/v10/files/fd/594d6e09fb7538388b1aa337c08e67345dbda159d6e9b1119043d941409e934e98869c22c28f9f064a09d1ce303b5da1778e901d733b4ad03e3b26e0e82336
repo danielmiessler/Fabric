@@ -1,0 +1,51 @@
+{
+  "pages": 26,
+  "items": 1843,
+  "groupedItems": 1506,
+  "changes": 12,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "token types"
+    },
+    {
+      "name": "types"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":0,"change":"ContentChange","types":["H2"],"str":"St Mary the Virgin, Witney","dir":"ltr","width":"299.73","height":"24.00","transform":["24.00","0.00","0.00","24.00","501.17","180.62"],"fontName":"Gill Sans MT Bold","x":501.167,"y":180.623,"line":0}
+{"page":0,"change":"ContentChange","types":["H3"],"str":"Social Audit                      January 2012","dir":"ltr","width":"298.23","height":"18.00","transform":["18.00","0.00","0.00","18.00","501.17","147.59"],"fontName":"Gill Sans MT","x":501.167,"y":147.591,"line":1}
+{"page":0,"change":"ContentChange","types":["H4"],"str":"Catriona Robertson","dir":"ltr","width":"148.81","height":"16.00","transform":["16.00","0.00","0.00","16.00","503.78","78.51"],"fontName":"Gill Sans MT Bold","x":503.776,"y":78.514,"line":2}
+{"page":5,"change":"ContentChange","types":["H2"],"str":"Introduction","dir":"ltr","width":"184.61","height":"36.00","transform":["36.00","0.00","0.00","36.00","34.02","525.26"],"fontName":"Gill Sans MT","x":34.015,"y":525.26,"line":0}
+{"page":7,"change":"ContentChange","types":["H2"],"str":"History","dir":"ltr","width":"112.19","height":"36.00","transform":["36.00","0.00","0.00","36.00","34.02","525.26"],"fontName":"Gill Sans MT","x":34.015,"y":525.26,"line":0}
+{"page":8,"change":"ContentChange","types":["H2"],"str":"History","dir":"ltr","width":"112.19","height":"36.00","transform":["36.00","0.00","0.00","36.00","462.74","525.26"],"fontName":"Gill Sans MT","x":462.744,"y":525.26,"line":0}
+{"page":10,"change":"ContentChange","types":["H2"],"str":"Setting and context","dir":"ltr","width":"287.58","height":"36.00","transform":["36.00","0.00","0.00","36.00","442.95","525.26"],"fontName":"Gill Sans MT","x":442.955,"y":525.26,"line":0}
+{"page":12,"change":"ContentChange","types":["H2"],"str":"Witney’s people","dir":"ltr","width":"238.11","height":"36.00","transform":["36.00","0.00","0.00","36.00","450.94","525.26"],"fontName":"Gill Sans MT","x":450.944,"y":525.26,"line":0}
+{"page":18,"change":"ContentChange","types":["H2"],"str":"Education","dir":"ltr","width":"145.13","height":"36.00","transform":["36.00","0.00","0.00","36.00","450.94","525.26"],"fontName":"Gill Sans MT","x":450.944,"y":525.26,"line":0}
+{"page":21,"change":"ContentChange","types":["H2"],"str":"Lifestyle and deprivation","dir":"ltr","width":"359.54","height":"36.00","transform":["36.00","0.00","0.00","36.00","34.02","525.26"],"fontName":"Gill Sans MT","x":34.015,"y":525.26,"line":0}
+{"page":23,"change":"ContentChange","types":["H2"],"str":"Conclusions","dir":"ltr","width":"180.77","height":"36.00","transform":["36.00","0.00","0.00","36.00","34.02","525.26"],"fontName":"Gill Sans MT","x":34.015,"y":525.26,"line":0}
+{"page":25,"change":"ContentChange","types":["H2"],"str":"What St Mary’s offers","dir":"ltr","width":"321.78","height":"36.00","transform":["36.00","0.00","0.00","36.00","34.02","525.26"],"fontName":"Gill Sans MT","x":34.015,"y":525.26,"line":0}

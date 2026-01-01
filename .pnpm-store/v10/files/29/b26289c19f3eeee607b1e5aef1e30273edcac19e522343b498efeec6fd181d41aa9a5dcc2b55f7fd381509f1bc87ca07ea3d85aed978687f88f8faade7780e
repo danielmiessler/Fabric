@@ -1,0 +1,1 @@
+{"version":3,"file":"coffeescript.d.ts","sourceRoot":"","sources":["../../src/transformers/coffeescript.ts"],"names":[],"mappings":"AAEA,OAAO,KAAK,EAAE,WAAW,EAAE,OAAO,EAAE,MAAM,UAAU,CAAC;AAErD,QAAA,MAAM,WAAW,EAAE,WAAW,CAAC,OAAO,CAAC,YAAY,CA0BlD,CAAC;AAEF,OAAO,EAAE,WAAW,EAAE,CAAC"}

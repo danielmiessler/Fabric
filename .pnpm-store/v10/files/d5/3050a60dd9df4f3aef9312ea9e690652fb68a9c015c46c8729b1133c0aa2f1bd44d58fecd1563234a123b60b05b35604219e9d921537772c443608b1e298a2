@@ -1,0 +1,39 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const uuid_1 = require("uuid");
+class Item {
+    constructor(page, data, tokenTypes = [], uuid = (0, uuid_1.v4)()) {
+        this.listLevel = 0;
+        this.tokenTypes = [];
+        this.page = page;
+        this.data = data;
+        this.uuid = uuid;
+        this.tokenTypes = tokenTypes;
+    }
+    value(column) {
+        return this.data[column];
+    }
+    withTokenType(tokenType) {
+        const newItem = new Item(this.page, this.data, this.tokenTypes, this.uuid);
+        newItem.tokenTypes.push(tokenType);
+        return newItem;
+    }
+    withTokenTypes(tokenTypes) {
+        const newItem = new Item(this.page, this.data, this.tokenTypes, this.uuid);
+        tokenTypes.forEach((tt) => newItem.tokenTypes.push(tt));
+        return newItem;
+    }
+    withDataAddition(data) {
+        return this.withData(Object.assign(Object.assign({}, this.data), data));
+    }
+    withData(data) {
+        return new Item(this.page, data, this.tokenTypes, this.uuid);
+    }
+    /**
+     * Returns the item without a uuid.
+     */
+    withoutUuid() {
+        return new Item(this.page, this.data, this.tokenTypes, '');
+    }
+}
+exports.default = Item;

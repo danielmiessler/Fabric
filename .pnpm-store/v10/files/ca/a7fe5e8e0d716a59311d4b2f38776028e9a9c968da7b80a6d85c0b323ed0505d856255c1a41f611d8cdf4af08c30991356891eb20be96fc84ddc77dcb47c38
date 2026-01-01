@@ -1,0 +1,41 @@
+{
+  "pages": 218,
+  "items": 51079,
+  "groupedItems": 8567,
+  "changes": 2,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "token types"
+    },
+    {
+      "name": "types"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":0,"change":"ContentChange","types":["H1"],"str":"A Course in Combinatorial Optimization","dir":"ltr","width":"407.49","height":"24.79","transform":["24.79","0.00","0.00","24.79","112.60","584.96"],"fontName":"HVHZFT+CMR17","x":112.599,"y":584.959,"line":0}
+{"page":0,"change":"ContentChange","types":["H2"],"str":"Alexander Schrijver","dir":"ltr","width":"162.77","height":"20.66","transform":["20.66","0.00","0.00","20.66","234.96","508.10"],"fontName":"HVHZFT+CMR17","x":234.96300000000002,"y":508.09919999999994,"line":1}

@@ -1,0 +1,121 @@
+{
+  "pages": 175,
+  "items": 15299,
+  "groupedItems": 10799,
+  "changes": 269,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":2,"change":"ContentChange","str":"Made With Creative Commons iii","line":0,"x":70.8661,"y":21.3071,"width":"16.25","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":4,"change":"ContentChange","str":"Made With Creative Commons v","line":0,"x":70.8661,"y":21.3071,"width":"13.45","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":6,"change":"ContentChange","str":"Made With Creative Commons vii","line":0,"x":70.8661,"y":21.3071,"width":"17.77","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":8,"change":"ContentChange","str":"Made With Creative Commons ix","line":0,"x":70.8661,"y":21.3071,"width":"15.86","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":10,"change":"ContentChange","str":"Made With Creative Commons xi","line":0,"x":70.8661,"y":21.3071,"width":"15.88","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":12,"change":"ContentChange","str":"Made With Creative Commons xiii","line":0,"x":70.8661,"y":21.3071,"width":"20.01","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":14,"change":"ContentChange","str":"Made With Creative Commons xv","line":0,"x":70.8661,"y":21.3071,"width":"17.66","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":16,"change":"ContentChange","str":"Made With Creative Commons 1","line":0,"x":70.8661,"y":21.3071,"width":"13.88","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":18,"change":"ContentChange","str":"Made With Creative Commons 3","line":0,"x":70.8661,"y":21.3071,"width":"13.88","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":20,"change":"ContentChange","str":"Made With Creative Commons 5","line":0,"x":70.8661,"y":21.3071,"width":"13.88","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":20,"change":"ContentChange","str":"D I R E C T &","line":74,"x":201.6608,"y":289.7793,"width":"36.31","height":"15.77","fontName":["DBUVEN+BrysoShedcaps-Regular"],"dir":["ltr"]}
+{"page":22,"change":"ContentChange","str":"Made With Creative Commons 7","line":0,"x":70.8661,"y":21.3071,"width":"13.88","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":24,"change":"ContentChange","str":"Made With Creative Commons 9","line":0,"x":70.8661,"y":21.3071,"width":"13.88","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":26,"change":"ContentChange","str":"Made With Creative Commons 11","line":0,"x":70.8661,"y":21.3071,"width":"17.06","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":28,"change":"ContentChange","str":"Made With Creative Commons 13","line":0,"x":70.8661,"y":21.3071,"width":"17.64","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":30,"change":"ContentChange","str":"Made With Creative Commons 15","line":0,"x":70.8661,"y":21.3071,"width":"17.65","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":32,"change":"ContentChange","str":"Made With Creative Commons 17","line":0,"x":70.8661,"y":21.3071,"width":"17.44","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":34,"change":"ContentChange","str":"Made With Creative Commons 19","line":0,"x":70.8661,"y":21.3071,"width":"17.68","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":36,"change":"ContentChange","str":"Made With Creative Commons 21","line":0,"x":70.8661,"y":21.3071,"width":"17.69","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":38,"change":"ContentChange","str":"Made With Creative Commons 23","line":0,"x":70.8661,"y":21.3071,"width":"18.11","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":40,"change":"ContentChange","str":"Made With Creative Commons 25","line":0,"x":70.8661,"y":21.3071,"width":"18.16","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":42,"change":"ContentChange","str":"Made With Creative Commons 27","line":0,"x":70.8661,"y":21.3071,"width":"18.00","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":44,"change":"ContentChange","str":"Made With Creative Commons 29","line":0,"x":70.8661,"y":21.3071,"width":"18.20","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":46,"change":"ContentChange","str":"Made With Creative Commons 31","line":0,"x":70.8661,"y":21.3071,"width":"17.71","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":48,"change":"ContentChange","str":"Made With Creative Commons 33","line":0,"x":70.8661,"y":21.3071,"width":"18.25","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":50,"change":"ContentChange","str":"Made With Creative Commons 35","line":0,"x":70.8661,"y":21.3071,"width":"18.27","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":52,"change":"ContentChange","str":"Made With Creative Commons 37","line":0,"x":70.8661,"y":21.3071,"width":"18.04","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":54,"change":"ContentChange","str":"Made With Creative Commons 39","line":0,"x":70.8661,"y":21.3071,"width":"18.25","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":56,"change":"ContentChange","str":"Made With Creative Commons 41","line":0,"x":70.8661,"y":21.3071,"width":"17.49","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":58,"change":"ContentChange","str":"Made With Creative Commons 43","line":0,"x":70.8661,"y":21.3071,"width":"18.28","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":60,"change":"ContentChange","str":"Made With Creative Commons 45","line":0,"x":70.8661,"y":21.3071,"width":"18.29","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":62,"change":"ContentChange","str":"Made With Creative Commons 47","line":0,"x":70.8661,"y":21.3071,"width":"17.89","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":64,"change":"ContentChange","str":"Made With Creative Commons 49","line":0,"x":70.8661,"y":21.3071,"width":"18.20","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":66,"change":"ContentChange","str":"Made With Creative Commons 51","line":0,"x":70.8661,"y":21.3071,"width":"17.57","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":68,"change":"ContentChange","str":"Made With Creative Commons 53","line":0,"x":70.8661,"y":21.3071,"width":"18.20","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":70,"change":"ContentChange","str":"Made With Creative Commons 55","line":0,"x":70.8661,"y":21.3071,"width":"18.21","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":72,"change":"ContentChange","str":"Made With Creative Commons 57","line":0,"x":70.8661,"y":21.3071,"width":"17.95","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":74,"change":"ContentChange","str":"Made With Creative Commons 59","line":0,"x":70.8661,"y":21.3071,"width":"18.18","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":76,"change":"ContentChange","str":"Made With Creative Commons 61","line":0,"x":70.8661,"y":21.3071,"width":"17.79","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":78,"change":"ContentChange","str":"Made With Creative Commons 63","line":0,"x":70.8661,"y":21.3071,"width":"18.31","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":80,"change":"ContentChange","str":"Made With Creative Commons 65","line":0,"x":70.8661,"y":21.3071,"width":"18.32","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":82,"change":"ContentChange","str":"Made With Creative Commons 67","line":0,"x":70.8661,"y":21.3071,"width":"18.10","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":84,"change":"ContentChange","str":"Made With Creative Commons 69","line":0,"x":70.8661,"y":21.3071,"width":"18.31","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":86,"change":"ContentChange","str":"Made With Creative Commons 71","line":0,"x":70.8661,"y":21.3071,"width":"17.78","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":88,"change":"ContentChange","str":"Made With Creative Commons 73","line":0,"x":70.8661,"y":21.3071,"width":"18.00","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":90,"change":"ContentChange","str":"Made With Creative Commons 75","line":0,"x":70.8661,"y":21.3071,"width":"17.83","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":92,"change":"ContentChange","str":"Made With Creative Commons 77","line":0,"x":70.8661,"y":21.3071,"width":"18.13","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":94,"change":"ContentChange","str":"Made With Creative Commons 79","line":0,"x":70.8661,"y":21.3071,"width":"18.06","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":96,"change":"ContentChange","str":"Made With Creative Commons 81","line":0,"x":70.8661,"y":21.3071,"width":"17.64","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":98,"change":"ContentChange","str":"Made With Creative Commons 83","line":0,"x":70.8661,"y":21.3071,"width":"18.22","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":100,"change":"ContentChange","str":"Made With Creative Commons 85","line":0,"x":70.8661,"y":21.3071,"width":"18.27","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":102,"change":"ContentChange","str":"Made With Creative Commons 87","line":0,"x":70.8661,"y":21.3071,"width":"17.97","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":104,"change":"ContentChange","str":"Made With Creative Commons 89","line":0,"x":70.8661,"y":21.3071,"width":"18.21","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":106,"change":"ContentChange","str":"Made With Creative Commons 91","line":0,"x":70.8661,"y":21.3071,"width":"17.76","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":108,"change":"ContentChange","str":"Made With Creative Commons 93","line":0,"x":70.8661,"y":21.3071,"width":"18.21","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":110,"change":"ContentChange","str":"Made With Creative Commons 95","line":0,"x":70.8661,"y":21.3071,"width":"18.27","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":112,"change":"ContentChange","str":"Made With Creative Commons 97","line":0,"x":70.8661,"y":21.3071,"width":"17.99","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":114,"change":"ContentChange","str":"Made With Creative Commons 99","line":0,"x":70.8661,"y":21.3071,"width":"18.31","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":116,"change":"ContentChange","str":"Made With Creative Commons 101","line":0,"x":70.8661,"y":21.3071,"width":"21.57","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":118,"change":"ContentChange","str":"Made With Creative Commons 103","line":0,"x":70.8661,"y":21.3071,"width":"21.80","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":120,"change":"ContentChange","str":"Made With Creative Commons 105","line":0,"x":70.8661,"y":21.3071,"width":"21.83","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":122,"change":"ContentChange","str":"Made With Creative Commons 107","line":0,"x":70.8661,"y":21.3071,"width":"21.67","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":124,"change":"ContentChange","str":"Made With Creative Commons 109","line":0,"x":70.8661,"y":21.3071,"width":"21.83","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":126,"change":"ContentChange","str":"Made With Creative Commons 111","line":0,"x":70.8661,"y":21.3071,"width":"20.62","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":128,"change":"ContentChange","str":"Made With Creative Commons 113","line":0,"x":70.8661,"y":21.3071,"width":"20.90","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":130,"change":"ContentChange","str":"Made With Creative Commons 115","line":0,"x":70.8661,"y":21.3071,"width":"20.91","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":132,"change":"ContentChange","str":"Made With Creative Commons 117","line":0,"x":70.8661,"y":21.3071,"width":"20.81","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":134,"change":"ContentChange","str":"Made With Creative Commons 119","line":0,"x":70.8661,"y":21.3071,"width":"20.92","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":136,"change":"ContentChange","str":"Made With Creative Commons 121","line":0,"x":70.8661,"y":21.3071,"width":"21.54","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":138,"change":"ContentChange","str":"Made With Creative Commons 123","line":0,"x":70.8661,"y":21.3071,"width":"21.74","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":140,"change":"ContentChange","str":"Made With Creative Commons 125","line":0,"x":70.8661,"y":21.3071,"width":"21.77","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":142,"change":"ContentChange","str":"Made With Creative Commons 127","line":0,"x":70.8661,"y":21.3071,"width":"21.69","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":144,"change":"ContentChange","str":"Made With Creative Commons 129","line":0,"x":70.8661,"y":21.3071,"width":"21.79","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":146,"change":"ContentChange","str":"Made With Creative Commons 131","line":0,"x":70.8661,"y":21.3071,"width":"21.51","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":148,"change":"ContentChange","str":"Made With Creative Commons 133","line":0,"x":70.8661,"y":21.3071,"width":"21.79","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":150,"change":"ContentChange","str":"Made With Creative Commons 135","line":0,"x":70.8661,"y":21.3071,"width":"21.80","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":152,"change":"ContentChange","str":"Made With Creative Commons 137","line":0,"x":70.8661,"y":21.3071,"width":"21.68","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":154,"change":"ContentChange","str":"Made With Creative Commons 139","line":0,"x":70.8661,"y":21.3071,"width":"21.78","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":156,"change":"ContentChange","str":"Made With Creative Commons 141","line":0,"x":70.8661,"y":21.3071,"width":"21.29","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":158,"change":"ContentChange","str":"Made With Creative Commons 143","line":0,"x":70.8661,"y":21.3071,"width":"21.72","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":160,"change":"ContentChange","str":"Made With Creative Commons 145","line":0,"x":70.8661,"y":21.3071,"width":"21.73","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":162,"change":"ContentChange","str":"Made With Creative Commons 147","line":0,"x":70.8661,"y":21.3071,"width":"21.52","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":164,"change":"ContentChange","str":"Made With Creative Commons 149","line":0,"x":70.8661,"y":21.3071,"width":"21.67","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":166,"change":"ContentChange","str":"Made With Creative Commons 151","line":0,"x":70.8661,"y":21.3071,"width":"21.42","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":168,"change":"ContentChange","str":"Made With Creative Commons 153","line":0,"x":70.8661,"y":21.3071,"width":"21.77","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":170,"change":"ContentChange","str":"Made With Creative Commons 155","line":0,"x":70.8661,"y":21.3071,"width":"21.78","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":172,"change":"ContentChange","str":"Made With Creative Commons 157","line":0,"x":70.8661,"y":21.3071,"width":"21.65","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":174,"change":"ContentChange","str":"Made With Creative Commons 159","line":0,"x":70.8661,"y":21.3071,"width":"21.77","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}

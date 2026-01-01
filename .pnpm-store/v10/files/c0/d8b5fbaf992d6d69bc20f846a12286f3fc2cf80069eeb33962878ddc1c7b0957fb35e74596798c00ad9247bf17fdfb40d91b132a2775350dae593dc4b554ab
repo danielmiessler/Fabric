@@ -1,0 +1,541 @@
+{
+  "pages": 16,
+  "items": 1798,
+  "groupedItems": 1798,
+  "changes": 511,
+  "schema": [
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":0,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","54.00","744.96"],"fontName":"ABCDEE+Georgia","x":54,"y":744.96}
+{"page":0,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","54.00","719.28"],"fontName":"ABCDEE+Georgia","x":54,"y":719.28}
+{"page":0,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","54.00","693.58"],"fontName":"ABCDEE+Georgia","x":54,"y":693.58}
+{"page":0,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","159.38","667.90"],"fontName":"ABCDEE+Georgia","x":159.38,"y":667.9}
+{"page":0,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","159.38","642.22"],"fontName":"ABCDEE+Georgia","x":159.38,"y":642.22}
+{"page":0,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","195.41","616.54"],"fontName":"ABCDEE+Georgia","x":195.41,"y":616.54}
+{"page":0,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","159.38","590.86"],"fontName":"ABCDEE+Georgia","x":159.38,"y":590.86}
+{"page":0,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","159.38","565.18"],"fontName":"ABCDEE+Georgia","x":159.38,"y":565.18}
+{"page":0,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","484.66","539.50"],"fontName":"ABCDEE+Georgia","x":484.66,"y":539.5}
+{"page":0,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","484.66","513.79"],"fontName":"ABCDEE+Georgia","x":484.66,"y":513.79}
+{"page":0,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","506.26","488.11"],"fontName":"ABCDEE+Georgia","x":506.26,"y":488.11}
+{"page":0,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","506.26","462.43"],"fontName":"ABCDEE+Georgia","x":506.26,"y":462.43}
+{"page":0,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","506.26","436.75"],"fontName":"ABCDEE+Georgia","x":506.26,"y":436.75}
+{"page":0,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","506.26","411.07"],"fontName":"ABCDEE+Georgia","x":506.26,"y":411.07}
+{"page":0,"change":"Removal","str":" ","dir":"ltr","width":"3.85","height":"15.96","transform":["15.96","0.00","0.00","15.96","78.02","266.57"],"fontName":"ABCDEE+Georgia,Italic","x":78.024,"y":266.57}
+{"page":0,"change":"Removal","str":" ","dir":"ltr","width":"3.85","height":"15.96","transform":["15.96","0.00","0.00","15.96","304.01","245.69"],"fontName":"ABCDEE+Georgia,Italic","x":304.01,"y":245.69}
+{"page":0,"change":"Removal","str":" ","dir":"ltr","width":"3.85","height":"15.96","transform":["15.96","0.00","0.00","15.96","201.65","224.69"],"fontName":"ABCDEE+Georgia,Italic","x":201.65,"y":224.69}
+{"page":0,"change":"Removal","str":" ","dir":"ltr","width":"3.85","height":"15.96","transform":["15.96","0.00","0.00","15.96","150.14","203.57"],"fontName":"ABCDEE+Georgia,Italic","x":150.14,"y":203.57}
+{"page":0,"change":"Removal","str":" ","dir":"ltr","width":"3.85","height":"15.96","transform":["15.96","0.00","0.00","15.96","174.26","203.57"],"fontName":"ABCDEE+Georgia,Italic","x":174.26,"y":203.57}
+{"page":0,"change":"Removal","str":" ","dir":"ltr","width":"3.85","height":"15.96","transform":["15.96","0.00","0.00","15.96","212.93","203.57"],"fontName":"ABCDEE+Georgia,Italic","x":212.93,"y":203.57}
+{"page":0,"change":"Removal","str":" ","dir":"ltr","width":"3.85","height":"15.96","transform":["15.96","0.00","0.00","15.96","187.82","138.14"],"fontName":"ABCDEE+Georgia,Italic","x":187.82,"y":138.14}
+{"page":0,"change":"Removal","str":" ","dir":"ltr","width":"3.85","height":"15.96","transform":["15.96","0.00","0.00","15.96","172.22","117.14"],"fontName":"ABCDEE+Georgia,Italic","x":172.22,"y":117.14}
+{"page":0,"change":"Removal","str":" ","dir":"ltr","width":"8.21","height":"36.00","transform":["36.00","0.00","0.00","36.00","462.34","461.11"],"fontName":"ABCDEE+Arial Narrow,Bold","x":462.34,"y":461.11}
+{"page":0,"change":"Removal","str":" ","dir":"ltr","width":"8.21","height":"36.00","transform":["36.00","0.00","0.00","36.00","491.86","413.59"],"fontName":"ABCDEE+Arial Narrow,Bold","x":491.86,"y":413.59}
+{"page":0,"change":"Removal","str":" ","dir":"ltr","width":"6.37","height":"27.96","transform":["27.96","0.00","0.00","27.96","241.01","341.45"],"fontName":"ABCDEE+Arial Narrow,Bold","x":241.01,"y":341.45}
+{"page":0,"change":"Removal","str":" ","dir":"ltr","width":"8.21","height":"36.00","transform":["36.00","0.00","0.00","36.00","75.02","298.61"],"fontName":"ABCDEE+Arial Narrow,Bold","x":75.024,"y":298.61}
+{"page":0,"change":"Removal","str":" ","dir":"ltr","width":"4.57","height":"20.04","transform":["20.04","0.00","0.00","20.04","188.78","534.79"],"fontName":"ABCDEE+Arial Narrow,Bold","x":188.78,"y":534.79}
+{"page":0,"change":"Removal","str":" ","dir":"ltr","width":"4.57","height":"20.04","transform":["20.04","0.00","0.00","20.04","74.90","502.15"],"fontName":"ABCDEE+Arial Narrow,Bold","x":74.904,"y":502.15}
+{"page":1,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","90.02","735.00"],"fontName":"ABCDEE+Georgia","x":90.024,"y":735}
+{"page":1,"change":"Removal","str":" ","dir":"ltr","width":"1.83","height":"8.04","transform":["8.04","0.00","0.00","8.04","264.89","99.86"],"fontName":"ABCDEE+Arial Narrow,Bold","x":264.89,"y":99.864}
+{"page":1,"change":"Removal","str":" ","dir":"ltr","width":"1.83","height":"8.04","transform":["8.04","0.00","0.00","8.04","266.57","99.86"],"fontName":"ABCDEE+Arial Narrow,Bold","x":266.57,"y":99.864}
+{"page":1,"change":"Removal","str":" ","dir":"ltr","width":"1.83","height":"8.04","transform":["8.04","0.00","0.00","8.04","522.10","99.86"],"fontName":"ABCDEE+Arial Narrow,Bold","x":522.1,"y":99.864}
+{"page":1,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","90.02","77.06"],"fontName":"ABCDEE+Georgia","x":90.024,"y":77.064}
+{"page":1,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","90.02","51.38"],"fontName":"ABCDEE+Georgia","x":90.024,"y":51.384}
+{"page":1,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","128.30","691.42"],"fontName":"ABCDEE+Georgia","x":128.3,"y":691.42}
+{"page":1,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","154.34","691.42"],"fontName":"ABCDEE+Georgia","x":154.34,"y":691.42}
+{"page":1,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","424.87","691.42"],"fontName":"ABCDEE+Georgia","x":424.87,"y":691.42}
+{"page":1,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","475.78","691.42"],"fontName":"ABCDEE+Georgia","x":475.78,"y":691.42}
+{"page":1,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","229.37","648.34"],"fontName":"ABCDEE+Georgia","x":229.37,"y":648.34}
+{"page":1,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","472.06","648.34"],"fontName":"ABCDEE+Georgia","x":472.06,"y":648.34}
+{"page":1,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","141.14","605.26"],"fontName":"ABCDEE+Georgia","x":141.14,"y":605.26}
+{"page":1,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","90.02","580.90"],"fontName":"ABCDEE+Georgia","x":90.024,"y":580.9}
+{"page":1,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","90.02","556.54"],"fontName":"ABCDEE+Georgia","x":90.024,"y":556.54}
+{"page":1,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","90.02","532.03"],"fontName":"ABCDEE+Georgia","x":90.024,"y":532.03}
+{"page":1,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","90.02","507.67"],"fontName":"ABCDEE+Georgia","x":90.024,"y":507.67}
+{"page":1,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","90.02","483.31"],"fontName":"ABCDEE+Georgia","x":90.024,"y":483.31}
+{"page":1,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","90.02","458.95"],"fontName":"ABCDEE+Georgia","x":90.024,"y":458.95}
+{"page":1,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","90.02","434.59"],"fontName":"ABCDEE+Georgia","x":90.024,"y":434.59}
+{"page":1,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","90.02","410.23"],"fontName":"ABCDEE+Georgia","x":90.024,"y":410.23}
+{"page":1,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","90.02","385.87"],"fontName":"ABCDEE+Georgia","x":90.024,"y":385.87}
+{"page":1,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","90.02","361.49"],"fontName":"ABCDEE+Georgia","x":90.024,"y":361.49}
+{"page":1,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","90.02","337.13"],"fontName":"ABCDEE+Georgia","x":90.024,"y":337.13}
+{"page":1,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","90.02","312.65"],"fontName":"ABCDEE+Georgia","x":90.024,"y":312.65}
+{"page":1,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","90.02","288.29"],"fontName":"ABCDEE+Georgia","x":90.024,"y":288.29}
+{"page":1,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","90.02","263.93"],"fontName":"ABCDEE+Georgia","x":90.024,"y":263.93}
+{"page":1,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","90.02","239.57"],"fontName":"ABCDEE+Georgia","x":90.024,"y":239.57}
+{"page":1,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","348.31","215.21"],"fontName":"ABCDEE+Georgia","x":348.31,"y":215.21}
+{"page":1,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","492.10","200.81"],"fontName":"ABCDEE+Georgia","x":492.1,"y":200.81}
+{"page":1,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","337.63","186.38"],"fontName":"ABCDEE+Georgia","x":337.63,"y":186.38}
+{"page":1,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","340.27","186.38"],"fontName":"ABCDEE+Georgia","x":340.27,"y":186.38}
+{"page":1,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","520.42","162.02"],"fontName":"ABCDEE+Georgia","x":520.42,"y":162.02}
+{"page":1,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","291.89","147.74"],"fontName":"ABCDEE+Georgia","x":291.89,"y":147.74}
+{"page":1,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","303.89","147.74"],"fontName":"ABCDEE+Georgia","x":303.89,"y":147.74}
+{"page":1,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","398.83","147.74"],"fontName":"ABCDEE+Georgia","x":398.83,"y":147.74}
+{"page":1,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","401.35","147.74"],"fontName":"ABCDEE+Georgia","x":401.35,"y":147.74}
+{"page":1,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","545.38","147.74"],"fontName":"ABCDEE+Georgia","x":545.38,"y":147.74}
+{"page":2,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","90.02","735.00"],"fontName":"ABCDEE+Georgia","x":90.024,"y":735}
+{"page":2,"change":"Removal","str":" ","dir":"ltr","width":"1.83","height":"8.04","transform":["8.04","0.00","0.00","8.04","264.89","99.86"],"fontName":"ABCDEE+Arial Narrow,Bold","x":264.89,"y":99.864}
+{"page":2,"change":"Removal","str":" ","dir":"ltr","width":"1.83","height":"8.04","transform":["8.04","0.00","0.00","8.04","266.57","99.86"],"fontName":"ABCDEE+Arial Narrow,Bold","x":266.57,"y":99.864}
+{"page":2,"change":"Removal","str":" ","dir":"ltr","width":"1.83","height":"8.04","transform":["8.04","0.00","0.00","8.04","522.10","99.86"],"fontName":"ABCDEE+Arial Narrow,Bold","x":522.1,"y":99.864}
+{"page":2,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","90.02","77.06"],"fontName":"ABCDEE+Georgia","x":90.024,"y":77.064}
+{"page":2,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","90.02","51.38"],"fontName":"ABCDEE+Georgia","x":90.024,"y":51.384}
+{"page":2,"change":"Removal","str":" ","dir":"ltr","width":"5.78","height":"24.00","transform":["24.00","0.00","0.00","24.00","291.41","629.50"],"fontName":"ABCDEE+Georgia","x":291.41,"y":629.5}
+{"page":2,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","245.69","576.70"],"fontName":"ABCDEE+Georgia,Italic","x":245.69,"y":576.7}
+{"page":2,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","90.02","552.22"],"fontName":"ABCDEE+Georgia","x":90.024,"y":552.22}
+{"page":2,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","90.02","527.83"],"fontName":"ABCDEE+Georgia","x":90.024,"y":527.83}
+{"page":2,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","291.65","455.95"],"fontName":"ABCDEE+Georgia","x":291.65,"y":455.95}
+{"page":2,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","364.03","434.11"],"fontName":"ABCDEE+Georgia,Italic","x":364.03,"y":434.11}
+{"page":2,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","243.41","405.31"],"fontName":"ABCDEE+Georgia,Italic","x":243.41,"y":405.31}
+{"page":2,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","90.02","380.95"],"fontName":"ABCDEE+Georgia","x":90.024,"y":380.95}
+{"page":2,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","90.02","356.57"],"fontName":"ABCDEE+Georgia","x":90.024,"y":356.57}
+{"page":2,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","205.25","227.09"],"fontName":"ABCDEE+Georgia","x":205.25,"y":227.09}
+{"page":2,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","327.41","176.30"],"fontName":"ABCDEE+Georgia,Italic","x":327.41,"y":176.3}
+{"page":2,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","285.05","161.90"],"fontName":"ABCDEE+Georgia,Italic","x":285.05,"y":161.9}
+{"page":2,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","313.01","147.50"],"fontName":"ABCDEE+Georgia,Italic","x":313.01,"y":147.5}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","90.02","735.00"],"fontName":"ABCDEE+Georgia","x":90.024,"y":735}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"1.83","height":"8.04","transform":["8.04","0.00","0.00","8.04","264.89","99.86"],"fontName":"ABCDEE+Arial Narrow,Bold","x":264.89,"y":99.864}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"1.83","height":"8.04","transform":["8.04","0.00","0.00","8.04","266.57","99.86"],"fontName":"ABCDEE+Arial Narrow,Bold","x":266.57,"y":99.864}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"1.83","height":"8.04","transform":["8.04","0.00","0.00","8.04","522.10","99.86"],"fontName":"ABCDEE+Arial Narrow,Bold","x":522.1,"y":99.864}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","90.02","77.06"],"fontName":"ABCDEE+Georgia","x":90.024,"y":77.064}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","90.02","51.38"],"fontName":"ABCDEE+Georgia","x":90.024,"y":51.384}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","90.02","720.24"],"fontName":"ABCDEE+Georgia","x":90.024,"y":720.24}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","496.06","695.86"],"fontName":"ABCDEE+Georgia","x":496.06,"y":695.86}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"3.07","height":"11.04","transform":["11.04","0.00","0.00","11.04","115.70","671.50"],"x":115.7,"y":671.5}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"2.79","height":"11.04","transform":["11.59","0.00","0.00","11.04","169.46","671.50"],"fontName":"ABCDEE+Georgia","x":169.46,"y":671.5}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"2.79","height":"11.04","transform":["11.59","0.00","0.00","11.04","195.65","671.50"],"fontName":"ABCDEE+Georgia","x":195.65,"y":671.5}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"2.79","height":"11.04","transform":["11.59","0.00","0.00","11.04","283.49","671.50"],"fontName":"ABCDEE+Georgia","x":283.49,"y":671.5}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"2.79","height":"11.04","transform":["11.59","0.00","0.00","11.04","429.55","671.50"],"fontName":"ABCDEE+Georgia","x":429.55,"y":671.5}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"2.79","height":"11.04","transform":["11.59","0.00","0.00","11.04","446.59","671.50"],"fontName":"ABCDEE+Georgia","x":446.59,"y":671.5}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"2.79","height":"11.04","transform":["11.59","0.00","0.00","11.04","165.98","657.10"],"fontName":"ABCDEE+Georgia","x":165.98,"y":657.1}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","190.34","657.10"],"fontName":"ABCDEE+Georgia","x":190.34,"y":657.1}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"3.22","height":"11.04","transform":["11.58","0.00","0.00","11.04","117.62","632.74"],"x":117.62,"y":632.74}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"2.79","height":"11.04","transform":["11.59","0.00","0.00","11.04","323.45","618.34"],"fontName":"ABCDEE+Georgia","x":323.45,"y":618.34}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"2.79","height":"11.04","transform":["11.59","0.00","0.00","11.04","347.83","618.34"],"fontName":"ABCDEE+Georgia","x":347.83,"y":618.34}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"3.07","height":"11.04","transform":["11.04","0.00","0.00","11.04","117.02","593.98"],"x":117.02,"y":593.98}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","359.11","579.58"],"fontName":"ABCDEE+Georgia","x":359.11,"y":579.58}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"3.07","height":"11.04","transform":["11.04","0.00","0.00","11.04","117.14","555.22"],"x":117.14,"y":555.22}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","322.01","540.82"],"fontName":"ABCDEE+Georgia","x":322.01,"y":540.82}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"3.07","height":"11.04","transform":["11.04","0.00","0.00","11.04","116.78","516.43"],"x":116.78,"y":516.43}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","430.99","502.03"],"fontName":"ABCDEE+Georgia","x":430.99,"y":502.03}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"3.07","height":"11.04","transform":["11.04","0.00","0.00","11.04","117.26","477.67"],"x":117.26,"y":477.67}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","318.17","434.59"],"fontName":"ABCDEE+Georgia","x":318.17,"y":434.59}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"3.07","height":"11.04","transform":["11.04","0.00","0.00","11.04","116.54","410.23"],"x":116.54,"y":410.23}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","246.53","395.83"],"fontName":"ABCDEE+Georgia","x":246.53,"y":395.83}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"3.07","height":"11.04","transform":["11.04","0.00","0.00","11.04","117.50","371.47"],"x":117.5,"y":371.47}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","337.75","357.05"],"fontName":"ABCDEE+Georgia","x":337.75,"y":357.05}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"3.07","height":"11.04","transform":["11.04","0.00","0.00","11.04","117.26","332.69"],"x":117.26,"y":332.69}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","234.41","318.29"],"fontName":"ABCDEE+Georgia","x":234.41,"y":318.29}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"3.07","height":"11.04","transform":["11.04","0.00","0.00","11.04","122.42","293.93"],"x":122.42,"y":293.93}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","312.89","293.93"],"fontName":"ABCDEE+Georgia","x":312.89,"y":293.93}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","395.35","293.93"],"fontName":"ABCDEE+Georgia","x":395.35,"y":293.93}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","90.02","269.57"],"fontName":"ABCDEE+Georgia","x":90.024,"y":269.57}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","90.02","245.21"],"fontName":"ABCDEE+Georgia","x":90.024,"y":245.21}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","234.05","245.21"],"fontName":"ABCDEE+Georgia","x":234.05,"y":245.21}
+{"page":4,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","90.02","735.00"],"fontName":"ABCDEE+Georgia","x":90.024,"y":735}
+{"page":4,"change":"Removal","str":" ","dir":"ltr","width":"1.83","height":"8.04","transform":["8.04","0.00","0.00","8.04","264.89","99.86"],"fontName":"ABCDEE+Arial Narrow,Bold","x":264.89,"y":99.864}
+{"page":4,"change":"Removal","str":" ","dir":"ltr","width":"1.83","height":"8.04","transform":["8.04","0.00","0.00","8.04","266.57","99.86"],"fontName":"ABCDEE+Arial Narrow,Bold","x":266.57,"y":99.864}
+{"page":4,"change":"Removal","str":" ","dir":"ltr","width":"1.83","height":"8.04","transform":["8.04","0.00","0.00","8.04","522.10","99.86"],"fontName":"ABCDEE+Arial Narrow,Bold","x":522.1,"y":99.864}
+{"page":4,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","90.02","77.06"],"fontName":"ABCDEE+Georgia","x":90.024,"y":77.064}
+{"page":4,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","90.02","51.38"],"fontName":"ABCDEE+Georgia","x":90.024,"y":51.384}
+{"page":4,"change":"Removal","str":" ","dir":"ltr","width":"5.47","height":"24.00","transform":["24.00","0.00","0.00","24.00","185.18","707.74"],"fontName":"ABCDEE+Arial Narrow,Bold","x":185.18,"y":707.74}
+{"page":4,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","451.51","662.14"],"fontName":"ABCDEE+Georgia","x":451.51,"y":662.14}
+{"page":4,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","140.90","647.86"],"fontName":"ABCDEE+Georgia","x":140.9,"y":647.86}
+{"page":4,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","179.78","647.86"],"fontName":"ABCDEE+Georgia","x":179.78,"y":647.86}
+{"page":4,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","249.17","633.46"],"fontName":"ABCDEE+Georgia","x":249.17,"y":633.46}
+{"page":4,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","270.89","633.46"],"fontName":"ABCDEE+Georgia","x":270.89,"y":633.46}
+{"page":4,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","208.61","604.66"],"fontName":"ABCDEE+Georgia","x":208.61,"y":604.66}
+{"page":4,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","131.54","580.30"],"fontName":"ABCDEE+Georgia","x":131.54,"y":580.3}
+{"page":4,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","222.17","580.30"],"fontName":"ABCDEE+Georgia","x":222.17,"y":580.3}
+{"page":4,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","272.81","580.30"],"fontName":"ABCDEE+Georgia","x":272.81,"y":580.3}
+{"page":4,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","358.15","580.30"],"fontName":"ABCDEE+Georgia","x":358.15,"y":580.3}
+{"page":4,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","409.15","580.30"],"fontName":"ABCDEE+Georgia","x":409.15,"y":580.3}
+{"page":4,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","494.14","580.30"],"fontName":"ABCDEE+Georgia","x":494.14,"y":580.3}
+{"page":4,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","139.82","565.90"],"fontName":"ABCDEE+Georgia","x":139.82,"y":565.9}
+{"page":4,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","152.78","565.90"],"fontName":"ABCDEE+Georgia","x":152.78,"y":565.9}
+{"page":4,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","279.77","565.90"],"fontName":"ABCDEE+Georgia","x":279.77,"y":565.9}
+{"page":4,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","414.31","565.90"],"fontName":"ABCDEE+Georgia","x":414.31,"y":565.9}
+{"page":4,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","326.33","551.62"],"fontName":"ABCDEE+Georgia","x":326.33,"y":551.62}
+{"page":4,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","363.43","498.43"],"fontName":"ABCDEE+Georgia","x":363.43,"y":498.43}
+{"page":4,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","119.06","469.63"],"fontName":"ABCDEE+Georgia","x":119.06,"y":469.63}
+{"page":4,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","205.13","469.63"],"fontName":"ABCDEE+Georgia","x":205.13,"y":469.63}
+{"page":4,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","228.77","455.35"],"fontName":"ABCDEE+Georgia","x":228.77,"y":455.35}
+{"page":4,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","189.38","430.87"],"fontName":"ABCDEE+Georgia","x":189.38,"y":430.87}
+{"page":4,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","473.38","416.59"],"fontName":"ABCDEE+Georgia","x":473.38,"y":416.59}
+{"page":4,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","424.99","402.19"],"fontName":"ABCDEE+Georgia","x":424.99,"y":402.19}
+{"page":4,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","497.62","373.39"],"fontName":"ABCDEE+Georgia","x":497.62,"y":373.39}
+{"page":4,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","219.53","359.09"],"fontName":"ABCDEE+Georgia","x":219.53,"y":359.09}
+{"page":4,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","248.09","315.89"],"fontName":"ABCDEE+Georgia","x":248.09,"y":315.89}
+{"page":4,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","90.02","291.53"],"fontName":"ABCDEE+Georgia","x":90.024,"y":291.53}
+{"page":4,"change":"Removal","str":" ","dir":"ltr","width":"5.47","height":"24.00","transform":["24.00","0.00","0.00","24.00","374.47","254.81"],"fontName":"ABCDEE+Arial Narrow,Bold","x":374.47,"y":254.81}
+{"page":4,"change":"Removal","str":" ","dir":"ltr","width":"5.47","height":"24.00","transform":["24.00","0.00","0.00","24.00","371.11","227.21"],"fontName":"ABCDEE+Arial Narrow,Bold","x":371.11,"y":227.21}
+{"page":4,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","162.02","200.09"],"fontName":"ABCDEE+Georgia","x":162.02,"y":200.09}
+{"page":4,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","480.46","200.09"],"fontName":"ABCDEE+Georgia","x":480.46,"y":200.09}
+{"page":4,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","217.37","185.66"],"fontName":"ABCDEE+Georgia","x":217.37,"y":185.66}
+{"page":4,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","264.05","185.66"],"fontName":"ABCDEE+Georgia","x":264.05,"y":185.66}
+{"page":4,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","90.02","161.90"],"fontName":"ABCDEE+Georgia","x":90.024,"y":161.9}
+{"page":4,"change":"Removal","str":" ","dir":"ltr","width":"1.94","height":"8.04","transform":["8.04","0.00","0.00","8.04","92.18","139.34"],"fontName":"ABCDEE+Georgia","x":92.184,"y":139.34}
+{"page":4,"change":"Removal","str":" ","dir":"ltr","width":"1.94","height":"8.04","transform":["8.04","0.00","0.00","8.04","435.07","139.34"],"fontName":"ABCDEE+Georgia","x":435.07,"y":139.34}
+{"page":4,"change":"Removal","str":" ","dir":"ltr","width":"1.94","height":"8.04","transform":["8.04","0.00","0.00","8.04","154.34","128.06"],"fontName":"ABCDEE+Georgia","x":154.34,"y":128.06}
+{"page":4,"change":"Removal","str":" ","dir":"ltr","width":"1.94","height":"8.04","transform":["8.04","0.00","0.00","8.04","278.57","128.06"],"fontName":"ABCDEE+Georgia","x":278.57,"y":128.06}
+{"page":5,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","90.02","735.00"],"fontName":"ABCDEE+Georgia","x":90.024,"y":735}
+{"page":5,"change":"Removal","str":" ","dir":"ltr","width":"1.83","height":"8.04","transform":["8.04","0.00","0.00","8.04","264.89","99.86"],"fontName":"ABCDEE+Arial Narrow,Bold","x":264.89,"y":99.864}
+{"page":5,"change":"Removal","str":" ","dir":"ltr","width":"1.83","height":"8.04","transform":["8.04","0.00","0.00","8.04","266.57","99.86"],"fontName":"ABCDEE+Arial Narrow,Bold","x":266.57,"y":99.864}
+{"page":5,"change":"Removal","str":" ","dir":"ltr","width":"1.83","height":"8.04","transform":["8.04","0.00","0.00","8.04","522.10","99.86"],"fontName":"ABCDEE+Arial Narrow,Bold","x":522.1,"y":99.864}
+{"page":5,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","90.02","77.06"],"fontName":"ABCDEE+Georgia","x":90.024,"y":77.064}
+{"page":5,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","90.02","51.38"],"fontName":"ABCDEE+Georgia","x":90.024,"y":51.384}
+{"page":5,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","360.19","662.74"],"fontName":"ABCDEE+Georgia","x":360.19,"y":662.74}
+{"page":5,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","357.91","648.34"],"fontName":"ABCDEE+Georgia","x":357.91,"y":648.34}
+{"page":5,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","467.50","623.98"],"fontName":"ABCDEE+Georgia","x":467.5,"y":623.98}
+{"page":5,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","521.02","623.98"],"fontName":"ABCDEE+Georgia","x":521.02,"y":623.98}
+{"page":5,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","133.58","566.50"],"fontName":"ABCDEE+Georgia","x":133.58,"y":566.5}
+{"page":5,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","349.75","542.14"],"fontName":"ABCDEE+Georgia","x":349.75,"y":542.14}
+{"page":5,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","488.14","498.91"],"fontName":"ABCDEE+Georgia","x":488.14,"y":498.91}
+{"page":5,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","509.26","498.91"],"fontName":"ABCDEE+Georgia","x":509.26,"y":498.91}
+{"page":5,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","461.62","484.63"],"fontName":"ABCDEE+Georgia","x":461.62,"y":484.63}
+{"page":5,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","143.90","445.87"],"fontName":"ABCDEE+Georgia","x":143.9,"y":445.87}
+{"page":5,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","411.91","417.07"],"fontName":"ABCDEE+Georgia","x":411.91,"y":417.07}
+{"page":5,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","294.89","402.67"],"fontName":"ABCDEE+Georgia","x":294.89,"y":402.67}
+{"page":5,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","324.65","402.67"],"fontName":"ABCDEE+Georgia","x":324.65,"y":402.67}
+{"page":5,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","369.19","402.67"],"fontName":"ABCDEE+Georgia","x":369.19,"y":402.67}
+{"page":5,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","378.91","402.67"],"fontName":"ABCDEE+Georgia","x":378.91,"y":402.67}
+{"page":5,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","408.91","373.99"],"fontName":"ABCDEE+Georgia","x":408.91,"y":373.99}
+{"page":5,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","301.61","335.21"],"fontName":"ABCDEE+Georgia","x":301.61,"y":335.21}
+{"page":5,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","443.47","335.21"],"fontName":"ABCDEE+Georgia","x":443.47,"y":335.21}
+{"page":5,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","112.82","292.13"],"fontName":"ABCDEE+Georgia","x":112.82,"y":292.13}
+{"page":5,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","485.50","263.33"],"fontName":"ABCDEE+Georgia","x":485.5,"y":263.33}
+{"page":5,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","211.01","234.65"],"fontName":"ABCDEE+Georgia","x":211.01,"y":234.65}
+{"page":5,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","286.85","234.65"],"fontName":"ABCDEE+Georgia","x":286.85,"y":234.65}
+{"page":5,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","180.74","220.25"],"fontName":"ABCDEE+Georgia","x":180.74,"y":220.25}
+{"page":5,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","90.02","195.89"],"fontName":"ABCDEE+Georgia","x":90.024,"y":195.89}
+{"page":6,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","90.02","735.00"],"fontName":"ABCDEE+Georgia","x":90.024,"y":735}
+{"page":6,"change":"Removal","str":" ","dir":"ltr","width":"1.83","height":"8.04","transform":["8.04","0.00","0.00","8.04","264.89","99.86"],"fontName":"ABCDEE+Arial Narrow,Bold","x":264.89,"y":99.864}
+{"page":6,"change":"Removal","str":" ","dir":"ltr","width":"1.83","height":"8.04","transform":["8.04","0.00","0.00","8.04","266.57","99.86"],"fontName":"ABCDEE+Arial Narrow,Bold","x":266.57,"y":99.864}
+{"page":6,"change":"Removal","str":" ","dir":"ltr","width":"1.83","height":"8.04","transform":["8.04","0.00","0.00","8.04","522.10","99.86"],"fontName":"ABCDEE+Arial Narrow,Bold","x":522.1,"y":99.864}
+{"page":6,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","90.02","77.06"],"fontName":"ABCDEE+Georgia","x":90.024,"y":77.064}
+{"page":6,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","90.02","51.38"],"fontName":"ABCDEE+Georgia","x":90.024,"y":51.384}
+{"page":6,"change":"Removal","str":" ","dir":"ltr","width":"5.47","height":"24.00","transform":["24.00","0.00","0.00","24.00","479.38","707.74"],"fontName":"ABCDEE+Arial Narrow,Bold","x":479.38,"y":707.74}
+{"page":6,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","285.65","647.86"],"fontName":"ABCDEE+Georgia","x":285.65,"y":647.86}
+{"page":6,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","395.95","647.86"],"fontName":"ABCDEE+Georgia","x":395.95,"y":647.86}
+{"page":6,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","401.35","633.46"],"fontName":"ABCDEE+Georgia","x":401.35,"y":633.46}
+{"page":6,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","144.74","619.06"],"fontName":"ABCDEE+Georgia","x":144.74,"y":619.06}
+{"page":6,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","211.01","619.06"],"fontName":"ABCDEE+Georgia","x":211.01,"y":619.06}
+{"page":6,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","282.77","619.06"],"fontName":"ABCDEE+Georgia","x":282.77,"y":619.06}
+{"page":6,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","395.23","619.06"],"fontName":"ABCDEE+Georgia","x":395.23,"y":619.06}
+{"page":6,"change":"Removal","str":" ","dir":"ltr","width":"3.20","height":"14.04","transform":["14.04","0.00","0.00","14.04","137.30","584.86"],"fontName":"ABCDEE+Arial Narrow","x":137.3,"y":584.86}
+{"page":6,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","345.55","548.86"],"fontName":"ABCDEE+Georgia","x":345.55,"y":548.86}
+{"page":6,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","402.31","548.86"],"fontName":"ABCDEE+Georgia","x":402.31,"y":548.86}
+{"page":6,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","443.47","534.43"],"fontName":"ABCDEE+Georgia","x":443.47,"y":534.43}
+{"page":6,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","492.70","534.43"],"fontName":"ABCDEE+Georgia","x":492.7,"y":534.43}
+{"page":6,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","337.03","520.03"],"fontName":"ABCDEE+Georgia","x":337.03,"y":520.03}
+{"page":6,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","429.19","495.67"],"fontName":"ABCDEE+Georgia","x":429.19,"y":495.67}
+{"page":6,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","370.27","452.59"],"fontName":"ABCDEE+Georgia","x":370.27,"y":452.59}
+{"page":6,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","489.58","452.59"],"fontName":"ABCDEE+Georgia","x":489.58,"y":452.59}
+{"page":6,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","407.71","428.23"],"fontName":"ABCDEE+Georgia","x":407.71,"y":428.23}
+{"page":6,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","132.98","413.83"],"fontName":"ABCDEE+Georgia","x":132.98,"y":413.83}
+{"page":6,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","291.77","413.83"],"fontName":"ABCDEE+Georgia","x":291.77,"y":413.83}
+{"page":6,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","223.37","370.75"],"fontName":"ABCDEE+Georgia","x":223.37,"y":370.75}
+{"page":6,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","448.27","356.33"],"fontName":"ABCDEE+Georgia","x":448.27,"y":356.33}
+{"page":6,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","392.83","313.13"],"fontName":"ABCDEE+Georgia","x":392.83,"y":313.13}
+{"page":6,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","504.10","284.45"],"fontName":"ABCDEE+Georgia","x":504.1,"y":284.45}
+{"page":6,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","265.01","255.65"],"fontName":"ABCDEE+Georgia","x":265.01,"y":255.65}
+{"page":6,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","356.11","241.37"],"fontName":"ABCDEE+Georgia","x":356.11,"y":241.37}
+{"page":6,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","315.29","226.97"],"fontName":"ABCDEE+Georgia","x":315.29,"y":226.97}
+{"page":6,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","232.49","202.61"],"fontName":"ABCDEE+Georgia","x":232.49,"y":202.61}
+{"page":6,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","250.73","202.61"],"fontName":"ABCDEE+Georgia","x":250.73,"y":202.61}
+{"page":6,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","286.37","202.61"],"fontName":"ABCDEE+Georgia","x":286.37,"y":202.61}
+{"page":6,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","436.03","202.61"],"fontName":"ABCDEE+Georgia","x":436.03,"y":202.61}
+{"page":6,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","129.98","188.18"],"fontName":"ABCDEE+Georgia","x":129.98,"y":188.18}
+{"page":6,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","367.15","159.38"],"fontName":"ABCDEE+Georgia","x":367.15,"y":159.38}
+{"page":7,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","90.02","735.00"],"fontName":"ABCDEE+Georgia","x":90.024,"y":735}
+{"page":7,"change":"Removal","str":" ","dir":"ltr","width":"1.83","height":"8.04","transform":["8.04","0.00","0.00","8.04","264.89","99.86"],"fontName":"ABCDEE+Arial Narrow,Bold","x":264.89,"y":99.864}
+{"page":7,"change":"Removal","str":" ","dir":"ltr","width":"1.83","height":"8.04","transform":["8.04","0.00","0.00","8.04","266.57","99.86"],"fontName":"ABCDEE+Arial Narrow,Bold","x":266.57,"y":99.864}
+{"page":7,"change":"Removal","str":" ","dir":"ltr","width":"1.83","height":"8.04","transform":["8.04","0.00","0.00","8.04","522.10","99.86"],"fontName":"ABCDEE+Arial Narrow,Bold","x":522.1,"y":99.864}
+{"page":7,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","90.02","77.06"],"fontName":"ABCDEE+Georgia","x":90.024,"y":77.064}
+{"page":7,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","90.02","51.38"],"fontName":"ABCDEE+Georgia","x":90.024,"y":51.384}
+{"page":7,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","181.58","705.82"],"fontName":"ABCDEE+Georgia","x":181.58,"y":705.82}
+{"page":7,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","322.73","681.46"],"fontName":"ABCDEE+Georgia","x":322.73,"y":681.46}
+{"page":7,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","297.05","566.50"],"fontName":"ABCDEE+Georgia","x":297.05,"y":566.5}
+{"page":7,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","135.74","552.10"],"fontName":"ABCDEE+Georgia","x":135.74,"y":552.1}
+{"page":7,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","371.23","537.67"],"fontName":"ABCDEE+Georgia","x":371.23,"y":537.67}
+{"page":7,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","320.57","513.31"],"fontName":"ABCDEE+Georgia","x":320.57,"y":513.31}
+{"page":7,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","285.41","498.91"],"fontName":"ABCDEE+Georgia","x":285.41,"y":498.91}
+{"page":7,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","325.73","498.91"],"fontName":"ABCDEE+Georgia","x":325.73,"y":498.91}
+{"page":7,"change":"Removal","str":" ","dir":"ltr","width":"2.92","height":"9.96","transform":["10.50","0.00","0.00","9.96","119.54","474.55"],"x":119.54,"y":474.55}
+{"page":7,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","311.81","474.55"],"fontName":"ABCDEE+Georgia","x":311.81,"y":474.55}
+{"page":7,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","313.37","417.07"],"fontName":"ABCDEE+Georgia","x":313.37,"y":417.07}
+{"page":7,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","400.39","417.07"],"fontName":"ABCDEE+Georgia","x":400.39,"y":417.07}
+{"page":7,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","191.42","388.39"],"fontName":"ABCDEE+Georgia","x":191.42,"y":388.39}
+{"page":7,"change":"Removal","str":" ","dir":"ltr","width":"2.92","height":"9.96","transform":["10.50","0.00","0.00","9.96","119.54","364.01"],"x":119.54,"y":364.01}
+{"page":7,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","145.70","364.01"],"fontName":"ABCDEE+Georgia","x":145.7,"y":364.01}
+{"page":7,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","246.29","364.01"],"fontName":"ABCDEE+Georgia","x":246.29,"y":364.01}
+{"page":7,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","168.50","335.21"],"fontName":"ABCDEE+Georgia","x":168.5,"y":335.21}
+{"page":7,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","250.37","320.81"],"fontName":"ABCDEE+Georgia","x":250.37,"y":320.81}
+{"page":7,"change":"Removal","str":" ","dir":"ltr","width":"2.92","height":"9.96","transform":["10.50","0.00","0.00","9.96","119.54","296.45"],"x":119.54,"y":296.45}
+{"page":7,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","256.01","296.45"],"fontName":"ABCDEE+Georgia","x":256.01,"y":296.45}
+{"page":7,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","176.78","267.77"],"fontName":"ABCDEE+Georgia","x":176.78,"y":267.77}
+{"page":7,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","282.53","267.77"],"fontName":"ABCDEE+Georgia","x":282.53,"y":267.77}
+{"page":7,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","364.15","267.77"],"fontName":"ABCDEE+Georgia","x":364.15,"y":267.77}
+{"page":7,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","504.70","267.77"],"fontName":"ABCDEE+Georgia","x":504.7,"y":267.77}
+{"page":7,"change":"Removal","str":" ","dir":"ltr","width":"2.92","height":"9.96","transform":["10.50","0.00","0.00","9.96","119.54","243.29"],"x":119.54,"y":243.29}
+{"page":7,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","90.02","196.01"],"fontName":"ABCDEE+Georgia","x":90.024,"y":196.01}
+{"page":7,"change":"Removal","str":" ","dir":"ltr","width":"1.94","height":"8.04","transform":["8.04","0.00","0.00","8.04","92.18","173.54"],"fontName":"ABCDEE+Georgia","x":92.184,"y":173.54}
+{"page":7,"change":"Removal","str":" ","dir":"ltr","width":"1.94","height":"8.04","transform":["8.04","0.00","0.00","8.04","496.42","173.54"],"fontName":"ABCDEE+Georgia","x":496.42,"y":173.54}
+{"page":7,"change":"Removal","str":" ","dir":"ltr","width":"1.94","height":"8.04","transform":["8.04","0.00","0.00","8.04","148.22","162.14"],"fontName":"ABCDEE+Georgia","x":148.22,"y":162.14}
+{"page":7,"change":"Removal","str":" ","dir":"ltr","width":"1.94","height":"8.04","transform":["8.04","0.00","0.00","8.04","239.45","162.14"],"fontName":"ABCDEE+Georgia","x":239.45,"y":162.14}
+{"page":7,"change":"Removal","str":" ","dir":"ltr","width":"1.94","height":"8.04","transform":["8.04","0.00","0.00","8.04","327.17","162.14"],"fontName":"ABCDEE+Georgia","x":327.17,"y":162.14}
+{"page":7,"change":"Removal","str":" ","dir":"ltr","width":"1.94","height":"8.04","transform":["8.04","0.00","0.00","8.04","427.15","162.14"],"fontName":"ABCDEE+Georgia","x":427.15,"y":162.14}
+{"page":7,"change":"Removal","str":" ","dir":"ltr","width":"1.94","height":"8.04","transform":["8.04","0.00","0.00","8.04","125.30","150.74"],"fontName":"ABCDEE+Georgia","x":125.3,"y":150.74}
+{"page":7,"change":"Removal","str":" ","dir":"ltr","width":"1.94","height":"8.04","transform":["8.04","0.00","0.00","8.04","175.94","150.74"],"fontName":"ABCDEE+Georgia","x":175.94,"y":150.74}
+{"page":7,"change":"Removal","str":" ","dir":"ltr","width":"1.94","height":"8.04","transform":["8.04","0.00","0.00","8.04","354.07","150.74"],"fontName":"ABCDEE+Georgia","x":354.07,"y":150.74}
+{"page":7,"change":"Removal","str":" ","dir":"ltr","width":"1.94","height":"8.04","transform":["8.04","0.00","0.00","8.04","92.78","139.34"],"fontName":"ABCDEE+Georgia","x":92.784,"y":139.34}
+{"page":7,"change":"Removal","str":" ","dir":"ltr","width":"1.94","height":"8.04","transform":["8.04","0.00","0.00","8.04","176.30","128.06"],"fontName":"ABCDEE+Georgia","x":176.3,"y":128.06}
+{"page":8,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","90.02","735.00"],"fontName":"ABCDEE+Georgia","x":90.024,"y":735}
+{"page":8,"change":"Removal","str":" ","dir":"ltr","width":"1.83","height":"8.04","transform":["8.04","0.00","0.00","8.04","264.89","99.86"],"fontName":"ABCDEE+Arial Narrow,Bold","x":264.89,"y":99.864}
+{"page":8,"change":"Removal","str":" ","dir":"ltr","width":"1.83","height":"8.04","transform":["8.04","0.00","0.00","8.04","266.57","99.86"],"fontName":"ABCDEE+Arial Narrow,Bold","x":266.57,"y":99.864}
+{"page":8,"change":"Removal","str":" ","dir":"ltr","width":"1.83","height":"8.04","transform":["8.04","0.00","0.00","8.04","522.10","99.86"],"fontName":"ABCDEE+Arial Narrow,Bold","x":522.1,"y":99.864}
+{"page":8,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","90.02","77.06"],"fontName":"ABCDEE+Georgia","x":90.024,"y":77.064}
+{"page":8,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","90.02","51.38"],"fontName":"ABCDEE+Georgia","x":90.024,"y":51.384}
+{"page":8,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","216.17","720.24"],"fontName":"ABCDEE+Georgia","x":216.17,"y":720.24}
+{"page":8,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","463.06","691.42"],"fontName":"ABCDEE+Georgia","x":463.06,"y":691.42}
+{"page":8,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","304.97","677.14"],"fontName":"ABCDEE+Georgia","x":304.97,"y":677.14}
+{"page":8,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","234.29","662.74"],"fontName":"ABCDEE+Georgia","x":234.29,"y":662.74}
+{"page":8,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","479.14","662.74"],"fontName":"ABCDEE+Georgia","x":479.14,"y":662.74}
+{"page":8,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","383.95","638.38"],"fontName":"ABCDEE+Georgia","x":383.95,"y":638.38}
+{"page":8,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","272.57","623.98"],"fontName":"ABCDEE+Georgia","x":272.57,"y":623.98}
+{"page":8,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","163.46","609.58"],"fontName":"ABCDEE+Georgia","x":163.46,"y":609.58}
+{"page":8,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","299.69","609.58"],"fontName":"ABCDEE+Georgia","x":299.69,"y":609.58}
+{"page":8,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","499.06","609.58"],"fontName":"ABCDEE+Georgia","x":499.06,"y":609.58}
+{"page":8,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","336.43","537.67"],"fontName":"ABCDEE+Georgia","x":336.43,"y":537.67}
+{"page":8,"change":"Removal","str":" ","dir":"ltr","width":"3.20","height":"14.04","transform":["14.04","0.00","0.00","14.04","144.86","503.47"],"fontName":"ABCDEE+Arial Narrow","x":144.86,"y":503.47}
+{"page":8,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","254.81","481.87"],"fontName":"ABCDEE+Georgia","x":254.81,"y":481.87}
+{"page":8,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","172.10","467.47"],"fontName":"ABCDEE+Georgia","x":172.1,"y":467.47}
+{"page":8,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","462.82","453.07"],"fontName":"ABCDEE+Georgia","x":462.82,"y":453.07}
+{"page":8,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","150.98","409.99"],"fontName":"ABCDEE+Georgia","x":150.98,"y":409.99}
+{"page":8,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","153.50","409.99"],"fontName":"ABCDEE+Georgia","x":153.5,"y":409.99}
+{"page":8,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","349.63","313.73"],"fontName":"ABCDEE+Georgia","x":349.63,"y":313.73}
+{"page":8,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","316.97","256.25"],"fontName":"ABCDEE+Georgia","x":316.97,"y":256.25}
+{"page":8,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","351.07","256.25"],"fontName":"ABCDEE+Georgia","x":351.07,"y":256.25}
+{"page":8,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","173.90","231.89"],"fontName":"ABCDEE+Georgia","x":173.9,"y":231.89}
+{"page":8,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","90.02","173.18"],"fontName":"ABCDEE+Georgia","x":90.024,"y":173.18}
+{"page":8,"change":"Removal","str":" ","dir":"ltr","width":"1.94","height":"8.04","transform":["8.04","0.00","0.00","8.04","92.18","150.74"],"fontName":"ABCDEE+Georgia","x":92.184,"y":150.74}
+{"page":8,"change":"Removal","str":" ","dir":"ltr","width":"1.94","height":"8.04","transform":["8.04","0.00","0.00","8.04","290.93","139.34"],"fontName":"ABCDEE+Georgia","x":290.93,"y":139.34}
+{"page":8,"change":"Removal","str":" ","dir":"ltr","width":"1.94","height":"8.04","transform":["8.04","0.00","0.00","8.04","131.54","128.06"],"fontName":"ABCDEE+Georgia","x":131.54,"y":128.06}
+{"page":9,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","90.02","735.00"],"fontName":"ABCDEE+Georgia","x":90.024,"y":735}
+{"page":9,"change":"Removal","str":" ","dir":"ltr","width":"1.83","height":"8.04","transform":["8.04","0.00","0.00","8.04","264.89","99.86"],"fontName":"ABCDEE+Arial Narrow,Bold","x":264.89,"y":99.864}
+{"page":9,"change":"Removal","str":" ","dir":"ltr","width":"1.83","height":"8.04","transform":["8.04","0.00","0.00","8.04","266.57","99.86"],"fontName":"ABCDEE+Arial Narrow,Bold","x":266.57,"y":99.864}
+{"page":9,"change":"Removal","str":" ","dir":"ltr","width":"1.83","height":"8.04","transform":["8.04","0.00","0.00","8.04","522.10","99.86"],"fontName":"ABCDEE+Arial Narrow,Bold","x":522.1,"y":99.864}
+{"page":9,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","90.02","77.06"],"fontName":"ABCDEE+Georgia","x":90.024,"y":77.064}
+{"page":9,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","90.02","51.38"],"fontName":"ABCDEE+Georgia","x":90.024,"y":51.384}
+{"page":9,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","225.77","677.14"],"fontName":"ABCDEE+Georgia","x":225.77,"y":677.14}
+{"page":9,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","197.33","633.94"],"fontName":"ABCDEE+Georgia","x":197.33,"y":633.94}
+{"page":9,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","157.58","619.66"],"fontName":"ABCDEE+Georgia","x":157.58,"y":619.66}
+{"page":9,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","479.26","552.10"],"fontName":"ABCDEE+Georgia","x":479.26,"y":552.1}
+{"page":9,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","245.57","537.67"],"fontName":"ABCDEE+Georgia","x":245.57,"y":537.67}
+{"page":9,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","428.35","537.67"],"fontName":"ABCDEE+Georgia","x":428.35,"y":537.67}
+{"page":9,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","210.89","455.83"],"fontName":"ABCDEE+Georgia","x":210.89,"y":455.83}
+{"page":9,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","505.18","427.15"],"fontName":"ABCDEE+Georgia","x":505.18,"y":427.15}
+{"page":9,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","245.09","398.35"],"fontName":"ABCDEE+Georgia","x":245.09,"y":398.35}
+{"page":9,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","156.74","383.95"],"fontName":"ABCDEE+Georgia","x":156.74,"y":383.95}
+{"page":9,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","321.17","359.57"],"fontName":"ABCDEE+Georgia","x":321.17,"y":359.57}
+{"page":9,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","134.78","345.17"],"fontName":"ABCDEE+Georgia","x":134.78,"y":345.17}
+{"page":9,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","497.62","316.49"],"fontName":"ABCDEE+Georgia","x":497.62,"y":316.49}
+{"page":9,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","321.89","244.61"],"fontName":"ABCDEE+Georgia","x":321.89,"y":244.61}
+{"page":9,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","277.13","148.34"],"fontName":"ABCDEE+Georgia","x":277.13,"y":148.34}
+{"page":10,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","90.02","735.00"],"fontName":"ABCDEE+Georgia","x":90.024,"y":735}
+{"page":10,"change":"Removal","str":" ","dir":"ltr","width":"1.83","height":"8.04","transform":["8.04","0.00","0.00","8.04","264.89","99.86"],"fontName":"ABCDEE+Arial Narrow,Bold","x":264.89,"y":99.864}
+{"page":10,"change":"Removal","str":" ","dir":"ltr","width":"1.83","height":"8.04","transform":["8.04","0.00","0.00","8.04","266.57","99.86"],"fontName":"ABCDEE+Arial Narrow,Bold","x":266.57,"y":99.864}
+{"page":10,"change":"Removal","str":" ","dir":"ltr","width":"1.83","height":"8.04","transform":["8.04","0.00","0.00","8.04","522.10","99.86"],"fontName":"ABCDEE+Arial Narrow,Bold","x":522.1,"y":99.864}
+{"page":10,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","90.02","77.06"],"fontName":"ABCDEE+Georgia","x":90.024,"y":77.064}
+{"page":10,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","90.02","51.38"],"fontName":"ABCDEE+Georgia","x":90.024,"y":51.384}
+{"page":10,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","141.74","720.24"],"fontName":"ABCDEE+Georgia","x":141.74,"y":720.24}
+{"page":10,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","501.46","720.24"],"fontName":"ABCDEE+Georgia","x":501.46,"y":720.24}
+{"page":10,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","110.54","691.42"],"fontName":"ABCDEE+Georgia","x":110.54,"y":691.42}
+{"page":10,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","384.19","677.14"],"fontName":"ABCDEE+Georgia","x":384.19,"y":677.14}
+{"page":10,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","232.49","652.78"],"fontName":"ABCDEE+Georgia","x":232.49,"y":652.78}
+{"page":10,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","477.10","652.78"],"fontName":"ABCDEE+Georgia","x":477.1,"y":652.78}
+{"page":10,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","153.98","638.38"],"fontName":"ABCDEE+Georgia","x":153.98,"y":638.38}
+{"page":10,"change":"Removal","str":" ","dir":"ltr","width":"3.07","height":"11.04","transform":["11.04","0.00","0.00","11.04","115.70","614.02"],"x":115.7,"y":614.02}
+{"page":10,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","203.81","585.22"],"fontName":"ABCDEE+Georgia","x":203.81,"y":585.22}
+{"page":10,"change":"Removal","str":" ","dir":"ltr","width":"3.07","height":"11.04","transform":["11.04","0.00","0.00","11.04","117.14","560.86"],"x":117.14,"y":560.86}
+{"page":10,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","510.46","560.86"],"fontName":"ABCDEE+Georgia","x":510.46,"y":560.86}
+{"page":10,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","468.34","507.67"],"fontName":"ABCDEE+Georgia","x":468.34,"y":507.67}
+{"page":10,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","153.14","421.51"],"fontName":"ABCDEE+Georgia","x":153.14,"y":421.51}
+{"page":10,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","293.57","378.31"],"fontName":"ABCDEE+Georgia","x":293.57,"y":378.31}
+{"page":10,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","242.45","310.85"],"fontName":"ABCDEE+Georgia","x":242.45,"y":310.85}
+{"page":10,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","345.55","296.45"],"fontName":"ABCDEE+Georgia","x":345.55,"y":296.45}
+{"page":10,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","220.85","282.05"],"fontName":"ABCDEE+Georgia","x":220.85,"y":282.05}
+{"page":10,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","110.54","267.77"],"fontName":"ABCDEE+Georgia","x":110.54,"y":267.77}
+{"page":10,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","226.01","253.37"],"fontName":"ABCDEE+Georgia","x":226.01,"y":253.37}
+{"page":10,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","283.25","157.10"],"fontName":"ABCDEE+Georgia","x":283.25,"y":157.1}
+{"page":11,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","90.02","735.00"],"fontName":"ABCDEE+Georgia","x":90.024,"y":735}
+{"page":11,"change":"Removal","str":" ","dir":"ltr","width":"1.83","height":"8.04","transform":["8.04","0.00","0.00","8.04","264.89","99.86"],"fontName":"ABCDEE+Arial Narrow,Bold","x":264.89,"y":99.864}
+{"page":11,"change":"Removal","str":" ","dir":"ltr","width":"1.83","height":"8.04","transform":["8.04","0.00","0.00","8.04","266.57","99.86"],"fontName":"ABCDEE+Arial Narrow,Bold","x":266.57,"y":99.864}
+{"page":11,"change":"Removal","str":" ","dir":"ltr","width":"1.83","height":"8.04","transform":["8.04","0.00","0.00","8.04","522.10","99.86"],"fontName":"ABCDEE+Arial Narrow,Bold","x":522.1,"y":99.864}
+{"page":11,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","90.02","77.06"],"fontName":"ABCDEE+Georgia","x":90.024,"y":77.064}
+{"page":11,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","90.02","51.38"],"fontName":"ABCDEE+Georgia","x":90.024,"y":51.384}
+{"page":11,"change":"Removal","str":" ","dir":"ltr","width":"5.47","height":"24.00","transform":["24.00","0.00","0.00","24.00","90.02","707.74"],"fontName":"ABCDEE+Arial Narrow,Bold","x":90.024,"y":707.74}
+{"page":11,"change":"Removal","str":" ","dir":"ltr","width":"5.47","height":"24.00","transform":["24.00","0.00","0.00","24.00","425.83","676.06"],"fontName":"ABCDEE+Arial Narrow,Bold","x":425.83,"y":676.06}
+{"page":11,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","111.38","644.86"],"fontName":"ABCDEE+Georgia","x":111.38,"y":644.86}
+{"page":11,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","208.61","644.86"],"fontName":"ABCDEE+Georgia","x":208.61,"y":644.86}
+{"page":11,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","221.93","630.46"],"fontName":"ABCDEE+Georgia","x":221.93,"y":630.46}
+{"page":11,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","307.97","630.46"],"fontName":"ABCDEE+Georgia","x":307.97,"y":630.46}
+{"page":11,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","329.95","630.46"],"fontName":"ABCDEE+Georgia","x":329.95,"y":630.46}
+{"page":11,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","475.18","630.46"],"fontName":"ABCDEE+Georgia","x":475.18,"y":630.46}
+{"page":11,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","214.97","616.18"],"fontName":"ABCDEE+Georgia","x":214.97,"y":616.18}
+{"page":11,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","353.59","601.78"],"fontName":"ABCDEE+Georgia","x":353.59,"y":601.78}
+{"page":11,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","401.59","601.78"],"fontName":"ABCDEE+Georgia","x":401.59,"y":601.78}
+{"page":11,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","162.98","563.02"],"fontName":"ABCDEE+Georgia","x":162.98,"y":563.02}
+{"page":11,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","157.34","548.62"],"fontName":"ABCDEE+Georgia","x":157.34,"y":548.62}
+{"page":11,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","302.81","548.62"],"fontName":"ABCDEE+Georgia","x":302.81,"y":548.62}
+{"page":11,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","373.87","548.62"],"fontName":"ABCDEE+Georgia","x":373.87,"y":548.62}
+{"page":11,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","417.79","548.62"],"fontName":"ABCDEE+Georgia","x":417.79,"y":548.62}
+{"page":11,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","287.21","534.19"],"fontName":"ABCDEE+Georgia","x":287.21,"y":534.19}
+{"page":11,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","337.99","534.19"],"fontName":"ABCDEE+Georgia","x":337.99,"y":534.19}
+{"page":11,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","130.22","519.91"],"fontName":"ABCDEE+Georgia","x":130.22,"y":519.91}
+{"page":11,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","174.26","495.55"],"fontName":"ABCDEE+Georgia","x":174.26,"y":495.55}
+{"page":11,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","293.21","481.15"],"fontName":"ABCDEE+Georgia","x":293.21,"y":481.15}
+{"page":11,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","379.03","466.75"],"fontName":"ABCDEE+Georgia","x":379.03,"y":466.75}
+{"page":11,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","132.02","437.95"],"fontName":"ABCDEE+Georgia","x":132.02,"y":437.95}
+{"page":11,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","279.05","423.67"],"fontName":"ABCDEE+Georgia","x":279.05,"y":423.67}
+{"page":11,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","477.70","409.27"],"fontName":"ABCDEE+Georgia","x":477.7,"y":409.27}
+{"page":11,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","135.62","380.47"],"fontName":"ABCDEE+Georgia","x":135.62,"y":380.47}
+{"page":11,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","428.95","366.19"],"fontName":"ABCDEE+Georgia","x":428.95,"y":366.19}
+{"page":11,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","443.47","351.77"],"fontName":"ABCDEE+Georgia","x":443.47,"y":351.77}
+{"page":11,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","400.51","322.97"],"fontName":"ABCDEE+Georgia","x":400.51,"y":322.97}
+{"page":11,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","497.86","322.97"],"fontName":"ABCDEE+Georgia","x":497.86,"y":322.97}
+{"page":11,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","270.41","255.53"],"fontName":"ABCDEE+Georgia","x":270.41,"y":255.53}
+{"page":11,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","225.77","231.17"],"fontName":"ABCDEE+Georgia","x":225.77,"y":231.17}
+{"page":11,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","117.50","201.29"],"fontName":"ABCDEE+Georgia","x":117.5,"y":201.29}
+{"page":11,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","366.67","186.86"],"fontName":"ABCDEE+Georgia","x":366.67,"y":186.86}
+{"page":11,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","466.42","186.86"],"fontName":"ABCDEE+Georgia","x":466.42,"y":186.86}
+{"page":12,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","90.02","735.00"],"fontName":"ABCDEE+Georgia","x":90.024,"y":735}
+{"page":12,"change":"Removal","str":" ","dir":"ltr","width":"1.83","height":"8.04","transform":["8.04","0.00","0.00","8.04","264.89","99.86"],"fontName":"ABCDEE+Arial Narrow,Bold","x":264.89,"y":99.864}
+{"page":12,"change":"Removal","str":" ","dir":"ltr","width":"1.83","height":"8.04","transform":["8.04","0.00","0.00","8.04","266.57","99.86"],"fontName":"ABCDEE+Arial Narrow,Bold","x":266.57,"y":99.864}
+{"page":12,"change":"Removal","str":" ","dir":"ltr","width":"1.83","height":"8.04","transform":["8.04","0.00","0.00","8.04","522.10","99.86"],"fontName":"ABCDEE+Arial Narrow,Bold","x":522.1,"y":99.864}
+{"page":12,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","90.02","77.06"],"fontName":"ABCDEE+Georgia","x":90.024,"y":77.064}
+{"page":12,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","90.02","51.38"],"fontName":"ABCDEE+Georgia","x":90.024,"y":51.384}
+{"page":12,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","205.85","700.30"],"fontName":"ABCDEE+Georgia","x":205.85,"y":700.3}
+{"page":12,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","368.35","714.72"],"fontName":"ABCDEE+Georgia","x":368.35,"y":714.72}
+{"page":12,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","451.39","714.72"],"fontName":"ABCDEE+Georgia","x":451.39,"y":714.72}
+{"page":12,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","281.45","665.50"],"fontName":"ABCDEE+Georgia","x":281.45,"y":665.5}
+{"page":12,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","367.39","665.50"],"fontName":"ABCDEE+Georgia","x":367.39,"y":665.5}
+{"page":12,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","448.39","665.50"],"fontName":"ABCDEE+Georgia","x":448.39,"y":665.5}
+{"page":12,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","279.05","630.58"],"fontName":"ABCDEE+Georgia","x":279.05,"y":630.58}
+{"page":12,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","365.95","630.58"],"fontName":"ABCDEE+Georgia","x":365.95,"y":630.58}
+{"page":12,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","446.47","630.58"],"fontName":"ABCDEE+Georgia","x":446.47,"y":630.58}
+{"page":12,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","157.82","581.38"],"fontName":"ABCDEE+Georgia","x":157.82,"y":581.38}
+{"page":12,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","369.19","595.78"],"fontName":"ABCDEE+Georgia","x":369.19,"y":595.78}
+{"page":12,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","448.03","595.78"],"fontName":"ABCDEE+Georgia","x":448.03,"y":595.78}
+{"page":12,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","270.29","546.46"],"fontName":"ABCDEE+Georgia","x":270.29,"y":546.46}
+{"page":12,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","367.75","546.46"],"fontName":"ABCDEE+Georgia","x":367.75,"y":546.46}
+{"page":12,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","448.39","546.46"],"fontName":"ABCDEE+Georgia","x":448.39,"y":546.46}
+{"page":12,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","290.33","511.63"],"fontName":"ABCDEE+Georgia","x":290.33,"y":511.63}
+{"page":12,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","367.39","511.63"],"fontName":"ABCDEE+Georgia","x":367.39,"y":511.63}
+{"page":12,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","448.75","511.63"],"fontName":"ABCDEE+Georgia","x":448.75,"y":511.63}
+{"page":12,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","314.81","476.71"],"fontName":"ABCDEE+Georgia","x":314.81,"y":476.71}
+{"page":12,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","369.91","476.71"],"fontName":"ABCDEE+Georgia","x":369.91,"y":476.71}
+{"page":12,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","449.71","476.71"],"fontName":"ABCDEE+Georgia","x":449.71,"y":476.71}
+{"page":12,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","249.65","441.79"],"fontName":"ABCDEE+Georgia","x":249.65,"y":441.79}
+{"page":12,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","366.67","441.79"],"fontName":"ABCDEE+Georgia","x":366.67,"y":441.79}
+{"page":12,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","449.59","441.79"],"fontName":"ABCDEE+Georgia","x":449.59,"y":441.79}
+{"page":12,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","148.34","406.99"],"fontName":"ABCDEE+Georgia","x":148.34,"y":406.99}
+{"page":12,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","249.41","406.99"],"fontName":"ABCDEE+Georgia","x":249.41,"y":406.99}
+{"page":12,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","369.43","406.99"],"fontName":"ABCDEE+Georgia","x":369.43,"y":406.99}
+{"page":12,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","448.15","406.99"],"fontName":"ABCDEE+Georgia","x":448.15,"y":406.99}
+{"page":12,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","285.65","372.07"],"fontName":"ABCDEE+Georgia","x":285.65,"y":372.07}
+{"page":12,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","367.39","372.07"],"fontName":"ABCDEE+Georgia","x":367.39,"y":372.07}
+{"page":12,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","447.79","372.07"],"fontName":"ABCDEE+Georgia","x":447.79,"y":372.07}
+{"page":12,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","90.02","342.17"],"fontName":"ABCDEE+Georgia","x":90.024,"y":342.17}
+{"page":12,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","112.82","303.41"],"fontName":"ABCDEE+Georgia","x":112.82,"y":303.41}
+{"page":12,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","267.29","245.93"],"fontName":"ABCDEE+Georgia","x":267.29,"y":245.93}
+{"page":12,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","90.02","221.57"],"fontName":"ABCDEE+Georgia","x":90.024,"y":221.57}
+{"page":13,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","90.02","735.00"],"fontName":"ABCDEE+Georgia","x":90.024,"y":735}
+{"page":13,"change":"Removal","str":" ","dir":"ltr","width":"1.83","height":"8.04","transform":["8.04","0.00","0.00","8.04","264.89","99.86"],"fontName":"ABCDEE+Arial Narrow,Bold","x":264.89,"y":99.864}
+{"page":13,"change":"Removal","str":" ","dir":"ltr","width":"1.83","height":"8.04","transform":["8.04","0.00","0.00","8.04","266.57","99.86"],"fontName":"ABCDEE+Arial Narrow,Bold","x":266.57,"y":99.864}
+{"page":13,"change":"Removal","str":" ","dir":"ltr","width":"1.83","height":"8.04","transform":["8.04","0.00","0.00","8.04","522.10","99.86"],"fontName":"ABCDEE+Arial Narrow,Bold","x":522.1,"y":99.864}
+{"page":13,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","90.02","77.06"],"fontName":"ABCDEE+Georgia","x":90.024,"y":77.064}
+{"page":13,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","90.02","51.38"],"fontName":"ABCDEE+Georgia","x":90.024,"y":51.384}
+{"page":13,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","496.90","494.23"],"fontName":"ABCDEE+Georgia","x":496.9,"y":494.23}
+{"page":13,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","90.02","472.27"],"fontName":"ABCDEE+Georgia","x":90.024,"y":472.27}
+{"page":13,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","90.02","457.99"],"fontName":"ABCDEE+Georgia","x":90.024,"y":457.99}
+{"page":13,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","356.23","433.51"],"fontName":"ABCDEE+Georgia","x":356.23,"y":433.51}
+{"page":13,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","136.10","403.75"],"fontName":"ABCDEE+Georgia","x":136.1,"y":403.75}
+{"page":13,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","408.31","403.75"],"fontName":"ABCDEE+Georgia","x":408.31,"y":403.75}
+{"page":13,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","130.58","368.83"],"fontName":"ABCDEE+Georgia","x":130.58,"y":368.83}
+{"page":13,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","322.73","368.83"],"fontName":"ABCDEE+Georgia","x":322.73,"y":368.83}
+{"page":13,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","160.82","333.89"],"fontName":"ABCDEE+Georgia","x":160.82,"y":333.89}
+{"page":13,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","320.45","333.89"],"fontName":"ABCDEE+Georgia","x":320.45,"y":333.89}
+{"page":13,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","141.98","299.09"],"fontName":"ABCDEE+Georgia","x":141.98,"y":299.09}
+{"page":13,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","320.69","299.09"],"fontName":"ABCDEE+Georgia","x":320.69,"y":299.09}
+{"page":13,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","123.02","264.17"],"fontName":"ABCDEE+Georgia","x":123.02,"y":264.17}
+{"page":13,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","318.29","264.17"],"fontName":"ABCDEE+Georgia","x":318.29,"y":264.17}
+{"page":13,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","143.66","229.25"],"fontName":"ABCDEE+Georgia","x":143.66,"y":229.25}
+{"page":13,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","319.85","229.25"],"fontName":"ABCDEE+Georgia","x":319.85,"y":229.25}
+{"page":13,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","118.22","194.45"],"fontName":"ABCDEE+Georgia","x":118.22,"y":194.45}
+{"page":13,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","318.77","194.45"],"fontName":"ABCDEE+Georgia","x":318.77,"y":194.45}
+{"page":13,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","120.50","159.50"],"fontName":"ABCDEE+Georgia","x":120.5,"y":159.5}
+{"page":13,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","312.41","159.50"],"fontName":"ABCDEE+Georgia","x":312.41,"y":159.5}
+{"page":14,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","90.02","735.00"],"fontName":"ABCDEE+Georgia","x":90.024,"y":735}
+{"page":14,"change":"Removal","str":" ","dir":"ltr","width":"1.83","height":"8.04","transform":["8.04","0.00","0.00","8.04","264.89","99.86"],"fontName":"ABCDEE+Arial Narrow,Bold","x":264.89,"y":99.864}
+{"page":14,"change":"Removal","str":" ","dir":"ltr","width":"1.83","height":"8.04","transform":["8.04","0.00","0.00","8.04","266.57","99.86"],"fontName":"ABCDEE+Arial Narrow,Bold","x":266.57,"y":99.864}
+{"page":14,"change":"Removal","str":" ","dir":"ltr","width":"1.83","height":"8.04","transform":["8.04","0.00","0.00","8.04","522.10","99.86"],"fontName":"ABCDEE+Arial Narrow,Bold","x":522.1,"y":99.864}
+{"page":14,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","90.02","77.06"],"fontName":"ABCDEE+Georgia","x":90.024,"y":77.064}
+{"page":14,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","90.02","51.38"],"fontName":"ABCDEE+Georgia","x":90.024,"y":51.384}
+{"page":14,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","136.10","714.72"],"fontName":"ABCDEE+Georgia","x":136.1,"y":714.72}
+{"page":14,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","313.01","714.72"],"fontName":"ABCDEE+Georgia","x":313.01,"y":714.72}
+{"page":14,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","146.54","679.90"],"fontName":"ABCDEE+Georgia","x":146.54,"y":679.9}
+{"page":14,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","313.85","679.90"],"fontName":"ABCDEE+Georgia","x":313.85,"y":679.9}
+{"page":14,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","176.30","644.98"],"fontName":"ABCDEE+Georgia","x":176.3,"y":644.98}
+{"page":14,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","315.05","644.98"],"fontName":"ABCDEE+Georgia","x":315.05,"y":644.98}
+{"page":14,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","90.02","615.10"],"fontName":"ABCDEE+Georgia","x":90.024,"y":615.1}
+{"page":14,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","258.89","533.23"],"fontName":"ABCDEE+Georgia","x":258.89,"y":533.23}
+{"page":14,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","261.53","533.23"],"fontName":"ABCDEE+Georgia","x":261.53,"y":533.23}
+{"page":14,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","264.17","533.23"],"fontName":"ABCDEE+Georgia","x":264.17,"y":533.23}
+{"page":14,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","263.45","494.47"],"fontName":"ABCDEE+Georgia","x":263.45,"y":494.47}
+{"page":14,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","443.47","451.39"],"fontName":"ABCDEE+Georgia","x":443.47,"y":451.39}
+{"page":14,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","261.65","369.43"],"fontName":"ABCDEE+Georgia","x":261.65,"y":369.43}
+{"page":14,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","283.25","355.13"],"fontName":"ABCDEE+Georgia","x":283.25,"y":355.13}
+{"page":14,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","438.67","316.37"],"fontName":"ABCDEE+Georgia","x":438.67,"y":316.37}
+{"page":14,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","133.46","301.97"],"fontName":"ABCDEE+Georgia","x":133.46,"y":301.97}
+{"page":14,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","283.01","244.49"],"fontName":"ABCDEE+Georgia","x":283.01,"y":244.49}
+{"page":14,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","90.02","220.13"],"fontName":"ABCDEE+Georgia","x":90.024,"y":220.13}
+{"page":14,"change":"Removal","str":" ","dir":"ltr","width":"5.47","height":"24.00","transform":["24.00","0.00","0.00","24.00","202.73","183.26"],"fontName":"ABCDEE+Arial Narrow,Bold","x":202.73,"y":183.26}
+{"page":14,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","235.73","152.06"],"fontName":"ABCDEE+Georgia","x":235.73,"y":152.06}
+{"page":15,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","90.02","735.00"],"fontName":"ABCDEE+Georgia","x":90.024,"y":735}
+{"page":15,"change":"Removal","str":" ","dir":"ltr","width":"1.83","height":"8.04","transform":["8.04","0.00","0.00","8.04","264.89","99.86"],"fontName":"ABCDEE+Arial Narrow,Bold","x":264.89,"y":99.864}
+{"page":15,"change":"Removal","str":" ","dir":"ltr","width":"1.83","height":"8.04","transform":["8.04","0.00","0.00","8.04","266.57","99.86"],"fontName":"ABCDEE+Arial Narrow,Bold","x":266.57,"y":99.864}
+{"page":15,"change":"Removal","str":" ","dir":"ltr","width":"1.83","height":"8.04","transform":["8.04","0.00","0.00","8.04","522.10","99.86"],"fontName":"ABCDEE+Arial Narrow,Bold","x":522.1,"y":99.864}
+{"page":15,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","90.02","77.06"],"fontName":"ABCDEE+Georgia","x":90.024,"y":77.064}
+{"page":15,"change":"Removal","str":" ","dir":"ltr","width":"2.89","height":"12.00","transform":["12.00","0.00","0.00","12.00","90.02","51.38"],"fontName":"ABCDEE+Georgia","x":90.024,"y":51.384}
+{"page":15,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","330.55","720.24"],"fontName":"ABCDEE+Georgia","x":330.55,"y":720.24}
+{"page":15,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","186.38","648.34"],"fontName":"ABCDEE+Georgia","x":186.38,"y":648.34}
+{"page":15,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","373.99","648.34"],"fontName":"ABCDEE+Georgia","x":373.99,"y":648.34}
+{"page":15,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","190.46","607.66"],"fontName":"ABCDEE+Georgia","x":190.46,"y":607.66}
+{"page":15,"change":"Removal","str":"  ","dir":"ltr","width":"5.28","height":"11.04","transform":["11.04","0.00","0.00","11.04","177.38","593.26"],"fontName":"ABCDEE+Georgia","x":177.38,"y":593.26}
+{"page":15,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","267.17","578.86"],"fontName":"ABCDEE+Georgia","x":267.17,"y":578.86}
+{"page":15,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","436.87","496.99"],"fontName":"ABCDEE+Georgia","x":436.87,"y":496.99}
+{"page":15,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","439.51","496.99"],"fontName":"ABCDEE+Georgia","x":439.51,"y":496.99}
+{"page":15,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","364.27","468.19"],"fontName":"ABCDEE+Georgia","x":364.27,"y":468.19}
+{"page":15,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","133.70","386.35"],"fontName":"ABCDEE+Georgia","x":133.7,"y":386.35}
+{"page":15,"change":"Removal","str":" ","dir":"ltr","width":"2.66","height":"11.04","transform":["11.04","0.00","0.00","11.04","90.02","361.97"],"fontName":"ABCDEE+Georgia","x":90.024,"y":361.97}

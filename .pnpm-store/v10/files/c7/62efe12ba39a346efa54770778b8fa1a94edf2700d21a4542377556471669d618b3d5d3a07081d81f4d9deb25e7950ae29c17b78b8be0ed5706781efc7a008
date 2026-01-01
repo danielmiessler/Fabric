@@ -1,0 +1,45 @@
+{
+  "name": "sade",
+  "version": "1.8.1",
+  "description": "Smooth (CLI) operator 🎶",
+  "repository": "lukeed/sade",
+  "module": "lib/index.mjs",
+  "main": "lib/index.js",
+  "types": "index.d.ts",
+  "license": "MIT",
+  "files": [
+    "*.d.ts",
+    "lib"
+  ],
+  "author": {
+    "name": "Luke Edwards",
+    "email": "luke.edwards05@gmail.com",
+    "url": "https://lukeed.com"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "test": "tape -r esm test/*.js | tap-spec"
+  },
+  "dependencies": {
+    "mri": "^1.1.0"
+  },
+  "engines": {
+    "node": ">=6"
+  },
+  "keywords": [
+    "cli",
+    "cli-app",
+    "commander",
+    "arguments",
+    "parser",
+    "yargs",
+    "argv"
+  ],
+  "devDependencies": {
+    "esm": "3.2.25",
+    "rollup": "1.32.1",
+    "tap-spec": "4.1.2",
+    "tape": "4.14.0",
+    "terser": "4.8.0"
+  }
+}

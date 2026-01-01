@@ -1,0 +1,9 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.getPackageVersion = void 0;
+function getPackageVersion(packageJsonPath) {
+    // remove build metadata
+    return require(packageJsonPath).version.replace(/\+.*$/, "");
+}
+exports.getPackageVersion = getPackageVersion;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZ2V0UGFja2FnZVZlcnNpb24uanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi9zcmMvZ2V0UGFja2FnZVZlcnNpb24udHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7O0FBQUEsU0FBZ0IsaUJBQWlCLENBQUMsZUFBdUI7SUFDdkQsd0JBQXdCO0lBQ3hCLE9BQU8sT0FBTyxDQUFDLGVBQWUsQ0FBQyxDQUFDLE9BQU8sQ0FBQyxPQUFPLENBQUMsT0FBTyxFQUFFLEVBQUUsQ0FBQyxDQUFBO0FBQzlELENBQUM7QUFIRCw4Q0FHQyIsInNvdXJjZXNDb250ZW50IjpbImV4cG9ydCBmdW5jdGlvbiBnZXRQYWNrYWdlVmVyc2lvbihwYWNrYWdlSnNvblBhdGg6IHN0cmluZyk6IHN0cmluZyB7XG4gIC8vIHJlbW92ZSBidWlsZCBtZXRhZGF0YVxuICByZXR1cm4gcmVxdWlyZShwYWNrYWdlSnNvblBhdGgpLnZlcnNpb24ucmVwbGFjZSgvXFwrLiokLywgXCJcIilcbn1cbiJdfQ==

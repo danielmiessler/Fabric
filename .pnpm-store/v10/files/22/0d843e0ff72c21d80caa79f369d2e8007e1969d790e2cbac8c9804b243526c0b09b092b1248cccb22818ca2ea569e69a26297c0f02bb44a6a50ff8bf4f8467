@@ -1,0 +1,13 @@
+diff --git a/node_modules/jest-file-snapshot/index.d.ts b/node_modules/jest-file-snapshot/index.d.ts
+index 88db2ef..e44ec36 100644
+--- a/node_modules/jest-file-snapshot/index.d.ts
++++ b/node_modules/jest-file-snapshot/index.d.ts
+@@ -6,7 +6,7 @@ export const toMatchFile: (
+   content: string | Buffer,
+   filename?: string,
+   options?: FileMatcherOptions
+-) => CustomMatcherResult;
++) => jest.CustomMatcherResult;
+ 
+ declare interface FileMatcherOptions {
+   diff?: DiffOptions;

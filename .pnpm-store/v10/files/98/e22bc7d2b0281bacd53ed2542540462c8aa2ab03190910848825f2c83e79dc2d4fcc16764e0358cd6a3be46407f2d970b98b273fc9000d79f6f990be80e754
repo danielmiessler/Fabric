@@ -1,0 +1,43 @@
+{
+  "pages": 199,
+  "items": 8436,
+  "groupedItems": 8311,
+  "changes": 0,
+  "schema": [
+    {
+      "name": "block",
+      "annotation": "ADDED"
+    },
+    {
+      "name": "line"
+    },
+    {
+      "name": "token types"
+    },
+    {
+      "name": "types"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}

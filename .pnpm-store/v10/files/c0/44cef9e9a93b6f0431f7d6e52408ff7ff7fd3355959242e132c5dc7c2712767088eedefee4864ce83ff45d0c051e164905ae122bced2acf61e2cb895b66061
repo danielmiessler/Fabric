@@ -1,0 +1,7 @@
+import GlobalValue from './GlobalValue';
+export default class GlobalDefinition<T> {
+    key: string;
+    constructor(key: string);
+    value(value: T): GlobalValue<T>;
+    overrideValue(value: T): GlobalValue<T>;
+}

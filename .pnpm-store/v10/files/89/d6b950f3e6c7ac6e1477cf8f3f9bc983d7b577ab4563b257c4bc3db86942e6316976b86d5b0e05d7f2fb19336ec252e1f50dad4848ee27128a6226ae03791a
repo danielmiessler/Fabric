@@ -1,0 +1,97 @@
+{
+  "name": "patch-package",
+  "version": "8.0.1",
+  "description": "Fix broken node modules with no fuss",
+  "main": "dist/index.js",
+  "repository": "github:ds300/patch-package",
+  "author": "David Sheldrick",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14",
+    "npm": ">5"
+  },
+  "bin": "./index.js",
+  "scripts": {
+    "prepublishOnly": "yarn run clean && yarn run build",
+    "build": "tsc --project tsconfig.build.json",
+    "new-integration-test": "ts-node integration-tests/newIntegrationTest.ts",
+    "clean": "rimraf dist patch-package.test*.tgz",
+    "format": "prettier --no-semi --write --trailing-comma=all src{/**,}/*.ts integration-tests{/**,}/*.ts property-based-tests{/**,}/*.ts",
+    "prepack": "rimraf dist/**/*.test.js",
+    "test": "./run-tests.sh --runInBand"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsc --noEmit && lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.ts": [
+      "tslint -c tslint.json -p tsconfig.json",
+      "prettier --no-semi --trailing-comma=all --list-different"
+    ]
+  },
+  "jest": {
+    "globals": {
+      "ts-jest": {
+        "diagnostics": false
+      }
+    },
+    "transform": {
+      ".(ts|tsx)": "ts-jest"
+    },
+    "testRegex": "/(src|integration-tests|property-based-tests)/.+\\.test\\.ts$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ]
+  },
+  "devDependencies": {
+    "@types/app-root-path": "^1.2.4",
+    "@types/cross-spawn": "^6.0.0",
+    "@types/fs-extra": "^9.0.0",
+    "@types/jest": "^24.0.11",
+    "@types/json-stable-stringify": "^1.0.34",
+    "@types/minimist": "^1.2.2",
+    "@types/node": "^12.0.0",
+    "@types/rimraf": "^2.0.2",
+    "@types/semver": "^7.5.0",
+    "@types/tmp": "^0.2.6",
+    "husky": "^1.3.1",
+    "jest": "^24.5.0",
+    "lint-staged": "^8.1.5",
+    "prettier": "^2.2.1",
+    "randomstring": "^1.1.5",
+    "rimraf": "^2.6.3",
+    "ts-jest": "^24.0.0",
+    "ts-node": "8.0.3",
+    "tslint": "^5.14.0",
+    "typescript": "^4.2.2"
+  },
+  "dependencies": {
+    "@yarnpkg/lockfile": "^1.1.0",
+    "chalk": "^4.1.2",
+    "ci-info": "^3.7.0",
+    "cross-spawn": "^7.0.3",
+    "find-yarn-workspace-root": "^2.0.0",
+    "fs-extra": "^10.0.0",
+    "json-stable-stringify": "^1.0.2",
+    "klaw-sync": "^6.0.0",
+    "minimist": "^1.2.6",
+    "open": "^7.4.2",
+    "semver": "^7.5.3",
+    "slash": "^2.0.0",
+    "tmp": "^0.2.4",
+    "yaml": "^2.2.2"
+  },
+  "files": [
+    "index.js",
+    "dist/**/*.js",
+    "CHANGELOG.md",
+    "LICENSE",
+    "patch-package-banner.png",
+    "README.md"
+  ],
+  "packageManager": "yarn@1.22.19"
+}

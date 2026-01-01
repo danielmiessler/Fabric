@@ -1,0 +1,15 @@
+import PdfParser from './PdfParser';
+import ProgressListenFunction from './ProgressListenFunction';
+import ItemTransformer from './transformer/ItemTransformer';
+import Debugger from './Debugger';
+import { PdfSource, TransformationResult } from './convert';
+export interface ParseContinuation {
+    debug(): Debugger;
+    transform(): TransformationResult;
+}
+export default class PdfPipeline {
+    parser: PdfParser;
+    transformers: ItemTransformer[];
+    constructor(parser: PdfParser, transformers: ItemTransformer[]);
+    parse(src: PdfSource, progressListener: ProgressListenFunction): Promise<ParseContinuation>;
+}

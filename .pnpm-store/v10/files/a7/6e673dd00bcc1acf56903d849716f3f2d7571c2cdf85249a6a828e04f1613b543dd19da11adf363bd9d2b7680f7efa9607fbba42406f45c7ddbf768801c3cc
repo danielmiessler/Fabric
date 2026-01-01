@@ -1,0 +1,39 @@
+{
+  "name": "string-similarity",
+  "version": "4.0.4",
+  "description": "Finds degree of similarity between strings, based on Dice's Coefficient, which is mostly better than Levenshtein distance.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "jasmine --config=src/spec/support/jasmine.json",
+    "build": "rm -rf umd && webpack-cli",
+    "prepublish": "npm test && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/aceakash/string-similarity.git"
+  },
+  "keywords": [
+    "strings",
+    "similar",
+    "difference",
+    "similarity",
+    "compare",
+    "comparison",
+    "degree",
+    "match",
+    "matching",
+    "dice",
+    "levenshtein"
+  ],
+  "files": [
+    "src/index.js",
+    "umd/string-similarity.min.js"
+  ],
+  "author": "Akash Kurdekar <npm@kurdekar.com> (http://untilfalse.com/)",
+  "license": "ISC",
+  "devDependencies": {
+    "jasmine": "^3.6.3",
+    "webpack": "^5.11.1",
+    "webpack-cli": "^4.3.1"
+  }
+}

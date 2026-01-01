@@ -1,0 +1,27 @@
+{
+  "pages": 19,
+  "items": 2769,
+  "groupedItems": 2769,
+  "changes": 0,
+  "schema": [
+    {
+      "name": "transform"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}

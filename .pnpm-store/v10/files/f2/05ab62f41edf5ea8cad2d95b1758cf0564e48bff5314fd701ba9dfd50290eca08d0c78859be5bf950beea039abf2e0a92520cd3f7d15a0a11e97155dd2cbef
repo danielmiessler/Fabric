@@ -1,0 +1,80 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const ItemTransformer_1 = require("./ItemTransformer");
+const LineItemMerger_1 = require("../debug/LineItemMerger");
+const groupingUtils_1 = require("../support/groupingUtils");
+const text_types_1 = require("../text-types");
+const stringFunctions_1 = require("../support/stringFunctions");
+class DetectListLevels extends ItemTransformer_1.default {
+    constructor() {
+        super('Detect List Levels', 'Figure out the nesting levels of each list item', {
+            requireColumns: ['str', 'block', 'x'],
+            debug: {
+                // showAll: true,
+                itemMerger: new LineItemMerger_1.default(false),
+            },
+        });
+    }
+    // TODO instead of changing the 'str' we should annotate the item and let the converters do their thing
+    transform(context, inputItems) {
+        let listBlocks = 0;
+        let modifiedBlocks = 0;
+        (0, groupingUtils_1.groupByBlock)(inputItems)
+            .filter((blockItems) => {
+            const types = blockItems[0].data['types'] || [];
+            return types.map(text_types_1.toBlockType).includes('LIST');
+        })
+            .forEach((blockItems) => {
+            let lastItemX;
+            let currentLevel = 0;
+            const xByLevel = {};
+            let modifiedBlock = false;
+            let isOverflowLine = false;
+            (0, groupingUtils_1.groupByLine)(blockItems).forEach((lineItems) => {
+                const firstItem = lineItems[0];
+                const isLineItem = (0, stringFunctions_1.isListItem)(firstItem.data['str'] + ' ...') || (0, stringFunctions_1.isNumberedListItem)(firstItem.data['str'] + ' ...');
+                const x = firstItem.data['x'];
+                if (lastItemX) {
+                    if (isLineItem) {
+                        if ((0, groupingUtils_1.isGreaterWithTolerance)(x, lastItemX)) {
+                            currentLevel++;
+                            xByLevel[x] = currentLevel;
+                        }
+                        else if (x < lastItemX) {
+                            currentLevel = xByLevel[x];
+                        }
+                    }
+                    else {
+                        // current level remains the seame
+                        isOverflowLine = true;
+                    }
+                }
+                else {
+                    xByLevel[x] = 0;
+                }
+                if (currentLevel > 0) {
+                    lineItems[0].listLevel = currentLevel;
+                    modifiedBlock = true;
+                    if (isOverflowLine) {
+                        // TODO mark line so it can be indented as well ?
+                    }
+                }
+                if (!isOverflowLine) {
+                    lastItemX = x;
+                }
+                isOverflowLine = false;
+            });
+            listBlocks++;
+            if (modifiedBlock) {
+                modifiedBlocks++;
+            }
+        });
+        return {
+            items: inputItems.map((item) => {
+                return item;
+            }),
+            messages: ['Modified ' + modifiedBlocks + ' / ' + listBlocks + ' list blocks.'],
+        };
+    }
+}
+exports.default = DetectListLevels;

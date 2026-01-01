@@ -1,0 +1,11 @@
+export type HeadlineType = 'H1' | 'H2' | 'H3' | 'H4' | 'H5' | 'H6';
+export type ListType = 'LIST' | 'NUMBERED_LIST';
+export type TextType = HeadlineType | 'TOC' | 'FOOTNOTES' | 'CODE' | ListType | 'PARAGRAPH';
+export declare function toBlockType(type: TextType): TextType;
+export declare function isHeadline(type: TextType): boolean;
+export declare function toHeadlineType(number: 1 | 2 | 3 | 4 | 5 | 6 | number): HeadlineType;
+export declare function headlineLevel(type: TextType): number;
+export declare function mergeToBlock(type: TextType): boolean;
+export declare function mergeFollowingNonTypedItems(type: TextType): boolean;
+export declare function mergeFollowingNonTypedItemsWithSmallDistance(type: TextType): boolean;
+export declare function discardTokenTypes(blockTypes: TextType[]): boolean;

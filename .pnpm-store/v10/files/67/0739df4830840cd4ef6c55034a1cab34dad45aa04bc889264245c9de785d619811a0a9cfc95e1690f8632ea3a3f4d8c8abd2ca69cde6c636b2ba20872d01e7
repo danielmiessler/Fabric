@@ -1,0 +1,72 @@
+{
+  "name": "simple-statistics",
+  "version": "7.8.8",
+  "description": "Simple Statistics",
+  "author": "Tom MacWright <tom@macwright.com> (https://macwright.com/)",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/simple-statistics/simple-statistics.git"
+  },
+  "files": [
+    "src",
+    "dist",
+    "LICENSE",
+    "index.js",
+    "index.d.ts"
+  ],
+  "devDependencies": {
+    "@biomejs/biome": "^1.8.3",
+    "@rollup/plugin-buble": "^1.0.3",
+    "@rollup/plugin-terser": "^0.4.4",
+    "cz-conventional-changelog": "^3.3.0",
+    "documentation": "^14",
+    "random-js": "^2.1.0",
+    "rollup": "^4.20.0",
+    "standard-version": "^9.5.0",
+    "tap": "^21.0.1",
+    "typescript": "^5.5.4"
+  },
+  "source": "index.js",
+  "main": "dist/simple-statistics.js",
+  "module": "dist/simple-statistics.mjs",
+  "umd:main": "dist/simple-statistics.min.js",
+  "browser": "dist/simple-statistics.min.js",
+  "unpkg": "dist/simple-statistics.min.js",
+  "types": "index.d.ts",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./dist/simple-statistics.mjs",
+      "browser": "./dist/simple-statistics.min.js",
+      "require": "./dist/simple-statistics.js"
+    }
+  },
+  "engines": {
+    "node": "*"
+  },
+  "license": "ISC",
+  "keywords": [
+    "descriptive",
+    "linear",
+    "math",
+    "probability",
+    "regression",
+    "statistics"
+  ],
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "scripts": {
+    "release": "standard-version && sh ./scripts/update_website.sh",
+    "test": "rollup -c rollup.config.mjs && npm run lint && tap test/*.test.js --jobs=4",
+    "build": "rollup -c rollup.config.mjs",
+    "prepublish": "rollup -c rollup.config.mjs && ./scripts/update_readme.js",
+    "prelint": "tsc --skipLibCheck --noEmit",
+    "lint": "biome check index.js src test",
+    "lint-fix": "biome check --fix index.js src test",
+    "postlint": "documentation lint src"
+  }
+}

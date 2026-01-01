@@ -1,0 +1,38 @@
+{
+  "pages": 466,
+  "items": 772243,
+  "groupedItems": 15232,
+  "changes": 55,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":87,"change":"Removal","score":"1.00: (0.00 + 1.00)","str":"F O O T N O T E S :","line":0,"x":251.741232,"y":687.6,"width":"108.58","height":"16.56","fontName":["AAAAAB+LiberationSerif-Bold"],"dir":["ltr"]}
+{"page":180,"change":"Removal","score":"1.00: (0.00 + 1.00)","str":"F O O T N O T E S :","line":0,"x":251.74151999999958,"y":687.6,"width":"108.58","height":"16.56","fontName":["AAAAAB+LiberationSerif-Bold"],"dir":["ltr"]}
+{"page":207,"change":"Removal","score":"1.00: (0.00 + 1.00)","str":"F O O T N O T E S :","line":0,"x":251.741232,"y":687.6,"width":"108.58","height":"16.56","fontName":["AAAAAB+LiberationSerif-Bold"],"dir":["ltr"]}
+{"page":295,"change":"Removal","score":"1.00: (0.00 + 1.00)","str":"F O O T N O T E S :","line":0,"x":251.741232,"y":687.6,"width":"108.58","height":"16.56","fontName":["AAAAAB+LiberationSerif-Bold"],"dir":["ltr"]}
+{"page":451,"change":"Removal","score":"1.00: (0.00 + 1.00)","str":"F O O T N O T E S :","line":0,"x":251.741232,"y":688.32,"width":"108.58","height":"16.56","fontName":["AAAAAB+LiberationSerif-Bold"],"dir":["ltr"]}

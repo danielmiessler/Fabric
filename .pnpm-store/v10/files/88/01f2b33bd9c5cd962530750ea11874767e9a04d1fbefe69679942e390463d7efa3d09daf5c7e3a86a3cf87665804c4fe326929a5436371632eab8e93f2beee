@@ -1,0 +1,47 @@
+{
+  "pages": 293,
+  "items": 9255,
+  "groupedItems": 6520,
+  "changes": 5,
+  "schema": [
+    {
+      "name": "block"
+    },
+    {
+      "name": "line"
+    },
+    {
+      "name": "token types"
+    },
+    {
+      "name": "types"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":0,"change":"ContentChange","types":["CODE"],"str":"H. G. Wells ","dir":"ltr","width":"60.33","height":"12.00","transform":["12.00","0.00","0.00","12.00","169.32","415.38"],"x":169.32,"y":415.38,"line":1,"block":1}
+{"page":84,"change":"ContentChange","types":["CODE"],"str":"WHAT I SAW OF THE DESTRUCTION OF ","dir":"ltr","width":"267.35","height":"13.50","transform":["13.50","0.00","0.00","13.50","66.00","410.40"],"x":65.99910000000003,"y":410.3997,"line":3,"block":111}
+{"page":84,"change":"ContentChange","types":["CODE"],"str":"WEYBRIDGE AND SHEPPERTON ","dir":"ltr","width":"216.32","height":"13.50","transform":["13.50","0.00","0.00","13.50","91.50","394.80"],"x":91.49925000000003,"y":394.7991,"line":4,"block":111}
+{"page":193,"change":"ContentChange","types":["CODE"],"str":"WHAT WE SAW FROM THE RUINED ","dir":"ltr","width":"239.20","height":"13.50","transform":["13.50","0.00","0.00","13.50","80.04","410.40"],"x":80.03954999999998,"y":410.3997,"line":3,"block":236}
+{"page":193,"change":"ContentChange","types":["CODE"],"str":"HOUSE ","dir":"ltr","width":"50.58","height":"13.50","transform":["13.50","0.00","0.00","13.50","174.36","394.80"],"x":174.35999999999996,"y":394.7991,"line":4,"block":236}

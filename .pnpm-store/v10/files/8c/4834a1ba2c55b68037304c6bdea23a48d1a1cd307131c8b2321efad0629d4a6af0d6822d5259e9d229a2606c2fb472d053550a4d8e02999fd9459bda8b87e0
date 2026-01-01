@@ -1,0 +1,41 @@
+{
+  "pages": 7,
+  "items": 483,
+  "groupedItems": 217,
+  "changes": 11,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "token types"
+    },
+    {
+      "name": "types"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":0,"change":"ContentChange","types":["H1"],"str":"Creative  Commons  Attribution - ShareAlike  4.0 ","line":3,"x":56.7,"y":729.36,"width":"390.17","height":"16.02","fontName":["BCDGEE+Montserrat-Bold"],"dir":["ltr"]}
+{"page":0,"change":"ContentChange","types":["H1"],"str":"International   Public   License Agreement   of   siMPle  –","line":4,"x":56.7,"y":709.86,"width":"458.94","height":"16.02","fontName":["BCDGEE+Montserrat-Bold","BCDIEE+Montserrat-Bold"],"dir":["ltr"]}

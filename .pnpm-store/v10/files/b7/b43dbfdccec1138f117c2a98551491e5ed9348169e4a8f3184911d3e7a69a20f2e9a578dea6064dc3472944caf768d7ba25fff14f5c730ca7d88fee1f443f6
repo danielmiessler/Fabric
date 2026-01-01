@@ -1,0 +1,17 @@
+import { SvelteComponentTyped } from "svelte";
+declare const __propDef: {
+    props: {
+        ariaLabel?: string | undefined;
+        title?: string | undefined;
+    };
+    events: {
+        [evt: string]: CustomEvent<any>;
+    };
+    slots: {};
+};
+export type PlayButtonProps = typeof __propDef.props;
+export type PlayButtonEvents = typeof __propDef.events;
+export type PlayButtonSlots = typeof __propDef.slots;
+export default class PlayButton extends SvelteComponentTyped<PlayButtonProps, PlayButtonEvents, PlayButtonSlots> {
+}
+export {};

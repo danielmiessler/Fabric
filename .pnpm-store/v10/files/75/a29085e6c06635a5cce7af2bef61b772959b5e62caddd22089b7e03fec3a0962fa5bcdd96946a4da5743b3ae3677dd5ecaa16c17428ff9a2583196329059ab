@@ -1,0 +1,17 @@
+export declare const TAB_CHAR_CODE = 9;
+export declare const WHITESPACE_CHAR_CODE = 32;
+export declare const MIN_DIGIT_CHAR_CODE = 48;
+export declare const MAX_DIGIT_CHAR_CODE = 57;
+export declare const PERIOD_CHAR_CODES: number[];
+export declare const DASHS_CHAR_CODES: number[];
+export declare function isDigit(charCode: number): boolean;
+export declare function toCharcodes(text: string): number[];
+export declare function filterOutDigits(text: string): string;
+export declare function filterOutWhitespaces(text: string): string;
+export declare function filterOut(text: string, codes: number[]): string;
+export declare function extractNumbers(text: string): number[];
+export declare function extractEndingNumber(text: string): number | undefined;
+export declare function isListItemCharacter(string: string): boolean;
+export declare function isListItem(value: string): boolean;
+export declare function isNumberedListItem(value: string): boolean;
+export declare function isNumber(value: string): boolean;

@@ -1,0 +1,35 @@
+{
+  "pages": 4,
+  "items": 160,
+  "groupedItems": 112,
+  "changes": 10,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":0,"change":"ContentChange","str":"s h a l F - M a s q u e","line":4,"x":37.1206,"y":758.8381,"width":"99.35","height":"17.64","fontName":["NRVUEW+Futura-Light"],"dir":["ltr"]}
+{"page":3,"change":"ContentChange","str":"s h a l F - M a s q u e","line":30,"x":37.1206,"y":758.8381,"width":"99.35","height":"17.64","fontName":["NRVUEW+Futura-Light"],"dir":["ltr"]}

@@ -1,0 +1,59 @@
+{
+  "pages": 7,
+  "items": 483,
+  "groupedItems": 217,
+  "changes": 91,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "token types"
+    },
+    {
+      "name": "types"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":1,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"1. Subject to the terms and conditions of this Public License, the Licensor hereby grants You ","line":24,"x":38.7,"y":332.9,"width":"494.17","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":1,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"2. Exceptions and Limitations . For the avoidance of doubt, where Exception s and Limitations ","line":29,"x":38.7,"y":233.18,"width":"494.15","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":1,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"3. Term . The term of this Public License is specified in Section 6(a) .","line":32,"x":38.7,"y":178.16,"width":"353.21","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":1,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"4. Media  and  formats;  technical  modifications  allowed .  The  Licensor  authorizes  You  to ","line":33,"x":38.7,"y":155.84,"width":"494.11","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":2,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"5. Downstream recipients .","line":6,"x":38.7,"y":689.02,"width":"139.11","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":2,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"6. No  endorsement .  Nothing  in  this  Public  License  constitutes  or  may  be  construed  as ","line":17,"x":38.7,"y":485.32,"width":"494.10","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":2,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"1. Moral rights, such as the right of integrity, are not licensed under this Public License, nor ","line":22,"x":38.7,"y":379.58,"width":"491.03","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":2,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"2. Patent and trademark rights are not licensed under this Public License.","line":27,"x":38.7,"y":291.86,"width":"393.26","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":2,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"3. To the extent possible, the Licensor waives any right to collect royalties from You for the ","line":28,"x":38.7,"y":269.54,"width":"494.01","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":2,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"1. If You Share the Licensed Material (including in modified form), You must:","line":35,"x":38.7,"y":107.1,"width":"406.28","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":3,"change":"ContentChange","types":["LIST"],"str":"- Primpke,  S.,  A.  Dias,  P.,  Gerdts,  G.,  Anal.  Methods  11,  2138 – 2147 .  (2019)","line":12,"x":56.7,"y":560.02,"width":"314.50","height":"9.00","fontName":["BCDKEE+Montserrat-Regular","BCDLEE+Montserrat-Regular"],"dir":["ltr"]}
+{"page":3,"change":"ContentChange","types":["LIST"],"str":"- Liu,     F.,     Olesen,     K.B.,     Borregaard,     A.R.,     Vollertsen,     J.,  Sci.     Total     Environ.     671 .     (2019)","line":13,"x":56.7,"y":549.04,"width":"461.88","height":"9.00","fontName":["BCDKEE+Montserrat-Regular"],"dir":["ltr"]}
+{"page":3,"change":"ContentChange","types":["LIST"],"str":"- Raman database: Cabernard, L.;  Roscher , L.;  Lorenz, C.;  Gerdts, G.; Primpke, S.,  Environmental Science ","line":14,"x":56.7,"y":538.06,"width":"481.09","height":"9.00","fontName":["BCDKEE+Montserrat-Regular"],"dir":["ltr"]}
+{"page":3,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"2. You may satisfy the conditions in Section 3(a)(1) in any reasonable manner based on the ","line":20,"x":38.7,"y":420.68,"width":"488.88","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":3,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"3. If  requested  by  the  Licensor,  You  must  remove  any  of  the  information  required  by ","line":24,"x":38.7,"y":349.28,"width":"494.08","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":3,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"1. The  Adapter’s  License  You  apply  must  be  a  Creative  Commons  license  with  the  same ","line":29,"x":38.7,"y":235.58,"width":"492.03","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular","BCDJEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":3,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"2. You must include the text of, or the URI or hyperlink to, the Adapter's License You apply. ","line":31,"x":38.7,"y":196.94,"width":"493.98","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":3,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"3. You may not offer or impose any additional or different terms or conditions on, or apply ","line":34,"x":38.7,"y":141.86,"width":"493.97","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":5,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"1. automatically as of the date the violation is cured, provided it is cured within 30  days of ","line":8,"x":38.7,"y":638.38,"width":"493.33","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":5,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"2. upon express reinstatement by the Licensor.","line":10,"x":38.7,"y":599.68,"width":"250.20","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}

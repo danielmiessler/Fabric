@@ -1,0 +1,97 @@
+{
+  "name": "eslint-compat-utils",
+  "version": "0.5.1",
+  "description": "Provides an API for ESLint custom rules that is compatible with the latest ESLint even when using older ESLint.",
+  "engines": {
+    "node": ">=12"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
+    "./eslint": {
+      "types": "./dist/eslint.d.ts",
+      "import": "./dist/eslint.mjs",
+      "require": "./dist/eslint.cjs"
+    },
+    "./linter": {
+      "types": "./dist/linter.d.ts",
+      "import": "./dist/linter.mjs",
+      "require": "./dist/linter.cjs"
+    },
+    "./rule-tester": {
+      "types": "./dist/rule-tester.d.ts",
+      "import": "./dist/rule-tester.mjs",
+      "require": "./dist/rule-tester.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "prebuild": "npm run -s clean",
+    "build": "unbuild",
+    "clean": "rimraf .nyc_output dist coverage",
+    "lint": "npm-run-all \"lint:*\"",
+    "lint:js": "eslint . --ext .js,.mjs,.ts,.json,.yml,.yaml",
+    "eslint-fix": "eslint . --ext .js,.mjs,.ts,.json,.yml,.yaml --fix",
+    "test:cover": "nyc --reporter=lcov npm run test",
+    "test": "npm run mocha -- \"tests/src/**/*.ts\" --reporter dot --timeout 60000",
+    "update:extract-v6-props": "npm run ts -- tools/extract-v6-props.ts",
+    "ts": "node -r esbuild-register",
+    "mocha": "npm run ts -- ./node_modules/mocha/bin/mocha.js",
+    "prerelease": "npm run clean && npm run build",
+    "release": "changeset publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ota-meshi/eslint-compat-utils.git"
+  },
+  "keywords": [
+    "eslint"
+  ],
+  "author": "Yosuke Ota (https://github.com/ota-meshi)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ota-meshi/eslint-compat-utils/issues"
+  },
+  "homepage": "https://github.com/ota-meshi/eslint-compat-utils#readme",
+  "peerDependencies": {
+    "eslint": ">=6.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.26.2",
+    "@ota-meshi/eslint-plugin": "^0.15.0",
+    "@svitejs/changesets-changelog-github-compact": "^1.1.0",
+    "@types/eslint": "^8.44.3",
+    "@types/mocha": "^10.0.0",
+    "@types/node": "^20.0.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "esbuild-register": "^3.5.0",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-json-schema-validator": "^5.0.0",
+    "eslint-plugin-jsonc": "^2.9.0",
+    "eslint-plugin-n": "^17.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-yml": "^1.9.0",
+    "mocha": "^10.2.0",
+    "npm-run-all2": "^6.0.0",
+    "nyc": "^15.1.0",
+    "prettier": "^3.0.3",
+    "unbuild": "^2.0.0"
+  },
+  "dependencies": {
+    "semver": "^7.5.4"
+  }
+}

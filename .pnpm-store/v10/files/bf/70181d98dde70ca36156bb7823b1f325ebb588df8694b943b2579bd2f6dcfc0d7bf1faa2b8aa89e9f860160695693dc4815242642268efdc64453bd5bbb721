@@ -1,0 +1,43 @@
+{
+  "pages": 7,
+  "items": 6779,
+  "groupedItems": 1102,
+  "changes": 27,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "token types"
+    },
+    {
+      "name": "types"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":0,"change":"ContentChange","types":["H2"],"str":"What Shanl We Mam?","line":0,"x":365.64,"y":738.30001,"width":"99.72","height":"14.40","fontName":["Courier"],"dir":["ltr"]}
+{"page":0,"change":"ContentChange","types":["H1"],"str":"The Tragedy of the Commons","line":1,"x":66.35999999999996,"y":668.0399900000001,"width":"212.04","height":"22.50","fontName":["Courier"],"dir":["ltr"]}
+{"page":0,"change":"ContentChange","types":["H2"],"str":"The population problem has no technical solution;","line":2,"x":48.95999999999998,"y":633.7200000000001,"width":"233.28","height":"15.40","fontName":["Courier"],"dir":["ltr"]}
+{"page":0,"change":"ContentChange","types":["H2"],"str":"it requires a fundamental extension in morality.","line":3,"x":61.319999999999965,"y":617.2800000000001,"width":"219.12","height":"15.50","fontName":["Courier"],"dir":["ltr"]}

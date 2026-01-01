@@ -1,0 +1,90 @@
+{
+  "pages": 200,
+  "items": 8461,
+  "groupedItems": 8324,
+  "changes": 55,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "token types"
+    },
+    {
+      "name": "types",
+      "annotation": "ADDED"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {
+    "toc": {
+      "tocHeadlineItems": [
+        {
+          "page": 3,
+          "text": "Contents"
+        }
+      ],
+      "pages": [
+        3
+      ],
+      "detectedHeadlineLevels": {}
+    },
+    "headlineTypeToHeightRange": {
+      "H2": {
+        "min": 24.7871,
+        "max": 24.7871
+      }
+    }
+  }
+}
+{"page":3,"change":"Removal","str":"Contents","dir":"ltr","width":"95.01","height":"24.79","transform":["24.79","0.00","0.00","24.79","117.83","625.56"],"fontName":"INBNCB+NimbusRomNo9L-Medi","x":117.828,"y":625.557,"line":0}
+{"page":3,"change":"Removal","str":"A Scandal In Bohemia 3","line":1,"x":117.828,"y":561.248,"width":"110.02","height":"10.91","fontName":["INBNCB+NimbusRomNo9L-Medi"],"dir":["ltr"]}
+{"page":3,"change":"Removal","str":"The Red-Headed League 21","line":2,"x":117.828,"y":536.7900000000001,"width":"126.67","height":"10.91","fontName":["INBNCB+NimbusRomNo9L-Medi"],"dir":["ltr"]}
+{"page":3,"change":"Removal","str":"A Case Of Identity 38","line":3,"x":117.828,"y":512.3320000000001,"width":"98.48","height":"10.91","fontName":["INBNCB+NimbusRomNo9L-Medi"],"dir":["ltr"]}
+{"page":3,"change":"Removal","str":"The Boscombe Valley Mystery 51","line":4,"x":117.828,"y":487.87400000000014,"width":"152.01","height":"10.91","fontName":["INBNCB+NimbusRomNo9L-Medi"],"dir":["ltr"]}
+{"page":3,"change":"Removal","str":"The Five Orange Pips 69","line":5,"x":117.828,"y":463.41500000000013,"width":"112.21","height":"10.91","fontName":["INBNCB+NimbusRomNo9L-Medi"],"dir":["ltr"]}
+{"page":3,"change":"Removal","str":"The Man With The Twisted Lip 83","line":6,"x":117.828,"y":438.9570000000001,"width":"158.72","height":"10.91","fontName":["INBNCB+NimbusRomNo9L-Medi"],"dir":["ltr"]}
+{"page":3,"change":"Removal","str":"The Adventure Of The Blue Carbuncle 100","line":7,"x":117.828,"y":414.49900000000014,"width":"197.97","height":"10.91","fontName":["INBNCB+NimbusRomNo9L-Medi"],"dir":["ltr"]}
+{"page":3,"change":"Removal","str":"The Adventure Of The Speckled Band 115","line":8,"x":117.828,"y":390.04000000000013,"width":"194.56","height":"10.91","fontName":["INBNCB+NimbusRomNo9L-Medi"],"dir":["ltr"]}
+{"page":3,"change":"Removal","str":"The Adventure Of The Engineer’s Thumb 133","line":9,"x":117.828,"y":365.5820000000001,"width":"212.33","height":"10.91","fontName":["INBNCB+NimbusRomNo9L-Medi"],"dir":["ltr"]}
+{"page":3,"change":"Removal","str":"The Adventure Of The Noble Bachelor 148","line":10,"x":117.828,"y":341.12400000000014,"width":"196.96","height":"10.91","fontName":["INBNCB+NimbusRomNo9L-Medi"],"dir":["ltr"]}
+{"page":3,"change":"Removal","str":"The Adventure Of The Beryl Coronet 164","line":11,"x":117.828,"y":316.66600000000017,"width":"191.30","height":"10.91","fontName":["INBNCB+NimbusRomNo9L-Medi"],"dir":["ltr"]}
+{"page":3,"change":"Removal","str":"The Adventure Of The Copper Beeches 182","line":12,"x":117.828,"y":292.20700000000016,"width":"199.99","height":"10.91","fontName":["INBNCB+NimbusRomNo9L-Medi"],"dir":["ltr"]}
+{"page":4,"change":"ContentChange","types":["H2"],"str":"A Scandal In Bohemia","dir":"ltr","width":"237.58","height":"24.79","transform":["24.79","0.00","0.00","24.79","117.83","580.73"],"fontName":"INBNCB+NimbusRomNo9L-Medi","x":117.828,"y":580.725,"line":1}
+{"page":22,"change":"ContentChange","types":["H2"],"str":"The Red-Headed League","dir":"ltr","width":"263.02","height":"24.79","transform":["24.79","0.00","0.00","24.79","117.83","580.73"],"fontName":"INBNCB+NimbusRomNo9L-Medi","x":117.828,"y":580.725,"line":1}
+{"page":39,"change":"ContentChange","types":["H2"],"str":"A Case Of Identity","dir":"ltr","width":"198.97","height":"24.79","transform":["24.79","0.00","0.00","24.79","117.83","580.73"],"fontName":"INBNCB+NimbusRomNo9L-Medi","x":117.828,"y":580.725,"line":1}
+{"page":52,"change":"ContentChange","types":["H2"],"str":"The Boscombe Valley Mystery","dir":"ltr","width":"320.60","height":"24.79","transform":["24.79","0.00","0.00","24.79","117.83","580.73"],"fontName":"INBNCB+NimbusRomNo9L-Medi","x":117.828,"y":580.725,"line":1}
+{"page":70,"change":"ContentChange","types":["H2"],"str":"The Five Orange Pips","dir":"ltr","width":"230.17","height":"24.79","transform":["24.79","0.00","0.00","24.79","117.83","580.73"],"fontName":"INBNCB+NimbusRomNo9L-Medi","x":117.828,"y":580.725,"line":1}
+{"page":84,"change":"ContentChange","types":["H2"],"str":"The Man With The Twisted Lip","dir":"ltr","width":"335.84","height":"24.79","transform":["24.79","0.00","0.00","24.79","117.83","580.73"],"fontName":"INBNCB+NimbusRomNo9L-Medi","x":117.828,"y":580.725,"line":1}
+{"page":101,"change":"ContentChange","types":["H2"],"str":"The Adventure Of The Blue","dir":"ltr","width":"295.39","height":"24.79","transform":["24.79","0.00","0.00","24.79","117.83","580.73"],"fontName":"INBNCB+NimbusRomNo9L-Medi","x":117.828,"y":580.725,"line":1}
+{"page":101,"change":"ContentChange","types":["H2"],"str":"Carbuncle","dir":"ltr","width":"111.05","height":"24.79","transform":["24.79","0.00","0.00","24.79","117.83","550.84"],"fontName":"INBNCB+NimbusRomNo9L-Medi","x":117.828,"y":550.837,"line":2}
+{"page":116,"change":"ContentChange","types":["H2"],"str":"The Adventure Of The Speckled","dir":"ltr","width":"342.21","height":"24.79","transform":["24.79","0.00","0.00","24.79","117.83","580.73"],"fontName":"INBNCB+NimbusRomNo9L-Medi","x":117.828,"y":580.725,"line":1}
+{"page":116,"change":"ContentChange","types":["H2"],"str":"Band","dir":"ltr","width":"56.49","height":"24.79","transform":["24.79","0.00","0.00","24.79","117.83","550.84"],"fontName":"INBNCB+NimbusRomNo9L-Medi","x":117.828,"y":550.837,"line":2}
+{"page":134,"change":"ContentChange","types":["H2"],"str":"The Adventure Of The","dir":"ltr","width":"240.98","height":"24.79","transform":["24.79","0.00","0.00","24.79","117.83","580.73"],"fontName":"INBNCB+NimbusRomNo9L-Medi","x":117.828,"y":580.725,"line":1}
+{"page":134,"change":"ContentChange","types":["H2"],"str":"Engineer’s Thumb","dir":"ltr","width":"198.10","height":"24.79","transform":["24.79","0.00","0.00","24.79","117.83","550.84"],"fontName":"INBNCB+NimbusRomNo9L-Medi","x":117.828,"y":550.837,"line":2}
+{"page":149,"change":"ContentChange","types":["H2"],"str":"The Adventure Of The Noble","dir":"ltr","width":"309.14","height":"24.79","transform":["24.79","0.00","0.00","24.79","117.83","580.73"],"fontName":"INBNCB+NimbusRomNo9L-Medi","x":117.828,"y":580.725,"line":1}
+{"page":149,"change":"ContentChange","types":["H2"],"str":"Bachelor","dir":"ltr","width":"95.01","height":"24.79","transform":["24.79","0.00","0.00","24.79","117.83","550.84"],"fontName":"INBNCB+NimbusRomNo9L-Medi","x":117.828,"y":550.837,"line":2}
+{"page":165,"change":"ContentChange","types":["H2"],"str":"The Adventure Of The Beryl","dir":"ltr","width":"305.01","height":"24.79","transform":["24.79","0.00","0.00","24.79","117.83","580.73"],"fontName":"INBNCB+NimbusRomNo9L-Medi","x":117.828,"y":580.725,"line":1}
+{"page":165,"change":"ContentChange","types":["H2"],"str":"Coronet","dir":"ltr","width":"86.28","height":"24.79","transform":["24.79","0.00","0.00","24.79","117.83","550.84"],"fontName":"INBNCB+NimbusRomNo9L-Medi","x":117.828,"y":550.837,"line":2}
+{"page":183,"change":"ContentChange","types":["H2"],"str":"The Adventure Of The Copper","dir":"ltr","width":"327.04","height":"24.79","transform":["24.79","0.00","0.00","24.79","117.83","580.73"],"fontName":"INBNCB+NimbusRomNo9L-Medi","x":117.828,"y":580.725,"line":1}
+{"page":183,"change":"ContentChange","types":["H2"],"str":"Beeches","dir":"ltr","width":"83.98","height":"24.79","transform":["24.79","0.00","0.00","24.79","117.83","550.84"],"fontName":"INBNCB+NimbusRomNo9L-Medi","x":117.828,"y":550.837,"line":2}

@@ -1,0 +1,1 @@
+<blockquote><slot></slot></blockquote>

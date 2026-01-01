@@ -1,0 +1,21 @@
+## ONE SENTENCE SUMMARY:
+No source content was provided, so I cannot summarize, extract main points, or derive takeaways from the input.
+
+## MAIN POINTS:
+1. The prompt includes formatting requirements for a Markdown summary output.
+2. A single-sentence summary is required and must contain exactly 20 words.
+3. Ten key points must be listed, each limited to 16 words.
+4. Five takeaways must be provided as a separate numbered list.
+5. Output must contain only three named sections with the specified headings.
+6. Numbered lists are mandatory; bullet points are not allowed.
+7. The response must avoid warnings, notes, or any extra sections.
+8. Repetition across sections is disallowed, requiring distinct phrasing and content.
+9. List items should not share the same opening words to improve variety.
+10. The actual content to summarize is missing after “INPUT:”.
+
+## TAKEAWAYS:
+1. Providing the source text is essential to generate an accurate summary.
+2. Strict length constraints require careful word counting and concise phrasing.
+3. Clear structure improves readability and makes automated checks easier.
+4. Non-repetitive wording across sections demands intentional paraphrasing.
+5. Numbered formatting rules should be followed exactly to meet the specification.

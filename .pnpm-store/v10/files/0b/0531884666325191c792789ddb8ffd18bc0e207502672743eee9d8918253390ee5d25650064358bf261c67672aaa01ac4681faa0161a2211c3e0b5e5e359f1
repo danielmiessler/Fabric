@@ -1,0 +1,13 @@
+import Item from './Item';
+import { HeadlineType } from './text-types';
+/**
+ * Table of contents usually parsed by  `DetectToc.ts`.
+ */
+export default class TOC {
+    tocHeadlineItems: Item[];
+    pages: number[];
+    detectedHeadlineLevels: Set<HeadlineType>;
+    constructor(tocHeadlineItems: Item[], pages: number[], detectedHeadlineLevels: Set<HeadlineType>);
+    startPage(): number;
+    endPage(): number;
+}

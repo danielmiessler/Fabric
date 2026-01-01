@@ -1,0 +1,46 @@
+{
+  "pages": 14,
+  "items": 2430,
+  "groupedItems": 1499,
+  "changes": 0,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {
+    "maxHeight": 17.9328,
+    "mostUsedHeight": 8.9664,
+    "mostUsedDistance": 9.96,
+    "mostUsedFont": "KUYGUP+NimbusRomNo9L-Regu",
+    "minX": 53.99990000000005,
+    "maxX": 553.8755000000001,
+    "minY": 68.44329999999982,
+    "maxY": 713.7734000000003,
+    "pageMapping": {
+      "pageFactor": 1,
+      "detectedOnPage": false
+    }
+  }
+}

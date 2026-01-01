@@ -1,0 +1,93 @@
+{
+  "pages": 16,
+  "items": 1242,
+  "groupedItems": 416,
+  "changes": 222,
+  "schema": [
+    {
+      "name": "block"
+    },
+    {
+      "name": "line"
+    },
+    {
+      "name": "token types"
+    },
+    {
+      "name": "types"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":7,"change":"ContentChange","types":["CODE"],"str":"(1) At the start of this project,  Colmex  had the necessary permissions to digitize and ","block":42,"line":16,"x":107.18,"y":474.55,"width":"400.50","height":"11.04","fontName":[null,"ABCDEE+Georgia"],"dir":["ltr"]}
+{"page":7,"change":"ContentChange","types":["CODE"],"str":"make freely available in digital form a significant number of titles in their backlist, ","dir":"ltr","width":"400.17","height":"11.04","transform":["11.04","0.00","0.00","11.04","124.34","460.27"],"fontName":"ABCDEE+Georgia","x":124.34,"y":460.27,"line":17,"block":42}
+{"page":7,"change":"ContentChange","types":["CODE"],"str":"in many cases because the author was a faculty member at Colmex. Give n the ","block":42,"line":18,"x":124.34,"y":445.87,"width":"376.17","height":"11.04","fontName":["ABCDEE+Georgia"],"dir":["ltr"]}
+{"page":7,"change":"ContentChange","types":["CODE"],"str":"sizable expense involved in clearing digital rights,  we determined that there was ","block":42,"line":19,"x":124.34,"y":431.47,"width":"389.01","height":"11.04","fontName":["ABCDEE+Georgia"],"dir":["ltr"]}
+{"page":7,"change":"ContentChange","types":["CODE"],"str":"significant value in focusing our efforts on books  that  did not require painstaking ","block":42,"line":20,"x":124.34,"y":417.07,"width":"389.68","height":"11.04","fontName":["ABCDEE+Georgia"],"dir":["ltr"]}
+{"page":7,"change":"ContentChange","types":["CODE"],"str":"rights research. Of the 1,411 titles in the backlist, Colmex's press has distributio n ","block":42,"line":21,"x":124.34,"y":402.67,"width":"391.12","height":"11.04","fontName":["ABCDEE+Georgia"],"dir":["ltr"]}
+{"page":7,"change":"ContentChange","types":["CODE"],"str":"rights for 741.","dir":"ltr","width":"67.10","height":"11.04","transform":["11.04","0.00","0.00","11.04","124.34","388.39"],"fontName":"ABCDEE+Georgia","x":124.34,"y":388.39,"line":22,"block":42}
+{"page":7,"change":"ContentChange","types":["CODE"],"str":"(2) This list was then  refined to exclude a small number of books that were not ","block":43,"line":23,"x":107.18,"y":364.01,"width":"372.11","height":"11.04","fontName":[null,"ABCDEE+Georgia"],"dir":["ltr"]}
+{"page":7,"change":"ContentChange","types":["CODE"],"str":"scholarly in nature (e.g., technical guides from the 1990s).  W e retained in the list , ","block":43,"line":24,"x":124.34,"y":349.61,"width":"396.80","height":"11.04","fontName":["ABCDEE+Georgia"],"dir":["ltr"]}
+{"page":7,"change":"ContentChange","types":["CODE"],"str":"however, a small number of literary or primary source titles that would be u seful ","block":43,"line":25,"x":124.34,"y":335.21,"width":"389.45","height":"11.04","fontName":["ABCDEE+Georgia"],"dir":["ltr"]}
+{"page":7,"change":"ContentChange","types":["CODE"],"str":"for research and teaching.","dir":"ltr","width":"126.00","height":"11.04","transform":["11.04","0.00","0.00","11.04","124.34","320.81"],"fontName":"ABCDEE+Georgia","x":124.34,"y":320.81,"line":26,"block":43}
+{"page":7,"change":"ContentChange","types":["CODE"],"str":"(3) The list was further  refined to exclude titles that did not fit well with the ","block":44,"line":27,"x":107.18,"y":296.45,"width":"360.00","height":"11.04","fontName":[null,"ABCDEE+Georgia"],"dir":["ltr"]}
+{"page":7,"change":"ContentChange","types":["CODE"],"str":"humanities and humanistic social sciences profile 2 . For example,  books  that ","block":44,"line":28,"x":124.34,"y":282.05,"width":"369.56","height":"11.04","fontName":["ABCDEE+Georgia"],"dir":["ltr"]}
+{"page":7,"change":"ContentChange","types":["CODE"],"str":"focused on environmental policy were considered out of scope for this project. ","block":44,"line":29,"x":124.34,"y":267.77,"width":"372.46","height":"11.04","fontName":["ABCDEE+Georgia"],"dir":["ltr"]}
+{"page":7,"change":"ContentChange","types":["CODE"],"str":"(4) Finally,  based on cost estimates, we initially aimed to reach a final list of ","block":45,"line":30,"x":107.18,"y":243.29,"width":"364.16","height":"11.04","fontName":[null,"ABCDEE+Georgia"],"dir":["ltr"]}
+{"page":7,"change":"ContentChange","types":["CODE"],"str":"approximately 600 titles .  Given cost constraints, we  made the difficult choice s, ","block":45,"line":31,"x":124.34,"y":229.01,"width":"383.85","height":"11.04","fontName":["ABCDEE+Georgia"],"dir":["ltr"]}
+{"page":7,"change":"ContentChange","types":["CODE"],"str":"including moving  approximately 40 social science - leaning titles  (many in political ","block":45,"line":32,"x":124.34,"y":214.61,"width":"399.13","height":"11.04","fontName":["ABCDEE+Georgia"],"dir":["ltr"]}
+{"page":8,"change":"ContentChange","types":["CODE"],"str":"science)  to a B - list. It is important to note that, w hile these titles were not ","block":47,"line":1,"x":124.34,"y":720.24,"width":"355.41","height":"11.04","fontName":["ABCDEE+Georgia"],"dir":["ltr"]}
+{"page":8,"change":"ContentChange","types":["CODE"],"str":"included in the starting list for digitization, lower - than - anticipated costs allowed ","block":47,"line":2,"x":124.34,"y":705.82,"width":"392.75","height":"11.04","fontName":["ABCDEE+Georgia"],"dir":["ltr"]}
+{"page":8,"change":"ContentChange","types":["CODE"],"str":"us to include these titles in our final output. We acknowledge that t his initial ","block":47,"line":3,"x":124.34,"y":691.42,"width":"369.67","height":"11.04","fontName":["ABCDEE+Georgia"],"dir":["ltr"]}
+{"page":8,"change":"ContentChange","types":["CODE"],"str":"selection process was not perfect,  but we are pleased with the final outcome since ","block":47,"line":4,"x":124.34,"y":677.14,"width":"392.80","height":"11.04","fontName":["ABCDEE+Georgia"],"dir":["ltr"]}
+{"page":8,"change":"ContentChange","types":["CODE"],"str":"these books hold value for humanities researchers (especially historians) .","block":47,"line":5,"x":124.34,"y":662.74,"width":"351.97","height":"11.04","fontName":["ABCDEE+Georgia"],"dir":["ltr"]}
+{"page":11,"change":"ContentChange","types":["CODE"],"str":"Title Copyright ","block":71,"line":29,"x":95.304,"y":201.29,"width":"75.04","height":"11.04","fontName":["ABCDEE+Georgia,Italic"],"dir":["ltr"]}
+{"page":11,"change":"ContentChange","types":["CODE"],"str":"year","dir":"ltr","width":"22.71","height":"11.04","transform":["11.04","0.00","0.00","11.04","343.99","186.86"],"fontName":"ABCDEE+Georgia,Italic","x":343.99,"y":186.86,"line":30,"block":71}
+{"page":11,"change":"ContentChange","types":["CODE"],"str":"Usage through ","dir":"ltr","width":"76.03","height":"11.04","transform":["11.04","0.00","0.00","11.04","420.91","201.29"],"fontName":"ABCDEE+Georgia,Italic","x":420.91,"y":201.29,"line":31,"block":72}
+{"page":11,"change":"ContentChange","types":["CODE"],"str":"10/28/19","dir":"ltr","width":"45.60","height":"11.04","transform":["11.04","0.00","0.00","11.04","420.91","186.86"],"fontName":"ABCDEE+Georgia,Italic","x":420.91,"y":186.86,"line":32,"block":72}
+{"page":12,"change":"ContentChange","types":["CODE"],"str":"Historia económica general de México: de la ","dir":"ltr","width":"217.10","height":"11.04","transform":["11.04","0.00","0.00","11.04","95.30","714.72"],"fontName":"ABCDEE+Georgia","x":95.304,"y":714.72,"line":1,"block":73}
+{"page":12,"change":"ContentChange","types":["CODE"],"str":"colonia a nuestros días","dir":"ltr","width":"110.55","height":"11.04","transform":["11.04","0.00","0.00","11.04","95.30","700.30"],"fontName":"ABCDEE+Georgia","x":95.304,"y":700.3,"line":2,"block":73}
+{"page":12,"change":"ContentChange","types":["CODE"],"str":"2010 13 , 251","block":74,"line":3,"x":343.99,"y":714.72,"width":"54.95","height":"11.04","fontName":["ABCDEE+Georgia"],"dir":["ltr"]}
+{"page":12,"change":"ContentChange","types":["CODE"],"str":"Historia general de México: volumen I 1994 9 , 323","block":75,"line":4,"x":95.304,"y":665.5,"width":"237.13","height":"11.04","fontName":["ABCDEE+Georgia"],"dir":["ltr"]}
+{"page":12,"change":"ContentChange","types":["CODE"],"str":"Los intelectuales y el poder en México 1991 5 , 156","block":76,"line":5,"x":95.304,"y":630.58,"width":"231.23","height":"11.04","fontName":["ABCDEE+Georgia"],"dir":["ltr"]}
+{"page":12,"change":"ContentChange","types":["CODE"],"str":"De amicitia et doctrina: home naje a Martha ","block":77,"line":6,"x":95.304,"y":595.78,"width":"214.16","height":"11.04","fontName":["ABCDEE+Georgia"],"dir":["ltr"]}
+{"page":12,"change":"ContentChange","types":["CODE"],"str":"Elena Venier","dir":"ltr","width":"62.46","height":"11.04","transform":["11.04","0.00","0.00","11.04","95.30","581.38"],"fontName":"ABCDEE+Georgia","x":95.304,"y":581.38,"line":7,"block":77}
+{"page":12,"change":"ContentChange","types":["CODE"],"str":"2007 4 , 785","block":78,"line":8,"x":343.99,"y":595.78,"width":"52.23","height":"11.04","fontName":["ABCDEE+Georgia"],"dir":["ltr"]}
+{"page":12,"change":"ContentChange","types":["CODE"],"str":"La lingüística en México, 1980 - 1996 1998 4 , 564","block":79,"line":9,"x":95.304,"y":546.46,"width":"226.57","height":"11.04","fontName":["ABCDEE+Georgia"],"dir":["ltr"]}
+{"page":12,"change":"ContentChange","types":["CODE"],"str":"Diccionario del español usual en México 1996 4 , 503","block":80,"line":10,"x":95.304,"y":511.63,"width":"246.29","height":"11.04","fontName":["ABCDEE+Georgia"],"dir":["ltr"]}
+{"page":12,"change":"ContentChange","types":["CODE"],"str":"Introducción a la historia de la vida cotidiana 2006 4 , 300","block":81,"line":11,"x":95.304,"y":476.71,"width":"274.06","height":"11.04","fontName":["ABCDEE+Georgia"],"dir":["ltr"]}
+{"page":12,"change":"ContentChange","types":["CODE"],"str":"Historia de la lectura en México 1997 3 , 888","block":82,"line":12,"x":95.304,"y":441.79,"width":"205.74","height":"11.04","fontName":["ABCDEE+Georgia"],"dir":["ltr"]}
+{"page":12,"change":"ContentChange","types":["CODE"],"str":"Cuestiones de teoría sociológica 2005 3 , 659","block":83,"line":13,"x":95.304,"y":406.99,"width":"204.14","height":"11.04","fontName":["ABCDEE+Georgia"],"dir":["ltr"]}
+{"page":12,"change":"ContentChange","types":["CODE"],"str":"Historia general de México: volumen II 1994 3 , 595","block":84,"line":14,"x":95.304,"y":372.07,"width":"240.74","height":"11.04","fontName":["ABCDEE+Georgia"],"dir":["ltr"]}
+{"page":13,"change":"ContentChange","types":["CODE"],"str":"Country Usage through 10/28/19","block":87,"line":2,"x":95.304,"y":403.75,"width":"162.37","height":"11.04","fontName":["ABCDEE+Georgia,Italic"],"dir":["ltr"]}
+{"page":13,"change":"ContentChange","types":["CODE"],"str":"Mexico 151 , 601","block":88,"line":3,"x":95.304,"y":368.83,"width":"71.09","height":"11.04","fontName":["ABCDEE+Georgia"],"dir":["ltr"]}
+{"page":13,"change":"ContentChange","types":["CODE"],"str":"United States 54 , 035","block":89,"line":4,"x":95.304,"y":333.89,"width":"99.29","height":"11.04","fontName":["ABCDEE+Georgia"],"dir":["ltr"]}
+{"page":13,"change":"ContentChange","types":["CODE"],"str":"Colombia 29 , 369","block":90,"line":5,"x":95.304,"y":299.09,"width":"80.70","height":"11.04","fontName":["ABCDEE+Georgia"],"dir":["ltr"]}
+{"page":13,"change":"ContentChange","types":["CODE"],"str":"Spain 17 , 001","block":91,"line":6,"x":95.304,"y":264.17,"width":"59.36","height":"11.04","fontName":["ABCDEE+Georgia"],"dir":["ltr"]}
+{"page":13,"change":"ContentChange","types":["CODE"],"str":"Argentina 13 , 909","block":92,"line":7,"x":95.304,"y":229.25,"width":"81.64","height":"11.04","fontName":["ABCDEE+Georgia"],"dir":["ltr"]}
+{"page":13,"change":"ContentChange","types":["CODE"],"str":"Peru 11 , 408","block":93,"line":8,"x":95.304,"y":194.45,"width":"55.02","height":"11.04","fontName":["ABCDEE+Georgia"],"dir":["ltr"]}
+{"page":13,"change":"ContentChange","types":["CODE"],"str":"Chile 9 , 172","block":94,"line":9,"x":95.304,"y":159.5,"width":"51.00","height":"11.04","fontName":["ABCDEE+Georgia"],"dir":["ltr"]}
+{"page":14,"change":"ContentChange","types":["CODE"],"str":"Ecuador 9 , 143","block":95,"line":1,"x":95.304,"y":714.72,"width":"67.11","height":"11.04","fontName":["ABCDEE+Georgia"],"dir":["ltr"]}
+{"page":14,"change":"ContentChange","types":["CODE"],"str":"Costa Rica 4 , 770","block":96,"line":2,"x":95.304,"y":679.9,"width":"78.38","height":"11.04","fontName":["ABCDEE+Georgia"],"dir":["ltr"]}
+{"page":14,"change":"ContentChange","types":["CODE"],"str":"United Kingdom 3 , 580","block":97,"line":3,"x":95.304,"y":644.98,"width":"109.27","height":"11.04","fontName":["ABCDEE+Georgia"],"dir":["ltr"]}

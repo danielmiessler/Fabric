@@ -1,0 +1,42 @@
+{
+  "pages": 16,
+  "items": 1242,
+  "groupedItems": 416,
+  "changes": 0,
+  "schema": [
+    {
+      "name": "block"
+    },
+    {
+      "name": "line"
+    },
+    {
+      "name": "token types"
+    },
+    {
+      "name": "types"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}

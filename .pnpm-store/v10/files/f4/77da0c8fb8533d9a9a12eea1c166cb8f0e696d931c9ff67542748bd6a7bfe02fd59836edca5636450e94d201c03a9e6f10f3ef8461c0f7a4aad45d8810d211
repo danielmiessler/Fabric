@@ -1,0 +1,17 @@
+{
+	"version": 3,
+	"file": "index.d.ts",
+	"names": [
+		"Options",
+		"svelteInspector"
+	],
+	"sources": [
+		"../src/public.d.ts",
+		"../src/index.js"
+	],
+	"sourcesContent": [
+		null,
+		null
+	],
+	"mappings": ";kBAAiBA,OAAOA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;iBCoBRC,eAAeA"
+}

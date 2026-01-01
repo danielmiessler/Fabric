@@ -1,0 +1,10 @@
+import Item from '../Item';
+import ItemResult from '../ItemResult';
+import ItemTransformer from './ItemTransformer';
+import TransformContext from './TransformContext';
+import { TextType } from '../text-types';
+export default class DetectCodeQuoteBlocks extends ItemTransformer {
+    constructor();
+    transform(context: TransformContext, inputItems: Item[]): ItemResult;
+}
+export declare function itemWithType(item: Item, type: TextType): Item;

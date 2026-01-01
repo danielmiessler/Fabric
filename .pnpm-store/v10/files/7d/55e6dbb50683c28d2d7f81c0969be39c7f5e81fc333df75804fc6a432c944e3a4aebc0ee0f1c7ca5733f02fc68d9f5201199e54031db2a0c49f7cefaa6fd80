@@ -1,0 +1,114 @@
+{
+  "pages": 256,
+  "items": 20146,
+  "groupedItems": 7300,
+  "changes": 125,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "token types"
+    },
+    {
+      "name": "types",
+      "annotation": "ADDED"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {
+    "toc": {
+      "tocHeadlineItems": [
+        {
+          "page": 5,
+          "text": "In"
+        },
+        {
+          "page": 5,
+          "text": "haltsverzeichnis"
+        }
+      ],
+      "pages": [
+        5
+      ],
+      "detectedHeadlineLevels": {}
+    },
+    "headlineTypeToHeightRange": {
+      "H2": {
+        "min": 13.98,
+        "max": 13.98
+      }
+    }
+  }
+}
+{"page":5,"change":"Removal","str":"In haltsverzeichnis","line":1,"x":68.04,"y":561.48,"width":"95.37","height":"12.00","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":5,"change":"Removal","str":"Einleitung  .................................................................................................................... 1 ","line":2,"x":68.04,"y":483.42,"width":"317.46","height":"7.98","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":5,"change":"Removal","str":"Neue ster Stand der Technik der Vergasung von Holzbiomasse in Südtirol und  ","line":3,"x":68.03999999999999,"y":461.94582,"width":"286.90","height":"7.98","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":5,"change":"Removal","str":"technisch- wirtschaftliche Analyse möglicher Verbesserungen in Hinblick auf eine ","line":4,"x":68.03999999999999,"y":452.76882,"width":"294.71","height":"7.98","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":5,"change":"Removal","str":"polygenerative Strukturierung","dir":"ltr","width":"107.42","height":"7.98","transform":["7.98","0.00","0.00","7.98","68.04","443.59"],"fontName":"CRDKGT+ArialMT","x":68.03999999999999,"y":443.59182,"line":5}
+{"page":5,"change":"Removal","str":"Basso, Cordioli, Bonadio, Patuzzi, Dal Savio, Mimmo, Baratieri .................................. 5 ","line":6,"x":68.03999999999998,"y":434.41481999999996,"width":"315.26","height":"7.98","fontName":["UJLJRF+Arial-ItalicMT","CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":5,"change":"Removal","str":"Extraktion aus Holzrückständen für Anwendungen in der Lebensmittel -  und ","line":7,"x":68.03999999999996,"y":415.99697999999995,"width":"274.61","height":"7.98","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":5,"change":"Removal","str":"Pharmabranche","dir":"ltr","width":"58.24","height":"7.98","transform":["7.98","0.00","0.00","7.98","68.03","406.76"],"fontName":"CRDKGT+ArialMT","x":68.03201999999993,"y":406.75613999999996,"line":8}
+{"page":5,"change":"Removal","str":"Ferrentino, Haman, Morozova, Scampicchio ............................................................. 49 ","line":9,"x":68.03201999999993,"y":397.63499999999993,"width":"315.18","height":"7.98","fontName":["UJLJRF+Arial-ItalicMT","CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":5,"change":"Removal","str":"Nutzung von Kohle als Bodenverbesserungsmittel: Keim -  und Phytotoxizitätstests ","line":10,"x":68.02403999999993,"y":379.2171599999999,"width":"298.53","height":"7.98","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":5,"change":"Removal","str":"mit Kohle aus Südtiroler Vergasungsanlagen","dir":"ltr","width":"162.54","height":"7.98","transform":["7.98","0.00","0.00","7.98","68.02","370.04"],"fontName":"CRDKGT+ArialMT","x":68.02403999999993,"y":370.0401599999999,"line":11}
+{"page":5,"change":"Removal","str":"Celletti, Borruso, Valentinuzzi, Basso, Patuzzi, Baratieri, Cesco, Mimmo .................. 75 ","line":12,"x":68.02403999999993,"y":360.8631599999999,"width":"315.59","height":"7.98","fontName":["UJLJRF+Arial-ItalicMT","CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":5,"change":"Removal","str":"Auswirkungen der Einbringung von Biochar in den Boden auf Ertrag und Qualität von ","dir":"ltr","width":"311.11","height":"7.98","transform":["7.98","0.00","0.00","7.98","68.02","342.45"],"fontName":"CRDKGT+ArialMT","x":68.0240399999999,"y":342.44531999999987,"line":13}
+{"page":5,"change":"Removal","str":"Reb-  und Obstanlagen in Südtirol","line":14,"x":68.0240399999999,"y":333.26831999999985,"width":"121.37","height":"7.98","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":5,"change":"Removal","str":"Lucchetta, Raifer, Lösch, Matteazzi, Patauner .......................................................... 95 ","line":15,"x":68.02403999999993,"y":324.02747999999985,"width":"314.46","height":"7.98","fontName":["UJLJRF+Arial-ItalicMT","CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":5,"change":"Removal","str":"Anwendung von Biochar als Bodenverbesserungsmittel: Wirkungen auf den ","dir":"ltr","width":"276.97","height":"7.98","transform":["7.98","0.00","0.00","7.98","68.02","305.67"],"fontName":"CRDKGT+ArialMT","x":68.02403999999993,"y":305.67347999999987,"line":16}
+{"page":5,"change":"Removal","str":"Stickstoffzyklus und  die Trockenstresstol eranz  bei im Topf angebauten Weinpflanzen","line":17,"x":68.02403999999993,"y":296.4326399999999,"width":"309.02","height":"7.98","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":5,"change":"Removal","str":"Petrillo, Zanotelli, Lucchetta, Aguzzoni, Tagliavini, Andreotti ................................... 1 43","line":18,"x":68.02403999999996,"y":287.25563999999986,"width":"313.21","height":"7.98","fontName":["UJLJRF+Arial-ItalicMT","CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":5,"change":"Removal","str":"Wirkung des Zusatzes von Biochar zum Boden auf Treibhausgas - Emissionen und ","line":19,"x":68.02403999999996,"y":268.78193999999985,"width":"299.53","height":"7.98","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":5,"change":"Removal","str":"Kohlenstoffbestand ","dir":"ltr","width":"72.51","height":"7.98","transform":["7.98","0.00","0.00","7.98","68.03","259.60"],"fontName":"CRDKGT+ArialMT","x":68.03201999999999,"y":259.60493999999983,"line":20}
+{"page":5,"change":"Removal","str":"Criscuoli, Ventura, Panzacchi, Glaser, Wiedner, Ceccon, Lö sch, Raifer,  Tonon ...... 1 73","line":21,"x":68.03201999999999,"y":250.48379999999983,"width":"313.17","height":"7.98","fontName":["UJLJRF+Arial-ItalicMT","CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":5,"change":"Removal","str":"Erzeugung und Nutzung von Biochar in Südtirol: Lebenszyklusanalyse (LCA) der ","dir":"ltr","width":"295.79","height":"7.98","transform":["7.98","0.00","0.00","7.98","68.04","232.07"],"fontName":"CRDKGT+ArialMT","x":68.04000000000002,"y":232.06595999999985,"line":22}
+{"page":5,"change":"Removal","str":"Produktionskette","dir":"ltr","width":"61.24","height":"7.98","transform":["7.98","0.00","0.00","7.98","68.04","222.89"],"fontName":"CRDKGT+ArialMT","x":68.04000000000002,"y":222.88895999999986,"line":23}
+{"page":5,"change":"Removal","str":"Criscuoli, Panzacchi, Rossberg, Mwabonje, Cooper, Woods, Tonon .......................  207","line":24,"x":68.04000000000002,"y":213.71195999999986,"width":"314.63","height":"7.98","fontName":["UJLJRF+Arial-ItalicMT","CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":5,"change":"Removal","str":"Schlussfolgerungen ................................................................................................. 2 51","line":25,"x":68.04798000000005,"y":195.29411999999985,"width":"313.83","height":"7.98","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":7,"change":"ContentChange","types":["H2"],"str":"Ein leitung","line":1,"x":70.92,"y":562.3799,"width":"62.38","height":"13.98","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":11,"change":"ContentChange","types":["H2"],"str":"Neu e ster Stand der Technik der Vergasung von ","line":1,"x":70.92,"y":562.3799,"width":"304.81","height":"13.98","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":11,"change":"ContentChange","types":["H2"],"str":"Holzbiomasse in Südtirol und technisch -","line":2,"x":70.92,"y":546.3029,"width":"252.90","height":"13.98","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":11,"change":"ContentChange","types":["H2"],"str":"wirtschaftliche Analyse möglicher ","dir":"ltr","width":"213.52","height":"13.98","transform":["13.98","0.00","0.00","13.98","70.92","530.23"],"fontName":"CRDKGT+ArialMT","x":70.92000000000002,"y":530.2259,"line":3}
+{"page":11,"change":"ContentChange","types":["H2"],"str":"Verbesserungen in Hinblick auf eine ","dir":"ltr","width":"231.55","height":"13.98","transform":["13.98","0.00","0.00","13.98","70.92","514.08"],"fontName":"CRDKGT+ArialMT","x":70.92000000000002,"y":514.0790000000001,"line":4}
+{"page":11,"change":"ContentChange","types":["H2"],"str":"polygenerative Strukturierung ","dir":"ltr","width":"189.60","height":"13.98","transform":["13.98","0.00","0.00","13.98","70.92","498.00"],"fontName":"CRDKGT+ArialMT","x":70.92000000000002,"y":498.00200000000007,"line":5}
+{"page":55,"change":"ContentChange","types":["H2"],"str":"Extraktion aus Holzrückständen für ","dir":"ltr","width":"224.48","height":"13.98","transform":["13.98","0.00","0.00","13.98","70.92","562.26"],"fontName":"CRDKGT+ArialMT","x":70.92,"y":562.2599,"line":1}
+{"page":55,"change":"ContentChange","types":["H2"],"str":"Anwendungen in der Lebensmittel - und ","line":2,"x":70.92,"y":546.1829,"width":"246.96","height":"13.98","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":55,"change":"ContentChange","types":["H2"],"str":"Pharmabranche ","dir":"ltr","width":"104.72","height":"13.98","transform":["13.98","0.00","0.00","13.98","70.92","530.11"],"fontName":"CRDKGT+ArialMT","x":70.92000000000004,"y":530.1059,"line":3}
+{"page":81,"change":"ContentChange","types":["H2"],"str":"Nutzung von Kohle als B odenverbesserungsmittel:","line":1,"x":70.92,"y":568.02,"width":"313.73","height":"13.98","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":81,"change":"ContentChange","types":["H2"],"str":"Keim - und Phytotoxizitätstests mit Kohle aus ","line":2,"x":70.92000000000002,"y":551.943,"width":"280.54","height":"13.98","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":81,"change":"ContentChange","types":["H2"],"str":"Südtiroler Vergasungsanlagen ","dir":"ltr","width":"194.95","height":"13.98","transform":["13.98","0.00","0.00","13.98","70.92","535.87"],"fontName":"CRDKGT+ArialMT","x":70.92000000000002,"y":535.866,"line":3}
+{"page":101,"change":"ContentChange","types":["H2"],"str":"Auswirkungen der Einbringung von Biochar in den ","dir":"ltr","width":"319.29","height":"13.98","transform":["13.98","0.00","0.00","13.98","70.92","559.44"],"fontName":"CRDKGT+ArialMT","x":70.92,"y":559.44,"line":1}
+{"page":101,"change":"ContentChange","types":["H2"],"str":"Boden auf Ertrag und Qualität von Reb - und Obst -","line":2,"x":70.92,"y":543.363,"width":"311.76","height":"13.98","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":101,"change":"ContentChange","types":["H2"],"str":"anlagen in Südtirol","dir":"ltr","width":"117.87","height":"13.98","transform":["13.98","0.00","0.00","13.98","70.93","527.29"],"fontName":"CRDKGT+ArialMT","x":70.93397999999996,"y":527.2860000000001,"line":3}
+{"page":149,"change":"ContentChange","types":["H2"],"str":"Anwendung von Biochar als ","dir":"ltr","width":"180.10","height":"13.98","transform":["13.98","0.00","0.00","13.98","70.92","562.26"],"fontName":"CRDKGT+ArialMT","x":70.92,"y":562.2599,"line":1}
+{"page":149,"change":"ContentChange","types":["H2"],"str":"B odenverbesserungs mittel: ","line":2,"x":70.92,"y":546.1829,"width":"175.85","height":"13.98","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":149,"change":"ContentChange","types":["H2"],"str":"Wirkungen auf den Stickstoffzyklus und  die ","line":3,"x":70.92000000000004,"y":530.1059,"width":"274.89","height":"13.98","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":149,"change":"ContentChange","types":["H2"],"str":"Trockenstresstoleranz bei im Topf angebauten ","line":4,"x":70.92000000000002,"y":513.9590000000001,"width":"293.04","height":"13.98","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":149,"change":"ContentChange","types":["H2"],"str":"Weinpflanzen","dir":"ltr","width":"86.07","height":"13.98","transform":["13.98","0.00","0.00","13.98","70.92","497.88"],"fontName":"CRDKGT+ArialMT","x":70.92000000000004,"y":497.88200000000006,"line":5}
+{"page":179,"change":"ContentChange","types":["H2"],"str":"Wirkung des Zusatzes von Biochar zum Boden ","dir":"ltr","width":"299.21","height":"13.98","transform":["13.98","0.00","0.00","13.98","70.92","562.26"],"fontName":"CRDKGT+ArialMT","x":70.92,"y":562.2599,"line":1}
+{"page":179,"change":"ContentChange","types":["H2"],"str":"auf Treibhausgas - Emissionen und ","line":2,"x":70.92,"y":546.1829,"width":"219.53","height":"13.98","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":179,"change":"ContentChange","types":["H2"],"str":"Kohlenstoffbestand","dir":"ltr","width":"121.67","height":"13.98","transform":["13.98","0.00","0.00","13.98","70.92","530.11"],"fontName":"CRDKGT+ArialMT","x":70.92000000000002,"y":530.1059,"line":3}
+{"page":213,"change":"ContentChange","types":["H2"],"str":"Erzeugung und Nutzung von Biochar in Südtirol: ","dir":"ltr","width":"307.40","height":"13.98","transform":["13.98","0.00","0.00","13.98","70.92","562.26"],"fontName":"CRDKGT+ArialMT","x":70.92,"y":562.2599,"line":1}
+{"page":213,"change":"ContentChange","types":["H2"],"str":"Lebenszyklusanalyse (LCA) der Produktionskette","dir":"ltr","width":"310.32","height":"13.98","transform":["13.98","0.00","0.00","13.98","70.92","546.18"],"fontName":"CRDKGT+ArialMT","x":70.92,"y":546.1829,"line":2}
+{"page":257,"change":"ContentChange","types":["H2"],"str":"Schlussfolgerungen","dir":"ltr","width":"124.71","height":"13.98","transform":["13.98","0.00","0.00","13.98","70.92","568.02"],"fontName":"CRDKGT+ArialMT","x":70.92,"y":568.02,"line":1}

@@ -1,0 +1,44 @@
+{
+  "pages": 466,
+  "items": 772193,
+  "groupedItems": 15227,
+  "changes": 85,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "token types"
+    },
+    {
+      "name": "types"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":2,"change":"ContentChange","types":["H1"],"str":"T h e A r t o f P u b l i c S p e a k i n g","line":0,"x":138.0375,"y":673.92,"width":"307.24","height":"28.80","fontName":["AAAAAB+LiberationSerif-Bold"],"dir":["ltr"]}
+{"page":3,"change":"ContentChange","types":["H2"],"str":"J . B E R G E S E N W E I N","line":0,"x":210.51,"y":663.84,"width":"180.92","height":"20.16","fontName":["AAAAAB+LiberationSerif-Bold"],"dir":["ltr"]}
+{"page":4,"change":"ContentChange","types":["H2"],"str":"D A L E C A R N A G E Y","line":0,"x":217.24876799999998,"y":663.84,"width":"172.47","height":"20.16","fontName":["AAAAAB+LiberationSerif-Bold"],"dir":["ltr"]}
+{"page":9,"change":"ContentChange","types":["H2"],"str":"T H E A R T O F P U B L I C S P E A K I N G","line":0,"x":149.57999999999998,"y":663.84,"width":"294.60","height":"20.16","fontName":["AAAAAB+LiberationSerif-Bold"],"dir":["ltr"]}
+{"page":300,"change":"ContentChange","types":["H2"],"str":"A P P E N D I C E S","line":0,"x":241.605,"y":663.84,"width":"128.80","height":"20.16","fontName":["AAAAAB+LiberationSerif-Bold"],"dir":["ltr"]}

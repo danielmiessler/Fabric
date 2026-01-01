@@ -1,0 +1,25 @@
+{
+	"version": 3,
+	"file": "index.d.ts",
+	"names": [
+		"Options",
+		"SvelteConfig",
+		"VitePreprocessOptions",
+		"svelte",
+		"vitePreprocess",
+		"loadSvelteConfig"
+	],
+	"sources": [
+		"../src/public.d.ts",
+		"../src/index.js",
+		"../src/preprocess.js",
+		"../src/utils/load-svelte-config.js"
+	],
+	"sourcesContent": [
+		null,
+		null,
+		null,
+		null
+	],
+	"mappings": ";;;;;aAMYA,OAAOA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;kBA2HFC,YAAYA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;kBA2DZC,qBAAqBA;;;;iBChKtBC,MAAMA;iBCbNC,cAAcA;iBCgBRC,gBAAgBA"
+}

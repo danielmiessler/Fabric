@@ -1,0 +1,56 @@
+{
+	"name": "sorcery",
+	"description": "Resolve a chain of sourcemaps back to the original source",
+	"version": "0.11.1",
+	"author": "Rich Harris",
+	"repository": "https://github.com/Rich-Harris/sorcery",
+	"main": "dist/sorcery.cjs.js",
+	"jsnext:main": "dist/sorcery.es6.js",
+	"license": "MIT",
+	"dependencies": {
+		"buffer-crc32": "^1.0.0",
+		"minimist": "^1.2.0",
+		"sander": "^0.5.0",
+		"@jridgewell/sourcemap-codec": "^1.4.14"
+	},
+	"devDependencies": {
+		"@rollup/plugin-buble": "^1.0.3",
+		"@rollup/plugin-commonjs": "^26.0.1",
+		"@rollup/plugin-node-resolve": "^15.2.3",
+		"buble": "^0.20.0",
+		"codecov.io": "^0.1.6",
+		"coffee-script": "^1.10.0",
+		"eslint": "^2.8.0",
+		"glob": "^7.0.3",
+		"istanbul": "^0.4.3",
+		"less": "^2.6.1",
+		"mocha": "^2.4.5",
+		"promise-map-series": "^0.2.2",
+		"remap-istanbul": "^0.6.3",
+		"rollup": "^4.18.0",
+		"source-map": "^0.5.3",
+		"source-map-support": "^0.4.0",
+		"uglify-js": "^2.6.2"
+	},
+	"bin": {
+		"sorcery": "bin/sorcery"
+	},
+	"scripts": {
+		"build": "rm -rf dist && rollup -c rollup.config.mjs",
+		"pretest": "npm run build",
+		"prepare-tests": "node test/samples/prepare-tests.js",
+		"test": "mocha --compilers js:buble/register",
+		"prepublish": "npm test",
+		"lint": "eslint src",
+		"pretest-coverage": "npm run build",
+		"test-coverage": "rm -rf coverage/* && istanbul cover --report json node_modules/.bin/_mocha -- -u exports -R spec test/test.js",
+		"posttest-coverage": "remap-istanbul -i coverage/coverage-final.json -o coverage/coverage-remapped.json -b dist && remap-istanbul -i coverage/coverage-final.json -o coverage/coverage-remapped.lcov -t lcovonly -b dist && remap-istanbul -i coverage/coverage-final.json -o coverage/coverage-remapped -t html -b dist",
+		"ci": "npm run test-coverage && codecov < coverage/coverage-remapped.lcov"
+	},
+	"files": [
+		"src/",
+		"dist/",
+		"bin/",
+		"README.md"
+	]
+}

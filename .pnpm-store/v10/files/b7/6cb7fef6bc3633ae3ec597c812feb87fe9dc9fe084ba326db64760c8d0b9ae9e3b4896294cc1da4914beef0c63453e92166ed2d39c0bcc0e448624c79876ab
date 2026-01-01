@@ -1,0 +1,76 @@
+{
+  "name": "lucide-svelte",
+  "description": "A Lucide icon library package for Svelte applications",
+  "version": "0.309.0",
+  "license": "ISC",
+  "homepage": "https://lucide.dev",
+  "bugs": "https://github.com/lucide-icons/lucide/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lucide-icons/lucide.git",
+    "directory": "packages/lucide-svelte"
+  },
+  "keywords": [
+    "Lucide",
+    "Svelte",
+    "Feather",
+    "Icons",
+    "Icon",
+    "SVG",
+    "Feather Icons",
+    "Fontawesome",
+    "Font Awesome"
+  ],
+  "author": "Eric Fennis",
+  "type": "module",
+  "main": "dist/lucide-svelte.js",
+  "exports": {
+    ".": {
+      "types": "./dist/lucide-svelte.d.ts",
+      "svelte": "./dist/lucide-svelte.js",
+      "default": "./dist/lucide-svelte.js"
+    },
+    "./icons": {
+      "types": "./dist/lucide-svelte.d.ts",
+      "svelte": "./dist/lucide-svelte.js"
+    },
+    "./icons/*": {
+      "types": "./dist/icons/*.svelte.d.ts",
+      "svelte": "./dist/icons/*.svelte"
+    }
+  },
+  "typings": "dist/lucide-svelte.d.ts",
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "devDependencies": {
+    "@sveltejs/package": "^2.2.3",
+    "@sveltejs/vite-plugin-svelte": "^2.4.2",
+    "@testing-library/jest-dom": "^6.1.4",
+    "@testing-library/svelte": "^4.0.2",
+    "@tsconfig/svelte": "^5.0.0",
+    "jest-serializer-html": "^7.1.0",
+    "jsdom": "^20.0.3",
+    "svelte": "^4.0.1",
+    "svelte-check": "^3.4.4",
+    "svelte-preprocess": "^5.0.4",
+    "typescript": "^5.1.6",
+    "vite": "5.0.10",
+    "vitest": "^1.1.1",
+    "@lucide/build-icons": "1.0.0"
+  },
+  "peerDependencies": {
+    "svelte": ">=3 <5"
+  },
+  "scripts": {
+    "build": "pnpm clean && pnpm copy:license && pnpm build:icons && pnpm build:package && pnpm build:license",
+    "copy:license": "cp ../../LICENSE ./LICENSE",
+    "clean": "rm -rf dist && rm -rf stats && rm -rf ./src/icons/*.svelte && rm -f index.js",
+    "build:icons": "build-icons --output=./src --templateSrc=./scripts/exportTemplate.mjs --exportFileName=index.ts --iconFileExtension=.svelte --importImportFileExtension=.svelte --withAliases --aliasesFileExtension=.ts --aliasImportFileExtension=.svelte --pretty=false",
+    "build:package": "svelte-package --input ./src",
+    "build:license": "node ./scripts/addLicense.mjs",
+    "test": "vitest run",
+    "version": "pnpm version --git-tag-version=false"
+  }
+}

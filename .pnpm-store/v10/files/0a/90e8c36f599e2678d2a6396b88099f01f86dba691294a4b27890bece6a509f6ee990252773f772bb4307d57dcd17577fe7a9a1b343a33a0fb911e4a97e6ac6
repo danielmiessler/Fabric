@@ -1,0 +1,40 @@
+{
+  "pages": 19,
+  "items": 1365,
+  "groupedItems": 1171,
+  "changes": 6,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "token types"
+    },
+    {
+      "name": "types"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":0,"change":"ContentChange","types":["LIST"],"str":"- TION and  - TURE. In this way, teache rs can choose appropriate words to include in an individual ","line":33,"x":72.024,"y":144.62,"width":"429.52","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}

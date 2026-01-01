@@ -1,0 +1,12 @@
+packages:
+  - web
+
+ignoredBuiltDependencies:
+  - esbuild
+  - svelte-preprocess
+
+onlyBuiltDependencies:
+  - pdf-to-markdown-core
+pnpm:
+  overrides:
+    postcss-load-config: ^6.0.0

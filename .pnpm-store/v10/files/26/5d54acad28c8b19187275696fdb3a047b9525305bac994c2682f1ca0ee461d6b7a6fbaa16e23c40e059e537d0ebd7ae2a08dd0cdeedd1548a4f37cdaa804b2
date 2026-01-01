@@ -1,0 +1,46 @@
+{
+	"name": "vitefu",
+	"description": "Utilities for building frameworks with Vite",
+	"version": "0.2.5",
+	"license": "MIT",
+	"type": "module",
+	"types": "./index.d.ts",
+	"exports": {
+		".": {
+			"types": "./index.d.ts",
+			"import": "./src/index.js",
+			"require": "./src/index.cjs"
+		}
+	},
+	"files": [
+		"src",
+		"index.d.ts"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/svitejs/vitefu.git"
+	},
+	"bugs": {
+		"url": "https://github.com/svitejs/vitefu/issues"
+	},
+	"keywords": [
+		"vite",
+		"framework",
+		"utilities"
+	],
+	"scripts": {
+		"test": "uvu tests \".*\\.test\\.js\""
+	},
+	"peerDependencies": {
+		"vite": "^3.0.0 || ^4.0.0 || ^5.0.0"
+	},
+	"peerDependenciesMeta": {
+		"vite": {
+			"optional": true
+		}
+	},
+	"devDependencies": {
+		"uvu": "^0.5.6",
+		"vite": "^3.2.3"
+	}
+}

@@ -1,0 +1,26 @@
+{
+  "name": "mini-svg-data-uri",
+  "version": "1.4.4",
+  "description": "Small, efficient encoding of SVG data URIs for CSS, HTML, etc.",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "bin": "cli.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tigt/mini-svg-data-uri.git"
+  },
+  "keywords": [
+    "svg",
+    "url",
+    "data",
+    "uri",
+    "minification",
+    "url encoding"
+  ],
+  "author": "Taylor “Tigt” Hunt <holla@ti.gt> (https://ti.gt/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tigt/mini-svg-data-uri/issues"
+  },
+  "homepage": "https://github.com/tigt/mini-svg-data-uri#readme"
+}

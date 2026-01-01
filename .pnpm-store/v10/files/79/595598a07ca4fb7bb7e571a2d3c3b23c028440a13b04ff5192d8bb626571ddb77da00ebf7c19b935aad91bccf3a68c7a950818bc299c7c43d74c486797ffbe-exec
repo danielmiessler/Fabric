@@ -1,0 +1,33 @@
+{
+  "name": "cryptiles",
+  "description": "General purpose crypto utilities",
+  "version": "0.2.2",
+  "author": "Eran Hammer <eran@hueniverse.com> (http://hueniverse.com)",
+  "contributors": [],
+  "repository": "git://github.com/hueniverse/cryptiles",
+  "main": "index",
+  "keywords": [
+    "cryptography",
+    "security",
+    "utilites"
+  ],
+  "engines": {
+    "node": ">=0.8.0"
+  },
+  "dependencies": {
+    "boom": "0.4.x"
+  },
+  "devDependencies": {
+    "lab": "0.1.x",
+    "complexity-report": "0.x.x"
+  },
+  "scripts": {
+    "test": "make test-cov"
+  },
+  "licenses": [
+    {
+      "type": "BSD",
+      "url": "http://github.com/hueniverse/cryptiles/raw/master/LICENSE"
+    }
+  ]
+}

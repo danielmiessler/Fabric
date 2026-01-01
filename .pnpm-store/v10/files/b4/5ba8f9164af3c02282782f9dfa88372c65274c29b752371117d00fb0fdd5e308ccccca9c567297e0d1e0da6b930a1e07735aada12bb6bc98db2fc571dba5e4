@@ -1,0 +1,76 @@
+{
+  "pages": 60,
+  "items": 3967,
+  "groupedItems": 1429,
+  "changes": 141,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "token types"
+    },
+    {
+      "name": "types"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":5,"change":"ContentChange","types":["LIST"],"str":"• people have  complex needs  (requiring  more information to be handed  over and ","line":14,"x":117.26,"y":255.05,"width":"392.07","height":"11.04","fontName":["Arial",null],"dir":["ltr"]}
+{"page":5,"change":"ContentChange","types":["LIST"],"str":"• at w eekends or holidays","line":16,"x":117.26,"y":225.89,"width":"121.96","height":"11.04","fontName":["Arial",null],"dir":["ltr"]}
+{"page":5,"change":"ContentChange","types":["LIST"],"str":"• if  junior staff  are  reluctant to ask for clarification from more senior staff or other professions","line":17,"x":117.26,"y":211.37,"width":"443.91","height":"11.04","fontName":["Arial",null],"dir":["ltr"]}
+{"page":5,"change":"ContentChange","types":["LIST"],"str":"• where there is no written documentation , or what is written is unclear (e . g . too many abb reviations).","line":18,"x":117.26,"y":196.82,"width":"480.30","height":"11.04","fontName":["Arial",null],"dir":["ltr"]}
+{"page":6,"change":"ContentChange","types":["LIST"],"str":"• Standardisation : e ach participant follows the same procedure and communicates the ","line":8,"x":117.26,"y":221.69,"width":"419.03","height":"11.04","fontName":["Arial",null],"dir":["ltr"]}
+{"page":6,"change":"ContentChange","types":["LIST"],"str":"• Streamlining :  unnecessary steps  in the process are identified and removed. M aking ","line":11,"x":117.26,"y":163.46,"width":"411.84","height":"11.04","fontName":["Arial",null],"dir":["ltr"]}
+{"page":7,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"1. Leadership There is a nominated leader for each transfer of ","line":7,"x":133.58,"y":340.27,"width":"288.01","height":"12.00","fontName":[null],"dir":["ltr"]}
+{"page":7,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"2. Values Transfer s and handovers are  valued as an essential ","line":9,"x":133.58,"y":286.85,"width":"278.59","height":"12.00","fontName":[null],"dir":["ltr"]}
+{"page":7,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"3. R ight people The appropriate people are involved.","line":11,"x":133.58,"y":243.89,"width":"245.40","height":"12.00","fontName":[null],"dir":["ltr"]}
+{"page":7,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"4. Specified time ","line":12,"x":133.58,"y":200.81,"width":"94.86","height":"12.00","fontName":[null],"dir":["ltr"]}
+{"page":7,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"5. Standardised ","line":17,"x":133.58,"y":134.18,"width":"89.50","height":"12.00","fontName":[null],"dir":["ltr"]}
+{"page":15,"change":"ContentChange","types":["NUMBERED_LIST"],"str":".","dir":"ltr","width":"3.07","height":"11.04","transform":["11.04","0.00","0.00","11.04","529.87","155.30"],"x":529.87,"y":155.3,"line":27}
+{"page":58,"change":"ContentChange","types":["LIST"],"str":"• Start out (page 10)","line":3,"x":144.74,"y":487.49,"width":"98.83","height":"12.00","fontName":["ABCDEE+Calibri","ABCDEE+Calibri,Bold"],"dir":["ltr"]}
+{"page":58,"change":"ContentChange","types":["LIST"],"str":"• Refer to existing policies and procedures for transfers of care in your organisation","line":4,"x":153.77,"y":472.13,"width":"400.22","height":"12.00","fontName":["ABCDEE+Calibri","ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":58,"change":"ContentChange","types":["LIST"],"str":"• Observe, measure and process map the current communication process","line":5,"x":153.77,"y":456.77,"width":"355.31","height":"12.00","fontName":["ABCDEE+Calibri","ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":58,"change":"ContentChange","types":["LIST"],"str":"• What does good look like?  Compare your policy and communication process with the good practice checklist. ","line":6,"x":153.77,"y":441.26,"width":"541.97","height":"12.00","fontName":["ABCDEE+Calibri","ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":58,"change":"ContentChange","types":["LIST"],"str":"• Define and scope (page 13)","line":9,"x":144.74,"y":415.3,"width":"140.64","height":"12.00","fontName":["ABCDEE+Calibri","ABCDEE+Calibri,Bold"],"dir":["ltr"]}
+{"page":58,"change":"ContentChange","types":["LIST"],"str":"• Begin to answer the three questions of the model for improvement (Appendix C)","line":10,"x":153.77,"y":399.94,"width":"397.63","height":"12.00","fontName":["ABCDEE+Calibri","ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":58,"change":"ContentChange","types":["LIST"],"str":"• Set your project aim and scope and link this to your organisational big issues on a driver diagram (page 22)","line":11,"x":153.77,"y":384.58,"width":"522.42","height":"12.00","fontName":["ABCDEE+Calibri","ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":58,"change":"ContentChange","types":["LIST"],"str":"• Engage staff, patients, clients and residents using patient stories and evidence from useful resources","line":12,"x":153.77,"y":369.1,"width":"491.89","height":"12.00","fontName":["ABCDEE+Calibri","ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":58,"change":"ContentChange","types":["LIST"],"str":"• Choose your project team, include senior and frontline staff and patients/clients/residents","line":13,"x":153.77,"y":353.74,"width":"444.55","height":"12.00","fontName":["ABCDEE+Calibri","ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":58,"change":"ContentChange","types":["LIST"],"str":"• Document your project plan (Appendix F) and use the sustainaiblity guide to think about long term impact of change","line":14,"x":153.77,"y":338.38,"width":"571.55","height":"12.00","fontName":["ABCDEE+Calibri","ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":58,"change":"ContentChange","types":["LIST"],"str":"• Measure and understand (page 19)","line":16,"x":144.74,"y":322.27,"width":"179.99","height":"12.00","fontName":["ABCDEE+Calibri","ABCDEE+Calibri,Bold"],"dir":["ltr"]}
+{"page":58,"change":"ContentChange","types":["LIST"],"str":"• Choose and define your  outcomes and process measures, collect baseline data  and display on run or SPC charts","line":17,"x":153.77,"y":306.91,"width":"552.29","height":"12.00","fontName":["ABCDEE+Calibri","ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":58,"change":"ContentChange","types":["LIST"],"str":"• Design and plan (page 24)","line":19,"x":144.19,"y":285.19,"width":"134.04","height":"12.00","fontName":["ABCDEE+Calibri","ABCDEE+Calibri,Bold"],"dir":["ltr"]}
+{"page":58,"change":"ContentChange","types":["LIST"],"str":"• Design your standard transfer of care template and test using Plan Do Study Act (PDSA) cycles (Appendix I & J)","line":20,"x":153.19,"y":269.83,"width":"539.16","height":"12.00","fontName":["ABCDEE+Calibri","ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":58,"change":"ContentChange","types":["LIST"],"str":"• Use dot voting to define your minimum data set (Appendix G)","line":21,"x":162.19,"y":254.47,"width":"305.46","height":"12.00","fontName":["ABCDEE+Calibri","ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":58,"change":"ContentChange","types":["LIST"],"str":"• Select a standardised communication tool (e.g. SBAR) to organise your minimum data set","line":22,"x":162.19,"y":238.99,"width":"438.29","height":"12.00","fontName":["ABCDEE+Calibri","ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":58,"change":"ContentChange","types":["LIST"],"str":"• Generate and test other change ideas using the good practice checklist (Appendix B) and examples (Appendix K)","line":23,"x":153.19,"y":223.63,"width":"549.47","height":"12.00","fontName":["ABCDEE+Calibri","ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":58,"change":"ContentChange","types":["LIST"],"str":"• Choose process measures (Appendix  H) collect data and display on run or SPC charts","line":24,"x":153.19,"y":208.27,"width":"418.36","height":"12.00","fontName":["ABCDEE+Calibri","ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":58,"change":"ContentChange","types":["LIST"],"str":"• Pilot and implement (page 34)","line":26,"x":144.74,"y":191.59,"width":"156.48","height":"12.00","fontName":["ABCDEE+Calibri","ABCDEE+Calibri,Bold"],"dir":["ltr"]}
+{"page":58,"change":"ContentChange","types":["LIST"],"str":"• Document your new standardised transfer of care process","line":27,"x":153.77,"y":176.23,"width":"287.10","height":"12.00","fontName":["ABCDEE+Calibri","ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":58,"change":"ContentChange","types":["LIST"],"str":"• Plan your tests for implementation using PDSA cycles.  Plan training, measurement, resources & stakeholder ","line":28,"x":153.77,"y":160.87,"width":"533.48","height":"12.00","fontName":["ABCDEE+Calibri","ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":58,"change":"ContentChange","types":["LIST"],"str":"• Consider 'flexible standardisation' and spread good practice to other teams, departments and organisations","line":30,"x":153.77,"y":132.17,"width":"528.46","height":"12.00","fontName":["ABCDEE+Calibri","ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":58,"change":"ContentChange","types":["LIST"],"str":"• Sustain and share (page 38)","line":32,"x":143.64,"y":113.33,"width":"141.57","height":"12.00","fontName":["ABCDEE+Calibri","ABCDEE+Calibri,Bold"],"dir":["ltr"]}
+{"page":58,"change":"ContentChange","types":["LIST"],"str":"• Use the sustainability guide to ensure your changes will be sustained","line":33,"x":152.64,"y":97.968,"width":"339.64","height":"12.00","fontName":["ABCDEE+Calibri","ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":58,"change":"ContentChange","types":["LIST"],"str":"• Celebrate and spread your success through conferences, posters, journal articles etc. (Appendix L)","line":34,"x":152.64,"y":82.608,"width":"480.70","height":"12.00","fontName":["ABCDEE+Calibri","ABCDEE+Calibri"],"dir":["ltr"]}

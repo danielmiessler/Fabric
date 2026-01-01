@@ -1,0 +1,53 @@
+{
+  "name": "@sveltejs/adapter-auto",
+  "version": "3.3.1",
+  "description": "Automatically chooses the SvelteKit adapter for your current environment, if possible.",
+  "keywords": [
+    "adapter",
+    "automatically",
+    "deploy",
+    "hosting",
+    "platform",
+    "svelte",
+    "sveltekit"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sveltejs/kit",
+    "directory": "packages/adapter-auto"
+  },
+  "license": "MIT",
+  "homepage": "https://svelte.dev",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "types": "index.d.ts",
+  "files": [
+    "files",
+    "index.js",
+    "index.d.ts",
+    "adapters.js"
+  ],
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^3.0.1",
+    "@types/node": "^18.19.48",
+    "typescript": "^5.3.3",
+    "@sveltejs/kit": "^2.7.3"
+  },
+  "dependencies": {
+    "import-meta-resolve": "^4.1.0"
+  },
+  "peerDependencies": {
+    "@sveltejs/kit": "^2.0.0"
+  },
+  "scripts": {
+    "lint": "prettier --check .",
+    "format": "pnpm lint --write",
+    "check": "tsc"
+  }
+}

@@ -1,0 +1,190 @@
+{
+  "pages": 140,
+  "items": 25313,
+  "groupedItems": 3179,
+  "changes": 869,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "token types"
+    },
+    {
+      "name": "types",
+      "annotation": "ADDED"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {
+    "toc": {
+      "tocHeadlineItems": [
+        {
+          "page": 14,
+          "text": "CONTENTS."
+        }
+      ],
+      "pages": [
+        14,
+        15,
+        16
+      ],
+      "detectedHeadlineLevels": {}
+    },
+    "headlineTypeToHeightRange": {
+      "H2": {
+        "min": 10.056899999999999,
+        "max": 11.7335289
+      }
+    }
+  }
+}
+{"page":14,"change":"Removal","str":"CONTENTS.","dir":"ltr","width":"83.76","height":"15.51","transform":["15.51","0.00","0.00","15.51","96.55","328.43"],"x":96.54624,"y":328.42962,"line":0}
+{"page":14,"change":"Removal","str":"The Occasion of this Discourse 3","line":1,"x":29.88336,"y":258.74967,"width":"105.17","height":"7.66","fontName":[null],"dir":["ltr"]}
+{"page":14,"change":"Removal","str":"Mistakes about Religion 4","line":2,"x":30.1707,"y":247.25607,"width":"86.20","height":"6.66","fontName":[null],"dir":["ltr"]}
+{"page":14,"change":"Removal","str":"What Religion is 6","line":3,"x":30.1707,"y":236.91182999999998,"width":"59.76","height":"8.32","fontName":[null],"dir":["ltr"]}
+{"page":14,"change":"Removal","str":"The Permanency and Stability of Religion .... 7","line":4,"x":29.73969,"y":223.55051999999998,"width":"176.29","height":"13.17","fontName":[null],"dir":["ltr"]}
+{"page":14,"change":"Removal","str":"The P'reedom and Unconstrainedness of Religion . . S","line":5,"x":29.88336,"y":213.20628,"width":"170.83","height":"7.74","fontName":[null],"dir":["ltr"]}
+{"page":14,"change":"Removal","str":"Religion a Divine Principle 13","line":6,"x":30.1707,"y":200.85065999999998,"width":"97.40","height":"6.74","fontName":[null],"dir":["ltr"]}
+{"page":14,"change":"Removal","str":"What the Natural Life is 14","line":7,"x":30.314369999999997,"y":189.21338999999998,"width":"84.48","height":"8.26","fontName":[null],"dir":["ltr"]}
+{"page":14,"change":"Removal","str":"The different Tendencies of the Natural Life .... 15","line":8,"x":30.02703,"y":177.57612,"width":"182.75","height":"13.29","fontName":[null],"dir":["ltr"]}
+{"page":14,"change":"Removal","str":"Wherein the Divine Life doth consist 20","line":9,"x":29.88336,"y":166.51353,"width":"128.30","height":"7.39","fontName":[null],"dir":["ltr"]}
+{"page":14,"change":"Removal","str":"Religion better understood by Actions than by","line":10,"x":30.458039999999997,"y":154.58892,"width":"151.43","height":"7.06","fontName":[null],"dir":["ltr"]}
+{"page":14,"change":"Removal","str":"Words 24","line":11,"x":53.58891,"y":141.80229,"width":"31.18","height":"7.90","fontName":[null],"dir":["ltr"]}
+{"page":14,"change":"Removal","str":"Divine Love exemplified in our Saviour 26","line":12,"x":30.02703,"y":130.7397,"width":"136.77","height":"7.48","fontName":[null],"dir":["ltr"]}
+{"page":14,"change":"Removal","str":"Our Saviour's Constant Devotion 28","line":13,"x":30.458039999999997,"y":118.81509,"width":"120.54","height":"7.74","fontName":[null],"dir":["ltr"]}
+{"page":14,"change":"Removal","str":"Our Saviour's Charity to Men 29","line":14,"x":30.458039999999997,"y":106.3158,"width":"103.73","height":"8.54","fontName":[null],"dir":["ltr"]}
+{"page":14,"change":"Removal","str":"Our Saviour's Purity 31","line":15,"x":30.458039999999997,"y":94.67853,"width":"77.01","height":"7.74","fontName":[null],"dir":["ltr"]}
+{"page":14,"change":"Removal","str":"Our Saviour's Humility 34","line":16,"x":30.458039999999997,"y":81.89189999999999,"width":"87.92","height":"7.82","fontName":[null],"dir":["ltr"]}
+{"page":14,"change":"Removal","str":"A Prayer 37","line":17,"x":30.314369999999997,"y":69.96728999999999,"width":"37.35","height":"10.06","fontName":[null],"dir":["ltr"]}
+{"page":14,"change":"Removal","str":"The Excellency and Advantage of Religion .... 38","line":18,"x":30.314369999999997,"y":59.04837,"width":"183.03","height":"13.35","fontName":[null],"dir":["ltr"]}
+{"page":14,"change":"Removal","str":"The Excellency of Divine Love 39","line":19,"x":30.314369999999997,"y":46.118069999999996,"width":"110.77","height":"7.82","fontName":[null],"dir":["ltr"]}
+{"page":14,"change":"Removal","str":"The Advantages of Divine Love 44","line":20,"x":30.314369999999997,"y":34.337129999999995,"width":"114.08","height":"7.82","fontName":[null],"dir":["ltr"]}
+{"page":15,"change":"Removal","str":"The Worth of the Object 45","line":1,"x":65.36985,"y":378.85778999999997,"width":"85.48","height":"7.66","fontName":[null],"dir":["ltr"]}
+{"page":15,"change":"Removal","str":"The Certainty to be Beloved Again 46","line":2,"x":65.22618,"y":367.65153,"width":"119.39","height":"7.66","fontName":[null],"dir":["ltr"]}
+{"page":15,"change":"Removal","str":"The Presence of the Beloved Person 48","line":3,"x":65.22618,"y":355.58324999999996,"width":"122.55","height":"7.66","fontName":[null],"dir":["ltr"]}
+{"page":15,"change":"Removal","str":"The Divine Love makes us partake of an Infinite","line":4,"x":65.22618,"y":344.95167,"width":"153.88","height":"7.66","fontName":[null],"dir":["ltr"]}
+{"page":15,"change":"Removal","str":"Happiness 49","line":5,"x":89.0754,"y":330.87201,"width":"44.68","height":"6.89","fontName":[null],"dir":["ltr"]}
+{"page":15,"change":"Removal","str":"He that loveth God finds Sweetness in every Dis-","line":6,"x":65.65719,"y":320.95878,"width":"154.30","height":"8.06","fontName":[null],"dir":["ltr"]}
+{"page":15,"change":"Removal","str":"pensation 51","line":7,"x":88.78806,"y":308.31582,"width":"41.23","height":"6.38","fontName":[null],"dir":["ltr"]}
+{"page":15,"change":"Removal","str":"The Duties of Religion are Delightful to Him ... 52","line":8,"x":65.22618,"y":296.67855,"width":"172.98","height":"12.21","fontName":[null],"dir":["ltr"]}
+{"page":15,"change":"Removal","str":"The Excellency of Charity 54","line":9,"x":65.22618,"y":283.89191999999997,"width":"95.10","height":"7.74","fontName":[null],"dir":["ltr"]}
+{"page":15,"change":"Removal","str":"The Pleasure that attends Charity 56","line":10,"x":65.08251,"y":272.973,"width":"118.23","height":"7.74","fontName":[null],"dir":["ltr"]}
+{"page":15,"change":"Removal","str":"The Excellency of Purity 58","line":11,"x":65.22618,"y":261.04839,"width":"89.93","height":"7.66","fontName":[null],"dir":["ltr"]}
+{"page":15,"change":"Removal","str":"The Delight afforded by Purity 59","line":12,"x":65.08251,"y":248.40543,"width":"108.33","height":"7.66","fontName":[null],"dir":["ltr"]}
+{"page":15,"change":"Removal","str":"The Excellency of Humility 60","line":13,"x":65.36985,"y":238.20486,"width":"100.28","height":"7.66","fontName":[null],"dir":["ltr"]}
+{"page":15,"change":"Removal","str":"The Pleasure and Sweetness of an Humble Temper . 62","line":14,"x":65.36985,"y":226.42391999999998,"width":"173.27","height":"7.90","fontName":[null],"dir":["ltr"]}
+{"page":15,"change":"Removal","str":"A Prayer 65","line":15,"x":65.36985,"y":213.92462999999998,"width":"36.78","height":"9.82","fontName":[null],"dir":["ltr"]}
+{"page":15,"change":"Removal","str":"The Despondent Thoughts of some Newly Awakened","line":16,"x":65.22618,"y":203.00571,"width":"177.29","height":"7.76","fontName":[null],"dir":["ltr"]}
+{"page":15,"change":"Removal","str":"to a Right Sense of Things 66","line":17,"x":88.93173,"y":191.22476999999998,"width":"91.52","height":"7.18","fontName":[null],"dir":["ltr"]}
+{"page":15,"change":"Removal","str":"The Unreasonableness of these Fears 69","line":18,"x":65.22618,"y":178.58181,"width":"130.74","height":"7.58","fontName":[null],"dir":["ltr"]}
+{"page":15,"change":"Removal","str":"We must do what we can, and depend on the Divine","line":19,"x":65.36985,"y":167.66289,"width":"158.03","height":"9.58","fontName":[null],"dir":["ltr"]}
+{"page":15,"change":"Removal","str":"Assistance 74","line":20,"x":88.50072,"y":154.30158,"width":"45.26","height":"6.32","fontName":[null],"dir":["ltr"]}
+{"page":15,"change":"Removal","str":"We must shun all Manner of Sin 78","line":21,"x":65.36985,"y":143.38266,"width":"108.18","height":"9.46","fontName":[null],"dir":["ltr"]}
+{"page":15,"change":"Removal","str":"We must know what Things are Sinful So","line":22,"x":65.22618,"y":132.32007,"width":"129.88","height":"9.58","fontName":[null],"dir":["ltr"]}
+{"page":15,"change":"Removal","str":"We must resist the Temptations of Sin. by consider-","line":23,"x":65.22618,"y":120.6828,"width":"166.94","height":"9.46","fontName":[null],"dir":["ltr"]}
+{"page":15,"change":"Removal","str":"ing the Evils they will draw on us 82","line":24,"x":88.78806,"y":108.75819,"width":"108.61","height":"7.36","fontName":[null],"dir":["ltr"]}
+{"page":15,"change":"Removal","str":"We must keep a Constant Watch over Ourselves . . 87","line":25,"x":65.08251,"y":96.2589,"width":"164.22","height":"9.58","fontName":[null],"dir":["ltr"]}
+{"page":15,"change":"Removal","str":"We must often examine our Actions 89","line":26,"x":64.93884,"y":84.19062,"width":"123.69","height":"9.82","fontName":[null],"dir":["ltr"]}
+{"page":15,"change":"Removal","str":"It is fit to restrain Ourselves in Many Lawful Things . 91","line":27,"x":64.93884,"y":72.40968,"width":"172.11","height":"8.56","fontName":[null],"dir":["ltr"]}
+{"page":15,"change":"Removal","str":"\\\\'e must strive to put Ourselves out of Love with the","line":28,"x":65.22618,"y":61.634429999999995,"width":"163.21","height":"7.48","fontName":[null],"dir":["ltr"]}
+{"page":15,"change":"Removal","str":"World 93","line":29,"x":88.35705,"y":47.98578,"width":"30.03","height":"7.57","fontName":[null],"dir":["ltr"]}
+{"page":16,"change":"Removal","str":"We must do those Outward Actions that are Com-","line":1,"x":37.06686,"y":372.39264,"width":"159.33","height":"9.82","fontName":[null],"dir":["ltr"]}
+{"page":16,"change":"Removal","str":"manded 98","line":2,"x":60.772409999999994,"y":359.31867,"width":"35.77","height":"7.82","fontName":[null],"dir":["ltr"]}
+{"page":16,"change":"Removal","str":"We must endeavor to form Internal Acts of Devo-","line":3,"x":37.21053,"y":348.54341999999997,"width":"159.33","height":"9.70","fontName":[null],"dir":["ltr"]}
+{"page":16,"change":"Removal","str":"tion, Charity, &c. 100","line":4,"x":60.62873999999999,"y":336.47513999999995,"width":"67.24","height":"6.20","fontName":[null],"dir":["ltr"]}
+{"page":16,"change":"Removal","str":"Consideration a Great Instrument of Religion . . . loi","line":5,"x":37.21053,"y":324.69419999999997,"width":"167.09","height":"6.80","fontName":[null],"dir":["ltr"]}
+{"page":16,"change":"Removal","str":"To beget Divine Love, we must consider the Excel-","line":6,"x":36.92319,"y":312.76959,"width":"162.78","height":"8.14","fontName":[null],"dir":["ltr"]}
+{"page":16,"change":"Removal","str":"lency of the Divine Nature 104","line":7,"x":60.62873999999999,"y":300.41397,"width":"96.97","height":"6.94","fontName":[null],"dir":["ltr"]}
+{"page":16,"change":"Removal","str":"We should meditate on God's Goodness and Love . 108","line":8,"x":36.92319,"y":289.35138,"width":"172.41","height":"9.94","fontName":[null],"dir":["ltr"]}
+{"page":16,"change":"Removal","str":"To beget Charity, we must remember that all Men","line":9,"x":36.92319,"y":277.2831,"width":"160.76","height":"8.54","fontName":[null],"dir":["ltr"]}
+{"page":16,"change":"Removal","str":"are nearly related unto God 113","line":10,"x":60.772409999999994,"y":265.07115,"width":"98.70","height":"8.14","fontName":[null],"dir":["ltr"]}
+{"page":16,"change":"Removal","str":"That they carry God's Image upon them 114","line":11,"x":36.92319,"y":253.00286999999997,"width":"140.80","height":"7.47","fontName":[null],"dir":["ltr"]}
+{"page":16,"change":"Removal","str":"To beget Purity, we should consider the Dignity of","line":12,"x":37.21053,"y":241.94027999999997,"width":"162.92","height":"8.14","fontName":[null],"dir":["ltr"]}
+{"page":16,"change":"Removal","str":"our Nature 116","line":13,"x":60.916079999999994,"y":230.15934,"width":"47.99","height":"6.98","fontName":[null],"dir":["ltr"]}
+{"page":16,"change":"Removal","str":"We should meditate often on the Joys of Heaven . 117","line":14,"x":37.21053,"y":217.94738999999998,"width":"164.64","height":"9.82","fontName":[null],"dir":["ltr"]}
+{"page":16,"change":"Removal","str":"Humility arises from the Consideration of our Fail-","line":15,"x":38.21622,"y":206.74113,"width":"167.95","height":"6.88","fontName":[null],"dir":["ltr"]}
+{"page":16,"change":"Removal","str":"ings 118","line":16,"x":61.203419999999994,"y":194.67284999999998,"width":"25.72","height":"6.17","fontName":[null],"dir":["ltr"]}
+{"page":16,"change":"Removal","str":"Thoughts of God give us the Lowest Thoughts of","line":17,"x":37.21053,"y":182.60457,"width":"158.61","height":"8.22","fontName":[null],"dir":["ltr"]}
+{"page":16,"change":"Removal","str":"Ourselves 120","line":18,"x":61.490759999999995,"y":170.9673,"width":"46.55","height":"6.55","fontName":[null],"dir":["ltr"]}
+{"page":16,"change":"Removal","str":"Prayer, another Instrument of Religion, and the","line":19,"x":37.64154,"y":159.04269,"width":"159.47","height":"7.02","fontName":[null],"dir":["ltr"]}
+{"page":16,"change":"Removal","str":"Advantages of Mental Prayer 121","line":20,"x":60.772409999999994,"y":147.26174999999998,"width":"109.90","height":"7.16","fontName":[null],"dir":["ltr"]}
+{"page":16,"change":"Removal","str":"Religion is to be Advanced by the same Means by","line":21,"x":37.64154,"y":135.0498,"width":"155.16","height":"7.66","fontName":[null],"dir":["ltr"]}
+{"page":16,"change":"Removal","str":"which it is Begun ; and the Use of the Holy","line":22,"x":61.059749999999994,"y":122.98151999999999,"width":"127.72","height":"7.66","fontName":[null],"dir":["ltr"]}
+{"page":16,"change":"Removal","str":"Sacrainent towards it 124","line":23,"x":61.634429999999995,"y":111.48791999999999,"width":"83.33","height":"6.84","fontName":[null],"dir":["ltr"]}
+{"page":16,"change":"Removal","str":"A Prayer 126","line":24,"x":37.78521,"y":99.41964,"width":"41.09","height":"10.54","fontName":[null],"dir":["ltr"]}
+{"page":21,"change":"ContentChange","types":["H2"],"str":"MISTAKES ABOUT RELIGION.","line":17,"x":94.67853,"y":111.63158999999999,"width":"122.41","height":"10.30","fontName":[null],"dir":["ltr"]}
+{"page":23,"change":"ContentChange","types":["H2"],"str":"WHAT RELIGION IS.","line":15,"x":111.91892999999999,"y":162.77811,"width":"81.89","height":"11.49","fontName":[null],"dir":["ltr"]}
+{"page":24,"change":"ContentChange","types":["H2"],"str":"THE PERMANENCY AND STABILITY OF","line":7,"x":42.52632,"y":253.57754999999997,"width":"160.04","height":"10.69","fontName":[null],"dir":["ltr"]}
+{"page":31,"change":"ContentChange","types":["H2"],"str":"WHAT THE NATURAL LIFE IS.","line":1,"x":86.202,"y":352.70984999999996,"width":"119.25","height":"11.49","fontName":[null],"dir":["ltr"]}
+{"page":45,"change":"ContentChange","types":["H2"],"str":"OUR SAVIOUR'S CONSTANT DEVOTION.","line":17,"x":71.97867,"y":127.00428,"width":"164.07","height":"10.38","fontName":[null],"dir":["ltr"]}
+{"page":46,"change":"ContentChange","types":["H2"],"str":"OUR SAVIOUR'S CHARITY TO MEN.","line":13,"x":62.640119999999996,"y":181.45521,"width":"140.22","height":"10.46","fontName":[null],"dir":["ltr"]}
+{"page":48,"change":"ContentChange","types":["H2"],"str":"OUR SAVIOUR'S PURITY.","line":21,"x":88.06971,"y":85.19631,"width":"100.29","height":"10.06","fontName":[null],"dir":["ltr"]}
+{"page":51,"change":"ContentChange","types":["H2"],"str":"OUR SAVIOUR'S HUMILITY.","line":3,"x":96.68991,"y":315.21198,"width":"112.79","height":"10.46","fontName":[null],"dir":["ltr"]}
+{"page":54,"change":"ContentChange","types":["H2"],"str":"A PRAYER.","line":1,"x":124.84922999999999,"y":353.28452999999996,"width":"44.68","height":"10.30","fontName":[null],"dir":["ltr"]}
+{"page":56,"change":"ContentChange","types":["H2"],"str":"THE EXCELLENCY OF DIVINE LOVE.","line":21,"x":64.50783,"y":76.43244,"width":"148.27","height":"10.18","fontName":[null],"dir":["ltr"]}
+{"page":61,"change":"ContentChange","types":["H2"],"str":"THE ADVANTAGES OF DIVINE LOVE.","line":1,"x":72.84069,"y":352.27884,"width":"150.14","height":"10.37","fontName":[null],"dir":["ltr"]}
+{"page":62,"change":"ContentChange","types":["H2"],"str":"THE WORTH OF THE OBJECT.","line":1,"x":70.82930999999999,"y":355.29591,"width":"117.09","height":"11.25","fontName":[null],"dir":["ltr"]}
+{"page":63,"change":"ContentChange","types":["H2"],"str":"THE CERTAINTY TO BE BELOVED AGAIN.","line":20,"x":61.059749999999994,"y":96.68991,"width":"166.66","height":"10.30","fontName":[null],"dir":["ltr"]}
+{"page":66,"change":"ContentChange","types":["H2"],"str":"THE DIVINE LOVE MAKES US PARTAKE OF","line":16,"x":27.00996,"y":132.75108,"width":"170.25","height":"10.39","fontName":[null],"dir":["ltr"]}
+{"page":66,"change":"ContentChange","types":["H2"],"str":"AN INFINITE HAPPINESS.","line":17,"x":76.57611,"y":119.96445,"width":"105.60","height":"10.89","fontName":[null],"dir":["ltr"]}
+{"page":68,"change":"ContentChange","types":["H2"],"str":"HE THAT LOVETH GOD FINDS SWEETNESS IN","line":1,"x":33.47511,"y":353.28452999999996,"width":"182.03","height":"10.62","fontName":[null],"dir":["ltr"]}
+{"page":68,"change":"ContentChange","types":["H2"],"str":"EVERY DISPENSATION.","line":2,"x":88.93173,"y":341.07257999999996,"width":"100.42","height":"10.25","fontName":[null],"dir":["ltr"]}
+{"page":69,"change":"ContentChange","types":["H2"],"str":"THE DUTIES OF RELIGION ARE DELIGHTFUL","line":12,"x":53.58891,"y":187.77669,"width":"183.61","height":"10.14","fontName":[null],"dir":["ltr"]}
+{"page":69,"change":"ContentChange","types":["H2"],"str":"TO HIM.","line":13,"x":144.24468,"y":174.99006,"width":"30.74","height":"9.82","fontName":[null],"dir":["ltr"]}
+{"page":73,"change":"ContentChange","types":["H2"],"str":"THE PLEASURE THAT ATTENDS CHARITY.","line":7,"x":61.490759999999995,"y":256.88196,"width":"175.28","height":"10.48","fontName":[null],"dir":["ltr"]}
+{"page":75,"change":"ContentChange","types":["H2"],"str":"THE EXCELLENCY OF PURITY.","line":1,"x":92.66714999999999,"y":349.98012,"width":"127.00","height":"10.25","fontName":[null],"dir":["ltr"]}
+{"page":76,"change":"ContentChange","types":["H2"],"str":"THE DELIGHT AFFORDED BY PURITY.","line":1,"x":49.13514,"y":348.25608,"width":"156.03","height":"10.30","fontName":[null],"dir":["ltr"]}
+{"page":77,"change":"ContentChange","types":["H2"],"str":"THE EXCELLENCY OF HUMILITY.","line":13,"x":84.62163,"y":170.53628999999998,"width":"138.07","height":"10.20","fontName":[null],"dir":["ltr"]}
+{"page":79,"change":"ContentChange","types":["H2"],"str":"THE PLEASURE AND SWEETNESS OF AN","line":1,"x":66.80655,"y":351.56048999999996,"width":"163.06","height":"10.78","fontName":[null],"dir":["ltr"]}
+{"page":79,"change":"ContentChange","types":["H2"],"str":"HUMBLE TEMPER.","line":2,"x":121.97582999999999,"y":338.91753,"width":"76.15","height":"10.42","fontName":[null],"dir":["ltr"]}
+{"page":82,"change":"ContentChange","types":["H2"],"str":"A PRAYER.","line":1,"x":115.51068,"y":348.25608,"width":"44.97","height":"10.54","fontName":[null],"dir":["ltr"]}
+{"page":83,"change":"ContentChange","types":["H2"],"str":"THE DESPONDENT THOUGHTS OF SOME NEW-","line":18,"x":50.715509999999995,"y":98.98863,"width":"189.36","height":"10.42","fontName":[null],"dir":["ltr"]}
+{"page":83,"change":"ContentChange","types":["H2"],"str":"LY AWAKENED TO A RIGHT SENSE OF","line":19,"x":66.51921,"y":87.20769,"width":"151.57","height":"10.95","fontName":[null],"dir":["ltr"]}
+{"page":86,"change":"ContentChange","types":["H2"],"str":"THE UNREASONABLENESS OF THESE FEARS.","line":5,"x":40.514939999999996,"y":279.43815,"width":"187.63","height":"10.22","fontName":[null],"dir":["ltr"]}
+{"page":91,"change":"ContentChange","types":["H2"],"str":"ON THE DIVINE ASSISTANCE","line":17,"x":89.0754,"y":116.94738,"width":"118.67","height":"10.54","fontName":[null],"dir":["ltr"]}
+{"page":95,"change":"ContentChange","types":["H2"],"str":"WE MUST SHUN ALL MANNER OF SIN.","line":10,"x":67.38123,"y":214.21196999999998,"width":"148.99","height":"11.37","fontName":[null],"dir":["ltr"]}
+{"page":99,"change":"ContentChange","types":["H2"],"str":"BY CONSIDERING THE EVILS THEY WILL","line":8,"x":63.93315,"y":250.84781999999998,"width":"168.10","height":"10.48","fontName":[null],"dir":["ltr"]}
+{"page":99,"change":"ContentChange","types":["H2"],"str":"DRAW ON US.","line":9,"x":63.93315,"y":239.06688,"width":"53.01","height":"11.43","fontName":[null],"dir":["ltr"]}
+{"page":104,"change":"ContentChange","types":["H2"],"str":"WE MUST KEEP A CONSTANT WATCH OVER","line":7,"x":39.940259999999995,"y":261.76673999999997,"width":"175.28","height":"11.49","fontName":[null],"dir":["ltr"]}
+{"page":115,"change":"ContentChange","types":["H2"],"str":"WE MUST DO THOSE OUTWARD ACTIONS THAT","line":1,"x":52.29588,"y":351.84783,"width":"192.08","height":"11.25","fontName":[null],"dir":["ltr"]}
+{"page":115,"change":"ContentChange","types":["H2"],"str":"ARE COMMANDED.","line":2,"x":117.37839,"y":339.20486999999997,"width":"79.74","height":"10.27","fontName":[null],"dir":["ltr"]}
+{"page":117,"change":"ContentChange","types":["H2"],"str":"WE MUST ENDEAVOR TO FORM INTERNAL","line":1,"x":62.065439999999995,"y":351.9915,"width":"173.13","height":"11.37","fontName":[null],"dir":["ltr"]}
+{"page":117,"change":"ContentChange","types":["H2"],"str":"ACTS OF DEVOTION, CHARITY, &c.","line":2,"x":81.31721999999999,"y":339.0612,"width":"139.22","height":"9.70","fontName":[null],"dir":["ltr"]}
+{"page":121,"change":"ContentChange","types":["H2"],"str":"TO BEGET DIVINE LOVE, WE MUST CONSIDER","line":16,"x":55.02561,"y":119.96445,"width":"184.04","height":"11.37","fontName":[null],"dir":["ltr"]}
+{"page":121,"change":"ContentChange","types":["H2"],"str":"THE EXCELLENCY OF THE DIVINE NATURE.","line":17,"x":62.352779999999996,"y":107.17782,"width":"179.01","height":"10.18","fontName":[null],"dir":["ltr"]}
+{"page":125,"change":"ContentChange","types":["H2"],"str":"WE SHOULD MEDITATE ON GOD'S GOODNESS","line":15,"x":46.405409999999996,"y":140.36559,"width":"185.34","height":"11.73","fontName":[null],"dir":["ltr"]}
+{"page":125,"change":"ContentChange","types":["H2"],"str":"AND LOVE.","line":16,"x":128.87198999999998,"y":127.57896,"width":"45.54","height":"10.78","fontName":[null],"dir":["ltr"]}
+{"page":130,"change":"ContentChange","types":["H2"],"str":"THAT ALL MEN ARE NEARLY RELATED","line":2,"x":46.405409999999996,"y":332.88338999999996,"width":"161.49","height":"10.86","fontName":[null],"dir":["ltr"]}
+{"page":130,"change":"ContentChange","types":["H2"],"str":"UNTO GOD.","line":3,"x":46.54908,"y":319.95309,"width":"45.97","height":"10.36","fontName":[null],"dir":["ltr"]}
+{"page":131,"change":"ContentChange","types":["H2"],"str":"THAT THEY CARRY GOD'S IMAGE UPON THEM.","line":13,"x":57.036989999999996,"y":181.88621999999998,"width":"189.50","height":"10.49","fontName":[null],"dir":["ltr"]}
+{"page":133,"change":"ContentChange","types":["H2"],"str":"TO BEGET PURITY, WE SHOULD CONSIDER","line":1,"x":65.51352,"y":344.08965,"width":"173.98","height":"11.49","fontName":[null],"dir":["ltr"]}
+{"page":133,"change":"ContentChange","types":["H2"],"str":"THE DIGNITY OF OUR NATURE.","line":2,"x":92.09246999999999,"y":331.15934999999996,"width":"127.14","height":"10.38","fontName":[null],"dir":["ltr"]}
+{"page":134,"change":"ContentChange","types":["H2"],"str":"WE SHOULD MEDITATE OFTEN ON THE JOYS","line":1,"x":32.61309,"y":345.52635,"width":"179.73","height":"11.49","fontName":[null],"dir":["ltr"]}
+{"page":134,"change":"ContentChange","types":["H2"],"str":"OF HEAVEN.","line":2,"x":112.49360999999999,"y":333.88908,"width":"50.86","height":"9.70","fontName":[null],"dir":["ltr"]}
+{"page":135,"change":"ContentChange","types":["H2"],"str":"HUMILITY ARISES FROM THE CONSIDERATION","line":14,"x":60.772409999999994,"y":152.43386999999998,"width":"196.83","height":"10.78","fontName":[null],"dir":["ltr"]}
+{"page":135,"change":"ContentChange","types":["H2"],"str":"OF OUR FAILINGS.","line":15,"x":125.42390999999999,"y":141.51495,"width":"75.71","height":"10.54","fontName":[null],"dir":["ltr"]}
+{"page":137,"change":"ContentChange","types":["H2"],"str":"THOUGHTS OF GOD GIVE US THE LOWEST","line":1,"x":54.16359,"y":350.5548,"width":"169.39","height":"10.78","fontName":[null],"dir":["ltr"]}
+{"page":137,"change":"ContentChange","types":["H2"],"str":"THOUGHTS OF OURSELVES.","line":2,"x":91.94879999999999,"y":337.91184,"width":"116.80","height":"10.42","fontName":[null],"dir":["ltr"]}
+{"page":138,"change":"ContentChange","types":["H2"],"str":"AND THE ADVANTAGES OF MENTAL PRAYER.","line":2,"x":52.29588,"y":336.61881,"width":"187.49","height":"10.78","fontName":[null],"dir":["ltr"]}
+{"page":143,"change":"ContentChange","types":["H2"],"str":"A PRAYER.","line":1,"x":119.2461,"y":353.71554,"width":"45.11","height":"10.54","fontName":[null],"dir":["ltr"]}

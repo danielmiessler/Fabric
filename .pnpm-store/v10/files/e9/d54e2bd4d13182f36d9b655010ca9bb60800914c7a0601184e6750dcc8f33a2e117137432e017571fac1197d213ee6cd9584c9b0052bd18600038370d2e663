@@ -1,0 +1,22 @@
+{
+	"version": 3,
+	"file": "index.d.ts",
+	"names": [
+		"uneval",
+		"stringify",
+		"parse",
+		"unflatten"
+	],
+	"sources": [
+		"../src/uneval.js",
+		"../src/stringify.js",
+		"../src/parse.js"
+	],
+	"sourcesContent": [
+		null,
+		null,
+		null
+	],
+	"mappings": ";;;;;iBAqBgBA,MAAMA;;;;;iBCGNC,SAASA;;;;;iBCTTC,KAAKA;;;;;iBASLC,SAASA",
+	"ignoreList": []
+}

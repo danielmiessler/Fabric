@@ -1,0 +1,37 @@
+{
+  "pages": 4,
+  "items": 160,
+  "groupedItems": 112,
+  "changes": 28,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":0,"change":"Removal","score":"1.00: (0.00 + 1.00)","str":"s h a l F - M a s q u e","line":4,"x":37.1206,"y":758.8381,"width":"99.35","height":"17.64","fontName":["NRVUEW+Futura-Light"],"dir":["ltr"]}
+{"page":1,"change":"Removal","score":"1.00: (0.00 + 1.00)","str":"Florence Bost • 06 82 69 89 82 • florence@sablechaud.eu • www.sablechaud.eu","dir":"ltr","width":"310.16","height":"8.00","transform":["8.00","0.00","0.00","8.00","121.89","45.27"],"fontName":"NRVUEW+HelveticaNeue-Light","x":121.8898,"y":45.2719,"line":0}
+{"page":2,"change":"Removal","score":"1.00: (0.00 + 1.00)","str":"Florence Bost • 06 82 69 89 82 • florence@sablechaud.eu • www.sablechaud.eu","dir":"ltr","width":"310.16","height":"8.00","transform":["8.00","0.00","0.00","8.00","121.89","45.27"],"fontName":"NRVUEW+HelveticaNeue-Light","x":121.8898,"y":45.2719,"line":0}
+{"page":3,"change":"Removal","score":"1.00: (0.00 + 1.00)","str":"s h a l F - M a s q u e","line":30,"x":37.1206,"y":758.8381,"width":"99.35","height":"17.64","fontName":["NRVUEW+Futura-Light"],"dir":["ltr"]}

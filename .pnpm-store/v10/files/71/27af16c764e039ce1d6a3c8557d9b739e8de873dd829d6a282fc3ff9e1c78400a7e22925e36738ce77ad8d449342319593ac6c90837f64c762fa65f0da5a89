@@ -1,0 +1,116 @@
+{
+  "name": "svelte-eslint-parser",
+  "version": "0.43.0",
+  "description": "Svelte parser for ESLint",
+  "repository": "git+https://github.com/sveltejs/svelte-eslint-parser.git",
+  "homepage": "https://github.com/sveltejs/svelte-eslint-parser#readme",
+  "author": "Yosuke Ota (https://github.com/ota-meshi)",
+  "contributors": [
+    "JounQin (https://github.com/JounQin)"
+  ],
+  "funding": "https://github.com/sponsors/ota-meshi",
+  "license": "MIT",
+  "packageManager": "pnpm@7.33.7",
+  "engines": {
+    "node": "^12.22.0 || ^14.17.0 || >=16.0.0"
+  },
+  "type": "commonjs",
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "keywords": [
+    "svelte",
+    "sveltejs",
+    "eslint",
+    "parser"
+  ],
+  "peerDependencies": {
+    "svelte": "^3.37.0 || ^4.0.0 || ^5.0.0"
+  },
+  "peerDependenciesMeta": {
+    "svelte": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "eslint-scope": "^7.2.2",
+    "eslint-visitor-keys": "^3.4.3",
+    "espree": "^9.6.1",
+    "postcss": "^8.4.39",
+    "postcss-scss": "^4.0.9"
+  },
+  "devDependencies": {
+    "@changesets/changelog-github": "^0.5.0",
+    "@changesets/cli": "^2.27.9",
+    "@changesets/get-release-plan": "^4.0.4",
+    "@ota-meshi/eslint-plugin": "^0.15.3",
+    "@types/benchmark": "^2.1.5",
+    "@types/chai": "^4.3.20",
+    "@types/eslint": "^9.6.1",
+    "@types/eslint-scope": "^3.7.7",
+    "@types/eslint-visitor-keys": "^3.3.0",
+    "@types/estree": "^1.0.6",
+    "@types/mocha": "^10.0.9",
+    "@types/node": "^20.16.11",
+    "@types/semver": "^7.5.8",
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "~7.18.0",
+    "@typescript-eslint/types": "~7.18.0",
+    "benchmark": "^2.1.4",
+    "chai": "^4.5.0",
+    "env-cmd": "^10.1.0",
+    "esbuild": "^0.24.0",
+    "esbuild-register": "^3.6.0",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-eslint-comments": "^3.2.0",
+    "eslint-plugin-json-schema-validator": "^5.1.3",
+    "eslint-plugin-jsonc": "^2.16.0",
+    "eslint-plugin-n": "^17.11.1",
+    "eslint-plugin-node-dependencies": "^0.12.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-regexp": "^2.6.0",
+    "eslint-plugin-svelte": "^2.44.1",
+    "eslint-plugin-yml": "^1.14.0",
+    "estree-walker": "^3.0.3",
+    "locate-character": "^3.0.0",
+    "magic-string": "^0.30.12",
+    "mocha": "^10.7.3",
+    "mocha-chai-jest-snapshot": "^1.1.6",
+    "nyc": "^17.1.0",
+    "prettier": "~3.3.3",
+    "prettier-plugin-pkg": "^0.18.1",
+    "prettier-plugin-svelte": "^3.2.7",
+    "rimraf": "^6.0.1",
+    "semver": "^7.6.3",
+    "svelte": "^5.0.0",
+    "svelte2tsx": "^0.7.22",
+    "typescript": "~5.6.3",
+    "typescript-eslint-parser-for-extra-files": "^0.7.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "benchmark": "pnpm run ts benchmark/index.ts",
+    "build": "pnpm run build:meta && pnpm run build:tsc",
+    "build:meta": "pnpm run ts ./tools/update-meta.ts",
+    "build:tsc": "tsc --project ./tsconfig.build.json",
+    "clean": "rimraf .nyc_output lib coverage",
+    "cover": "nyc --reporter=lcov pnpm run test",
+    "debug": "pnpm run mocha \"tests/src/**/*.ts\" --reporter dot --timeout 60000",
+    "eslint-fix": "pnpm run lint --fix",
+    "lint": "eslint . --ext .js,.ts,.json,.yaml,.yml,.svelte",
+    "mocha": "pnpm run ts ./node_modules/mocha/bin/mocha.js",
+    "prebuild": "pnpm run clean",
+    "prerelease": "pnpm run clean && pnpm run build",
+    "preversion": "pnpm run lint && pnpm run test",
+    "release": "changeset publish",
+    "test": "pnpm run mocha \"tests/src/**/*.ts\" --reporter dot --timeout 60000",
+    "ts": "node -r esbuild-register",
+    "update-fixtures": "git add package.json && pnpm i -D svelte@4 && git checkout package.json && pnpm run run-update-fixtures && pnpm i && pnpm run run-update-fixtures",
+    "run-update-fixtures": "pnpm run ts ./tools/update-fixtures.ts",
+    "version:ci": "env-cmd -e version-ci pnpm run build:meta && changeset version"
+  }
+}

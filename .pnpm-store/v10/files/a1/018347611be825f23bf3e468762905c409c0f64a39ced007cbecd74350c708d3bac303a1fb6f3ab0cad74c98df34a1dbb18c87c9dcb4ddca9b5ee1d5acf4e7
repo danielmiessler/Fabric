@@ -1,0 +1,90 @@
+{
+  "pages": 27,
+  "items": 1874,
+  "groupedItems": 1522,
+  "changes": 61,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "token types"
+    },
+    {
+      "name": "types",
+      "annotation": "ADDED"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {
+    "toc": {
+      "tocHeadlineItems": [
+        {
+          "page": 2,
+          "text": "Contents"
+        }
+      ],
+      "pages": [
+        2
+      ],
+      "detectedHeadlineLevels": {}
+    },
+    "headlineTypeToHeightRange": {
+      "H2": {
+        "min": 24,
+        "max": 36
+      }
+    }
+  }
+}
+{"page":2,"change":"Removal","str":"Introduction     5","line":0,"x":452.032,"y":384.497,"width":"81.35","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":2,"change":"Removal","str":"History  7","line":1,"x":452.032,"y":365.60900000000004,"width":"45.93","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":2,"change":"Removal","str":"Setting and context      10","line":2,"x":452.032,"y":346.72100000000006,"width":"123.36","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":2,"change":"Removal","str":"Witney’s people  12","line":3,"x":452.032,"y":327.8330000000001,"width":"94.89","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":2,"change":"Removal","str":"Health   14","line":4,"x":452.032,"y":308.9450000000001,"width":"51.37","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":2,"change":"Removal","str":"Witney at work  15","line":5,"x":452.032,"y":290.05700000000013,"width":"93.06","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":2,"change":"Removal","str":"Housing  16","line":6,"x":452.032,"y":271.16900000000015,"width":"55.11","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":2,"change":"Removal","str":"Crime  and safety  17","line":7,"x":452.032,"y":252.28100000000015,"width":"99.69","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":2,"change":"Removal","str":"Education  18","line":8,"x":452.032,"y":233.39300000000014,"width":"63.14","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":2,"change":"Removal","str":"Transport  20","line":9,"x":452.032,"y":214.50500000000014,"width":"64.49","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":2,"change":"Removal","str":"Lifestyle and deprivation  21","line":10,"x":452.032,"y":195.61700000000013,"width":"133.67","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":2,"change":"Removal","str":"Conclusions      23","line":11,"x":452.032,"y":176.72900000000013,"width":"87.37","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":2,"change":"Removal","str":"What St Mary’s offers   25","line":12,"x":452.032,"y":157.84100000000012,"width":"123.37","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":2,"change":"Removal","str":"Recommendations  27","line":13,"x":452.032,"y":138.95300000000012,"width":"105.64","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":2,"change":"Removal","str":"Further information and links   28","line":14,"x":452.032,"y":120.06500000000011,"width":"159.37","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":2,"change":"Removal","str":"Contents","dir":"ltr","width":"138.21","height":"36.00","transform":["36.00","0.00","0.00","36.00","455.07","525.26"],"fontName":"Gill Sans MT","x":455.07399999999996,"y":525.2600000000001,"line":15}
+{"page":4,"change":"ContentChange","types":["H2"],"str":"Introduction","dir":"ltr","width":"184.61","height":"36.00","transform":["36.00","0.00","0.00","36.00","455.07","525.26"],"fontName":"Gill Sans MT","x":455.074,"y":525.26,"line":0}
+{"page":6,"change":"ContentChange","types":["H2"],"str":"History","dir":"ltr","width":"112.19","height":"36.00","transform":["36.00","0.00","0.00","36.00","463.62","525.26"],"fontName":"Gill Sans MT","x":463.62,"y":525.26,"line":0}
+{"page":9,"change":"ContentChange","types":["H2"],"str":"Setting and context","dir":"ltr","width":"287.58","height":"36.00","transform":["36.00","0.00","0.00","36.00","34.02","525.26"],"fontName":"Gill Sans MT","x":34.015,"y":525.26,"line":0}
+{"page":11,"change":"ContentChange","types":["H2"],"str":"Witney’s people","dir":"ltr","width":"238.11","height":"36.00","transform":["36.00","0.00","0.00","36.00","34.02","525.26"],"fontName":"Gill Sans MT","x":34.015,"y":525.26,"line":0}
+{"page":13,"change":"ContentChange","types":["H2"],"str":"Health","dir":"ltr","width":"97.97","height":"36.00","transform":["36.00","0.00","0.00","36.00","34.02","525.26"],"fontName":"Gill Sans MT","x":34.015,"y":525.26,"line":0}
+{"page":14,"change":"ContentChange","types":["H2"],"str":"Witney at work","dir":"ltr","width":"234.55","height":"36.00","transform":["36.00","0.00","0.00","36.00","450.94","525.26"],"fontName":"Gill Sans MT","x":450.944,"y":525.26,"line":0}
+{"page":15,"change":"ContentChange","types":["H2"],"str":"Housing","dir":"ltr","width":"120.64","height":"36.00","transform":["36.00","0.00","0.00","36.00","34.02","533.33"],"fontName":"Gill Sans MT","x":34.015,"y":533.326,"line":0}
+{"page":16,"change":"ContentChange","types":["H2"],"str":"Crime and safety","dir":"ltr","width":"250.41","height":"36.00","transform":["36.00","0.00","0.00","36.00","450.94","525.26"],"fontName":"Gill Sans MT","x":450.944,"y":525.26,"line":0}
+{"page":17,"change":"ContentChange","types":["H2"],"str":"Education","dir":"ltr","width":"145.13","height":"36.00","transform":["36.00","0.00","0.00","36.00","34.02","525.26"],"fontName":"Gill Sans MT","x":34.015,"y":525.26,"line":0}
+{"page":19,"change":"ContentChange","types":["H2"],"str":"Transport","dir":"ltr","width":"145.42","height":"36.00","transform":["36.00","0.00","0.00","36.00","34.02","525.26"],"fontName":"Gill Sans MT","x":34.015,"y":525.26,"line":0}
+{"page":20,"change":"ContentChange","types":["H2"],"str":"Lifestyle and deprivation","dir":"ltr","width":"359.54","height":"36.00","transform":["36.00","0.00","0.00","36.00","450.94","525.26"],"fontName":"Gill Sans MT","x":450.944,"y":525.26,"line":0}
+{"page":22,"change":"ContentChange","types":["H2"],"str":"Conclusions","dir":"ltr","width":"180.77","height":"36.00","transform":["36.00","0.00","0.00","36.00","450.94","525.26"],"fontName":"Gill Sans MT","x":450.944,"y":525.26,"line":0}
+{"page":24,"change":"ContentChange","types":["H2"],"str":"What St Mary’s offers","dir":"ltr","width":"321.78","height":"36.00","transform":["36.00","0.00","0.00","36.00","450.94","525.26"],"fontName":"Gill Sans MT","x":450.944,"y":525.26,"line":0}
+{"page":26,"change":"ContentChange","types":["H2"],"str":"Recommendations","dir":"ltr","width":"273.82","height":"36.00","transform":["36.00","0.00","0.00","36.00","23.52","555.66"],"fontName":"Gill Sans MT","x":23.522,"y":555.657,"line":0}
+{"page":27,"change":"ContentChange","types":["H2"],"str":"Further information and links","dir":"ltr","width":"290.86","height":"24.00","transform":["24.00","0.00","0.00","24.00","427.20","563.35"],"fontName":"Gill Sans MT","x":427.201,"y":563.346,"line":0}

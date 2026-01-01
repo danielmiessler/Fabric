@@ -1,0 +1,57 @@
+{
+  "pages": 24,
+  "items": 1264,
+  "groupedItems": 1164,
+  "changes": 18,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "token types"
+    },
+    {
+      "name": "types"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":0,"change":"ContentChange","types":["H2"],"str":"Freies Wissen dank ","dir":"ltr","width":"178.49","height":"15.22","transform":["10.76","10.76","-10.76","10.76","123.28","395.24"],"fontName":"QMZZIE+AvenirLTStd-Black","x":123.278,"y":395.2377,"line":0}
+{"page":0,"change":"ContentChange","types":["H2"],"str":"Creative-Commons-Lizenzen","dir":"ltr","width":"255.25","height":"15.22","transform":["10.76","10.76","-10.76","10.76","81.29","322.31"],"fontName":"QMZZIE+AvenirLTStd-Black","x":81.28529540000001,"y":322.30753500000003,"line":1}
+{"page":1,"change":"ContentChange","types":["H3"],"str":"CC-Lizenzen","dir":"ltr","width":"100.79","height":"14.00","transform":["14.00","0.00","0.00","14.00","34.02","512.47"],"fontName":"QMZZIE+AvenirLTStd-Black","x":34.0158,"y":512.4728,"line":26}
+{"page":2,"change":"ContentChange","types":["H4"],"str":"John H. Weitzmann","dir":"ltr","width":"96.43","height":"13.00","transform":["13.00","0.00","0.00","13.00","34.02","86.93"],"fontName":"QMZZIE+AGaramond-Italic","x":34.0157,"y":86.9291,"line":16}
+{"page":5,"change":"ContentChange","types":["H4"],"str":"Stell dir eine Welt vor, in der","dir":"ltr","width":"136.99","height":"13.00","transform":["13.00","0.00","0.00","13.00","34.02","482.93"],"fontName":"QMZZIE+AGaramond-Italic","x":34.0157,"y":482.9292,"line":1}
+{"page":5,"change":"ContentChange","types":["H4"],"str":" jeder Mensch an der Gesamtheit ","dir":"ltr","width":"159.60","height":"13.00","transform":["13.00","0.00","0.00","13.00","34.02","470.93"],"fontName":"QMZZIE+AGaramond-Italic","x":34.0157,"y":470.93019999999996,"line":2}
+{"page":5,"change":"ContentChange","types":["H4"],"str":"des Wissens teilhaben kann. ","dir":"ltr","width":"134.30","height":"13.00","transform":["13.00","0.00","0.00","13.00","34.02","458.93"],"fontName":"QMZZIE+AGaramond-Italic","x":34.0157,"y":458.93119999999993,"line":3}
+{"page":5,"change":"ContentChange","types":["H4"],"str":"Das ist unsere Mission.","dir":"ltr","width":"108.99","height":"13.00","transform":["13.00","0.00","0.00","13.00","34.02","446.93"],"fontName":"QMZZIE+AGaramond-Italic","x":34.0157,"y":446.9321999999999,"line":4}
+{"page":5,"change":"ContentChange","types":["H2"],"str":"1","dir":"ltr","width":"14.21","height":"24.00","transform":["24.00","0.00","0.00","24.00","34.02","345.93"],"fontName":"QMZZIE+AvenirLTStd-Black","x":34.0157,"y":345.9292,"line":6}
+{"page":7,"change":"ContentChange","types":["H2"],"str":"2","dir":"ltr","width":"14.21","height":"24.00","transform":["24.00","0.00","0.00","24.00","215.76","503.81"],"fontName":"QMZZIE+AvenirLTStd-Black","x":215.7638,"y":503.8094,"line":37}
+{"page":8,"change":"ContentChange","types":["H2"],"str":"3","dir":"ltr","width":"14.21","height":"24.00","transform":["24.00","0.00","0.00","24.00","215.76","503.81"],"fontName":"QMZZIE+AvenirLTStd-Black","x":215.7638,"y":503.8094,"line":33}
+{"page":9,"change":"ContentChange","types":["H2"],"str":"4","dir":"ltr","width":"14.21","height":"24.00","transform":["24.00","0.00","0.00","24.00","215.76","503.81"],"fontName":"QMZZIE+AvenirLTStd-Black","x":215.7638,"y":503.8094,"line":24}
+{"page":10,"change":"ContentChange","types":["H2"],"str":"5","dir":"ltr","width":"14.21","height":"24.00","transform":["24.00","0.00","0.00","24.00","34.02","345.93"],"fontName":"QMZZIE+AvenirLTStd-Black","x":34.0157,"y":345.9292,"line":11}
+{"page":11,"change":"ContentChange","types":["H2"],"str":"6","dir":"ltr","width":"14.21","height":"24.00","transform":["24.00","0.00","0.00","24.00","215.76","417.93"],"fontName":"QMZZIE+AvenirLTStd-Black","x":215.7638,"y":417.9292,"line":42}
+{"page":12,"change":"ContentChange","types":["H2"],"str":"7","dir":"ltr","width":"14.21","height":"24.00","transform":["24.00","0.00","0.00","24.00","34.02","358.93"],"fontName":"QMZZIE+AvenirLTStd-Black","x":34.0157,"y":358.9292,"line":11}
+{"page":13,"change":"ContentChange","types":["H2"],"str":"8","dir":"ltr","width":"14.21","height":"24.00","transform":["24.00","0.00","0.00","24.00","34.02","429.93"],"fontName":"QMZZIE+AvenirLTStd-Black","x":34.0157,"y":429.9292,"line":5}
+{"page":14,"change":"ContentChange","types":["H2"],"str":"9","dir":"ltr","width":"14.21","height":"24.00","transform":["24.00","0.00","0.00","24.00","34.02","503.81"],"fontName":"QMZZIE+AvenirLTStd-Black","x":34.0157,"y":503.8094,"line":1}
+{"page":22,"change":"ContentChange","types":["H3"],"str":"Paul Klimpel","dir":"ltr","width":"70.42","height":"14.00","transform":["14.00","0.00","0.00","14.00","215.88","230.93"],"fontName":"QMZZIE+AGaramond-Italic","x":215.8819,"y":230.9291,"line":53}

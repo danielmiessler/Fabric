@@ -1,0 +1,5 @@
+import PdfParser from './PdfParser';
+export interface ParseConfig {
+    pdfjsParams?: object;
+}
+export declare function parser(pdfJs: any, options?: ParseConfig): PdfParser;

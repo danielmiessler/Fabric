@@ -1,0 +1,100 @@
+{
+  "name": "@skeletonlabs/skeleton",
+  "version": "2.11.0",
+  "description": "A SvelteKit component library.",
+  "author": "endigo9740 <chris@skeletonlabs.dev>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/skeletonlabs/skeleton.git"
+  },
+  "bugs": {
+    "url": "https://github.com/skeletonlabs/skeleton/issues"
+  },
+  "keywords": [
+    "cli",
+    "components",
+    "ui",
+    "component",
+    "svelte",
+    "component-library",
+    "ui-components",
+    "ui-framework",
+    "tailwind",
+    "tailwindcss",
+    "components-library",
+    "sveltekit"
+  ],
+  "license": "MIT",
+  "homepage": "https://skeleton.dev/",
+  "devDependencies": {
+    "@sveltejs/adapter-auto": "2.1.0",
+    "@sveltejs/kit": "1.20.5",
+    "@sveltejs/package": "^2.1.0",
+    "@testing-library/dom": "9.3.0",
+    "@testing-library/svelte": "4.0.1",
+    "@typescript-eslint/eslint-plugin": "5.59.9",
+    "@typescript-eslint/parser": "5.59.9",
+    "@vitest/coverage-c8": "0.32.0",
+    "autoprefixer": "10.4.14",
+    "eslint": "8.42.0",
+    "eslint-config-prettier": "8.8.0",
+    "eslint-plugin-svelte": "^2.31.0",
+    "jsdom": "21.1.1",
+    "postcss": "8.4.24",
+    "postcss-import": "15.1.0",
+    "postcss-js": "4.0.1",
+    "postcss-load-config": "4.0.1",
+    "prettier": "^3.2.5",
+    "prettier-plugin-svelte": "^3.2.3",
+    "svelte": "4.2.15",
+    "svelte-check": "^3.4.4",
+    "tailwindcss": "3.3.2",
+    "tslib": "2.5.3",
+    "typescript": "5.0.3",
+    "vite": "4.3.9",
+    "vitest": "0.32.0"
+  },
+  "type": "module",
+  "dependencies": {
+    "esm-env": "1.0.0"
+  },
+  "peerDependencies": {
+    "svelte": "^3.56.0 || ^4.0.0 || ^5.0.0"
+  },
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "svelte": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "./dist/**/*.svelte",
+    "./dist/**/*.js",
+    "./dist/**/*.d.ts",
+    "./dist/**/*.cjs",
+    "./dist/**/*.d.cts",
+    "!./dist/**/*.test.*"
+  ],
+  "scripts": {
+    "dev": "vite dev",
+    "build": "vite build",
+    "package": "node ./scripts/pre-build.js && svelte-kit sync && svelte-package && node ./scripts/post-build.js",
+    "preview": "vite preview",
+    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+    "lint": "prettier --ignore-path .prettierignore --check --plugin-search-dir=. . && eslint --fix --ignore-path .gitignore .",
+    "format": "prettier --ignore-path .prettierignore --write --plugin-search-dir=. .",
+    "test": "vitest",
+    "coverage": "vitest run --coverage",
+    "sync": "svelte-kit sync"
+  },
+  "typesVersions": {
+    ">4.0": {
+      "index.d.ts": [
+        "./dist/index.d.ts"
+      ]
+    }
+  }
+}

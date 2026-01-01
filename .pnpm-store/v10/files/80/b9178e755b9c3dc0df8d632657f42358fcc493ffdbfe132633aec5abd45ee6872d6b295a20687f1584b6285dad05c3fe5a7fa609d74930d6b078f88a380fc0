@@ -1,0 +1,72 @@
+{
+  "pages": 199,
+  "items": 8436,
+  "groupedItems": 8311,
+  "changes": 47,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "token types"
+    },
+    {
+      "name": "types"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":0,"change":"ContentChange","types":["H1"],"str":"SHERLOCK","dir":"ltr","width":"363.20","height":"59.78","transform":["59.78","0.00","0.00","59.78","117.83","656.26"],"fontName":"NVBKCW+RoyalInitialen","x":117.828,"y":656.262,"line":0}
+{"page":0,"change":"ContentChange","types":["H1"],"str":"HOLMES","dir":"ltr","width":"275.57","height":"59.78","transform":["59.78","0.00","0.00","59.78","159.37","592.48"],"fontName":"NVBKCW+RoyalInitialen","x":159.372,"y":592.4789999999999,"line":1}
+{"page":1,"change":"ContentChange","types":["H4"],"str":"S IR A RTHUR I GNATIUS","line":0,"x":196.324,"y":702.187,"width":"186.21","height":"20.66","fontName":["KKLGKN+NimbusRomNo9L-Regu"],"dir":["ltr"]}
+{"page":1,"change":"ContentChange","types":["H2"],"str":"C ONAN D OYLE","line":1,"x":214.04500000000002,"y":678.946,"width":"156.34","height":"24.79","fontName":["INBNCB+NimbusRomNo9L-Medi"],"dir":["ltr"]}
+{"page":1,"change":"ContentChange","types":["H3"],"str":"T HE A DVENTURES O F","line":3,"x":149.122,"y":483.32700000000006,"width":"273.72","height":"29.89","fontName":["INBNCB+NimbusRomNo9L-Medi"],"dir":["ltr"]}
+{"page":1,"change":"ContentChange","types":["H3"],"str":"SHERLOCK HOLMES","dir":"ltr","width":"327.51","height":"29.89","transform":["29.89","0.00","0.00","29.89","133.40","433.72"],"fontName":"INBNCB+NimbusRomNo9L-Medi","x":133.40100000000007,"y":433.7180000000001,"line":4}
+{"page":4,"change":"ContentChange","types":["H4"],"str":"Adventure I","dir":"ltr","width":"106.74","height":"20.66","transform":["20.66","0.00","0.00","20.66","117.83","630.54"],"fontName":"INBNCB+NimbusRomNo9L-Medi","x":117.828,"y":630.539,"line":0}
+{"page":4,"change":"ContentChange","types":["H5"],"str":"I","dir":"ltr","width":"5.58","height":"14.35","transform":["14.35","0.00","0.00","14.35","117.83","522.94"],"fontName":"INBNCB+NimbusRomNo9L-Medi","x":117.828,"y":522.942,"line":2}
+{"page":4,"change":"ContentChange","types":["H2"],"str":"T","dir":"ltr","width":"44.05","height":"59.78","transform":["59.78","0.00","0.00","59.78","117.83","456.23"],"fontName":"NVBKCW+RoyalInitialen","x":117.828,"y":456.232,"line":3}
+{"page":11,"change":"ContentChange","types":["H5"],"str":"II","dir":"ltr","width":"11.16","height":"14.35","transform":["14.35","0.00","0.00","14.35","117.83","494.00"],"fontName":"INBNCB+NimbusRomNo9L-Medi","x":117.82799999999993,"y":494.00400000000036,"line":15}
+{"page":18,"change":"ContentChange","types":["H5"],"str":"III","dir":"ltr","width":"16.74","height":"14.35","transform":["14.35","0.00","0.00","14.35","117.83","304.32"],"fontName":"INBNCB+NimbusRomNo9L-Medi","x":117.82799999999999,"y":304.3160000000006,"line":29}
+{"page":22,"change":"ContentChange","types":["H4"],"str":"Adventure II","dir":"ltr","width":"114.78","height":"20.66","transform":["20.66","0.00","0.00","20.66","117.83","630.54"],"fontName":"INBNCB+NimbusRomNo9L-Medi","x":117.828,"y":630.539,"line":0}
+{"page":22,"change":"ContentChange","types":["H2"],"str":"I","dir":"ltr","width":"37.06","height":"59.78","transform":["59.78","0.00","0.00","59.78","117.83","485.40"],"fontName":"NVBKCW+RoyalInitialen","x":117.828,"y":485.39500000000004,"line":2}
+{"page":39,"change":"ContentChange","types":["H4"],"str":"Adventure III","dir":"ltr","width":"122.82","height":"20.66","transform":["20.66","0.00","0.00","20.66","117.83","630.54"],"fontName":"INBNCB+NimbusRomNo9L-Medi","x":117.828,"y":630.539,"line":0}
+{"page":39,"change":"ContentChange","types":["H2"],"str":"M","dir":"ltr","width":"44.89","height":"59.78","transform":["59.78","0.00","0.00","59.78","122.67","486.68"],"fontName":"NVBKCW+RoyalInitialen","x":122.672,"y":486.678,"line":3}
+{"page":52,"change":"ContentChange","types":["H4"],"str":"Adventure IV","dir":"ltr","width":"121.66","height":"20.66","transform":["20.66","0.00","0.00","20.66","117.83","630.54"],"fontName":"INBNCB+NimbusRomNo9L-Medi","x":117.828,"y":630.539,"line":0}
+{"page":52,"change":"ContentChange","types":["H2"],"str":"W","dir":"ltr","width":"48.90","height":"59.78","transform":["59.78","0.00","0.00","59.78","117.83","485.34"],"fontName":"NVBKCW+RoyalInitialen","x":117.828,"y":485.336,"line":2}
+{"page":70,"change":"ContentChange","types":["H4"],"str":"Adventure V","dir":"ltr","width":"113.62","height":"20.66","transform":["20.66","0.00","0.00","20.66","117.83","630.54"],"fontName":"INBNCB+NimbusRomNo9L-Medi","x":117.828,"y":630.539,"line":0}
+{"page":70,"change":"ContentChange","types":["H2"],"str":"W","dir":"ltr","width":"48.90","height":"59.78","transform":["59.78","0.00","0.00","59.78","117.83","485.34"],"fontName":"NVBKCW+RoyalInitialen","x":117.828,"y":485.336,"line":2}
+{"page":84,"change":"ContentChange","types":["H4"],"str":"Adventure VI","dir":"ltr","width":"121.66","height":"20.66","transform":["20.66","0.00","0.00","20.66","117.83","630.54"],"fontName":"INBNCB+NimbusRomNo9L-Medi","x":117.828,"y":630.539,"line":0}
+{"page":84,"change":"ContentChange","types":["H2"],"str":"I","dir":"ltr","width":"37.06","height":"59.78","transform":["59.78","0.00","0.00","59.78","117.83","485.40"],"fontName":"NVBKCW+RoyalInitialen","x":117.828,"y":485.39500000000004,"line":2}
+{"page":101,"change":"ContentChange","types":["H4"],"str":"Adventure VII","dir":"ltr","width":"129.70","height":"20.66","transform":["20.66","0.00","0.00","20.66","117.83","630.54"],"fontName":"INBNCB+NimbusRomNo9L-Medi","x":117.828,"y":630.539,"line":0}
+{"page":101,"change":"ContentChange","types":["H2"],"str":"I","dir":"ltr","width":"37.06","height":"59.78","transform":["59.78","0.00","0.00","59.78","117.83","455.51"],"fontName":"NVBKCW+RoyalInitialen","x":117.828,"y":455.508,"line":3}
+{"page":116,"change":"ContentChange","types":["H4"],"str":"Adventure VIII","dir":"ltr","width":"137.74","height":"20.66","transform":["20.66","0.00","0.00","20.66","117.83","630.54"],"fontName":"INBNCB+NimbusRomNo9L-Medi","x":117.828,"y":630.539,"line":0}
+{"page":116,"change":"ContentChange","types":["H2"],"str":"O","dir":"ltr","width":"50.09","height":"59.78","transform":["59.78","0.00","0.00","59.78","117.83","455.81"],"fontName":"NVBKCW+RoyalInitialen","x":117.828,"y":455.806,"line":3}
+{"page":134,"change":"ContentChange","types":["H4"],"str":"Adventure IX","dir":"ltr","width":"121.66","height":"20.66","transform":["20.66","0.00","0.00","20.66","117.83","630.54"],"fontName":"INBNCB+NimbusRomNo9L-Medi","x":117.828,"y":630.539,"line":0}
+{"page":134,"change":"ContentChange","types":["H2"],"str":"O","dir":"ltr","width":"50.09","height":"59.78","transform":["59.78","0.00","0.00","59.78","117.83","455.81"],"fontName":"NVBKCW+RoyalInitialen","x":117.828,"y":455.806,"line":3}
+{"page":149,"change":"ContentChange","types":["H4"],"str":"Adventure X","dir":"ltr","width":"113.62","height":"20.66","transform":["20.66","0.00","0.00","20.66","117.83","630.54"],"fontName":"INBNCB+NimbusRomNo9L-Medi","x":117.828,"y":630.539,"line":0}
+{"page":149,"change":"ContentChange","types":["H2"],"str":"T","dir":"ltr","width":"44.05","height":"59.78","transform":["59.78","0.00","0.00","59.78","117.83","455.57"],"fontName":"NVBKCW+RoyalInitialen","x":117.828,"y":455.567,"line":3}
+{"page":165,"change":"ContentChange","types":["H4"],"str":"Adventure XI","dir":"ltr","width":"121.66","height":"20.66","transform":["20.66","0.00","0.00","20.66","117.83","630.54"],"fontName":"INBNCB+NimbusRomNo9L-Medi","x":117.828,"y":630.539,"line":0}
+{"page":165,"change":"ContentChange","types":["H2"],"str":"H","dir":"ltr","width":"41.90","height":"59.78","transform":["59.78","0.00","0.00","59.78","122.67","456.22"],"fontName":"NVBKCW+RoyalInitialen","x":122.672,"y":456.22499999999997,"line":4}
+{"page":183,"change":"ContentChange","types":["H4"],"str":"Adventure XII","dir":"ltr","width":"129.70","height":"20.66","transform":["20.66","0.00","0.00","20.66","117.83","630.54"],"fontName":"INBNCB+NimbusRomNo9L-Medi","x":117.828,"y":630.539,"line":0}
+{"page":183,"change":"ContentChange","types":["H2"],"str":"T","dir":"ltr","width":"44.05","height":"59.78","transform":["59.78","0.00","0.00","59.78","122.67","455.57"],"fontName":"NVBKCW+RoyalInitialen","x":122.672,"y":455.56699999999995,"line":4}

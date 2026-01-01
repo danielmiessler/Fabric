@@ -1,0 +1,34 @@
+{
+  "pages": 76,
+  "items": 3205,
+  "groupedItems": 2652,
+  "changes": 3,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":12,"change":"ContentChange","str":"she began again: ‘O u est ma chatte?’ which was the first sentence in her French `","line":37,"x":102.88399999999999,"y":183.2159999999997,"width":"392.53","height":"11.96","fontName":["FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}

@@ -1,0 +1,28 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.deriveFromUnsorted = exports.fromMiddle = void 0;
+const groupingUtils_1 = require("./groupingUtils");
+const simple_statistics_1 = require("simple-statistics");
+class Range {
+    constructor(min, median, max) {
+        this.min = min;
+        this.median = median;
+        this.max = max;
+    }
+    description() {
+        return `${this.median}(${this.min}/${this.max})`;
+    }
+}
+exports.default = Range;
+function fromMiddle(middle, maxDeviation) {
+    return new Range(middle - maxDeviation, middle, middle + maxDeviation);
+}
+exports.fromMiddle = fromMiddle;
+function deriveFromUnsorted(numbers) {
+    numbers.sort(groupingUtils_1.ascending);
+    const median = (0, simple_statistics_1.medianSorted)(numbers);
+    const min = numbers[0];
+    const max = numbers[numbers.length - 1];
+    return new Range(min, median, max);
+}
+exports.deriveFromUnsorted = deriveFromUnsorted;

@@ -1,0 +1,81 @@
+{
+  "pages": 6,
+  "items": 268,
+  "groupedItems": 145,
+  "changes": 131,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "token types"
+    },
+    {
+      "name": "types"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":3,"change":"ContentChange","types":["LIST"],"str":"- Etwas  Kursiv","line":15,"x":56.69069,"y":467,"width":"67.97","height":"13.20","fontName":["JBRMKS+Helvetica","SVUOCV+Helvetica-Oblique"],"dir":["ltr"]}
+{"page":3,"change":"ContentChange","types":["LIST"],"str":"- Etwas  Fett","line":16,"x":56.69069,"y":454,"width":"57.57","height":"13.20","fontName":["JBRMKS+Helvetica","OMUGKQ+Helvetica-Bold"],"dir":["ltr"]}
+{"page":3,"change":"ContentChange","types":["LIST"],"str":"- Etwas  Unterstrichen 7","line":17,"x":56.69069,"y":441,"width":"106.90","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":3,"change":"ContentChange","types":["LIST"],"str":"- Etwas  Durchgestrichen","line":18,"x":56.69069,"y":428,"width":"117.50","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":3,"change":"ContentChange","types":["LIST"],"str":"- Und noch ein Link: http://pdf2md.morethan.io","line":19,"x":56.69069,"y":415,"width":"223.92","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":4,"change":"ContentChange","types":["LIST"],"str":"- Eintrag 1","line":2,"x":56.69069,"y":727,"width":"48.42","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":4,"change":"ContentChange","types":["LIST"],"str":"- Eintrag 2, aber mit so langem Text, das er umbricht. Wirklich, wirklich lang. Breche du Zeile. Na ","line":3,"x":56.69069,"y":714,"width":"470.06","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":4,"change":"ContentChange","types":["LIST"],"str":"- Eintrag 3","line":6,"x":56.69069,"y":675,"width":"48.42","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":4,"change":"ContentChange","types":["LIST"],"str":"- Eintrag 1","line":8,"x":56.69069,"y":636,"width":"48.42","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":4,"change":"ContentChange","types":["LIST"],"str":"- Sub Eintrag 1.1, aber mit so langem Text, das er umbricht. Wirklich, wirklich lang. Breche du ","line":9,"x":68.69069,"y":623,"width":"454.79","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":4,"change":"ContentChange","types":["LIST"],"str":"- Sub Eintrag 1.2","line":12,"x":68.69069,"y":584,"width":"80.23","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":4,"change":"ContentChange","types":["LIST"],"str":"- Eintrag 2","line":13,"x":56.69069,"y":571,"width":"48.42","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":4,"change":"ContentChange","types":["LIST"],"str":"- Sub Eintrag 2.1","line":14,"x":68.69069,"y":558,"width":"80.23","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":4,"change":"ContentChange","types":["LIST"],"str":"• Eintrage 1","line":16,"x":56.69069,"y":517.7268,"width":"53.99","height":"11.00","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":4,"change":"ContentChange","types":["LIST"],"str":"• Eintrage 2","line":17,"x":56.69069,"y":504.7268,"width":"53.99","height":"11.00","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":4,"change":"ContentChange","types":["LIST"],"str":"- Eintrage 1","line":19,"x":56.69069,"y":467,"width":"54.54","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":4,"change":"ContentChange","types":["LIST"],"str":"• Eintrage 2","line":20,"x":56.69069,"y":452.7268,"width":"53.99","height":"11.00","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":4,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"1. Eins","line":22,"x":56.69069,"y":414.7268,"width":"30.58","height":"11.00","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":4,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"2. Zwei, aber mit so langem Text, das er umbricht. Wirklich, wirklich lang. Breche du Zeile. Na los. ","line":23,"x":56.69069,"y":401.7268,"width":"474.22","height":"11.00","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":4,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"3. Drei","line":26,"x":56.69069,"y":362.7268,"width":"29.35","height":"11.00","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":4,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"4. Vier. Und auch hier wieder ein etwas längerer Text, so dass der Eintrag über mehrere Zeilen ","line":27,"x":56.69069,"y":349.7268,"width":"460.05","height":"11.00","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":4,"change":"ContentChange","types":["LIST"],"str":"- Eintrag 1","line":30,"x":80.69069,"y":298,"width":"48.42","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":4,"change":"ContentChange","types":["LIST"],"str":"- Eintrag 2, aber mit so langem Text, das er umbricht. Wirklich, wirklich lang. Breche du Zeile. ","line":31,"x":80.69069,"y":285,"width":"452.94","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":4,"change":"ContentChange","types":["LIST"],"str":"- Eintrag 3","line":34,"x":80.69069,"y":246,"width":"48.42","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":4,"change":"ContentChange","types":["LIST"],"str":"- Erste 1","line":36,"x":56.69069,"y":194,"width":"39.24","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":4,"change":"ContentChange","types":["LIST"],"str":"- Erste 2","line":37,"x":56.69069,"y":181,"width":"39.24","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":4,"change":"ContentChange","types":["LIST"],"str":"- Zwote 1","line":38,"x":56.69069,"y":155,"width":"43.51","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":4,"change":"ContentChange","types":["LIST"],"str":"- Zwote 2","line":39,"x":56.69069,"y":142,"width":"43.51","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":5,"change":"ContentChange","types":["LIST"],"str":"- Erster Level 1","line":1,"x":56.69069,"y":736,"width":"72.26","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":5,"change":"ContentChange","types":["LIST"],"str":"- Zwoter Level 1.1, aber mit so langem Text, das er umbricht. Wirklich, wirklich lang. Breche du ","line":2,"x":68.69069,"y":723,"width":"460.28","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":5,"change":"ContentChange","types":["LIST"],"str":"- 3ter Level 1.1.1","line":5,"x":80.69069,"y":684,"width":"80.23","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":5,"change":"ContentChange","types":["LIST"],"str":"- 3ter Level 1.1.2, aber mit so langem Text, das er umbricht. Wirklich, wirklich lang. Breche ","line":6,"x":80.69069,"y":671,"width":"439.50","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":5,"change":"ContentChange","types":["LIST"],"str":"- Zwoter Level 1.2","line":9,"x":68.69069,"y":632,"width":"85.71","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":5,"change":"ContentChange","types":["LIST"],"str":"- Zwoter Level 1.3","line":10,"x":68.69069,"y":619,"width":"85.71","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":5,"change":"ContentChange","types":["LIST"],"str":"- 3ter Level 1.3.1","line":11,"x":80.69069,"y":606,"width":"80.23","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":5,"change":"ContentChange","types":["LIST"],"str":"- Erster Level 2","line":12,"x":56.69069,"y":593,"width":"72.26","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":5,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"1. Eintrag 1","line":14,"x":56.69069,"y":553.7268,"width":"53.20","height":"11.00","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":5,"change":"ContentChange","types":["LIST"],"str":"- Eintrag 1.1","line":15,"x":68.69069,"y":541,"width":"57.60","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":5,"change":"ContentChange","types":["LIST"],"str":"- Eintrag 1.2","line":16,"x":68.69069,"y":528,"width":"57.60","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":5,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"2. Eintrag 2","line":17,"x":56.69069,"y":514.7268,"width":"53.20","height":"11.00","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":5,"change":"ContentChange","types":["LIST"],"str":"- Eintrag 1","line":20,"x":56.69069,"y":463,"width":"48.42","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":5,"change":"ContentChange","types":["LIST"],"str":"- Eintrag 2","line":21,"x":56.69069,"y":450,"width":"48.42","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}

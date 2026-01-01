@@ -1,0 +1,208 @@
+{
+  "pages": 175,
+  "items": 15299,
+  "groupedItems": 10799,
+  "changes": 525,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":1,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"ii Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"14.15","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":2,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons iii","line":0,"x":70.8661,"y":21.3071,"width":"16.25","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":3,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"iv Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"15.72","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":4,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons v","line":0,"x":70.8661,"y":21.3071,"width":"13.45","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":5,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"vi Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"15.73","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":6,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons vii","line":0,"x":70.8661,"y":21.3071,"width":"17.77","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":7,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"viii Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"19.87","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":8,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons ix","line":0,"x":70.8661,"y":21.3071,"width":"15.86","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":9,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"x Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"13.60","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":10,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons xi","line":0,"x":70.8661,"y":21.3071,"width":"15.88","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":11,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"xii Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"17.91","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":12,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons xiii","line":0,"x":70.8661,"y":21.3071,"width":"20.01","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":13,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"xiv Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"19.48","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":14,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons xv","line":0,"x":70.8661,"y":21.3071,"width":"17.66","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":15,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"xvi Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"19.66","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":16,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 1","line":0,"x":70.8661,"y":21.3071,"width":"13.88","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":17,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"2 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"13.88","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":18,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 3","line":0,"x":70.8661,"y":21.3071,"width":"13.88","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":19,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"4 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"13.88","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":20,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 5","line":0,"x":70.8661,"y":21.3071,"width":"13.88","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":21,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"6 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"13.88","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":22,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 7","line":0,"x":70.8661,"y":21.3071,"width":"13.88","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":23,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"8 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"13.88","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":24,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 9","line":0,"x":70.8661,"y":21.3071,"width":"13.88","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":25,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"10 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"17.66","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":26,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 11","line":0,"x":70.8661,"y":21.3071,"width":"17.06","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":27,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"12 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"17.66","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":28,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 13","line":0,"x":70.8661,"y":21.3071,"width":"17.64","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":29,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"14 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"17.55","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":30,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 15","line":0,"x":70.8661,"y":21.3071,"width":"17.65","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":31,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"16 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"17.65","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":32,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 17","line":0,"x":70.8661,"y":21.3071,"width":"17.44","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":33,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"18 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"17.61","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":34,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 19","line":0,"x":70.8661,"y":21.3071,"width":"17.68","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":35,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"20 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"18.15","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":36,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 21","line":0,"x":70.8661,"y":21.3071,"width":"17.69","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":37,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"22 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"18.21","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":38,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 23","line":0,"x":70.8661,"y":21.3071,"width":"18.11","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":39,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"24 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"18.08","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":40,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 25","line":0,"x":70.8661,"y":21.3071,"width":"18.16","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":41,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"26 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"18.14","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":42,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 27","line":0,"x":70.8661,"y":21.3071,"width":"18.00","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":43,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"28 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"18.09","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":44,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 29","line":0,"x":70.8661,"y":21.3071,"width":"18.20","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":45,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"30 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"18.22","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":46,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 31","line":0,"x":70.8661,"y":21.3071,"width":"17.71","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":47,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"32 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"18.22","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":48,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 33","line":0,"x":70.8661,"y":21.3071,"width":"18.25","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":49,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"34 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"18.31","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":50,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 35","line":0,"x":70.8661,"y":21.3071,"width":"18.27","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":51,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"36 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"18.21","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":52,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 37","line":0,"x":70.8661,"y":21.3071,"width":"18.04","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":53,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"38 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"18.24","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":54,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 39","line":0,"x":70.8661,"y":21.3071,"width":"18.25","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":55,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"40 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"18.21","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":56,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 41","line":0,"x":70.8661,"y":21.3071,"width":"17.49","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":57,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"42 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"18.13","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":58,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 43","line":0,"x":70.8661,"y":21.3071,"width":"18.28","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":59,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"44 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"18.41","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":60,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 45","line":0,"x":70.8661,"y":21.3071,"width":"18.29","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":61,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"46 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"18.20","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":62,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 47","line":0,"x":70.8661,"y":21.3071,"width":"17.89","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":63,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"48 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"18.22","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":64,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 49","line":0,"x":70.8661,"y":21.3071,"width":"18.20","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":65,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"50 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"18.20","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":66,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 51","line":0,"x":70.8661,"y":21.3071,"width":"17.57","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":67,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"52 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"18.13","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":68,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 53","line":0,"x":70.8661,"y":21.3071,"width":"18.20","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":69,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"54 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"18.28","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":70,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 55","line":0,"x":70.8661,"y":21.3071,"width":"18.21","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":71,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"56 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"18.18","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":72,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 57","line":0,"x":70.8661,"y":21.3071,"width":"17.95","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":73,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"58 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"18.17","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":74,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 59","line":0,"x":70.8661,"y":21.3071,"width":"18.18","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":75,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"60 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"18.28","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":76,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 61","line":0,"x":70.8661,"y":21.3071,"width":"17.79","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":77,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"62 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"18.25","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":78,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 63","line":0,"x":70.8661,"y":21.3071,"width":"18.31","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":79,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"64 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"18.36","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":80,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 65","line":0,"x":70.8661,"y":21.3071,"width":"18.32","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":81,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"66 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"18.31","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":82,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 67","line":0,"x":70.8661,"y":21.3071,"width":"18.10","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":83,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"68 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"18.29","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":84,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 69","line":0,"x":70.8661,"y":21.3071,"width":"18.31","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":85,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"70 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"17.87","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":86,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 71","line":0,"x":70.8661,"y":21.3071,"width":"17.78","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":87,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"72 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"18.08","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":88,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 73","line":0,"x":70.8661,"y":21.3071,"width":"18.00","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":89,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"74 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"17.41","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":90,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 75","line":0,"x":70.8661,"y":21.3071,"width":"17.83","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":91,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"76 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"17.87","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":92,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 77","line":0,"x":70.8661,"y":21.3071,"width":"18.13","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":93,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"78 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"17.90","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":94,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 79","line":0,"x":70.8661,"y":21.3071,"width":"18.06","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":95,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"80 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"18.20","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":96,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 81","line":0,"x":70.8661,"y":21.3071,"width":"17.64","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":97,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"82 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"18.19","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":98,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 83","line":0,"x":70.8661,"y":21.3071,"width":"18.22","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":99,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"84 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"18.31","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":100,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 85","line":0,"x":70.8661,"y":21.3071,"width":"18.27","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":101,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"86 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"18.21","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":102,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 87","line":0,"x":70.8661,"y":21.3071,"width":"17.97","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":103,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"88 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"18.20","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":104,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 89","line":0,"x":70.8661,"y":21.3071,"width":"18.21","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":105,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"90 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"18.31","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":106,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 91","line":0,"x":70.8661,"y":21.3071,"width":"17.76","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":107,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"92 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"18.22","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":108,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 93","line":0,"x":70.8661,"y":21.3071,"width":"18.21","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":109,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"94 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"18.28","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":110,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 95","line":0,"x":70.8661,"y":21.3071,"width":"18.27","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":111,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"96 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"18.29","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":112,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 97","line":0,"x":70.8661,"y":21.3071,"width":"17.99","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":113,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"98 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"18.20","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":114,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 99","line":0,"x":70.8661,"y":21.3071,"width":"18.31","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":115,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"100 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"21.84","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":116,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 101","line":0,"x":70.8661,"y":21.3071,"width":"21.57","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":117,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"102 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"21.81","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":118,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 103","line":0,"x":70.8661,"y":21.3071,"width":"21.80","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":119,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"104 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"21.84","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":120,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 105","line":0,"x":70.8661,"y":21.3071,"width":"21.83","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":121,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"106 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"21.85","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":122,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 107","line":0,"x":70.8661,"y":21.3071,"width":"21.67","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":123,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"108 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"21.79","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":124,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 109","line":0,"x":70.8661,"y":21.3071,"width":"21.83","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":125,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"110 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"20.92","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":126,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 111","line":0,"x":70.8661,"y":21.3071,"width":"20.62","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":127,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"112 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"20.92","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":128,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 113","line":0,"x":70.8661,"y":21.3071,"width":"20.90","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":129,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"114 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"20.86","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":130,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 115","line":0,"x":70.8661,"y":21.3071,"width":"20.91","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":131,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"116 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"20.91","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":132,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 117","line":0,"x":70.8661,"y":21.3071,"width":"20.81","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":133,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"118 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"20.89","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":134,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 119","line":0,"x":70.8661,"y":21.3071,"width":"20.92","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":135,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"120 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"21.76","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":136,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 121","line":0,"x":70.8661,"y":21.3071,"width":"21.54","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":137,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"122 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"21.79","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":138,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 123","line":0,"x":70.8661,"y":21.3071,"width":"21.74","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":139,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"124 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"21.73","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":140,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 125","line":0,"x":70.8661,"y":21.3071,"width":"21.77","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":141,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"126 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"21.76","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":142,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 127","line":0,"x":70.8661,"y":21.3071,"width":"21.69","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":143,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"128 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"21.73","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":144,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 129","line":0,"x":70.8661,"y":21.3071,"width":"21.79","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":145,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"130 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"21.77","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":146,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 131","line":0,"x":70.8661,"y":21.3071,"width":"21.51","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":147,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"132 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"21.77","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":148,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 133","line":0,"x":70.8661,"y":21.3071,"width":"21.79","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":149,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"134 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"21.81","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":150,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 135","line":0,"x":70.8661,"y":21.3071,"width":"21.80","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":151,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"136 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"21.77","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":152,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 137","line":0,"x":70.8661,"y":21.3071,"width":"21.68","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":153,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"138 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"21.78","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":154,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 139","line":0,"x":70.8661,"y":21.3071,"width":"21.78","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":155,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"140 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"21.68","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":156,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 141","line":0,"x":70.8661,"y":21.3071,"width":"21.29","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":157,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"142 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"21.64","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":158,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 143","line":0,"x":70.8661,"y":21.3071,"width":"21.72","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":159,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"144 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"21.78","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":160,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 145","line":0,"x":70.8661,"y":21.3071,"width":"21.73","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":161,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"146 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"21.68","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":162,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 147","line":0,"x":70.8661,"y":21.3071,"width":"21.52","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":163,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"148 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"21.69","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":164,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 149","line":0,"x":70.8661,"y":21.3071,"width":"21.67","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":165,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"150 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"21.77","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":166,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 151","line":0,"x":70.8661,"y":21.3071,"width":"21.42","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":167,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"152 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"21.74","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":168,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 153","line":0,"x":70.8661,"y":21.3071,"width":"21.77","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":169,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"154 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"21.81","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":170,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 155","line":0,"x":70.8661,"y":21.3071,"width":"21.78","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":171,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"156 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"21.77","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":172,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 157","line":0,"x":70.8661,"y":21.3071,"width":"21.65","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":173,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"158 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"21.76","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":174,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"Made With Creative Commons 159","line":0,"x":70.8661,"y":21.3071,"width":"21.77","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}
+{"page":175,"change":"Removal","score":"1.99: (0.99 + 1.00)","str":"160 Made With Creative Commons","line":0,"x":42.5197,"y":21.3071,"width":"21.82","height":"7.00","fontName":["CJYOPP+AkzidenzGroteskBE-Bold"],"dir":["ltr"]}

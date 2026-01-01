@@ -1,0 +1,11 @@
+#!/usr/bin/env node
+
+/*
+ * cn
+ * https://github.com/rumpl/cn
+ *
+ * Copyright (c) 2013 Djordje Lukic
+ * Licensed under the MIT license.
+ */
+
+require('../index');

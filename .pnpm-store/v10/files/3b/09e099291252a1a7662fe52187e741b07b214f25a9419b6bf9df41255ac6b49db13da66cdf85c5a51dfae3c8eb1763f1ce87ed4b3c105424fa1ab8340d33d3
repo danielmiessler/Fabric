@@ -1,0 +1,58 @@
+{
+  "pages": 27,
+  "items": 1899,
+  "groupedItems": 1547,
+  "changes": 25,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":2,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"3","dir":"ltr","width":"6.02","height":"12.00","transform":["12.00","0.00","0.00","12.00","812.96","16.35"],"fontName":"Gill Sans MT","x":812.962,"y":16.346,"line":16}
+{"page":4,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"5","dir":"ltr","width":"6.02","height":"12.00","transform":["12.00","0.00","0.00","12.00","811.49","16.35"],"fontName":"Gill Sans MT","x":811.492,"y":16.346,"line":42}
+{"page":5,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"    6","dir":"ltr","width":"19.33","height":"12.00","transform":["12.00","0.00","0.00","12.00","6.49","16.35"],"fontName":"Gill Sans MT","x":6.488,"y":16.346,"line":27}
+{"page":6,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"7","dir":"ltr","width":"6.02","height":"12.00","transform":["12.00","0.00","0.00","12.00","812.60","16.35"],"fontName":"Gill Sans MT","x":812.595,"y":16.346,"line":48}
+{"page":7,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"  8","dir":"ltr","width":"12.67","height":"12.00","transform":["12.00","0.00","0.00","12.00","6.49","16.35"],"fontName":"Gill Sans MT","x":6.489,"y":16.346,"line":58}
+{"page":8,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"9","dir":"ltr","width":"6.02","height":"12.00","transform":["12.00","0.00","0.00","12.00","813.78","16.35"],"fontName":"Gill Sans MT","x":813.78,"y":16.346,"line":38}
+{"page":9,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"   10","dir":"ltr","width":"21.55","height":"12.00","transform":["12.00","0.00","0.00","12.00","8.57","16.35"],"fontName":"Gill Sans MT","x":8.572,"y":16.346,"line":59}
+{"page":10,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"11","dir":"ltr","width":"12.03","height":"12.00","transform":["12.00","0.00","0.00","12.00","812.74","16.35"],"fontName":"Gill Sans MT","x":812.738,"y":16.346,"line":63}
+{"page":11,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"   12","dir":"ltr","width":"21.55","height":"12.00","transform":["12.00","0.00","0.00","12.00","6.49","16.35"],"fontName":"Gill Sans MT","x":6.487999999999971,"y":16.345999999999975,"line":31}
+{"page":12,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"13","dir":"ltr","width":"12.03","height":"12.00","transform":["12.00","0.00","0.00","12.00","812.74","16.35"],"fontName":"Gill Sans MT","x":812.738,"y":16.346,"line":16}
+{"page":13,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"   14","dir":"ltr","width":"21.55","height":"12.00","transform":["12.00","0.00","0.00","12.00","6.49","16.35"],"fontName":"Gill Sans MT","x":6.4879999999999995,"y":16.346000000000124,"line":57}
+{"page":14,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"15","dir":"ltr","width":"12.03","height":"12.00","transform":["12.00","0.00","0.00","12.00","812.74","16.35"],"fontName":"Gill Sans MT","x":812.738,"y":16.346,"line":61}
+{"page":15,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"   16","dir":"ltr","width":"21.55","height":"12.00","transform":["12.00","0.00","0.00","12.00","6.49","16.35"],"fontName":"Gill Sans MT","x":6.488,"y":16.346,"line":5}
+{"page":16,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"17","dir":"ltr","width":"12.03","height":"12.00","transform":["12.00","0.00","0.00","12.00","812.74","16.35"],"fontName":"Gill Sans MT","x":812.738,"y":16.346,"line":60}
+{"page":17,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"   18","dir":"ltr","width":"21.55","height":"12.00","transform":["12.00","0.00","0.00","12.00","6.49","16.35"],"fontName":"Gill Sans MT","x":6.4879999999999995,"y":16.345999999999947,"line":71}
+{"page":18,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"19","dir":"ltr","width":"12.03","height":"12.00","transform":["12.00","0.00","0.00","12.00","812.74","16.35"],"fontName":"Gill Sans MT","x":812.738,"y":16.346,"line":62}
+{"page":19,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"   20","dir":"ltr","width":"21.55","height":"12.00","transform":["12.00","0.00","0.00","12.00","6.49","16.35"],"fontName":"Gill Sans MT","x":6.4879999999999995,"y":16.346000000000032,"line":41}
+{"page":20,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"21","dir":"ltr","width":"12.03","height":"12.00","transform":["12.00","0.00","0.00","12.00","812.74","16.35"],"fontName":"Gill Sans MT","x":812.738,"y":16.346,"line":55}
+{"page":21,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"   22","dir":"ltr","width":"21.55","height":"12.00","transform":["12.00","0.00","0.00","12.00","6.49","16.35"],"fontName":"Gill Sans MT","x":6.4879999999999995,"y":16.34600000000006,"line":39}
+{"page":22,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"23","dir":"ltr","width":"12.03","height":"12.00","transform":["12.00","0.00","0.00","12.00","812.70","16.35"],"fontName":"Gill Sans MT","x":812.696,"y":16.346,"line":53}
+{"page":23,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"   24","dir":"ltr","width":"21.55","height":"12.00","transform":["12.00","0.00","0.00","12.00","6.49","16.35"],"fontName":"Gill Sans MT","x":6.487999999999971,"y":16.346000000000167,"line":62}
+{"page":24,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"25","dir":"ltr","width":"12.03","height":"12.00","transform":["12.00","0.00","0.00","12.00","812.60","16.35"],"fontName":"Gill Sans MT","x":812.595,"y":16.346,"line":46}
+{"page":25,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"   26","dir":"ltr","width":"21.55","height":"12.00","transform":["12.00","0.00","0.00","12.00","6.49","16.35"],"fontName":"Gill Sans MT","x":6.487999999999971,"y":16.346000000000238,"line":61}
+{"page":26,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"   27","dir":"ltr","width":"21.55","height":"12.00","transform":["12.00","0.00","0.00","12.00","6.49","16.35"],"fontName":"Gill Sans MT","x":6.487999999999982,"y":16.345999999999986,"line":35}
+{"page":27,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"28","dir":"ltr","width":"12.03","height":"12.00","transform":["12.00","0.00","0.00","12.00","810.59","16.35"],"fontName":"Gill Sans MT","x":810.59,"y":16.346,"line":60}

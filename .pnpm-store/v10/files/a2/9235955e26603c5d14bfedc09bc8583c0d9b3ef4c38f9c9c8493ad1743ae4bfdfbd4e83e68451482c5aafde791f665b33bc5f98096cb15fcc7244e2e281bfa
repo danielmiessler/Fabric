@@ -1,0 +1,44 @@
+{
+  "pages": 4,
+  "items": 134,
+  "groupedItems": 108,
+  "changes": 5,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "token types"
+    },
+    {
+      "name": "types"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":0,"change":"ContentChange","types":["H1"],"str":"La vraie température !","dir":"ltr","width":"307.05","height":"29.00","transform":["29.00","0.00","0.00","29.00","197.43","469.65"],"fontName":"NRVUEW+HelveticaNeue-Thin","x":197.4282,"y":469.654,"line":0}
+{"page":0,"change":"ContentChange","types":["H2"],"str":"qui permet de laver en toute sécurité ","dir":"ltr","width":"328.32","height":"18.00","transform":["18.00","0.00","0.00","18.00","188.39","416.29"],"fontName":"NRVUEW+HelveticaNeue-Thin","x":188.3882,"y":416.2949,"line":1}
+{"page":0,"change":"ContentChange","types":["H2"],"str":"les masques barrières en tissu","dir":"ltr","width":"268.07","height":"18.00","transform":["18.00","0.00","0.00","18.00","216.01","394.69"],"fontName":"NRVUEW+HelveticaNeue-Thin","x":216.0091,"y":394.6949,"line":2}
+{"page":3,"change":"ContentChange","types":["H2"],"str":"Qui sommes-nous ?","dir":"ltr","width":"176.33","height":"18.00","transform":["18.00","0.00","0.00","18.00","127.30","768.06"],"fontName":"NRVUEW+HelveticaNeue-Thin","x":127.3039,"y":768.0642,"line":0}
+{"page":3,"change":"ContentChange","types":["H2"],"str":"Les liens d’accès","dir":"ltr","width":"152.39","height":"18.00","transform":["18.00","0.00","0.00","18.00","127.30","192.63"],"fontName":"NRVUEW+HelveticaNeue-Thin","x":127.3039,"y":192.6311,"line":1}

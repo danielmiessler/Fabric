@@ -1,0 +1,53 @@
+{
+  "pages": 466,
+  "items": 772193,
+  "groupedItems": 15227,
+  "changes": 629,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "token types"
+    },
+    {
+      "name": "types"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":30,"change":"ContentChange","types":["LIST"],"str":"- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -","line":5,"x":134.29151999999976,"y":608.4,"width":"167.83","height":"14.40","fontName":["AAAAAC+LiberationSerif"],"dir":["ltr"]}
+{"page":30,"change":"ContentChange","types":["LIST"],"str":"- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -","line":8,"x":332.65151999999944,"y":550.08,"width":"167.83","height":"14.40","fontName":["AAAAAC+LiberationSerif"],"dir":["ltr"]}
+{"page":35,"change":"ContentChange","types":["NUMBERED_LIST"],"str":". . . I W O U L D C A L L H I M N A P O L E O N , b u t N a p o l e o n m a d e h i s w a y","line":27,"x":95.76000000000022,"y":216.72000000000003,"width":"352.77","height":"14.40","fontName":["AAAAAC+LiberationSerif","AAAAAD+LiberationSerif-Italic"],"dir":["ltr"]}
+{"page":51,"change":"ContentChange","types":["NUMBERED_LIST"],"str":". . . p a u s e . . . h a s a d i s t i n c t i v e v a l u e , e x p r e s s e d i n s i l e n c e ; i n o t h e r","line":3,"x":95.75999999999976,"y":635.76,"width":"327.54","height":"14.40","fontName":["AAAAAC+LiberationSerif"],"dir":["ltr"]}
+{"page":60,"change":"ContentChange","types":["NUMBERED_LIST"],"str":". . . A t l a s t , t h e R e p u b l i c a n p a r t y h a s a p p e a r e d . I t a v o w s , n o w , a s t h e","line":7,"x":95.75999999999931,"y":557.28,"width":"343.53","height":"14.40","fontName":["AAAAAC+LiberationSerif"],"dir":["ltr"]}
+{"page":64,"change":"ContentChange","types":["LIST"],"str":"- - - - - - - - - - - - - - - - - - - - - - - - - -","line":18,"x":174.23999999999978,"y":342.72,"width":"124.68","height":"14.40","fontName":["AAAAAC+LiberationSerif"],"dir":["ltr"]}
+{"page":64,"change":"ContentChange","types":["LIST"],"str":"- - - - - - - - - - - - - - - - - - - - - - - - -","line":21,"x":314.6399999999994,"y":284.40000000000003,"width":"119.88","height":"14.40","fontName":["AAAAAC+LiberationSerif"],"dir":["ltr"]}
+{"page":64,"change":"ContentChange","types":["LIST"],"str":"- - - - - - - - - - - - - - - - - - - - - - - - -","line":24,"x":314.6399999999994,"y":226.08000000000004,"width":"119.88","height":"14.40","fontName":["AAAAAC+LiberationSerif"],"dir":["ltr"]}
+{"page":64,"change":"ContentChange","types":["LIST"],"str":"- - - - - - - - - - - - - - - - - - - - - - - - -","line":27,"x":174.23999999999978,"y":167.76,"width":"119.88","height":"14.40","fontName":["AAAAAC+LiberationSerif"],"dir":["ltr"]}
+{"page":160,"change":"ContentChange","types":["NUMBERED_LIST"],"str":". . . I n t h e i n t e l l e c t o f t h e t r a i n e d t h i n k e r i t c o n c e n t r a t e s — b y a p r o c e s s w h i c h w e","line":31,"x":72,"y":107.27999999999997,"width":"407.51","height":"14.40","fontName":["AAAAAC+LiberationSerif"],"dir":["ltr"]}
+{"page":463,"change":"ContentChange","types":["LIST"],"str":"- Y o u p a y a r o y a l t y f e e o f 2 0 % o f t h e g r o s s p r o f i t s y o u d e r i v e f r o m","line":31,"x":72,"y":339.84000000000003,"width":"274.75","height":"8.64","fontName":["AAAAAA+LiberationMono"],"dir":["ltr"]}
+{"page":463,"change":"ContentChange","types":["LIST"],"str":"- Y o u p r o v i d e a f u l l r e f u n d o f a n y m o n e y p a i d b y a u s e r w h o n o t i f i e s","line":43,"x":72,"y":208.80000000000007,"width":"279.94","height":"8.64","fontName":["AAAAAA+LiberationMono"],"dir":["ltr"]}
+{"page":463,"change":"ContentChange","types":["LIST"],"str":"- Y o u p r o v i d e , i n a c c o r d a n c e w i t h p a r a g r a p h 1 . F . 3 , a f u l l r e f u n d o f a n y","line":50,"x":72,"y":128.15999999999997,"width":"305.86","height":"8.64","fontName":["AAAAAA+LiberationMono"],"dir":["ltr"]}
+{"page":463,"change":"ContentChange","types":["LIST"],"str":"- Y o u c o m p l y w i t h a l l o t h e r t e r m s o f t h i s a g r e e m e n t f o r f r e e","line":54,"x":72,"y":77.75999999999999,"width":"254.02","height":"8.64","fontName":["AAAAAA+LiberationMono"],"dir":["ltr"]}

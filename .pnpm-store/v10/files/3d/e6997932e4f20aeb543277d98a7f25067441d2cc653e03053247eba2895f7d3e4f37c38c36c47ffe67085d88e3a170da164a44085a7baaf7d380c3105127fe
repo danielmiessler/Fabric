@@ -1,0 +1,27 @@
+import Item from './Item';
+import ParseResult from './ParseResult';
+import PdfParser from './PdfParser';
+import type ProgressListenFunction from './ProgressListenFunction';
+import ItemTransformer from './transformer/ItemTransformer';
+export type PdfSource = string | Uint8Array | object;
+export interface Converter {
+    convert: (items: Item[]) => string;
+}
+interface Options {
+    debug: boolean;
+    progressListener: ProgressListenFunction;
+}
+export interface TransformationResult {
+    convert(converter: Converter): string;
+}
+export declare function parseAndTransform(src: PdfSource, parser: PdfParser, transformers: ItemTransformer[], progressListener: ProgressListenFunction): Promise<TransformationResult>;
+export declare function convert(src: PdfSource, parser: PdfParser, transformers: ItemTransformer[], converter: Converter, options?: Options): Promise<string>;
+/**
+ * Goes through all transformer and makes sure each required column is available in its predecessor schema.
+ *
+ * @param inputSchema
+ * @param transformers
+ */
+export declare function verifyRequiredColumns(inputSchema: string[], transformers: ItemTransformer[]): void;
+export declare function transform(parseResult: ParseResult, transformers: ItemTransformer[]): Item[];
+export {};

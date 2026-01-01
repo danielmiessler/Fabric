@@ -1,0 +1,29 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const ItemTransformer_1 = require("./ItemTransformer");
+const LineItemMerger_1 = require("../debug/LineItemMerger");
+class DetectLinks extends ItemTransformer_1.default {
+    constructor() {
+        super('Detect Links', 'Detect occurrences http links', {
+            requireColumns: ['str'],
+            debug: {
+                itemMerger: new LineItemMerger_1.default(false),
+            },
+        });
+    }
+    transform(context, inputItems) {
+        return {
+            // TODO this is missing links which are just part of an item
+            items: inputItems.map((item) => {
+                const itemText = item.data['str'];
+                if (itemText.startsWith('http:') || itemText.startsWith('www.')) {
+                    // wordString = `http://${wordString}`; TODO www version
+                    return item.withTokenTypes(['LINK']);
+                }
+                return item;
+            }),
+            messages: [`Detected ${'?'} links.`],
+        };
+    }
+}
+exports.default = DetectLinks;

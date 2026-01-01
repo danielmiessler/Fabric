@@ -1,0 +1,51 @@
+{
+  "name": "kleur",
+  "version": "4.1.5",
+  "repository": "lukeed/kleur",
+  "description": "The fastest Node.js library for formatting terminal text with ANSI colors~!",
+  "module": "index.mjs",
+  "types": "index.d.ts",
+  "main": "index.js",
+  "license": "MIT",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.mjs",
+      "require": "./index.js"
+    },
+    "./colors": {
+      "types": "./colors.d.ts",
+      "import": "./colors.mjs",
+      "require": "./colors.js"
+    }
+  },
+  "files": [
+    "*.d.ts",
+    "colors.*",
+    "index.*"
+  ],
+  "author": {
+    "name": "Luke Edwards",
+    "email": "luke.edwards05@gmail.com",
+    "url": "https://lukeed.com"
+  },
+  "scripts": {
+    "build": "node build",
+    "test": "uvu -r esm -i utils -i xyz"
+  },
+  "engines": {
+    "node": ">=6"
+  },
+  "keywords": [
+    "ansi",
+    "cli",
+    "color",
+    "colors",
+    "console",
+    "terminal"
+  ],
+  "devDependencies": {
+    "esm": "3.2.25",
+    "uvu": "0.3.3"
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "pages": 7,
+  "items": 483,
+  "groupedItems": 217,
+  "changes": 127,
+  "schema": [
+    {
+      "name": "block"
+    },
+    {
+      "name": "line"
+    },
+    {
+      "name": "token types"
+    },
+    {
+      "name": "types"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":0,"change":"ContentChange","types":["CODE"],"str":"Software for the automated detection of microplastic","dir":"ltr","width":"336.78","height":"12.00","transform":["12.00","0.00","0.00","12.00","56.70","694.18"],"fontName":"BCDGEE+Montserrat-Bold","x":56.7,"y":694.18,"line":5,"block":2}
+{"page":0,"change":"ContentChange","types":["CODE"],"str":"By exercising the Licensed Rights (defined below), You accept and agree to be bound by ","dir":"ltr","width":"484.38","height":"13.02","transform":["13.02","0.00","0.00","13.02","56.70","666.46"],"fontName":"BCDHEE+SourceSansPro-Regular","x":56.7,"y":666.46,"line":6,"block":3}
+{"page":0,"change":"ContentChange","types":["CODE"],"str":"the    terms    and    conditions    of    this    Creative    Commons    Attribution - ShareAlike    4.0 ","block":3,"line":7,"x":56.7,"y":650.08,"width":"484.38","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":0,"change":"ContentChange","types":["CODE"],"str":"International Public License (\"Public License\"). To the extent this Public License may be ","dir":"ltr","width":"484.36","height":"13.02","transform":["13.02","0.00","0.00","13.02","56.70","633.76"],"fontName":"BCDHEE+SourceSansPro-Regular","x":56.7,"y":633.76,"line":8,"block":3}
+{"page":0,"change":"ContentChange","types":["CODE"],"str":"interpreted  as  a  contract,  You  are  granted  the  Licensed  Rights  in  consideration  of  Your ","dir":"ltr","width":"484.28","height":"13.02","transform":["13.02","0.00","0.00","13.02","56.70","617.44"],"fontName":"BCDHEE+SourceSansPro-Regular","x":56.7,"y":617.44,"line":9,"block":3}
+{"page":0,"change":"ContentChange","types":["CODE"],"str":"a cceptance  of  these  terms  and  conditions,  and  the  Licensor  grants  You  such  rights  in ","block":3,"line":10,"x":56.7,"y":601.06,"width":"484.33","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":0,"change":"ContentChange","types":["CODE"],"str":"consideration   of   benefits   the   Licensor   receives   from   making   the   Licensed   Material ","dir":"ltr","width":"484.34","height":"13.02","transform":["13.02","0.00","0.00","13.02","56.70","584.74"],"fontName":"BCDHEE+SourceSansPro-Regular","x":56.7,"y":584.74,"line":11,"block":3}
+{"page":0,"change":"ContentChange","types":["CODE"],"str":"available under these terms and conditions.","dir":"ltr","width":"237.81","height":"13.02","transform":["13.02","0.00","0.00","13.02","56.70","568.36"],"fontName":"BCDHEE+SourceSansPro-Regular","x":56.7,"y":568.36,"line":12,"block":3}
+{"page":0,"change":"ContentChange","types":["CODE"],"str":"Section 1  – Definitions.","block":4,"line":13,"x":56.7,"y":540.04,"width":"121.37","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular","BCDJEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":1,"change":"ContentChange","types":["CODE"],"str":"Section 2  – Scope.","block":18,"line":22,"x":56.7,"y":385.58,"width":"96.06","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular","BCDJEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":2,"change":"ContentChange","types":["CODE"],"str":"necessary  to  circumvent  Effective  Technological  Measu res.  For  purposes  of  this  Public ","block":24,"line":3,"x":56.7,"y":744.06,"width":"484.30","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":2,"change":"ContentChange","types":["CODE"],"str":"License,  simply  making  modifications  authorized  by  this  Section 2(a)(4) never  produces ","block":24,"line":4,"x":56.7,"y":727.74,"width":"479.20","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":2,"change":"ContentChange","types":["CODE"],"str":"Adapted Material.","dir":"ltr","width":"96.32","height":"13.02","transform":["13.02","0.00","0.00","13.02","56.70","711.42"],"fontName":"BCDHEE+SourceSansPro-Regular","x":56.7,"y":711.42,"line":5,"block":24}
+{"page":2,"change":"ContentChange","types":["CODE"],"str":"Section 3  – License Conditions.","block":32,"line":32,"x":56.7,"y":192.14,"width":"165.26","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular","BCDJEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":2,"change":"ContentChange","types":["CODE"],"str":"Your exercise of the Licens ed Rights is expressly made subject to the following conditions.","block":33,"line":33,"x":56.7,"y":163.82,"width":"481.95","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":3,"change":"ContentChange","types":["CODE"],"str":"A. retain the following if it is supplied by the Licensor with the Licensed Material:","block":36,"line":3,"x":38.7,"y":744.06,"width":"430.08","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":3,"change":"ContentChange","types":["CODE"],"str":"i. identification  of  the  creator(s)  of  the  Licensed  Material  and  any  others  designated  to ","block":36,"line":4,"x":32.28,"y":721.74,"width":"490.69","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":3,"change":"ContentChange","types":["CODE"],"str":"receive  attribution,  in  any  reasonable  manner  requested  by  the  Licensor  (including  by ","dir":"ltr","width":"484.36","height":"13.02","transform":["13.02","0.00","0.00","13.02","56.70","705.42"],"fontName":"BCDHEE+SourceSansPro-Regular","x":56.7,"y":705.42,"line":5,"block":36}
+{"page":3,"change":"ContentChange","types":["CODE"],"str":"pseudonym if designated);","dir":"ltr","width":"144.38","height":"13.02","transform":["13.02","0.00","0.00","13.02","56.70","689.02"],"fontName":"BCDHEE+SourceSansPro-Regular","x":56.7,"y":689.02,"line":6,"block":36}
+{"page":3,"change":"ContentChange","types":["CODE"],"str":"ii. a copyright notice;","block":36,"line":7,"x":29.04,"y":666.7,"width":"110.72","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":3,"change":"ContentChange","types":["CODE"],"str":"Citing siMPle in academic papers:","dir":"ltr","width":"194.34","height":"10.98","transform":["10.98","0.00","0.00","10.98","56.70","571.48"],"fontName":"BCDGEE+Montserrat-Bold","x":56.7,"y":571.48,"line":11,"block":39}
+{"page":3,"change":"ContentChange","types":["CODE"],"str":"B. indicate  if  You  modified  the  Licensed  Material  and  retain  an  indication  of  any  prev ious ","block":41,"line":16,"x":38.7,"y":498.04,"width":"495.26","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":3,"change":"ContentChange","types":["CODE"],"str":"modifications; and","dir":"ltr","width":"101.73","height":"13.02","transform":["13.02","0.00","0.00","13.02","56.70","481.72"],"fontName":"BCDHEE+SourceSansPro-Regular","x":56.7,"y":481.72,"line":17,"block":41}
+{"page":3,"change":"ContentChange","types":["CODE"],"str":"C. indicate the Licensed Material is licensed under this Public License, and include the text ","block":41,"line":18,"x":38.7,"y":459.34,"width":"494.97","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":3,"change":"ContentChange","types":["CODE"],"str":"of, or the URI or hyperlink to, this Public License.","dir":"ltr","width":"262.11","height":"13.02","transform":["13.02","0.00","0.00","13.02","56.70","443.02"],"fontName":"BCDHEE+SourceSansPro-Regular","x":56.7,"y":443.02,"line":19,"block":41}
+{"page":3,"change":"ContentChange","types":["CODE"],"str":"In addition to the conditions in Section 3(a) , if You Share Adapted Material You produce, ","block":43,"line":27,"x":56.7,"y":282.26,"width":"481.61","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":3,"change":"ContentChange","types":["CODE"],"str":"the following conditions also apply.","dir":"ltr","width":"192.62","height":"13.02","transform":["13.02","0.00","0.00","13.02","56.70","265.94"],"fontName":"BCDHEE+SourceSansPro-Regular","x":56.7,"y":265.94,"line":28,"block":43}
+{"page":4,"change":"ContentChange","types":["CODE"],"str":"Section 4  – Sui Generis Database Rights.","block":45,"line":3,"x":56.7,"y":744.06,"width":"214.01","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular","BCDJEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":4,"change":"ContentChange","types":["CODE"],"str":"Where the Licensed Rights include Sui Generis Database Rights that apply to Your use of ","dir":"ltr","width":"484.30","height":"13.02","transform":["13.02","0.00","0.00","13.02","56.70","715.74"],"fontName":"BCDHEE+SourceSansPro-Regular","x":56.7,"y":715.74,"line":4,"block":46}
+{"page":4,"change":"ContentChange","types":["CODE"],"str":"the Licensed Material:","dir":"ltr","width":"118.79","height":"13.02","transform":["13.02","0.00","0.00","13.02","56.70","699.40"],"fontName":"BCDHEE+SourceSansPro-Regular","x":56.7,"y":699.4,"line":5,"block":46}
+{"page":4,"change":"ContentChange","types":["CODE"],"str":"For  the  avoidance  of  doubt,  this  Section 4 supplements  and  does  not  replace  Your ","block":50,"line":14,"x":56.7,"y":520.3,"width":"479.18","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":4,"change":"ContentChange","types":["CODE"],"str":"obligations under this Public License where the  Licensed Rights include other Copyright ","block":50,"line":15,"x":56.7,"y":503.98,"width":"483.69","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":4,"change":"ContentChange","types":["CODE"],"str":"and Similar Rights.","dir":"ltr","width":"101.82","height":"13.02","transform":["13.02","0.00","0.00","13.02","56.70","487.66"],"fontName":"BCDHEE+SourceSansPro-Regular","x":56.7,"y":487.66,"line":16,"block":50}
+{"page":4,"change":"ContentChange","types":["CODE"],"str":"Section 5  – Disclaimer of Warranties and Limitation of Liability.","block":51,"line":17,"x":56.7,"y":459.28,"width":"337.04","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular","BCDJEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":4,"change":"ContentChange","types":["CODE"],"str":"Section 6  – Term and Termination.","block":55,"line":36,"x":56.7,"y":102.78,"width":"184.60","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular","BCDJEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":5,"change":"ContentChange","types":["CODE"],"str":"For  the  avoidance  of  doubt,  this  Section 6(b) does  not  affect  any  right  the  Licensor  m ay ","block":59,"line":11,"x":56.7,"y":569.32,"width":"479.00","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":5,"change":"ContentChange","types":["CODE"],"str":"have to seek remedies for Your violations of this Public License.","dir":"ltr","width":"341.54","height":"13.02","transform":["13.02","0.00","0.00","13.02","56.70","553.00"],"fontName":"BCDHEE+SourceSansPro-Regular","x":56.7,"y":553,"line":12,"block":59}
+{"page":5,"change":"ContentChange","types":["CODE"],"str":"Section 7  – Other Terms and Conditions.","block":62,"line":17,"x":56.7,"y":439.3,"width":"215.72","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular","BCDJEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":5,"change":"ContentChange","types":["CODE"],"str":"Section 8  – Interpretation.","block":65,"line":23,"x":56.7,"y":309.2,"width":"139.26","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular","BCDJEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":6,"change":"ContentChange","types":["CODE"],"str":"Creative   Commons   is   not   a   party   to   its   public   licenses.   Notwithstanding,   Creative ","dir":"ltr","width":"484.34","height":"13.02","transform":["13.02","0.00","0.00","13.02","56.70","658.72"],"fontName":"BCDHEE+SourceSansPro-Regular","x":56.7,"y":658.72,"line":6,"block":70}
+{"page":6,"change":"ContentChange","types":["CODE"],"str":"Commons may elect to apply one of its public licenses to material it publishes and in those ","dir":"ltr","width":"484.54","height":"13.02","transform":["13.02","0.00","0.00","13.02","56.70","642.34"],"fontName":"BCDHEE+SourceSansPro-Regular","x":56.7,"y":642.34,"line":7,"block":70}
+{"page":6,"change":"ContentChange","types":["CODE"],"str":"instances  will be considered the “Licensor.” The text of the Creative Commons public ","block":70,"line":8,"x":56.7,"y":626.02,"width":"482.55","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular","BCDJEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":6,"change":"ContentChange","types":["CODE"],"str":"licenses  is  dedicated  to  the  public  domain  under  the CC0  Public  Domain  Dedication . ","block":70,"line":9,"x":56.7,"y":609.7,"width":"481.78","height":"13.72","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":6,"change":"ContentChange","types":["CODE"],"str":"Except  for  the  limited purpose  of  indicating  that  material  is  shared  under  a  Creative ","block":70,"line":10,"x":56.7,"y":593.32,"width":"479.34","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":6,"change":"ContentChange","types":["CODE"],"str":"Commons  public  license  or  as  otherwise  permitted  by  the  Creative  Commons  policies ","dir":"ltr","width":"484.34","height":"13.02","transform":["13.02","0.00","0.00","13.02","56.70","577.00"],"fontName":"BCDHEE+SourceSansPro-Regular","x":56.7,"y":577,"line":11,"block":70}
+{"page":6,"change":"ContentChange","types":["CODE"],"str":"published  at creativecommons.org/policies ,  Creative  Commo ns  does  not  authorize  the ","block":70,"line":12,"x":56.7,"y":560.68,"width":"481.91","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":6,"change":"ContentChange","types":["CODE"],"str":"use of the trademark “Creative Commons” or any other trademark or logo of Creative ","dir":"ltr","width":"484.33","height":"13.02","transform":["13.02","0.00","0.00","13.02","56.70","544.30"],"fontName":"BCDJEE+SourceSansPro-Regular","x":56.7,"y":544.3,"line":13,"block":70}
+{"page":6,"change":"ContentChange","types":["CODE"],"str":"Commons  without  its  prior  written  consent  including,  without  limitation,  in  connection ","dir":"ltr","width":"484.33","height":"13.02","transform":["13.02","0.00","0.00","13.02","56.70","527.98"],"fontName":"BCDHEE+SourceSansPro-Regular","x":56.7,"y":527.98,"line":14,"block":70}
+{"page":6,"change":"ContentChange","types":["CODE"],"str":"with   any   unauthorized   modifications   to   any   of   its   public   lic enses   or   any   other ","block":70,"line":15,"x":56.7,"y":511.66,"width":"484.32","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":6,"change":"ContentChange","types":["CODE"],"str":"arrangements,  understandings,  or  agreements  concerning  use  of  licensed  material.  For ","dir":"ltr","width":"484.41","height":"13.02","transform":["13.02","0.00","0.00","13.02","56.70","495.28"],"fontName":"BCDHEE+SourceSansPro-Regular","x":56.7,"y":495.28,"line":16,"block":70}
+{"page":6,"change":"ContentChange","types":["CODE"],"str":"the  avoidance  of  doubt,  this  paragraph  does  not  form  part  of  the  public  licenses.","dir":"ltr","width":"481.67","height":"13.02","transform":["13.02","0.00","0.00","13.02","56.70","478.96"],"fontName":"BCDHEE+SourceSansPro-Regular","x":56.7,"y":478.96,"line":17,"block":70}
+{"page":6,"change":"ContentChange","types":["CODE"],"str":"Creative Commons may be contacted at creativecommons.org .","block":71,"line":18,"x":56.7,"y":446.26,"width":"338.95","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}

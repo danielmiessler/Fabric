@@ -1,0 +1,57 @@
+{
+  "name": "vite-plugin-tailwind-purgecss",
+  "version": "0.2.1",
+  "description": "Vite plugin for PurgeCSS",
+  "module": "dist/index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "repository": {
+    "url": "https://github.com/AdrianGonz97/vite-plugin-tailwind-purgecss",
+    "type": "git"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "keywords": [
+    "purgeCSS",
+    "sveltekit",
+    "svelte",
+    "rollup",
+    "tailwind",
+    "tailwindcss",
+    "vite",
+    "vite-plugin",
+    "skeleton"
+  ],
+  "author": "AdrianGonz97",
+  "license": "MIT",
+  "dependencies": {
+    "estree-walker": "^3.0.3",
+    "purgecss": "^6.0.0"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.26.2",
+    "@types/node": "^18.11.18",
+    "prettier": "^2.8.1",
+    "tsup": "^6.5.0",
+    "typescript": "^4.9.4",
+    "vite": "^5.0.0"
+  },
+  "files": [
+    "dist"
+  ],
+  "peerDependencies": {
+    "vite": "^4.1.1 || ^5.0.0"
+  },
+  "scripts": {
+    "dev": "tsup --watch",
+    "build": "tsup",
+    "lint": "tsc",
+    "release": "pnpm run build && changeset publish",
+    "format": "prettier --write \"./src/**/*.{ts,svelte}\""
+  }
+}

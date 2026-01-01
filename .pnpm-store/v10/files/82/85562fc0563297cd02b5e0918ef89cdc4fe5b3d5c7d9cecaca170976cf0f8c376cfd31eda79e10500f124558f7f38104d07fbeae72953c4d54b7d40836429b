@@ -1,0 +1,91 @@
+{
+  "pages": 255,
+  "items": 20093,
+  "groupedItems": 7275,
+  "changes": 123,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "token types"
+    },
+    {
+      "name": "types"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":0,"change":"ContentChange","types":["H1"],"str":"WOOD-UP","dir":"ltr","width":"312.99","height":"64.00","transform":["64.00","0.00","0.00","64.00","55.56","408.09"],"fontName":"NXPYEX+AkzidenzGroteskPro-Bold","x":55.5591,"y":408.0945,"line":0}
+{"page":0,"change":"ContentChange","types":["H2"],"str":"Aufwertung der Produktionskette ","dir":"ltr","width":"284.97","height":"18.00","transform":["18.00","0.00","0.00","18.00","56.27","375.98"],"fontName":"NXPYEX+AkzidenzGroteskPro-Bold","x":56.2677,"y":375.9803,"line":1}
+{"page":0,"change":"ContentChange","types":["H2"],"str":"von Holzbiokohle für Energie, ","dir":"ltr","width":"252.66","height":"18.00","transform":["18.00","0.00","0.00","18.00","56.27","353.98"],"fontName":"NXPYEX+AkzidenzGroteskPro-Bold","x":56.2677,"y":353.9803,"line":2}
+{"page":0,"change":"ContentChange","types":["H2"],"str":"Bodenfruchtbarkeit und Klimaschutz","dir":"ltr","width":"305.41","height":"18.00","transform":["18.00","0.00","0.00","18.00","56.27","331.98"],"fontName":"NXPYEX+AkzidenzGroteskPro-Bold","x":56.2677,"y":331.9803,"line":3}
+{"page":0,"change":"ContentChange","types":["H3"],"str":"Giustino Tonon (Hrsg.)","dir":"ltr","width":"132.32","height":"13.00","transform":["13.00","0.00","0.00","13.00","56.27","296.98"],"fontName":"NXPYEX+AkzidenzGroteskPro-Bold","x":56.2677,"y":296.9803,"line":4}
+{"page":3,"change":"ContentChange","types":["H1"],"str":"WOOD-UP","dir":"ltr","width":"312.99","height":"64.00","transform":["64.00","0.00","0.00","64.00","55.56","408.09"],"fontName":"NXPYEX+AkzidenzGroteskPro-Bold","x":55.5591,"y":408.0945,"line":0}
+{"page":3,"change":"ContentChange","types":["H2"],"str":"Aufwertung der Produktionskette ","dir":"ltr","width":"284.97","height":"18.00","transform":["18.00","0.00","0.00","18.00","56.27","375.98"],"fontName":"NXPYEX+AkzidenzGroteskPro-Bold","x":56.2677,"y":375.9803,"line":1}
+{"page":3,"change":"ContentChange","types":["H2"],"str":"von Holzbiokohle für Energie, ","dir":"ltr","width":"252.66","height":"18.00","transform":["18.00","0.00","0.00","18.00","56.27","353.98"],"fontName":"NXPYEX+AkzidenzGroteskPro-Bold","x":56.2677,"y":353.9803,"line":2}
+{"page":3,"change":"ContentChange","types":["H2"],"str":"Bodenfruchtbarkeit und Klimaschutz","dir":"ltr","width":"305.41","height":"18.00","transform":["18.00","0.00","0.00","18.00","56.27","331.98"],"fontName":"NXPYEX+AkzidenzGroteskPro-Bold","x":56.2677,"y":331.9803,"line":3}
+{"page":3,"change":"ContentChange","types":["H3"],"str":"Giustino Tonon (Hrsg.)","dir":"ltr","width":"132.32","height":"13.00","transform":["13.00","0.00","0.00","13.00","56.27","296.98"],"fontName":"NXPYEX+AkzidenzGroteskPro-Bold","x":56.2677,"y":296.9803,"line":4}
+{"page":12,"change":"ContentChange","types":["H4"],"str":"1. Einleitung","line":6,"x":68.04,"y":480.36,"width":"62.60","height":"12.00","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":14,"change":"ContentChange","types":["H4"],"str":"2. Materialien und Methoden","line":15,"x":68.03999999999999,"y":352.38,"width":"148.71","height":"12.00","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":21,"change":"ContentChange","types":["H4"],"str":"3. Ergebnisse und Diskussion","line":5,"x":70.92,"y":492.36,"width":"154.71","height":"12.00","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":41,"change":"ContentChange","types":["H4"],"str":"4. Technisch- wirtschaftliche Analyse möglicher Eingriffe ","line":2,"x":70.92,"y":564.36,"width":"295.98","height":"12.00","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":41,"change":"ContentChange","types":["H4"],"str":"zur Anlagenoptimierung in Hinblick auf Polygeneration","dir":"ltr","width":"288.06","height":"12.00","transform":["12.00","0.00","0.00","12.00","87.90","550.56"],"fontName":"CRDKGT+ArialMT","x":87.89999999999999,"y":550.5600000000001,"line":3}
+{"page":51,"change":"ContentChange","types":["H4"],"str":"5. Schlussfolgerungen","line":2,"x":70.92,"y":564.36,"width":"115.35","height":"12.00","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":56,"change":"ContentChange","types":["H4"],"str":"1. Einleitung","line":2,"x":68.04,"y":564.24,"width":"62.60","height":"12.00","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":59,"change":"ContentChange","types":["H4"],"str":"2. Materialien und Methoden  ","line":13,"x":70.92,"y":394.26,"width":"155.40","height":"12.00","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":62,"change":"ContentChange","types":["H4"],"str":"3. Ergebnisse und Diskussion  ","line":11,"x":68.04,"y":408.24,"width":"161.40","height":"12.00","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":76,"change":"ContentChange","types":["H4"],"str":"4. Schlussfolgerungen","line":26,"x":68.04,"y":198.24,"width":"115.35","height":"12.00","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":82,"change":"ContentChange","types":["H4"],"str":"1. Einleitung","line":2,"x":68.04,"y":569.9999,"width":"62.60","height":"12.00","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":84,"change":"ContentChange","types":["H4"],"str":"2. Materialien und Methoden","line":24,"x":68.04,"y":232.02,"width":"148.71","height":"12.00","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":88,"change":"ContentChange","types":["H4"],"str":"3. Ergebnisse und Diskussion","line":4,"x":68.04,"y":512.04,"width":"154.71","height":"12.00","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":97,"change":"ContentChange","types":["H4"],"str":"4. Schlussfolgerungen","line":3,"x":70.92,"y":569.9999,"width":"115.35","height":"12.00","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":102,"change":"ContentChange","types":["H4"],"str":"1. Einleitung","line":16,"x":68.04,"y":342.42,"width":"62.60","height":"12.00","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":106,"change":"ContentChange","types":["H4"],"str":"2. Materialien und Methoden","line":2,"x":68.04,"y":561.42,"width":"148.71","height":"12.00","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":119,"change":"ContentChange","types":["H4"],"str":"3. Ergebnisse","line":19,"x":70.92,"y":279.42,"width":"69.99","height":"12.00","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":139,"change":"ContentChange","types":["H4"],"str":"4. Diskussion","line":11,"x":70.92,"y":368.16,"width":"67.93","height":"12.00","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":144,"change":"ContentChange","types":["H4"],"str":"5. Schlussfolgerungen","line":14,"x":68.04,"y":363.42,"width":"115.35","height":"12.00","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":150,"change":"ContentChange","types":["H4"],"str":"1. Anwendung von Biochar als Bodenverbesserungsmittel: ","line":20,"x":68.04,"y":291.24,"width":"307.49","height":"12.00","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":150,"change":"ContentChange","types":["H4"],"str":"Wirkungen auf die Gesamtfruchtbarkeit der Böden und ","dir":"ltr","width":"293.46","height":"12.00","transform":["12.00","0.00","0.00","12.00","85.02","277.44"],"fontName":"CRDKGT+ArialMT","x":85.01999999999998,"y":277.44,"line":21}
+{"page":150,"change":"ContentChange","types":["H4"],"str":"die Wachstumsperformance der Pflanzen","dir":"ltr","width":"219.96","height":"12.00","transform":["12.00","0.00","0.00","12.00","85.02","263.64"],"fontName":"CRDKGT+ArialMT","x":85.01999999999998,"y":263.64,"line":22}
+{"page":154,"change":"ContentChange","types":["H4"],"str":"2. W irkungen  der  Anwendung  von  Biochar  auf  den  Stick -","line":2,"x":68.04,"y":564.24,"width":"307.54","height":"12.00","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":154,"change":"ContentChange","types":["H4"],"str":"stoffzyklus  von  getopften Weinpflanzen","line":3,"x":85.02000000000004,"y":550.44,"width":"208.09","height":"12.00","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":165,"change":"ContentChange","types":["H4"],"str":"3. Wirkungen der Nutzung von Biochar auf die hydrischen ","line":2,"x":70.92,"y":564.24,"width":"306.75","height":"12.00","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":165,"change":"ContentChange","types":["H4"],"str":"Eigenschaften der Substrate und die potenziellen ","dir":"ltr","width":"264.90","height":"12.00","transform":["12.00","0.00","0.00","12.00","87.90","550.44"],"fontName":"CRDKGT+ArialMT","x":87.89999999999999,"y":550.44,"line":3}
+{"page":165,"change":"ContentChange","types":["H4"],"str":"Stickstoffverluste durch Auslaugung ","dir":"ltr","width":"194.14","height":"12.00","transform":["12.00","0.00","0.00","12.00","87.90","536.64"],"fontName":"CRDKGT+ArialMT","x":87.89999999999999,"y":536.6400000000001,"line":4}
+{"page":169,"change":"ContentChange","types":["H4"],"str":"4. Wirkungen der Anwendung von Biochar auf den ","line":6,"x":70.92,"y":273.24,"width":"268.11","height":"12.00","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":169,"change":"ContentChange","types":["H4"],"str":"physiologischen Zustand der einem zunehmenden ","dir":"ltr","width":"271.44","height":"12.00","transform":["12.00","0.00","0.00","12.00","87.90","259.44"],"fontName":"CRDKGT+ArialMT","x":87.89999999999999,"y":259.44,"line":7}
+{"page":169,"change":"ContentChange","types":["H4"],"str":"Trockenstress ausgesetzten Weinpflanzen","dir":"ltr","width":"226.08","height":"12.00","transform":["12.00","0.00","0.00","12.00","87.90","245.64"],"fontName":"CRDKGT+ArialMT","x":87.89999999999999,"y":245.64,"line":8}
+{"page":173,"change":"ContentChange","types":["H4"],"str":"5. Schluss bemerkungen","line":2,"x":70.92,"y":564.24,"width":"125.34","height":"12.00","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":180,"change":"ContentChange","types":["H4"],"str":"1. Einleitung","line":26,"x":68.04,"y":210.24,"width":"62.60","height":"12.00","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":182,"change":"ContentChange","types":["H4"],"str":"2. Materialien und Methoden","line":2,"x":68.04,"y":564.24,"width":"148.71","height":"12.00","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":187,"change":"ContentChange","types":["H2"],"str":"𝑓𝑓 =","line":3,"x":70.92,"y":539.7,"width":"18.13","height":"13.98","fontName":["CJUSQJ+CambriaMath","WASIKV+CambriaMath"],"dir":["ltr"]}
+{"page":190,"change":"ContentChange","types":["H4"],"str":"3. Ergebnisse ","line":20,"x":68.04,"y":279.24,"width":"73.38","height":"12.00","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":200,"change":"ContentChange","types":["H4"],"str":"4. Diskussion","line":28,"x":68.04,"y":278.94,"width":"67.93","height":"12.00","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":207,"change":"ContentChange","types":["H4"],"str":"5. Schlussfolgerungen","line":13,"x":70.92,"y":394.62,"width":"115.35","height":"12.00","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":214,"change":"ContentChange","types":["H4"],"str":"1. Einleitung","line":16,"x":68.04,"y":345.24,"width":"62.60","height":"12.00","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":216,"change":"ContentChange","types":["H4"],"str":"2. Mate rialien und Methoden","line":19,"x":68.04,"y":296.22,"width":"148.74","height":"12.00","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":235,"change":"ContentChange","types":["H4"],"str":"3. Ergebnisse und Diskussion","dir":"ltr","width":"158.04","height":"12.00","transform":["12.00","0.00","0.00","12.00","70.92","564.24"],"fontName":"CRDKGT+ArialMT","x":70.92,"y":564.24,"line":2}
+{"page":249,"change":"ContentChange","types":["H4"],"str":"4. Perspektiven","dir":"ltr","width":"82.68","height":"12.00","transform":["12.00","0.00","0.00","12.00","70.92","564.24"],"fontName":"CRDKGT+ArialMT","x":70.92,"y":564.24,"line":2}
+{"page":251,"change":"ContentChange","types":["H4"],"str":"5. Schlussfolgerungen","dir":"ltr","width":"118.68","height":"12.00","transform":["12.00","0.00","0.00","12.00","70.92","506.22"],"fontName":"CRDKGT+ArialMT","x":70.92,"y":506.22,"line":4}

@@ -1,0 +1,53 @@
+{
+  "pages": 26,
+  "items": 1843,
+  "groupedItems": 1506,
+  "changes": 19,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "token types"
+    },
+    {
+      "name": "types"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":19,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"2012.    If  built,  the  new  road  would","dir":"ltr","width":"184.87","height":"12.00","transform":["12.00","0.00","0.00","12.00","34.02","290.99"],"fontName":"Gill Sans MT","x":34.015,"y":290.9890000000003,"line":15}
+{"page":26,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"1.   Encourage St Mary’s to develop its position as mother parish church (or minster) serving","dir":"ltr","width":"456.98","height":"12.00","transform":["12.00","0.00","0.00","12.00","24.14","530.44"],"fontName":"Gill Sans MT","x":24.145,"y":530.436,"line":3}
+{"page":26,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"2.   Play to St Mary’s strengths as a beautiful, historic and capacious building in a timeless setting","dir":"ltr","width":"456.98","height":"12.00","transform":["12.00","0.00","0.00","12.00","24.15","483.77"],"fontName":"Gill Sans MT","x":24.145000000000003,"y":483.77200000000005,"line":6}
+{"page":26,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"3.   Press ahead with the Appeal, prioritising a new, unifying and heated floor, flexible seating","dir":"ltr","width":"456.98","height":"12.00","transform":["12.00","0.00","0.00","12.00","24.15","451.00"],"fontName":"Gill Sans MT","x":24.145000000000003,"y":450.9960000000001,"line":8}
+{"page":26,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"4.   Consider inviting key arts organisations (eg Witney Music Festival , Witney Book Festival ,","line":10,"x":24.145000000000003,"y":418.22,"width":"448.95","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":26,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"5.   Work with local business partners to create wedding (and other) packages which combine","dir":"ltr","width":"456.98","height":"12.00","transform":["12.00","0.00","0.00","12.00","24.15","385.44"],"fontName":"Gill Sans MT","x":24.14500000000004,"y":385.444,"line":12}
+{"page":26,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"6.   Develop resources (with strong curriculum links) for primary and secondary teachers to","dir":"ltr","width":"456.98","height":"12.00","transform":["12.00","0.00","0.00","12.00","24.15","324.89"],"fontName":"Gill Sans MT","x":24.14500000000004,"y":324.8920000000001,"line":16}
+{"page":26,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"7.   Create attractive guides and GPS apps for newcomers to St Mary’s, immediately apparent","dir":"ltr","width":"456.98","height":"12.00","transform":["12.00","0.00","0.00","12.00","24.15","278.23"],"fontName":"Gill Sans MT","x":24.14500000000004,"y":278.2280000000002,"line":19}
+{"page":26,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"8.   Make the most of the east end sanctuary as a place set aside for quiet reflection.  Provide","dir":"ltr","width":"456.97","height":"12.00","transform":["12.00","0.00","0.00","12.00","24.15","231.56"],"fontName":"Gill Sans MT","x":24.14500000000004,"y":231.5640000000002,"line":22}
+{"page":26,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"9.   Consider the installation of inner glass doors at the west end, enabling the many passers-by","dir":"ltr","width":"456.97","height":"12.00","transform":["12.00","0.00","0.00","12.00","24.15","184.90"],"fontName":"Gill Sans MT","x":24.14500000000004,"y":184.90000000000018,"line":25}
+{"page":26,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"10. Consider developing a heritage and local identity trail, particularly for the many newcomers","dir":"ltr","width":"456.98","height":"12.00","transform":["12.00","0.00","0.00","12.00","24.15","138.24"],"fontName":"Gill Sans MT","x":24.14500000000004,"y":138.23600000000016,"line":28}
+{"page":26,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"11. Upgrade the parish website, add ‘virtual tours’ of the parish churches and their activities.","dir":"ltr","width":"456.97","height":"12.00","transform":["12.00","0.00","0.00","12.00","24.14","105.46"],"fontName":"Gill Sans MT","x":24.144999999999982,"y":105.46,"line":30}
+{"page":26,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"12. Consider upgrading the organ to recital standard to support first-rate musical performances.","dir":"ltr","width":"456.98","height":"12.00","transform":["12.00","0.00","0.00","12.00","24.14","44.91"],"fontName":"Gill Sans MT","x":24.144999999999982,"y":44.90799999999999,"line":34}
+{"page":27,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"2010.","dir":"ltr","width":"26.69","height":"12.00","transform":["12.00","0.00","0.00","12.00","627.68","431.85"],"fontName":"Gill Sans MT","x":627.685,"y":431.85100000000006,"line":38}

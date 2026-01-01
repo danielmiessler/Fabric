@@ -1,0 +1,238 @@
+{
+  "pages": 27,
+  "items": 1899,
+  "groupedItems": 1547,
+  "changes": 204,
+  "schema": [
+    {
+      "name": "line",
+      "annotation": "ADDED"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":1,"change":"Addition","str":"Cover photo: Brian Robert Marshall under Creative Commons Licence.","line":0,"x":34.015,"y":551.26,"width":"288.66","height":"10.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"Introduction     5","line":0,"x":452.032,"y":384.497,"width":"81.35","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"History  7","line":1,"x":452.032,"y":365.60900000000004,"width":"45.93","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"Setting and context      10","line":2,"x":452.032,"y":346.72100000000006,"width":"123.36","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"Witney’s people  12","line":3,"x":452.032,"y":327.8330000000001,"width":"94.89","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"Health   14","line":4,"x":452.032,"y":308.9450000000001,"width":"51.37","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"Witney at work  15","line":5,"x":452.032,"y":290.05700000000013,"width":"93.06","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"Housing  16","line":6,"x":452.032,"y":271.16900000000015,"width":"55.11","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"Crime  and safety  17","line":7,"x":452.032,"y":252.28100000000015,"width":"99.69","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"Education  18","line":8,"x":452.032,"y":233.39300000000014,"width":"63.14","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"Transport  20","line":9,"x":452.032,"y":214.50500000000014,"width":"64.49","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"Lifestyle and deprivation  21","line":10,"x":452.032,"y":195.61700000000013,"width":"133.67","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"Conclusions      23","line":11,"x":452.032,"y":176.72900000000013,"width":"87.37","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"What St Mary’s offers   25","line":12,"x":452.032,"y":157.84100000000012,"width":"123.37","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"Recommendations  27","line":13,"x":452.032,"y":138.95300000000012,"width":"105.64","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"Further information and links   28","line":14,"x":452.032,"y":120.06500000000011,"width":"159.37","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":4,"change":"Addition","str":"The  first  stage  of  the appeal   has","line":1,"x":452.032,"y":350.558,"width":"167.13","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":4,"change":"Addition","str":"A social audit for St Mary’s Church, Witney , was commissioned as part of","line":61,"x":451.823,"y":415.235,"width":"352.98","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":5,"change":"Addition","str":"example   the Indices   of   Multiple","line":2,"x":34.015,"y":459.067,"width":"166.61","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":5,"change":"Addition","str":"Deprivation  2010 ,  which  uses  data","line":3,"x":34.015,"y":445.179,"width":"176.02","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":5,"change":"Addition","str":"used throughout the audit.  The only","line":15,"x":34.015,"y":263.52300000000025,"width":"173.27","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":5,"change":"Addition","str":"® St Mary’s falls within SOA 010E, on the border of 010F.","line":29,"x":568.5,"y":68.976,"width":"209.34","height":"9.00","fontName":["Wingdings","Gill Sans MT"],"dir":["ltr"]}
+{"page":5,"change":"Addition","str":"(Map downloaded from ONS via Oxford Data Observatory )","line":30,"x":587.326,"y":54.488,"width":"176.47","height":"8.00","fontName":["Gill Sans MT Italic"],"dir":["ltr"]}
+{"page":5,"change":"Addition","str":"West Oxon 010 West Oxon 009","line":50,"x":595.737,"y":412.752,"width":"85.60","height":"7.00","fontName":["Gill Sans MT Italic"],"dir":["ltr"]}
+{"page":5,"change":"Addition","str":"(Map downloaded from ONS via Oxford Data Observatory )","line":53,"x":581.069,"y":329.912,"width":"186.88","height":"8.00","fontName":["Gill Sans MT Italic"],"dir":["ltr"]}
+{"page":5,"change":"Addition","str":"Map downloaded from A Church Near You","line":55,"x":144.56,"y":67.724,"width":"134.46","height":"8.00","fontName":["Gill Sans MT Italic"],"dir":["ltr"]}
+{"page":5,"change":"Addition","str":"the Indices  of  Multiple  Deprivation","line":57,"x":34.015,"y":442.047,"width":"177.79","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":5,"change":"Addition","str":"2010 ,  which  uses  data  from  2008)  is","line":58,"x":34.015,"y":428.159,"width":"185.19","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":5,"change":"Addition","str":"throughout  the  audit.    The Oxford","line":69,"x":227.70999999999998,"y":442.0470000000002,"width":"178.72","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":5,"change":"Addition","str":"County Council’s Data Observatory  is","line":70,"x":227.71,"y":428.159,"width":"185.19","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":6,"change":"Addition","str":"in  West  Oxfordshire  and","line":19,"x":639.8050000000001,"y":184.9149999999999,"width":"122.90","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":6,"change":"Addition","str":"protected  by Grade  I  listing  by","line":20,"x":639.8050000000001,"y":171.0269999999999,"width":"160.86","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":6,"change":"Addition","str":"English  Heritage   as  a  building  of","line":21,"x":639.805,"y":157.139,"width":"168.07","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":6,"change":"Addition","str":"( www.thebuckettree.bigcartel.com )","line":31,"x":29.326999999999998,"y":284.589,"width":"130.20","height":"10.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":6,"change":"Addition","str":"Some of Witney’s footballers ( Witney Town Football Club ) are known as the","line":35,"x":462.737,"y":377.986,"width":"345.14","height":"12.00","fontName":["Gill Sans MT","Gill Sans MT Italic"],"dir":["ltr"]}
+{"page":6,"change":"Addition","str":"Wool was the key to Witney’s success as a market town  for centuries.","line":39,"x":462.73699999999997,"y":317.434,"width":"341.86","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":6,"change":"Addition","str":"Square and Corn Street, from Trevor J Cooper’s Conjectural Reconstruction of the Bishop’s","line":45,"x":29.321,"y":85.082,"width":"355.46","height":"10.00","fontName":["Gill Sans MT","Gill Sans MT Italic"],"dir":["ltr"]}
+{"page":6,"change":"Addition","str":"New Town of Witney c 1300 , from A Walk Round Witney by Witney and District Historical","line":46,"x":29.320999999999998,"y":73.50899999999999,"width":"368.80","height":"10.00","fontName":["Gill Sans MT Italic","Gill Sans MT"],"dir":["ltr"]}
+{"page":6,"change":"Addition","str":"and Archaeological Society ( permission to reproduce applied for ).","line":47,"x":29.321000000000012,"y":61.935999999999986,"width":"253.49","height":"10.00","fontName":["Gill Sans MT","Gill Sans MT Italic"],"dir":["ltr"]}
+{"page":7,"change":"Addition","str":"Witney  church  life which","line":20,"x":34.015,"y":191.4910000000003,"width":"118.67","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":7,"change":"Addition","str":"continues today .","line":21,"x":34.015,"y":177.603,"width":"79.97","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":7,"change":"Addition","str":"were  Methodists:  attending","line":27,"x":34.015,"y":89.27499999999998,"width":"132.69","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":7,"change":"Addition","str":"Smiths Industries  bought a factory","line":37,"x":206.96800000000002,"y":358.147,"width":"164.45","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":7,"change":"Addition","str":"A map  showing  Witney  in  the","line":55,"x":206.96800000000002,"y":93.16300000000007,"width":"157.28","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":7,"change":"Addition","str":"1950s   (see  right)  shows  Church","line":56,"x":206.968,"y":79.275,"width":"164.45","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":7,"change":"Addition","str":"Maps from West Oxfordshire District Council  (Cogges Link Road enquiry, 2011,","line":59,"x":468.637,"y":89.715,"width":"325.78","height":"10.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":8,"change":"Addition","str":"1950s ,  however,  have  expanded","line":4,"x":462.358,"y":304.055,"width":"168.50","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":8,"change":"Addition","str":"Burwell,  Newland,  Cogges,","line":7,"x":462.35799999999995,"y":262.3910000000001,"width":"131.09","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":8,"change":"Addition","str":"estates  providing  good","line":10,"x":462.35799999999995,"y":220.72700000000006,"width":"110.13","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":8,"change":"Addition","str":"Witney  has  retained  and","line":19,"x":462.35799999999995,"y":85.73500000000001,"width":"119.29","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":9,"change":"Addition","str":"the parish of Witney . Holy Trinity  in","line":2,"x":34.015,"y":396.251,"width":"173.10","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":9,"change":"Addition","str":"town), St  John  the  Evangelist   in  the","line":4,"x":34.014999999999986,"y":368.475,"width":"178.92","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":9,"change":"Addition","str":"village of Hailey and St John the Baptist","line":5,"x":34.014999999999986,"y":354.58700000000005,"width":"182.01","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":9,"change":"Addition","str":"most  of  West  Oxfordshire’s","line":32,"x":227.17200000000003,"y":354.58700000000016,"width":"138.36","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":9,"change":"Addition","str":"residents”  ( Local  Development  Framework,","line":33,"x":227.17200000000003,"y":340.6990000000002,"width":"184.66","height":"12.00","fontName":["Gill Sans MT","Gill Sans MT Italic"],"dir":["ltr"]}
+{"page":9,"change":"Addition","str":"Draft Core Strategy, 2011 ).","line":34,"x":227.172,"y":326.811,"width":"105.38","height":"12.00","fontName":["Gill Sans MT Italic","Gill Sans MT"],"dir":["ltr"]}
+{"page":9,"change":"Addition","str":"attracting  people  who  might","line":41,"x":227.17199999999997,"y":224.59500000000006,"width":"137.08","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":9,"change":"Addition","str":"centre  of  town  but  nevertheless a","line":51,"x":227.17199999999997,"y":70.715,"width":"177.42","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":9,"change":"Addition","str":"conservation  area ,  gives  it  a  wide","line":53,"x":227.172,"y":42.939,"width":"184.66","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":11,"change":"Addition","str":"According  to Oxfordshire’s  Small","line":1,"x":34.015,"y":260.848,"width":"166.73","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":11,"change":"Addition","str":"Area  Population  Forecasts ,  based","line":2,"x":34.015,"y":246.96,"width":"173.67","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":11,"change":"Addition","str":"The Oxfordshire   Population   and","line":8,"x":34.015000000000015,"y":158.63199999999998,"width":"165.18","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":11,"change":"Addition","str":"household  forecasts  2010 ,  which","line":9,"x":34.015,"y":144.744,"width":"173.67","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":11,"change":"Addition","str":"highest   population    and   Witney","line":17,"x":216.187,"y":246.95999999999995,"width":"173.67","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":11,"change":"Addition","str":"of age to rise significantly by 2016 .","line":25,"x":216.187,"y":130.8559999999999,"width":"163.45","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":11,"change":"Addition","str":"1951 1961 1971 1981 1991 2001 2011 2012 2013 2014 2015 2016","line":46,"x":523.1850000000001,"y":404.8110000000001,"width":"203.24","height":"7.86","fontName":["Arial"],"dir":["ltr"]}
+{"page":11,"change":"Addition","str":"0% 20% 40% 60% 80% 100%","line":48,"x":545.515,"y":67.702,"width":"94.46","height":"7.87","fontName":["Arial"],"dir":["ltr"]}
+{"page":11,"change":"Addition","str":"Witney West 0-15","line":53,"x":509.18199999999996,"y":168.22500000000002,"width":"52.07","height":"7.87","fontName":["Arial"],"dir":["ltr"]}
+{"page":11,"change":"Addition","str":"0 1000 2000 3000 4000 5000 6000 7000 8000","line":66,"x":99.68700000000001,"y":287.82500000000016,"width":"140.95","height":"7.93","fontName":["Arial"],"dir":["ltr"]}
+{"page":11,"change":"Addition","str":"2012 2013 2014 2015 2016","line":83,"x":537.5319999999999,"y":233.67299999999994,"width":"77.29","height":"7.18","fontName":["Arial"],"dir":["ltr"]}
+{"page":12,"change":"Addition","str":"Witney North Witney South","line":31,"x":114.15400000000001,"y":388.356,"width":"85.79","height":"6.96","fontName":["Arial Bold"],"dir":["ltr"]}
+{"page":12,"change":"Addition","str":"7% Christian","line":76,"x":526.8009999999999,"y":331.212,"width":"42.09","height":"7.98","fontName":["Arial"],"dir":["ltr"]}
+{"page":13,"change":"Addition","str":"Disability domain. Indices of Multiple Depriviation 2010 ).","line":3,"x":507.10699999999997,"y":258.518,"width":"217.23","height":"10.00","fontName":["Gill Sans MT","Gill Sans MT Italic"],"dir":["ltr"]}
+{"page":13,"change":"Addition","str":"ü The Nuffield Practice","line":14,"x":34.015,"y":304.6010000000002,"width":"108.57","height":"12.00","fontName":["Wingdings","Gill Sans MT"],"dir":["ltr"]}
+{"page":13,"change":"Addition","str":"ü The   Windrush   Health   Centre","line":15,"x":34.015,"y":285.713,"width":"168.26","height":"12.00","fontName":["Wingdings","Gill Sans MT"],"dir":["ltr"]}
+{"page":13,"change":"Addition","str":"(the newly  constructed  centre   is","line":16,"x":44.927,"y":271.825,"width":"158.33","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":13,"change":"Addition","str":"ü Cogges Surgery","line":18,"x":34.01500000000002,"y":239.049,"width":"81.70","height":"12.00","fontName":["Wingdings","Gill Sans MT"],"dir":["ltr"]}
+{"page":13,"change":"Addition","str":"ü Deer Park Family Medical Practice","line":19,"x":34.015,"y":220.161,"width":"168.26","height":"12.00","fontName":["Wingdings","Gill Sans MT"],"dir":["ltr"]}
+{"page":13,"change":"Addition","str":"There  is  a Community  Hospital   at","line":20,"x":34.015,"y":201.273,"width":"168.71","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":13,"change":"Addition","str":"injuries  and  deaths  ( West  Oxfordshire","line":33,"x":216.187,"y":411.817,"width":"173.67","height":"12.00","fontName":["Gill Sans MT","Gill Sans MT Italic"],"dir":["ltr"]}
+{"page":13,"change":"Addition","str":"Health Profile 2011 ).","line":34,"x":216.187,"y":397.929,"width":"81.16","height":"12.00","fontName":["Gill Sans MT Italic","Gill Sans MT"],"dir":["ltr"]}
+{"page":13,"change":"Addition","str":"ü   tackling obesity","line":50,"x":216.187,"y":155.72100000000015,"width":"84.89","height":"12.00","fontName":["Wingdings","Gill Sans MT"],"dir":["ltr"]}
+{"page":13,"change":"Addition","str":"ü   increasing physical activity","line":51,"x":216.187,"y":136.83300000000014,"width":"136.31","height":"12.00","fontName":["Wingdings","Gill Sans MT"],"dir":["ltr"]}
+{"page":13,"change":"Addition","str":"ü   reducing     high     risk     alcohol","line":52,"x":216.187,"y":117.94500000000014,"width":"173.67","height":"12.00","fontName":["Wingdings","Gill Sans MT"],"dir":["ltr"]}
+{"page":13,"change":"Addition","str":"ü   improving  older  people’s  activity","line":54,"x":216.187,"y":85.16900000000012,"width":"173.67","height":"12.00","fontName":["Wingdings","Gill Sans MT"],"dir":["ltr"]}
+{"page":14,"change":"Addition","str":"estates  in  Witney  (Bromag,","line":2,"x":451.295,"y":372.276,"width":"132.76","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":14,"change":"Addition","str":"increasing  number  of  high","line":8,"x":451.295,"y":288.94800000000015,"width":"125.08","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":14,"change":"Addition","str":"employment  found  in  West","line":18,"x":451.295,"y":140.06800000000015,"width":"133.85","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":14,"change":"Addition","str":"Oxfordshire  (not  necessarily","line":28,"x":636.049,"y":358.3880000000002,"width":"139.66","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":14,"change":"Addition","str":"     West Oxon West Oxon   South East   GB","line":62,"x":172.70015,"y":229.831,"width":"208.21","height":"10.50","fontName":["Gill Sans MT Bold"],"dir":["ltr"]}
+{"page":14,"change":"Addition","str":"(employee jobs)  (%)          (%)        (%)","line":63,"x":187.26,"y":218.143,"width":"169.54","height":"10.00","fontName":["Gill Sans MT Bold"],"dir":["ltr"]}
+{"page":14,"change":"Addition","str":"Total employee jobs 38,900     -            -    -","line":64,"x":28.69999999999999,"y":194.997,"width":"182.07","height":"10.00","fontName":["Gill Sans MT Bold","Gill Sans MT"],"dir":["ltr"]}
+{"page":14,"change":"Addition","str":"Full-time   26,800     68.8         69.0        68.8","line":65,"x":28.69999999999999,"y":183.424,"width":"173.63","height":"10.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":14,"change":"Addition","str":"Part-time  12,200     31.2         31.0        31.2","line":66,"x":28.69999999999999,"y":171.851,"width":"175.52","height":"10.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":14,"change":"Addition","str":"Manufacturing  5,300       13.6          8.1         10.2","line":68,"x":28.69999999999999,"y":148.70499999999998,"width":"194.00","height":"10.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":14,"change":"Addition","str":"Construction  2,100       5.5          4.5           4.8","line":69,"x":28.69999999999999,"y":137.13199999999998,"width":"186.69","height":"10.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":14,"change":"Addition","str":"Services   30,600     78.5        85.7         83.5","line":70,"x":28.69999999999999,"y":125.55899999999997,"width":"172.99","height":"10.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":14,"change":"Addition","str":"  Distribution, hotels & restaurants 9,500 24.5     24.6         23.4","line":71,"x":28.69999999999999,"y":113.98599999999996,"width":"255.60","height":"10.00","fontName":["Gill Sans MT","Gill Sans MT Bold"],"dir":["ltr"]}
+{"page":14,"change":"Addition","str":"  Transport & communications  1,600       4.2          5.9           5.8","line":72,"x":28.69999999999999,"y":102.41299999999995,"width":"256.82","height":"10.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":14,"change":"Addition","str":"  Finance, IT, other business activities 8,100 20.8       24.0         22.0","line":73,"x":28.69999999999999,"y":90.83999999999995,"width":"270.46","height":"10.00","fontName":["Gill Sans MT","Gill Sans MT Bold"],"dir":["ltr"]}
+{"page":14,"change":"Addition","str":"  Public admin, education & health 7,700 19.8       25.6         27.0","line":74,"x":28.700000000000045,"y":79.26699999999994,"width":"256.91","height":"10.00","fontName":["Gill Sans MT","Gill Sans MT Bold"],"dir":["ltr"]}
+{"page":14,"change":"Addition","str":"  Other services    3,600       9.2          5.6           5.3","line":75,"x":28.700000000000045,"y":67.69399999999993,"width":"204.51","height":"10.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":14,"change":"Addition","str":"Tourism-related † 4,800       12.4          8.2           8.2","line":76,"x":28.700000000000045,"y":54.76799999999993,"width":"203.85","height":"10.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":14,"change":"Addition","str":"         Numbers    %","line":79,"x":171.15720000000002,"y":509.846,"width":"82.00","height":"10.50","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":14,"change":"Addition","str":"Witney Central    78  2.9","line":80,"x":27.156000000000034,"y":497.694,"width":"101.19","height":"10.50","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":14,"change":"Addition","str":"Witney East   72   1.5","line":81,"x":27.156000000000034,"y":485.54200000000003,"width":"86.84","height":"10.50","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":14,"change":"Addition","str":"Witney North      43   1.7","line":82,"x":27.156000000000034,"y":473.39000000000004,"width":"104.10","height":"10.50","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":14,"change":"Addition","str":"Witney South      79  2.2","line":83,"x":27.156000000000034,"y":461.23800000000006,"width":"101.19","height":"10.50","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":14,"change":"Addition","str":"Witney West       45  1.5","line":84,"x":27.156000000000034,"y":449.08600000000007,"width":"101.19","height":"10.50","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":14,"change":"Addition","str":"Hailey, Minster Lovell and Leafield  27  1.1","line":85,"x":27.156000000000034,"y":436.9340000000001,"width":"174.51","height":"10.50","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":14,"change":"Addition","str":"Ducklington  20  1.5","line":86,"x":27.156000000000034,"y":424.7820000000001,"width":"80.85","height":"10.50","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":14,"change":"Addition","str":"West Oxfordshire             913  1.4","line":87,"x":27.156000000000034,"y":412.6300000000001,"width":"145.52","height":"10.50","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":14,"change":"Addition","str":"Great Britain  -  3.8","line":88,"x":27.156000000000034,"y":400.4780000000001,"width":"77.80","height":"10.50","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":15,"change":"Addition","str":"detached  and  semi-detached","line":10,"x":34.015,"y":442.4830000000001,"width":"138.29","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":15,"change":"Addition","str":"map on page 8 ).  These have increased","line":12,"x":34.015,"y":414.707,"width":"185.77","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":15,"change":"Addition","str":"ü   Smiths Estate","line":14,"x":58.765,"y":382.85900000000004,"width":"73.28","height":"11.00","fontName":["Wingdings","Gill Sans MT"],"dir":["ltr"]}
+{"page":15,"change":"Addition","str":"ü   Burwell","line":15,"x":58.76499999999999,"y":364.908,"width":"46.70","height":"11.00","fontName":["Wingdings","Gill Sans MT"],"dir":["ltr"]}
+{"page":15,"change":"Addition","str":"ü   Newland","line":16,"x":58.76499999999999,"y":346.957,"width":"52.66","height":"11.00","fontName":["Wingdings","Gill Sans MT"],"dir":["ltr"]}
+{"page":15,"change":"Addition","str":"ü   Thorney Leys","line":17,"x":58.76499999999999,"y":329.006,"width":"74.61","height":"11.00","fontName":["Wingdings","Gill Sans MT"],"dir":["ltr"]}
+{"page":15,"change":"Addition","str":"ü   Deer Park","line":18,"x":58.76499999999999,"y":311.05499999999995,"width":"59.16","height":"11.00","fontName":["Wingdings","Gill Sans MT"],"dir":["ltr"]}
+{"page":15,"change":"Addition","str":"ü   Madley Park","line":19,"x":58.76499999999999,"y":293.1039999999999,"width":"67.80","height":"11.00","fontName":["Wingdings","Gill Sans MT"],"dir":["ltr"]}
+{"page":15,"change":"Addition","str":"ü   Jacobs Mill","line":20,"x":58.76499999999999,"y":275.1529999999999,"width":"60.38","height":"11.00","fontName":["Wingdings","Gill Sans MT"],"dir":["ltr"]}
+{"page":15,"change":"Addition","str":"occupied  and  according  to","line":26,"x":34.015,"y":181.83399999999986,"width":"128.37","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":15,"change":"Addition","str":"UpMyStreet.com , average prices over","line":27,"x":34.015,"y":167.94599999999986,"width":"185.77","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":15,"change":"Addition","str":"transferred  it  to Cottsway  Housing","line":35,"x":34.015,"y":51.84199999999996,"width":"178.91","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":15,"change":"Addition","str":"Association  in March 2001.","line":36,"x":34.015,"y":37.954,"width":"131.90","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":16,"change":"Addition","str":"Witney  is  protected  by Thames","line":1,"x":451.088,"y":372.161,"width":"165.83","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":16,"change":"Addition","str":"Valley Police  and community safety","line":2,"x":451.088,"y":358.273,"width":"174.14","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":16,"change":"Addition","str":"is the shared responsibility of West","line":3,"x":451.08799999999997,"y":344.38500000000005,"width":"170.51","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":16,"change":"Addition","str":"Partnership ,   which   includes   the","line":5,"x":451.088,"y":316.609,"width":"174.14","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":16,"change":"Addition","str":"ü   Youths  hanging  around,","line":12,"x":463.35999999999996,"y":209.39300000000006,"width":"131.59","height":"12.00","fontName":["Wingdings","Gill Sans MT"],"dir":["ltr"]}
+{"page":16,"change":"Addition","str":"ü   Speeding","line":15,"x":463.35999999999996,"y":162.72900000000004,"width":"54.71","height":"12.00","fontName":["Wingdings","Gill Sans MT"],"dir":["ltr"]}
+{"page":16,"change":"Addition","str":"ü   Litter / fly-tipping","line":16,"x":463.35999999999996,"y":143.84100000000004,"width":"95.99","height":"12.00","fontName":["Wingdings","Gill Sans MT"],"dir":["ltr"]}
+{"page":16,"change":"Addition","str":"ü   Vandalism / graffiti","line":17,"x":463.35999999999996,"y":124.95300000000003,"width":"100.80","height":"12.00","fontName":["Wingdings","Gill Sans MT"],"dir":["ltr"]}
+{"page":16,"change":"Addition","str":"ü   Parking","line":18,"x":463.35999999999996,"y":106.06500000000003,"width":"47.29","height":"12.00","fontName":["Wingdings","Gill Sans MT"],"dir":["ltr"]}
+{"page":16,"change":"Addition","str":"ü   Lack of youth activities","line":19,"x":463.35999999999996,"y":87.17700000000002,"width":"123.19","height":"12.00","fontName":["Wingdings","Gill Sans MT"],"dir":["ltr"]}
+{"page":16,"change":"Addition","str":"The Witney Neighbourhood Action","line":20,"x":451.08799999999997,"y":68.28900000000002,"width":"171.22","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":16,"change":"Addition","str":"Group    has   identified   anti-social","line":21,"x":451.088,"y":54.401,"width":"174.14","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":16,"change":"Addition","str":"Night   Caf é ,   run   by   the   Street","line":32,"x":633.733,"y":228.28100000000018,"width":"174.14","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":16,"change":"Addition","str":"the Police.uk website .","line":43,"x":633.733,"y":70.513,"width":"102.53","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":16,"change":"Addition","str":"Year     2008-09   2009-10   2010-11","line":45,"x":28.351,"y":519.669,"width":"183.89","height":"12.00","fontName":["Gill Sans MT Bold"],"dir":["ltr"]}
+{"page":16,"change":"Addition","str":"population 50.64     46.95     40.62","line":47,"x":28.351,"y":472.264,"width":"157.04","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":16,"change":"Addition","str":"live in and crime levels have continued to fall  in recent years.","line":49,"x":451.213,"y":440.724,"width":"292.48","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":16,"change":"Addition","str":"West Oxfordshire dropped by 13% from 3,221 to 2,805 , which places the","line":51,"x":451.21299999999997,"y":407.948,"width":"353.66","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":16,"change":"Addition","str":"Violence against the person with injury     221      2.13%","line":55,"x":29.29499999999996,"y":120.82,"width":"267.34","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":16,"change":"Addition","str":"Violence against the person without injury       361       3.48%","line":56,"x":29.29499999999996,"y":101.93199999999999,"width":"294.09","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":16,"change":"Addition","str":"Serious sexual offences      25       0.24%","line":57,"x":29.29499999999996,"y":83.04399999999998,"width":"190.80","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":16,"change":"Addition","str":"Serious acquisitive crime    289       2.78%","line":58,"x":29.29499999999996,"y":64.15599999999998,"width":"198.12","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":16,"change":"Addition","str":"Other crimes (eg shoplifting, criminal damage)  1,909     18.39%","line":59,"x":29.29499999999996,"y":45.26799999999997,"width":"301.97","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":16,"change":"Addition","str":"be found at the UK Crime","line":62,"x":278.812,"y":252.84300000000002,"width":"98.37","height":"9.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":16,"change":"Addition","str":"Stats website .","line":63,"x":278.812,"y":242.427,"width":"52.75","height":"9.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":17,"change":"Addition","str":"England & Wales average  48%     50%     54%     Jan 12","line":3,"x":477.38,"y":348.18100000000004,"width":"262.82","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":17,"change":"Addition","str":"Oxfordshire average    50%     53%     57%     Jan 12","line":4,"x":477.38,"y":329.29300000000006,"width":"248.84","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":17,"change":"Addition","str":"The Henry Box School  57%     62%     62%     59%","line":5,"x":477.38,"y":310.4050000000001,"width":"243.01","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":17,"change":"Addition","str":"Wood Green School    62%     56%     62%     Jan 12","line":6,"x":477.38,"y":291.5170000000001,"width":"248.84","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":17,"change":"Addition","str":"Cokethorpe School      73%     79%     91%     Jan 12","line":7,"x":477.38,"y":272.62900000000013,"width":"248.84","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":17,"change":"Addition","str":"The Kings School  90%     100%   94%     Jan 12","line":8,"x":477.38,"y":253.74100000000013,"width":"225.41","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":17,"change":"Addition","str":"(Performance tables for 2011 are published by the Department for Education  at the end","line":9,"x":477.38,"y":236.709,"width":"327.93","height":"10.00","fontName":["Gill Sans MT Italic"],"dir":["ltr"]}
+{"page":17,"change":"Addition","str":"The  Henry  Box  School   is  situated","line":13,"x":34.015,"y":445.845,"width":"173.67","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":17,"change":"Addition","str":"Wood  Green  School   is  between","line":26,"x":34.015,"y":260.301,"width":"173.67","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":17,"change":"Addition","str":"Ofsted  inspection  report  in","line":33,"x":34.015000000000015,"y":163.08499999999995,"width":"133.43","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":17,"change":"Addition","str":"Pupils  at Cokethorpe  School   (659","line":39,"x":34.015000000000015,"y":74.75699999999992,"width":"168.12","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":17,"change":"Addition","str":"pupils)  and The  Kings  School   (143","line":40,"x":34.014999999999986,"y":60.869,"width":"168.70","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":17,"change":"Addition","str":"Witney: St  Mary’s  Infants  School","line":45,"x":216.18699999999998,"y":418.0690000000001,"width":"166.36","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":17,"change":"Addition","str":"and The Batt Primary School .  The","line":46,"x":216.187,"y":404.181,"width":"169.44","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":17,"change":"Addition","str":"is Abingdon  and  Witney  College","line":52,"x":216.18699999999998,"y":315.8530000000001,"width":"166.30","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":17,"change":"Addition","str":"domain  of  the Indices  of  Multiple","line":60,"x":216.187,"y":199.749,"width":"167.57","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":17,"change":"Addition","str":"Deprivation 2010   (which measures","line":61,"x":216.187,"y":185.861,"width":"173.67","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":19,"change":"Addition","str":"West  Oxfordshire  suffers","line":30,"x":227.397,"y":364.3170000000005,"width":"125.43","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":19,"change":"Addition","str":"and air  pollution   from  exhaust  fumes","line":34,"x":227.397,"y":308.765,"width":"180.44","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":19,"change":"Addition","str":"Oxfordshire County Council guide can be downloaded .","line":43,"x":576.433,"y":374.32,"width":"222.50","height":"10.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":19,"change":"Addition","str":"The route of the proposed Cogges Link road , which would end close to St","line":44,"x":504.893,"y":71.064,"width":"300.58","height":"10.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":19,"change":"Addition","str":"0 10 20 30 40 50 60 70","line":47,"x":106.155,"y":53.019999999999996,"width":"61.42","height":"7.61","fontName":["Arial"],"dir":["ltr"]}
+{"page":20,"change":"Addition","str":"Oxfordshire)  classification  is","line":3,"x":452.03200000000004,"y":309.58400000000006,"width":"138.00","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":20,"change":"Addition","str":"The   West   Oxfordshire Citizens","line":30,"x":634.205,"y":207.36800000000017,"width":"164.17","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":20,"change":"Addition","str":"Advice  Bureau ,  which  has  an  office","line":31,"x":634.205,"y":193.48,"width":"173.67","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":20,"change":"Addition","str":"Both sets of data are available through the Oxfordshire Data Observatory .","line":50,"x":451.213,"y":399.762,"width":"354.05","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":21,"change":"Addition","str":"All maps have been downloaded from Oxfordshire Data Observatory .","line":4,"x":529.3420000000001,"y":51.50699999999999,"width":"256.18","height":"10.00","fontName":["Gill Sans MT Italic"],"dir":["ltr"]}
+{"page":21,"change":"Addition","str":"down roots Low  income","line":16,"x":612.6709999999999,"y":240.24400000000009,"width":"94.14","height":"9.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":22,"change":"Addition","str":"A  high  proportion  describe","line":40,"x":634.205,"y":80.51700000000011,"width":"132.66","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":23,"change":"Addition","str":"caf é  and several projects which are","line":6,"x":34.015,"y":432.3470000000001,"width":"173.67","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":23,"change":"Addition","str":"The  closure  of  the Corn  Exchange","line":35,"x":216.187,"y":427.3470000000003,"width":"169.19","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":23,"change":"Addition","str":"at  the Langdale  Hall   (refurbished","line":37,"x":216.187,"y":399.571,"width":"166.51","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":23,"change":"Addition","str":"packages  combining  catering,","line":49,"x":216.18699999999998,"y":227.91500000000022,"width":"140.21","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":24,"change":"Addition","str":"Oxfordshire Guides   for   Brides","line":24,"x":634.205,"y":139.1249999999999,"width":"162.15","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":25,"change":"Addition","str":"sMeasure energy  management","line":20,"x":34.015,"y":195.851,"width":"143.37","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":26,"change":"Addition","str":"4.   Consider inviting key arts organisations (eg Witney Music Festival , Witney Book Festival ,","line":10,"x":24.145000000000003,"y":418.22,"width":"448.95","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":26,"change":"Addition","str":"Witney Film Festival , Witney Art Studios , Witney TV ) to advise the Appeal.","line":11,"x":41.44999999999999,"y":404.332,"width":"362.08","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":26,"change":"Addition","str":"to Witney, in partnership with Witney Museum , schools and local organisations.","line":29,"x":41.45000000000004,"y":124.348,"width":"387.04","height":"12.00","fontName":["Gill Sans MT"],"dir":["ltr"]}
+{"page":27,"change":"Addition","str":"St Mary the Virgin , Witney","line":2,"x":427.932,"y":520.179,"width":"139.68","height":"12.00","fontName":["Gill Sans MT Bold Italic"],"dir":["ltr"]}
+{"page":27,"change":"Addition","str":"Holy Trinity Church , Wood Green","line":3,"x":427.932,"y":501.291,"width":"178.24","height":"12.00","fontName":["Gill Sans MT Bold Italic"],"dir":["ltr"]}
+{"page":27,"change":"Addition","str":"St John the Evangelist , Hailey","line":4,"x":427.9320000000001,"y":482.403,"width":"154.98","height":"12.00","fontName":["Gill Sans MT Bold Italic"],"dir":["ltr"]}
+{"page":27,"change":"Addition","str":"St John the Baptist , Curbridge","line":5,"x":427.932,"y":463.515,"width":"157.15","height":"12.00","fontName":["Gill Sans MT Bold Italic"],"dir":["ltr"]}
+{"page":27,"change":"Addition","str":"Witney   Wool   and   Blanket   Trail ,","line":7,"x":427.932,"y":425.739,"width":"191.25","height":"12.00","fontName":["Gill Sans MT Bold Italic","Gill Sans MT"],"dir":["ltr"]}
+{"page":27,"change":"Addition","str":"A Walk Round Witney  Carroll, N., et","line":10,"x":427.932,"y":379.07500000000005,"width":"191.25","height":"12.00","fontName":["Gill Sans MT Bold Italic","Gill Sans MT"],"dir":["ltr"]}
+{"page":27,"change":"Addition","str":"Witney:   Cogges   Link   Road ,   West","line":14,"x":427.932,"y":318.523,"width":"191.25","height":"12.00","fontName":["Gill Sans MT Bold Italic","Gill Sans MT"],"dir":["ltr"]}
+{"page":27,"change":"Addition","str":"2010 ,  Department  for  Communities","line":17,"x":427.932,"y":271.859,"width":"191.25","height":"12.00","fontName":["Gill Sans MT Bold Italic","Gill Sans MT"],"dir":["ltr"]}
+{"page":27,"change":"Addition","str":"Nomis  (for labour market figures)","line":21,"x":427.932,"y":201.307,"width":"166.69","height":"12.00","fontName":["Gill Sans MT Bold Italic","Gill Sans MT"],"dir":["ltr"]}
+{"page":27,"change":"Addition","str":"Witney Town FC (Blanketmen)","line":22,"x":427.932,"y":182.41899999999998,"width":"152.64","height":"12.00","fontName":["Gill Sans MT Bold Italic","Gill Sans MT"],"dir":["ltr"]}
+{"page":27,"change":"Addition","str":"Local     Development     Framework ,","line":27,"x":427.932,"y":87.979,"width":"191.25","height":"12.00","fontName":["Gill Sans MT Bold Italic","Gill Sans MT"],"dir":["ltr"]}
+{"page":27,"change":"Addition","str":"Mary’s , showing protected view lines.","line":30,"x":427.932,"y":41.315,"width":"186.27","height":"12.00","fontName":["Gill Sans MT Bold Italic","Gill Sans MT"],"dir":["ltr"]}
+{"page":27,"change":"Addition","str":"Joint   Strategic   Needs   Assessment ,","line":31,"x":627.685,"y":539.067,"width":"191.25","height":"12.00","fontName":["Gill Sans MT Bold Italic"],"dir":["ltr"]}
+{"page":27,"change":"Addition","str":"Draft Air Quality Action Plan , West","line":36,"x":627.685,"y":459.627,"width":"187.08","height":"12.00","fontName":["Gill Sans MT Bold Italic","Gill Sans MT"],"dir":["ltr"]}
+{"page":27,"change":"Addition","str":"Witney  Neighbourhood  Action","line":45,"x":627.685,"y":304.635,"width":"160.14","height":"12.00","fontName":["Gill Sans MT Bold Italic"],"dir":["ltr"]}

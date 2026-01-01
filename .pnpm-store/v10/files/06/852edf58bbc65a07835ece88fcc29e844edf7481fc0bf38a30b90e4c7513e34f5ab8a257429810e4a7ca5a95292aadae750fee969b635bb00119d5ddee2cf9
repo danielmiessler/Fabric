@@ -1,0 +1,39 @@
+{
+	"name": "code-red",
+	"description": "code-red",
+	"version": "1.0.4",
+	"repository": "Rich-Harris/code-red",
+	"exports": {
+		".": {
+			"types": "./types/index.d.ts",
+			"import": "./src/index.js"
+		}
+	},
+	"type": "module",
+	"types": "types/index.d.ts",
+	"files": [
+		"src",
+		"types"
+	],
+	"scripts": {
+		"build": "dts-buddy",
+		"test": "uvu test test.js",
+		"prepublishOnly": "npm test && npm run build",
+		"repl": "node -e \"import('./src/index.js').then(mod => { x = mod.x; b = mod.b; print = mod.print });\" -i"
+	},
+	"license": "MIT",
+	"dependencies": {
+		"@jridgewell/sourcemap-codec": "^1.4.15",
+		"@types/estree": "^1.0.1",
+		"acorn": "^8.10.0",
+		"estree-walker": "^3.0.3",
+		"periscopic": "^3.1.0"
+	},
+	"devDependencies": {
+		"@types/node": "^20.4.10",
+		"dts-buddy": "^0.1.9",
+		"eslump": "^3.0.0",
+		"uvu": "^0.5.6"
+	},
+	"packageManager": "pnpm@8.6.0"
+}

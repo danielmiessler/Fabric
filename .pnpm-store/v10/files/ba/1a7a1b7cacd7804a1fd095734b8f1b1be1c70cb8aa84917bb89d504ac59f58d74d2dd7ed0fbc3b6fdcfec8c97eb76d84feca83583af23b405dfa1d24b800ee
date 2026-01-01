@@ -1,0 +1,49 @@
+{
+  "name": "rehype-parse",
+  "version": "9.0.1",
+  "description": "rehype plugin to parse HTML",
+  "license": "MIT",
+  "keywords": [
+    "abstract",
+    "ast",
+    "html",
+    "parse",
+    "plugin",
+    "rehype",
+    "rehype-plugin",
+    "syntax",
+    "tree",
+    "unified"
+  ],
+  "homepage": "https://github.com/rehypejs/rehype",
+  "repository": "https://github.com/rehypejs/rehype/tree/main/packages/rehype-parse",
+  "bugs": "https://github.com/rehypejs/rehype/issues",
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/unified"
+  },
+  "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
+  "contributors": [
+    "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)"
+  ],
+  "sideEffects": false,
+  "type": "module",
+  "exports": "./index.js",
+  "files": [
+    "lib/",
+    "index.d.ts",
+    "index.js"
+  ],
+  "dependencies": {
+    "@types/hast": "^3.0.0",
+    "hast-util-from-html": "^2.0.0",
+    "unified": "^11.0.0"
+  },
+  "scripts": {},
+  "typeCoverage": {
+    "atLeast": 100,
+    "detail": true,
+    "strict": true,
+    "ignoreCatch": true
+  }
+}

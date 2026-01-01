@@ -353,3 +353,4 @@ tmp/
 
 # Ignore .claude/
 .claude/
+node_modules

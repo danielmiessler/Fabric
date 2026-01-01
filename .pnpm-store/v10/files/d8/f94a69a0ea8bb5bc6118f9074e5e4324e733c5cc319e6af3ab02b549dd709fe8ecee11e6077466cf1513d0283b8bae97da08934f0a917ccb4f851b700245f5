@@ -1,0 +1,16 @@
+{
+  "author": "Mikeal Rogers <mikeal.rogers@gmail.com> (http://www.futurealoof.com)",
+  "name": "tunnel-agent",
+  "description": "HTTP proxy tunneling agent. Formerly part of mikeal/request, now a standalone module.",
+  "version": "0.3.0",
+  "repository": {
+    "url": "https://github.com/mikeal/tunnel-agent"
+  },
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "optionalDependencies": {},
+  "engines": {
+    "node": "*"
+  }
+}

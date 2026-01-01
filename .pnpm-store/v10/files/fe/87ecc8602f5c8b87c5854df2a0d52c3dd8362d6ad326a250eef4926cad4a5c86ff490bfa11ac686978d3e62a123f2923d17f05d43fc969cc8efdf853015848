@@ -1,0 +1,20 @@
+{
+  "name": "qs",
+  "description": "querystring parser",
+  "version": "0.6.6",
+  "keywords": ["query string", "parser", "component"],
+  "repository": {
+    "type" : "git",
+    "url" : "git://github.com/visionmedia/node-querystring.git"
+  },
+  "devDependencies": {
+      "mocha": "*"
+    , "expect.js": "*"
+  },
+  "scripts": {
+    "test": "make test"
+  },
+  "author": "TJ Holowaychuk <tj@vision-media.ca> (http://tjholowaychuk.com)",
+  "main": "index",
+  "engines": { "node": "*" }
+}

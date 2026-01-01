@@ -1,0 +1,325 @@
+{
+  "pages": 7,
+  "items": 282,
+  "groupedItems": 282,
+  "changes": 0,
+  "schema": [
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {
+    "maxHeight": 30,
+    "mostUsedHeight": 11,
+    "mostUsedDistance": 13,
+    "mostUsedFont": "JBRMKS+Helvetica",
+    "minX": 56.69069,
+    "maxX": 507.3787,
+    "minY": 45,
+    "maxY": 772,
+    "pageMapping": {
+      "pageFactor": 1,
+      "detectedOnPage": true
+    }
+  }
+}
+{"page":0,"change":"none","str":"Mega Überschrift","dir":"ltr","width":"245.06","height":"30.00","transform":["30.00","0.00","0.00","30.00","175.00","756.00"],"fontName":"OMUGKQ+Helvetica-Bold","x":175,"y":756}
+{"page":0,"change":"none","str":"2te Überschrift","dir":"ltr","width":"130.06","height":"20.00","transform":["20.00","0.00","0.00","20.00","233.00","665.00"],"fontName":"JBRMKS+Helvetica","x":233,"y":665}
+{"page":0,"change":"none","str":"Dies ist eine Test-PDF","dir":"ltr","width":"108.62","height":"11.00","transform":["11.00","0.00","0.00","11.00","240.00","585.00"],"fontName":"JBRMKS+Helvetica","x":240,"y":585}
+{"page":0,"change":"none","str":".","dir":"ltr","width":"3.06","height":"11.00","transform":["11.00","0.00","0.00","11.00","352.69","585.00"],"fontName":"JBRMKS+Helvetica","x":352.6927,"y":585}
+{"page":0,"change":"none","str":"1","dir":"ltr","width":"4.08","height":"7.33","transform":["7.33","0.00","0.00","7.33","348.00","588.00"],"fontName":"JBRMKS+Helvetica","x":348,"y":588}
+{"page":0,"change":"none","str":"Für’s Testen des ","dir":"ltr","width":"83.78","height":"11.00","transform":["11.00","0.00","0.00","11.00","208.00","572.00"],"fontName":"JBRMKS+Helvetica","x":208,"y":572}
+{"page":0,"change":"none","str":"Markdown Parsers","dir":"ltr","width":"91.70","height":"11.00","transform":["11.00","0.00","0.00","11.00","291.78","572.00"],"fontName":"JBRMKS+Helvetica","x":291.77832,"y":572}
+{"page":0,"change":"none","str":".","dir":"ltr","width":"3.06","height":"11.00","transform":["11.00","0.00","0.00","11.00","383.47","572.00"],"fontName":"JBRMKS+Helvetica","x":383.47360000000003,"y":572}
+{"page":0,"change":"none","str":"In Deutsch.","dir":"ltr","width":"55.64","height":"11.00","transform":["11.00","0.00","0.00","11.00","64.13","59.00"],"fontName":"JBRMKS+Helvetica","x":64.134603,"y":59}
+{"page":0,"change":"none","str":"1","dir":"ltr","width":"4.08","height":"7.33","transform":["7.33","0.00","0.00","7.33","57.00","62.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":62}
+{"page":0,"change":"none","str":"\u0000","dir":"ltr","width":"0.00","height":"12.00","transform":["12.00","0.00","0.00","12.00","294.00","45.00"],"fontName":"QACXPP+Helvetica","x":294,"y":45}
+{"page":0,"change":"none","str":"1","dir":"ltr","width":"6.67","height":"12.00","transform":["12.00","0.00","0.00","12.00","294.00","45.00"],"fontName":"JBRMKS+Helvetica","x":294,"y":45}
+{"page":1,"change":"none","str":"\u0000","dir":"ltr","width":"0.00","height":"12.00","transform":["12.00","0.00","0.00","12.00","294.00","45.00"],"fontName":"QACXPP+Helvetica","x":294,"y":45}
+{"page":1,"change":"none","str":"2","dir":"ltr","width":"6.67","height":"12.00","transform":["12.00","0.00","0.00","12.00","294.00","45.00"],"fontName":"JBRMKS+Helvetica","x":294,"y":45}
+{"page":2,"change":"none","str":"Paragraphen","dir":"ltr","width":"110.04","height":"18.00","transform":["18.00","0.00","0.00","18.00","57.00","767.00"],"fontName":"OMUGKQ+Helvetica-Bold","x":57,"y":767}
+{"page":2,"change":"none","str":"Das ist ein Paragraph. Ein einfacher Paragraph mit Schrift in Normalgröße","dir":"ltr","width":"361.34","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","740.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":740}
+{"page":2,"change":"none","str":". Damit wir ","dir":"ltr","width":"55.00","height":"11.00","transform":["11.00","0.00","0.00","11.00","422.41","740.00"],"fontName":"JBRMKS+Helvetica","x":422.408,"y":740}
+{"page":2,"change":"none","str":"sehen","dir":"ltr","width":"29.97","height":"11.00","transform":["11.00","0.00","0.00","11.00","477.41","740.00"],"fontName":"SVUOCV+Helvetica-Oblique","x":477.408,"y":740}
+{"page":2,"change":"none","str":" wie ","dir":"ltr","width":"22.61","height":"11.00","transform":["11.00","0.00","0.00","11.00","507.38","740.00"],"fontName":"JBRMKS+Helvetica","x":507.3787,"y":740}
+{"page":2,"change":"none","str":"2","dir":"ltr","width":"4.08","height":"7.33","transform":["7.33","0.00","0.00","7.33","418.00","743.00"],"fontName":"JBRMKS+Helvetica","x":418,"y":743}
+{"page":2,"change":"none","str":"sich Zeilenumbrüche verhalten, schreiben wir einfach ein bisschen mehr. So, dass sieht ja jetzt ","dir":"ltr","width":"464.09","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","727.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":727}
+{"page":2,"change":"none","str":"schon gut aus!","dir":"ltr","width":"71.55","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","714.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":714}
+{"page":2,"change":"none","str":"Ohne Zwischenzeile, neu angesetzt.","dir":"ltr","width":"177.34","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","701.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":701}
+{"page":2,"change":"none","str":"Mit Zwischenzeile, neu angesetzt.","dir":"ltr","width":"165.09","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","675.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":675}
+{"page":2,"change":"none","str":"Und nachfolgend ein etwas längerer Tex:","dir":"ltr","width":"199.17","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","649.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":649}
+{"page":2,"change":"none","str":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi laoreet diam nibh, sit amet bibendum ","dir":"ltr","width":"484.86","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","636.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":636}
+{"page":2,"change":"none","str":"metus tristique vel. Sed neque nulla, lacinia sit amet ex ut, ultrices dictum turpis. Praesent fringilla, ","dir":"ltr","width":"480.57","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","623.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":623}
+{"page":2,"change":"none","str":"lacus nec lobortis placerat, lorem ipsum convallis nisl, sit amet imperdiet erat arcu id arcu. Aenean ","dir":"ltr","width":"479.96","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","610.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":610}
+{"page":2,"change":"none","str":"accumsan risus in purus facilisis interdum. Aliquam tincidunt condimentum est, scelerisque ","dir":"ltr","width":"443.88","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","597.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":597}
+{"page":2,"change":"none","str":"venenatis orci. Fusce neque nibh, dapibus et volutpat sit amet, consectetur ac quam. Sed pharetra ","dir":"ltr","width":"482.46","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","584.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":584}
+{"page":2,"change":"none","str":"faucibus arcu, at interdum dui ornare ut. Aliquam sodales, magna et euismod congue, ipsum diam ","dir":"ltr","width":"478.79","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","571.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":571}
+{"page":2,"change":"none","str":"tempus sapien, vel aliquet tortor dolor ut purus. Aenean aliquet ut erat vitae dictum. Fusce eget ","dir":"ltr","width":"464.73","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","558.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":558}
+{"page":2,"change":"none","str":"ultrices magna. Sed egestas mi nec rutrum iaculis. Phasellus condimentum","dir":"ltr","width":"365.62","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","545.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":545}
+{"page":2,"change":"none","str":", urna sit amet sodales ","dir":"ltr","width":"113.73","height":"11.00","transform":["11.00","0.00","0.00","11.00","426.69","545.00"],"fontName":"JBRMKS+Helvetica","x":426.6888,"y":545}
+{"page":2,"change":"none","str":"3","dir":"ltr","width":"4.08","height":"7.33","transform":["7.33","0.00","0.00","7.33","422.00","548.00"],"fontName":"JBRMKS+Helvetica","x":422,"y":548}
+{"page":2,"change":"none","str":"accumsan, lacus risus cursus ipsum, et rhoncus ligula mi et nibh. In consequat a risus a ","dir":"ltr","width":"429.82","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","532.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":532}
+{"page":2,"change":"none","str":"accumsan. Pellentesque nec lacus sodales eros laoreet pretium non ac erat.","dir":"ltr","width":"372.39","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","519.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":519}
+{"page":2,"change":"none","str":"Und  jetzt  ein  kleiner  Text  im  block-format.  Das  erzeugt  schöne  doppelte  Leerzeichen  zwischen ","dir":"ltr","width":"484.98","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","493.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":493}
+{"page":2,"change":"none","str":"Wörtern. Wenn Markdown zu HTML gerendert wird, fällt das zwar nicht mehr auf. Aber in der puren ","dir":"ltr","width":"484.97","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","480.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":480}
+{"page":2,"change":"none","str":"Text-Version ist es schon stark sichtbar!","dir":"ltr","width":"193.20","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","467.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":467}
+{"page":2,"change":"none","str":"Und jetzt","dir":"ltr","width":"43.41","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","428.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":428}
+{"page":2,"change":"none","str":" einfach nochmal Text","dir":"ltr","width":"106.20","height":"11.00","transform":["11.00","0.00","0.00","11.00","104.49","428.00"],"fontName":"JBRMKS+Helvetica","x":104.48763,"y":428}
+{"page":2,"change":"none","str":" um die Fussnoten in zweistellige Bereiche","dir":"ltr","width":"207.89","height":"11.00","transform":["11.00","0.00","0.00","11.00","214.76","428.00"],"fontName":"JBRMKS+Helvetica","x":214.7633,"y":428}
+{"page":2,"change":"none","str":" vorranzutreiben!","dir":"ltr","width":"82.55","height":"11.00","transform":["11.00","0.00","0.00","11.00","426.72","428.00"],"fontName":"JBRMKS+Helvetica","x":426.7246,"y":428}
+{"page":2,"change":"none","str":"4","dir":"ltr","width":"4.08","height":"7.33","transform":["7.33","0.00","0.00","7.33","100.00","431.00"],"fontName":"JBRMKS+Helvetica","x":100,"y":431}
+{"page":2,"change":"none","str":"5","dir":"ltr","width":"4.08","height":"7.33","transform":["7.33","0.00","0.00","7.33","210.00","431.00"],"fontName":"JBRMKS+Helvetica","x":210,"y":431}
+{"page":2,"change":"none","str":"6","dir":"ltr","width":"4.08","height":"7.33","transform":["7.33","0.00","0.00","7.33","422.00","431.00"],"fontName":"JBRMKS+Helvetica","x":422,"y":431}
+{"page":2,"change":"none","str":"Was immer auch ‘normal’ ist...","dir":"ltr","width":"148.34","height":"11.00","transform":["11.00","0.00","0.00","11.00","64.13","164.00"],"fontName":"JBRMKS+Helvetica","x":64.134603,"y":164}
+{"page":2,"change":"none","str":"2","dir":"ltr","width":"4.08","height":"7.33","transform":["7.33","0.00","0.00","7.33","57.00","167.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":167}
+{"page":2,"change":"none","str":"Nicht zu verwechseln mit ‘condimenta’. Meine Lateinkenntnisse sind zwar schon so alt das ich ","dir":"ltr","width":"460.41","height":"11.00","transform":["11.00","0.00","0.00","11.00","64.13","141.00"],"fontName":"JBRMKS+Helvetica","x":64.134603,"y":141}
+{"page":2,"change":"none","str":"3","dir":"ltr","width":"4.08","height":"7.33","transform":["7.33","0.00","0.00","7.33","57.00","144.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":144}
+{"page":2,"change":"none","str":"überhaupt keine Ahnung hab, aber zumindest hab ich jetzt eine mehrzeilige Fussnote!","dir":"ltr","width":"418.29","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","128.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":128}
+{"page":2,"change":"none","str":"Hier & Jetzt!","dir":"ltr","width":"59.91","height":"11.00","transform":["11.00","0.00","0.00","11.00","64.13","105.00"],"fontName":"JBRMKS+Helvetica","x":64.134603,"y":105}
+{"page":2,"change":"none","str":"4","dir":"ltr","width":"4.08","height":"7.33","transform":["7.33","0.00","0.00","7.33","57.00","108.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":108}
+{"page":2,"change":"none","str":"Nicht viel mehr als ein Satz.","dir":"ltr","width":"135.72","height":"11.00","transform":["11.00","0.00","0.00","11.00","64.13","82.00"],"fontName":"JBRMKS+Helvetica","x":64.134603,"y":82}
+{"page":2,"change":"none","str":"5","dir":"ltr","width":"4.08","height":"7.33","transform":["7.33","0.00","0.00","7.33","57.00","85.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":85}
+{"page":2,"change":"none","str":"Weil dann wird's komplizierter!","dir":"ltr","width":"148.01","height":"11.00","transform":["11.00","0.00","0.00","11.00","64.13","59.00"],"fontName":"JBRMKS+Helvetica","x":64.134603,"y":59}
+{"page":2,"change":"none","str":"6","dir":"ltr","width":"4.08","height":"7.33","transform":["7.33","0.00","0.00","7.33","57.00","62.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":62}
+{"page":2,"change":"none","str":"\u0000","dir":"ltr","width":"0.00","height":"12.00","transform":["12.00","0.00","0.00","12.00","294.00","45.00"],"fontName":"QACXPP+Helvetica","x":294,"y":45}
+{"page":2,"change":"none","str":"3","dir":"ltr","width":"6.67","height":"12.00","transform":["12.00","0.00","0.00","12.00","294.00","45.00"],"fontName":"JBRMKS+Helvetica","x":294,"y":45}
+{"page":3,"change":"none","str":"Schriftschnitt","dir":"ltr","width":"116.01","height":"18.00","transform":["18.00","0.00","0.00","18.00","57.00","767.00"],"fontName":"OMUGKQ+Helvetica-Bold","x":57,"y":767}
+{"page":3,"change":"none","str":"Etwas ","dir":"ltr","width":"33.01","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","740.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":740}
+{"page":3,"change":"none","str":"kursiv","dir":"ltr","width":"28.73","height":"11.00","transform":["11.00","0.00","0.00","11.00","90.01","740.00"],"fontName":"SVUOCV+Helvetica-Oblique","x":90.01074,"y":740}
+{"page":3,"change":"none","str":" ist auch nicht schlecht. ","dir":"ltr","width":"116.78","height":"11.00","transform":["11.00","0.00","0.00","11.00","118.74","740.00"],"fontName":"JBRMKS+Helvetica","x":118.73535,"y":740}
+{"page":3,"change":"none","str":"Fett","dir":"ltr","width":"20.16","height":"11.00","transform":["11.00","0.00","0.00","11.00","235.51","740.00"],"fontName":"OMUGKQ+Helvetica-Bold","x":235.5137,"y":740}
+{"page":3,"change":"none","str":" ist auch interessant. Und was ist mit ","dir":"ltr","width":"181.57","height":"11.00","transform":["11.00","0.00","0.00","11.00","255.68","740.00"],"fontName":"JBRMKS+Helvetica","x":255.6768,"y":740}
+{"page":3,"change":"none","str":"FETTUNDKURSIV","dir":"ltr","width":"92.89","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","727.00"],"fontName":"JUJONH+Helvetica-BoldOblique","x":57,"y":727}
+{"page":3,"change":"none","str":" ?","dir":"ltr","width":"9.17","height":"11.00","transform":["11.00","0.00","0.00","11.00","149.89","727.00"],"fontName":"JBRMKS+Helvetica","x":149.8877,"y":727}
+{"page":3,"change":"none","str":"Interessant wird's wenn","dir":"ltr","width":"114.60","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","701.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":701}
+{"page":3,"change":"none","str":" mehrere Wörter hintereinanderweg formatiert","dir":"ltr","width":"223.16","height":"11.00","transform":["11.00","0.00","0.00","11.00","171.60","701.00"],"fontName":"SVUOCV+Helvetica-Oblique","x":171.5977,"y":701}
+{"page":3,"change":"none","str":" sind. Und ","dir":"ltr","width":"52.59","height":"11.00","transform":["11.00","0.00","0.00","11.00","394.75","701.00"],"fontName":"JBRMKS+Helvetica","x":394.7451,"y":701}
+{"page":3,"change":"none","str":"dann noch über ","dir":"ltr","width":"79.51","height":"11.00","transform":["11.00","0.00","0.00","11.00","447.33","701.00"],"fontName":"SVUOCV+Helvetica-Oblique","x":447.3281,"y":701}
+{"page":3,"change":"none","str":"Zeilenbrüche hinweg","dir":"ltr","width":"101.51","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","688.00"],"fontName":"SVUOCV+Helvetica-Oblique","x":57,"y":688}
+{"page":3,"change":"none","str":".","dir":"ltr","width":"3.06","height":"11.00","transform":["11.00","0.00","0.00","11.00","158.51","688.00"],"fontName":"JBRMKS+Helvetica","x":158.50830000000002,"y":688}
+{"page":3,"change":"none","str":"Fies könnte es werden mit ","dir":"ltr","width":"131.45","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","662.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":662}
+{"page":3,"change":"none","str":"abwechselnden","dir":"ltr","width":"76.45","height":"11.00","transform":["11.00","0.00","0.00","11.00","188.45","662.00"],"fontName":"SVUOCV+Helvetica-Oblique","x":188.4468,"y":662}
+{"page":3,"change":"none","str":"Formaten","dir":"ltr","width":"50.12","height":"11.00","transform":["11.00","0.00","0.00","11.00","267.95","662.00"],"fontName":"OMUGKQ+Helvetica-Bold","x":267.9497,"y":662}
+{"page":3,"change":"none","str":". Und das ganze dann noch ","dir":"ltr","width":"137.61","height":"11.00","transform":["11.00","0.00","0.00","11.00","318.07","662.00"],"fontName":"JBRMKS+Helvetica","x":318.0674,"y":662}
+{"page":3,"change":"none","str":"über","dir":"ltr","width":"22.02","height":"11.00","transform":["11.00","0.00","0.00","11.00","455.67","662.00"],"fontName":"SVUOCV+Helvetica-Oblique","x":455.6694,"y":662}
+{"page":3,"change":"none","str":"mehrere","dir":"ltr","width":"43.42","height":"11.00","transform":["11.00","0.00","0.00","11.00","480.74","662.00"],"fontName":"OMUGKQ+Helvetica-Bold","x":480.7417,"y":662}
+{"page":3,"change":"none","str":"Zeilen","dir":"ltr","width":"29.94","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","649.00"],"fontName":"SVUOCV+Helvetica-Oblique","x":57,"y":649}
+{"page":3,"change":"none","str":" hinweg.","dir":"ltr","width":"40.95","height":"11.00","transform":["11.00","0.00","0.00","11.00","86.96","649.00"],"fontName":"JBRMKS+Helvetica","x":86.95996,"y":649}
+{"page":3,"change":"none","str":"Und weil es so schön ist, fangen wir jetzt in dieser Zeile mit einem Schriftschnitt, nämlich ","dir":"ltr","width":"433.47","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","623.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":623}
+{"page":3,"change":"none","str":"kursiv an. ","dir":"ltr","width":"50.13","height":"11.00","transform":["11.00","0.00","0.00","11.00","490.45","623.00"],"fontName":"SVUOCV+Helvetica-Oblique","x":490.4526,"y":623}
+{"page":3,"change":"none","str":"Ziehen es über die gesamte zweite Zeile durch. Ist nicht ganz leicht, aber schaffen wir! Und lassen ","dir":"ltr","width":"481.63","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","610.00"],"fontName":"SVUOCV+Helvetica-Oblique","x":57,"y":610}
+{"page":3,"change":"none","str":"es dann Mitte","dir":"ltr","width":"66.04","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","597.00"],"fontName":"SVUOCV+Helvetica-Oblique","x":57,"y":597}
+{"page":3,"change":"none","str":" der 3ten ","dir":"ltr","width":"46.48","height":"11.00","transform":["11.00","0.00","0.00","11.00","123.04","597.00"],"fontName":"JBRMKS+Helvetica","x":123.0376,"y":597}
+{"page":3,"change":"none","str":"Zeile","dir":"ltr","width":"25.06","height":"11.00","transform":["11.00","0.00","0.00","11.00","169.51","597.00"],"fontName":"OMUGKQ+Helvetica-Bold","x":169.5137,"y":597}
+{"page":3,"change":"none","str":" ausklingen.","dir":"ltr","width":"58.71","height":"11.00","transform":["11.00","0.00","0.00","11.00","194.58","597.00"],"fontName":"JBRMKS+Helvetica","x":194.5806,"y":597}
+{"page":3,"change":"none","str":"Und nun ","dir":"ltr","width":"44.66","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","571.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":571}
+{"page":3,"change":"none","str":"kursiv","dir":"ltr","width":"28.73","height":"11.00","transform":["11.00","0.00","0.00","11.00","101.64","571.00"],"fontName":"SVUOCV+Helvetica-Oblique","x":101.64453,"y":571}
+{"page":3,"change":"none","str":"Und","dir":"ltr","width":"20.18","height":"11.00","transform":["11.00","0.00","0.00","11.00","130.37","571.00"],"fontName":"JBRMKS+Helvetica","x":130.36914000000002,"y":571}
+{"page":3,"change":"none","str":"Fett","dir":"ltr","width":"20.16","height":"11.00","transform":["11.00","0.00","0.00","11.00","150.55","571.00"],"fontName":"OMUGKQ+Helvetica-Bold","x":150.54834,"y":571}
+{"page":3,"change":"none","str":"Zusammen","dir":"ltr","width":"55.02","height":"11.00","transform":["11.00","0.00","0.00","11.00","170.71","571.00"],"fontName":"JBRMKS+Helvetica","x":170.7114,"y":571}
+{"page":3,"change":"none","str":"Ge","dir":"ltr","width":"14.67","height":"11.00","transform":["11.00","0.00","0.00","11.00","225.73","571.00"],"fontName":"SVUOCV+Helvetica-Oblique","x":225.7275,"y":571}
+{"page":3,"change":"none","str":"Mixt","dir":"ltr","width":"22.00","height":"11.00","transform":["11.00","0.00","0.00","11.00","240.40","571.00"],"fontName":"OMUGKQ+Helvetica-Bold","x":240.4014,"y":571}
+{"page":3,"change":"none","str":". Ohne Leerzeichen...","dir":"ltr","width":"107.01","height":"11.00","transform":["11.00","0.00","0.00","11.00","262.40","571.00"],"fontName":"JBRMKS+Helvetica","x":262.40139999999997,"y":571}
+{"page":3,"change":"none","str":"Eine","dir":"ltr","width":"22.02","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","545.00"],"fontName":"SVUOCV+Helvetica-Oblique","x":57,"y":545}
+{"page":3,"change":"none","str":" Zeile, die mit kursiv anfing und endet mit ","dir":"ltr","width":"202.99","height":"11.00","transform":["11.00","0.00","0.00","11.00","79.02","545.00"],"fontName":"JBRMKS+Helvetica","x":79.01611,"y":545}
+{"page":3,"change":"none","str":"fett.","dir":"ltr","width":"20.17","height":"11.00","transform":["11.00","0.00","0.00","11.00","282.00","545.00"],"fontName":"OMUGKQ+Helvetica-Bold","x":282.0005,"y":545}
+{"page":3,"change":"none","str":"Beende die Zeile mit ","dir":"ltr","width":"103.34","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","519.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":519}
+{"page":3,"change":"none","str":"fett.","dir":"ltr","width":"20.17","height":"11.00","transform":["11.00","0.00","0.00","11.00","160.33","519.00"],"fontName":"OMUGKQ+Helvetica-Bold","x":160.3345,"y":519}
+{"page":3,"change":"none","str":"Kursiv","dir":"ltr","width":"30.56","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","506.00"],"fontName":"SVUOCV+Helvetica-Oblique","x":57,"y":506}
+{"page":3,"change":"none","str":" ist dann die nachfolgende!","dir":"ltr","width":"131.50","height":"11.00","transform":["11.00","0.00","0.00","11.00","87.56","506.00"],"fontName":"JBRMKS+Helvetica","x":87.56152,"y":506}
+{"page":3,"change":"none","str":"Eine Liste mit unterschiedlich formatierten Wörtern","dir":"ltr","width":"246.38","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","480.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":480}
+{"page":3,"change":"none","str":"-","dir":"ltr","width":"4.40","height":"13.20","transform":["13.20","0.00","0.00","13.20","56.69","467.73"],"fontName":"JBRMKS+Helvetica","x":56.69069,"y":467.7327}
+{"page":3,"change":"none","str":"Etwas ","dir":"ltr","width":"33.01","height":"11.00","transform":["11.00","0.00","0.00","11.00","69.00","467.00"],"fontName":"JBRMKS+Helvetica","x":69,"y":467}
+{"page":3,"change":"none","str":"Kursiv","dir":"ltr","width":"30.56","height":"11.00","transform":["11.00","0.00","0.00","11.00","102.01","467.00"],"fontName":"SVUOCV+Helvetica-Oblique","x":102.01074,"y":467}
+{"page":3,"change":"none","str":"-","dir":"ltr","width":"4.40","height":"13.20","transform":["13.20","0.00","0.00","13.20","56.69","454.73"],"fontName":"JBRMKS+Helvetica","x":56.69069,"y":454.7327}
+{"page":3,"change":"none","str":"Etwas ","dir":"ltr","width":"33.01","height":"11.00","transform":["11.00","0.00","0.00","11.00","69.00","454.00"],"fontName":"JBRMKS+Helvetica","x":69,"y":454}
+{"page":3,"change":"none","str":"Fett","dir":"ltr","width":"20.16","height":"11.00","transform":["11.00","0.00","0.00","11.00","102.01","454.00"],"fontName":"OMUGKQ+Helvetica-Bold","x":102.01074,"y":454}
+{"page":3,"change":"none","str":"-","dir":"ltr","width":"4.40","height":"13.20","transform":["13.20","0.00","0.00","13.20","56.69","441.73"],"fontName":"JBRMKS+Helvetica","x":56.69069,"y":441.7327}
+{"page":3,"change":"none","str":"Etwas ","dir":"ltr","width":"33.01","height":"11.00","transform":["11.00","0.00","0.00","11.00","69.00","441.00"],"fontName":"JBRMKS+Helvetica","x":69,"y":441}
+{"page":3,"change":"none","str":"Unterstrichen","dir":"ltr","width":"65.41","height":"11.00","transform":["11.00","0.00","0.00","11.00","102.01","441.00"],"fontName":"JBRMKS+Helvetica","x":102.01074,"y":441}
+{"page":3,"change":"none","str":"7","dir":"ltr","width":"4.08","height":"7.33","transform":["7.33","0.00","0.00","7.33","167.00","444.00"],"fontName":"JBRMKS+Helvetica","x":167,"y":444}
+{"page":3,"change":"none","str":"-","dir":"ltr","width":"4.40","height":"13.20","transform":["13.20","0.00","0.00","13.20","56.69","428.73"],"fontName":"JBRMKS+Helvetica","x":56.69069,"y":428.7327}
+{"page":3,"change":"none","str":"Etwas ","dir":"ltr","width":"33.01","height":"11.00","transform":["11.00","0.00","0.00","11.00","69.00","428.00"],"fontName":"JBRMKS+Helvetica","x":69,"y":428}
+{"page":3,"change":"none","str":"Durchgestrichen","dir":"ltr","width":"80.10","height":"11.00","transform":["11.00","0.00","0.00","11.00","102.01","428.00"],"fontName":"JBRMKS+Helvetica","x":102.01074,"y":428}
+{"page":3,"change":"none","str":"-","dir":"ltr","width":"4.40","height":"13.20","transform":["13.20","0.00","0.00","13.20","56.69","415.73"],"fontName":"JBRMKS+Helvetica","x":56.69069,"y":415.7327}
+{"page":3,"change":"none","str":"Und noch ein Link: http://pdf2md.morethan.io","dir":"ltr","width":"219.53","height":"11.00","transform":["11.00","0.00","0.00","11.00","69.00","415.00"],"fontName":"JBRMKS+Helvetica","x":69,"y":415}
+{"page":3,"change":"none","str":"Ne Zeile die ","dir":"ltr","width":"61.77","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","389.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":389}
+{"page":3,"change":"none","str":"kursiv endet,","dir":"ltr","width":"62.37","height":"11.00","transform":["11.00","0.00","0.00","11.00","118.75","389.00"],"fontName":"SVUOCV+Helvetica-Oblique","x":118.75146000000001,"y":389}
+{"page":3,"change":"none","str":"und in ner ","dir":"ltr","width":"51.99","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","376.00"],"fontName":"SVUOCV+Helvetica-Oblique","x":57,"y":376}
+{"page":3,"change":"none","str":"(fast)","dir":"ltr","width":"25.06","height":"11.00","transform":["11.00","0.00","0.00","11.00","108.98","376.00"],"fontName":"JBRMKS+Helvetica","x":108.98145,"y":376}
+{"page":3,"change":"none","str":" komplett lasziven, eh, kursiven Zeile endet.","dir":"ltr","width":"213.39","height":"11.00","transform":["11.00","0.00","0.00","11.00","134.04","376.00"],"fontName":"SVUOCV+Helvetica-Oblique","x":134.0376,"y":376}
+{"page":3,"change":"none","str":"Etwas eher unwahrscheinliches. Zeile komplette fett.","dir":"ltr","width":"275.70","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","350.00"],"fontName":"OMUGKQ+Helvetica-Bold","x":57,"y":350}
+{"page":3,"change":"none","str":"Zeile komplett kursiv.","dir":"ltr","width":"102.50","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","337.00"],"fontName":"SVUOCV+Helvetica-Oblique","x":57,"y":337}
+{"page":3,"change":"none","str":"Und wieder fett.","dir":"ltr","width":"82.51","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","324.00"],"fontName":"OMUGKQ+Helvetica-Bold","x":57,"y":324}
+{"page":3,"change":"none","str":"Und","dir":"ltr","width":"20.18","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","311.00"],"fontName":"SVUOCV+Helvetica-Oblique","x":57,"y":311}
+{"page":3,"change":"none","str":"gemixt","dir":"ltr","width":"35.44","height":"11.00","transform":["11.00","0.00","0.00","11.00","80.24","311.00"],"fontName":"OMUGKQ+Helvetica-Bold","x":80.23535,"y":311}
+{"page":3,"change":"none","str":".","dir":"ltr","width":"3.06","height":"11.00","transform":["11.00","0.00","0.00","11.00","115.69","311.00"],"fontName":"JBRMKS+Helvetica","x":115.68994,"y":311}
+{"page":3,"change":"none","str":"Ein kompletter Absatz in kursiver Schriftform. Was will ich damit erreichen ? Ich will es sehen, ","dir":"ltr","width":"456.89","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","285.00"],"fontName":"SVUOCV+Helvetica-Oblique","x":57,"y":285}
+{"page":3,"change":"none","str":"einfach nur sehen! Gibt sicher noch andere sehenswerte Sachen im Leben, aber JETZT, ","dir":"ltr","width":"433.54","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","272.00"],"fontName":"SVUOCV+Helvetica-Oblique","x":57,"y":272}
+{"page":3,"change":"none","str":"interessiert mich ein kursiver Text Block! ;)","dir":"ltr","width":"205.20","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","259.00"],"fontName":"SVUOCV+Helvetica-Oblique","x":57,"y":259}
+{"page":3,"change":"none","str":"Und ein folgender Absatz, auch kursiv!","dir":"ltr","width":"187.73","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","233.00"],"fontName":"SVUOCV+Helvetica-Oblique","x":57,"y":233}
+{"page":3,"change":"none","str":"Und ein kursiver Setzt der einen eingeschlossen Link, nämlich ","dir":"ltr","width":"305.73","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","207.00"],"fontName":"SVUOCV+Helvetica-Oblique","x":57,"y":207}
+{"page":3,"change":"none","str":"http://pdf2md.morethan.io","dir":"ltr","width":"125.35","height":"11.00","transform":["11.00","0.00","0.00","11.00","362.72","207.00"],"fontName":"SVUOCV+Helvetica-Oblique","x":362.7173,"y":207}
+{"page":3,"change":"none","str":", hat.","dir":"ltr","width":"24.45","height":"11.00","transform":["11.00","0.00","0.00","11.00","488.07","207.00"],"fontName":"SVUOCV+Helvetica-Oblique","x":488.0679,"y":207}
+{"page":3,"change":"none","str":"Fussnote in einer Liste","dir":"ltr","width":"110.67","height":"11.00","transform":["11.00","0.00","0.00","11.00","64.13","59.00"],"fontName":"JBRMKS+Helvetica","x":64.134603,"y":59}
+{"page":3,"change":"none","str":"7","dir":"ltr","width":"4.08","height":"7.33","transform":["7.33","0.00","0.00","7.33","57.00","62.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":62}
+{"page":3,"change":"none","str":"\u0000","dir":"ltr","width":"0.00","height":"12.00","transform":["12.00","0.00","0.00","12.00","294.00","45.00"],"fontName":"QACXPP+Helvetica","x":294,"y":45}
+{"page":3,"change":"none","str":"4","dir":"ltr","width":"6.67","height":"12.00","transform":["12.00","0.00","0.00","12.00","294.00","45.00"],"fontName":"JBRMKS+Helvetica","x":294,"y":45}
+{"page":4,"change":"none","str":"Listen","dir":"ltr","width":"53.01","height":"18.00","transform":["18.00","0.00","0.00","18.00","57.00","767.00"],"fontName":"OMUGKQ+Helvetica-Bold","x":57,"y":767}
+{"page":4,"change":"none","str":"Nun eine Liste mit dash’s:","dir":"ltr","width":"125.77","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","740.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":740}
+{"page":4,"change":"none","str":"-","dir":"ltr","width":"4.40","height":"13.20","transform":["13.20","0.00","0.00","13.20","56.69","727.73"],"fontName":"JBRMKS+Helvetica","x":56.69069,"y":727.7327}
+{"page":4,"change":"none","str":"Eintrag 1","dir":"ltr","width":"44.03","height":"11.00","transform":["11.00","0.00","0.00","11.00","69.00","727.00"],"fontName":"JBRMKS+Helvetica","x":69,"y":727}
+{"page":4,"change":"none","str":"-","dir":"ltr","width":"4.40","height":"13.20","transform":["13.20","0.00","0.00","13.20","56.69","714.73"],"fontName":"JBRMKS+Helvetica","x":56.69069,"y":714.7327}
+{"page":4,"change":"none","str":"Eintrag 2, aber mit so langem Text, das er umbricht. Wirklich, wirklich lang. Breche du Zeile. Na ","dir":"ltr","width":"465.67","height":"11.00","transform":["11.00","0.00","0.00","11.00","69.00","714.00"],"fontName":"JBRMKS+Helvetica","x":69,"y":714}
+{"page":4,"change":"none","str":"los. Na endlich. Vielleicht sollt ich das auf 3 Zeilen erweitern ? Na ja, schaden kann es ja nicht. ","dir":"ltr","width":"462.68","height":"11.00","transform":["11.00","0.00","0.00","11.00","69.00","701.00"],"fontName":"JBRMKS+Helvetica","x":69,"y":701}
+{"page":4,"change":"none","str":"Also los!","dir":"ltr","width":"41.58","height":"11.00","transform":["11.00","0.00","0.00","11.00","69.00","688.00"],"fontName":"JBRMKS+Helvetica","x":69,"y":688}
+{"page":4,"change":"none","str":"-","dir":"ltr","width":"4.40","height":"13.20","transform":["13.20","0.00","0.00","13.20","56.69","675.73"],"fontName":"JBRMKS+Helvetica","x":56.69069,"y":675.7327}
+{"page":4,"change":"none","str":"Eintrag 3","dir":"ltr","width":"44.03","height":"11.00","transform":["11.00","0.00","0.00","11.00","69.00","675.00"],"fontName":"JBRMKS+Helvetica","x":69,"y":675}
+{"page":4,"change":"none","str":"Und Untergruppen:","dir":"ltr","width":"93.57","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","649.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":649}
+{"page":4,"change":"none","str":"-","dir":"ltr","width":"4.40","height":"13.20","transform":["13.20","0.00","0.00","13.20","56.69","636.73"],"fontName":"JBRMKS+Helvetica","x":56.69069,"y":636.7327}
+{"page":4,"change":"none","str":"Eintrag 1","dir":"ltr","width":"44.03","height":"11.00","transform":["11.00","0.00","0.00","11.00","69.00","636.00"],"fontName":"JBRMKS+Helvetica","x":69,"y":636}
+{"page":4,"change":"none","str":"-","dir":"ltr","width":"4.40","height":"13.20","transform":["13.20","0.00","0.00","13.20","68.69","623.73"],"fontName":"JBRMKS+Helvetica","x":68.69069,"y":623.7327}
+{"page":4,"change":"none","str":"Sub Eintrag 1.1, aber mit so langem Text, das er umbricht. Wirklich, wirklich lang. Breche du ","dir":"ltr","width":"450.40","height":"11.00","transform":["11.00","0.00","0.00","11.00","81.00","623.00"],"fontName":"JBRMKS+Helvetica","x":81,"y":623}
+{"page":4,"change":"none","str":"Zeile. Na los. Na endlich. Vielleicht sollt ich das auf 3 Zeilen erweitern ? Na ja, schaden kann ","dir":"ltr","width":"454.12","height":"11.00","transform":["11.00","0.00","0.00","11.00","81.00","610.00"],"fontName":"JBRMKS+Helvetica","x":81,"y":610}
+{"page":4,"change":"none","str":"es ja nicht. Also los!","dir":"ltr","width":"96.61","height":"11.00","transform":["11.00","0.00","0.00","11.00","81.00","597.00"],"fontName":"JBRMKS+Helvetica","x":81,"y":597}
+{"page":4,"change":"none","str":"-","dir":"ltr","width":"4.40","height":"13.20","transform":["13.20","0.00","0.00","13.20","68.69","584.73"],"fontName":"JBRMKS+Helvetica","x":68.69069,"y":584.7327}
+{"page":4,"change":"none","str":"Sub Eintrag 1.2","dir":"ltr","width":"75.83","height":"11.00","transform":["11.00","0.00","0.00","11.00","81.00","584.00"],"fontName":"JBRMKS+Helvetica","x":81,"y":584}
+{"page":4,"change":"none","str":"-","dir":"ltr","width":"4.40","height":"13.20","transform":["13.20","0.00","0.00","13.20","56.69","571.73"],"fontName":"JBRMKS+Helvetica","x":56.69069,"y":571.7327}
+{"page":4,"change":"none","str":"Eintrag 2","dir":"ltr","width":"44.03","height":"11.00","transform":["11.00","0.00","0.00","11.00","69.00","571.00"],"fontName":"JBRMKS+Helvetica","x":69,"y":571}
+{"page":4,"change":"none","str":"-","dir":"ltr","width":"4.40","height":"13.20","transform":["13.20","0.00","0.00","13.20","68.69","558.73"],"fontName":"JBRMKS+Helvetica","x":68.69069,"y":558.7327}
+{"page":4,"change":"none","str":"Sub Eintrag 2.1","dir":"ltr","width":"75.83","height":"11.00","transform":["11.00","0.00","0.00","11.00","81.00","558.00"],"fontName":"JBRMKS+Helvetica","x":81,"y":558}
+{"page":4,"change":"none","str":"Und eine mit bullet’s:","dir":"ltr","width":"101.92","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","532.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":532}
+{"page":4,"change":"none","str":"•","dir":"ltr","width":"3.85","height":"11.00","transform":["11.00","0.00","0.00","11.00","56.69","517.73"],"fontName":"JBRMKS+Helvetica","x":56.69069,"y":517.7268}
+{"page":4,"change":"none","str":"Eintrage 1","dir":"ltr","width":"50.14","height":"11.00","transform":["11.00","0.00","0.00","11.00","66.00","519.00"],"fontName":"JBRMKS+Helvetica","x":66,"y":519}
+{"page":4,"change":"none","str":"•","dir":"ltr","width":"3.85","height":"11.00","transform":["11.00","0.00","0.00","11.00","56.69","504.73"],"fontName":"JBRMKS+Helvetica","x":56.69069,"y":504.7268}
+{"page":4,"change":"none","str":"Eintrage 2","dir":"ltr","width":"50.14","height":"11.00","transform":["11.00","0.00","0.00","11.00","66.00","506.00"],"fontName":"JBRMKS+Helvetica","x":66,"y":506}
+{"page":4,"change":"none","str":"Gemixt:","dir":"ltr","width":"37.90","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","480.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":480}
+{"page":4,"change":"none","str":"-","dir":"ltr","width":"4.40","height":"13.20","transform":["13.20","0.00","0.00","13.20","56.69","467.73"],"fontName":"JBRMKS+Helvetica","x":56.69069,"y":467.7327}
+{"page":4,"change":"none","str":"Eintrage 1","dir":"ltr","width":"50.14","height":"11.00","transform":["11.00","0.00","0.00","11.00","69.00","467.00"],"fontName":"JBRMKS+Helvetica","x":69,"y":467}
+{"page":4,"change":"none","str":"•","dir":"ltr","width":"3.85","height":"11.00","transform":["11.00","0.00","0.00","11.00","56.69","452.73"],"fontName":"JBRMKS+Helvetica","x":56.69069,"y":452.7268}
+{"page":4,"change":"none","str":"Eintrage 2","dir":"ltr","width":"50.14","height":"11.00","transform":["11.00","0.00","0.00","11.00","66.00","454.00"],"fontName":"JBRMKS+Helvetica","x":66,"y":454}
+{"page":4,"change":"none","str":"Nummerierte Liste:","dir":"ltr","width":"92.92","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","428.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":428}
+{"page":4,"change":"none","str":"1.","dir":"ltr","width":"9.18","height":"11.00","transform":["11.00","0.00","0.00","11.00","56.69","414.73"],"fontName":"JBRMKS+Helvetica","x":56.69069,"y":414.7268}
+{"page":4,"change":"none","str":"Eins","dir":"ltr","width":"21.40","height":"11.00","transform":["11.00","0.00","0.00","11.00","75.00","415.00"],"fontName":"JBRMKS+Helvetica","x":75,"y":415}
+{"page":4,"change":"none","str":"2.","dir":"ltr","width":"9.18","height":"11.00","transform":["11.00","0.00","0.00","11.00","56.69","401.73"],"fontName":"JBRMKS+Helvetica","x":56.69069,"y":401.7268}
+{"page":4,"change":"none","str":"Zwei, aber mit so langem Text, das er umbricht. Wirklich, wirklich lang. Breche du Zeile. Na los. ","dir":"ltr","width":"465.04","height":"11.00","transform":["11.00","0.00","0.00","11.00","75.00","402.00"],"fontName":"JBRMKS+Helvetica","x":75,"y":402}
+{"page":4,"change":"none","str":"Na endlich. Vielleicht sollt ich das auf 3 Zeilen erweitern ? Na ja, schaden kann es ja nicht. Also ","dir":"ltr","width":"466.36","height":"11.00","transform":["11.00","0.00","0.00","11.00","75.00","389.00"],"fontName":"JBRMKS+Helvetica","x":75,"y":389}
+{"page":4,"change":"none","str":"los!","dir":"ltr","width":"17.12","height":"11.00","transform":["11.00","0.00","0.00","11.00","75.00","376.00"],"fontName":"JBRMKS+Helvetica","x":75,"y":376}
+{"page":4,"change":"none","str":"3.","dir":"ltr","width":"9.18","height":"11.00","transform":["11.00","0.00","0.00","11.00","56.69","362.73"],"fontName":"JBRMKS+Helvetica","x":56.69069,"y":362.7268}
+{"page":4,"change":"none","str":"Drei","dir":"ltr","width":"20.17","height":"11.00","transform":["11.00","0.00","0.00","11.00","75.00","363.00"],"fontName":"JBRMKS+Helvetica","x":75,"y":363}
+{"page":4,"change":"none","str":"4.","dir":"ltr","width":"9.18","height":"11.00","transform":["11.00","0.00","0.00","11.00","56.69","349.73"],"fontName":"JBRMKS+Helvetica","x":56.69069,"y":349.7268}
+{"page":4,"change":"none","str":"Vier. Und auch hier wieder ein etwas längerer Text, so dass der Eintrag über mehrere Zeilen ","dir":"ltr","width":"450.87","height":"11.00","transform":["11.00","0.00","0.00","11.00","75.00","350.00"],"fontName":"JBRMKS+Helvetica","x":75,"y":350}
+{"page":4,"change":"none","str":"geht!","dir":"ltr","width":"24.48","height":"11.00","transform":["11.00","0.00","0.00","11.00","75.00","337.00"],"fontName":"JBRMKS+Helvetica","x":75,"y":337}
+{"page":4,"change":"none","str":"Zentrierte Liste:","dir":"ltr","width":"76.42","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","311.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":311}
+{"page":4,"change":"none","str":"-","dir":"ltr","width":"4.40","height":"13.20","transform":["13.20","0.00","0.00","13.20","80.69","298.73"],"fontName":"JBRMKS+Helvetica","x":80.69069,"y":298.7327}
+{"page":4,"change":"none","str":"Eintrag 1","dir":"ltr","width":"44.03","height":"11.00","transform":["11.00","0.00","0.00","11.00","93.00","298.00"],"fontName":"JBRMKS+Helvetica","x":93,"y":298}
+{"page":4,"change":"none","str":"-","dir":"ltr","width":"4.40","height":"13.20","transform":["13.20","0.00","0.00","13.20","80.69","285.73"],"fontName":"JBRMKS+Helvetica","x":80.69069,"y":285.7327}
+{"page":4,"change":"none","str":"Eintrag 2, aber mit so langem Text, das er umbricht. Wirklich, wirklich lang. Breche du Zeile. ","dir":"ltr","width":"448.55","height":"11.00","transform":["11.00","0.00","0.00","11.00","93.00","285.00"],"fontName":"JBRMKS+Helvetica","x":93,"y":285}
+{"page":4,"change":"none","str":"Na los. Na endlich. Vielleicht sollt ich das auf 3 Zeilen erweitern ? Na ja, schaden kann es ","dir":"ltr","width":"438.84","height":"11.00","transform":["11.00","0.00","0.00","11.00","93.00","272.00"],"fontName":"JBRMKS+Helvetica","x":93,"y":272}
+{"page":4,"change":"none","str":"ja nicht. Also los!","dir":"ltr","width":"81.94","height":"11.00","transform":["11.00","0.00","0.00","11.00","93.00","259.00"],"fontName":"JBRMKS+Helvetica","x":93,"y":259}
+{"page":4,"change":"none","str":"-","dir":"ltr","width":"4.40","height":"13.20","transform":["13.20","0.00","0.00","13.20","80.69","246.73"],"fontName":"JBRMKS+Helvetica","x":80.69069,"y":246.7327}
+{"page":4,"change":"none","str":"Eintrag 3","dir":"ltr","width":"44.03","height":"11.00","transform":["11.00","0.00","0.00","11.00","93.00","246.00"],"fontName":"JBRMKS+Helvetica","x":93,"y":246}
+{"page":4,"change":"none","str":"Zwei aufeinander folgende Listen:","dir":"ltr","width":"165.12","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","220.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":220}
+{"page":4,"change":"none","str":"-","dir":"ltr","width":"4.40","height":"13.20","transform":["13.20","0.00","0.00","13.20","56.69","194.73"],"fontName":"JBRMKS+Helvetica","x":56.69069,"y":194.7327}
+{"page":4,"change":"none","str":"Erste 1","dir":"ltr","width":"34.85","height":"11.00","transform":["11.00","0.00","0.00","11.00","69.00","194.00"],"fontName":"JBRMKS+Helvetica","x":69,"y":194}
+{"page":4,"change":"none","str":"-","dir":"ltr","width":"4.40","height":"13.20","transform":["13.20","0.00","0.00","13.20","56.69","181.73"],"fontName":"JBRMKS+Helvetica","x":56.69069,"y":181.7327}
+{"page":4,"change":"none","str":"Erste 2","dir":"ltr","width":"34.85","height":"11.00","transform":["11.00","0.00","0.00","11.00","69.00","181.00"],"fontName":"JBRMKS+Helvetica","x":69,"y":181}
+{"page":4,"change":"none","str":"-","dir":"ltr","width":"4.40","height":"13.20","transform":["13.20","0.00","0.00","13.20","56.69","155.73"],"fontName":"JBRMKS+Helvetica","x":56.69069,"y":155.7327}
+{"page":4,"change":"none","str":"Zwote 1","dir":"ltr","width":"39.11","height":"11.00","transform":["11.00","0.00","0.00","11.00","69.00","155.00"],"fontName":"JBRMKS+Helvetica","x":69,"y":155}
+{"page":4,"change":"none","str":"-","dir":"ltr","width":"4.40","height":"13.20","transform":["13.20","0.00","0.00","13.20","56.69","142.73"],"fontName":"JBRMKS+Helvetica","x":56.69069,"y":142.7327}
+{"page":4,"change":"none","str":"Zwote 2","dir":"ltr","width":"39.11","height":"11.00","transform":["11.00","0.00","0.00","11.00","69.00","142.00"],"fontName":"JBRMKS+Helvetica","x":69,"y":142}
+{"page":4,"change":"none","str":"\u0000","dir":"ltr","width":"0.00","height":"12.00","transform":["12.00","0.00","0.00","12.00","294.00","45.00"],"fontName":"QACXPP+Helvetica","x":294,"y":45}
+{"page":4,"change":"none","str":"5","dir":"ltr","width":"6.67","height":"12.00","transform":["12.00","0.00","0.00","12.00","294.00","45.00"],"fontName":"JBRMKS+Helvetica","x":294,"y":45}
+{"page":5,"change":"none","str":"Liste mit drei Levels:","dir":"ltr","width":"100.27","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","749.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":749}
+{"page":5,"change":"none","str":"-","dir":"ltr","width":"4.40","height":"13.20","transform":["13.20","0.00","0.00","13.20","56.69","736.73"],"fontName":"JBRMKS+Helvetica","x":56.69069,"y":736.7327}
+{"page":5,"change":"none","str":"Erster Level 1","dir":"ltr","width":"67.86","height":"11.00","transform":["11.00","0.00","0.00","11.00","69.00","736.00"],"fontName":"JBRMKS+Helvetica","x":69,"y":736}
+{"page":5,"change":"none","str":"-","dir":"ltr","width":"4.40","height":"13.20","transform":["13.20","0.00","0.00","13.20","68.69","723.73"],"fontName":"JBRMKS+Helvetica","x":68.69069,"y":723.7327}
+{"page":5,"change":"none","str":"Zwoter Level 1.1, aber mit so langem Text, das er umbricht. Wirklich, wirklich lang. Breche du ","dir":"ltr","width":"455.89","height":"11.00","transform":["11.00","0.00","0.00","11.00","81.00","723.00"],"fontName":"JBRMKS+Helvetica","x":81,"y":723}
+{"page":5,"change":"none","str":"Zeile. Na los. Na endlich. Vielleicht sollt ich das auf 3 Zeilen erweitern ? Na ja, schaden kann ","dir":"ltr","width":"454.12","height":"11.00","transform":["11.00","0.00","0.00","11.00","81.00","710.00"],"fontName":"JBRMKS+Helvetica","x":81,"y":710}
+{"page":5,"change":"none","str":"es ja nicht. Also los!","dir":"ltr","width":"96.61","height":"11.00","transform":["11.00","0.00","0.00","11.00","81.00","697.00"],"fontName":"JBRMKS+Helvetica","x":81,"y":697}
+{"page":5,"change":"none","str":"-","dir":"ltr","width":"4.40","height":"13.20","transform":["13.20","0.00","0.00","13.20","80.69","684.73"],"fontName":"JBRMKS+Helvetica","x":80.69069,"y":684.7327}
+{"page":5,"change":"none","str":"3ter Level 1.1.1","dir":"ltr","width":"75.83","height":"11.00","transform":["11.00","0.00","0.00","11.00","93.00","684.00"],"fontName":"JBRMKS+Helvetica","x":93,"y":684}
+{"page":5,"change":"none","str":"-","dir":"ltr","width":"4.40","height":"13.20","transform":["13.20","0.00","0.00","13.20","80.69","671.73"],"fontName":"JBRMKS+Helvetica","x":80.69069,"y":671.7327}
+{"page":5,"change":"none","str":"3ter Level 1.1.2, aber mit so langem Text, das er umbricht. Wirklich, wirklich lang. Breche ","dir":"ltr","width":"435.10","height":"11.00","transform":["11.00","0.00","0.00","11.00","93.00","671.00"],"fontName":"JBRMKS+Helvetica","x":93,"y":671}
+{"page":5,"change":"none","str":"du Zeile. Na los. Na endlich. Vielleicht sollt ich das auf 3 Zeilen erweitern ? Na ja, schaden ","dir":"ltr","width":"442.50","height":"11.00","transform":["11.00","0.00","0.00","11.00","93.00","658.00"],"fontName":"JBRMKS+Helvetica","x":93,"y":658}
+{"page":5,"change":"none","str":"kann es ja nicht. Also los!","dir":"ltr","width":"123.52","height":"11.00","transform":["11.00","0.00","0.00","11.00","93.00","645.00"],"fontName":"JBRMKS+Helvetica","x":93,"y":645}
+{"page":5,"change":"none","str":"-","dir":"ltr","width":"4.40","height":"13.20","transform":["13.20","0.00","0.00","13.20","68.69","632.73"],"fontName":"JBRMKS+Helvetica","x":68.69069,"y":632.7327}
+{"page":5,"change":"none","str":"Zwoter Level 1.2","dir":"ltr","width":"81.32","height":"11.00","transform":["11.00","0.00","0.00","11.00","81.00","632.00"],"fontName":"JBRMKS+Helvetica","x":81,"y":632}
+{"page":5,"change":"none","str":"-","dir":"ltr","width":"4.40","height":"13.20","transform":["13.20","0.00","0.00","13.20","68.69","619.73"],"fontName":"JBRMKS+Helvetica","x":68.69069,"y":619.7327}
+{"page":5,"change":"none","str":"Zwoter Level 1.3","dir":"ltr","width":"81.32","height":"11.00","transform":["11.00","0.00","0.00","11.00","81.00","619.00"],"fontName":"JBRMKS+Helvetica","x":81,"y":619}
+{"page":5,"change":"none","str":"-","dir":"ltr","width":"4.40","height":"13.20","transform":["13.20","0.00","0.00","13.20","80.69","606.73"],"fontName":"JBRMKS+Helvetica","x":80.69069,"y":606.7327}
+{"page":5,"change":"none","str":"3ter Level 1.3.1","dir":"ltr","width":"75.83","height":"11.00","transform":["11.00","0.00","0.00","11.00","93.00","606.00"],"fontName":"JBRMKS+Helvetica","x":93,"y":606}
+{"page":5,"change":"none","str":"-","dir":"ltr","width":"4.40","height":"13.20","transform":["13.20","0.00","0.00","13.20","56.69","593.73"],"fontName":"JBRMKS+Helvetica","x":56.69069,"y":593.7327}
+{"page":5,"change":"none","str":"Erster Level 2","dir":"ltr","width":"67.86","height":"11.00","transform":["11.00","0.00","0.00","11.00","69.00","593.00"],"fontName":"JBRMKS+Helvetica","x":69,"y":593}
+{"page":5,"change":"none","str":"Und nun nummeriert mit un-nummerierten Sub-Leveln:","dir":"ltr","width":"266.57","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","567.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":567}
+{"page":5,"change":"none","str":"1.","dir":"ltr","width":"9.18","height":"11.00","transform":["11.00","0.00","0.00","11.00","56.69","553.73"],"fontName":"JBRMKS+Helvetica","x":56.69069,"y":553.7268}
+{"page":5,"change":"none","str":"Eintrag 1","dir":"ltr","width":"44.03","height":"11.00","transform":["11.00","0.00","0.00","11.00","75.00","554.00"],"fontName":"JBRMKS+Helvetica","x":75,"y":554}
+{"page":5,"change":"none","str":"-","dir":"ltr","width":"4.40","height":"13.20","transform":["13.20","0.00","0.00","13.20","68.69","541.73"],"fontName":"JBRMKS+Helvetica","x":68.69069,"y":541.7327}
+{"page":5,"change":"none","str":"Eintrag 1.1","dir":"ltr","width":"53.20","height":"11.00","transform":["11.00","0.00","0.00","11.00","81.00","541.00"],"fontName":"JBRMKS+Helvetica","x":81,"y":541}
+{"page":5,"change":"none","str":"-","dir":"ltr","width":"4.40","height":"13.20","transform":["13.20","0.00","0.00","13.20","68.69","528.73"],"fontName":"JBRMKS+Helvetica","x":68.69069,"y":528.7327}
+{"page":5,"change":"none","str":"Eintrag 1.2","dir":"ltr","width":"53.20","height":"11.00","transform":["11.00","0.00","0.00","11.00","81.00","528.00"],"fontName":"JBRMKS+Helvetica","x":81,"y":528}
+{"page":5,"change":"none","str":"2.","dir":"ltr","width":"9.18","height":"11.00","transform":["11.00","0.00","0.00","11.00","56.69","514.73"],"fontName":"JBRMKS+Helvetica","x":56.69069,"y":514.7268}
+{"page":5,"change":"none","str":"Eintrag 2","dir":"ltr","width":"44.03","height":"11.00","transform":["11.00","0.00","0.00","11.00","75.00","515.00"],"fontName":"JBRMKS+Helvetica","x":75,"y":515}
+{"page":5,"change":"none","str":"Und jetzt eine Liste, die übergangslos aus einem zwei-zeiligen Paragraphen folgt. Mal sehen ob ","dir":"ltr","width":"469.03","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","489.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":489}
+{"page":5,"change":"none","str":"der Parser das sauber trennen kann:","dir":"ltr","width":"179.17","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","476.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":476}
+{"page":5,"change":"none","str":"-","dir":"ltr","width":"4.40","height":"13.20","transform":["13.20","0.00","0.00","13.20","56.69","463.73"],"fontName":"JBRMKS+Helvetica","x":56.69069,"y":463.7327}
+{"page":5,"change":"none","str":"Eintrag 1","dir":"ltr","width":"44.03","height":"11.00","transform":["11.00","0.00","0.00","11.00","69.00","463.00"],"fontName":"JBRMKS+Helvetica","x":69,"y":463}
+{"page":5,"change":"none","str":"-","dir":"ltr","width":"4.40","height":"13.20","transform":["13.20","0.00","0.00","13.20","56.69","450.73"],"fontName":"JBRMKS+Helvetica","x":56.69069,"y":450.7327}
+{"page":5,"change":"none","str":"Eintrag 2","dir":"ltr","width":"44.03","height":"11.00","transform":["11.00","0.00","0.00","11.00","69.00","450.00"],"fontName":"JBRMKS+Helvetica","x":69,"y":450}
+{"page":5,"change":"none","str":"Und danach kommt auch gleicht was.","dir":"ltr","width":"182.82","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","437.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":437}
+{"page":5,"change":"none","str":"\u0000","dir":"ltr","width":"0.00","height":"12.00","transform":["12.00","0.00","0.00","12.00","294.00","45.00"],"fontName":"QACXPP+Helvetica","x":294,"y":45}
+{"page":5,"change":"none","str":"6","dir":"ltr","width":"6.67","height":"12.00","transform":["12.00","0.00","0.00","12.00","294.00","45.00"],"fontName":"JBRMKS+Helvetica","x":294,"y":45}
+{"page":6,"change":"none","str":"Quotes & Spezielle Einschübe","dir":"ltr","width":"258.06","height":"18.00","transform":["18.00","0.00","0.00","18.00","165.00","767.00"],"fontName":"OMUGKQ+Helvetica-Bold","x":165,"y":767}
+{"page":6,"change":"none","str":"8","dir":"ltr","width":"6.67","height":"12.00","transform":["12.00","0.00","0.00","12.00","423.00","772.00"],"fontName":"OMUGKQ+Helvetica-Bold","x":423,"y":772}
+{"page":6,"change":"none","str":"Das hier ist wieder ein normaler Absatz. Das interessante ist der nachfolgende Teil, der ","dir":"ltr","width":"425.99","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","740.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":740}
+{"page":6,"change":"none","str":"eingeschoben ist, gewöhnlicher Weise sowas wie ein Zitat, oder Code, oder sonst was:","dir":"ltr","width":"423.55","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","727.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":727}
+{"page":6,"change":"none","str":"Wenn ein chaotischer Schreibtisch eine chaotische Denkweise widerspiegelt, welche Denkweise ","dir":"ltr","width":"472.46","height":"11.00","transform":["11.00","0.00","0.00","11.00","63.00","701.00"],"fontName":"SVUOCV+Helvetica-Oblique","x":63,"y":701}
+{"page":6,"change":"none","str":"spiegelt dann ein leerer Schreibtisch wider?","dir":"ltr","width":"212.80","height":"11.00","transform":["11.00","0.00","0.00","11.00","151.00","688.00"],"fontName":"SVUOCV+Helvetica-Oblique","x":151,"y":688}
+{"page":6,"change":"none","str":" - Albert Einstein","dir":"ltr","width":"80.10","height":"11.00","transform":["11.00","0.00","0.00","11.00","363.79","688.00"],"fontName":"JBRMKS+Helvetica","x":363.7866,"y":688}
+{"page":6,"change":"none","str":"So, das war ja schonmal ein guter Anfang. Hier noch ein Einzeiler:","dir":"ltr","width":"322.25","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","662.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":662}
+{"page":6,"change":"none","str":"Phantasie ist wichtiger als ","dir":"ltr","width":"129.62","height":"11.00","transform":["11.00","0.00","0.00","11.00","101.00","623.00"],"fontName":"JBRMKS+Helvetica","x":101,"y":623}
+{"page":6,"change":"none","str":"Wissen","dir":"ltr","width":"38.32","height":"11.00","transform":["11.00","0.00","0.00","11.00","230.62","623.00"],"fontName":"OMUGKQ+Helvetica-Bold","x":230.6152,"y":623}
+{"page":6,"change":"none","str":", denn Wissen","dir":"ltr","width":"69.70","height":"11.00","transform":["11.00","0.00","0.00","11.00","269.03","623.00"],"fontName":"JBRMKS+Helvetica","x":269.02930000000003,"y":623}
+{"page":6,"change":"none","str":" ist ","dir":"ltr","width":"17.11","height":"11.00","transform":["11.00","0.00","0.00","11.00","342.81","623.00"],"fontName":"JBRMKS+Helvetica","x":342.8084,"y":623}
+{"page":6,"change":"none","str":"begrenzt","dir":"ltr","width":"42.81","height":"11.00","transform":["11.00","0.00","0.00","11.00","359.92","623.00"],"fontName":"SVUOCV+Helvetica-Oblique","x":359.9207,"y":623}
+{"page":6,"change":"none","str":".","dir":"ltr","width":"3.06","height":"11.00","transform":["11.00","0.00","0.00","11.00","402.73","623.00"],"fontName":"JBRMKS+Helvetica","x":402.7284,"y":623}
+{"page":6,"change":"none","str":" - Albert Einstein","dir":"ltr","width":"80.10","height":"11.00","transform":["11.00","0.00","0.00","11.00","405.78","623.00"],"fontName":"JBRMKS+Helvetica","x":405.7845,"y":623}
+{"page":6,"change":"none","str":"9","dir":"ltr","width":"4.08","height":"7.33","transform":["7.33","0.00","0.00","7.33","339.00","626.00"],"fontName":"JBRMKS+Helvetica","x":339,"y":626}
+{"page":6,"change":"none","str":"10","dir":"ltr","width":"8.16","height":"7.33","transform":["7.33","0.00","0.00","7.33","486.00","626.00"],"fontName":"JBRMKS+Helvetica","x":486,"y":626}
+{"page":6,"change":"none","str":"Und nun mehrere Quotes hintereinander:","dir":"ltr","width":"200.58","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","584.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":584}
+{"page":6,"change":"none","str":"Die größte Macht hat das richtige Wort zur richtigen Zeit.","dir":"ltr","width":"275.53","height":"11.00","transform":["11.00","0.00","0.00","11.00","127.00","558.00"],"fontName":"SVUOCV+Helvetica-Oblique","x":127,"y":558}
+{"page":6,"change":"none","str":" - Mark Twain","dir":"ltr","width":"65.82","height":"11.00","transform":["11.00","0.00","0.00","11.00","402.52","558.00"],"fontName":"JBRMKS+Helvetica","x":402.521,"y":558}
+{"page":6,"change":"none","str":"Der Kuss ist ein liebenswerter Trick der Natur, ein Gespräch zu unterbrechen, wenn Worte ","dir":"ltr","width":"441.87","height":"11.00","transform":["11.00","0.00","0.00","11.00","78.00","532.00"],"fontName":"SVUOCV+Helvetica-Oblique","x":78,"y":532}
+{"page":6,"change":"none","str":"überflüssig werden","dir":"ltr","width":"92.33","height":"11.00","transform":["11.00","0.00","0.00","11.00","207.00","519.00"],"fontName":"SVUOCV+Helvetica-Oblique","x":207,"y":519}
+{"page":6,"change":"none","str":". - Ingrid Bergman","dir":"ltr","width":"88.04","height":"11.00","transform":["11.00","0.00","0.00","11.00","299.33","519.00"],"fontName":"JBRMKS+Helvetica","x":299.3291,"y":519}
+{"page":6,"change":"none","str":"Das Schicksal wird schon seine Gründe haben.","dir":"ltr","width":"230.52","height":"11.00","transform":["11.00","0.00","0.00","11.00","159.00","493.00"],"fontName":"SVUOCV+Helvetica-Oblique","x":159,"y":493}
+{"page":6,"change":"none","str":" - Voltaire","dir":"ltr","width":"46.47","height":"11.00","transform":["11.00","0.00","0.00","11.00","389.51","493.00"],"fontName":"JBRMKS+Helvetica","x":389.51120000000003,"y":493}
+{"page":6,"change":"none","str":"Heading 2","dir":"ltr","width":"76.49","height":"16.00","transform":["16.00","0.00","0.00","16.00","57.00","449.00"],"fontName":"OMUGKQ+Helvetica-Bold","x":57,"y":449}
+{"page":6,"change":"none","str":"abc","dir":"ltr","width":"17.74","height":"11.00","transform":["11.00","0.00","0.00","11.00","57.00","422.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":422}
+{"page":6,"change":"none","str":"Heading 2 II","dir":"ltr","width":"89.85","height":"16.00","transform":["16.00","0.00","0.00","16.00","57.00","391.00"],"fontName":"OMUGKQ+Helvetica-Bold","x":57,"y":391}
+{"page":6,"change":"none","str":"Eine Überschrifts-Fussnote... so was gibts auch!","dir":"ltr","width":"237.22","height":"11.00","transform":["11.00","0.00","0.00","11.00","64.13","105.00"],"fontName":"JBRMKS+Helvetica","x":64.134603,"y":105}
+{"page":6,"change":"none","str":"8","dir":"ltr","width":"4.08","height":"7.33","transform":["7.33","0.00","0.00","7.33","57.00","108.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":108}
+{"page":6,"change":"none","str":"Wisse, dass ist eine Fussnote in einem Zitat!","dir":"ltr","width":"217.65","height":"11.00","transform":["11.00","0.00","0.00","11.00","64.13","82.00"],"fontName":"JBRMKS+Helvetica","x":64.134603,"y":82}
+{"page":6,"change":"none","str":"9","dir":"ltr","width":"4.08","height":"7.33","transform":["7.33","0.00","0.00","7.33","57.00","85.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":85}
+{"page":6,"change":"none","str":"Der Albert Einstein (Fussnote im Zitat, am Ende der Zeile)","dir":"ltr","width":"281.84","height":"11.00","transform":["11.00","0.00","0.00","11.00","68.21","59.00"],"fontName":"JBRMKS+Helvetica","x":68.21305,"y":59}
+{"page":6,"change":"none","str":"10","dir":"ltr","width":"8.16","height":"7.33","transform":["7.33","0.00","0.00","7.33","57.00","62.00"],"fontName":"JBRMKS+Helvetica","x":57,"y":62}
+{"page":6,"change":"none","str":"\u0000","dir":"ltr","width":"0.00","height":"12.00","transform":["12.00","0.00","0.00","12.00","294.00","45.00"],"fontName":"QACXPP+Helvetica","x":294,"y":45}
+{"page":6,"change":"none","str":"7","dir":"ltr","width":"6.67","height":"12.00","transform":["12.00","0.00","0.00","12.00","294.00","45.00"],"fontName":"JBRMKS+Helvetica","x":294,"y":45}

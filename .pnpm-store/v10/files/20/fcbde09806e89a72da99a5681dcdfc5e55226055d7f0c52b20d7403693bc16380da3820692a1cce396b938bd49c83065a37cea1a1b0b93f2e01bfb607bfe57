@@ -1,0 +1,38 @@
+{
+  "pages": 7,
+  "items": 6779,
+  "groupedItems": 1102,
+  "changes": 17,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":5,"change":"ContentChange","str":"1248 SCIENCE, VOL. 162","line":146,"x":65.7600000000005,"y":26.159990000000654,"width":"74.10","height":"9.20","fontName":["Courier"],"dir":["ltr"]}
+{"page":6,"change":"ContentChange","str":"Science  162  (3859), 1243-1248.","line":3,"x":72,"y":591.99997,"width":"114.29","height":"8.00","fontName":[null],"dir":["ltr"]}
+{"page":6,"change":"ContentChange","str":"Use of this article is subject to the  Terms of Service","line":9,"x":71.99998999999998,"y":136,"width":"181.84","height":"8.00","fontName":[null],"dir":["ltr"]}
+{"page":6,"change":"ContentChange","str":"Advancement of Science, 1200 New York Avenue NW, Washington, DC 20005. The title  Science  is a registered","line":11,"x":72,"y":101.99994,"width":"395.73","height":"8.00","fontName":[null],"dir":["ltr"]}
+{"page":6,"change":"ContentChange","str":"Science  (print ISSN 0036-8075; online ISSN 1095-9203) is published by the American Association for the","line":12,"x":72,"y":110.00001999999999,"width":"372.62","height":"8.00","fontName":[null],"dir":["ltr"]}

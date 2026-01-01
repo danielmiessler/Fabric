@@ -1,0 +1,15 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.parser = void 0;
+const PdfParser_1 = require("./PdfParser");
+const defaultConfig = {
+    pdfjsParams: {
+        // TODO check if that cmap thing makes sense since we don't bundle them
+        cMapUrl: 'cmaps/',
+        cMapPacked: true,
+    },
+};
+function parser(pdfJs, options = defaultConfig) {
+    return new PdfParser_1.default(pdfJs, options.pdfjsParams);
+}
+exports.parser = parser;

@@ -1,0 +1,50 @@
+{
+  "name": "rehype",
+  "version": "13.0.2",
+  "description": "HTML processor powered by plugins part of the unified collective",
+  "license": "MIT",
+  "keywords": [
+    "abstract",
+    "ast",
+    "html",
+    "parse",
+    "process",
+    "rehype",
+    "serialize",
+    "stringify",
+    "syntax",
+    "tree",
+    "unified"
+  ],
+  "dependencies": {
+    "@types/hast": "^3.0.0",
+    "rehype-parse": "^9.0.0",
+    "rehype-stringify": "^10.0.0",
+    "unified": "^11.0.0"
+  },
+  "homepage": "https://github.com/rehypejs/rehype",
+  "repository": "https://github.com/rehypejs/rehype/tree/main/packages/rehype",
+  "bugs": "https://github.com/rehypejs/rehype/issues",
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/unified"
+  },
+  "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
+  "contributors": [
+    "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)"
+  ],
+  "sideEffects": false,
+  "type": "module",
+  "exports": "./index.js",
+  "files": [
+    "index.d.ts",
+    "index.js"
+  ],
+  "scripts": {},
+  "typeCoverage": {
+    "atLeast": 100,
+    "detail": true,
+    "strict": true,
+    "ignoreCatch": true
+  }
+}

@@ -1,0 +1,122 @@
+{
+  "pages": 24,
+  "items": 1495,
+  "groupedItems": 1495,
+  "changes": 92,
+  "schema": [
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":1,"change":"Removal","str":" ","dir":"ltr","width":"2.34","height":"9.00","transform":["9.00","0.00","0.00","9.00","45.35","410.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":45.3543,"y":410.9291}
+{"page":1,"change":"Removal","str":" ","dir":"ltr","width":"2.22","height":"8.00","transform":["8.00","0.00","0.00","8.00","337.79","422.93"],"fontName":"QMZZIE+AvenirLTStd-Book","x":337.7867,"y":422.9291}
+{"page":2,"change":"Removal","str":" ","dir":"ltr","width":"2.25","height":"9.00","transform":["9.00","0.00","0.00","9.00","34.02","218.95"],"fontName":"QMZZIE+AGaramondPro-Regular","x":34.0157,"y":218.9500999999999}
+{"page":2,"change":"Removal","str":" ","dir":"ltr","width":"2.25","height":"9.00","transform":["9.00","0.00","0.00","9.00","34.02","110.98"],"fontName":"QMZZIE+AGaramondPro-Regular","x":34.0157,"y":110.97709999999981}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"1.30","height":"5.00","transform":["5.00","0.00","0.00","5.00","53.02","458.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":53.0166,"y":458.9291}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"1.30","height":"5.00","transform":["5.00","0.00","0.00","5.00","379.03","459.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":379.0267,"y":459.9291}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"1.30","height":"5.00","transform":["5.00","0.00","0.00","5.00","53.02","446.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":53.0166,"y":446.9291}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"1.82","height":"7.00","transform":["7.00","0.00","0.00","7.00","159.83","446.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":159.8347,"y":446.9291}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"1.30","height":"5.00","transform":["5.00","0.00","0.00","5.00","379.03","435.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":379.02610000000004,"y":435.9291}
+{"page":3,"change":"Removal","str":"  ","dir":"ltr","width":"2.70","height":"5.00","transform":["5.00","0.00","0.00","5.00","53.02","422.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":53.0166,"y":422.9291}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"1.30","height":"5.00","transform":["5.00","0.00","0.00","5.00","53.02","410.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":53.0166,"y":410.9291}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"1.30","height":"5.00","transform":["5.00","0.00","0.00","5.00","53.02","398.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":53.0166,"y":398.9291}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"1.30","height":"5.00","transform":["5.00","0.00","0.00","5.00","53.02","386.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":53.0166,"y":386.9291}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"1.82","height":"7.00","transform":["7.00","0.00","0.00","7.00","335.63","386.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":335.6257,"y":386.9291}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"1.30","height":"5.00","transform":["5.00","0.00","0.00","5.00","53.02","362.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":53.0166,"y":362.9291}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"1.82","height":"7.00","transform":["7.00","0.00","0.00","7.00","341.03","362.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":341.0297,"y":362.9291}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"1.82","height":"7.00","transform":["7.00","0.00","0.00","7.00","325.00","350.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":324.9997,"y":350.9311}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"1.30","height":"5.00","transform":["5.00","0.00","0.00","5.00","53.02","326.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":53.0166,"y":326.9291}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"1.30","height":"5.00","transform":["5.00","0.00","0.00","5.00","53.02","314.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":53.0166,"y":314.9291}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"1.82","height":"7.00","transform":["7.00","0.00","0.00","7.00","342.02","314.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":342.0237,"y":314.9291}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"1.30","height":"5.00","transform":["5.00","0.00","0.00","5.00","53.02","290.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":53.0156,"y":290.9291}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"1.30","height":"5.00","transform":["5.00","0.00","0.00","5.00","53.02","278.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":53.0156,"y":278.9291}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"1.30","height":"5.00","transform":["5.00","0.00","0.00","5.00","53.02","266.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":53.0156,"y":266.9291}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"1.10","height":"5.00","transform":["5.00","0.00","0.00","5.00","259.71","267.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":259.7089,"y":267.9291}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"1.30","height":"5.00","transform":["5.00","0.00","0.00","5.00","53.02","254.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":53.0156,"y":254.9291}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"1.82","height":"7.00","transform":["7.00","0.00","0.00","7.00","307.39","254.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":307.3947,"y":254.9291}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"1.30","height":"5.00","transform":["5.00","0.00","0.00","5.00","53.02","230.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":53.0156,"y":230.9291}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"1.82","height":"7.00","transform":["7.00","0.00","0.00","7.00","328.23","230.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":328.2267,"y":230.9291}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"0.18","height":"5.00","transform":["5.00","0.00","0.00","5.00","249.84","219.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":249.839,"y":219.9291}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"1.30","height":"5.00","transform":["5.00","0.00","0.00","5.00","375.31","219.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":375.31399999999996,"y":219.9291}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"1.30","height":"5.00","transform":["5.00","0.00","0.00","5.00","53.02","206.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":53.0156,"y":206.9291}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"0.31","height":"5.00","transform":["5.00","0.00","0.00","5.00","170.06","207.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":170.0603,"y":207.9291}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"1.30","height":"5.00","transform":["5.00","0.00","0.00","5.00","375.32","207.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":375.3203,"y":207.9291}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"1.30","height":"5.00","transform":["5.00","0.00","0.00","5.00","53.02","194.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":53.0156,"y":194.9291}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"1.82","height":"7.00","transform":["7.00","0.00","0.00","7.00","299.15","194.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":299.1487,"y":194.9291}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"1.30","height":"5.00","transform":["5.00","0.00","0.00","5.00","53.02","170.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":53.0156,"y":170.9291}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"1.30","height":"5.00","transform":["5.00","0.00","0.00","5.00","375.32","171.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":375.3157,"y":171.9291}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"1.30","height":"5.00","transform":["5.00","0.00","0.00","5.00","53.02","158.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":53.0156,"y":158.9291}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"1.82","height":"7.00","transform":["7.00","0.00","0.00","7.00","168.15","158.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":168.1507,"y":158.9291}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"1.82","height":"7.00","transform":["7.00","0.00","0.00","7.00","326.69","146.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":326.6867000000001,"y":146.93110000000001}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"1.30","height":"5.00","transform":["5.00","0.00","0.00","5.00","375.32","135.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":375.3164,"y":135.9291}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"1.30","height":"5.00","transform":["5.00","0.00","0.00","5.00","53.02","122.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":53.0156,"y":122.9291}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"1.30","height":"5.00","transform":["5.00","0.00","0.00","5.00","375.32","123.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":375.317,"y":123.9291}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"1.30","height":"5.00","transform":["5.00","0.00","0.00","5.00","53.02","110.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":53.0156,"y":110.9291}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"1.30","height":"5.00","transform":["5.00","0.00","0.00","5.00","375.31","111.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":375.31489999999997,"y":111.9291}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"1.30","height":"5.00","transform":["5.00","0.00","0.00","5.00","375.32","87.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":375.31759999999997,"y":87.9291}
+{"page":3,"change":"Removal","str":" ","dir":"ltr","width":"1.30","height":"5.00","transform":["5.00","0.00","0.00","5.00","375.32","75.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":375.31500000000005,"y":75.9291}
+{"page":5,"change":"Removal","str":"  ","dir":"ltr","width":"6.50","height":"13.00","transform":["13.00","0.00","0.00","13.00","34.02","434.93"],"fontName":"QMZZIE+AGaramond-Italic","x":34.0157,"y":434.9331999999999}
+{"page":5,"change":"Removal","str":" ","dir":"ltr","width":"2.96","height":"10.00","transform":["10.00","0.00","0.00","10.00","146.48","322.93"],"fontName":"QMZZIE+AvenirLTStd-Heavy","x":146.47570000000002,"y":322.9292}
+{"page":5,"change":"Removal","str":" ","dir":"ltr","width":"2.60","height":"10.00","transform":["10.00","0.00","0.00","10.00","178.95","290.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":178.9457,"y":290.9292}
+{"page":5,"change":"Removal","str":" ","dir":"ltr","width":"2.25","height":"9.00","transform":["9.00","0.00","0.00","9.00","93.93","206.93"],"fontName":"QMZZIE+AGaramondPro-Regular","x":93.92870000000002,"y":206.9292}
+{"page":5,"change":"Removal","str":" ","dir":"ltr","width":"2.25","height":"9.00","transform":["9.00","0.00","0.00","9.00","385.51","231.02"],"fontName":"QMZZIE+AGaramondPro-Regular","x":385.5107,"y":231.02219999999977}
+{"page":7,"change":"Removal","str":" ","dir":"ltr","width":"2.96","height":"10.00","transform":["10.00","0.00","0.00","10.00","310.32","478.93"],"fontName":"QMZZIE+AvenirLTStd-Heavy","x":310.3238,"y":478.9292}
+{"page":7,"change":"Removal","str":" ","dir":"ltr","width":"3.00","height":"10.00","transform":["10.00","0.00","0.00","10.00","318.73","430.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":318.7338,"y":430.9292}
+{"page":7,"change":"Removal","str":" ","dir":"ltr","width":"3.00","height":"10.00","transform":["10.00","0.00","0.00","10.00","311.35","414.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":311.3538,"y":414.9292}
+{"page":8,"change":"Removal","str":" ","dir":"ltr","width":"2.60","height":"10.00","transform":["10.00","0.00","0.00","10.00","283.31","446.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":283.3138,"y":446.9292}
+{"page":8,"change":"Removal","str":" ","dir":"ltr","width":"3.00","height":"10.00","transform":["10.00","0.00","0.00","10.00","357.23","414.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":357.2338,"y":414.9292}
+{"page":8,"change":"Removal","str":" ","dir":"ltr","width":"2.60","height":"10.00","transform":["10.00","0.00","0.00","10.00","360.63","414.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":360.63379999999995,"y":414.9292}
+{"page":9,"change":"Removal","str":" ","dir":"ltr","width":"3.00","height":"10.00","transform":["10.00","0.00","0.00","10.00","343.73","414.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":343.73380000000003,"y":414.9292}
+{"page":9,"change":"Removal","str":" ","dir":"ltr","width":"3.00","height":"10.00","transform":["10.00","0.00","0.00","10.00","369.10","398.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":369.10380000000004,"y":398.9292}
+{"page":9,"change":"Removal","str":" ","dir":"ltr","width":"2.44","height":"9.00","transform":["9.00","0.00","0.00","9.00","215.76","134.96"],"fontName":"QMZZIE+AGaramondPro-Regular","x":215.7638,"y":134.96219999999983}
+{"page":10,"change":"Removal","str":" ","dir":"ltr","width":"3.00","height":"10.00","transform":["10.00","0.00","0.00","10.00","175.97","274.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":175.96570000000003,"y":274.9292}
+{"page":10,"change":"Removal","str":" ","dir":"ltr","width":"3.00","height":"10.00","transform":["10.00","0.00","0.00","10.00","163.52","258.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":163.51570000000004,"y":258.9292}
+{"page":11,"change":"Removal","str":" ","dir":"ltr","width":"3.00","height":"10.00","transform":["10.00","0.00","0.00","10.00","364.48","298.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":364.4838,"y":298.9292}
+{"page":11,"change":"Removal","str":" ","dir":"ltr","width":"3.00","height":"10.00","transform":["10.00","0.00","0.00","10.00","379.54","282.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":379.5438,"y":282.9292}
+{"page":11,"change":"Removal","str":" ","dir":"ltr","width":"3.00","height":"10.00","transform":["10.00","0.00","0.00","10.00","338.18","266.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":338.1838,"y":266.9292}
+{"page":11,"change":"Removal","str":" ","dir":"ltr","width":"3.12","height":"12.00","transform":["12.00","0.00","0.00","12.00","267.87","250.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":267.8732,"y":250.9292}
+{"page":12,"change":"Removal","str":" ","dir":"ltr","width":"3.36","height":"10.00","transform":["10.00","0.00","0.00","10.00","187.53","318.93"],"fontName":"QMZZIE+AvenirLTStd-Heavy","x":187.52570000000003,"y":318.9292}
+{"page":12,"change":"Removal","str":" ","dir":"ltr","width":"3.00","height":"10.00","transform":["10.00","0.00","0.00","10.00","184.24","190.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":184.2357,"y":190.92919999999998}
+{"page":12,"change":"Removal","str":" ","dir":"ltr","width":"3.00","height":"10.00","transform":["10.00","0.00","0.00","10.00","197.96","174.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":197.9557,"y":174.92919999999998}
+{"page":13,"change":"Removal","str":" ","dir":"ltr","width":"3.00","height":"10.00","transform":["10.00","0.00","0.00","10.00","164.92","358.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":164.9157,"y":358.9292}
+{"page":13,"change":"Removal","str":" ","dir":"ltr","width":"3.00","height":"10.00","transform":["10.00","0.00","0.00","10.00","186.57","342.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":186.5657,"y":342.9292}
+{"page":14,"change":"Removal","str":" ","dir":"ltr","width":"3.00","height":"10.00","transform":["10.00","0.00","0.00","10.00","195.25","382.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":195.24570000000003,"y":382.9292}
+{"page":14,"change":"Removal","str":" ","dir":"ltr","width":"3.00","height":"10.00","transform":["10.00","0.00","0.00","10.00","379.92","371.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":379.9238,"y":371.9292}
+{"page":15,"change":"Removal","str":" ","dir":"ltr","width":"2.25","height":"9.00","transform":["9.00","0.00","0.00","9.00","203.76","530.93"],"fontName":"QMZZIE+AGaramondPro-Regular","x":203.76479999999998,"y":530.9291}
+{"page":15,"change":"Removal","str":" ","dir":"ltr","width":"3.00","height":"10.00","transform":["10.00","0.00","0.00","10.00","193.96","178.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":193.9557,"y":178.9292}
+{"page":15,"change":"Removal","str":" ","dir":"ltr","width":"2.96","height":"10.00","transform":["10.00","0.00","0.00","10.00","339.28","234.93"],"fontName":"QMZZIE+AvenirLTStd-Heavy","x":339.28380000000004,"y":234.9292}
+{"page":16,"change":"Removal","str":" ","dir":"ltr","width":"2.00","height":"9.00","transform":["9.00","0.00","0.00","9.00","203.76","458.95"],"fontName":"QMZZIE+AGaramondPro-Regular","x":203.76129999999998,"y":458.9470999999999}
+{"page":16,"change":"Removal","str":" ","dir":"ltr","width":"2.25","height":"9.00","transform":["9.00","0.00","0.00","9.00","203.76","458.95"],"fontName":"QMZZIE+AGaramondPro-Regular","x":203.76129999999998,"y":458.9470999999999}
+{"page":16,"change":"Removal","str":" ","dir":"ltr","width":"3.00","height":"10.00","transform":["10.00","0.00","0.00","10.00","378.24","142.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":378.2438,"y":142.9292}
+{"page":16,"change":"Removal","str":" ","dir":"ltr","width":"3.00","height":"10.00","transform":["10.00","0.00","0.00","10.00","381.04","110.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":381.0438,"y":110.92920000000001}
+{"page":17,"change":"Removal","str":" ","dir":"ltr","width":"3.00","height":"10.00","transform":["10.00","0.00","0.00","10.00","374.02","110.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":374.0238,"y":110.92920000000001}
+{"page":18,"change":"Removal","str":" ","dir":"ltr","width":"2.25","height":"9.00","transform":["9.00","0.00","0.00","9.00","385.51","122.98"],"fontName":"QMZZIE+AGaramondPro-Regular","x":385.51279999999997,"y":122.97719999999977}
+{"page":19,"change":"Removal","str":" ","dir":"ltr","width":"3.00","height":"10.00","transform":["10.00","0.00","0.00","10.00","191.14","250.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":191.1357,"y":250.92919999999998}
+{"page":19,"change":"Removal","str":" ","dir":"ltr","width":"3.00","height":"10.00","transform":["10.00","0.00","0.00","10.00","193.62","234.93"],"fontName":"QMZZIE+AvenirLTStd-Light","x":193.6157,"y":234.92919999999998}
+{"page":19,"change":"Removal","str":" ","dir":"ltr","width":"2.25","height":"9.00","transform":["9.00","0.00","0.00","9.00","203.76","86.94"],"fontName":"QMZZIE+AGaramondPro-Regular","x":203.76479999999998,"y":86.94120000000001}
+{"page":20,"change":"Removal","str":" ","dir":"ltr","width":"2.25","height":"9.00","transform":["9.00","0.00","0.00","9.00","203.76","230.96"],"fontName":"QMZZIE+AGaramondPro-Regular","x":203.7647,"y":230.95919999999984}
+{"page":20,"change":"Removal","str":" ","dir":"ltr","width":"2.25","height":"9.00","transform":["9.00","0.00","0.00","9.00","385.51","218.95"],"fontName":"QMZZIE+AGaramondPro-Regular","x":385.51270000000005,"y":218.95019999999988}
+{"page":20,"change":"Removal","str":" ","dir":"ltr","width":"2.25","height":"9.00","transform":["9.00","0.00","0.00","9.00","385.51","218.95"],"fontName":"QMZZIE+AGaramondPro-Regular","x":385.5127,"y":218.95019999999988}
+{"page":21,"change":"Removal","str":" ","dir":"ltr","width":"1.98","height":"9.00","transform":["9.00","0.00","0.00","9.00","40.77","218.97"],"fontName":"QMZZIE+AGaramondPro-Regular","x":40.7657,"y":218.9711999999999}
+{"page":21,"change":"Removal","str":"  ","dir":"ltr","width":"4.27","height":"9.00","transform":["9.00","0.00","0.00","9.00","40.77","146.98"],"fontName":"QMZZIE+AGaramondPro-Regular","x":40.7657,"y":146.98019999999985}
+{"page":23,"change":"Removal","str":" ","dir":"ltr","width":"1.82","height":"7.00","transform":["7.00","0.00","0.00","7.00","208.14","428.12"],"fontName":"QMZZIE+AvenirLTStd-Light","x":208.1381,"y":428.1174}

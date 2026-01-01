@@ -1,0 +1,47 @@
+{
+  "pages": 6,
+  "items": 268,
+  "groupedItems": 145,
+  "changes": 10,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "token types"
+    },
+    {
+      "name": "types"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":0,"change":"ContentChange","types":["H1"],"str":"Mega Überschrift","dir":"ltr","width":"245.06","height":"30.00","transform":["30.00","0.00","0.00","30.00","175.00","756.00"],"fontName":"OMUGKQ+Helvetica-Bold","x":175,"y":756,"line":0}
+{"page":0,"change":"ContentChange","types":["H2"],"str":"2te Überschrift","dir":"ltr","width":"130.06","height":"20.00","transform":["20.00","0.00","0.00","20.00","233.00","665.00"],"fontName":"JBRMKS+Helvetica","x":233,"y":665,"line":1}
+{"page":2,"change":"ContentChange","types":["H2"],"str":"Paragraphen","dir":"ltr","width":"110.04","height":"18.00","transform":["18.00","0.00","0.00","18.00","57.00","767.00"],"fontName":"OMUGKQ+Helvetica-Bold","x":57,"y":767,"line":0}
+{"page":3,"change":"ContentChange","types":["H2"],"str":"Schriftschnitt","dir":"ltr","width":"116.01","height":"18.00","transform":["18.00","0.00","0.00","18.00","57.00","767.00"],"fontName":"OMUGKQ+Helvetica-Bold","x":57,"y":767,"line":0}
+{"page":4,"change":"ContentChange","types":["H2"],"str":"Listen","dir":"ltr","width":"53.01","height":"18.00","transform":["18.00","0.00","0.00","18.00","57.00","767.00"],"fontName":"OMUGKQ+Helvetica-Bold","x":57,"y":767,"line":0}
+{"page":6,"change":"ContentChange","types":["H2"],"str":"Quotes & Spezielle Einschübe 8","line":0,"x":165,"y":767,"width":"264.73","height":"18.00","fontName":["OMUGKQ+Helvetica-Bold"],"dir":["ltr"]}
+{"page":6,"change":"ContentChange","types":["H3"],"str":"Heading 2","dir":"ltr","width":"76.49","height":"16.00","transform":["16.00","0.00","0.00","16.00","57.00","449.00"],"fontName":"OMUGKQ+Helvetica-Bold","x":57,"y":449,"line":12}
+{"page":6,"change":"ContentChange","types":["H3"],"str":"Heading 2 II","dir":"ltr","width":"89.85","height":"16.00","transform":["16.00","0.00","0.00","16.00","57.00","391.00"],"fontName":"OMUGKQ+Helvetica-Bold","x":57,"y":391,"line":14}

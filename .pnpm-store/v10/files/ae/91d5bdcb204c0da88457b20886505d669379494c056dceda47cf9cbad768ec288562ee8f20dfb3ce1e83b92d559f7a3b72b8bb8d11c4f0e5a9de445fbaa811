@@ -1,0 +1,7 @@
+export type FontType = 'BOLD' | 'OBLIQUE';
+export type TokenType = 'LINK' | 'FOOTNOTE' | 'FOOTNOTE_LINK' | FontType;
+export declare const startSymbol: (type: TokenType) => "" | "**" | "_";
+export declare const endSymbol: (type: TokenType) => "" | "**" | "_";
+export declare const attachWithoutWhitespace: (type: TokenType) => boolean;
+export declare const plainTextFormat: (type: TokenType) => boolean;
+export declare function tokenToText(token: string, type: TokenType): string;

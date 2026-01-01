@@ -1,0 +1,154 @@
+{
+  "pages": 19,
+  "items": 1503,
+  "groupedItems": 1234,
+  "changes": 120,
+  "schema": [
+    {
+      "name": "line",
+      "annotation": "ADDED"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":0,"change":"Addition","str":"Closed syllable word lists  1","line":0,"x":420.79,"y":745.56,"width":"119.31","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":0,"change":"Addition","str":"Phonics word lists by Susan Jones licensed under  Creative Commons Attribution 4.0 International ","line":1,"x":106.22,"y":76.584,"width":"436.20","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":0,"change":"Addition","str":"Drill Bits Phonics - oriented word lists for teachers ","line":4,"x":76.104,"y":639.34,"width":"360.52","height":"18.00","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":0,"change":"Addition","str":"printed word and the words we speak  — the “sound/symbol” connection. This book is a compilation of ","line":6,"x":72.024,"y":599.86,"width":"459.79","height":"11.04","fontName":["ABCDEE+Calibri","ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":0,"change":"Addition","str":"lists of words which follow the predictable associations of le tters, syllables and words to the sounds we ","line":7,"x":72.024,"y":585.46,"width":"463.14","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":0,"change":"Addition","str":"associations is just one part of reading, though a critical one. This book is des igned to be used as a ","line":10,"x":72.024,"y":533.95,"width":"439.58","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":0,"change":"Addition","str":"have memor ized without learning the sounds associated with the letters. ","line":14,"x":72.024,"y":468.07,"width":"328.93","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":0,"change":"Addition","str":"HOW THE LISTS ARE ORGANIZED ","line":17,"x":72.024,"y":408.55,"width":"145.73","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":0,"change":"Addition","str":"Syllable type 1: Closed syllables  — short vowel sounds (TIN, EX, SPLAT) ","line":20,"x":72.024,"y":357.05,"width":"314.74","height":"11.04","fontName":["ABCDEE+Calibri","ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":0,"change":"Addition","str":"Syllable type 2: Vowel consonant - e  — long vowel sounds (BAKE, DR IVE, SCRAPE) ","line":21,"x":72.024,"y":342.53,"width":"355.79","height":"11.04","fontName":["ABCDEE+Calibri","ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":0,"change":"Addition","str":"Syllable Type 3: Open syllables — long vowel sound (GO, TRI, CU","line":22,"x":72.024,"y":328.01,"width":"281.98","height":"11.04","fontName":["ABCDEE+Calibri","ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":0,"change":"Addition","str":"Syllable Type 4: r - controlled syllables (HARD, PORCH, PERT) ","line":23,"x":72.024,"y":313.49,"width":"267.18","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":0,"change":"Addition","str":"Syllable Type 5: consonant - l - e words (CANDLE, TABLE, MUZZLE) ","line":24,"x":72.024,"y":298.97,"width":"286.20","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":0,"change":"Addition","str":"Syllable Type 6: Vowel pairs  — unique sounds (OUT, PAW) , long vowel sounds (MAIN, COACH) ","line":25,"x":72.024,"y":284.69,"width":"420.28","height":"11.04","fontName":["ABCDEE+Calibri","ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":0,"change":"Addition","str":"separated, so that the order of presentation is A - I - O - U - E - Y instead of the alphabetical A - E - I - O - U - Y.","line":27,"x":72.024,"y":247.73,"width":"438.29","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":0,"change":"Addition","str":"For the first s yllable types, there are lists which focus on specific problems students may have, such as ","line":28,"x":74.544,"y":225.05,"width":"458.26","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":0,"change":"Addition","str":"into small steps.) As the sound patterns advance, the first li sts are still those which do not require the ","line":30,"x":72.024,"y":196.13,"width":"455.18","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":0,"change":"Addition","str":"- TION and  - TURE. In this way, teache rs can choose appropriate words to include in an individual ","line":33,"x":72.024,"y":144.62,"width":"429.52","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":0,"change":"Addition","str":"one of so many words which are exceptions because the t in NATION does  not make the sound it makes ","line":36,"x":72.024,"y":93.144,"width":"465.88","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":1,"change":"Addition","str":"Closed syllable word lists  2","line":0,"x":420.79,"y":745.56,"width":"119.31","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":1,"change":"Addition","str":"Phonics word lists by Susan Jones licensed under  Creative Commons Attribution 4.0 International ","line":1,"x":106.22,"y":76.584,"width":"436.20","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":1,"change":"Addition","str":"in TIN, the student can learn there are thousands of words he or she can master by knowing that  - TION ","line":3,"x":72.024,"y":709.54,"width":"462.66","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":1,"change":"Addition","str":"often is pronounced SHUN. By learning that TI says SH in many other cases ( - TIAL, - TIOUS), even more ","line":4,"x":72.024,"y":695.02,"width":"454.10","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":1,"change":"Addition","str":"T his section has word lists for closed syllables.   It’s an edited, updated version of the PDF I already ","line":6,"x":72.024,"y":635.62,"width":"441.59","height":"11.04","fontName":["ABCDEE+Calibri","ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":1,"change":"Addition","str":"“short a” ................................ ................................ ................................ ................................ ......... 3","line":8,"x":74.544,"y":598.66,"width":"424.05","height":"11.04","fontName":["ABCDEE+Calibri","ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":1,"change":"Addition","str":"“short I” ................................ ................................ ................................ ................................ ............ 8","line":9,"x":72.024,"y":576.22,"width":"429.97","height":"11.04","fontName":["ABCDEE+Calibri","ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":1,"change":"Addition","str":"“short o” ................................ ................................ ................................ ................................ ......... 10","line":10,"x":72.024,"y":553.78,"width":"430.36","height":"11.04","fontName":["ABCDEE+Calibri","ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":1,"change":"Addition","str":"“short u” ................................ ................................ ................................ ................................ ......... 1 2","line":11,"x":72.024,"y":531.19,"width":"430.27","height":"11.04","fontName":["ABCDEE+Calibri","ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":1,"change":"Addition","str":"E ................................ ................................ ................................ ................................ ..................... 14","line":12,"x":72.024,"y":508.75,"width":"427.90","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":1,"change":"Addition","str":"Y ................................ ................................ ................................ ................................ ..................... 16","line":13,"x":72.024,"y":486.19,"width":"427.89","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"Closed syllable word lists  3","line":0,"x":420.79,"y":745.56,"width":"119.31","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"Phonics word lists by Susan Jones licensed under  Creative Commons Attribution 4.0 International ","line":1,"x":106.22,"y":76.584,"width":"436.20","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"SHORT A  — EASY WORDS Have the student  read each word in the word progressions and discover the ","line":4,"x":72.024,"y":684.82,"width":"455.60","height":"11.04","fontName":["ABCDEE+Calibri","ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"his or her own  wo rds what is happening when consonants change. The thought processes that he or she ","line":7,"x":72.024,"y":633.34,"width":"470.27","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"explain it, help lay the foundations for being able to transfer th at knowledge successfully.","line":9,"x":72.024,"y":604.42,"width":"399.07","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"judgment if the ta lking - out task is frustrating. However, it’s precisely the connections between action ","line":12,"x":72.024,"y":552.82,"width":"454.70","height":"11.04","fontName":["ABCDEE+Calibri","ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"with specific language problems (and especially the impulsively f ast responders), who learn isolated ","line":14,"x":72.024,"y":523.87,"width":"447.95","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"skills easily but don’t transfer that skill to reading in context, who most benefit from taking time to think ","line":15,"x":72.024,"y":509.35,"width":"464.97","height":"11.04","fontName":["ABCDEE+Calibri","ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"knowledge and explain the changes to you. Encourage discovery and review of patterns (that SH makes ","line":17,"x":72.024,"y":480.43,"width":"461.20","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"consonants. Are blends much harder than single consonants? Are there some consonants  — q, x or y ","line":19,"x":72.024,"y":451.39,"width":"447.48","height":"11.04","fontName":["ABCDEE+Calibri","ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"especially  — which are less securely known? If so, practice them! Never assume that a student is picking ","line":20,"x":72.024,"y":436.87,"width":"465.21","height":"11.04","fontName":["ABCDEE+Calibri","ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"up on things  — ask. Ask what’s changing from word to word. Asking is better than telling, too  — just try ","line":21,"x":72.024,"y":422.47,"width":"459.80","height":"11.04","fontName":["ABCDEE+Calibri","ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"to ask the  right question so your student tells you the right answer. If you tell the student an answer, be ","line":22,"x":72.024,"y":407.95,"width":"466.50","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"sound like (and if there is still hesitation, show INK and then change the k to c), and then add the t at the ","line":24,"x":72.024,"y":378.91,"width":"466.40","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"first. There may be students who need a lot of practice with the two sounds of c and g, so a special list is ","line":26,"x":72.024,"y":349.97,"width":"465.10","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"included. Too often a student has mastered vowel pairs  — but still pronounces CENT as KENT.","line":27,"x":72.024,"y":335.57,"width":"416.26","height":"11.04","fontName":["ABCDEE+Calibri","ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":" Consider CHR as in CHRIS as a category to be taught as its own mini - lesson and incorporated ","line":29,"x":90.024,"y":289.85,"width":"419.42","height":"11.04","fontName":["SymbolMT","ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"into drill and review with the other l etter/sound associations. CH is /k/ in many words of Greek ","line":30,"x":108.02,"y":275.45,"width":"426.57","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"and PULCHRITUDE . ","line":33,"x":108.02,"y":231.89,"width":"87.99","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":" Especially with younger students, it can help to give letters “personalities.” “Bossy Ls that ","line":34,"x":90.024,"y":216.89,"width":"403.67","height":"11.04","fontName":["SymbolMT","ABCDEE+Calibri","ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":" SHORT O There are several groups of o syllables that end in consonants, but have a long vowel ","line":37,"x":90.024,"y":172.7,"width":"426.24","height":"11.04","fontName":["SymbolMT","ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"sound ( - OST,  - OLD). These would be considered special categories. For the reasons stated above, ","line":38,"x":108.02,"y":158.3,"width":"434.37","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"o sou nds. O is also pronounced differently in different areas of the country. Students may ","line":40,"x":108.02,"y":129.26,"width":"402.52","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"Closed syllable word lists  4","line":0,"x":420.79,"y":745.56,"width":"119.31","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"Phonics word lists by Susan Jones licensed under  Creative Commons Attribution 4.0 International ","line":1,"x":106.22,"y":76.584,"width":"436.20","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"then adds an m at the end. Stretch out the l part of CALM (CAL - L - L - L - LM DOWN) a nd have the ","line":3,"x":108.02,"y":709.54,"width":"420.82","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":" A similar confusion may occur between COW and CAL, which can be addressed in the same ","line":5,"x":90.024,"y":679.9,"width":"413.87","height":"11.04","fontName":["SymbolMT","ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"confused with Cow Ripken. SHORT U The  - UL combination is very easily confused with the o ","line":7,"x":108.02,"y":650.98,"width":"409.16","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"sound .   The “Bossy L” personification can help here. ","line":8,"x":108.02,"y":636.46,"width":"236.69","height":"11.04","fontName":["ABCDEE+Calibri","ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":" CALLUS is the word for the things that show up on your hands from doing hard work;","line":9,"x":90.024,"y":621.46,"width":"384.21","height":"11.04","fontName":["SymbolMT","ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"CALLOUS is the adjective to describe peop le with “calluses on their heart.” ","line":10,"x":108.02,"y":606.94,"width":"334.69","height":"11.04","fontName":["ABCDEE+Calibri","ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"SHORT E Note that the /j/ sound in  - JECT is always spelled with a j, while in the syllable  - GEST it ","line":11,"x":108.02,"y":592.42,"width":"426.43","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"confusion.) Y AS A VOWEL S ince words with y as a vowel have the same sound as short i, and are ","line":13,"x":108.02,"y":563.5,"width":"433.30","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"choose useful words and learn the closed syllables with y in the context of those words . If your ","line":15,"x":108.02,"y":534.43,"width":"425.12","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":4,"change":"Addition","str":"Closed syllable word lists  5","line":0,"x":420.79,"y":745.56,"width":"119.31","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":4,"change":"Addition","str":"Phonics word lists by Susan Jones licensed under  Creative Commons Attribution 4.0 International ","line":1,"x":106.22,"y":76.584,"width":"436.20","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":5,"change":"Addition","str":"Closed syllable word lists  6","line":0,"x":420.79,"y":745.56,"width":"119.31","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":5,"change":"Addition","str":"Phonics word lists by Susan Jones licensed under  Creative Commons Attribution 4.0 International ","line":1,"x":106.22,"y":76.584,"width":"436.20","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":5,"change":"Addition","str":"Basic short a  syllables","line":3,"x":72.024,"y":709.66,"width":"96.80","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":5,"change":"Addition","str":"alp *","line":77,"x":450.07,"y":155.3,"width":"19.12","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":5,"change":"Addition","str":" *As in ‘altitude’, not alternative","line":78,"x":90.024,"y":132.26,"width":"146.25","height":"11.04","fontName":["SymbolMT","ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":6,"change":"Addition","str":"Closed syllable word lists  7","line":0,"x":420.79,"y":745.56,"width":"119.31","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":6,"change":"Addition","str":"Phonics word lists by Susan Jones licensed under  Creative Commons Attribution 4.0 International ","line":1,"x":106.22,"y":76.584,"width":"436.20","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":6,"change":"Addition","str":"phland  quank  thrant  shrap  slank  stratch ","line":4,"x":72.024,"y":664.66,"width":"180.65","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":6,"change":"Addition","str":"pram  blap  swaft  cath  whamp  stract ","line":5,"x":72.024,"y":642.22,"width":"161.22","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":6,"change":"Addition","str":"clasm  rapt","line":6,"x":72.024,"y":619.66,"width":"46.74","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":6,"change":"Addition","str":"brash  rant  spasm  gras p  shank  drab ","line":8,"x":72.024,"y":552.22,"width":"158.19","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":6,"change":"Addition","str":"chap  sham  shag  clash  bland  cram ","line":9,"x":72.024,"y":529.75,"width":"151.49","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":6,"change":"Addition","str":"prank  malt  clad  daft  flank  graft ","line":10,"x":72.024,"y":507.19,"width":"140.69","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":6,"change":"Addition","str":"chasm  thrash  slab  cran  dram  asp ","line":11,"x":72.024,"y":484.75,"width":"149.15","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":6,"change":"Addition","str":"hasp  yak  flax  span  clan  ban ","line":12,"x":72.024,"y":462.19,"width":"123.54","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":6,"change":"Addition","str":"dank  swank  yak  shad","line":13,"x":72.024,"y":439.75,"width":"94.13","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":6,"change":"Addition","str":"Words with different ‘a’ sound  – pay attention to the patterns  ","line":14,"x":108.02,"y":402.67,"width":"286.42","height":"11.04","fontName":["ABCDEE+Calibri","ABCDEE+Calibri","ABCDEE+Wingdings-Regular"],"dir":["ltr"]}
+{"page":7,"change":"Addition","str":"Closed syllable word lists  8","line":0,"x":420.79,"y":745.56,"width":"119.31","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":7,"change":"Addition","str":"Phonics word lists by Susan Jones licensed under  Creative Commons Attribution 4.0 International ","line":1,"x":106.22,"y":76.584,"width":"436.20","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":7,"change":"Addition","str":"Basic  syllable s","line":20,"x":72.024,"y":574.66,"width":"62.98","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":8,"change":"Addition","str":"Closed syllable word lists  9","line":0,"x":420.79,"y":745.56,"width":"119.31","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":8,"change":"Addition","str":"Phonics word lists by Susan Jones licensed under  Creative Commons Attribution 4.0 International ","line":1,"x":106.22,"y":76.584,"width":"436.20","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":8,"change":"Addition","str":"a, i multisyllable nonsense review  -- Includes special category syllables","line":44,"x":72.024,"y":343.25,"width":"310.89","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":9,"change":"Addition","str":"Closed syllable word lists  10","line":0,"x":415.27,"y":745.56,"width":"124.75","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":9,"change":"Addition","str":"Phonics word lists by Susan Jones licensed under  Creative Commons Attribution 4.0 International ","line":1,"x":106.22,"y":76.584,"width":"436.20","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":10,"change":"Addition","str":"Closed syllable word lists  11","line":0,"x":415.27,"y":745.56,"width":"124.75","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":10,"change":"Addition","str":"Phonics word lists by Susan Jones licensed under  Creative Commons Attribution 4.0 International ","line":1,"x":106.22,"y":76.584,"width":"436.20","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":10,"change":"Addition","str":"m ob","line":32,"x":72.024,"y":484.75,"width":"20.56","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":10,"change":"Addition","str":"s ock ","line":54,"x":475.3,"y":439.75,"width":"22.29","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":11,"change":"Addition","str":"Closed syllable word lists  12","line":0,"x":415.27,"y":745.56,"width":"124.75","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":11,"change":"Addition","str":"Phonics word lists by Susan Jones licensed under  Creative Commons Attribution 4.0 International ","line":1,"x":106.22,"y":76.584,"width":"436.20","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":11,"change":"Addition","str":"Basic Syllables  – omit “chron” if student hasn’t learned the ‘chr ’ special category. ","line":3,"x":72.024,"y":709.66,"width":"361.33","height":"11.04","fontName":["ABCDEE+Calibri","ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":12,"change":"Addition","str":"Closed syllable word lists  13","line":0,"x":415.27,"y":745.56,"width":"124.75","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":12,"change":"Addition","str":"Phonics word lists by Susan Jones licensed under  Creative Commons Attribution 4.0 International ","line":1,"x":106.22,"y":76.584,"width":"436.20","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":12,"change":"Addition","str":"Two  and three  syllable words with a, i, and o","line":3,"x":72.024,"y":709.66,"width":"199.18","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":13,"change":"Addition","str":"Closed syllable word lists  14","line":0,"x":415.27,"y":745.56,"width":"124.75","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":13,"change":"Addition","str":"Phonics word lists by Susan Jones licensed under  Creative Commons Attribution 4.0 International ","line":1,"x":106.22,"y":76.584,"width":"436.20","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":13,"change":"Addition","str":"Word  Progressions","line":4,"x":72.024,"y":687.22,"width":"84.67","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":14,"change":"Addition","str":"Closed syllable word lists  15","line":0,"x":415.27,"y":745.56,"width":"124.75","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":14,"change":"Addition","str":"Phonics word lists by Susan Jones licensed under  Creative Commons Attribution 4.0 International ","line":1,"x":106.22,"y":76.584,"width":"436.20","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":14,"change":"Addition","str":"Multi - syllable words with a, I, o, u","line":25,"x":72.024,"y":560.26,"width":"150.98","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":14,"change":"Addition","str":"(*pronounce adult as “ad   - ult”  with short a, not  ‘uh - dult’)","line":26,"x":82.104,"y":537.67,"width":"263.33","height":"11.04","fontName":["ABCDEE+Calibri","ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":15,"change":"Addition","str":"Closed syllable word lists  16","line":0,"x":415.27,"y":745.56,"width":"124.75","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":15,"change":"Addition","str":"Phonics word lists by Susan Jones licensed under  Creative Commons Attribution 4.0 International ","line":1,"x":106.22,"y":76.584,"width":"436.20","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":16,"change":"Addition","str":"Closed syllable word lists  17","line":0,"x":415.27,"y":745.56,"width":"124.75","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":16,"change":"Addition","str":"Phonics word lists by Susan Jones licensed under  Creative Commons Attribution 4.0 International ","line":1,"x":106.22,"y":76.584,"width":"436.20","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":16,"change":"Addition","str":"Syllables  w ithout a beginning consonant","line":3,"x":72.024,"y":709.66,"width":"179.52","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":16,"change":"Addition","str":"Vocabulary enrichment  – single syllable ","line":24,"x":72.024,"y":574.66,"width":"176.64","height":"11.04","fontName":["ABCDEE+Calibri","ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":17,"change":"Addition","str":"Closed syllable word lists  18","line":0,"x":415.27,"y":745.56,"width":"124.75","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":17,"change":"Addition","str":"Phonics word lists by Susan Jones licensed under  Creative Commons Attribution 4.0 International ","line":1,"x":106.22,"y":76.584,"width":"436.20","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":18,"change":"Addition","str":"Closed syllable word lists  19","line":0,"x":415.27,"y":745.56,"width":"124.75","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":18,"change":"Addition","str":"Phonics word lists by Susan Jones licensed under  Creative Commons Attribution 4.0 International ","line":1,"x":106.22,"y":76.584,"width":"436.20","height":"11.04","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":18,"change":"Addition","str":"Multisyllable words with y as closed syllable vowel  - includes all syllable types & some categories. It’s a ","line":3,"x":72.024,"y":709.54,"width":"455.52","height":"11.04","fontName":["ABCDEE+Calibri","ABCDEE+Calibri"],"dir":["ltr"]}
+{"page":18,"change":"Addition","str":"cool list  ","line":4,"x":72.024,"y":695.14,"width":"46.25","height":"11.04","fontName":["ABCDEE+Calibri","ABCDEE+Wingdings-Regular"],"dir":["ltr"]}

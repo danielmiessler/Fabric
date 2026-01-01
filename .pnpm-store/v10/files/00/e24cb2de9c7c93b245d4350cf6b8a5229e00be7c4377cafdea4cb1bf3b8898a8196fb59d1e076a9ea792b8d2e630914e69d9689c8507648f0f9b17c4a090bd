@@ -1,0 +1,42 @@
+{
+  "name": "cookie",
+  "version": "1.0.2",
+  "description": "HTTP server cookie parsing and serialization",
+  "keywords": [
+    "cookie",
+    "cookies"
+  ],
+  "repository": "jshttp/cookie",
+  "license": "MIT",
+  "author": "Roman Shtylman <shtylman@gmail.com>",
+  "contributors": [
+    "Douglas Christopher Wilson <doug@somethingdoug.com>"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "bench": "vitest bench",
+    "build": "ts-scripts build",
+    "format": "ts-scripts format",
+    "prepare": "ts-scripts install",
+    "prepublishOnly": "npm run build",
+    "specs": "ts-scripts specs",
+    "test": "ts-scripts test"
+  },
+  "devDependencies": {
+    "@borderless/ts-scripts": "^0.15.0",
+    "@vitest/coverage-v8": "^2.1.2",
+    "top-sites": "1.1.194",
+    "typescript": "^5.6.2",
+    "vitest": "^2.1.2"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "ts-scripts": {
+    "project": "tsconfig.build.json"
+  }
+}

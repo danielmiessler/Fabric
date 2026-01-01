@@ -1,0 +1,56 @@
+{
+  "pages": 75,
+  "items": 3043,
+  "groupedItems": 2564,
+  "changes": 28,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "token types"
+    },
+    {
+      "name": "types"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":0,"change":"ContentChange","types":["H1"],"str":"A LICE ’ S A DVENTURES","line":0,"x":171.72200000000004,"y":625.557,"width":"238.54","height":"24.79","fontName":["TBCMKD+NimbusRomNo9L-Medi"],"dir":["ltr"]}
+{"page":0,"change":"ContentChange","types":["H1"],"str":"IN W ONDERLAND","line":1,"x":200.12800000000004,"y":596.081,"width":"185.63","height":"24.79","fontName":["TBCMKD+NimbusRomNo9L-Medi"],"dir":["ltr"]}
+{"page":0,"change":"ContentChange","types":["H2"],"str":"by Lewis Carroll","dir":"ltr","width":"124.02","height":"17.21","transform":["17.21","0.00","0.00","17.21","235.15","537.55"],"fontName":"TBCMKD+NimbusRomNo9L-Medi","x":235.14600000000004,"y":537.5450000000001,"line":2}
+{"page":3,"change":"ContentChange","types":["H2"],"str":"Poem","dir":"ltr","width":"58.70","height":"24.79","transform":["24.79","0.00","0.00","24.79","102.88","648.74"],"fontName":"TBCMKD+NimbusRomNo9L-Medi","x":102.88400000000001,"y":648.739,"line":0}
+{"page":4,"change":"ContentChange","types":["H2"],"str":"Chapter I","dir":"ltr","width":"103.96","height":"24.79","transform":["24.79","0.00","0.00","24.79","102.88","623.57"],"fontName":"TBCMKD+NimbusRomNo9L-Medi","x":102.884,"y":623.565,"line":0}
+{"page":9,"change":"ContentChange","types":["H2"],"str":"Chapter II","dir":"ltr","width":"113.60","height":"24.79","transform":["24.79","0.00","0.00","24.79","102.88","623.57"],"fontName":"TBCMKD+NimbusRomNo9L-Medi","x":102.884,"y":623.565,"line":0}
+{"page":14,"change":"ContentChange","types":["H2"],"str":"Chapter III","dir":"ltr","width":"123.24","height":"24.79","transform":["24.79","0.00","0.00","24.79","102.88","623.57"],"fontName":"TBCMKD+NimbusRomNo9L-Medi","x":102.884,"y":623.565,"line":0}
+{"page":19,"change":"ContentChange","types":["H2"],"str":"Chapter IV","dir":"ltr","width":"121.85","height":"24.79","transform":["24.79","0.00","0.00","24.79","102.88","623.57"],"fontName":"TBCMKD+NimbusRomNo9L-Medi","x":102.884,"y":623.565,"line":0}
+{"page":25,"change":"ContentChange","types":["H2"],"str":"Chapter V","dir":"ltr","width":"112.21","height":"24.79","transform":["24.79","0.00","0.00","24.79","102.88","623.57"],"fontName":"TBCMKD+NimbusRomNo9L-Medi","x":102.884,"y":623.565,"line":0}
+{"page":32,"change":"ContentChange","types":["H2"],"str":"Chapter VI","dir":"ltr","width":"121.85","height":"24.79","transform":["24.79","0.00","0.00","24.79","102.88","623.57"],"fontName":"TBCMKD+NimbusRomNo9L-Medi","x":102.884,"y":623.565,"line":0}
+{"page":39,"change":"ContentChange","types":["H2"],"str":"Chapter VII","dir":"ltr","width":"131.50","height":"24.79","transform":["24.79","0.00","0.00","24.79","102.88","623.57"],"fontName":"TBCMKD+NimbusRomNo9L-Medi","x":102.884,"y":623.565,"line":0}
+{"page":46,"change":"ContentChange","types":["H2"],"str":"Chapter VIII","dir":"ltr","width":"141.14","height":"24.79","transform":["24.79","0.00","0.00","24.79","102.88","623.57"],"fontName":"TBCMKD+NimbusRomNo9L-Medi","x":102.884,"y":623.565,"line":0}
+{"page":53,"change":"ContentChange","types":["H2"],"str":"Chapter IX","dir":"ltr","width":"121.85","height":"24.79","transform":["24.79","0.00","0.00","24.79","102.88","623.57"],"fontName":"TBCMKD+NimbusRomNo9L-Medi","x":102.884,"y":623.565,"line":0}
+{"page":59,"change":"ContentChange","types":["H2"],"str":"Chapter X","dir":"ltr","width":"112.21","height":"24.79","transform":["24.79","0.00","0.00","24.79","102.88","623.57"],"fontName":"TBCMKD+NimbusRomNo9L-Medi","x":102.884,"y":623.565,"line":0}
+{"page":65,"change":"ContentChange","types":["H2"],"str":"Chapter XI","dir":"ltr","width":"121.85","height":"24.79","transform":["24.79","0.00","0.00","24.79","102.88","623.57"],"fontName":"TBCMKD+NimbusRomNo9L-Medi","x":102.884,"y":623.565,"line":0}
+{"page":70,"change":"ContentChange","types":["H2"],"str":"Chapter XII","dir":"ltr","width":"131.50","height":"24.79","transform":["24.79","0.00","0.00","24.79","102.88","623.57"],"fontName":"TBCMKD+NimbusRomNo9L-Medi","x":102.884,"y":623.565,"line":0}
+{"page":76,"change":"ContentChange","types":["H2"],"str":"T HE E ND","line":0,"x":248.313,"y":486.4889999999999,"width":"87.82","height":"24.79","fontName":["FZVLIH+NimbusRomNo9L-Regu"],"dir":["ltr"]}

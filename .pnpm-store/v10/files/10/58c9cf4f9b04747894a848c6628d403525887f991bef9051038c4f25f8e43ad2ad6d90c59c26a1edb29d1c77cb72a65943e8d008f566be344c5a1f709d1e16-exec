@@ -1,0 +1,40 @@
+{
+  "name": "request",
+  "description": "Simplified HTTP request client.",
+  "tags": [
+    "http",
+    "simple",
+    "util",
+    "utility"
+  ],
+  "version": "2.21.0",
+  "author": "Mikeal Rogers <mikeal.rogers@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/mikeal/request.git"
+  },
+  "bugs": {
+    "url": "http://github.com/mikeal/request/issues"
+  },
+  "engines": [
+    "node >= 0.8.0"
+  ],
+  "main": "index.js",
+  "dependencies": {
+    "qs": "~0.6.0",
+    "json-stringify-safe": "~4.0.0",
+    "forever-agent": "~0.5.0",
+    "tunnel-agent": "~0.3.0",
+    "http-signature": "~0.9.11",
+    "hawk": "~0.13.0",
+    "aws-sign": "~0.3.0",
+    "oauth-sign": "~0.3.0",
+    "cookie-jar": "~0.3.0",
+    "node-uuid": "~1.4.0",
+    "mime": "~1.2.9",
+    "form-data": "0.0.8"
+  },
+  "scripts": {
+    "test": "node tests/run.js"
+  }
+}

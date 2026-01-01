@@ -1,0 +1,47 @@
+{
+  "pages": 535,
+  "items": 53922,
+  "groupedItems": 31813,
+  "changes": 14,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":54,"change":"Removal","score":"1.00: (0.00 + 1.00)","str":"https://doi.org/10.1007/978-3-030-05843-2_1","dir":"ltr","width":"155.21","height":"8.50","transform":["8.50","0.00","0.00","8.50","53.86","36.72"],"fontName":"MOGBYU+NlttbmRrqjxqWvxgqcTimesLTStd-Roman","x":53.85879801999998,"y":36.71720123,"line":2}
+{"page":58,"change":"Removal","score":"1.00: (0.00 + 1.00)","str":"https://doi.org/10.1007/978-3-030-05843-2_2","dir":"ltr","width":"155.21","height":"8.50","transform":["8.50","0.00","0.00","8.50","53.86","36.72"],"fontName":"VZMDTX+QjfkjqRrbhprHjqhbmTimesLTStd-Roman","x":53.85879801999998,"y":36.71720123,"line":2}
+{"page":77,"change":"Removal","score":"1.00: (0.00 + 1.00)","str":"https://doi.org/10.1007/978-3-030-05843-2_3","dir":"ltr","width":"155.21","height":"8.50","transform":["8.50","0.00","0.00","8.50","53.86","36.72"],"fontName":"CVNJWE+QxgrwgDmkxwmPsqhksTimesLTStd-Roman","x":53.85879801999998,"y":36.71720123,"line":2}
+{"page":131,"change":"Removal","score":"1.00: (0.00 + 1.00)","str":"https://doi.org/10.1007/978-3-030-05843-2_4","dir":"ltr","width":"155.21","height":"8.50","transform":["8.50","0.00","0.00","8.50","53.86","36.72"],"fontName":"KKYTIJ+RsrtgmLbwryvNqmycxTimesLTStd-Roman","x":53.85879801999998,"y":36.71720123,"line":2}
+{"page":144,"change":"Removal","score":"1.00: (0.00 + 1.00)","str":"https://doi.org/10.1007/978-3-030-05843-2_5","dir":"ltr","width":"155.21","height":"8.50","transform":["8.50","0.00","0.00","8.50","53.86","36.72"],"fontName":"LNXWIX+HnpxfkNsnwjjDdfnwjTimesLTStd-Roman","x":53.85879801999998,"y":36.71720123,"line":2}
+{"page":182,"change":"Removal","score":"1.00: (0.00 + 1.00)","str":"https://doi.org/10.1007/978-3-030-05843-2_6","dir":"ltr","width":"155.21","height":"8.50","transform":["8.50","0.00","0.00","8.50","53.86","36.72"],"fontName":"CSLHWZ+FdpslqMkstnlWqhkkrTimesLTStd-Roman","x":53.85879801999998,"y":36.71720123,"line":2}
+{"page":211,"change":"Removal","score":"1.00: (0.00 + 1.00)","str":"https://doi.org/10.1007/978-3-030-05843-2_7","dir":"ltr","width":"155.21","height":"8.50","transform":["8.50","0.00","0.00","8.50","53.86","36.72"],"fontName":"PUOYMP+MvlhfjYrxffwDbwglxTimesLTStd-Roman","x":53.85879801999998,"y":36.71720123,"line":2}
+{"page":224,"change":"Removal","score":"1.00: (0.00 + 1.00)","str":"https://doi.org/10.1007/978-3-030-05843-2_8","dir":"ltr","width":"155.21","height":"8.50","transform":["8.50","0.00","0.00","8.50","53.86","36.72"],"fontName":"WBIXVW+GdxfghFpvhyyRwyvdbTimesLTStd-Roman","x":53.85879801999998,"y":36.71720123,"line":2}
+{"page":451,"change":"Removal","score":"1.00: (0.00 + 1.00)","str":"https://doi.org/10.1007/978-3-030-05843-2_9","dir":"ltr","width":"155.21","height":"8.50","transform":["8.50","0.00","0.00","8.50","53.86","36.72"],"fontName":"LYEPZS+PnjsjyLhrblyLybwyqTimesLTStd-Roman","x":53.85879801999998,"y":36.71720123,"line":2}
+{"page":460,"change":"Removal","score":"1.00: (0.00 + 1.00)","str":"https://doi.org/10.1007/978-3-030-05843-2_10","dir":"ltr","width":"159.46","height":"8.50","transform":["8.50","0.00","0.00","8.50","53.86","36.72"],"fontName":"PGGTUK+MjlrwvGpnncyLwpvhkTimesLTStd-Roman","x":53.85879801999998,"y":36.71720123,"line":2}
+{"page":483,"change":"Removal","score":"1.00: (0.00 + 1.00)","str":"https://doi.org/10.1007/978-3-030-05843-2_11","dir":"ltr","width":"159.46","height":"8.50","transform":["8.50","0.00","0.00","8.50","53.86","36.72"],"fontName":"CWYJCU+MwbqrqRrbdpnKlvqykTimesLTStd-Roman","x":53.85879801999998,"y":36.71720123,"line":2}
+{"page":504,"change":"Removal","score":"1.00: (0.00 + 1.00)","str":"https://doi.org/10.1007/978-3-030-05843-2_12","dir":"ltr","width":"159.46","height":"8.50","transform":["8.50","0.00","0.00","8.50","53.86","36.72"],"fontName":"UFCXMJ+JrxrmgHhwrvyTcvmjtTimesLTStd-Roman","x":53.85879801999998,"y":36.71720123,"line":2}
+{"page":515,"change":"Removal","score":"1.00: (0.00 + 1.00)","str":"https://doi.org/10.1007/978-3-030-05843-2_13","dir":"ltr","width":"159.46","height":"8.50","transform":["8.50","0.00","0.00","8.50","53.86","36.72"],"fontName":"HNJXSZ+PjhwjxNfxdkbDvkmhnTimesLTStd-Roman","x":53.85879801999998,"y":36.71720123,"line":2}
+{"page":532,"change":"Removal","score":"1.00: (0.00 + 1.00)","str":"https://doi.org/10.1007/978-3-030-05843-2","dir":"ltr","width":"146.71","height":"8.50","transform":["8.50","0.00","0.00","8.50","53.86","36.72"],"fontName":"PPZKZK+WbphbcDtgymbJxvcchTimesLTStd-Roman","x":53.85829925,"y":36.71720123,"line":30}

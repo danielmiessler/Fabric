@@ -1,0 +1,34 @@
+{
+  "pages": 200,
+  "items": 8844,
+  "groupedItems": 8522,
+  "changes": 3,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":20,"change":"ContentChange","str":"I RENE N ORTON , n e A  ́ DLER .”","line":19,"x":318.49899999999997,"y":449.4180000000004,"width":"128.91","height":"10.91","fontName":["KKLGKN+NimbusRomNo9L-Regu"],"dir":["ltr"]}

@@ -1,0 +1,80 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.itemWithType = void 0;
+const ItemTransformer_1 = require("./ItemTransformer");
+const LineItemMerger_1 = require("../debug/LineItemMerger");
+const CacluclateStatistics_1 = require("./CacluclateStatistics");
+const groupingUtils_1 = require("../support/groupingUtils");
+const stringFunctions_1 = require("../support/stringFunctions");
+class DetectCodeQuoteBlocks extends ItemTransformer_1.default {
+    constructor() {
+        super('Detect Code Blocks', 'Find blocks of text which look like they could be code/quote blocks', {
+            requireColumns: ['str', 'block'],
+            debug: {
+                itemMerger: new LineItemMerger_1.default(false),
+            },
+        });
+    }
+    transform(context, inputItems) {
+        const mostUsedHeight = context.getGlobal(CacluclateStatistics_1.MOST_USED_HEIGHT);
+        const codeBlockItems = new Set();
+        let foundCodeItems = 0;
+        (0, groupingUtils_1.groupByPage)(inputItems).forEach((pageItems) => {
+            const minX = toMinX(pageItems);
+            (0, groupingUtils_1.groupByBlock)(pageItems).forEach((blockItems) => {
+                if (!blockItems[0].data['types'] && looksLikeCodeBlock(minX, blockItems, mostUsedHeight)) {
+                    foundCodeItems++;
+                    blockItems.forEach((item) => codeBlockItems.add(item.uuid));
+                }
+            });
+        });
+        return {
+            items: inputItems.map((item) => {
+                if (codeBlockItems.has(item.uuid)) {
+                    return itemWithType(item, 'CODE');
+                }
+                return item;
+            }),
+            messages: [`Found ${foundCodeItems} code blocks.`],
+        };
+    }
+}
+exports.default = DetectCodeQuoteBlocks;
+function itemWithType(item, type) {
+    const existingTypes = item.data['types'] || [];
+    return item.withDataAddition({ types: [...existingTypes, type].filter(groupingUtils_1.onlyUniques) });
+}
+exports.itemWithType = itemWithType;
+function toMinX(items) {
+    let minX = 999;
+    items.forEach((item) => {
+        minX = Math.min(minX, item.data['x']);
+    });
+    if (minX == 999) {
+        return null;
+    }
+    return minX;
+}
+function looksLikeCodeBlock(minX, items, mostUsedHeight) {
+    if (items.length == 0) {
+        return false;
+    }
+    const xIsRelevant = (x) => {
+        return x > minX + 1;
+    };
+    if (items.length == 1) {
+        return xIsRelevant(items[0].data['x']) && items[0].data['height'] <= mostUsedHeight + 1;
+    }
+    const lineItems = (0, groupingUtils_1.groupByLine)(items);
+    for (let index = 0; index < lineItems.length; index++) {
+        const lineX = lineItems[index][0].data['x'];
+        if (!xIsRelevant(lineX)) {
+            return false;
+        }
+        const firstText = lineItems[index][0].data['str'];
+        if ((0, stringFunctions_1.isListItemCharacter)(firstText) || (0, stringFunctions_1.isNumberedListItem)(firstText)) {
+            return false;
+        }
+    }
+    return true;
+}

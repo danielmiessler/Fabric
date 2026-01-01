@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>PDF to Markdown</title>
+        <meta name="description" content="Converts PDF files to Markdown." />
+        <meta name="keywords" content="PDF, Markdown, converter, online">
+        <link rel="shortcut icon" href="favicons/favicon.ico" />
+        <link rel="icon" href="favicons/favicon.ico" />
+    </head>
+    <body>
+        <div id="main"/>
+    </body>
+</html>

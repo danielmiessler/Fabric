@@ -1,0 +1,71 @@
+{
+  "name": "svelte-reveal",
+  "version": "1.1.0",
+  "description": "Svelte action that leverages the Intersection Observer API to trigger reveal on scroll transitions",
+  "type": "module",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.js"
+    },
+    "./styles.css": "./dist/styles.css"
+  },
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --clean --minify --dts --format esm,cjs && cp src/styles.css dist/styles.css",
+    "dev": "npm run build -- --watch",
+    "predev": "npm run clean:build",
+    "pack": "npm pack",
+    "lint": "eslint .",
+    "clean:build": "rimraf dist svelte-reveal-*.tgz",
+    "clean:deps": "rimraf .turbo node_modules package-lock.json",
+    "clean": "run-p clean:*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DaveKeehl/svelte-reveal.git"
+  },
+  "author": {
+    "name": "Davide Ciulla",
+    "email": "davide.ciulla@hotmail.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DaveKeehl/svelte-reveal/issues"
+  },
+  "homepage": "https://github.com/DaveKeehl/svelte-reveal#readme",
+  "keywords": [
+    "svelte-reveal",
+    "svelte",
+    "reveal",
+    "scroll",
+    "intersection",
+    "observer",
+    "transition",
+    "animation"
+  ],
+  "funding": {
+    "type": "ko-fi",
+    "url": "https://ko-fi.com/davekeehl"
+  },
+  "devDependencies": {
+    "@types/seedrandom": "^3.0.8",
+    "@typescript-eslint/eslint-plugin": "^7.4.0",
+    "@typescript-eslint/parser": "^7.4.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-config-turbo": "^1.13.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^3.2.5",
+    "rimraf": "^5.0.5",
+    "seedrandom": "^3.0.5",
+    "svelte": "^4.2.12",
+    "tsup": "^8.0.2",
+    "typescript": "^5.4.3"
+  }
+}

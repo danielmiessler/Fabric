@@ -1,0 +1,11 @@
+import Item from '../Item';
+import ItemResult from '../ItemResult';
+import ItemTransformer from './ItemTransformer';
+import TransformContext from './TransformContext';
+/**
+ * We can't trust order of occurence, esp. footnote links like to come last
+ */
+export default class SortXWithinLines extends ItemTransformer {
+    constructor();
+    transform(_: TransformContext, inputItems: Item[]): ItemResult;
+}

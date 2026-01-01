@@ -1,0 +1,171 @@
+{
+  "pages": 7,
+  "items": 532,
+  "groupedItems": 238,
+  "changes": 137,
+  "schema": [
+    {
+      "name": "line",
+      "annotation": "ADDED"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":0,"change":"Addition","str":"Systematic Identification of MicroPLastics in the Environment","line":0,"x":148.16,"y":796.02,"width":"278.17","height":"10.98","fontName":["BCDEEE+Calibri-Bold"],"dir":["ltr"]}
+{"page":0,"change":"Addition","str":"Page  1 / 7","line":2,"x":35.34,"y":38.1,"width":"39.46","height":"10.98","fontName":["BCDFEE+Calibri"],"dir":["ltr"]}
+{"page":0,"change":"Addition","str":"Creative  Commons  Attribution - ShareAlike  4.0 ","line":3,"x":56.7,"y":729.36,"width":"390.17","height":"16.02","fontName":["BCDGEE+Montserrat-Bold"],"dir":["ltr"]}
+{"page":0,"change":"Addition","str":"International   Public   License Agreement   of   siMPle  –","line":4,"x":56.7,"y":709.86,"width":"458.94","height":"16.02","fontName":["BCDGEE+Montserrat-Bold","BCDIEE+Montserrat-Bold"],"dir":["ltr"]}
+{"page":0,"change":"Addition","str":"the    terms    and    conditions    of    this    Creative    Commons    Attribution - ShareAlike    4.0 ","line":7,"x":56.7,"y":650.08,"width":"484.38","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":0,"change":"Addition","str":"a cceptance  of  these  terms  and  conditions,  and  the  Licensor  grants  You  such  rights  in ","line":10,"x":56.7,"y":601.06,"width":"484.33","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":0,"change":"Addition","str":"Section 1  – Definitions.","line":13,"x":56.7,"y":540.04,"width":"121.37","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular","BCDJEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":0,"change":"Addition","str":"a. Adapted Material mean s material subject to Copyright and Similar Rights that is derived ","line":14,"x":38.7,"y":509.68,"width":"491.40","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":0,"change":"Addition","str":"under the C opyright and Similar Rights held by the Licensor. For purposes of this Public ","line":17,"x":56.7,"y":460.66,"width":"484.27","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":0,"change":"Addition","str":"relat ion with a moving image.","line":20,"x":56.7,"y":411.62,"width":"161.11","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":0,"change":"Addition","str":"b. Adapter's  License means  the  license  You  apply  to  Your  Copyright  and  Similar  Rights  in ","line":21,"x":38.7,"y":389.3,"width":"492.16","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":0,"change":"Addition","str":"c. BY - SA  Compatible  License means  a  licen se  listed ","line":24,"x":38.7,"y":334.28,"width":"272.34","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":0,"change":"Addition","str":"at creativecommons.org/compatiblelicenses ,    approved    by    Creative    Commons    as ","line":25,"x":56.7,"y":317.96,"width":"481.87","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":0,"change":"Addition","str":"d. Copyright  and  Similar  Rights means  copyright  and/or  similar  rights  closely  related  to ","line":27,"x":38.7,"y":279.26,"width":"489.72","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":0,"change":"Addition","str":"purposes of this Public License, the right s specified in Section 2(b)(1) - (2) are not Copyright ","line":30,"x":56.7,"y":230.24,"width":"479.33","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":0,"change":"Addition","str":"e. Effective  Technological  Measures means  those  measures  that,  in  the  absence  of  proper ","line":32,"x":38.7,"y":191.54,"width":"491.45","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":0,"change":"Addition","str":"authority,  may  n ot  be  circumvented  under  laws  fulfilling  obligations  under  Article  11  of ","line":33,"x":56.7,"y":175.22,"width":"484.34","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":0,"change":"Addition","str":"f. Exceptions  and  Limitations means  fair  use,  fair  dealing,  and/or  any  other  exception  or","line":36,"x":38.7,"y":120.18,"width":"486.03","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":1,"change":"Addition","str":"Systematic Identification of MicroPLastics in the Environment","line":0,"x":148.16,"y":796.02,"width":"278.17","height":"10.98","fontName":["BCDEEE+Calibri-Bold"],"dir":["ltr"]}
+{"page":1,"change":"Addition","str":"Page  2 / 7","line":2,"x":35.34,"y":38.1,"width":"39.46","height":"10.98","fontName":["BCDFEE+Calibri"],"dir":["ltr"]}
+{"page":1,"change":"Addition","str":"g. License Elements means the license attributes listed in the name of a Creative Commons ","line":3,"x":38.7,"y":744.06,"width":"491.46","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":1,"change":"Addition","str":"Public License. The License Elements of this Public License are Attributio n and ShareAlike.","line":4,"x":56.7,"y":727.74,"width":"481.83","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":1,"change":"Addition","str":"h. Licensed Material means the artistic or literary work, database, or other material to which ","line":5,"x":38.7,"y":705.42,"width":"492.20","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":1,"change":"Addition","str":"i. Licensed  Rights means  the  rights  granted  to  You  subject  to  the  terms  and  conditions  of ","line":7,"x":38.7,"y":666.7,"width":"488.10","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":1,"change":"Addition","str":"this Public  License, which are limited to all Copyright and Similar Rights that apply to Your ","line":8,"x":56.7,"y":650.38,"width":"484.80","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":1,"change":"Addition","str":"j. Licensor means the individual(s) or entity(ies) granting rights under this Public License.","line":10,"x":38.7,"y":611.68,"width":"474.22","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":1,"change":"Addition","str":"k. Share means  to  provide  material  to  the  public  by  any  means  or  process  that  requires ","line":11,"x":38.7,"y":589.36,"width":"491.39","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":1,"change":"Addition","str":"material a vailable to the public including in ways that members of the public may access ","line":14,"x":56.7,"y":540.34,"width":"484.37","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":1,"change":"Addition","str":"l. Sui  Generis  Database  Rights means  rights  other  than  copyright  resulting  from  Directive ","line":16,"x":38.7,"y":501.64,"width":"488.22","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":1,"change":"Addition","str":"96/9/EC  of  the  Europe an  Parliament  and  of  the  Council  of  11  March  1996  on  the  legal ","line":17,"x":56.7,"y":485.32,"width":"484.28","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":1,"change":"Addition","str":"m. You means  the  individual  or  entity  exercising  the  Licensed  Rights  und er  this  Public ","line":20,"x":38.7,"y":430.3,"width":"495.75","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":1,"change":"Addition","str":"License. Your has a corresponding meaning.","line":21,"x":56.7,"y":413.9,"width":"232.82","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":1,"change":"Addition","str":"Section 2  – Scope.","line":22,"x":56.7,"y":385.58,"width":"96.06","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular","BCDJEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":1,"change":"Addition","str":"a. License grant .","line":23,"x":38.7,"y":355.16,"width":"85.77","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":1,"change":"Addition","str":"1. Subject to the terms and conditions of this Public License, the Licensor hereby grants You ","line":24,"x":38.7,"y":332.9,"width":"494.17","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":1,"change":"Addition","str":"a   worldwide,   royalty - free,   non - sublicensable,   non - exclusive,   irrevocable  license   to ","line":25,"x":56.7,"y":316.52,"width":"479.19","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":1,"change":"Addition","str":"A. reproduce and Share the Licensed Material, in whole or in part; and","line":27,"x":38.7,"y":277.88,"width":"373.54","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":1,"change":"Addition","str":"B. produce, reproduce, and Share Adapted Material.","line":28,"x":38.7,"y":255.5,"width":"278.39","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":1,"change":"Addition","str":"2. Exceptions and Limitations . For the avoidance of doubt, where Exception s and Limitations ","line":29,"x":38.7,"y":233.18,"width":"494.15","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":1,"change":"Addition","str":"3. Term . The term of this Public License is specified in Section 6(a) .","line":32,"x":38.7,"y":178.16,"width":"353.21","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":1,"change":"Addition","str":"4. Media  and  formats;  technical  modifications  allowed .  The  Licensor  authorizes  You  to ","line":33,"x":38.7,"y":155.84,"width":"494.11","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":1,"change":"Addition","str":"created,  and  to  make  technical  modifications  necessary  to  do so.  The  Licensor  waives ","line":35,"x":56.7,"y":123.12,"width":"480.10","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"Systematic Identification of MicroPLastics in the Environment","line":0,"x":148.16,"y":796.02,"width":"278.17","height":"10.98","fontName":["BCDEEE+Calibri-Bold"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"Page  3 / 7","line":2,"x":35.34,"y":38.1,"width":"39.46","height":"10.98","fontName":["BCDFEE+Calibri"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"necessary  to  circumvent  Effective  Technological  Measu res.  For  purposes  of  this  Public ","line":3,"x":56.7,"y":744.06,"width":"484.30","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"License,  simply  making  modifications  authorized  by  this  Section 2(a)(4) never  produces ","line":4,"x":56.7,"y":727.74,"width":"479.20","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"5. Downstream recipients .","line":6,"x":38.7,"y":689.02,"width":"139.11","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"A. Offer  from  the  Licensor  – Licensed  Material .  Every  recipient  of  the  Licensed  Material ","line":7,"x":38.7,"y":666.7,"width":"484.23","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular","BCDJEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"B. Additional offer from the  Licensor  – Adapted Material . Every recipient of Adapted Material ","line":10,"x":38.7,"y":611.68,"width":"493.13","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular","BCDJEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"C. No downstream restr ictions . You may not offer or impose any additional or different terms ","line":13,"x":38.7,"y":556.66,"width":"495.16","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"Material .","line":16,"x":56.7,"y":507.64,"width":"47.68","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"6. No  endorsement .  Nothing  in  this  Public  License  constitutes  or  may  be  construed  as ","line":17,"x":38.7,"y":485.32,"width":"494.10","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"connected  with,  or  sponsored,  endorsed,  or  granted  official  status  by,  the  Licenso r  or ","line":19,"x":56.7,"y":452.62,"width":"484.24","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"others designated to receive attribution as provided in Section 3(a)(1)(A)(i) .","line":20,"x":56.7,"y":436.3,"width":"402.55","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"b. Other rights .","line":21,"x":38.7,"y":407.9,"width":"78.65","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"1. Moral rights, such as the right of integrity, are not licensed under this Public License, nor ","line":22,"x":38.7,"y":379.58,"width":"491.03","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"Licensor to the limited extent necessary to allow You to exer cise the Licensed Rights, but ","line":25,"x":56.7,"y":330.56,"width":"484.34","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"2. Patent and trademark rights are not licensed under this Public License.","line":27,"x":38.7,"y":291.86,"width":"393.26","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"3. To the extent possible, the Licensor waives any right to collect royalties from You for the ","line":28,"x":38.7,"y":269.54,"width":"494.01","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"exercise of the Licensed Rights, whether direct ly or through a collecting society under any ","line":29,"x":56.7,"y":253.16,"width":"484.45","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"Section 3  – License Conditions.","line":32,"x":56.7,"y":192.14,"width":"165.26","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular","BCDJEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"Your exercise of the Licens ed Rights is expressly made subject to the following conditions.","line":33,"x":56.7,"y":163.82,"width":"481.95","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"a. Attribution .","line":34,"x":38.7,"y":135.48,"width":"72.70","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"1. If You Share the Licensed Material (including in modified form), You must:","line":35,"x":38.7,"y":107.1,"width":"406.28","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"Systematic Identification of MicroPLastics in the Environment","line":0,"x":148.16,"y":796.02,"width":"278.17","height":"10.98","fontName":["BCDEEE+Calibri-Bold"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"Page  4 / 7","line":2,"x":35.34,"y":38.1,"width":"39.46","height":"10.98","fontName":["BCDFEE+Calibri"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"A. retain the following if it is supplied by the Licensor with the Licensed Material:","line":3,"x":38.7,"y":744.06,"width":"430.08","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"i. identification  of  the  creator(s)  of  the  Licensed  Material  and  any  others  designated  to ","line":4,"x":32.28,"y":721.74,"width":"490.69","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"ii. a copyright notice;","line":7,"x":29.04,"y":666.7,"width":"110.72","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"iii. a notice that refers to this Public L icense;","line":8,"x":25.86,"y":644.38,"width":"235.04","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"iv. a notice that refers to the disclaimer of warranties;","line":9,"x":26.22,"y":622,"width":"285.59","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"v. a URI or hyperlink to the Licensed Material to the extent reasonably practicabl e","line":10,"x":29.4,"y":599.68,"width":"436.39","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"- Primpke,  S.,  A.  Dias,  P.,  Gerdts,  G.,  Anal.  Methods  11,  2138 – 2147 .  (2019)","line":12,"x":56.7,"y":560.02,"width":"314.50","height":"9.00","fontName":["BCDKEE+Montserrat-Regular","BCDLEE+Montserrat-Regular"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"- Liu,     F.,     Olesen,     K.B.,     Borregaard,     A.R.,     Vollertsen,     J.,  Sci.     Total     Environ.     671 .     (2019)","line":13,"x":56.7,"y":549.04,"width":"461.88","height":"9.00","fontName":["BCDKEE+Montserrat-Regular"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"- Raman database: Cabernard, L.;  Roscher , L.;  Lorenz, C.;  Gerdts, G.; Primpke, S.,  Environmental Science ","line":14,"x":56.7,"y":538.06,"width":"481.09","height":"9.00","fontName":["BCDKEE+Montserrat-Regular"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"& Technology 52 (22), 13279 - 13288 (2018)","line":15,"x":56.7,"y":527.08,"width":"179.63","height":"9.00","fontName":["BCDKEE+Montserrat-Regular"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"B. indicate  if  You  modified  the  Licensed  Material  and  retain  an  indication  of  any  prev ious ","line":16,"x":38.7,"y":498.04,"width":"495.26","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"C. indicate the Licensed Material is licensed under this Public License, and include the text ","line":18,"x":38.7,"y":459.34,"width":"494.97","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"2. You may satisfy the conditions in Section 3(a)(1) in any reasonable manner based on the ","line":20,"x":38.7,"y":420.68,"width":"488.88","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"may be reasonable to satisfy the conditions by providing a URI or hyperlink to a resourc e ","line":22,"x":56.7,"y":387.98,"width":"484.26","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"3. If  requested  by  the  Licensor,  You  must  remove  any  of  the  information  required  by ","line":24,"x":38.7,"y":349.28,"width":"494.08","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"Section 3(a)(1)(A) to the extent reasonably pract icable.","line":25,"x":56.7,"y":332.96,"width":"290.29","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"b. ShareAlike .","line":26,"x":38.7,"y":310.64,"width":"71.77","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"In addition to the conditions in Section 3(a) , if You Share Adapted Material You produce, ","line":27,"x":56.7,"y":282.26,"width":"481.61","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"1. The  Adapter’s  License  You  apply  must  be  a  Creative  Commons  license  with  the  same ","line":29,"x":38.7,"y":235.58,"width":"492.03","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular","BCDJEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"License Elements, this version or later, or a BY - SA Compatible License.","line":30,"x":56.7,"y":219.26,"width":"378.58","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"2. You must include the text of, or the URI or hyperlink to, the Adapter's License You apply. ","line":31,"x":38.7,"y":196.94,"width":"493.98","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"You  may satisfy this  condi tion  in  any reasonable manner  based on  the  medium, means, ","line":32,"x":56.7,"y":180.56,"width":"484.37","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"3. You may not offer or impose any additional or different terms or conditions on, or apply ","line":34,"x":38.7,"y":141.86,"width":"493.97","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"any  Effective  Technological  Measures  to,  Adapted  Material  th at  restrict  exercise  of  the ","line":35,"x":56.7,"y":125.52,"width":"484.32","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":4,"change":"Addition","str":"Systematic Identification of MicroPLastics in the Environment","line":0,"x":148.16,"y":796.02,"width":"278.17","height":"10.98","fontName":["BCDEEE+Calibri-Bold"],"dir":["ltr"]}
+{"page":4,"change":"Addition","str":"Page  5 / 7","line":2,"x":35.34,"y":38.1,"width":"39.46","height":"10.98","fontName":["BCDFEE+Calibri"],"dir":["ltr"]}
+{"page":4,"change":"Addition","str":"Section 4  – Sui Generis Database Rights.","line":3,"x":56.7,"y":744.06,"width":"214.01","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular","BCDJEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":4,"change":"Addition","str":"a. for   the   avoidance   of   d oubt,   Section 2(a)(1) grants   You   the   right   to   extract,   reuse, ","line":6,"x":38.7,"y":669.04,"width":"488.87","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":4,"change":"Addition","str":"b. if You include all or a subs tantial portion of the database contents in a database in which ","line":8,"x":38.7,"y":630.34,"width":"494.72","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":4,"change":"Addition","str":"purposes of Section 3(b) ; and","line":11,"x":56.7,"y":581.32,"width":"155.84","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":4,"change":"Addition","str":"c. You  must  comply  with  the  conditions  in  Section 3(a) if  You  Share  all  or  a  substanti al ","line":12,"x":38.7,"y":559,"width":"488.36","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":4,"change":"Addition","str":"For  the  avoidance  of  doubt,  this  Section 4 supplements  and  does  not  replace  Your ","line":14,"x":56.7,"y":520.3,"width":"479.18","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":4,"change":"Addition","str":"obligations under this Public License where the  Licensed Rights include other Copyright ","line":15,"x":56.7,"y":503.98,"width":"483.69","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":4,"change":"Addition","str":"Section 5  – Disclaimer of Warranties and Limitation of Liability.","line":17,"x":56.7,"y":459.28,"width":"337.04","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular","BCDJEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":4,"change":"Addition","str":"a. Unless  otherwise  separately  undertaken  by  the  Licensor,  to  the  extent  possible,  the ","line":18,"x":38.7,"y":428.92,"width":"494.12","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":4,"change":"Addition","str":"Licensor offers the Licensed Material as - is an d as - available, and makes no representations ","line":19,"x":56.7,"y":412.58,"width":"484.28","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":4,"change":"Addition","str":"fitness  for  a  particular  purpos e,  non - infringement,  absence  of  latent  or  other  defects, ","line":22,"x":56.7,"y":363.56,"width":"484.17","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":4,"change":"Addition","str":"b. To the  extent possible, in no event will the Licensor be liable to You on any legal theory ","line":26,"x":38.7,"y":292.22,"width":"493.76","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":4,"change":"Addition","str":"incidental,   consequential,   punitive,   exemplary,   or   other   losses,   costs,   expenses ,   or ","line":28,"x":56.7,"y":259.52,"width":"484.21","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":4,"change":"Addition","str":"Where a limitation of liability is not allowed in full or in part, this l imitation may not apply ","line":31,"x":56.7,"y":210.5,"width":"484.32","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":4,"change":"Addition","str":"c. The disclaimer of warranties and limitation of liability provided above shall be interpreted ","line":33,"x":38.7,"y":163.82,"width":"493.71","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":4,"change":"Addition","str":"Section 6  – Term and Termination.","line":36,"x":56.7,"y":102.78,"width":"184.60","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular","BCDJEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":5,"change":"Addition","str":"Systematic Identification of MicroPLastics in the Environment","line":0,"x":148.16,"y":796.02,"width":"278.17","height":"10.98","fontName":["BCDEEE+Calibri-Bold"],"dir":["ltr"]}
+{"page":5,"change":"Addition","str":"Page  6 / 7","line":2,"x":35.34,"y":38.1,"width":"39.46","height":"10.98","fontName":["BCDFEE+Calibri"],"dir":["ltr"]}
+{"page":5,"change":"Addition","str":"a. This Public License applies for the term of the Copyright and Similar Rights licensed here. ","line":3,"x":38.7,"y":744.06,"width":"494.17","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":5,"change":"Addition","str":"b. Where  Your  right  to  use  the  Licensed  Material  has  terminated  under  Section 6(a) ,  it ","line":6,"x":38.7,"y":683.02,"width":"489.15","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":5,"change":"Addition","str":"1. automatically as of the date the violation is cured, provided it is cured within 30  days of ","line":8,"x":38.7,"y":638.38,"width":"493.33","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":5,"change":"Addition","str":"2. upon express reinstatement by the Licensor.","line":10,"x":38.7,"y":599.68,"width":"250.20","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":5,"change":"Addition","str":"For  the  avoidance  of  doubt,  this  Section 6(b) does  not  affect  any  right  the  Licensor  m ay ","line":11,"x":56.7,"y":569.32,"width":"479.00","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":5,"change":"Addition","str":"c. For  the  avoidance  of  doubt,  the  Licensor  may  also  offer  the  Licensed  Material  under ","line":13,"x":38.7,"y":522.64,"width":"493.49","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":5,"change":"Addition","str":"however, doing so  will not terminate this Public License.","line":15,"x":56.7,"y":490,"width":"304.49","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":5,"change":"Addition","str":"d. Sections 1 , 5 , 6 , 7 , and 8 survive termination of this Public Licen se.","line":16,"x":38.7,"y":467.62,"width":"351.44","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":5,"change":"Addition","str":"Section 7  – Other Terms and Conditions.","line":17,"x":56.7,"y":439.3,"width":"215.72","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular","BCDJEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":5,"change":"Addition","str":"a. The  Licensor  shall  not  be  bound  by  any  additional  or  different  terms  or  conditions ","line":18,"x":38.7,"y":408.92,"width":"494.08","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":5,"change":"Addition","str":"b. Any  arrangements,  understandings,  or  agreements  regarding  the  Licensed  Material  not ","line":20,"x":38.7,"y":370.28,"width":"494.75","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":5,"change":"Addition","str":"Section 8  – Interpretation.","line":23,"x":56.7,"y":309.2,"width":"139.26","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular","BCDJEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":5,"change":"Addition","str":"a. For the avoidance of doubt, this Public License does not, and shall not be interpreted to, ","line":24,"x":38.7,"y":278.84,"width":"493.99","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":5,"change":"Addition","str":"reduce, limit, restrict, or impose co nditions on any use of the Licensed Material that could ","line":25,"x":56.7,"y":262.52,"width":"484.44","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":5,"change":"Addition","str":"b. To the extent possible, if any provision of this Public License is deemed unenforceable, it ","line":27,"x":38.7,"y":223.88,"width":"494.75","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":5,"change":"Addition","str":"shall be automatically reformed to the  minimum extent necessary to make it enforceable. ","line":28,"x":56.7,"y":207.5,"width":"484.71","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":5,"change":"Addition","str":"c. No  term  or  condition  of  this  Public  License  will  be  waived  and  no  failure  to  comply ","line":31,"x":38.7,"y":152.48,"width":"490.90","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":6,"change":"Addition","str":"Systematic Identification of MicroPLastics in the Environment","line":0,"x":148.16,"y":796.02,"width":"278.17","height":"10.98","fontName":["BCDEEE+Calibri-Bold"],"dir":["ltr"]}
+{"page":6,"change":"Addition","str":"Page  7 / 7","line":2,"x":35.34,"y":38.1,"width":"39.46","height":"10.98","fontName":["BCDFEE+Calibri"],"dir":["ltr"]}
+{"page":6,"change":"Addition","str":"d. Nothing in this Public License constitutes or may be interpreted as a limitation upon, or ","line":3,"x":38.7,"y":744.06,"width":"494.73","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":6,"change":"Addition","str":"waiver of, any privileges and immunities that apply to the Licensor or You , including from ","line":4,"x":56.7,"y":727.74,"width":"484.47","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":6,"change":"Addition","str":"instances  will be considered the “Licensor.” The text of the Creative Commons public ","line":8,"x":56.7,"y":626.02,"width":"482.55","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular","BCDJEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":6,"change":"Addition","str":"licenses  is  dedicated  to  the  public  domain  under  the CC0  Public  Domain  Dedication . ","line":9,"x":56.7,"y":609.7,"width":"481.78","height":"13.72","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":6,"change":"Addition","str":"Except  for  the  limited purpose  of  indicating  that  material  is  shared  under  a  Creative ","line":10,"x":56.7,"y":593.32,"width":"479.34","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":6,"change":"Addition","str":"published  at creativecommons.org/policies ,  Creative  Commo ns  does  not  authorize  the ","line":12,"x":56.7,"y":560.68,"width":"481.91","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":6,"change":"Addition","str":"with   any   unauthorized   modifications   to   any   of   its   public   lic enses   or   any   other ","line":15,"x":56.7,"y":511.66,"width":"484.32","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}
+{"page":6,"change":"Addition","str":"Creative Commons may be contacted at creativecommons.org .","line":18,"x":56.7,"y":446.26,"width":"338.95","height":"13.02","fontName":["BCDHEE+SourceSansPro-Regular"],"dir":["ltr"]}

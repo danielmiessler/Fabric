@@ -1,0 +1,22 @@
+{
+  "name": "json-stringify-safe",
+  "version": "4.0.0",
+  "description": "Like JSON.stringify, but doesn't blow up on circular refs",
+  "main": "stringify.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/isaacs/json-stringify-safe"
+  },
+  "keywords": [
+    "json",
+    "stringify",
+    "circular",
+    "safe"
+  ],
+  "author": "Isaac Z. Schlueter <i@izs.me> (http://blog.izs.me)",
+  "license": "BSD",
+  "readmeFilename": "README.md"
+}

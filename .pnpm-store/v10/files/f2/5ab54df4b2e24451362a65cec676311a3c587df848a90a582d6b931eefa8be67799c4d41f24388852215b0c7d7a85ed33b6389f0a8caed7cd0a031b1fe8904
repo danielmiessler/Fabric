@@ -1,0 +1,50 @@
+{
+  "pages": 24,
+  "items": 1403,
+  "groupedItems": 1215,
+  "changes": 17,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":4,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"5","dir":"ltr","width":"5.33","height":"9.00","transform":["9.00","0.00","0.00","9.00","380.39","26.93"],"fontName":"QMZZIE+AvenirLTStd-Black","x":380.3863,"y":26.9291,"line":0}
+{"page":5,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"6","dir":"ltr","width":"5.33","height":"9.00","transform":["9.00","0.00","0.00","9.00","34.02","26.93"],"fontName":"QMZZIE+AvenirLTStd-Black","x":34.0158,"y":26.9291,"line":0}
+{"page":6,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"7","dir":"ltr","width":"5.33","height":"9.00","transform":["9.00","0.00","0.00","9.00","380.39","26.93"],"fontName":"QMZZIE+AvenirLTStd-Black","x":380.3863,"y":26.9291,"line":9}
+{"page":7,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"8","dir":"ltr","width":"5.33","height":"9.00","transform":["9.00","0.00","0.00","9.00","34.02","26.93"],"fontName":"QMZZIE+AvenirLTStd-Black","x":34.0158,"y":26.9291,"line":0}
+{"page":8,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"9","dir":"ltr","width":"5.33","height":"9.00","transform":["9.00","0.00","0.00","9.00","380.39","26.93"],"fontName":"QMZZIE+AvenirLTStd-Black","x":380.3863,"y":26.9291,"line":0}
+{"page":9,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"10","dir":"ltr","width":"10.66","height":"9.00","transform":["9.00","0.00","0.00","9.00","34.02","26.93"],"fontName":"QMZZIE+AvenirLTStd-Black","x":34.0158,"y":26.9291,"line":0}
+{"page":10,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"11","dir":"ltr","width":"10.66","height":"9.00","transform":["9.00","0.00","0.00","9.00","375.06","26.93"],"fontName":"QMZZIE+AvenirLTStd-Black","x":375.0583,"y":26.9291,"line":0}
+{"page":11,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"12","dir":"ltr","width":"10.66","height":"9.00","transform":["9.00","0.00","0.00","9.00","34.02","26.93"],"fontName":"QMZZIE+AvenirLTStd-Black","x":34.0158,"y":26.9291,"line":0}
+{"page":12,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"13","dir":"ltr","width":"10.66","height":"9.00","transform":["9.00","0.00","0.00","9.00","375.06","26.93"],"fontName":"QMZZIE+AvenirLTStd-Black","x":375.0583,"y":26.9291,"line":0}
+{"page":13,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"14","dir":"ltr","width":"10.66","height":"9.00","transform":["9.00","0.00","0.00","9.00","34.02","26.93"],"fontName":"QMZZIE+AvenirLTStd-Black","x":34.0158,"y":26.9291,"line":0}
+{"page":14,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"15","dir":"ltr","width":"10.66","height":"9.00","transform":["9.00","0.00","0.00","9.00","375.06","26.93"],"fontName":"QMZZIE+AvenirLTStd-Black","x":375.0583,"y":26.9291,"line":0}
+{"page":15,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"16","dir":"ltr","width":"10.66","height":"9.00","transform":["9.00","0.00","0.00","9.00","34.02","26.93"],"fontName":"QMZZIE+AvenirLTStd-Black","x":34.0158,"y":26.9291,"line":0}
+{"page":16,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"17","dir":"ltr","width":"10.66","height":"9.00","transform":["9.00","0.00","0.00","9.00","375.06","26.93"],"fontName":"QMZZIE+AvenirLTStd-Black","x":375.0583,"y":26.9291,"line":0}
+{"page":17,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"18","dir":"ltr","width":"10.66","height":"9.00","transform":["9.00","0.00","0.00","9.00","34.02","26.93"],"fontName":"QMZZIE+AvenirLTStd-Black","x":34.0158,"y":26.9291,"line":0}
+{"page":18,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"19","dir":"ltr","width":"10.66","height":"9.00","transform":["9.00","0.00","0.00","9.00","375.06","26.93"],"fontName":"QMZZIE+AvenirLTStd-Black","x":375.0583,"y":26.9291,"line":0}
+{"page":19,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"20","dir":"ltr","width":"10.66","height":"9.00","transform":["9.00","0.00","0.00","9.00","34.02","26.93"],"fontName":"QMZZIE+AvenirLTStd-Black","x":34.0158,"y":26.9291,"line":0}
+{"page":20,"change":"Removal","score":"1.00: (1.00 + 0.00)","str":"21","dir":"ltr","width":"10.66","height":"9.00","transform":["9.00","0.00","0.00","9.00","375.06","26.93"],"fontName":"QMZZIE+AvenirLTStd-Black","x":375.0583,"y":26.9291,"line":0}

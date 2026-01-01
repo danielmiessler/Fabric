@@ -1,0 +1,270 @@
+{
+  "pages": 221,
+  "items": 51638,
+  "groupedItems": 8863,
+  "changes": 694,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {
+    "maxHeight": 24.7871,
+    "mostUsedHeight": 11.9551,
+    "mostUsedDistance": 14.44,
+    "mostUsedFont": "LERRTL+CMR12",
+    "minX": 52.262,
+    "maxX": 571.0594300000001,
+    "minY": 76.19790000000002,
+    "maxY": 738.022,
+    "pageMapping": {
+      "pageFactor": 1,
+      "detectedOnPage": true
+    }
+  }
+}
+{"page":4,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"5","dir":"ltr","width":"5.85","height":"11.96","transform":["11.96","0.00","0.00","11.96","526.49","738.02"],"fontName":"LERRTL+CMR12","x":526.491,"y":738.022,"line":0}
+{"page":5,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"6 Chapter 1. Shortest paths and trees","line":0,"x":72,"y":738.022,"width":"190.74","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":6,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 1.1. Shortest paths with nonnegative lengths 7","line":0,"x":100.35,"y":738.022,"width":"276.58","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":7,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"8 Chapter 1. Shortest paths and trees","line":0,"x":72,"y":738.022,"width":"190.74","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":8,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 1.2. Speeding up Dijkstra’s algorithm with heaps 9","line":0,"x":100.35,"y":738.022,"width":"298.85","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":9,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"10 Chapter 1. Shortest paths and trees","line":0,"x":72,"y":738.022,"width":"196.59","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":10,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 1.2. Speeding up Dijkstra’s algorithm with heaps 11","line":0,"x":100.35,"y":738.022,"width":"304.70","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":11,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"12 Chapter 1. Shortest paths and trees","line":0,"x":72,"y":738.022,"width":"196.59","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":12,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 1.3. Shortest paths with arbitrary lengths 13","line":0,"x":100.35,"y":738.022,"width":"267.15","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":13,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"14 Chapter 1. Shortest paths and trees","line":0,"x":72,"y":738.022,"width":"196.59","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":14,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 1.3. Shortest paths with arbitrary lengths 15","line":0,"x":100.35,"y":738.022,"width":"267.15","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":15,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"16 Chapter 1. Shortest paths and trees","line":0,"x":72,"y":738.022,"width":"196.59","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":16,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 1.3. Shortest paths with arbitrary lengths 17","line":0,"x":100.35,"y":738.022,"width":"267.15","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":17,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"18 Chapter 1. Shortest paths and trees","line":0,"x":72,"y":738.022,"width":"196.59","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":18,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 1.4. Minimum spanning trees 19","line":0,"x":100.35,"y":738.022,"width":"203.02","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":19,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"20 Chapter 1. Shortest paths and trees","line":0,"x":72,"y":738.022,"width":"196.59","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":20,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 1.4. Minimum spanning trees 21","line":0,"x":100.35,"y":738.022,"width":"203.02","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":21,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"22 Chapter 1. Shortest paths and trees","line":0,"x":72,"y":738.022,"width":"196.59","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":22,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"23","dir":"ltr","width":"11.70","height":"11.96","transform":["11.96","0.00","0.00","11.96","520.64","738.02"],"fontName":"LERRTL+CMR12","x":520.641,"y":738.022,"line":0}
+{"page":23,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"24 Chapter 2. Polytopes, polyhedra, Farkas’ lemma, and linear programming","line":0,"x":72,"y":738.022,"width":"387.37","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":24,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 2.2. Polytopes and polyhedra 25","line":0,"x":100.35,"y":738.022,"width":"203.44","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":25,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"26 Chapter 2. Polytopes, polyhedra, Farkas’ lemma, and linear programming","line":0,"x":72,"y":738.022,"width":"387.37","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":26,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 2.2. Polytopes and polyhedra 27","line":0,"x":100.35,"y":738.022,"width":"203.44","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":27,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"28 Chapter 2. Polytopes, polyhedra, Farkas’ lemma, and linear programming","line":0,"x":72,"y":738.022,"width":"387.37","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":28,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 2.2. Polytopes and polyhedra 29","line":0,"x":100.35,"y":738.022,"width":"203.44","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":29,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"30 Chapter 2. Polytopes, polyhedra, Farkas’ lemma, and linear programming","line":0,"x":72,"y":738.022,"width":"387.37","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":30,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 2.3. Farkas’ lemma 31","line":0,"x":100.35,"y":738.022,"width":"150.11","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":31,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"32 Chapter 2. Polytopes, polyhedra, Farkas’ lemma, and linear programming","line":0,"x":72,"y":738.022,"width":"387.37","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":32,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 2.4. Linear programming 33","line":0,"x":100.35,"y":738.022,"width":"180.94","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":33,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"34 Chapter 2. Polytopes, polyhedra, Farkas’ lemma, and linear programming","line":0,"x":72,"y":738.022,"width":"387.37","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":34,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 2.4. Linear programming 35","line":0,"x":100.35,"y":738.022,"width":"180.94","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":35,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"36 Chapter 2. Polytopes, polyhedra, Farkas’ lemma, and linear programming","line":0,"x":72,"y":738.022,"width":"387.37","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":36,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 2.4. Linear programming 37","line":0,"x":100.35,"y":738.022,"width":"180.94","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":37,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"38 Chapter 2. Polytopes, polyhedra, Farkas’ lemma, and linear programming","line":0,"x":72,"y":738.022,"width":"387.37","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":38,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"39","dir":"ltr","width":"11.70","height":"11.96","transform":["11.96","0.00","0.00","11.96","520.64","738.02"],"fontName":"LERRTL+CMR12","x":520.641,"y":738.022,"line":0}
+{"page":39,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"40 Chapter 3. Matchings and covers in bipartite graphs","line":0,"x":72,"y":738.022,"width":"281.46","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":40,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 3.3. K ̋onig’s theorems 41","line":0,"x":100.35,"y":738.022,"width":"164.65","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":41,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"42 Chapter 3. Matchings and covers in bipartite graphs","line":0,"x":72,"y":738.022,"width":"281.46","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":42,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 3.3. K ̋onig’s theorems 43","line":0,"x":100.35,"y":738.022,"width":"164.65","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":43,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"44 Chapter 3. Matchings and covers in bipartite graphs","line":0,"x":72,"y":738.022,"width":"281.46","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":44,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 3.4. Cardinality bipartite matching algorithm 45","line":0,"x":100.35,"y":738.022,"width":"286.45","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":45,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"46 Chapter 3. Matchings and covers in bipartite graphs","line":0,"x":72,"y":738.022,"width":"281.46","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":46,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 3.5. Weighted bipartite matching 47","line":0,"x":100.35,"y":738.022,"width":"223.06","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":47,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"48 Chapter 3. Matchings and covers in bipartite graphs","line":0,"x":72,"y":738.022,"width":"281.46","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":48,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 3.5. Weighted bipartite matching 49","line":0,"x":100.35,"y":738.022,"width":"223.06","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":49,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"50 Chapter 3. Matchings and covers in bipartite graphs","line":0,"x":72,"y":738.022,"width":"281.46","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":50,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 3.6. The matching polytope 51","line":0,"x":100.35,"y":738.022,"width":"195.73","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":51,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"52 Chapter 3. Matchings and covers in bipartite graphs","line":0,"x":72,"y":738.022,"width":"281.46","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":52,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 3.6. The matching polytope 53","line":0,"x":100.35,"y":738.022,"width":"195.73","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":53,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"54 Chapter 4. Menger’s theorem, flows, and circulations","line":0,"x":72,"y":738.022,"width":"283.72","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":54,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 4.1. Menger’s theorem 55","line":0,"x":100.35,"y":738.022,"width":"167.52","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":55,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"56 Chapter 4. Menger’s theorem, flows, and circulations","line":0,"x":72,"y":738.022,"width":"283.72","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":56,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 4.1. Menger’s theorem 57","line":0,"x":100.35,"y":738.022,"width":"167.52","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":56,"change":"Removal","score":"1.00: (0.00 + 1.00)","str":"⋃","dir":"ltr","width":"12.12","height":"10.91","transform":["10.91","0.00","0.00","10.91","186.45","121.12"],"fontName":"TICOHQ+CMEX10","x":186.445634,"y":121.11792200000012,"line":38}
+{"page":56,"change":"Removal","score":"1.00: (0.00 + 1.00)","str":"⋃","dir":"ltr","width":"12.12","height":"10.91","transform":["10.91","0.00","0.00","10.91","225.81","121.12"],"fontName":"TICOHQ+CMEX10","x":225.811692,"y":121.11792200000012,"line":41}
+{"page":57,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"58 Chapter 4. Menger’s theorem, flows, and circulations","line":0,"x":72,"y":738.022,"width":"283.72","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":58,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 4.2. Flows in networks 59","line":0,"x":100.35,"y":738.022,"width":"168.39","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":58,"change":"Removal","score":"1.00: (0.00 + 1.00)","str":"∑","dir":"ltr","width":"17.27","height":"11.96","transform":["11.96","0.00","0.00","11.96","231.76","711.91"],"fontName":"TICOHQ+CMEX10","x":231.75898999999998,"y":711.913,"line":2}
+{"page":59,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"60 Chapter 4. Menger’s theorem, flows, and circulations","line":0,"x":72,"y":738.022,"width":"283.72","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":60,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 4.3. Finding a maximum flow 61","line":0,"x":100.35,"y":738.022,"width":"204.35","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":61,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"62 Chapter 4. Menger’s theorem, flows, and circulations","line":0,"x":72,"y":738.022,"width":"283.72","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":62,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 4.3. Finding a maximum flow 63","line":0,"x":100.35,"y":738.022,"width":"204.35","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":63,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"64 Chapter 4. Menger’s theorem, flows, and circulations","line":0,"x":72,"y":738.022,"width":"283.72","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":64,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 4.4. Speeding up the maximum flow algorithm 65","line":0,"x":100.35,"y":738.022,"width":"291.33","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":65,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"66 Chapter 4. Menger’s theorem, flows, and circulations","line":0,"x":72,"y":738.022,"width":"283.72","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":66,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 4.4. Speeding up the maximum flow algorithm 67","line":0,"x":100.35,"y":738.022,"width":"291.33","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":67,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"68 Chapter 4. Menger’s theorem, flows, and circulations","line":0,"x":72,"y":738.022,"width":"283.72","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":68,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 4.5. Circulations 69","line":0,"x":100.35,"y":738.022,"width":"137.92","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":69,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"70 Chapter 4. Menger’s theorem, flows, and circulations","line":0,"x":72,"y":738.022,"width":"283.72","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":70,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 4.6. Minimum-cost flows 71","line":0,"x":100.35,"y":738.022,"width":"178.63","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":71,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"72 Chapter 4. Menger’s theorem, flows, and circulations","line":0,"x":72,"y":738.022,"width":"283.72","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":72,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 4.6. Minimum-cost flows 73","line":0,"x":100.35,"y":738.022,"width":"178.63","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":73,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"74 Chapter 4. Menger’s theorem, flows, and circulations","line":0,"x":72,"y":738.022,"width":"283.72","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":74,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 4.6. Minimum-cost flows 75","line":0,"x":100.35,"y":738.022,"width":"178.63","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":75,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"76 Chapter 4. Menger’s theorem, flows, and circulations","line":0,"x":72,"y":738.022,"width":"283.72","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":76,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 4.6. Minimum-cost flows 77","line":0,"x":100.35,"y":738.022,"width":"178.63","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":77,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"78 Chapter 5. Nonbipartite matching","line":0,"x":72,"y":738.022,"width":"187.61","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":78,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 5.1. Tutte’s 1-factor theorem and the Tutte-Berge f ormula 79","line":0,"x":100.35,"y":738.022,"width":"352.04","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":79,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"80 Chapter 5. Nonbipartite matching","line":0,"x":72,"y":738.022,"width":"187.61","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":80,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 5.2. Cardinality matching algorithm 81","line":0,"x":100.35,"y":738.022,"width":"238.33","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":81,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"82 Chapter 5. Nonbipartite matching","line":0,"x":72,"y":738.022,"width":"187.61","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":82,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 5.2. Cardinality matching algorithm 83","line":0,"x":100.35,"y":738.022,"width":"238.33","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":83,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"84 Chapter 5. Nonbipartite matching","line":0,"x":72,"y":738.022,"width":"187.61","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":84,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 5.3. Weighted matching algorithm 85","line":0,"x":100.35,"y":738.022,"width":"228.25","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":85,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"86 Chapter 5. Nonbipartite matching","line":0,"x":72,"y":738.022,"width":"187.61","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":85,"change":"Removal","score":"1.00: (0.00 + 1.00)","str":"∑","dir":"ltr","width":"17.27","height":"11.96","transform":["11.96","0.00","0.00","11.96","213.16","711.91"],"fontName":"TICOHQ+CMEX10","x":213.15585,"y":711.913,"line":2}
+{"page":86,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 5.3. Weighted matching algorithm 87","line":0,"x":100.35,"y":738.022,"width":"228.25","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":87,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"88 Chapter 5. Nonbipartite matching","line":0,"x":72,"y":738.022,"width":"187.61","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":88,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 5.3. Weighted matching algorithm 89","line":0,"x":100.35,"y":738.022,"width":"228.25","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":89,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"90 Chapter 5. Nonbipartite matching","line":0,"x":72,"y":738.022,"width":"187.61","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":90,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 5.4. The matching polytope 91","line":0,"x":100.35,"y":738.022,"width":"195.73","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":91,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"92 Chapter 5. Nonbipartite matching","line":0,"x":72,"y":738.022,"width":"187.61","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":92,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 5.4. The matching polytope 93","line":0,"x":100.35,"y":738.022,"width":"195.73","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":93,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"94 Chapter 5. Nonbipartite matching","line":0,"x":72,"y":738.022,"width":"187.61","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":94,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 5.5. The Cunningham-Marsh formula 95","line":0,"x":100.35,"y":738.022,"width":"244.90","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":95,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"96 Chapter 5. Nonbipartite matching","line":0,"x":72,"y":738.022,"width":"187.61","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":96,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"97","dir":"ltr","width":"11.70","height":"11.96","transform":["11.96","0.00","0.00","11.96","520.64","738.02"],"fontName":"LERRTL+CMR12","x":520.641,"y":738.022,"line":0}
+{"page":97,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"98 Chapter 6. Problems, algorithms, and running time","line":0,"x":72,"y":738.022,"width":"276.68","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":98,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 6.2. Words 99","line":0,"x":100.35,"y":738.022,"width":"108.66","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":99,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"100 Chapter 6. Problems, algorithms, and running time","line":0,"x":72,"y":738.022,"width":"282.53","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":100,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 6.5. The class NP 101","line":0,"x":100.35,"y":738.022,"width":"150.17","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":101,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"102 Chapter 6. Problems, algorithms, and running time","line":0,"x":72,"y":738.022,"width":"282.53","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":102,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 6.7. NP-completeness 103","line":0,"x":100.35,"y":738.022,"width":"169.04","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":103,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"104 Chapter 6. Problems, algorithms, and running time","line":0,"x":72,"y":738.022,"width":"282.53","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":104,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 6.8. NP-completeness of the satisfiability problem 105","line":0,"x":100.35,"y":738.022,"width":"313.86","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":105,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"106 Chapter 6. Problems, algorithms, and running time","line":0,"x":72,"y":738.022,"width":"282.53","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":106,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 6.9. NP-completeness of some other problems 107","line":0,"x":100.35,"y":738.022,"width":"292.41","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":107,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"108 Chapter 6. Problems, algorithms, and running time","line":0,"x":72,"y":738.022,"width":"282.53","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":108,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 6.10. Turing machines 109","line":0,"x":100.35,"y":738.022,"width":"172.39","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":109,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"110 Chapter 6. Problems, algorithms, and running time","line":0,"x":72,"y":738.022,"width":"282.53","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":110,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"111","dir":"ltr","width":"17.55","height":"11.96","transform":["11.96","0.00","0.00","11.96","514.79","738.02"],"fontName":"LERRTL+CMR12","x":514.791,"y":738.022,"line":0}
+{"page":111,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"112 Chapter 7. Cliques, stable sets, and colourings","line":0,"x":72,"y":738.022,"width":"256.21","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":112,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 7.1. Introduction 113","line":0,"x":100.35,"y":738.022,"width":"145.99","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":113,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"114 Chapter 7. Cliques, stable sets, and colourings","line":0,"x":72,"y":738.022,"width":"256.21","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":114,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 7.2. Edge-colourings of bipartite graphs 115","line":0,"x":100.35,"y":738.022,"width":"262.03","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":115,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"116 Chapter 7. Cliques, stable sets, and colourings","line":0,"x":72,"y":738.022,"width":"256.21","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":116,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 7.2. Edge-colourings of bipartite graphs 117","line":0,"x":100.35,"y":738.022,"width":"262.03","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":117,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"118 Chapter 7. Cliques, stable sets, and colourings","line":0,"x":72,"y":738.022,"width":"256.21","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":118,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 7.2. Edge-colourings of bipartite graphs 119","line":0,"x":100.35,"y":738.022,"width":"262.03","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":119,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"120 Chapter 7. Cliques, stable sets, and colourings","line":0,"x":72,"y":738.022,"width":"256.21","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":120,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 7.3. Partially ordered sets 121","line":0,"x":100.35,"y":738.022,"width":"191.47","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":121,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"122 Chapter 7. Cliques, stable sets, and colourings","line":0,"x":72,"y":738.022,"width":"256.21","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":122,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 7.3. Partially ordered sets 123","line":0,"x":100.35,"y":738.022,"width":"191.47","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":123,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"124 Chapter 7. Cliques, stable sets, and colourings","line":0,"x":72,"y":738.022,"width":"256.21","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":124,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 7.4. Perfect graphs 125","line":0,"x":100.35,"y":738.022,"width":"155.65","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":125,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"126 Chapter 7. Cliques, stable sets, and colourings","line":0,"x":72,"y":738.022,"width":"256.21","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":126,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 7.4. Perfect graphs 127","line":0,"x":100.35,"y":738.022,"width":"155.65","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":127,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"128 Chapter 7. Cliques, stable sets, and colourings","line":0,"x":72,"y":738.022,"width":"256.21","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":128,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 7.5. Chordal graphs 129","line":0,"x":100.35,"y":738.022,"width":"160.69","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":129,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"130 Chapter 7. Cliques, stable sets, and colourings","line":0,"x":72,"y":738.022,"width":"256.21","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":130,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 7.5. Chordal graphs 131","line":0,"x":100.35,"y":738.022,"width":"160.69","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":131,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"132 Chapter 8. Integer linear programming and totally unimodul ar matrices","line":0,"x":72,"y":738.022,"width":"387.64","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":132,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 8.1. Integer linear programming 133","line":0,"x":100.35,"y":738.022,"width":"222.40","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":133,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"134 Chapter 8. Integer linear programming and totally unimodul ar matrices","line":0,"x":72,"y":738.022,"width":"387.64","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":134,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 8.2. Totally unimodular matrices 135","line":0,"x":100.35,"y":738.022,"width":"227.99","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":135,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"136 Chapter 8. Integer linear programming and totally unimodul ar matrices","line":0,"x":72,"y":738.022,"width":"387.64","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":136,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 8.2. Totally unimodular matrices 137","line":0,"x":100.35,"y":738.022,"width":"227.99","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":137,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"138 Chapter 8. Integer linear programming and totally unimodul ar matrices","line":0,"x":72,"y":738.022,"width":"387.64","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":138,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 8.3. Totally unimodular matrices from bipartite gr aphs 139","line":0,"x":100.35,"y":738.022,"width":"341.53","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":139,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"140 Chapter 8. Integer linear programming and totally unimodul ar matrices","line":0,"x":72,"y":738.022,"width":"387.64","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":140,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 8.3. Totally unimodular matrices from bipartite gr aphs 141","line":0,"x":100.35,"y":738.022,"width":"341.53","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":141,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"142 Chapter 8. Integer linear programming and totally unimodul ar matrices","line":0,"x":72,"y":738.022,"width":"387.64","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":142,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 8.4. Totally unimodular matrices from directed gra phs 143","line":0,"x":100.35,"y":738.022,"width":"338.29","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":143,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"144 Chapter 8. Integer linear programming and totally unimodul ar matrices","line":0,"x":72,"y":738.022,"width":"387.64","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":144,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 8.4. Totally unimodular matrices from directed gra phs 145","line":0,"x":100.35,"y":738.022,"width":"338.29","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":145,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"146 Chapter 8. Integer linear programming and totally unimodul ar matrices","line":0,"x":72,"y":738.022,"width":"387.64","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":146,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 8.4. Totally unimodular matrices from directed gra phs 147","line":0,"x":100.35,"y":738.022,"width":"338.29","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":147,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"148 Chapter 9. Multicommodity flows and disjoint paths","line":0,"x":72,"y":738.022,"width":"287.96","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":148,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 9.1. Introduction 149","line":0,"x":100.35,"y":738.022,"width":"145.99","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":149,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"150 Chapter 9. Multicommodity flows and disjoint paths","line":0,"x":72,"y":738.022,"width":"287.96","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":150,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 9.1. Introduction 151","line":0,"x":100.35,"y":738.022,"width":"145.99","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":151,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"152 Chapter 9. Multicommodity flows and disjoint paths","line":0,"x":72,"y":738.022,"width":"287.96","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":152,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 9.2. Two commodities 153","line":0,"x":100.35,"y":738.022,"width":"172.39","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":153,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"154 Chapter 9. Multicommodity flows and disjoint paths","line":0,"x":72,"y":738.022,"width":"287.96","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":154,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 9.2. Two commodities 155","line":0,"x":100.35,"y":738.022,"width":"172.39","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":155,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"156 Chapter 9. Multicommodity flows and disjoint paths","line":0,"x":72,"y":738.022,"width":"287.96","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":156,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 9.3. Disjoint paths in acyclic directed graphs 157","line":0,"x":100.35,"y":738.022,"width":"288.44","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":157,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"158 Chapter 9. Multicommodity flows and disjoint paths","line":0,"x":72,"y":738.022,"width":"287.96","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":158,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 9.4. Vertex-disjoint paths in planar graphs 159","line":0,"x":100.35,"y":738.022,"width":"276.89","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":159,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"160 Chapter 9. Multicommodity flows and disjoint paths","line":0,"x":72,"y":738.022,"width":"287.96","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":160,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 9.4. Vertex-disjoint paths in planar graphs 161","line":0,"x":100.35,"y":738.022,"width":"276.89","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":161,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"162 Chapter 9. Multicommodity flows and disjoint paths","line":0,"x":72,"y":738.022,"width":"287.96","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":162,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 9.4. Vertex-disjoint paths in planar graphs 163","line":0,"x":100.35,"y":738.022,"width":"276.89","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":163,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"164 Chapter 9. Multicommodity flows and disjoint paths","line":0,"x":72,"y":738.022,"width":"287.96","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":164,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 9.5. Edge-disjoint paths in planar graphs 165","line":0,"x":100.35,"y":738.022,"width":"268.93","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":165,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"166 Chapter 9. Multicommodity flows and disjoint paths","line":0,"x":72,"y":738.022,"width":"287.96","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":166,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 9.5. Edge-disjoint paths in planar graphs 167","line":0,"x":100.35,"y":738.022,"width":"268.93","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":167,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"168 Chapter 9. Multicommodity flows and disjoint paths","line":0,"x":72,"y":738.022,"width":"287.96","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":168,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 9.6. A column generation technique for multicommod ity flows 169","line":0,"x":100.35,"y":738.022,"width":"376.25","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":169,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"170 Chapter 9. Multicommodity flows and disjoint paths","line":0,"x":72,"y":738.022,"width":"287.96","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":169,"change":"Removal","score":"1.00: (0.00 + 1.00)","str":"∑","dir":"ltr","width":"17.27","height":"11.96","transform":["11.96","0.00","0.00","11.96","196.07","711.91"],"fontName":"TICOHQ+CMEX10","x":196.074,"y":711.913,"line":2}
+{"page":170,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 9.6. A column generation technique for multicommod ity flows 171","line":0,"x":100.35,"y":738.022,"width":"376.25","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":171,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"172 Chapter 9. Multicommodity flows and disjoint paths","line":0,"x":72,"y":738.022,"width":"287.96","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":172,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"173","dir":"ltr","width":"17.55","height":"11.96","transform":["11.96","0.00","0.00","11.96","514.79","738.02"],"fontName":"LERRTL+CMR12","x":514.791,"y":738.022,"line":0}
+{"page":173,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"174 Chapter 10. Matroids","line":0,"x":72,"y":738.022,"width":"129.14","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":174,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 10.1. Matroids and the greedy algorithm 175","line":0,"x":100.35,"y":738.022,"width":"267.33","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":175,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"176 Chapter 10. Matroids","line":0,"x":72,"y":738.022,"width":"129.14","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":176,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 10.2. Equivalent axioms for matroids 177","line":0,"x":100.35,"y":738.022,"width":"248.38","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":177,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"178 Chapter 10. Matroids","line":0,"x":72,"y":738.022,"width":"129.14","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":178,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 10.2. Equivalent axioms for matroids 179","line":0,"x":100.35,"y":738.022,"width":"248.38","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":179,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"180 Chapter 10. Matroids","line":0,"x":72,"y":738.022,"width":"129.14","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":180,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 10.3. Examples of matroids 181","line":0,"x":100.35,"y":738.022,"width":"199.28","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":181,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"182 Chapter 10. Matroids","line":0,"x":72,"y":738.022,"width":"129.14","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":182,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 10.4. Two technical lemmas 183","line":0,"x":100.35,"y":738.022,"width":"201.65","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":183,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"184 Chapter 10. Matroids","line":0,"x":72,"y":738.022,"width":"129.14","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":184,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 10.5. Matroid intersection 185","line":0,"x":100.35,"y":738.022,"width":"191.90","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":185,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"186 Chapter 10. Matroids","line":0,"x":72,"y":738.022,"width":"129.14","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":186,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 10.5. Matroid intersection 187","line":0,"x":100.35,"y":738.022,"width":"191.90","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":187,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"188 Chapter 10. Matroids","line":0,"x":72,"y":738.022,"width":"129.14","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":188,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 10.5. Matroid intersection 189","line":0,"x":100.35,"y":738.022,"width":"191.90","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":189,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"190 Chapter 10. Matroids","line":0,"x":72,"y":738.022,"width":"129.14","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":190,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 10.6. Weighted matroid intersection 191","line":0,"x":100.35,"y":738.022,"width":"242.62","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":191,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"192 Chapter 10. Matroids","line":0,"x":72,"y":738.022,"width":"129.14","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":192,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 10.6. Weighted matroid intersection 193","line":0,"x":100.35,"y":738.022,"width":"242.62","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":193,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"194 Chapter 10. Matroids","line":0,"x":72,"y":738.022,"width":"129.14","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":194,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 10.7. Matroids and polyhedra 195","line":0,"x":100.35,"y":738.022,"width":"211.08","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":195,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"196 Chapter 10. Matroids","line":0,"x":72,"y":738.022,"width":"129.14","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":196,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 10.7. Matroids and polyhedra 197","line":0,"x":100.35,"y":738.022,"width":"211.08","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":197,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"198 Chapter 10. Matroids","line":0,"x":72,"y":738.022,"width":"129.14","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":197,"change":"Removal","score":"1.00: (0.00 + 1.00)","str":"∑","dir":"ltr","width":"17.27","height":"11.96","transform":["11.96","0.00","0.00","11.96","259.60","711.91"],"fontName":"TICOHQ+CMEX10","x":259.59610999999995,"y":711.913,"line":2}
+{"page":197,"change":"Removal","score":"1.00: (0.00 + 1.00)","str":"∑","dir":"ltr","width":"17.27","height":"11.96","transform":["11.96","0.00","0.00","11.96","346.52","711.91"],"fontName":"TICOHQ+CMEX10","x":346.517999,"y":711.9130000000001,"line":6}
+{"page":198,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 10.7. Matroids and polyhedra 199","line":0,"x":100.35,"y":738.022,"width":"211.08","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":199,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"200 Chapter 10. Matroids","line":0,"x":72,"y":738.022,"width":"129.14","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":200,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 10.7. Matroids and polyhedra 201","line":0,"x":100.35,"y":738.022,"width":"211.08","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":201,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"202 Chapter 10. Matroids","line":0,"x":72,"y":738.022,"width":"129.14","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":202,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 10.7. Matroids and polyhedra 203","line":0,"x":100.35,"y":738.022,"width":"211.08","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":203,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"204 Chapter 10. Matroids","line":0,"x":72,"y":738.022,"width":"129.14","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":204,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 10.7. Matroids and polyhedra 205","line":0,"x":100.35,"y":738.022,"width":"211.08","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":205,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"206 Chapter 10. Matroids","line":0,"x":72,"y":738.022,"width":"129.14","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":206,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 10.7. Matroids and polyhedra 207","line":0,"x":100.35,"y":738.022,"width":"211.08","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":207,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"208 Chapter 10. Matroids","line":0,"x":72,"y":738.022,"width":"129.14","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":208,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Section 10.7. Matroids and polyhedra 209","line":0,"x":100.35,"y":738.022,"width":"211.08","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":209,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"210 Name index","line":0,"x":72,"y":738.022,"width":"78.68","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":210,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Name index 211","line":0,"x":100.35,"y":738.022,"width":"78.67","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":211,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"212 Subject index","line":0,"x":72,"y":738.022,"width":"87.79","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":212,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Subject index 213","line":0,"x":100.35,"y":738.022,"width":"87.79","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":213,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"214 Subject index","line":0,"x":72,"y":738.022,"width":"87.79","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":214,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Subject index 215","line":0,"x":100.35,"y":738.022,"width":"87.79","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":215,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"216 Subject index","line":0,"x":72,"y":738.022,"width":"87.79","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":216,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Subject index 217","line":0,"x":100.35,"y":738.022,"width":"87.79","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":217,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"218 Subject index","line":0,"x":72,"y":738.022,"width":"87.79","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":218,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Subject index 219","line":0,"x":100.35,"y":738.022,"width":"87.79","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}
+{"page":219,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"220 Subject index","line":0,"x":72,"y":738.022,"width":"87.79","height":"11.96","fontName":["LERRTL+CMR12","EHNRCF+CMSL12"],"dir":["ltr"]}
+{"page":220,"change":"Removal","score":"1.43: (1.00 + 0.43)","str":"Subject index 221","line":0,"x":100.35,"y":738.022,"width":"87.79","height":"11.96","fontName":["EHNRCF+CMSL12","LERRTL+CMR12"],"dir":["ltr"]}

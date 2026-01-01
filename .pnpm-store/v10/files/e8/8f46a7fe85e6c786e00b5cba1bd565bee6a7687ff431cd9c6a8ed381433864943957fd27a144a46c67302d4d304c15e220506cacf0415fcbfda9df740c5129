@@ -1,0 +1,41 @@
+{
+  "pages": 256,
+  "items": 20477,
+  "groupedItems": 7589,
+  "changes": 45,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":66,"change":"ContentChange","str":"A B","line":45,"x":199.9328,"y":360.1597,"width":"9.78","height":"7.03","fontName":["YZOXCB+TimesNewRomanPS-BoldMT"],"dir":["ltr"]}
+{"page":157,"change":"ContentChange","str":"Gesamt − N Organ ( mg ) × ( 15 N Überschuss Gewebe − natürlicher 15 N Überschuss )","line":15,"x":136.44,"y":215.1,"width":"234.47","height":"6.48","fontName":["CJUSQJ+CambriaMath","WASIKV+CambriaMath"],"dir":["ltr"]}
+{"page":157,"change":"ContentChange","str":"( 15 N Überschuss Dünger − natürlicher 15 N Überschuss )","line":16,"x":174.18,"y":205.14,"width":"160.64","height":"6.48","fontName":["WASIKV+CambriaMath","CJUSQJ+CambriaMath"],"dir":["ltr"]}
+{"page":197,"change":"ContentChange","str":"- Emissionen  (mmol/m 2","line":6,"x":296.46,"y":359.94,"width":"73.03","height":"7.02","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":199,"change":"ContentChange","str":"O 2","line":6,"x":273.3,"y":360.72,"width":"7.96","height":"7.02","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":218,"change":"ContentChange","str":"Verbrennung Mülldeponie von Zement","line":38,"x":126.9985,"y":463.5649,"width":"95.31","height":"6.37","fontName":["OORMCL+Calibri"],"dir":["ltr"]}
+{"page":218,"change":"ContentChange","str":"Energie Energie","line":39,"x":114.6294,"y":293.2214,"width":"39.55","height":"6.37","fontName":["KITOYT+Calibri-Bold"],"dir":["ltr"]}
+{"page":218,"change":"ContentChange","str":"Energie Energie aus  Deponiegas Rohstoffe für die  Produktion von  Beton Nutzen für  Landwirtschaft  und Umwelt","line":40,"x":127.0588,"y":529.1141,"width":"289.94","height":"6.37","fontName":["KITOYT+Calibri-Bold"],"dir":["ltr"]}

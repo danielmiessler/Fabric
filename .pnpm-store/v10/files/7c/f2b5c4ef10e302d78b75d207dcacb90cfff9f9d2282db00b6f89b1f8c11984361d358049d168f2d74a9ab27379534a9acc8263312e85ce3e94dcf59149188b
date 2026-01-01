@@ -1,0 +1,58 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.tokenToText = exports.plainTextFormat = exports.attachWithoutWhitespace = exports.endSymbol = exports.startSymbol = void 0;
+const startSymbol = (type) => {
+    switch (type) {
+        case 'BOLD':
+            return '**';
+        case 'OBLIQUE':
+            return '_';
+        default:
+            return '';
+        //   throw new Error(`No start symbol defined for type: ${type}`);
+    }
+};
+exports.startSymbol = startSymbol;
+const endSymbol = (type) => {
+    switch (type) {
+        case 'BOLD':
+            return '**';
+        case 'OBLIQUE':
+            return '_';
+        default:
+            return '';
+        //   throw new Error(`No end symbol defined for type: ${type}`);
+    }
+};
+exports.endSymbol = endSymbol;
+const attachWithoutWhitespace = (type) => {
+    switch (type) {
+        case 'FOOTNOTE_LINK':
+            return true;
+        default:
+            return false;
+    }
+};
+exports.attachWithoutWhitespace = attachWithoutWhitespace;
+const plainTextFormat = (type) => {
+    switch (type) {
+        case 'FOOTNOTE_LINK':
+            return true;
+        default:
+            return false;
+    }
+};
+exports.plainTextFormat = plainTextFormat;
+function tokenToText(token, type) {
+    switch (type) {
+        case 'LINK':
+            return `[${token}](${token})`;
+        case 'FOOTNOTE_LINK':
+            return `[^${token}]`;
+        case 'FOOTNOTE':
+            return `[^${token}]:`;
+        default:
+            return token;
+    }
+}
+exports.tokenToText = tokenToText;

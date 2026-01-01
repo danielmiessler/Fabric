@@ -1,0 +1,41 @@
+{
+  "pages": 19,
+  "items": 1365,
+  "groupedItems": 1171,
+  "changes": 5,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "token types"
+    },
+    {
+      "name": "types"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":0,"change":"ContentChange","types":["H1"],"str":"Drill Bits","dir":"ltr","width":"60.68","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","702.82"],"fontName":"ABCDEE+Calibri","x":72.024,"y":702.82,"line":3}
+{"page":0,"change":"ContentChange","types":["H1"],"str":"Drill Bits Phonics - oriented word lists for teachers ","line":4,"x":76.104,"y":639.34,"width":"360.52","height":"18.00","fontName":["ABCDEE+Calibri"],"dir":["ltr"]}

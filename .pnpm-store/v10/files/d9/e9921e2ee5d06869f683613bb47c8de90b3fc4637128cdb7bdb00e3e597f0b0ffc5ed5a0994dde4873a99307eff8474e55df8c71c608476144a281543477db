@@ -1,0 +1,42 @@
+name: Release Insiders
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [22]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          registry-url: 'https://registry.npmjs.org'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Resolve version
+        id: vars
+        run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+
+      - name: 'Version based on commit: 0.0.0-insiders.${{ steps.vars.outputs.sha_short }}'
+        run: npm version 0.0.0-insiders.${{ steps.vars.outputs.sha_short }} --force --no-git-tag-version
+
+      - name: Publish
+        run: npm publish --provenance --tag insiders
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

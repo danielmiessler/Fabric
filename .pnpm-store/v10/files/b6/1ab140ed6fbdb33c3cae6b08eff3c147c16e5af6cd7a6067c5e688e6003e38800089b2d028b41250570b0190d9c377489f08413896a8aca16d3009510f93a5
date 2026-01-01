@@ -1,0 +1,13 @@
+import { sveltePreprocess } from './autoProcess';
+declare const _default: typeof sveltePreprocess;
+export default _default;
+export { default as pug } from './processors/pug';
+export { default as coffeescript } from './processors/coffeescript';
+export { default as typescript } from './processors/typescript';
+export { default as less } from './processors/less';
+export { default as scss, default as sass } from './processors/scss';
+export { default as stylus } from './processors/stylus';
+export { default as postcss } from './processors/postcss';
+export { default as globalStyle } from './processors/globalStyle';
+export { default as babel } from './processors/babel';
+export { default as replace } from './processors/replace';

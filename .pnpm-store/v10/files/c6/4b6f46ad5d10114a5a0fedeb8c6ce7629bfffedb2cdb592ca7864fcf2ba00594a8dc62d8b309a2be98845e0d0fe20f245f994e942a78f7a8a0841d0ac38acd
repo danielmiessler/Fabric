@@ -1,0 +1,56 @@
+{
+  "pages": 4,
+  "items": 160,
+  "groupedItems": 112,
+  "changes": 22,
+  "schema": [
+    {
+      "name": "line",
+      "annotation": "ADDED"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":0,"change":"Addition","str":"F l a s h - M a s q u e","line":4,"x":37.1206,"y":758.8381,"width":"99.35","height":"17.64","fontName":["NRVUEW+Futura-Light"],"dir":["ltr"]}
+{"page":0,"change":"Addition","str":"Le  26  mars  dernier,  le  guide  des  spécifi -","line":6,"x":316.1299,"y":279.9142,"width":"230.05","height":"11.00","fontName":["NRVUEW+HelveticaNeue-ThinItalic"],"dir":["ltr"]}
+{"page":0,"change":"Addition","str":"CC $","line":15,"x":83.2854,"y":45.249,"width":"16.55","height":"8.68","fontName":["NRVUEW+CCdemo-medium"],"dir":["ltr"]}
+{"page":0,"change":"Addition","str":"BY NC ND","line":16,"x":104.221,"y":37.4888,"width":"22.97","height":"6.10","fontName":["NRVUEW+CCdemo-medium"],"dir":["ltr"]}
+{"page":1,"change":"Addition","str":"La période de confinement décrétée par le gouvernement français depuis le mardi 17/03/20 et pro -","line":2,"x":60.9449,"y":671.2632,"width":"468.68","height":"11.00","fontName":["NRVUEW+HelveticaNeue-Light","NRVUEW+HelveticaNeue-Light"],"dir":["ltr"]}
+{"page":1,"change":"Addition","str":"pas lancer une machine  que  pour les masques, les personnes n’ont pas de thermomètre à disposi -","line":12,"x":60.9449,"y":517.2632,"width":"468.81","height":"11.00","fontName":["NRVUEW+HelveticaNeue-Light","NRVUEW+HelveticaNeue-Light"],"dir":["ltr"]}
+{"page":1,"change":"Addition","str":"Le but de l’expérience dans un premier temps, est de savoir si l’on peut réunir les conditions essen -","line":15,"x":60.9449,"y":475.2632,"width":"471.04","height":"11.00","fontName":["NRVUEW+HelveticaNeue-Light","NRVUEW+HelveticaNeue-Light"],"dir":["ltr"]}
+{"page":1,"change":"Addition","str":"Expérience :  mesures de l’évolution de la température en fonction du temps dans des récipients ","line":17,"x":60.9449,"y":433.2632,"width":"460.07","height":"11.00","fontName":["NRVUEW+HelveticaNeue-Medium","NRVUEW+HelveticaNeue-Light"],"dir":["ltr"]}
+{"page":1,"change":"Addition","str":"• Un thermomètre  de cuisine équipé d’une sonde (HABOR)","line":20,"x":60.9449,"y":377.2632,"width":"279.76","height":"11.00","fontName":["NRVUEW+HelveticaNeue-Light"],"dir":["ltr"]}
+{"page":1,"change":"Addition","str":"- un récipient plastique ( Tupperware)","line":24,"x":240.9489,"y":321.2632,"width":"171.78","height":"11.00","fontName":["NRVUEW+HelveticaNeue-Light"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"L’expérience a été réalisée par 2 fois et dans 2 cas de figures :   - sans couvercle","line":5,"x":60.9449,"y":662.0402,"width":"378.16","height":"11.00","fontName":["NRVUEW+HelveticaNeue-Light"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"Cette étude a été réalisée dans la cadre particulier du confinement. L’expérience a été réalisée avec rigueur et reste informa -","line":30,"x":60.9449,"y":91.0251,"width":"476.22","height":"8.00","fontName":["NRVUEW+HelveticaNeue-Light","NRVUEW+HelveticaNeue-Light"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"Cette  série  d’études  est  à  l’initiative  de  Florence  Bost  -  et  de  son  ré -","line":2,"x":118.8,"y":734.7269,"width":"427.58","height":"12.00","fontName":["NRVUEW+HelveticaNeue-Thin"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"Smart textiles designer,  Florence Bost  est consultante depuis 2003 sous le nom de ","line":8,"x":163.7008,"y":611.9668,"width":"365.43","height":"10.00","fontName":["NRVUEW+HelveticaNeue-Light","NRVUEW+HelveticaNeue-Bold"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"de création e-textiles et démonstrateurs ainsi que des formations pr ofessionnelles e-tex -","line":10,"x":163.7008,"y":579.9668,"width":"378.55","height":"10.00","fontName":["NRVUEW+HelveticaNeue-Light","NRVUEW+HelveticaNeue-Light"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"elle est aussi experte française AFNOR pour la commission de normalisation eur opéenne ","line":12,"x":163.7008,"y":547.9668,"width":"383.79","height":"10.00","fontName":["NRVUEW+HelveticaNeue-Light"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"smart textiles (CEN/TC 248-WG31). Les études sur les masques ont été accompagnées ","line":13,"x":163.7008,"y":531.9668,"width":"379.15","height":"10.00","fontName":["NRVUEW+HelveticaNeue-Light"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"Certaines illustrations ont été réalisées par la styliste et illustratrice  Virginie Boy .","line":19,"x":163.7008,"y":411.9668,"width":"343.44","height":"10.00","fontName":["NRVUEW+HelveticaNeue-Light","NRVUEW+HelveticaNeue-Bold"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"collaborative. Depuis 2005, Techtera a ainsi accompagné plus de 215 projets R&D finan -","line":24,"x":163.7008,"y":296.4719,"width":"380.50","height":"10.00","fontName":["NRVUEW+HelveticaNeue-Light","NRVUEW+HelveticaNeue-Light"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"cés pour un budget total de 556,5 millions d’Euros, à destination des marchés d’applica -","line":25,"x":163.7008,"y":280.4719,"width":"382.13","height":"10.00","fontName":["NRVUEW+HelveticaNeue-Light","NRVUEW+HelveticaNeue-Light"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"tion de la santé, des sports et loisirs, du transport, du bâtiment, de la pr otection et de la ","line":26,"x":163.7008,"y":264.4719,"width":"379.51","height":"10.00","fontName":["NRVUEW+HelveticaNeue-Light"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"F l a s h - M a s q u e","line":30,"x":37.1206,"y":758.8381,"width":"99.35","height":"17.64","fontName":["NRVUEW+Futura-Light"],"dir":["ltr"]}

@@ -1,0 +1,36 @@
+{
+  "name": "youtube-transcript",
+  "version": "1.2.1",
+  "description": "Fetch transcript from a youtube video",
+  "main": "dist/youtube-transcript.common.js",
+  "browser": "dist/youtube-transcript.esm.js",
+  "module": "dist/youtube-transcript.esm.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "rollup -c"
+  },
+  "author": "Kakulukian",
+  "keywords": [
+    "youtube",
+    "transcript"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "rollup": "^2.28.2",
+    "rollup-plugin-typescript": "^1.0.1",
+    "rollup-plugin-typescript2": "^0.27.3",
+    "tslib": "^2.0.1",
+    "typescript": "^4.0.3"
+  },
+  "files": [
+    "dist/*"
+  ],
+  "repository": "https://github.com/Kakulukian/youtube-transcript.git",
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://github.com/Kakulukian/youtube-transcript",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

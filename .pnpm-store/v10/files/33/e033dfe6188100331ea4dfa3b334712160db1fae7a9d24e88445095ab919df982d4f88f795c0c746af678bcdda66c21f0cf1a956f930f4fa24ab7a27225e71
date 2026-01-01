@@ -1,0 +1,137 @@
+{
+  "pages": 255,
+  "items": 20093,
+  "groupedItems": 7275,
+  "changes": 425,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "token types"
+    },
+    {
+      "name": "types"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":16,"change":"ContentChange","types":["LIST"],"str":"- den  Fluss der verwendeten Holzbiomasse","line":7,"x":68.031,"y":494.16890000000006,"width":"173.47","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":16,"change":"ContentChange","types":["LIST"],"str":"- den Fluss der erzeugten Rückstände (Kohle)","line":8,"x":68.03099999999998,"y":480.1919000000001,"width":"183.52","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":33,"change":"ContentChange","types":["LIST"],"str":"-","dir":"ltr","width":"2.66","height":"7.98","transform":["0.00","7.98","-7.98","0.00","70.62","250.32"],"fontName":"PNMSCP+PalatinoLinotype-Roman","x":70.62,"y":250.32,"line":38}
+{"page":33,"change":"ContentChange","types":["NUMBERED_LIST"],"str":".","dir":"ltr","width":"2.00","height":"7.98","transform":["0.00","7.98","-7.98","0.00","120.24","120.18"],"fontName":"JWGNKV+PalatinoLinotype-Italic","x":120.24,"y":120.18,"line":47}
+{"page":33,"change":"ContentChange","types":["LIST"],"str":"- R","line":49,"x":350.7,"y":100.86,"width":"7.99","height":"7.98","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":33,"change":"ContentChange","types":["LIST"],"str":"- C","line":51,"x":367.14,"y":100.86,"width":"8.32","height":"7.98","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":36,"change":"ContentChange","types":["LIST"],"str":"-","dir":"ltr","width":"2.66","height":"7.98","transform":["0.00","7.98","-7.98","0.00","81.96","260.88"],"fontName":"PNMSCP+PalatinoLinotype-Roman","x":81.96,"y":260.88,"line":33}
+{"page":36,"change":"ContentChange","types":["NUMBERED_LIST"],"str":".","dir":"ltr","width":"2.00","height":"7.98","transform":["0.00","7.98","-7.98","0.00","130.68","128.34"],"fontName":"JWGNKV+PalatinoLinotype-Italic","x":130.68,"y":128.34,"line":41}
+{"page":38,"change":"ContentChange","types":["LIST"],"str":"- 0,5","line":11,"x":114.0573,"y":496.25964,"width":"12.88","height":"7.98","fontName":["JWGNKV+PalatinoLinotype-Italic"],"dir":["ltr"]}
+{"page":38,"change":"ContentChange","types":["LIST"],"str":"- 39 ","line":23,"x":114.06,"y":399.48198,"width":"12.81","height":"7.98","fontName":["JWGNKV+PalatinoLinotype-Italic"],"dir":["ltr"]}
+{"page":38,"change":"ContentChange","types":["LIST"],"str":"- 7000 ","line":27,"x":114.06,"y":362.34,"width":"21.03","height":"7.98","fontName":["JWGNKV+PalatinoLinotype-Italic"],"dir":["ltr"]}
+{"page":38,"change":"ContentChange","types":["LIST"],"str":"-","dir":"ltr","width":"2.66","height":"7.98","transform":["0.00","7.98","-7.98","0.00","70.86","238.32"],"fontName":"PNMSCP+PalatinoLinotype-Roman","x":70.86,"y":238.32,"line":38}
+{"page":38,"change":"ContentChange","types":["LIST"],"str":"- R","line":46,"x":352.02,"y":98.4,"width":"7.99","height":"7.98","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":38,"change":"ContentChange","types":["LIST"],"str":"- C","line":48,"x":369.06,"y":98.4,"width":"8.32","height":"7.98","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":39,"change":"ContentChange","types":["LIST"],"str":"-","dir":"ltr","width":"2.66","height":"7.98","transform":["0.00","7.98","-7.98","0.00","70.62","252.30"],"fontName":"PNMSCP+PalatinoLinotype-Roman","x":70.62,"y":252.3,"line":33}
+{"page":39,"change":"ContentChange","types":["LIST"],"str":"- R","line":41,"x":352.08,"y":111.84,"width":"7.99","height":"7.98","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":39,"change":"ContentChange","types":["LIST"],"str":"- C","line":43,"x":369.12,"y":111.84,"width":"8.32","height":"7.98","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":40,"change":"ContentChange","types":["LIST"],"str":"-","dir":"ltr","width":"2.66","height":"7.98","transform":["0.00","7.98","-7.98","0.00","67.80","252.30"],"fontName":"PNMSCP+PalatinoLinotype-Roman","x":67.8,"y":252.3,"line":33}
+{"page":40,"change":"ContentChange","types":["LIST"],"str":"- R","line":41,"x":348.78,"y":102.84,"width":"7.99","height":"7.98","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":40,"change":"ContentChange","types":["LIST"],"str":"- C","line":43,"x":365.82,"y":102.84,"width":"8.32","height":"7.98","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":42,"change":"ContentChange","types":["LIST"],"str":"- Ministerialdekret vom 18. Dezember 2008 (al lumfassender Tarif)","line":4,"x":68.04,"y":536.1629,"width":"266.14","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":42,"change":"ContentChange","types":["LIST"],"str":"- Ministerialdekret vom 6. Juli 2012 (FER - Dekret 2012) ","line":5,"x":68.04899999999998,"y":522.1859000000001,"width":"219.83","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":42,"change":"ContentChange","types":["LIST"],"str":"- Ministerialdekret vom 16. Juni 2016 (FER - Dekret 2016)","line":6,"x":68.04899999999998,"y":508.2089000000001,"width":"224.83","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":42,"change":"ContentChange","types":["LIST"],"str":"- Mangelnde Möglichkeit einer Änderung der Betriebsparameter der Anla -","line":24,"x":68.03100000000003,"y":238.21500000000003,"width":"303.36","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":42,"change":"ContentChange","types":["LIST"],"str":"- Besonderheit des Genehmigungsverfahrens, das eine Betriebseignungsbe -","line":28,"x":68.03100000000006,"y":182.18100000000004,"width":"303.39","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":43,"change":"ContentChange","types":["LIST"],"str":"- Mangelnde Bereitschaft der Anlagenbetreiber, „empirische“ Veränderun -","line":5,"x":70.91999999999999,"y":522.1859000000001,"width":"303.34","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":43,"change":"ContentChange","types":["LIST"],"str":"- Mangelnd e Bereitschaft der Partner, eine Laboreinrichtung mit marktähn -","line":8,"x":70.91999999999999,"y":480.1919000000001,"width":"303.34","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":43,"change":"ContentChange","types":["LIST"],"str":"- Aus der Analyse der Vergasungsanlagen in Südtirol geht hervor, dass zwi -","line":32,"x":70.92899999999995,"y":126.19800000000001,"width":"303.39","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":44,"change":"ContentChange","types":["LIST"],"str":"- Auch die Wahl der Leistung dieser Anlage wurde unter Berücksichtigung ","line":4,"x":68.03999999999996,"y":536.1629,"width":"303.43","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":44,"change":"ContentChange","types":["LIST"],"str":"- Die  übrigen  für  die  Originalkonfiguration  verwendeten  technischen  und  ","line":9,"x":68.03999999999996,"y":466.2149000000001,"width":"306.47","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":44,"change":"ContentChange","types":["LIST"],"str":"- „Investitio nsjahr“: die Wahl des Jahres, in dem der Eingriff vorgenommen ","line":22,"x":68.04,"y":266.166,"width":"305.50","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":44,"change":"ContentChange","types":["LIST"],"str":"- Die  meisten  in  der  Region  angesiedelten  Anlagen  wurden  zwischen  ","line":25,"x":82.19699999999997,"y":224.172,"width":"292.91","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":44,"change":"ContentChange","types":["LIST"],"str":"- vermutlich werden noch einige Jahre Forschung erforderlich sein, um ","line":29,"x":82.19699999999996,"y":168.201,"width":"291.86","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":44,"change":"ContentChange","types":["LIST"],"str":"- Eine Hypothese sieht vor, die Änderungen an der Anlage im 10. Betriebs -","line":32,"x":68.031,"y":126.207,"width":"303.45","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":45,"change":"ContentChange","types":["LIST"],"str":"- Es wurde außerdem angenommen, dass ebenso viel ele ktrische und ther -","line":5,"x":70.91999999999996,"y":522.1859000000001,"width":"303.28","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":46,"change":"ContentChange","types":["LIST"],"str":"- Auf Grundlage des  Marktpreises der Kohle in der Agrarbranche wurden ","line":2,"x":68.04,"y":564.1799,"width":"306.12","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":46,"change":"ContentChange","types":["LIST"],"str":"- Optimierte Konfig uration 1  –  Preis für die Kohleaufwertung =  0 €/t;","line":6,"x":82.25999999999999,"y":508.2089000000001,"width":"268.68","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":46,"change":"ContentChange","types":["LIST"],"str":"- Optimierte Konfig uration 2  –  Preis für die Kohleaufwertung =  100  €/t;","line":7,"x":80.81099999999998,"y":494.16890000000006,"width":"277.66","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":46,"change":"ContentChange","types":["LIST"],"str":"- Optimierte Konfig uration 3  –  Preis für die Kohleaufwertung =  200  €/t;","line":8,"x":80.80199999999991,"y":480.1919000000001,"width":"277.66","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":46,"change":"ContentChange","types":["LIST"],"str":"- Optimierte Konfig uration 4  –  Preis für die Kohleaufwertung =  500  €/t.","line":9,"x":80.79299999999984,"y":466.2149000000001,"width":"277.66","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":46,"change":"ContentChange","types":["LIST"],"str":"- In der optimierten Konfiguration 1 wurde angenommen, dass die Qualität ","line":10,"x":68.00399999999985,"y":452.1749000000001,"width":"303.42","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":49,"change":"ContentChange","types":["LIST"],"str":"- Förderung und Verkauf der erzeugten elektrischen Energie","line":5,"x":70.92000000000002,"y":524.88,"width":"244.59","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":49,"change":"ContentChange","types":["LIST"],"str":"- Verkauf der Wärmeenergie","line":6,"x":70.92000000000002,"y":510.903,"width":"114.28","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":49,"change":"ContentChange","types":["LIST"],"str":"- Einsparung  der  Entsorgungskosten  und/oder  Verkauf  d er  Kohle  (in  der  ","line":7,"x":70.92,"y":496.863,"width":"306.94","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":64,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"2019.","dir":"ltr","width":"17.97","height":"7.02","transform":["7.02","0.00","0.00","7.02","68.04","549.90"],"fontName":"CRDKGT+ArialMT","x":68.04000000000002,"y":549.90072,"line":4}
+{"page":65,"change":"ContentChange","types":["LIST"],"str":"- eine  erste  Phase,  bestehend  aus  einer  anfänglichen  Verzögerung sz eit, ","line":5,"x":70.92000000000002,"y":536.0429,"width":"305.55","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":65,"change":"ContentChange","types":["LIST"],"str":"- eine zweite Phase, in welch er der Wärmefluss i n Verbindung mit dem me -","line":7,"x":70.92000000000007,"y":508.0889000000001,"width":"303.24","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":65,"change":"ContentChange","types":["LIST"],"str":"- eine  dritte  Phase,  in  der  man  eine  schnelle  Wärmeflussverringerung  be -","line":9,"x":70.91999999999996,"y":480.0719000000001,"width":"303.31","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":68,"change":"ContentChange","types":["LIST"],"str":"- 0.995 bzw.  - 0,990 (n = 7, p = 0,01).  ","line":5,"x":68.04299999999998,"y":522.063,"width":"142.13","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":68,"change":"ContentChange","types":["LIST"],"str":"- 0,995** - 0,625  -","line":26,"x":110.76,"y":355.14,"width":"53.41","height":"7.98","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":68,"change":"ContentChange","types":["LIST"],"str":"- 0,439  - 0,358  0,402 -","line":29,"x":110.76,"y":321.3,"width":"67.38","height":"7.98","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":68,"change":"ContentChange","types":["LIST"],"str":"- 0,990** - 0,600  0,993** 0,497 -","line":32,"x":110.76,"y":286.92,"width":"96.79","height":"7.98","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":71,"change":"ContentChange","types":["LIST"],"str":"- 6,7 ± 0,1 4,8 ± 0,3 2,2 ± 0,4 6 ± 0,3 259 ± 11","line":21,"x":131.52,"y":480.84,"width":"141.26","height":"7.98","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":71,"change":"ContentChange","types":["LIST"],"str":"- 6,0 ± 0,1 6,4 ± 0,3 2,8 ± 0,5 8 ± 1 229 ± 11","line":49,"x":131.52,"y":239.04,"width":"135.08","height":"7.98","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":89,"change":"ContentChange","types":["LIST"],"str":"- PAK (Σ16 Moleküle) < 6 mg kg TS - 1 ;","line":15,"x":70.94700000000003,"y":387.84,"width":"148.68","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman","QBUDEH+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":89,"change":"ContentChange","types":["LIST"],"str":"- PCB < 0,06 mg kg TS - 1 ;","line":16,"x":70.91999999999999,"y":373.86,"width":"93.76","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":89,"change":"ContentChange","types":["LIST"],"str":"- Dioxine < 10 ng I - TEQ kg TS - 1","line":17,"x":70.923,"y":359.82,"width":"123.05","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":89,"change":"ContentChange","types":["LIST"],"str":"- Cd < 1,5 mg kg TS - 1 ;","line":18,"x":70.923,"y":345.84,"width":"83.60","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":89,"change":"ContentChange","types":["LIST"],"str":"- Cr < 0,5 mg kg TS - 1 ;","line":19,"x":70.917,"y":331.86,"width":"81.71","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":89,"change":"ContentChange","types":["LIST"],"str":"- Zn < 500 mg kg TS - 1","line":20,"x":70.923,"y":317.82,"width":"82.96","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":93,"change":"ContentChange","types":["LIST"],"str":"- 1 ; 5 = 17 g char k g Boden","line":7,"x":240.5385,"y":367.14,"width":"62.54","height":"7.02","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":93,"change":"ContentChange","types":["LIST"],"str":"- 1 ) der drei verschiedenen ","line":8,"x":304.92,"y":367.8,"width":"82.02","height":"7.02","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":93,"change":"ContentChange","types":["LIST"],"str":"- 1 ; 5 = 17 g char kg Boden","line":16,"x":240.5385,"y":119.64,"width":"62.73","height":"7.02","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":93,"change":"ContentChange","types":["LIST"],"str":"- 1 ) der drei verschiedenen ","line":17,"x":304.92,"y":120.3,"width":"82.02","height":"7.02","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":107,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"1. Moarhof Meran 46°40'2.7\"N ","line":14,"x":72.54,"y":508.86,"width":"105.33","height":"7.98","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":107,"change":"ContentChange","types":["LIST"],"str":"– B1C  – B2C","line":19,"x":347.52,"y":498.06,"width":"39.08","height":"7.98","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":107,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"2. Weißplatter Meran 46°39'17.27\"N ","line":21,"x":72.54,"y":477.18,"width":"125.07","height":"7.98","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":107,"change":"ContentChange","types":["LIST"],"str":"– B1C  – B2C","line":26,"x":347.52,"y":466.38,"width":"39.08","height":"7.98","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":107,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"3. Bloc k 65 Laimburg 46°23'23.16\"N ","line":28,"x":72.54,"y":445.74,"width":"122.37","height":"7.98","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":170,"change":"ContentChange","types":["LIST"],"str":"- Wasserpotenzial des Stammes um 12 Uhr mittags (Ψ MD ,  Werte  in  MP a), ","line":17,"x":68.04000000000002,"y":341.88,"width":"305.72","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman","QBUDEH+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":170,"change":"ContentChange","types":["LIST"],"str":"- Nettoassimilation von CO 2 (oder Nettofotosynthese, μmol/m 2 s), gemessen ","line":23,"x":68.0460000000001,"y":257.88,"width":"301.44","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":197,"change":"ContentChange","types":["LIST"],"str":"–","dir":"ltr","width":"3.90","height":"7.02","transform":["0.00","7.02","-7.02","0.00","296.46","120.78"],"fontName":"CRDKGT+ArialMT","x":296.46,"y":120.78,"line":4}
+{"page":197,"change":"ContentChange","types":["LIST"],"str":"- Emissionen  (mmol/m 2","line":6,"x":296.46,"y":359.94,"width":"73.03","height":"7.02","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":198,"change":"ContentChange","types":["LIST"],"str":"–","dir":"ltr","width":"3.90","height":"7.02","transform":["0.00","7.02","-7.02","0.00","268.50","120.06"],"fontName":"CRDKGT+ArialMT","x":268.5,"y":120.06,"line":3}
+{"page":198,"change":"ContentChange","types":["LIST"],"str":"- Emissionen  (nmol/m2/s),  die  in  Verbindung  mit  den  sechs  ","line":5,"x":268.5,"y":362.64,"width":"196.13","height":"7.02","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":199,"change":"ContentChange","types":["LIST"],"str":"–","dir":"ltr","width":"3.90","height":"7.02","transform":["0.00","7.02","-7.02","0.00","273.30","126.84"],"fontName":"CRDKGT+ArialMT","x":273.3,"y":126.84,"line":4}
+{"page":199,"change":"ContentChange","types":["LIST"],"str":"- Emissionen  (nmol/m2/s),  die  in  Verbindung  mit  den  sechs  ","line":7,"x":273.3,"y":368.8809,"width":"196.61","height":"7.02","fontName":["CRDKGT+ArialMT"],"dir":["ltr"]}
+{"page":210,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"594. https://doi.org/10.1007/s11104 - 013 - 1806 - x","line":33,"x":82.28699999999981,"y":130.14290000000025,"width":"185.74","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":212,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"523. https://doi.org/10 .1111/gcbb.12266","line":17,"x":82.28700000000009,"y":354.08990000000017,"width":"157.82","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":218,"change":"ContentChange","types":["LIST"],"str":"–","dir":"ltr","width":"3.90","height":"7.02","transform":["0.00","7.02","-7.02","0.00","313.13","148.41"],"fontName":"CRDKGT+ArialMT","x":313.1349,"y":148.4053,"line":3}
+{"page":218,"change":"ContentChange","types":["LIST"],"str":"-","dir":"ltr","width":"1.95","height":"6.37","transform":["0.00","6.38","-6.37","0.00","211.52","165.18"],"fontName":"KITOYT+Calibri-Bold","x":211.5187,"y":165.1778,"line":15}
+{"page":218,"change":"ContentChange","types":["LIST"],"str":"- Extraktion (SOX)","line":24,"x":183.5599,"y":209.8668,"width":"39.38","height":"5.73","fontName":["OORMCL+Calibri"],"dir":["ltr"]}
+{"page":219,"change":"ContentChange","types":["LIST"],"str":"- Szenario  1   – Aktuelle  Situation:  Evaluierung  der  aktuell  in  Südtirol  ge -","line":15,"x":70.947,"y":368.06690000000015,"width":"299.80","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":219,"change":"ContentChange","types":["LIST"],"str":"- Szenario 2  – Aktuelle Situation + Extraktion von hochwertigen Verbindun -","line":22,"x":70.95600000000005,"y":270.1019000000002,"width":"301.34","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":219,"change":"ContentChange","types":["LIST"],"str":"- Szenario 3 – Aktuelle Situation +  V erbesserte Vergasung:  e in Szenario mit ","line":30,"x":70.965,"y":158.09690000000026,"width":"303.06","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":220,"change":"ContentChange","types":["LIST"],"str":"- Szenario 4  – Aktuelle Situation + Extraktion von hochwertigen Verbindun -","line":5,"x":68.05799999999999,"y":522.0659,"width":"301.34","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":220,"change":"ContentChange","types":["LIST"],"str":"- Szenario 5 – Verbesserte Vergasung + Anwendung von  Biochar auf land-","line":9,"x":68.05799999999996,"y":466.0949000000001,"width":"299.98","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":220,"change":"ContentChange","types":["LIST"],"str":"- Szenario 6 – Verbesserte Vergasung + Anwendung von Biochar auf land-","line":18,"x":68.07599999999991,"y":340.1129000000002,"width":"297.75","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":220,"change":"ContentChange","types":["LIST"],"str":"- Szenario 7 – Aktuelle Situation + Extraktion von hochwertigen Verbindun -","line":24,"x":68.08499999999987,"y":256.12490000000025,"width":"299.28","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":220,"change":"ContentChange","types":["LIST"],"str":"- Dynamisches Szenario:  e in Szenario, das von Mal zu Mal definiert wird, je ","line":29,"x":68.09399999999994,"y":186.11390000000026,"width":"305.37","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":231,"change":"ContentChange","types":["LIST"],"str":"- Einsatz von synthetischen Düngemitteln;","line":8,"x":70.92900000000009,"y":480.0719000000001,"width":"170.48","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":231,"change":"ContentChange","types":["LIST"],"str":"- Einsatz von Bewässerung; ","line":9,"x":70.92900000000006,"y":466.0949000000001,"width":"111.74","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":231,"change":"ContentChange","types":["LIST"],"str":"- Kohlenstoffbindung im Boden;","line":10,"x":70.92900000000006,"y":452.0549000000001,"width":"129.13","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":231,"change":"ContentChange","types":["LIST"],"str":"- Vom  Boden  ausgehende  Treibhausgasemissionen:  Distickstoffmonoxid","line":11,"x":70.92900000000006,"y":438.0779000000001,"width":"303.40","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":238,"change":"ContentChange","types":["LIST"],"str":"- 52.458,81  t CO 2 eq) als in Szenario 1 ( - 6.554,09 t Öläquivalent und  - 19.700,04  t ","line":11,"x":68.03999999999994,"y":270.36,"width":"313.60","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}
+{"page":255,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"1143. https://doi.org/10.1234/4.2011.2517","dir":"ltr","width":"163.70","height":"9.00","transform":["9.00","0.00","0.00","9.00","85.13","312.10"],"fontName":"PNMSCP+PalatinoLinotype-Roman","x":85.13100000000003,"y":312.0959000000002,"line":20}
+{"page":255,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"523. https://doi.org/10.1111/gcbb.12266","dir":"ltr","width":"157.77","height":"9.00","transform":["9.00","0.00","0.00","9.00","85.13","228.11"],"fontName":"PNMSCP+PalatinoLinotype-Roman","x":85.13100000000009,"y":228.10790000000026,"line":26}
+{"page":255,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"1230. https://doi.org/https://doi.or g/10.1007/s11367- 016 - 1087- 8","line":30,"x":85.13100000000009,"y":172.13690000000025,"width":"251.89","height":"9.00","fontName":["PNMSCP+PalatinoLinotype-Roman"],"dir":["ltr"]}

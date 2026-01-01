@@ -1,0 +1,1 @@
+<thead><slot></slot></thead>

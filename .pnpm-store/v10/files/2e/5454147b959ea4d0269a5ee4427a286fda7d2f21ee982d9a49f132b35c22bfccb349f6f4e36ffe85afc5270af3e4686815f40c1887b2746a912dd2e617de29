@@ -1,0 +1,51 @@
+{
+  "name": "rehype-stringify",
+  "version": "10.0.1",
+  "description": "rehype plugin to serialize HTML",
+  "license": "MIT",
+  "keywords": [
+    "abstract",
+    "ast",
+    "compile",
+    "html",
+    "plugin",
+    "rehype",
+    "rehype-plugin",
+    "serialize",
+    "stringify",
+    "syntax",
+    "tree",
+    "unified"
+  ],
+  "homepage": "https://github.com/rehypejs/rehype",
+  "repository": "https://github.com/rehypejs/rehype/tree/main/packages/rehype-stringify",
+  "bugs": "https://github.com/rehypejs/rehype/issues",
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/unified"
+  },
+  "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
+  "contributors": [
+    "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)"
+  ],
+  "sideEffects": false,
+  "type": "module",
+  "exports": "./index.js",
+  "files": [
+    "lib/",
+    "index.d.ts",
+    "index.js"
+  ],
+  "dependencies": {
+    "@types/hast": "^3.0.0",
+    "hast-util-to-html": "^9.0.0",
+    "unified": "^11.0.0"
+  },
+  "scripts": {},
+  "typeCoverage": {
+    "atLeast": 100,
+    "detail": true,
+    "strict": true,
+    "ignoreCatch": true
+  }
+}

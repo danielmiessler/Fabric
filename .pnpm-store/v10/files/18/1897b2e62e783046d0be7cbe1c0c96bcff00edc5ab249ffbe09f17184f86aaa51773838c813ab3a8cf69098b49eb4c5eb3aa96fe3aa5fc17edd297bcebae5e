@@ -1,0 +1,36 @@
+{
+  "pages": 27,
+  "items": 1899,
+  "groupedItems": 1547,
+  "changes": 9,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":5,"change":"ContentChange","str":"West Oxon 009 West Oxon 010","line":50,"x":595.737,"y":412.752,"width":"85.60","height":"7.00","fontName":["Gill Sans MT Italic"],"dir":["ltr"]}
+{"page":12,"change":"ContentChange","str":"Witney South Witney North","line":31,"x":114.15400000000001,"y":388.356,"width":"85.79","height":"6.96","fontName":["Arial Bold"],"dir":["ltr"]}
+{"page":21,"change":"ContentChange","str":"Low  income down roots","line":16,"x":612.6709999999999,"y":240.24400000000009,"width":"94.14","height":"9.00","fontName":["Gill Sans MT"],"dir":["ltr"]}

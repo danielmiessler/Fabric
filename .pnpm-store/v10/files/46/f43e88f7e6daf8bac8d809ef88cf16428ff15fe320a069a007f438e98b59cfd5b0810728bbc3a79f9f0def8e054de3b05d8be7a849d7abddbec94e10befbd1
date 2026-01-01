@@ -1,0 +1,13 @@
+{
+        "author": "Mark Cavage <mcavage@gmail.com>",
+        "name": "assert-plus",
+        "description": "Extra assertions on top of node's assert module",
+        "version": "0.1.2",
+        "main": "./assert.js",
+        "dependencies": {},
+        "devDependencies": {},
+        "optionalDependencies": {},
+        "engines": {
+                "node": ">=0.6"
+        }
+}

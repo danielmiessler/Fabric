@@ -1,5 +1,29 @@
 {
-  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "name": "Fabric Dev Container",
+  "image": "mcr.microsoft.com/devcontainers/go:1.25",
   "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "20"
+    },
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+  "postCreateCommand": "go mod download && cd web && pnpm install && cd ..",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "golang.go",
+        "svelte.svelte-vscode",
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint"
+      ],
+      "settings": {
+        "go.useLanguageServer": true,
+        "go.lintOnSave": "package",
+        "[go]": {
+          "editor.formatOnSave": true,
+          "editor.defaultFormatter": "golang.go"
+        }
+      }
+    }
   }
 }

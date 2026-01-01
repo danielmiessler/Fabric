@@ -1,0 +1,44 @@
+{
+  "name": "locate-character",
+  "version": "3.0.0",
+  "description": "Get the line and column number of a specific character in a string",
+  "type": "module",
+  "types": "./types/index.d.ts",
+  "exports": {
+    "types": "./types/index.d.ts",
+    "import": "./src/index.js"
+  },
+  "scripts": {
+    "test": "node test/test.js",
+    "build": "dts-buddy",
+    "prepublishOnly": "npm test && npm run build"
+  },
+  "files": [
+    "src",
+    "types",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/Rich-Harris/locate-character.git"
+  },
+  "keywords": [
+    "string",
+    "character",
+    "locate",
+    "line",
+    "column",
+    "location"
+  ],
+  "author": "Rich Harris",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://gitlab.com/Rich-Harris/locate-character/issues"
+  },
+  "homepage": "https://gitlab.com/Rich-Harris/locate-character#README",
+  "devDependencies": {
+    "dts-buddy": "^0.1.6",
+    "typescript": "^5.1.3"
+  },
+  "packageManager": "pnpm@8.6.2"
+}

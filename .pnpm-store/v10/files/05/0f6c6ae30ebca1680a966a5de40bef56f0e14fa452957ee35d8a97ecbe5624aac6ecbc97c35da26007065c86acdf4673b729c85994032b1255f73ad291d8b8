@@ -1,0 +1,45 @@
+{
+  "name": "@tailwindcss/forms",
+  "version": "0.5.10",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
+  "license": "MIT",
+  "repository": "https://github.com/tailwindlabs/tailwindcss-forms",
+  "publishConfig": {
+    "access": "public"
+  },
+  "prettier": {
+    "printWidth": 100,
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "es5",
+    "plugins": [
+      "prettier-plugin-tailwindcss"
+    ]
+  },
+  "scripts": {
+    "dev": "concurrently \"npm run serve\" \"npm run watch\"",
+    "serve": "live-server .",
+    "watch": "npm run build -- -w",
+    "build": "tailwindcss -o dist/tailwind.css",
+    "test": "exit 0",
+    "release-channel": "node ./scripts/release-channel.js",
+    "release-notes": "node ./scripts/release-notes.js",
+    "format": "prettier . --write"
+  },
+  "peerDependencies": {
+    "tailwindcss": ">=3.0.0 || >= 3.0.0-alpha.1 || >= 4.0.0-alpha.20 || >= 4.0.0-beta.1"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.6",
+    "concurrently": "^5.3.0",
+    "live-server": "^1.2.2",
+    "postcss": "^8.4.13",
+    "prettier": "^3.3.3",
+    "prettier-plugin-tailwindcss": "^0.6.8",
+    "tailwindcss": "^3.0.24"
+  },
+  "dependencies": {
+    "mini-svg-data-uri": "^1.2.3"
+  }
+}

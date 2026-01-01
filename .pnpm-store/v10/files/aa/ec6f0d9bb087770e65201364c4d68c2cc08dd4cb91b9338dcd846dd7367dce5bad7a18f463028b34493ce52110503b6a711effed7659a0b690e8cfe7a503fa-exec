@@ -1,0 +1,32 @@
+{
+  "name": "hoek",
+  "description": "General purpose node utilities",
+  "version": "0.8.5",
+  "author": "Eran Hammer <eran@hueniverse.com> (http://hueniverse.com)",
+  "contributors":[
+    "Van Nguyen <the.gol.effect@gmail.com>"
+  ],
+  "repository": "git://github.com/spumko/hoek",
+  "main": "index",
+  "keywords": [
+    "utilities"
+  ],
+  "engines": {
+    "node": ">=0.8.0"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "lab": "0.1.x",
+    "complexity-report": "0.x.x"
+  },
+  "scripts": {
+    "test": "make test-cov"
+  },
+  "licenses": [
+    {
+      "type": "BSD",
+      "url": "http://github.com/spumko/hoek/raw/master/LICENSE"
+    }
+  ]
+}

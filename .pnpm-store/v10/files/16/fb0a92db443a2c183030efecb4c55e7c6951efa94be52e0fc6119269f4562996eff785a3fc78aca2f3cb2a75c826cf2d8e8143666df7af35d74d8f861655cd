@@ -1,0 +1,61 @@
+{
+  "pages": 644,
+  "items": 27118,
+  "groupedItems": 21363,
+  "changes": 26,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "token types"
+    },
+    {
+      "name": "types"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":2,"change":"ContentChange","types":["H1"],"str":"Contents","dir":"ltr","width":"108.89","height":"24.79","transform":["24.79","0.00","0.00","24.79","63.00","637.69"],"fontName":"AENRCE+CMBX12","x":63,"y":637.692,"line":0}
+{"page":7,"change":"ContentChange","types":["H1"],"str":"A Million Ways to Die:  The Only Way to Live (2010-11-27 21:23) .  .  .  .  .  .  .  .  .  .  .  .  .  . 381","line":0,"x":77.455,"y":723.441,"width":"433.00","height":"10.91","fontName":["EFUEQI+CMR10"],"dir":["ltr"]}
+{"page":12,"change":"ContentChange","types":["H3"],"str":"Chapter 1","dir":"ltr","width":"102.37","height":"20.66","transform":["20.66","0.00","0.00","20.66","63.00","642.26"],"fontName":"AENRCE+CMBX12","x":63,"y":642.263,"line":0}
+{"page":12,"change":"ContentChange","types":["H2"],"str":"2010","dir":"ltr","width":"55.72","height":"24.79","transform":["24.79","0.00","0.00","24.79","63.00","585.99"],"fontName":"AENRCE+CMBX12","x":63,"y":585.991,"line":1}
+{"page":388,"change":"ContentChange","types":["H2"],"str":"1.10    December","dir":"ltr","width":"115.42","height":"14.35","transform":["14.35","0.00","0.00","14.35","63.00","723.44"],"fontName":"AENRCE+CMBX12","x":63,"y":723.441,"line":0}
+{"page":420,"change":"ContentChange","types":["H3"],"str":"Chapter 2","dir":"ltr","width":"102.37","height":"20.66","transform":["20.66","0.00","0.00","20.66","63.00","642.97"],"fontName":"AENRCE+CMBX12","x":63,"y":642.965,"line":0}
+{"page":420,"change":"ContentChange","types":["H2"],"str":"2011","dir":"ltr","width":"55.72","height":"24.79","transform":["24.79","0.00","0.00","24.79","63.00","587.40"],"fontName":"AENRCE+CMBX12","x":63,"y":587.3960000000001,"line":1}
+{"page":420,"change":"ContentChange","types":["H2"],"str":"2.1    January","dir":"ltr","width":"93.33","height":"14.35","transform":["14.35","0.00","0.00","14.35","63.00","523.86"],"fontName":"AENRCE+CMBX12","x":63,"y":523.8570000000001,"line":2}
+{"page":439,"change":"ContentChange","types":["H2"],"str":"2.2    February","dir":"ltr","width":"100.36","height":"14.35","transform":["14.35","0.00","0.00","14.35","36.00","723.44"],"fontName":"AENRCE+CMBX12","x":36,"y":723.441,"line":0}
+{"page":455,"change":"ContentChange","types":["H2"],"str":"2.3    March","dir":"ltr","width":"82.16","height":"14.35","transform":["14.35","0.00","0.00","14.35","36.00","723.44"],"fontName":"AENRCE+CMBX12","x":36,"y":723.441,"line":0}
+{"page":472,"change":"ContentChange","types":["H2"],"str":"2.4    April","dir":"ltr","width":"73.43","height":"14.35","transform":["14.35","0.00","0.00","14.35","63.00","531.69"],"fontName":"AENRCE+CMBX12","x":63,"y":531.6900000000002,"line":10}
+{"page":519,"change":"ContentChange","types":["H2"],"str":"2.5    May","dir":"ltr","width":"67.95","height":"14.35","transform":["14.35","0.00","0.00","14.35","36.00","723.44"],"fontName":"AENRCE+CMBX12","x":36,"y":723.441,"line":0}
+{"page":538,"change":"ContentChange","types":["H2"],"str":"2.6    June","dir":"ltr","width":"70.37","height":"14.35","transform":["14.35","0.00","0.00","14.35","63.00","560.83"],"fontName":"AENRCE+CMBX12","x":63,"y":560.828,"line":7}
+{"page":552,"change":"ContentChange","types":["H2"],"str":"2.7    July","dir":"ltr","width":"67.04","height":"14.35","transform":["14.35","0.00","0.00","14.35","63.00","127.81"],"fontName":"AENRCE+CMBX12","x":63,"y":127.80900000000014,"line":32}
+{"page":563,"change":"ContentChange","types":["H2"],"str":"2.8    August","dir":"ltr","width":"87.55","height":"14.35","transform":["14.35","0.00","0.00","14.35","36.00","382.85"],"fontName":"AENRCE+CMBX12","x":36,"y":382.84500000000025,"line":18}
+{"page":577,"change":"ContentChange","types":["H2"],"str":"2.9    September","dir":"ltr","width":"112.03","height":"14.35","transform":["14.35","0.00","0.00","14.35","36.00","447.09"],"fontName":"AENRCE+CMBX12","x":36,"y":447.08500000000026,"line":15}
+{"page":584,"change":"ContentChange","types":["H2"],"str":"2.10    October","dir":"ltr","width":"101.78","height":"14.35","transform":["14.35","0.00","0.00","14.35","63.00","723.44"],"fontName":"AENRCE+CMBX12","x":63,"y":723.441,"line":0}
+{"page":600,"change":"ContentChange","types":["H2"],"str":"2.11    November","dir":"ltr","width":"116.81","height":"14.35","transform":["14.35","0.00","0.00","14.35","63.00","659.39"],"fontName":"AENRCE+CMBX12","x":63,"y":659.388,"line":2}
+{"page":618,"change":"ContentChange","types":["H2"],"str":"2.12    December","dir":"ltr","width":"115.42","height":"14.35","transform":["14.35","0.00","0.00","14.35","63.00","428.39"],"fontName":"AENRCE+CMBX12","x":63,"y":428.3919999999999,"line":18}
+{"page":644,"change":"ContentChange","types":["H3"],"str":"Chapter 3","dir":"ltr","width":"102.37","height":"20.66","transform":["20.66","0.00","0.00","20.66","63.00","643.43"],"fontName":"AENRCE+CMBX12","x":63,"y":643.431,"line":0}
+{"page":644,"change":"ContentChange","types":["H2"],"str":"2012","dir":"ltr","width":"55.72","height":"24.79","transform":["24.79","0.00","0.00","24.79","63.00","588.33"],"fontName":"AENRCE+CMBX12","x":63,"y":588.327,"line":1}
+{"page":644,"change":"ContentChange","types":["H2"],"str":"3.1    January","dir":"ltr","width":"93.33","height":"14.35","transform":["14.35","0.00","0.00","14.35","63.00","525.25"],"fontName":"AENRCE+CMBX12","x":63,"y":525.253,"line":2}

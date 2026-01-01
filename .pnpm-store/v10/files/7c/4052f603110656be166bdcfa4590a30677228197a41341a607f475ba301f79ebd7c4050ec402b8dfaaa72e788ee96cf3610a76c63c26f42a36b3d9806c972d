@@ -1,0 +1,30 @@
+{
+	"version": 3,
+	"file": "index.d.ts",
+	"names": [
+		"b",
+		"x",
+		"p",
+		"parse",
+		"parseExpressionAt",
+		"Expression",
+		"Node",
+		"ObjectExpression",
+		"Property",
+		"SpreadElement",
+		"CommentWithLocation",
+		"print",
+		"Comment"
+	],
+	"sources": [
+		"../src/index.js",
+		"../src/print/index.js",
+		"../src/utils/comments.js"
+	],
+	"sourcesContent": [
+		null,
+		null,
+		null
+	],
+	"mappings": ";iBA0QgBA,CAACA;;iBAuBDC,CAACA;;;;;iBAgCDC,CAACA;;;;iBA6CJC,KAAKA;iBAcLC,iBAAiBA;aAvXCC,UAAUA;aCYVC,IAAIA;aDVJC,gBAAgBA;aAChBC,QAAQA;aACRC,aAAaA;aAEHC,mBAAmBA;;;;iBCuB5CC,KAAKA;;;;;;;;;;;;MChCUC,OAAOA"
+}

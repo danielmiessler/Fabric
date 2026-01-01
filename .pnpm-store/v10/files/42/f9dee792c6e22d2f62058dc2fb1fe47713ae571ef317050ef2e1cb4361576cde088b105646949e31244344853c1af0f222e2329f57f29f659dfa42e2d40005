@@ -1,0 +1,51 @@
+{
+  "pages": 16,
+  "items": 1242,
+  "groupedItems": 416,
+  "changes": 50,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "token types"
+    },
+    {
+      "name": "types"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":3,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"1. Gabriela Said Reyes ,  Director, Dirección  de  Publicaciones de El  Colegio  de ","line":2,"x":108.02,"y":671.5,"width":"384.06","height":"11.04","fontName":["ABCDEE+Georgia"],"dir":["ltr"]}
+{"page":3,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"2. Ninel    Salcedo    Romero ,  former  Director    of    Marketing,  Dirección    de ","line":4,"x":108.02,"y":632.74,"width":"386.77","height":"11.04","fontName":["ABCDEE+Georgia"],"dir":["ltr"]}
+{"page":3,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"3. Brian  Connaughton,  Área  de  Historia  Regional  y  Comparada,  Departamento  de ","line":6,"x":108.02,"y":593.98,"width":"407.53","height":"11.04","fontName":["ABCDEE+Georgia"],"dir":["ltr"]}
+{"page":3,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"4. Robert   Darnton,   Carl   H.   Pforzheimer   University   Professor   and   University ","line":8,"x":108.02,"y":555.22,"width":"407.61","height":"11.04","fontName":["ABCDEE+Georgia"],"dir":["ltr"]}
+{"page":3,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"5. Gilbert   Joseph,   Farnam   Professor   of   History   &   International   Studies,   Yale ","line":10,"x":108.02,"y":516.43,"width":"407.32","height":"11.04","fontName":["ABCDEE+Georgia"],"dir":["ltr"]}
+{"page":3,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"6. Herbert  S.  Klein,  Gouverneur  Morris  Professor  Emeritus  of  History,  Columbia ","line":12,"x":108.02,"y":477.67,"width":"407.56","height":"11.04","fontName":["ABCDEE+Georgia"],"dir":["ltr"]}
+{"page":3,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"7. Jocelyn  Olcott,  Associate  Professor,  History  and  Gender,  Sexualit y  &  Feminist ","line":16,"x":108.02,"y":410.23,"width":"406.88","height":"11.04","fontName":["ABCDEE+Georgia"],"dir":["ltr"]}
+{"page":3,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"8. William  B.  Taylor,  Muriel  McKevitt  Sonne  Professor  of  Latin  American  History, ","line":18,"x":108.02,"y":371.47,"width":"407.95","height":"11.04","fontName":["ABCDEE+Georgia"],"dir":["ltr"]}
+{"page":3,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"9. Pardha Karamsetty, President, Content & Media Solutions, Apex CoVantage; CEO, ","line":20,"x":108.02,"y":332.69,"width":"407.79","height":"11.04","fontName":["ABCDEE+Georgia"],"dir":["ltr"]}
+{"page":3,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"10. Prabhanjan Mattam , Project Manager, Apex CoVantage","line":22,"x":108.02,"y":293.93,"width":"281.12","height":"11.04","fontName":["ABCDEE+Georgia"],"dir":["ltr"]}
+{"page":10,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"1. The need to send the books to one particular vendor instead of dividing them ","line":7,"x":108.02,"y":614.02,"width":"383.11","height":"11.04","fontName":["ABCDEE+Georgia"],"dir":["ltr"]}
+{"page":10,"change":"ContentChange","types":["NUMBERED_LIST"],"str":"2. The lack of electronic version ISBN (EISBN) assignments for any of the book s.  ","line":10,"x":108.02,"y":560.86,"width":"393.38","height":"11.04","fontName":["ABCDEE+Georgia"],"dir":["ltr"]}

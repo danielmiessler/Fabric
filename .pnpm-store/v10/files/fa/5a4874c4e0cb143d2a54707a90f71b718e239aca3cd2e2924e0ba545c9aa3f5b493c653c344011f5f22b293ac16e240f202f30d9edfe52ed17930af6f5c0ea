@@ -1,0 +1,53 @@
+{
+  "pages": 137,
+  "items": 24828,
+  "groupedItems": 3105,
+  "changes": 36,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "token types"
+    },
+    {
+      "name": "types"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":3,"change":"ContentChange","types":["H1"],"str":"(l^,^^^^i^<jiM'^^^>^ ^","line":0,"x":35.055479999999996,"y":384.02991,"width":"97.70","height":"45.97","fontName":[null],"dir":["ltr"]}
+{"page":6,"change":"ContentChange","types":["H1"],"str":"OooulO^I ^ 4le.^A\\-^","line":0,"x":58.18635,"y":417.79236,"width":"98.99","height":"11.34","fontName":[null],"dir":["ltr"]}
+{"page":6,"change":"ContentChange","types":["H2"],"str":"LIFE OF GOD","line":3,"x":39.22191,"y":324.40686,"width":"161.05","height":"32.33","fontName":[null],"dir":["ltr"]}
+{"page":6,"change":"ContentChange","types":["H5"],"str":"SOUL OF MAN","line":4,"x":75.13941,"y":226.56759,"width":"104.45","height":"21.23","fontName":[null],"dir":["ltr"]}
+{"page":18,"change":"ContentChange","types":["H6"],"str":"THE LIFE OF GOD","line":0,"x":63.07113,"y":257.16929999999996,"width":"123.13","height":"18.12","fontName":[null],"dir":["ltr"]}
+{"page":24,"change":"ContentChange","types":["H2"],"str":"T CHOOSE to express it by the name oi life","line":9,"x":28.302989999999998,"y":219.38409,"width":"172.55","height":"13.01","fontName":[null],"dir":["ltr"]}
+{"page":30,"change":"ContentChange","types":["H2"],"str":"T3 Y this time I hope it doth appear, that","line":2,"x":33.33144,"y":324.26319,"width":"156.17","height":"13.41","fontName":[null],"dir":["ltr"]}
+{"page":48,"change":"ContentChange","types":["H3"],"str":"T","dir":"ltr","width":"18.39","height":"30.65","transform":["30.65","0.00","0.00","30.65","36.49","54.45"],"x":36.49218,"y":54.45093,"line":20}
+{"page":56,"change":"ContentChange","types":["H4"],"str":"L","dir":"ltr","width":"16.95","height":"28.26","transform":["28.26","0.00","0.00","28.26","39.94","46.12"],"x":39.940259999999995,"y":46.118069999999996,"line":20}
+{"page":77,"change":"ContentChange","types":["H2"],"str":"'T^HE last branch of religion is Juimility","line":14,"x":54.88194,"y":148.69844999999998,"width":"170.39","height":"11.73","fontName":[null],"dir":["ltr"]}
+{"page":81,"change":"ContentChange","types":["H2"],"str":"nounce them : Not unto 21s, O Lord., not unto","line":5,"x":53.87625,"y":317.65437,"width":"173.26","height":"11.73","fontName":[null],"dir":["ltr"]}
+{"page":99,"change":"ContentChange","types":["H2"],"str":"13 UT now, amongst those things which we","line":10,"x":49.42248,"y":217.08536999999998,"width":"178.87","height":"13.17","fontName":[null],"dir":["ltr"]}
+{"page":121,"change":"ContentChange","types":["H2"],"str":"'HPHE serious and frequent consideration of","line":18,"x":54.5946,"y":83.47227,"width":"187.64","height":"11.73","fontName":[null],"dir":["ltr"]}
+{"page":124,"change":"ContentChange","types":["H2"],"str":"for our converse or our love : He is not far","line":10,"x":45.112379999999995,"y":244.23899999999998,"width":"161.20","height":"11.73","fontName":[null],"dir":["ltr"]}

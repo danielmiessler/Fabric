@@ -1,0 +1,35 @@
+{
+    "name": "@types/string-similarity",
+    "version": "4.0.2",
+    "description": "TypeScript definitions for string-similarity",
+    "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/string-similarity",
+    "license": "MIT",
+    "contributors": [
+        {
+            "name": "ragtime",
+            "githubUsername": "ragtime",
+            "url": "https://github.com/ragtime"
+        },
+        {
+            "name": "BendingBender",
+            "githubUsername": "BendingBender",
+            "url": "https://github.com/BendingBender"
+        },
+        {
+            "name": "Piotr Błażejewicz",
+            "githubUsername": "peterblazejewicz",
+            "url": "https://github.com/peterblazejewicz"
+        }
+    ],
+    "main": "",
+    "types": "index.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "directory": "types/string-similarity"
+    },
+    "scripts": {},
+    "dependencies": {},
+    "typesPublisherContentHash": "11dd03549a463c35bf8693ac9f24bd8ad3ae9dc24877fa2b00373cfd2e577440",
+    "typeScriptVersion": "4.5"
+}

@@ -1,0 +1,51 @@
+{
+  "pages": 6,
+  "items": 268,
+  "groupedItems": 145,
+  "changes": 32,
+  "schema": [
+    {
+      "name": "block"
+    },
+    {
+      "name": "line"
+    },
+    {
+      "name": "token types"
+    },
+    {
+      "name": "types"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":0,"change":"ContentChange","types":["CODE"],"str":"Dies ist eine Test-PDF 1 .","block":2,"line":2,"x":240,"y":585,"width":"115.75","height":"11.00","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":0,"change":"ContentChange","types":["CODE"],"str":"Für’s Testen des  Markdown Parsers .","block":2,"line":3,"x":208,"y":572,"width":"178.54","height":"11.00","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":6,"change":"ContentChange","types":["CODE"],"str":"Wenn ein chaotischer Schreibtisch eine chaotische Denkweise widerspiegelt, welche Denkweise ","dir":"ltr","width":"472.46","height":"11.00","transform":["11.00","0.00","0.00","11.00","63.00","701.00"],"fontName":"SVUOCV+Helvetica-Oblique","x":63,"y":701,"line":3,"block":54}
+{"page":6,"change":"ContentChange","types":["CODE"],"str":"spiegelt dann ein leerer Schreibtisch wider?  - Albert Einstein","block":54,"line":4,"x":151,"y":688,"width":"292.89","height":"11.00","fontName":["SVUOCV+Helvetica-Oblique","JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":6,"change":"ContentChange","types":["CODE"],"str":"Phantasie ist wichtiger als  Wissen , denn Wissen 9  ist  begrenzt .  - Albert Einstein 10","block":56,"line":6,"x":101,"y":623,"width":"392.96","height":"11.00","fontName":["JBRMKS+Helvetica","OMUGKQ+Helvetica-Bold","SVUOCV+Helvetica-Oblique"],"dir":["ltr"]}
+{"page":6,"change":"ContentChange","types":["CODE"],"str":"Die größte Macht hat das richtige Wort zur richtigen Zeit.  - Mark Twain","block":58,"line":8,"x":127,"y":558,"width":"341.35","height":"11.00","fontName":["SVUOCV+Helvetica-Oblique","JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":6,"change":"ContentChange","types":["CODE"],"str":"Der Kuss ist ein liebenswerter Trick der Natur, ein Gespräch zu unterbrechen, wenn Worte ","dir":"ltr","width":"441.87","height":"11.00","transform":["11.00","0.00","0.00","11.00","78.00","532.00"],"fontName":"SVUOCV+Helvetica-Oblique","x":78,"y":532,"line":9,"block":59}
+{"page":6,"change":"ContentChange","types":["CODE"],"str":"überflüssig werden . - Ingrid Bergman","block":59,"line":10,"x":207,"y":519,"width":"180.37","height":"11.00","fontName":["SVUOCV+Helvetica-Oblique","JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":6,"change":"ContentChange","types":["CODE"],"str":"Das Schicksal wird schon seine Gründe haben.  - Voltaire","block":60,"line":11,"x":159,"y":493,"width":"276.99","height":"11.00","fontName":["SVUOCV+Helvetica-Oblique","JBRMKS+Helvetica"],"dir":["ltr"]}

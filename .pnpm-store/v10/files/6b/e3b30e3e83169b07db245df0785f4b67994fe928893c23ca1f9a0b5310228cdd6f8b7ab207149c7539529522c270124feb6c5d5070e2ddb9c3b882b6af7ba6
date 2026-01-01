@@ -1,0 +1,120 @@
+{
+  "pages": 7,
+  "items": 282,
+  "groupedItems": 152,
+  "changes": 86,
+  "schema": [
+    {
+      "name": "line",
+      "annotation": "ADDED"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":0,"change":"Addition","str":"Dies ist eine Test-PDF . 1","line":2,"x":240,"y":585,"width":"115.75","height":"11.00","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":0,"change":"Addition","str":"Für’s Testen des  Markdown Parsers .","line":3,"x":208,"y":572,"width":"178.54","height":"11.00","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":0,"change":"Addition","str":"In Deutsch. 1","line":4,"x":57,"y":59,"width":"59.72","height":"11.00","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":0,"change":"Addition","str":"\u0000 1","line":5,"x":294,"y":45,"width":"6.67","height":"12.00","fontName":["QACXPP+Helvetica","JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":1,"change":"Addition","str":"\u0000 2","line":0,"x":294,"y":45,"width":"6.67","height":"12.00","fontName":["QACXPP+Helvetica","JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"Das ist ein Paragraph. Ein einfacher Paragraph mit Schrift in Normalgröße . Damit wir  sehen  wie  2","line":1,"x":57,"y":740,"width":"472.99","height":"11.00","fontName":["JBRMKS+Helvetica","SVUOCV+Helvetica-Oblique"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"ultrices magna. Sed egestas mi nec rutrum iaculis. Phasellus condimentum , urna sit amet sodales  3","line":14,"x":57,"y":545,"width":"483.43","height":"11.00","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"Und jetzt  einfach nochmal Text  um die Fussnoten in zweistellige Bereiche  vorranzutreiben! 4 5 6","line":20,"x":57,"y":428,"width":"452.29","height":"11.00","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"Was immer auch ‘normal’ ist... 2","line":21,"x":57,"y":164,"width":"152.41","height":"11.00","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"Nicht zu verwechseln mit ‘condimenta’. Meine Lateinkenntnisse sind zwar schon so alt das ich  3","line":22,"x":57,"y":141,"width":"464.48","height":"11.00","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"Hier & Jetzt! 4","line":24,"x":57,"y":105,"width":"63.98","height":"11.00","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"Nicht viel mehr als ein Satz. 5","line":25,"x":57,"y":82,"width":"139.80","height":"11.00","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"Weil dann wird's komplizierter! 6","line":26,"x":57,"y":59,"width":"152.09","height":"11.00","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":2,"change":"Addition","str":"\u0000 3","line":27,"x":294,"y":45,"width":"6.67","height":"12.00","fontName":["QACXPP+Helvetica","JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"Etwas  kursiv  ist auch nicht schlecht.  Fett  ist auch interessant. Und was ist mit ","line":1,"x":57,"y":740,"width":"380.26","height":"11.00","fontName":["JBRMKS+Helvetica","SVUOCV+Helvetica-Oblique","OMUGKQ+Helvetica-Bold"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"FETTUNDKURSIV  ?","line":2,"x":57,"y":727,"width":"102.06","height":"11.00","fontName":["JUJONH+Helvetica-BoldOblique","JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"Interessant wird's wenn  mehrere Wörter hintereinanderweg formatiert  sind. Und  dann noch über ","line":3,"x":57,"y":701,"width":"469.86","height":"11.00","fontName":["JBRMKS+Helvetica","SVUOCV+Helvetica-Oblique"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"Zeilenbrüche hinweg .","line":4,"x":57,"y":688,"width":"104.57","height":"11.00","fontName":["SVUOCV+Helvetica-Oblique","JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"Fies könnte es werden mit  abwechselnden Formaten . Und das ganze dann noch  über mehrere","line":5,"x":57,"y":662,"width":"461.07","height":"11.00","fontName":["JBRMKS+Helvetica","SVUOCV+Helvetica-Oblique","OMUGKQ+Helvetica-Bold"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"Zeilen  hinweg.","line":6,"x":57,"y":649,"width":"70.89","height":"11.00","fontName":["SVUOCV+Helvetica-Oblique","JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"Und weil es so schön ist, fangen wir jetzt in dieser Zeile mit einem Schriftschnitt, nämlich  kursiv an. ","line":7,"x":57,"y":623,"width":"483.60","height":"11.00","fontName":["JBRMKS+Helvetica","SVUOCV+Helvetica-Oblique"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"es dann Mitte  der 3ten  Zeile  ausklingen.","line":9,"x":57,"y":597,"width":"196.29","height":"11.00","fontName":["SVUOCV+Helvetica-Oblique","JBRMKS+Helvetica","OMUGKQ+Helvetica-Bold"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"Und nun  kursiv Und Fett Zusammen Ge Mixt . Ohne Leerzeichen...","line":10,"x":57,"y":571,"width":"312.42","height":"11.00","fontName":["JBRMKS+Helvetica","SVUOCV+Helvetica-Oblique","OMUGKQ+Helvetica-Bold"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"Eine  Zeile, die mit kursiv anfing und endet mit  fett.","line":11,"x":57,"y":545,"width":"245.17","height":"11.00","fontName":["SVUOCV+Helvetica-Oblique","JBRMKS+Helvetica","OMUGKQ+Helvetica-Bold"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"Beende die Zeile mit  fett.","line":12,"x":57,"y":519,"width":"123.51","height":"11.00","fontName":["JBRMKS+Helvetica","OMUGKQ+Helvetica-Bold"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"Kursiv  ist dann die nachfolgende!","line":13,"x":57,"y":506,"width":"162.06","height":"11.00","fontName":["SVUOCV+Helvetica-Oblique","JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"- Etwas  Kursiv","line":15,"x":56.69069,"y":467,"width":"67.97","height":"13.20","fontName":["JBRMKS+Helvetica","SVUOCV+Helvetica-Oblique"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"- Etwas  Fett","line":16,"x":56.69069,"y":454,"width":"57.57","height":"13.20","fontName":["JBRMKS+Helvetica","OMUGKQ+Helvetica-Bold"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"- Etwas  Unterstrichen 7","line":17,"x":56.69069,"y":441,"width":"106.90","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"- Etwas  Durchgestrichen","line":18,"x":56.69069,"y":428,"width":"117.50","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"- Und noch ein Link: http://pdf2md.morethan.io","line":19,"x":56.69069,"y":415,"width":"223.92","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"Ne Zeile die  kursiv endet,","line":20,"x":57,"y":389,"width":"124.14","height":"11.00","fontName":["JBRMKS+Helvetica","SVUOCV+Helvetica-Oblique"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"und in ner  (fast)  komplett lasziven, eh, kursiven Zeile endet.","line":21,"x":57,"y":376,"width":"290.43","height":"11.00","fontName":["SVUOCV+Helvetica-Oblique","JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"Und gemixt .","line":25,"x":57,"y":311,"width":"58.68","height":"11.00","fontName":["SVUOCV+Helvetica-Oblique","OMUGKQ+Helvetica-Bold","JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"Und ein kursiver Setzt der einen eingeschlossen Link, nämlich  http://pdf2md.morethan.io , hat.","line":30,"x":57,"y":207,"width":"455.53","height":"11.00","fontName":["SVUOCV+Helvetica-Oblique"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"Fussnote in einer Liste 7","line":31,"x":57,"y":59,"width":"114.75","height":"11.00","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":3,"change":"Addition","str":"\u0000 4","line":32,"x":294,"y":45,"width":"6.67","height":"12.00","fontName":["QACXPP+Helvetica","JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":4,"change":"Addition","str":"- Eintrag 1","line":2,"x":56.69069,"y":727,"width":"48.42","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":4,"change":"Addition","str":"- Eintrag 2, aber mit so langem Text, das er umbricht. Wirklich, wirklich lang. Breche du Zeile. Na ","line":3,"x":56.69069,"y":714,"width":"470.06","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":4,"change":"Addition","str":"- Eintrag 3","line":6,"x":56.69069,"y":675,"width":"48.42","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":4,"change":"Addition","str":"- Eintrag 1","line":8,"x":56.69069,"y":636,"width":"48.42","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":4,"change":"Addition","str":"- Sub Eintrag 1.1, aber mit so langem Text, das er umbricht. Wirklich, wirklich lang. Breche du ","line":9,"x":68.69069,"y":623,"width":"454.79","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":4,"change":"Addition","str":"- Sub Eintrag 1.2","line":12,"x":68.69069,"y":584,"width":"80.23","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":4,"change":"Addition","str":"- Eintrag 2","line":13,"x":56.69069,"y":571,"width":"48.42","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":4,"change":"Addition","str":"- Sub Eintrag 2.1","line":14,"x":68.69069,"y":558,"width":"80.23","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":4,"change":"Addition","str":"• Eintrage 1","line":16,"x":56.69069,"y":517.7268,"width":"53.99","height":"11.00","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":4,"change":"Addition","str":"• Eintrage 2","line":17,"x":56.69069,"y":504.7268,"width":"53.99","height":"11.00","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":4,"change":"Addition","str":"- Eintrage 1","line":19,"x":56.69069,"y":467,"width":"54.54","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":4,"change":"Addition","str":"• Eintrage 2","line":20,"x":56.69069,"y":452.7268,"width":"53.99","height":"11.00","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":4,"change":"Addition","str":"1. Eins","line":22,"x":56.69069,"y":414.7268,"width":"30.58","height":"11.00","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":4,"change":"Addition","str":"2. Zwei, aber mit so langem Text, das er umbricht. Wirklich, wirklich lang. Breche du Zeile. Na los. ","line":23,"x":56.69069,"y":401.7268,"width":"474.22","height":"11.00","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":4,"change":"Addition","str":"3. Drei","line":26,"x":56.69069,"y":362.7268,"width":"29.35","height":"11.00","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":4,"change":"Addition","str":"4. Vier. Und auch hier wieder ein etwas längerer Text, so dass der Eintrag über mehrere Zeilen ","line":27,"x":56.69069,"y":349.7268,"width":"460.05","height":"11.00","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":4,"change":"Addition","str":"- Eintrag 1","line":30,"x":80.69069,"y":298,"width":"48.42","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":4,"change":"Addition","str":"- Eintrag 2, aber mit so langem Text, das er umbricht. Wirklich, wirklich lang. Breche du Zeile. ","line":31,"x":80.69069,"y":285,"width":"452.94","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":4,"change":"Addition","str":"- Eintrag 3","line":34,"x":80.69069,"y":246,"width":"48.42","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":4,"change":"Addition","str":"- Erste 1","line":36,"x":56.69069,"y":194,"width":"39.24","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":4,"change":"Addition","str":"- Erste 2","line":37,"x":56.69069,"y":181,"width":"39.24","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":4,"change":"Addition","str":"- Zwote 1","line":38,"x":56.69069,"y":155,"width":"43.51","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":4,"change":"Addition","str":"- Zwote 2","line":39,"x":56.69069,"y":142,"width":"43.51","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":4,"change":"Addition","str":"\u0000 5","line":40,"x":294,"y":45,"width":"6.67","height":"12.00","fontName":["QACXPP+Helvetica","JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":5,"change":"Addition","str":"- Erster Level 1","line":1,"x":56.69069,"y":736,"width":"72.26","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":5,"change":"Addition","str":"- Zwoter Level 1.1, aber mit so langem Text, das er umbricht. Wirklich, wirklich lang. Breche du ","line":2,"x":68.69069,"y":723,"width":"460.28","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":5,"change":"Addition","str":"- 3ter Level 1.1.1","line":5,"x":80.69069,"y":684,"width":"80.23","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":5,"change":"Addition","str":"- 3ter Level 1.1.2, aber mit so langem Text, das er umbricht. Wirklich, wirklich lang. Breche ","line":6,"x":80.69069,"y":671,"width":"439.50","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":5,"change":"Addition","str":"- Zwoter Level 1.2","line":9,"x":68.69069,"y":632,"width":"85.71","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":5,"change":"Addition","str":"- Zwoter Level 1.3","line":10,"x":68.69069,"y":619,"width":"85.71","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":5,"change":"Addition","str":"- 3ter Level 1.3.1","line":11,"x":80.69069,"y":606,"width":"80.23","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":5,"change":"Addition","str":"- Erster Level 2","line":12,"x":56.69069,"y":593,"width":"72.26","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":5,"change":"Addition","str":"1. Eintrag 1","line":14,"x":56.69069,"y":553.7268,"width":"53.20","height":"11.00","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":5,"change":"Addition","str":"- Eintrag 1.1","line":15,"x":68.69069,"y":541,"width":"57.60","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":5,"change":"Addition","str":"- Eintrag 1.2","line":16,"x":68.69069,"y":528,"width":"57.60","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":5,"change":"Addition","str":"2. Eintrag 2","line":17,"x":56.69069,"y":514.7268,"width":"53.20","height":"11.00","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":5,"change":"Addition","str":"- Eintrag 1","line":20,"x":56.69069,"y":463,"width":"48.42","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":5,"change":"Addition","str":"- Eintrag 2","line":21,"x":56.69069,"y":450,"width":"48.42","height":"13.20","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":5,"change":"Addition","str":"\u0000 6","line":23,"x":294,"y":45,"width":"6.67","height":"12.00","fontName":["QACXPP+Helvetica","JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":6,"change":"Addition","str":"Quotes & Spezielle Einschübe 8","line":0,"x":165,"y":767,"width":"264.73","height":"18.00","fontName":["OMUGKQ+Helvetica-Bold"],"dir":["ltr"]}
+{"page":6,"change":"Addition","str":"spiegelt dann ein leerer Schreibtisch wider?  - Albert Einstein","line":4,"x":151,"y":688,"width":"292.89","height":"11.00","fontName":["SVUOCV+Helvetica-Oblique","JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":6,"change":"Addition","str":"Phantasie ist wichtiger als  Wissen , denn Wissen  ist  begrenzt .  - Albert Einstein 9 10","line":6,"x":101,"y":623,"width":"392.96","height":"11.00","fontName":["JBRMKS+Helvetica","OMUGKQ+Helvetica-Bold","SVUOCV+Helvetica-Oblique"],"dir":["ltr"]}
+{"page":6,"change":"Addition","str":"Die größte Macht hat das richtige Wort zur richtigen Zeit.  - Mark Twain","line":8,"x":127,"y":558,"width":"341.35","height":"11.00","fontName":["SVUOCV+Helvetica-Oblique","JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":6,"change":"Addition","str":"überflüssig werden . - Ingrid Bergman","line":10,"x":207,"y":519,"width":"180.37","height":"11.00","fontName":["SVUOCV+Helvetica-Oblique","JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":6,"change":"Addition","str":"Das Schicksal wird schon seine Gründe haben.  - Voltaire","line":11,"x":159,"y":493,"width":"276.99","height":"11.00","fontName":["SVUOCV+Helvetica-Oblique","JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":6,"change":"Addition","str":"Eine Überschrifts-Fussnote... so was gibts auch! 8","line":15,"x":57,"y":105,"width":"241.29","height":"11.00","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":6,"change":"Addition","str":"Wisse, dass ist eine Fussnote in einem Zitat! 9","line":16,"x":57,"y":82,"width":"221.73","height":"11.00","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":6,"change":"Addition","str":"Der Albert Einstein (Fussnote im Zitat, am Ende der Zeile) 10","line":17,"x":57,"y":59,"width":"290.00","height":"11.00","fontName":["JBRMKS+Helvetica"],"dir":["ltr"]}
+{"page":6,"change":"Addition","str":"\u0000 7","line":18,"x":294,"y":45,"width":"6.67","height":"12.00","fontName":["QACXPP+Helvetica","JBRMKS+Helvetica"],"dir":["ltr"]}

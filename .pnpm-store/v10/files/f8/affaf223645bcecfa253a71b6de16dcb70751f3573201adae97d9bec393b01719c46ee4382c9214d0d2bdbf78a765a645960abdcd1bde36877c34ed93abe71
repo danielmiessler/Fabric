@@ -1,0 +1,120 @@
+{
+  "name": "eslint-plugin-svelte",
+  "version": "2.46.1",
+  "description": "ESLint plugin for Svelte using AST",
+  "repository": "git+https://github.com/sveltejs/eslint-plugin-svelte.git",
+  "homepage": "https://sveltejs.github.io/eslint-plugin-svelte",
+  "author": "Yosuke Ota (https://github.com/ota-meshi)",
+  "funding": "https://github.com/sponsors/ota-meshi",
+  "license": "MIT",
+  "engines": {
+    "node": "^14.17.0 || >=16.0.0"
+  },
+  "type": "commonjs",
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "keywords": [
+    "eslint",
+    "eslint-plugin",
+    "eslintplugin",
+    "svelte",
+    "sveltejs"
+  ],
+  "peerDependencies": {
+    "eslint": "^7.0.0 || ^8.0.0-0 || ^9.0.0-0",
+    "svelte": "^3.37.0 || ^4.0.0 || ^5.0.0"
+  },
+  "peerDependenciesMeta": {
+    "svelte": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "@eslint-community/eslint-utils": "^4.4.0",
+    "@jridgewell/sourcemap-codec": "^1.4.15",
+    "eslint-compat-utils": "^0.5.1",
+    "esutils": "^2.0.3",
+    "known-css-properties": "^0.35.0",
+    "postcss": "^8.4.38",
+    "postcss-load-config": "^3.1.4",
+    "postcss-safe-parser": "^6.0.0",
+    "postcss-selector-parser": "^6.1.0",
+    "semver": "^7.6.2",
+    "svelte-eslint-parser": "^0.43.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.8",
+    "@babel/eslint-parser": "^7.25.8",
+    "@babel/plugin-proposal-function-bind": "^7.25.8",
+    "@eslint-community/eslint-plugin-eslint-comments": "^4.4.0",
+    "@types/babel__core": "^7.20.5",
+    "@types/eslint-utils": "^3.0.5",
+    "@types/esutils": "^2.0.2",
+    "@types/json-schema": "^7.0.15",
+    "@types/less": "^3.0.6",
+    "@types/mocha": "^10.0.9",
+    "@types/node": "^20.16.11",
+    "@types/postcss-safe-parser": "^5.0.4",
+    "@types/semver": "^7.5.8",
+    "@types/stylus": "^0.48.43",
+    "acorn": "^8.13.0",
+    "assert": "^2.1.0",
+    "esbuild": "^0.24.0",
+    "esbuild-register": "^3.6.0",
+    "eslint-scope": "^8.1.0",
+    "eslint-typegen": "^0.3.2",
+    "eslint-visitor-keys": "^4.1.0",
+    "espree": "^10.2.0",
+    "less": "^4.2.0",
+    "mocha": "^10.7.3",
+    "nyc": "^17.1.0",
+    "postcss-nested": "^6.2.0",
+    "sass": "^1.79.5",
+    "source-map-js": "^1.2.1",
+    "stylus": "^0.64.0",
+    "svelte": "^5.0.0",
+    "svelte-i18n": "^4.0.0",
+    "type-coverage": "^2.29.7",
+    "yaml": "^2.6.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "typeCoverage": {
+    "atLeast": 98.9,
+    "cache": true,
+    "detail": true,
+    "ignoreAsAssertion": true,
+    "ignoreNested": true,
+    "ignoreNonNullAssertion": true,
+    "showRelativePath": true,
+    "strict": true,
+    "update": true
+  },
+  "scripts": {
+    "build": "pnpm run build:meta && pnpm run build:ts",
+    "build:meta": "pnpm run ts ./tools/update-meta.ts",
+    "build:ts": "tsc --project ./tsconfig.build.json",
+    "clean": "rimraf .nyc_output lib coverage build .svelte-kit svelte.config-dist.js",
+    "cover": "nyc --reporter=lcov pnpm run test",
+    "debug": "pnpm run mocha \"tests/src/**/*.ts\" --reporter dot --timeout 60000",
+    "lint": "run-p lint:*",
+    "lint-fix": "pnpm run lint:es --fix && pnpm run lint:style --fix",
+    "lint:es": "eslint --cache .",
+    "mocha": "pnpm run ts ./node_modules/mocha/bin/mocha.js",
+    "new": "pnpm run ts ./tools/new-rule.ts",
+    "prebuild": "pnpm run clean",
+    "prerelease": "pnpm run clean && pnpm run build",
+    "release": "changeset publish",
+    "test": "pnpm run mocha \"tests/src/**/*.ts\" --reporter dot --timeout 60000",
+    "test:debug": "env-cmd -e debug pnpm run test",
+    "test:update-fixtures": "env-cmd -e update-fixtures pnpm run test",
+    "ts": "node -r esbuild-register",
+    "typecov": "type-coverage",
+    "update": "pnpm run ts ./tools/update.ts",
+    "version": "env-cmd -e version pnpm run update",
+    "version:ci": "env-cmd -e version-ci pnpm run update && changeset version"
+  }
+}

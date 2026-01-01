@@ -1,0 +1,48 @@
+{
+  "pages": 16,
+  "items": 1287,
+  "groupedItems": 431,
+  "changes": 60,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":1,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"The Im pact of Open Access Latin American Scholarship 1","line":0,"x":90.024,"y":99.864,"width":"178.34","height":"8.04","fontName":["ABCDEE+Arial Narrow,Bold"],"dir":["ltr"]}
+{"page":2,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"The Im pact of Open Access Latin American Scholarship 2","line":0,"x":90.024,"y":99.864,"width":"178.34","height":"8.04","fontName":["ABCDEE+Arial Narrow,Bold"],"dir":["ltr"]}
+{"page":3,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"The Im pact of Open Access Latin American Scholarship 3","line":0,"x":90.024,"y":99.864,"width":"178.34","height":"8.04","fontName":["ABCDEE+Arial Narrow,Bold"],"dir":["ltr"]}
+{"page":4,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"The Im pact of Open Access Latin American Scholarship 4","line":0,"x":90.024,"y":99.864,"width":"178.34","height":"8.04","fontName":["ABCDEE+Arial Narrow,Bold"],"dir":["ltr"]}
+{"page":5,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"The Im pact of Open Access Latin American Scholarship 5","line":0,"x":90.024,"y":99.864,"width":"178.34","height":"8.04","fontName":["ABCDEE+Arial Narrow,Bold"],"dir":["ltr"]}
+{"page":6,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"The Im pact of Open Access Latin American Scholarship 6","line":0,"x":90.024,"y":99.864,"width":"178.34","height":"8.04","fontName":["ABCDEE+Arial Narrow,Bold"],"dir":["ltr"]}
+{"page":7,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"The Im pact of Open Access Latin American Scholarship 7","line":0,"x":90.024,"y":99.864,"width":"178.34","height":"8.04","fontName":["ABCDEE+Arial Narrow,Bold"],"dir":["ltr"]}
+{"page":8,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"The Im pact of Open Access Latin American Scholarship 8","line":0,"x":90.024,"y":99.864,"width":"178.34","height":"8.04","fontName":["ABCDEE+Arial Narrow,Bold"],"dir":["ltr"]}
+{"page":9,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"The Im pact of Open Access Latin American Scholarship 9","line":0,"x":90.024,"y":99.864,"width":"178.34","height":"8.04","fontName":["ABCDEE+Arial Narrow,Bold"],"dir":["ltr"]}
+{"page":10,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"The Im pact of Open Access Latin American Scholarship 10","line":0,"x":90.024,"y":99.864,"width":"182.11","height":"8.04","fontName":["ABCDEE+Arial Narrow,Bold"],"dir":["ltr"]}
+{"page":11,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"The Im pact of Open Access Latin American Scholarship 11","line":0,"x":90.024,"y":99.864,"width":"182.11","height":"8.04","fontName":["ABCDEE+Arial Narrow,Bold"],"dir":["ltr"]}
+{"page":12,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"The Im pact of Open Access Latin American Scholarship 12","line":0,"x":90.024,"y":99.864,"width":"182.11","height":"8.04","fontName":["ABCDEE+Arial Narrow,Bold"],"dir":["ltr"]}
+{"page":13,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"The Im pact of Open Access Latin American Scholarship 13","line":0,"x":90.024,"y":99.864,"width":"182.11","height":"8.04","fontName":["ABCDEE+Arial Narrow,Bold"],"dir":["ltr"]}
+{"page":14,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"The Im pact of Open Access Latin American Scholarship 14","line":0,"x":90.024,"y":99.864,"width":"182.11","height":"8.04","fontName":["ABCDEE+Arial Narrow,Bold"],"dir":["ltr"]}
+{"page":15,"change":"Removal","score":"2.00: (1.00 + 1.00)","str":"The Im pact of Open Access Latin American Scholarship 15","line":0,"x":90.024,"y":99.864,"width":"182.11","height":"8.04","fontName":["ABCDEE+Arial Narrow,Bold"],"dir":["ltr"]}

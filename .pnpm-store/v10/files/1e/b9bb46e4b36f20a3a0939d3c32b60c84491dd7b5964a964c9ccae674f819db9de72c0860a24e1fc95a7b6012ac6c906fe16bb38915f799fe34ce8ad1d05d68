@@ -1,0 +1,87 @@
+{
+  "pages": 526,
+  "items": 52758,
+  "groupedItems": 31353,
+  "changes": 104,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "token types"
+    },
+    {
+      "name": "types"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":0,"change":"ContentChange","types":["H1"],"str":"Achieving the ","dir":"ltr","width":"278.10","height":"66.00","transform":["66.00","0.00","0.00","66.00","41.38","353.78"],"fontName":"RMSSHF+SwjtkcMqqdthDkwlwrMyriadPro-Cond","x":41.38153078000005,"y":353.78381345,"line":0}
+{"page":0,"change":"ContentChange","types":["H1"],"str":"Paris Climate ","dir":"ltr","width":"263.00","height":"66.00","transform":["66.00","0.00","0.00","66.00","41.38","293.79"],"fontName":"RMSSHF+SwjtkcMqqdthDkwlwrMyriadPro-Cond","x":41.38153078000005,"y":293.78979492,"line":1}
+{"page":0,"change":"ContentChange","types":["H1"],"str":"Agreement Goals","dir":"ltr","width":"335.65","height":"66.00","transform":["66.00","0.00","0.00","66.00","41.38","233.80"],"fontName":"RMSSHF+SwjtkcMqqdthDkwlwrMyriadPro-Cond","x":41.38153078000005,"y":233.79580687,"line":2}
+{"page":0,"change":"ContentChange","types":["H2"],"str":"Sven Teske    Editor","line":3,"x":43.72393799000008,"y":450.26321411,"width":"151.82","height":"28.00","fontName":["RMSSHF+SwjtkcMqqdthDkwlwrMyriadPro-Cond","RMSSHF+BsmttdLmcghkPtgllqMyriadPro-CondIt"],"dir":["ltr"]}
+{"page":0,"change":"ContentChange","types":["H2"],"str":"Global and Regional 100% Renewable","dir":"ltr","width":"324.10","height":"28.00","transform":["28.00","0.00","0.00","28.00","43.72","186.57"],"fontName":"RMSSHF+SwjtkcMqqdthDkwlwrMyriadPro-Cond","x":43.72393799000008,"y":186.56610107,"line":4}
+{"page":0,"change":"ContentChange","types":["H2"],"str":"Energy Scenarios with Non-energy GHG","dir":"ltr","width":"335.43","height":"28.00","transform":["28.00","0.00","0.00","28.00","43.72","158.57"],"fontName":"RMSSHF+SwjtkcMqqdthDkwlwrMyriadPro-Cond","x":43.72393799000008,"y":158.56610107,"line":5}
+{"page":0,"change":"ContentChange","types":["H2"],"str":"Pathways for +1.5°C and +2°C","dir":"ltr","width":"258.59","height":"28.00","transform":["28.00","0.00","0.00","28.00","43.72","130.57"],"fontName":"RMSSHF+SwjtkcMqqdthDkwlwrMyriadPro-Cond","x":43.72393799000008,"y":130.56610107,"line":6}
+{"page":1,"change":"ContentChange","types":["H4"],"str":"Achieving the Paris Climate Agreement Goals","dir":"ltr","width":"295.77","height":"16.00","transform":["16.00","0.00","0.00","16.00","53.86","592.46"],"fontName":"TGOZWB+JkylrpTwghlkTlcrnvTimesLTStd-Roman","x":53.85829925,"y":592.46166992,"line":0}
+{"page":2,"change":"ContentChange","types":["H4"],"str":"Sven Teske","dir":"ltr","width":"72.69","height":"16.00","transform":["16.00","0.00","0.00","16.00","53.86","593.06"],"fontName":"TGOZWB+JkylrpTwghlkTlcrnvTimesLTStd-Roman","x":53.85829925,"y":593.06170654,"line":0}
+{"page":2,"change":"ContentChange","types":["H2"],"str":"Achieving the Paris Climate ","dir":"ltr","width":"322.42","height":"28.00","transform":["28.00","0.00","0.00","28.00","53.86","479.06"],"fontName":"TGOZWB+JkylrpTwghlkTlcrnvTimesLTStd-Roman","x":53.85829925,"y":479.06170654,"line":2}
+{"page":2,"change":"ContentChange","types":["H2"],"str":"Agreement Goals","dir":"ltr","width":"196.73","height":"28.00","transform":["28.00","0.00","0.00","28.00","53.86","449.07"],"fontName":"TGOZWB+JkylrpTwghlkTlcrnvTimesLTStd-Roman","x":53.85829925,"y":449.07369995,"line":3}
+{"page":2,"change":"ContentChange","types":["H3"],"str":"Global and Regional 100% Renewable ","dir":"ltr","width":"283.55","height":"18.00","transform":["18.00","0.00","0.00","18.00","53.86","413.06"],"fontName":"TGOZWB+JkylrpTwghlkTlcrnvTimesLTStd-Roman","x":53.85829925,"y":413.06170654,"line":4}
+{"page":2,"change":"ContentChange","types":["H3"],"str":"Energy Scenarios with Non-energy GHG ","dir":"ltr","width":"300.78","height":"18.00","transform":["18.00","0.00","0.00","18.00","53.86","393.06"],"fontName":"TGOZWB+JkylrpTwghlkTlcrnvTimesLTStd-Roman","x":53.85829925,"y":393.0637207,"line":5}
+{"page":2,"change":"ContentChange","types":["H3"],"str":"Pathways for +1.5°C and +2°C","dir":"ltr","width":"223.74","height":"18.00","transform":["18.00","0.00","0.00","18.00","53.86","373.07"],"fontName":"TGOZWB+JkylrpTwghlkTlcrnvTimesLTStd-Roman","x":53.85829925,"y":373.06570434,"line":6}
+{"page":5,"change":"ContentChange","types":["H4"],"str":"Climate Model: Foreword","dir":"ltr","width":"177.77","height":"16.00","transform":["16.00","0.00","0.00","16.00","53.86","592.46"],"fontName":"MTXJCP+NvqljkWdwfdjNcmgdgTimesLTStd-Bold","x":53.85829925,"y":592.461792,"line":28}
+{"page":8,"change":"ContentChange","types":["H4"],"str":"Contact Information","dir":"ltr","width":"141.36","height":"16.00","transform":["16.00","0.00","0.00","16.00","53.86","592.46"],"fontName":"MTXJCP+NvqljkWdwfdjNcmgdgTimesLTStd-Bold","x":53.85829925,"y":592.461792,"line":1}
+{"page":10,"change":"ContentChange","types":["H4"],"str":"Executive Summary","dir":"ltr","width":"137.89","height":"16.00","transform":["16.00","0.00","0.00","16.00","53.86","592.46"],"fontName":"MTXJCP+NvqljkWdwfdjNcmgdgTimesLTStd-Bold","x":53.85829925,"y":592.461792,"line":1}
+{"page":33,"change":"ContentChange","types":["H4"],"str":"Acknowledgement","dir":"ltr","width":"126.05","height":"16.00","transform":["16.00","0.00","0.00","16.00","53.86","592.46"],"fontName":"MTXJCP+NvqljkWdwfdjNcmgdgTimesLTStd-Bold","x":53.85829925,"y":592.461792,"line":1}
+{"page":34,"change":"ContentChange","types":["H4"],"str":"Contents","dir":"ltr","width":"61.33","height":"16.00","transform":["16.00","0.00","0.00","16.00","53.86","592.46"],"fontName":"MTXJCP+NvqljkWdwfdjNcmgdgTimesLTStd-Bold","x":53.85829925,"y":592.461792,"line":1}
+{"page":47,"change":"ContentChange","types":["H4"],"str":"List of Tables","dir":"ltr","width":"91.39","height":"16.00","transform":["16.00","0.00","0.00","16.00","53.86","592.46"],"fontName":"MTXJCP+NvqljkWdwfdjNcmgdgTimesLTStd-Bold","x":53.85829925,"y":592.461792,"line":29}
+{"page":54,"change":"ContentChange","types":["H4"],"str":"Introduction","dir":"ltr","width":"86.83","height":"16.00","transform":["16.00","0.00","0.00","16.00","53.86","576.03"],"fontName":"BVRIAQ+VnxxvjKxlcpvTrncyxTimesLTStd-Bold","x":53.85829828999998,"y":576.02770996,"line":4}
+{"page":58,"change":"ContentChange","types":["H4"],"str":"State of Research","dir":"ltr","width":"118.78","height":"16.00","transform":["16.00","0.00","0.00","16.00","53.86","576.03"],"fontName":"FBKGDD+TgytvtDqsrjtPqxhkhTimesLTStd-Bold","x":53.85829828999998,"y":576.02770996,"line":4}
+{"page":77,"change":"ContentChange","types":["H4"],"str":"Methodology","dir":"ltr","width":"89.78","height":"16.00","transform":["16.00","0.00","0.00","16.00","53.86","576.03"],"fontName":"XYDAEO+QqjpynNrvgmlJcvqybTimesLTStd-Bold","x":53.85829828999998,"y":576.02770996,"line":4}
+{"page":90,"change":"ContentChange","types":["H5"],"str":"∑∑ == ∑ =","line":28,"x":132.10830688,"y":347.31600952,"width":"59.38","height":"15.00","fontName":["CYMZWE+XmrcwlVmqqxgJlwbyfSymbolMT"],"dir":["ltr"]}
+{"page":92,"change":"ContentChange","types":["H5"],"str":"() = ∑ () ⋅ () ⋅ η et ()","line":12,"x":162.57699584,"y":283.04168701,"width":"94.77","height":"15.00","fontName":["CYMZWE+FxbflyGsfbsnXpxckjSymbolMT","CYMZWE+YkcncjSmyngrRlmqtyTimesLTStd-Italic"],"dir":["ltr"]}
+{"page":92,"change":"ContentChange","types":["H5"],"str":"() = ∑ fe ()","line":17,"x":198.07699584,"y":251.04170227,"width":"52.15","height":"15.00","fontName":["CYMZWE+VmnspxJjprylKxyfwnSymbolMT","CYMZWE+PrjxyqBrsjnlCyvkvxTimes-Italic"],"dir":["ltr"]}
+{"page":92,"change":"ContentChange","types":["H5"],"str":"() = ∑∑ () = ∑ () = ∑∑∑ () ⋅ et t tt fe","line":26,"x":92.38950347,"y":219.01049804,"width":"300.35","height":"15.00","fontName":["CYMZWE+FxbflyGsfbsnXpxckjSymbolMT","CYMZWE+RkrdqcCckkvhKdwwkcTimesLTStd-Italic"],"dir":["ltr"]}
+{"page":93,"change":"ContentChange","types":["H5"],"str":"() = ∑∑ () ⋅ () ⋅ η ct ()","line":22,"x":160.35830688,"y":419.50350952,"width":"105.83","height":"15.00","fontName":["CYMZWE+FxbflyGsfbsnXpxckjSymbolMT","CYMZWE+LssxbjNdlrtrDyqlwdTimes-Italic"],"dir":["ltr"]}
+{"page":93,"change":"ContentChange","types":["H5"],"str":"() = ∑ pe ()","line":25,"x":196.88949584,"y":385.50350952,"width":"53.37","height":"15.00","fontName":["CYMZWE+VmnspxJjprylKxyfwnSymbolMT","CYMZWE+BshqpvSpkmshWkjxslTimesLTStd-Italic"],"dir":["ltr"]}
+{"page":110,"change":"ContentChange","types":["H5"],"str":"∑ −","line":21,"x":208.01449584,"y":84.50782775,"width":"13.87","height":"15.00","fontName":["CYMZWE+FqsltlTjdspvJgbmhfSymbolMT"],"dir":["ltr"]}
+{"page":111,"change":"ContentChange","types":["H5"],"str":"1 ∑ −","line":8,"x":214.10830688,"y":551.47229003,"width":"16.76","height":"15.00","fontName":["CYMZWE+XmxrchHpvfbwGtgfhrTimesLTStd-Roman","CYMZWE+LlcbxwCjblldRrfmkqSymbolMT"],"dir":["ltr"]}
+{"page":131,"change":"ContentChange","types":["H4"],"str":"Mitigation Scenarios for Non-energy GHG","dir":"ltr","width":"290.97","height":"16.00","transform":["16.00","0.00","0.00","16.00","53.86","576.03"],"fontName":"YSZZWH+PvgvkqLpcflpCgcwwnTimesLTStd-Bold","x":53.85829828999998,"y":576.02770996,"line":4}
+{"page":144,"change":"ContentChange","types":["H4"],"str":"Main Assumptions for Energy Pathways","dir":"ltr","width":"274.85","height":"16.00","transform":["16.00","0.00","0.00","16.00","53.86","576.03"],"fontName":"WOKFGB+HpngqgBwvknsFxxyjwTimesLTStd-Bold","x":53.85829828999998,"y":576.02770996,"line":4}
+{"page":182,"change":"ContentChange","types":["H4"],"str":"Transport Transition Concepts","dir":"ltr","width":"210.49","height":"16.00","transform":["16.00","0.00","0.00","16.00","53.86","576.03"],"fontName":"SDLUMT+NnrmnsRgkybwGqmvwqTimesLTStd-Bold","x":53.85829828999998,"y":576.02770996,"line":4}
+{"page":184,"change":"ContentChange","types":["H6"],"str":"2015","dir":"ltr","width":"29.21","height":"14.43","transform":["14.43","0.00","0.00","14.43","165.47","520.24"],"fontName":"LQUESH+MwrddlDxpdpgBwjtttCalibri-Bold","x":165.46769714,"y":520.24072265,"line":20}
+{"page":211,"change":"ContentChange","types":["H4"],"str":"Renewable Energy Resource Assessment","dir":"ltr","width":"276.40","height":"16.00","transform":["16.00","0.00","0.00","16.00","53.86","576.03"],"fontName":"YSCVIX+JkwjxdHrklctCdhgywTimesLTStd-Bold","x":53.85829828999998,"y":576.02770996,"line":4}
+{"page":224,"change":"ContentChange","types":["H4"],"str":"Energy Scenario Results","dir":"ltr","width":"166.94","height":"16.00","transform":["16.00","0.00","0.00","16.00","53.86","576.03"],"fontName":"HCVGTA+HrrpsrRfvtprJnvfvdTimesLTStd-Bold","x":53.85829828999998,"y":576.02770996,"line":4}
+{"page":451,"change":"ContentChange","types":["H4"],"str":"Trajectories for a Just Transition ","dir":"ltr","width":"228.45","height":"16.00","transform":["16.00","0.00","0.00","16.00","53.86","576.03"],"fontName":"YCQPZS+ChmcpvXdssdrTttfrxTimesLTStd-Bold","x":53.85829828999998,"y":576.02770996,"line":4}
+{"page":451,"change":"ContentChange","types":["H4"],"str":"of the Fossil Fuel Industry","dir":"ltr","width":"179.17","height":"16.00","transform":["16.00","0.00","0.00","16.00","53.86","558.03"],"fontName":"YCQPZS+ChmcpvXdssdrTttfrxTimesLTStd-Bold","x":53.85829828999998,"y":558.02770996,"line":5}
+{"page":460,"change":"ContentChange","types":["H4"],"str":"Just Transition: Employment Projections ","dir":"ltr","width":"284.91","height":"16.00","transform":["16.00","0.00","0.00","16.00","53.86","576.03"],"fontName":"YEUVQS+SdnkylMywmbtPfwdngTimesLTStd-Bold","x":53.85829828999998,"y":576.02770996,"line":4}
+{"page":460,"change":"ContentChange","types":["H4"],"str":"for the 2.0 °C and 1.5 °C Scenarios","dir":"ltr","width":"236.83","height":"16.00","transform":["16.00","0.00","0.00","16.00","53.86","558.03"],"fontName":"YEUVQS+SdnkylMywmbtPfwdngTimesLTStd-Bold","x":53.85829828999998,"y":558.02770996,"line":5}
+{"page":483,"change":"ContentChange","types":["H4"],"str":"Requirements for Minerals and Metals ","dir":"ltr","width":"269.05","height":"16.00","transform":["16.00","0.00","0.00","16.00","53.86","576.03"],"fontName":"SCYBSO+VrwybmLnjnkyKbcngcTimesLTStd-Bold","x":53.85829828999998,"y":576.02770996,"line":4}
+{"page":483,"change":"ContentChange","types":["H4"],"str":"for 100% Renewable Scenarios","dir":"ltr","width":"212.46","height":"16.00","transform":["16.00","0.00","0.00","16.00","53.86","558.03"],"fontName":"SCYBSO+VrwybmLnjnkyKbcngcTimesLTStd-Bold","x":53.85829828999998,"y":558.02770996,"line":5}
+{"page":504,"change":"ContentChange","types":["H4"],"str":"Implications of the Developed Scenarios ","dir":"ltr","width":"276.48","height":"16.00","transform":["16.00","0.00","0.00","16.00","53.86","576.03"],"fontName":"UFCXMJ+LwcyhkHrqnwrFvgtyxTimesLTStd-Bold","x":53.85829828999998,"y":576.02770996,"line":4}
+{"page":504,"change":"ContentChange","types":["H4"],"str":"for Climate Change","dir":"ltr","width":"134.69","height":"16.00","transform":["16.00","0.00","0.00","16.00","53.86","558.03"],"fontName":"UFCXMJ+LwcyhkHrqnwrFvgtyxTimesLTStd-Bold","x":53.85829828999998,"y":558.02770996,"line":5}
+{"page":515,"change":"ContentChange","types":["H4"],"str":"Discussion, Conclusions ","dir":"ltr","width":"166.70","height":"16.00","transform":["16.00","0.00","0.00","16.00","53.86","576.03"],"fontName":"WUUJUV+SxpbbsFmqqddLjmwxwTimesLTStd-Bold","x":53.85829828999998,"y":576.02770996,"line":4}
+{"page":515,"change":"ContentChange","types":["H4"],"str":"and Recommendations","dir":"ltr","width":"156.00","height":"16.00","transform":["16.00","0.00","0.00","16.00","53.86","558.03"],"fontName":"WUUJUV+SxpbbsFmqqddLjmwxwTimesLTStd-Bold","x":53.85829828999998,"y":558.02770996,"line":5}
+{"page":532,"change":"ContentChange","types":["H4"],"str":"Annex","dir":"ltr","width":"44.45","height":"16.00","transform":["16.00","0.00","0.00","16.00","53.86","592.46"],"fontName":"FAZCPE+LhdrkvNllvybLsjfmjTimesLTStd-Bold","x":53.85829925,"y":592.461792,"line":1}

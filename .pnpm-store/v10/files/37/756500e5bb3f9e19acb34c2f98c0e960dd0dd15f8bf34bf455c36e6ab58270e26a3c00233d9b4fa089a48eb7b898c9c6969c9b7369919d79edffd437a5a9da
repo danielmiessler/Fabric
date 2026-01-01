@@ -1,0 +1,48 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const ItemTransformer_1 = require("./ItemTransformer");
+const LineItemMerger_1 = require("../debug/LineItemMerger");
+const groupingUtils_1 = require("../support/groupingUtils");
+const items_1 = require("../support/items");
+const stringFunctions_1 = require("../support/stringFunctions");
+class DetectListItems extends ItemTransformer_1.default {
+    constructor() {
+        super('Detect List Items', 'Detect Lists with nesting', {
+            requireColumns: ['str'],
+            debug: {
+                // showAll: true,
+                itemMerger: new LineItemMerger_1.default(false),
+            },
+        });
+    }
+    transform(context, inputItems) {
+        let foundListItems = 0;
+        let foundNumberedItems = 0;
+        const uuidsToType = new Map();
+        (0, groupingUtils_1.groupByLine)(inputItems).forEach((lineItems) => {
+            const types = lineItems[0].data['types'];
+            if (!types) {
+                const firstText = lineItems[0].data['str'];
+                if ((0, stringFunctions_1.isListItemCharacter)(firstText)) {
+                    foundListItems++;
+                    lineItems.forEach((i) => uuidsToType.set(i.uuid, 'LIST'));
+                }
+                else if ((0, stringFunctions_1.isNumberedListItem)(firstText)) {
+                    foundNumberedItems++;
+                    lineItems.forEach((i) => uuidsToType.set(i.uuid, 'NUMBERED_LIST'));
+                }
+            }
+        });
+        return {
+            items: inputItems.map((item) => {
+                const listType = uuidsToType.get(item.uuid);
+                if (listType) {
+                    return (0, items_1.itemWithType)(item, listType);
+                }
+                return item;
+            }),
+            messages: [`Detected ${foundListItems} list items`, `Detected ${foundNumberedItems} numbered list items`],
+        };
+    }
+}
+exports.default = DetectListItems;

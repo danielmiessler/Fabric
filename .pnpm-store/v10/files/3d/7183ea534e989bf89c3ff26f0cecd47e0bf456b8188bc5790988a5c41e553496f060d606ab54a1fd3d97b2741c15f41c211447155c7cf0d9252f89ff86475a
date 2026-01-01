@@ -1,0 +1,41 @@
+{
+  "pages": 14,
+  "items": 2430,
+  "groupedItems": 1499,
+  "changes": 2,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "token types"
+    },
+    {
+      "name": "types"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":0,"change":"ContentChange","types":["H1"],"str":"Trace-based Just-in-Time Type Specialization for Dynamic","dir":"ltr","width":"449.09","height":"17.93","transform":["17.93","0.00","0.00","17.93","80.52","700.67"],"fontName":"TACTGM+NimbusRomNo9L-Medi","x":80.5159,"y":700.6706,"line":0}
+{"page":0,"change":"ContentChange","types":["H1"],"str":"Languages","dir":"ltr","width":"82.71","height":"17.93","transform":["17.93","0.00","0.00","17.93","263.71","680.75"],"fontName":"TACTGM+NimbusRomNo9L-Medi","x":263.706,"y":680.7453,"line":1}

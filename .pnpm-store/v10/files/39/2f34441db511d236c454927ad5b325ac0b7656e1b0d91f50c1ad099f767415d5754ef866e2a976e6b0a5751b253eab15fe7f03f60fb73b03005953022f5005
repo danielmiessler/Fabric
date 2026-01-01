@@ -1,0 +1,143 @@
+{
+  "name": "svelte-preprocess",
+  "version": "5.1.4",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "description": "A Svelte preprocessor wrapper with baked-in support for commonly used preprocessors",
+  "author": "Christian Kaisermann <christian@kaisermann.me>",
+  "repository": "https://github.com/sveltejs/svelte-preprocess",
+  "keywords": [
+    "svelte",
+    "preprocess",
+    "less",
+    "stylus",
+    "sass",
+    "scss",
+    "pug",
+    "coffeescript"
+  ],
+  "engines": {
+    "node": ">= 16.0.0"
+  },
+  "packageManager": "pnpm@8.12.1",
+  "volta": {
+    "node": "20.10.0"
+  },
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "prebuild": "node scripts.js rmrf ./dist",
+    "build": "tsc --build tsconfig.build.json",
+    "dev": "pnpm build -w",
+    "test": "jest",
+    "lint": "eslint --ext js,ts .",
+    "format": "prettier --write \"**/*.{ts,js,json}\"",
+    "postinstall": "echo \"[svelte-preprocess] Don't forget to install the preprocessors packages that will be used: sass, stylus, less, postcss & postcss-load-config, coffeescript, pug, etc...\"",
+    "version": "conventional-changelog -p angular -i CHANGELOG.md -s -r 1 && git add CHANGELOG.md",
+    "patch": "npm version patch -m 'chore(release): %s'",
+    "minor": "npm version minor -m 'chore(release): %s'",
+    "major": "npm version major -m 'chore(release): %s'",
+    "prepublishOnly": "pnpm test && pnpm build",
+    "prepare": "husky install"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "lint-staged": {
+    "*.{ts,js,tsx,jsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.json": [
+      "prettier --write"
+    ]
+  },
+  "devDependencies": {
+    "@babel/core": "^7.23.6",
+    "@babel/preset-env": "^7.23.6",
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
+    "@kiwi/eslint-config": "^2.0.2",
+    "@kiwi/prettier-config": "^2.0.2",
+    "@types/babel__core": "^7.20.5",
+    "@types/jest": "^27.5.2",
+    "@types/node": "^14.18.34",
+    "@types/stylus": "^0.48.38",
+    "autoprefixer": "^10.4.16",
+    "babel-minify": "^0.5.2",
+    "coffeescript": "^2.7.0",
+    "conventional-changelog-cli": "^2.2.2",
+    "eslint": "^8.29.0",
+    "husky": "^8.0.2",
+    "jest": "^29.5.0",
+    "less": "^3.13.1",
+    "lint-staged": "^10.5.4",
+    "postcss": "^8.4.32",
+    "postcss-easy-import": "^4.0.0",
+    "postcss-load-config": "^3.1.4",
+    "prettier": "^2.8.1",
+    "pug": "^3.0.2",
+    "sass": "^1.56.2",
+    "stylus": "^0.55.0",
+    "sugarss": "^4.0.0",
+    "svelte": "^3.54.0",
+    "ts-jest": "^29.1.1",
+    "typescript": "^5.0.2"
+  },
+  "dependencies": {
+    "@types/pug": "^2.0.6",
+    "detect-indent": "^6.1.0",
+    "magic-string": "^0.30.5",
+    "sorcery": "^0.11.0",
+    "strip-indent": "^3.0.0"
+  },
+  "peerDependencies": {
+    "@babel/core": "^7.10.2",
+    "coffeescript": "^2.5.1",
+    "less": "^3.11.3 || ^4.0.0",
+    "postcss": "^7 || ^8",
+    "postcss-load-config": "^2.1.0 || ^3.0.0 || ^4.0.0 || ^5.0.0",
+    "pug": "^3.0.0",
+    "sass": "^1.26.8",
+    "stylus": "^0.55.0",
+    "sugarss": "^2.0.0 || ^3.0.0 || ^4.0.0",
+    "svelte": "^3.23.0 || ^4.0.0-next.0 || ^4.0.0 || ^5.0.0-next.0",
+    "typescript": ">=3.9.5 || ^4.0.0 || ^5.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@babel/core": {
+      "optional": true
+    },
+    "coffeescript": {
+      "optional": true
+    },
+    "less": {
+      "optional": true
+    },
+    "postcss": {
+      "optional": true
+    },
+    "postcss-load-config": {
+      "optional": true
+    },
+    "pug": {
+      "optional": true
+    },
+    "sass": {
+      "optional": true
+    },
+    "stylus": {
+      "optional": true
+    },
+    "sugarss": {
+      "optional": true
+    },
+    "typescript": {
+      "optional": true
+    }
+  }
+}

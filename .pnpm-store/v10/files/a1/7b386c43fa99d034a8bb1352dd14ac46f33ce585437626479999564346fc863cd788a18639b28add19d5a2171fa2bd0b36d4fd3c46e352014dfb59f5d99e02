@@ -1,0 +1,68 @@
+{
+  "name": "@skeletonlabs/tw-plugin",
+  "version": "0.3.1",
+  "description": "Core plugin for Skeleton.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/skeletonlabs/skeleton.git"
+  },
+  "bugs": {
+    "url": "https://github.com/skeletonlabs/skeleton/issues"
+  },
+  "keywords": [
+    "cli",
+    "components",
+    "ui",
+    "component",
+    "svelte",
+    "component-library",
+    "ui-components",
+    "ui-framework",
+    "tailwind",
+    "tailwindcss",
+    "components-library",
+    "sveltekit"
+  ],
+  "license": "MIT",
+  "homepage": "https://skeleton.dev/",
+  "devDependencies": {
+    "@types/node": "18.16.16",
+    "@types/postcss-import": "^14.0.0",
+    "@typescript-eslint/eslint-plugin": "5.59.9",
+    "@typescript-eslint/parser": "5.59.9",
+    "eslint": "8.42.0",
+    "eslint-config-prettier": "8.8.0",
+    "postcss": "8.4.24",
+    "postcss-import": "15.1.0",
+    "postcss-js": "4.0.1",
+    "postcss-load-config": "4.0.1",
+    "postcss-selector-parser": "^6.0.13",
+    "prettier": "2.8.8",
+    "tailwindcss": "3.3.2",
+    "tslib": "2.5.3",
+    "tsup": "^6.7.0",
+    "tsx": "^3.12.7",
+    "typescript": "5.0.3"
+  },
+  "peerDependencies": {
+    "tailwindcss": ">=3.0.0"
+  },
+  "type": "commonjs",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "./dist/**/*.js",
+    "./dist/**/*.d.ts",
+    "./dist/**/*.cjs",
+    "./dist/**/*.d.cts"
+  ],
+  "scripts": {
+    "build": "tsx ./scripts/generate-jss.ts && tsup",
+    "sync": "pnpm build:jss && tsup",
+    "package": "pnpm build:jss && tsup",
+    "lint": "prettier --ignore-path .prettierignore --check --plugin-search-dir=. . && eslint --fix --ignore-path .gitignore .",
+    "format": "prettier --ignore-path .prettierignore --write --plugin-search-dir=. .",
+    "build:jss": "tsx ./scripts/generate-jss.ts",
+    "convert": "tsx ./scripts/convert-theme.ts && pnpm format"
+  }
+}

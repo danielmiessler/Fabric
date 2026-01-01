@@ -1,0 +1,96 @@
+<script>import PlayButton from "./PlayButton.svelte";
+export let id;
+export let title = "";
+export let thumbnail = "sddefault";
+export let showTitle = true;
+let showVideo = false;
+let embedUrl = "";
+let thumbnailUrl = "";
+let youtubeUrl = "";
+const params = new URLSearchParams({ autoplay: "1", playsinline: "1" });
+$:
+  embedUrl = `https://www.youtube-nocookie.com/embed/${id}?${params.toString()}`;
+$:
+  thumbnailUrl = `https://i.ytimg.com/vi/${id}/${thumbnail}.jpg`;
+$:
+  youtubeUrl = `https://www.youtube.com/watch?v=${id}`;
+async function handleClick(event) {
+  if (event.metaKey || event.ctrlKey)
+    return;
+  event.preventDefault();
+  showVideo = true;
+}
+</script>
+
+<a
+	href={youtubeUrl}
+	target="_blank"
+	rel="noopener noreferrer"
+	class="Youtube"
+	style="background-image: url({thumbnailUrl});"
+	on:click={handleClick}
+>
+	{#if showVideo}
+		<iframe
+			title={title || 'YouTube video'}
+			src={embedUrl}
+			allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+			allowfullscreen
+		></iframe>
+	{:else}
+		{#if showTitle && title}
+			<div class="title">{title}</div>
+		{/if}
+		{#if $$slots.playButton}
+			<slot name="playButton" />
+		{:else}
+			<PlayButton />
+		{/if}
+	{/if}
+</a>
+
+<style>
+	.title {
+		position: absolute;
+		top: 0;
+		height: 50px;
+		width: 100%;
+		box-sizing: border-box;
+		padding: 20px 10px 10px 20px;
+		font-family: 'YouTube Noto', Roboto, Arial, Helvetica, sans-serif;
+		font-size: 18px;
+		color: #fff;
+		text-shadow: 0 0 2px rgb(0 0 0 / 50%);
+		text-overflow: ellipsis;
+		overflow: hidden;
+		background: rgb(0, 0, 0);
+		background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.66) 100%);
+	}
+	.Youtube {
+		display: block;
+		position: relative;
+		background-position: center center;
+		background-size: cover;
+		cursor: pointer;
+		max-width: 720px;
+	}
+
+	:global(.Youtube:hover .PlayButton) {
+		filter: grayscale(0);
+	}
+
+	.Youtube::after {
+		content: '';
+		display: block;
+		padding-bottom: calc(100% / (16 / 9));
+	}
+
+	.Youtube iframe {
+		position: absolute;
+		border: none;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+	}
+</style>

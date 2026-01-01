@@ -1,0 +1,76 @@
+{
+  "pages": 60,
+  "items": 3989,
+  "groupedItems": 1439,
+  "changes": 43,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "token types"
+    },
+    {
+      "name": "types",
+      "annotation": "ADDED"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {
+    "toc": {
+      "tocHeadlineItems": [
+        {
+          "page": 1,
+          "text": "all went!”"
+        }
+      ],
+      "pages": [
+        1
+      ],
+      "detectedHeadlineLevels": {}
+    },
+    "headlineTypeToHeightRange": {
+      "H2": {
+        "min": 15.96,
+        "max": 27.96
+      }
+    }
+  }
+}
+{"page":1,"change":"Removal","str":"Acknowledgements page 3","line":2,"x":104.66,"y":463.9,"width":"138.33","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":1,"change":"Removal","str":"References page 3","line":3,"x":104.66,"y":444.94,"width":"94.35","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":1,"change":"Removal","str":"Distribution & reproduction page 3","line":4,"x":104.66,"y":425.98,"width":"178.69","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":1,"change":"Removal","str":"Executive summary page 4","line":5,"x":104.66,"y":406.99,"width":"138.33","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":1,"change":"Removal","str":"Introduction page 5","line":6,"x":104.66,"y":387.91,"width":"99.26","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":1,"change":"Removal","str":"Where can things go wrong? page 6","line":7,"x":104.66,"y":368.95,"width":"185.87","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":1,"change":"Removal","str":"How do you achieve it? (The six step improvement process) page 8","line":8,"x":104.66,"y":349.99,"width":"348.61","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":1,"change":"Removal","str":"Useful resources & references p age 40","line":9,"x":104.66,"y":127.22,"width":"200.07","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":1,"change":"Removal","str":"Appendice s page  42","line":10,"x":104.66,"y":108.26,"width":"103.27","height":"11.04","fontName":[null],"dir":["ltr"]}
+{"page":1,"change":"Removal","str":"all went!”","dir":"ltr","width":"46.06","height":"12.65","transform":["12.00","0.00","4.00","12.00","551.35","183.38"],"fontName":"ABCDEE+Eras Light ITC","x":551.35,"y":183.38,"line":27}
+{"page":2,"change":"ContentChange","types":["H2"],"str":"Acknowledgements","dir":"ltr","width":"138.58","height":"15.96","transform":["15.96","0.00","0.00","15.96","99.26","523.54"],"x":99.264,"y":523.54,"line":1}
+{"page":2,"change":"ContentChange","types":["H2"],"str":"References ","dir":"ltr","width":"86.12","height":"15.96","transform":["15.96","0.00","0.00","15.96","99.26","303.05"],"x":99.264,"y":303.05,"line":15}
+{"page":3,"change":"ContentChange","types":["H2"],"str":"Executive summary","dir":"ltr","width":"263.08","height":"27.96","transform":["27.96","0.00","0.00","27.96","99.26","512.26"],"x":99.264,"y":512.26,"line":1}
+{"page":4,"change":"ContentChange","types":["H2"],"str":"Int roduction","line":1,"x":99.264,"y":512.26,"width":"163.15","height":"27.96","fontName":[null],"dir":["ltr"]}
+{"page":5,"change":"ContentChange","types":["H2"],"str":"Where can things go wrong?","dir":"ltr","width":"384.06","height":"27.96","transform":["27.96","0.00","0.00","27.96","99.26","512.14"],"x":99.264,"y":512.14,"line":1}
+{"page":39,"change":"ContentChange","types":["H2"],"str":"U seful r esources","line":1,"x":53.88,"y":509.38,"width":"227.01","height":"27.96","fontName":[null],"dir":["ltr"]}
+{"page":41,"change":"ContentChange","types":["H2"],"str":"Appendices","dir":"ltr","width":"158.65","height":"27.96","transform":["27.96","0.00","0.00","27.96","53.88","509.50"],"fontName":"Arial,Bold","x":53.88,"y":509.5,"line":1}

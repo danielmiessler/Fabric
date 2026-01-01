@@ -1,0 +1,1 @@
+{"version":3,"file":"postcss.d.ts","sourceRoot":"","sources":["../../src/processors/postcss.ts"],"names":[],"mappings":"AAIA,OAAO,KAAK,EAAE,iBAAiB,EAAE,OAAO,EAAE,MAAM,UAAU,CAAC;AAE3D,0EAA0E;mCAChD,QAAQ,OAAO,KAAG,iBAAiB;AAA7D,wBAsBG"}

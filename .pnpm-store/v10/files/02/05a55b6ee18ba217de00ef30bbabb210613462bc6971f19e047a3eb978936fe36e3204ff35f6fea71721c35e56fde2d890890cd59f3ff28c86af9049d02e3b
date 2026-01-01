@@ -1,0 +1,16 @@
+import ItemTransformer from './ItemTransformer';
+import GlobalDefinition from '../GlobalDefinition';
+import Item from '../Item';
+import ItemResult from '../ItemResult';
+import TransformContext from './TransformContext';
+import TOC from '../TOC';
+export interface HeadlineRange {
+    min: number;
+    max: number;
+}
+export declare const TOC_GLOBAL: GlobalDefinition<TOC>;
+export declare const HEADLINE_TYPE_TO_HEIGHT_RANGE: GlobalDefinition<Record<string, HeadlineRange>>;
+export default class DetectToc extends ItemTransformer {
+    constructor();
+    transform(context: TransformContext, inputItems: Item[]): ItemResult;
+}

@@ -1,0 +1,55 @@
+{
+  "pages": 16,
+  "items": 1242,
+  "groupedItems": 416,
+  "changes": 35,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "token types"
+    },
+    {
+      "name": "types"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":0,"change":"ContentChange","types":["H3"],"str":"Andrew W. Mellon Foundation ","dir":"ltr","width":"225.69","height":"15.96","transform":["15.96","0.00","0.00","15.96","78.02","245.69"],"fontName":"ABCDEE+Georgia,Italic","x":78.024,"y":245.69,"line":0}
+{"page":0,"change":"ContentChange","types":["H3"],"str":"Grant 1711 - 05155","line":1,"x":78.024,"y":224.69,"width":"123.58","height":"15.96","fontName":["ABCDEE+Georgia,Italic"],"dir":["ltr"]}
+{"page":0,"change":"ContentChange","types":["H3"],"str":"December 19 , 2019","line":2,"x":78.024,"y":203.57,"width":"127.25","height":"15.96","fontName":["ABCDEE+Georgia,Italic"],"dir":["ltr"]}
+{"page":0,"change":"ContentChange","types":["H3"],"str":"John Kiplinger","dir":"ltr","width":"107.01","height":"15.96","transform":["15.96","0.00","0.00","15.96","80.66","138.14"],"fontName":"ABCDEE+Georgia,Italic","x":80.664,"y":138.14,"line":3}
+{"page":0,"change":"ContentChange","types":["H3"],"str":"Valerie Yaw ","dir":"ltr","width":"91.40","height":"15.96","transform":["15.96","0.00","0.00","15.96","80.66","117.14"],"fontName":"ABCDEE+Georgia,Italic","x":80.664,"y":117.14,"line":4}
+{"page":0,"change":"ContentChange","types":["H1"],"str":"The Impact of Open Access","dir":"ltr","width":"387.11","height":"36.00","transform":["36.00","0.00","0.00","36.00","75.02","461.11"],"fontName":"ABCDEE+Arial Narrow,Bold","x":75.024,"y":461.11,"line":5}
+{"page":0,"change":"ContentChange","types":["H1"],"str":"Latin American Scholarship :  ","line":6,"x":75.024,"y":413.59,"width":"416.70","height":"36.00","fontName":["ABCDEE+Arial Narrow,Bold"],"dir":["ltr"]}
+{"page":0,"change":"ContentChange","types":["H2"],"str":"Digitizing the Backlist of  El  Colegio de ","line":7,"x":75.024,"y":373.63,"width":"424.66","height":"27.96","fontName":["ABCDEE+Arial Narrow,Bold"],"dir":["ltr"]}
+{"page":0,"change":"ContentChange","types":["H2"],"str":"México’s Press","dir":"ltr","width":"165.77","height":"27.96","transform":["27.96","0.00","0.00","27.96","75.02","341.45"],"fontName":"ABCDEE+Arial Narrow,Bold","x":75.024,"y":341.45,"line":8}
+{"page":0,"change":"ContentChange","types":["H2"],"str":"WHITE PAPER","dir":"ltr","width":"113.99","height":"20.04","transform":["20.04","0.00","0.00","20.04","74.90","534.79"],"fontName":"ABCDEE+Arial Narrow,Bold","x":74.904,"y":534.79,"line":9}
+{"page":4,"change":"ContentChange","types":["H2"],"str":"Summary ","dir":"ltr","width":"95.16","height":"24.00","transform":["24.00","0.00","0.00","24.00","90.02","707.74"],"fontName":"ABCDEE+Arial Narrow,Bold","x":90.024,"y":707.74,"line":1}
+{"page":4,"change":"ContentChange","types":["H2"],"str":"Introduction: History , Context , and ","line":26,"x":90.024,"y":254.81,"width":"324.60","height":"24.00","fontName":["ABCDEE+Arial Narrow,Bold"],"dir":["ltr"]}
+{"page":4,"change":"ContentChange","types":["H2"],"str":"Significance of the Collection ","dir":"ltr","width":"281.06","height":"24.00","transform":["24.00","0.00","0.00","24.00","90.02","227.21"],"fontName":"ABCDEE+Arial Narrow,Bold","x":90.024,"y":227.21,"line":27}
+{"page":6,"change":"ContentChange","types":["H2"],"str":"Our Approach: Selection and Digitization ","dir":"ltr","width":"389.16","height":"24.00","transform":["24.00","0.00","0.00","24.00","90.02","707.74"],"fontName":"ABCDEE+Arial Narrow,Bold","x":90.024,"y":707.74,"line":1}
+{"page":11,"change":"ContentChange","types":["H2"],"str":"Usage : W hat We’ve Learned So Far ","line":1,"x":90.024,"y":676.06,"width":"335.81","height":"24.00","fontName":["ABCDEE+Arial Narrow,Bold","ABCDEE+Arial Narrow,Bold"],"dir":["ltr"]}
+{"page":14,"change":"ContentChange","types":["H2"],"str":"Conclusion ","dir":"ltr","width":"112.54","height":"24.00","transform":["24.00","0.00","0.00","24.00","90.02","183.26"],"fontName":"ABCDEE+Arial Narrow,Bold","x":90.024,"y":183.26,"line":27}

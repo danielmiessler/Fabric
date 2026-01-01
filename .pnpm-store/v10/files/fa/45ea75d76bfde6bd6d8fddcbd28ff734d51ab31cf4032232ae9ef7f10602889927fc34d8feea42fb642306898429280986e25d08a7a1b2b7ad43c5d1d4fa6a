@@ -1,0 +1,109 @@
+{
+  "pages": 4,
+  "items": 134,
+  "groupedItems": 108,
+  "changes": 92,
+  "schema": [
+    {
+      "name": "block"
+    },
+    {
+      "name": "line"
+    },
+    {
+      "name": "token types"
+    },
+    {
+      "name": "types"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":0,"change":"ContentChange","types":["CODE"],"str":"avec le soutien de ","dir":"ltr","width":"60.04","height":"7.66","transform":["7.66","0.00","0.00","7.66","393.76","49.88"],"fontName":"NRVUEW+Futura-Light","x":393.7645,"y":49.8771,"line":3,"block":3}
+{"page":0,"change":"ContentChange","types":["CODE"],"str":"Le  26  mars  dernier,  le  guide  des  spécifi -","block":5,"line":6,"x":316.1299,"y":279.9142,"width":"230.05","height":"11.00","fontName":["NRVUEW+HelveticaNeue-ThinItalic"],"dir":["ltr"]}
+{"page":0,"change":"ContentChange","types":["CODE"],"str":"cations    AFNOR    S76-001    recommande    ","dir":"ltr","width":"242.35","height":"11.00","transform":["11.00","0.00","0.00","11.00","316.13","264.91"],"fontName":"NRVUEW+HelveticaNeue-ThinItalic","x":316.1299,"y":264.9142,"line":7,"block":5}
+{"page":0,"change":"ContentChange","types":["CODE"],"str":"de  laver  ses  masques  à  60°C  pendant  au  ","dir":"ltr","width":"235.14","height":"11.00","transform":["11.00","0.00","0.00","11.00","316.13","249.91"],"fontName":"NRVUEW+HelveticaNeue-ThinItalic","x":316.1299,"y":249.9143,"line":8,"block":5}
+{"page":0,"change":"ContentChange","types":["CODE"],"str":"moins 30 mn. Comment faire pour ceux et ","dir":"ltr","width":"234.64","height":"11.00","transform":["11.00","0.00","0.00","11.00","316.13","234.91"],"fontName":"NRVUEW+HelveticaNeue-ThinItalic","x":316.1299,"y":234.9143,"line":9,"block":5}
+{"page":0,"change":"ContentChange","types":["CODE"],"str":"celles qui n’ont pas de lave-linge ? L’étude ","dir":"ltr","width":"234.12","height":"11.00","transform":["11.00","0.00","0.00","11.00","316.13","219.91"],"fontName":"NRVUEW+HelveticaNeue-ThinItalic","x":316.1299,"y":219.9143,"line":10,"block":5}
+{"page":0,"change":"ContentChange","types":["CODE"],"str":"n°1,  publiée  le  29  mars,  teste  différents  ","dir":"ltr","width":"236.91","height":"11.00","transform":["11.00","0.00","0.00","11.00","316.13","204.91"],"fontName":"NRVUEW+HelveticaNeue-ThinItalic","x":316.1299,"y":204.9143,"line":11,"block":5}
+{"page":0,"change":"ContentChange","types":["CODE"],"str":"récipients de la vie courante permettant de ","dir":"ltr","width":"234.08","height":"11.00","transform":["11.00","0.00","0.00","11.00","316.13","189.91"],"fontName":"NRVUEW+HelveticaNeue-ThinItalic","x":316.1299,"y":189.9143,"line":12,"block":5}
+{"page":0,"change":"ContentChange","types":["CODE"],"str":"maintenir de l’eau chaude à 60°C pendant ","dir":"ltr","width":"234.54","height":"11.00","transform":["11.00","0.00","0.00","11.00","316.13","174.91"],"fontName":"NRVUEW+HelveticaNeue-ThinItalic","x":316.1299,"y":174.9143,"line":13,"block":5}
+{"page":0,"change":"ContentChange","types":["CODE"],"str":"au moins 1/2 heure. Voici l’étude","dir":"ltr","width":"177.24","height":"11.00","transform":["11.00","0.00","0.00","11.00","316.13","159.91"],"fontName":"NRVUEW+HelveticaNeue-ThinItalic","x":316.1299,"y":159.9143,"line":14,"block":5}
+{"page":1,"change":"ContentChange","types":["CODE"],"str":"ETUDE de décroissance de température d’eau chaude","dir":"ltr","width":"385.74","height":"14.00","transform":["14.00","0.00","0.00","14.00","106.82","777.22"],"fontName":"NRVUEW+HelveticaNeue-Medium","x":106.8191,"y":777.2163,"line":27,"block":13}
+{"page":1,"change":"ContentChange","types":["CODE"],"str":"en vue du lavage de masques barrières en tissu ","dir":"ltr","width":"343.73","height":"14.00","transform":["14.00","0.00","0.00","14.00","129.77","760.42"],"fontName":"NRVUEW+HelveticaNeue-Medium","x":129.7717,"y":760.4163,"line":28,"block":13}
+{"page":1,"change":"ContentChange","types":["CODE"],"str":"dans un cadre familial confiné","dir":"ltr","width":"214.24","height":"14.00","transform":["14.00","0.00","0.00","14.00","192.57","743.62"],"fontName":"NRVUEW+HelveticaNeue-Medium","x":192.5685,"y":743.6163,"line":29,"block":13}
+{"page":2,"change":"ContentChange","types":["CODE"],"str":"- Faire bouillir 1,5 l d’eau dans une bouilloire électrique jusqu’à son arrêt automatique","dir":"ltr","width":"400.80","height":"11.00","transform":["11.00","0.00","0.00","11.00","60.94","732.04"],"fontName":"NRVUEW+HelveticaNeue-Light","x":60.9449,"y":732.0402,"line":1,"block":14}
+{"page":2,"change":"ContentChange","types":["CODE"],"str":"- Verser l’eau dans le récipient","dir":"ltr","width":"142.44","height":"11.00","transform":["11.00","0.00","0.00","11.00","60.94","718.04"],"fontName":"NRVUEW+HelveticaNeue-Light","x":60.9449,"y":718.0402,"line":2,"block":14}
+{"page":2,"change":"ContentChange","types":["CODE"],"str":"- Prise de mesure de référence","dir":"ltr","width":"145.92","height":"11.00","transform":["11.00","0.00","0.00","11.00","60.94","704.04"],"fontName":"NRVUEW+HelveticaNeue-Light","x":60.9449,"y":704.0402,"line":3,"block":14}
+{"page":2,"change":"ContentChange","types":["CODE"],"str":"- Relève des mesures toutes les 5 minutes ","dir":"ltr","width":"203.73","height":"11.00","transform":["11.00","0.00","0.00","11.00","60.94","690.04"],"fontName":"NRVUEW+HelveticaNeue-Light","x":60.9449,"y":690.0402,"line":4,"block":14}
+{"page":2,"change":"ContentChange","types":["CODE"],"str":"L’expérience a été réalisée par 2 fois et dans 2 cas de figures :   - sans couvercle","block":15,"line":5,"x":60.9449,"y":662.0402,"width":"378.16","height":"11.00","fontName":["NRVUEW+HelveticaNeue-Light"],"dir":["ltr"]}
+{"page":2,"change":"ContentChange","types":["CODE"],"str":"- avec couvercle (dépose)","dir":"ltr","width":"121.47","height":"11.00","transform":["11.00","0.00","0.00","11.00","384.95","648.04"],"fontName":"NRVUEW+HelveticaNeue-Light","x":384.9499,"y":648.0402,"line":6,"block":15}
+{"page":2,"change":"ContentChange","types":["CODE"],"str":"Notes :","dir":"ltr","width":"36.07","height":"11.00","transform":["11.00","0.00","0.00","11.00","60.94","634.04"],"fontName":"NRVUEW+HelveticaNeue-Medium","x":60.9449,"y":634.0402,"line":7,"block":15}
+{"page":2,"change":"ContentChange","types":["CODE"],"str":"T° ambiante de la pièce au moment de l’expérience était de 23°C, aucune fenêtre ouverte.","dir":"ltr","width":"426.96","height":"11.00","transform":["11.00","0.00","0.00","11.00","60.94","620.04"],"fontName":"NRVUEW+HelveticaNeue-Light","x":60.9449,"y":620.0402,"line":8,"block":15}
+{"page":2,"change":"ContentChange","types":["CODE"],"str":"T° de l’eau chaude sortant du robinet de la cuisine : 49°C  ","dir":"ltr","width":"277.58","height":"11.00","transform":["11.00","0.00","0.00","11.00","60.94","606.04"],"fontName":"NRVUEW+HelveticaNeue-Light","x":60.9449,"y":606.0402,"line":9,"block":15}
+{"page":2,"change":"ContentChange","types":["CODE"],"str":"Taux d’humidité ambiant 42%.","dir":"ltr","width":"143.84","height":"11.00","transform":["11.00","0.00","0.00","11.00","60.94","592.04"],"fontName":"NRVUEW+HelveticaNeue-Light","x":60.9449,"y":592.0402,"line":10,"block":15}
+{"page":2,"change":"ContentChange","types":["CODE"],"str":"Fluide : eau municipale","dir":"ltr","width":"107.99","height":"11.00","transform":["11.00","0.00","0.00","11.00","60.94","578.04"],"fontName":"NRVUEW+HelveticaNeue-Light","x":60.9449,"y":578.0402,"line":11,"block":15}
+{"page":2,"change":"ContentChange","types":["CODE"],"str":"Les mesures de température sont faites en °C.","dir":"ltr","width":"220.37","height":"11.00","transform":["11.00","0.00","0.00","11.00","60.94","564.04"],"fontName":"NRVUEW+HelveticaNeue-Light","x":60.9449,"y":564.0402,"line":12,"block":15}
+{"page":2,"change":"ContentChange","types":["CODE"],"str":"Date et lieu : le 29-03-20 - Paris","dir":"ltr","width":"151.40","height":"11.00","transform":["11.00","0.00","0.00","11.00","60.94","550.04"],"fontName":"NRVUEW+HelveticaNeue-Light","x":60.9449,"y":550.0402,"line":13,"block":15}
+{"page":2,"change":"ContentChange","types":["CODE"],"str":"Résultats :","dir":"ltr","width":"53.80","height":"11.00","transform":["11.00","0.00","0.00","11.00","60.94","522.04"],"fontName":"NRVUEW+HelveticaNeue-Medium","x":60.9449,"y":522.0402,"line":14,"block":16}
+{"page":2,"change":"ContentChange","types":["CODE"],"str":"La température moyenne constatée en référence est de 92 °C pour les récipients inox et plastique ","dir":"ltr","width":"465.73","height":"11.00","transform":["11.00","0.00","0.00","11.00","60.94","326.04"],"fontName":"NRVUEW+HelveticaNeue-Light","x":60.9449,"y":326.0402,"line":15,"block":17}
+{"page":2,"change":"ContentChange","types":["CODE"],"str":"et de 87°C pour la porcelaine. La différence s’explique par le fait que le récipient en porcelaine a une ","dir":"ltr","width":"475.97","height":"11.00","transform":["11.00","0.00","0.00","11.00","60.94","312.04"],"fontName":"NRVUEW+HelveticaNeue-Light","x":60.9449,"y":312.0402,"line":16,"block":17}
+{"page":2,"change":"ContentChange","types":["CODE"],"str":"épaisseur plus épaisse que les autres et absorbe dans un premier temps, plus de chaleur.","dir":"ltr","width":"423.38","height":"11.00","transform":["11.00","0.00","0.00","11.00","60.94","298.04"],"fontName":"NRVUEW+HelveticaNeue-Light","x":60.9449,"y":298.0402,"line":17,"block":17}
+{"page":2,"change":"ContentChange","types":["CODE"],"str":"Les résultats les plus convaincants sont dans les prises de mesure «récipient + couvercle». ","dir":"ltr","width":"430.99","height":"11.00","transform":["11.00","0.00","0.00","11.00","60.94","274.04"],"fontName":"NRVUEW+HelveticaNeue-Light","x":60.9449,"y":274.0402,"line":18,"block":18}
+{"page":2,"change":"ContentChange","types":["CODE"],"str":"Tous les matériaux sont performants, avec une légère supériorité pour le plastique.","dir":"ltr","width":"388.76","height":"11.00","transform":["11.00","0.00","0.00","11.00","60.94","260.04"],"fontName":"NRVUEW+HelveticaNeue-Light","x":60.9449,"y":260.0402,"line":19,"block":18}
+{"page":2,"change":"ContentChange","types":["CODE"],"str":"En moyenne, il faut 40 mn pour que la T° arrive à la limite de 60°C. La Température minimale de ","dir":"ltr","width":"454.45","height":"11.00","transform":["11.00","0.00","0.00","11.00","60.94","236.04"],"fontName":"NRVUEW+HelveticaNeue-Light","x":60.9449,"y":236.0402,"line":20,"block":19}
+{"page":2,"change":"ContentChange","types":["CODE"],"str":"départ pour tenir 30 mn est d’environ 75°C quelque soit le récipient. ","dir":"ltr","width":"324.51","height":"11.00","transform":["11.00","0.00","0.00","11.00","60.94","222.04"],"fontName":"NRVUEW+HelveticaNeue-Light","x":60.9449,"y":222.0402,"line":21,"block":19}
+{"page":2,"change":"ContentChange","types":["CODE"],"str":"Conclusion","dir":"ltr","width":"57.06","height":"11.00","transform":["11.00","0.00","0.00","11.00","60.94","198.04"],"fontName":"NRVUEW+HelveticaNeue-Medium","x":60.9449,"y":198.0402,"line":22,"block":20}
+{"page":2,"change":"ContentChange","types":["CODE"],"str":"• La garantie de conserver la température à 60°C pendant 30 mn comme préconisé dans le guide ","dir":"ltr","width":"466.37","height":"11.00","transform":["11.00","0.00","0.00","11.00","60.94","184.04"],"fontName":"NRVUEW+HelveticaNeue-Light","x":60.9449,"y":184.0402,"line":23,"block":20}
+{"page":2,"change":"ContentChange","types":["CODE"],"str":"de spécifications AFNOR S76-001 pour le lavage manuel des masques barrière en tissu, peut se ","dir":"ltr","width":"458.86","height":"11.00","transform":["11.00","0.00","0.00","11.00","60.94","170.04"],"fontName":"NRVUEW+HelveticaNeue-Light","x":60.9449,"y":170.0402,"line":24,"block":20}
+{"page":2,"change":"ContentChange","types":["CODE"],"str":"faire dans n’importe quel récipient à condition de bien le couvrir.","dir":"ltr","width":"301.17","height":"11.00","transform":["11.00","0.00","0.00","11.00","60.94","156.04"],"fontName":"NRVUEW+HelveticaNeue-Light","x":60.9449,"y":156.0402,"line":25,"block":20}
+{"page":2,"change":"ContentChange","types":["CODE"],"str":"• Si vous avez une bouilloire électrique modulable, vous pouvez régler la température maximale à ","dir":"ltr","width":"460.51","height":"11.00","transform":["11.00","0.00","0.00","11.00","60.94","142.04"],"fontName":"NRVUEW+HelveticaNeue-Light","x":60.9449,"y":142.0402,"line":26,"block":20}
+{"page":2,"change":"ContentChange","types":["CODE"],"str":"70°C.","dir":"ltr","width":"27.43","height":"11.00","transform":["11.00","0.00","0.00","11.00","60.94","128.04"],"fontName":"NRVUEW+HelveticaNeue-Light","x":60.9449,"y":128.0402,"line":27,"block":20}
+{"page":2,"change":"ContentChange","types":["CODE"],"str":"NOTE :","dir":"ltr","width":"28.49","height":"8.00","transform":["8.00","0.00","0.00","8.00","60.94","100.63"],"fontName":"NRVUEW+HelveticaNeue-Medium","x":60.9449,"y":100.6251,"line":29,"block":22}
+{"page":2,"change":"ContentChange","types":["CODE"],"str":"Cette étude a été réalisée dans la cadre particulier du confinement. L’expérience a été réalisée avec rigueur et reste informa -","block":22,"line":30,"x":60.9449,"y":91.0251,"width":"476.22","height":"8.00","fontName":["NRVUEW+HelveticaNeue-Light","NRVUEW+HelveticaNeue-Light"],"dir":["ltr"]}
+{"page":2,"change":"ContentChange","types":["CODE"],"str":"tive. L’auteur ne peut être rendue responsable de l’interprétation outre mesure des résultats par un tiers.","dir":"ltr","width":"399.15","height":"8.00","transform":["8.00","0.00","0.00","8.00","60.94","81.43"],"fontName":"NRVUEW+HelveticaNeue-Light","x":60.9449,"y":81.4251,"line":31,"block":22}
+{"page":2,"change":"ContentChange","types":["CODE"],"str":"mn","dir":"ltr","width":"11.27","height":"8.00","transform":["8.00","0.00","0.00","8.00","366.74","366.06"],"fontName":"NRVUEW+HelveticaNeue","x":366.7362,"y":366.0573,"line":32,"block":23}
+{"page":3,"change":"ContentChange","types":["CODE"],"str":"Smart textiles designer,  Florence Bost  est consultante depuis 2003 sous le nom de ","block":27,"line":8,"x":163.7008,"y":611.9668,"width":"365.43","height":"10.00","fontName":["NRVUEW+HelveticaNeue-Light","NRVUEW+HelveticaNeue-Bold"],"dir":["ltr"]}
+{"page":3,"change":"ContentChange","types":["CODE"],"str":"Sable Chaud. Elle réalise des cahiers d’idées, des études prospectives, des prestations ","dir":"ltr","width":"377.31","height":"10.00","transform":["10.00","0.00","0.00","10.00","163.70","595.97"],"fontName":"NRVUEW+HelveticaNeue-Light","x":163.7008,"y":595.9668,"line":9,"block":27}
+{"page":3,"change":"ContentChange","types":["CODE"],"str":"de création e-textiles et démonstrateurs ainsi que des formations pr ofessionnelles e-tex -","block":27,"line":10,"x":163.7008,"y":579.9668,"width":"378.55","height":"10.00","fontName":["NRVUEW+HelveticaNeue-Light","NRVUEW+HelveticaNeue-Light"],"dir":["ltr"]}
+{"page":3,"change":"ContentChange","types":["CODE"],"str":"tiles. Auteur de l’ouvrage «Textiles, innovations et matières actives» édité chez Eyrolles, ","dir":"ltr","width":"373.62","height":"10.00","transform":["10.00","0.00","0.00","10.00","163.70","563.97"],"fontName":"NRVUEW+HelveticaNeue-Light","x":163.7008,"y":563.9668,"line":11,"block":27}
+{"page":3,"change":"ContentChange","types":["CODE"],"str":"elle est aussi experte française AFNOR pour la commission de normalisation eur opéenne ","block":27,"line":12,"x":163.7008,"y":547.9668,"width":"383.79","height":"10.00","fontName":["NRVUEW+HelveticaNeue-Light"],"dir":["ltr"]}
+{"page":3,"change":"ContentChange","types":["CODE"],"str":"smart textiles (CEN/TC 248-WG31). Les études sur les masques ont été accompagnées ","block":27,"line":13,"x":163.7008,"y":531.9668,"width":"379.15","height":"10.00","fontName":["NRVUEW+HelveticaNeue-Light"],"dir":["ltr"]}
+{"page":3,"change":"ContentChange","types":["CODE"],"str":"par les expertises complémentaires de :","dir":"ltr","width":"170.96","height":"10.00","transform":["10.00","0.00","0.00","10.00","163.70","515.97"],"fontName":"NRVUEW+HelveticaNeue-Light","x":163.7008,"y":515.9668,"line":14,"block":27}
+{"page":3,"change":"ContentChange","types":["CODE"],"str":"Mattias Ganem","dir":"ltr","width":"72.38","height":"10.00","transform":["10.00","0.00","0.00","10.00","163.70","495.97"],"fontName":"NRVUEW+HelveticaNeue-Bold","x":163.7008,"y":495.9668,"line":15,"block":27}
+{"page":3,"change":"ContentChange","types":["CODE"],"str":"Ingénieur textile, IFM, actuellement chef de projet R&D et Développement durable.","dir":"ltr","width":"352.00","height":"10.00","transform":["10.00","0.00","0.00","10.00","163.70","479.97"],"fontName":"NRVUEW+HelveticaNeue-Light","x":163.7008,"y":479.9668,"line":16,"block":27}
+{"page":3,"change":"ContentChange","types":["CODE"],"str":"Jean-Baptiste Chot-Plassot","dir":"ltr","width":"131.84","height":"10.00","transform":["10.00","0.00","0.00","10.00","163.70","459.97"],"fontName":"NRVUEW+HelveticaNeue-Bold","x":163.7008,"y":459.9668,"line":17,"block":27}
+{"page":3,"change":"ContentChange","types":["CODE"],"str":"Ingénieur généraliste, IFM, actuellement ingénieur projet innovation - Mode & Textile","dir":"ltr","width":"357.07","height":"10.00","transform":["10.00","0.00","0.00","10.00","163.70","443.97"],"fontName":"NRVUEW+HelveticaNeue-Light","x":163.7008,"y":443.9668,"line":18,"block":27}
+{"page":3,"change":"ContentChange","types":["CODE"],"str":"Certaines illustrations ont été réalisées par la styliste et illustratrice  Virginie Boy .","block":28,"line":19,"x":163.7008,"y":411.9668,"width":"343.44","height":"10.00","fontName":["NRVUEW+HelveticaNeue-Light","NRVUEW+HelveticaNeue-Bold"],"dir":["ltr"]}
+{"page":3,"change":"ContentChange","types":["CODE"],"str":"Techtera est le pôle de compétitivité dédié à la filière textile française soutenu par l’Etat, ","dir":"ltr","width":"375.85","height":"10.00","transform":["10.00","0.00","0.00","10.00","163.70","360.47"],"fontName":"NRVUEW+HelveticaNeue-Light","x":163.7008,"y":360.4719,"line":20,"block":29}
+{"page":3,"change":"ContentChange","types":["CODE"],"str":"La Direction Générale de l’Armement et les collectivités territoriales. Il anime un réseau de ","dir":"ltr","width":"385.48","height":"10.00","transform":["10.00","0.00","0.00","10.00","163.70","344.47"],"fontName":"NRVUEW+HelveticaNeue-Light","x":163.7008,"y":344.4719,"line":21,"block":29}
+{"page":3,"change":"ContentChange","types":["CODE"],"str":"200 membres (entreprises, laboratoires de recherches, centres techniques, universités et ","dir":"ltr","width":"383.46","height":"10.00","transform":["10.00","0.00","0.00","10.00","163.70","328.47"],"fontName":"NRVUEW+HelveticaNeue-Light","x":163.7008,"y":328.4719,"line":22,"block":29}
+{"page":3,"change":"ContentChange","types":["CODE"],"str":"grandes écoles), avec pour objectif principal de stimuler la compétitivité par l’innovation ","dir":"ltr","width":"376.39","height":"10.00","transform":["10.00","0.00","0.00","10.00","163.70","312.47"],"fontName":"NRVUEW+HelveticaNeue-Light","x":163.7008,"y":312.4719,"line":23,"block":29}
+{"page":3,"change":"ContentChange","types":["CODE"],"str":"collaborative. Depuis 2005, Techtera a ainsi accompagné plus de 215 projets R&D finan -","block":29,"line":24,"x":163.7008,"y":296.4719,"width":"380.50","height":"10.00","fontName":["NRVUEW+HelveticaNeue-Light","NRVUEW+HelveticaNeue-Light"],"dir":["ltr"]}
+{"page":3,"change":"ContentChange","types":["CODE"],"str":"cés pour un budget total de 556,5 millions d’Euros, à destination des marchés d’applica -","block":29,"line":25,"x":163.7008,"y":280.4719,"width":"382.13","height":"10.00","fontName":["NRVUEW+HelveticaNeue-Light","NRVUEW+HelveticaNeue-Light"],"dir":["ltr"]}
+{"page":3,"change":"ContentChange","types":["CODE"],"str":"tion de la santé, des sports et loisirs, du transport, du bâtiment, de la pr otection et de la ","block":29,"line":26,"x":163.7008,"y":264.4719,"width":"379.51","height":"10.00","fontName":["NRVUEW+HelveticaNeue-Light"],"dir":["ltr"]}
+{"page":3,"change":"ContentChange","types":["CODE"],"str":"sécurité, de l’habillement et de la décoration.","dir":"ltr","width":"192.28","height":"10.00","transform":["10.00","0.00","0.00","10.00","163.70","248.47"],"fontName":"NRVUEW+HelveticaNeue-Light","x":163.7008,"y":248.4719,"line":27,"block":29}
+{"page":3,"change":"ContentChange","types":["CODE"],"str":"Techtera - Actualités","dir":"ltr","width":"87.62","height":"10.00","transform":["10.00","0.00","0.00","10.00","422.17","158.92"],"fontName":"NRVUEW+HelveticaNeue-Light","x":422.1677,"y":158.9151,"line":28,"block":30}
+{"page":3,"change":"ContentChange","types":["CODE"],"str":"avec le soutien de ","dir":"ltr","width":"60.04","height":"7.66","transform":["7.66","0.00","0.00","7.66","391.92","36.18"],"fontName":"NRVUEW+Futura-Light","x":391.9215,"y":36.1763,"line":29,"block":31}
+{"page":3,"change":"ContentChange","types":["CODE"],"str":"Sable Chaud - COVID-19","dir":"ltr","width":"109.29","height":"10.00","transform":["10.00","0.00","0.00","10.00","422.36","195.13"],"fontName":"NRVUEW+HelveticaNeue-Light","x":422.3622,"y":195.1333,"line":31,"block":32}

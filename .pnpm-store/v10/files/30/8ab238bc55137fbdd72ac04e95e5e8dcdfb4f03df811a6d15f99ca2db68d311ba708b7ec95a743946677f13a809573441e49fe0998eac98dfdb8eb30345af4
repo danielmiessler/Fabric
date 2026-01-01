@@ -1,0 +1,134 @@
+{
+  "pages": 116,
+  "items": 7676,
+  "groupedItems": 3481,
+  "changes": 101,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "token types"
+    },
+    {
+      "name": "types"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":0,"change":"ContentChange","types":["H1"],"str":"Grammar Matters ","dir":"ltr","width":"422.48","height":"48.00","transform":["48.00","0.00","0.00","48.00","101.54","554.98"],"fontName":"YBJWME+CenturyGothic,Bold","x":101.53969000000006,"y":554.9793999999998,"line":1}
+{"page":1,"change":"ContentChange","types":["H2"],"str":"Why is Proper Grammar so Important?","dir":"ltr","width":"441.53","height":"24.00","transform":["24.00","0.00","0.00","24.00","85.22","614.26"],"fontName":"SJUTSY+Arial,Bold","x":85.2237900000001,"y":614.2598999999999,"line":2}
+{"page":2,"change":"ContentChange","types":["H4"],"str":"Common Errors in Business Writing","dir":"ltr","width":"310.15","height":"18.00","transform":["18.00","0.00","0.00","18.00","62.04","442.75"],"fontName":"SJUTSY+Arial,Bold","x":62.040039999999976,"y":442.75010000000003,"line":14}
+{"page":3,"change":"ContentChange","types":["H4"],"str":"The Eight Parts of Speech","dir":"ltr","width":"223.02","height":"18.00","transform":["18.00","0.00","0.00","18.00","62.04","440.35"],"fontName":"SJUTSY+Arial,Bold","x":62.03981999999999,"y":440.3498,"line":15}
+{"page":7,"change":"ContentChange","types":["H2"],"str":"Sentences","dir":"ltr","width":"119.98","height":"24.00","transform":["24.00","0.00","0.00","24.00","245.93","528.31"],"fontName":"SJUTSY+Arial,Bold","x":245.93,"y":528.31,"line":2}
+{"page":8,"change":"ContentChange","types":["H4"],"str":"Sentence Types","dir":"ltr","width":"136.96","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","419.47"],"fontName":"SJUTSY+Arial,Bold","x":72.02379999999997,"y":419.46979999999996,"line":15}
+{"page":9,"change":"ContentChange","types":["H4"],"str":"Phrases and Clauses","dir":"ltr","width":"181.04","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","457.99"],"fontName":"SJUTSY+Arial,Bold","x":72.02372,"y":457.98970000000014,"line":11}
+{"page":11,"change":"ContentChange","types":["H4"],"str":"Sentence Varieties","dir":"ltr","width":"160.00","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","148.10"],"fontName":"SJUTSY+Arial,Bold","x":72.0238,"y":148.1002,"line":22}
+{"page":13,"change":"ContentChange","types":["H4"],"str":"Sentence Faults: Fragments, Comma Splices, and ","dir":"ltr","width":"431.96","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.03","392.95"],"fontName":"SJUTSY+Arial,Bold","x":72.02526000000015,"y":392.94980000000015,"line":16}
+{"page":13,"change":"ContentChange","types":["H4"],"str":"Run- Ons","line":17,"x":72.0238,"y":372.17,"width":"76.15","height":"18.00","fontName":["SJUTSY+Arial,Bold"],"dir":["ltr"]}
+{"page":15,"change":"ContentChange","types":["H2"],"str":"Nouns","dir":"ltr","width":"74.57","height":"24.00","transform":["24.00","0.00","0.00","24.00","268.73","480.43"],"fontName":"SJUTSY+Arial,Bold","x":268.73076,"y":480.4300000000002,"line":11}
+{"page":16,"change":"ContentChange","types":["H4"],"str":"Making Nouns Plural","dir":"ltr","width":"178.08","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","682.78"],"fontName":"SJUTSY+Arial,Bold","x":72.02416000000005,"y":682.7802,"line":1}
+{"page":19,"change":"ContentChange","types":["H4"],"str":"Possessive Nouns ","dir":"ltr","width":"164.09","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","205.49"],"fontName":"SJUTSY+Arial,Bold","x":72.02408999999994,"y":205.48959999999977,"line":24}
+{"page":20,"change":"ContentChange","types":["H4"],"str":"Using the Apostrophe","dir":"ltr","width":"187.94","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","468.79"],"fontName":"SJUTSY+Arial,Bold","x":72.02412000000004,"y":468.78990000000005,"line":13}
+{"page":21,"change":"ContentChange","types":["H4"],"str":"Challenges with Possessive Nouns","dir":"ltr","width":"301.16","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","349.37"],"fontName":"SJUTSY+Arial,Bold","x":72.0236800000001,"y":349.36989999999986,"line":15}
+{"page":24,"change":"ContentChange","types":["H2"],"str":"Pronouns","dir":"ltr","width":"111.94","height":"24.00","transform":["24.00","0.00","0.00","24.00","250.01","451.99"],"fontName":"SJUTSY+Arial,Bold","x":250.01036000000005,"y":451.99070000000006,"line":2}
+{"page":24,"change":"ContentChange","types":["H4"],"str":"Personal Pronouns","dir":"ltr","width":"165.08","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","155.90"],"fontName":"SJUTSY+Arial,Bold","x":72.02399999999997,"y":155.89999999999995,"line":15}
+{"page":27,"change":"ContentChange","types":["H4"],"str":"Pronoun-Antecedent Agreement","dir":"ltr","width":"276.85","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","384.91"],"fontName":"SJUTSY+Arial,Bold","x":72.02431000000013,"y":384.9099000000003,"line":18}
+{"page":28,"change":"ContentChange","types":["H4"],"str":"Pronoun Challenges","dir":"ltr","width":"175.01","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","235.97"],"fontName":"SJUTSY+Arial,Bold","x":72.0243000000001,"y":235.96999999999997,"line":25}
+{"page":33,"change":"ContentChange","types":["H2"],"str":"Verbs","dir":"ltr","width":"66.62","height":"24.00","transform":["24.00","0.00","0.00","24.00","272.69","452.11"],"fontName":"SJUTSY+Arial,Bold","x":272.6895,"y":452.1101,"line":10}
+{"page":33,"change":"ContentChange","types":["H4"],"str":"Types of Verbs","dir":"ltr","width":"129.01","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","299.21"],"fontName":"SJUTSY+Arial,Bold","x":72.0238,"y":299.21000000000004,"line":16}
+{"page":34,"change":"ContentChange","types":["H4"],"str":"Linking Verbs","dir":"ltr","width":"119.02","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","242.93"],"fontName":"SJUTSY+Arial,Bold","x":72.0238,"y":242.92999999999998,"line":24}
+{"page":35,"change":"ContentChange","types":["H4"],"str":"Helping Verbs","dir":"ltr","width":"121.05","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","482.59"],"fontName":"SJUTSY+Arial,Bold","x":72.02416,"y":482.58979999999997,"line":16}
+{"page":35,"change":"ContentChange","types":["H4"],"str":"Active Voice and Passive Voice","dir":"ltr","width":"268.96","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","244.73"],"fontName":"SJUTSY+Arial,Bold","x":72.02389999999998,"y":244.7301,"line":28}
+{"page":36,"change":"ContentChange","types":["H2"],"str":"Verb Tenses","dir":"ltr","width":"142.66","height":"24.00","transform":["24.00","0.00","0.00","24.00","72.02","478.63"],"fontName":"SJUTSY+Arial,Bold","x":72.02379999999994,"y":478.63000000000005,"line":13}
+{"page":37,"change":"ContentChange","types":["H4"],"str":"Participles What are participles? Participles are another form that a verb takes. ","line":38,"x":72.0238,"y":383.46979999999996,"width":"453.36","height":"18.00","fontName":["SJUTSY+Arial,Bold","XYXVPQ+Arial"],"dir":["ltr"]}
+{"page":39,"change":"ContentChange","types":["H4"],"str":"Infinitives","dir":"ltr","width":"83.93","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","256.73"],"fontName":"SJUTSY+Arial,Bold","x":72.0238,"y":256.73,"line":23}
+{"page":40,"change":"ContentChange","types":["H4"],"str":"Participle Phrases","dir":"ltr","width":"156.01","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","470.59"],"fontName":"SJUTSY+Arial,Bold","x":72.02381999999994,"y":470.5896,"line":13}
+{"page":41,"change":"ContentChange","types":["H4"],"str":"Irregular Verbs","dir":"ltr","width":"128.07","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","449.95"],"fontName":"SJUTSY+Arial,Bold","x":72.0238,"y":449.9502,"line":14}
+{"page":42,"change":"ContentChange","types":["H4"],"str":"Lay vs Lie","dir":"ltr","width":"86.94","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","520.75"],"fontName":"SJUTSY+Arial,Bold","x":72.0238,"y":520.7499,"line":7}
+{"page":44,"change":"ContentChange","types":["H2"],"str":"Subject/Verb Agreement","dir":"ltr","width":"278.69","height":"24.00","transform":["24.00","0.00","0.00","24.00","166.58","412.51"],"fontName":"SJUTSY+Arial,Bold","x":166.5802600000001,"y":412.5094000000001,"line":2}
+{"page":44,"change":"ContentChange","types":["H4"],"str":"Finding the subject","dir":"ltr","width":"164.97","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","214.85"],"fontName":"SJUTSY+Arial,Bold","x":72.02405,"y":214.85000000000002,"line":12}
+{"page":45,"change":"ContentChange","types":["H4"],"str":"Basic Rules for Subject-Verb Agreement","dir":"ltr","width":"346.03","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","99.74"],"fontName":"SJUTSY+Arial,Bold","x":72.0239,"y":99.74389999999997,"line":34}
+{"page":47,"change":"ContentChange","types":["H4"],"str":"Challenges with Subject/Verb Agreement","dir":"ltr","width":"350.93","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","218.21"],"fontName":"SJUTSY+Arial,Bold","x":72.0239,"y":218.20999999999998,"line":24}
+{"page":50,"change":"ContentChange","types":["H2"],"str":"Adjectives and Adverbs ","dir":"ltr","width":"278.88","height":"24.00","transform":["24.00","0.00","0.00","24.00","169.94","442.39"],"fontName":"SJUTSY+Arial,Bold","x":169.94010000000003,"y":442.39009999999996,"line":15}
+{"page":50,"change":"ContentChange","types":["H4"],"str":"Adjectives","dir":"ltr","width":"89.93","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","220.49"],"fontName":"SJUTSY+Arial,Bold","x":72.02391999999999,"y":220.4896999999999,"line":25}
+{"page":54,"change":"ContentChange","types":["H2"],"str":"Adverbs","dir":"ltr","width":"95.93","height":"24.00","transform":["24.00","0.00","0.00","24.00","72.02","478.63"],"fontName":"SJUTSY+Arial,Bold","x":72.02398000000005,"y":478.63030000000026,"line":8}
+{"page":55,"change":"ContentChange","types":["H2"],"str":"Comparative and Superlative Forms","dir":"ltr","width":"410.69","height":"24.00","transform":["24.00","0.00","0.00","24.00","72.02","478.63"],"fontName":"SJUTSY+Arial,Bold","x":72.02430000000001,"y":478.63020000000006,"line":10}
+{"page":57,"change":"ContentChange","types":["H4"],"str":"Commonly Confused Adjectives and Adverbs","dir":"ltr","width":"389.97","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","247.25"],"fontName":"SJUTSY+Arial,Bold","x":72.0238,"y":247.2498,"line":28}
+{"page":58,"change":"ContentChange","types":["H4"],"str":"Adverb and Adjective Placement","dir":"ltr","width":"278.94","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.03","380.95"],"fontName":"SJUTSY+Arial,Bold","x":72.02546000000018,"y":380.9498000000002,"line":16}
+{"page":59,"change":"ContentChange","types":["H2"],"str":"Prepositions","dir":"ltr","width":"145.37","height":"24.00","transform":["24.00","0.00","0.00","24.00","233.33","456.79"],"fontName":"SJUTSY+Arial,Bold","x":233.33,"y":456.79,"line":6}
+{"page":60,"change":"ContentChange","types":["H4"],"str":"Prepositions and Pronouns","dir":"ltr","width":"235.04","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","682.78"],"fontName":"SJUTSY+Arial,Bold","x":72.02416000000005,"y":682.7802,"line":1}
+{"page":60,"change":"ContentChange","types":["H4"],"str":"Common Preposition Errors","dir":"ltr","width":"241.09","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","484.39"],"fontName":"SJUTSY+Arial,Bold","x":72.02420000000001,"y":484.3900000000001,"line":10}
+{"page":61,"change":"ContentChange","types":["H4"],"str":"Commonly Confused Prepositions","dir":"ltr","width":"295.13","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","498.19"],"fontName":"SJUTSY+Arial,Bold","x":72.02395999999999,"y":498.1897999999998,"line":6}
+{"page":62,"change":"ContentChange","types":["H4"],"str":"Necessary and Unnecessary Prepositions","dir":"ltr","width":"357.98","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","278.57"],"fontName":"SJUTSY+Arial,Bold","x":72.02389999999998,"y":278.5699,"line":24}
+{"page":63,"change":"ContentChange","types":["H4"],"str":"Ending Sentences with a Preposition","dir":"ltr","width":"316.06","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","401.59"],"fontName":"SJUTSY+Arial,Bold","x":72.0238,"y":401.58979999999997,"line":17}
+{"page":64,"change":"ContentChange","types":["H4"],"str":"Idioms","dir":"ltr","width":"58.12","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","675.82"],"fontName":"SJUTSY+Arial,Bold","x":72.02416000000005,"y":675.8199000000001,"line":1}
+{"page":66,"change":"ContentChange","types":["H2"],"str":"Conjunctions","dir":"ltr","width":"175.78","height":"24.00","transform":["24.00","0.00","0.00","24.00","218.09","416.71"],"fontName":"FGNJWH+Verdana,Bold","x":218.09,"y":416.71,"line":2}
+{"page":66,"change":"ContentChange","types":["H4"],"str":"Coordinating conjunctions","dir":"ltr","width":"229.07","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","319.37"],"fontName":"SJUTSY+Arial,Bold","x":72.02379999999998,"y":319.3701,"line":5}
+{"page":67,"change":"ContentChange","types":["H4"],"str":"Punctuating compound sentences","dir":"ltr","width":"293.89","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","413.59"],"fontName":"SJUTSY+Arial,Bold","x":72.02313999999986,"y":413.58970000000005,"line":19}
+{"page":68,"change":"ContentChange","types":["H4"],"str":"Conjunctive Adverbs","dir":"ltr","width":"179.83","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","608.62"],"fontName":"SJUTSY+Arial,Bold","x":72.02436000000002,"y":608.6198,"line":5}
+{"page":68,"change":"ContentChange","types":["H4"],"str":"Parenthetical Adverbs","dir":"ltr","width":"189.95","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","184.70"],"fontName":"SJUTSY+Arial,Bold","x":72.02357999999997,"y":184.70009999999985,"line":26}
+{"page":69,"change":"ContentChange","types":["H4"],"str":"Subordinating Conjunctions","dir":"ltr","width":"242.10","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","470.59"],"fontName":"SJUTSY+Arial,Bold","x":72.02449999999999,"y":470.58920000000035,"line":14}
+{"page":70,"change":"ContentChange","types":["H4"],"str":"Parenthetical Clauses","dir":"ltr","width":"187.02","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","636.22"],"fontName":"SJUTSY+Arial,Bold","x":72.0239,"y":636.2196,"line":4}
+{"page":70,"change":"ContentChange","types":["H4"],"str":"Relative Clauses","dir":"ltr","width":"142.94","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","456.79"],"fontName":"SJUTSY+Arial,Bold","x":72.02392000000005,"y":456.7897000000001,"line":11}
+{"page":71,"change":"ContentChange","types":["H4"],"str":"Punctuation Review","dir":"ltr","width":"170.80","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","386.71"],"fontName":"SJUTSY+Arial,Bold","x":72.02465000000004,"y":386.7099,"line":16}
+{"page":72,"change":"ContentChange","types":["H2"],"str":"Commas","dir":"ltr","width":"101.35","height":"24.00","transform":["24.00","0.00","0.00","24.00","255.29","375.67"],"fontName":"SJUTSY+Arial,Bold","x":255.28980000000007,"y":375.67010000000005,"line":2}
+{"page":72,"change":"ContentChange","types":["H4"],"str":"Series Comma","dir":"ltr","width":"125.05","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","271.01"],"fontName":"SJUTSY+Arial,Bold","x":72.02380000000001,"y":271.01019999999994,"line":7}
+{"page":73,"change":"ContentChange","types":["H4"],"str":"Direct Address","dir":"ltr","width":"128.03","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","268.25"],"fontName":"SJUTSY+Arial,Bold","x":72.0238,"y":268.25,"line":24}
+{"page":74,"change":"ContentChange","types":["H4"],"str":"Adjectives","dir":"ltr","width":"89.93","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","423.55"],"fontName":"SJUTSY+Arial,Bold","x":72.0238,"y":423.55,"line":3}
+{"page":74,"change":"ContentChange","types":["H4"],"str":"Independent Clauses","dir":"ltr","width":"180.88","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","128.54"],"fontName":"SJUTSY+Arial,Bold","x":72.0238,"y":128.54,"line":17}
+{"page":75,"change":"ContentChange","types":["H4"],"str":"Introductory Dependent Clauses","dir":"ltr","width":"277.90","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","629.38"],"fontName":"SJUTSY+Arial,Bold","x":72.02458000000004,"y":629.3799,"line":3}
+{"page":75,"change":"ContentChange","types":["H4"],"str":"Terminal Dependent Clauses","dir":"ltr","width":"246.96","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","415.39"],"fontName":"SJUTSY+Arial,Bold","x":72.02358000000008,"y":415.3906999999998,"line":13}
+{"page":75,"change":"ContentChange","types":["H4"],"str":"Parenthetical Expressions","dir":"ltr","width":"225.11","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","161.90"],"fontName":"SJUTSY+Arial,Bold","x":72.0238,"y":161.9,"line":27}
+{"page":76,"change":"ContentChange","types":["H4"],"str":"Commas and Appositives ","dir":"ltr","width":"225.11","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","416.47"],"fontName":"SJUTSY+Arial,Bold","x":72.02391999999999,"y":416.4699,"line":18}
+{"page":76,"change":"ContentChange","types":["H4"],"str":"Commas and the Adverb  too","line":33,"x":72.0238,"y":90.984,"width":"244.96","height":"18.00","fontName":["SJUTSY+Arial,Bold","JSXJHV+Arial,BoldItalic"],"dir":["ltr"]}
+{"page":77,"change":"ContentChange","types":["H4"],"str":"Commas and Introductory Phrases","dir":"ltr","width":"299.00","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","421.99"],"fontName":"SJUTSY+Arial,Bold","x":72.0238,"y":421.99,"line":13}
+{"page":78,"change":"ContentChange","types":["H4"],"str":"Dates, Time Zones, Addresses, and Geographic ","dir":"ltr","width":"412.97","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","703.42"],"fontName":"SJUTSY+Arial,Bold","x":72.0238,"y":703.42,"line":1}
+{"page":78,"change":"ContentChange","types":["H4"],"str":"Locations","dir":"ltr","width":"85.07","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","682.78"],"fontName":"SJUTSY+Arial,Bold","x":72.0238,"y":682.78,"line":2}
+{"page":79,"change":"ContentChange","types":["H4"],"str":"Contrasting Statements","dir":"ltr","width":"202.90","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","453.67"],"fontName":"SJUTSY+Arial,Bold","x":72.02399999999999,"y":453.67,"line":13}
+{"page":79,"change":"ContentChange","types":["H4"],"str":"Clarity","dir":"ltr","width":"56.07","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","282.89"],"fontName":"SJUTSY+Arial,Bold","x":72.02382000000003,"y":282.8895999999999,"line":22}
+{"page":79,"change":"ContentChange","types":["H4"],"str":"Short Quotations","dir":"ltr","width":"147.01","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","112.22"],"fontName":"SJUTSY+Arial,Bold","x":72.02368000000008,"y":112.21989999999995,"line":31}
+{"page":80,"change":"ContentChange","types":["H4"],"str":"Degrees, Abbreviations, and Numbers","dir":"ltr","width":"325.94","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","567.22"],"fontName":"SJUTSY+Arial,Bold","x":72.0238,"y":567.22,"line":7}
+{"page":81,"change":"ContentChange","types":["H4"],"str":"Quick List of Comma Rules","dir":"ltr","width":"233.91","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","668.98"],"fontName":"SJUTSY+Arial,Bold","x":72.02416000000005,"y":668.9801,"line":1}
+{"page":82,"change":"ContentChange","types":["H2"],"str":"Semicolons, Colons, and Other ","dir":"ltr","width":"362.66","height":"24.00","transform":["24.00","0.00","0.00","24.00","127.94","336.41"],"fontName":"SJUTSY+Arial,Bold","x":127.93982000000003,"y":336.41010000000006,"line":3}
+{"page":82,"change":"ContentChange","types":["H2"],"str":"Punctuation","dir":"ltr","width":"138.62","height":"24.00","transform":["24.00","0.00","0.00","24.00","236.69","308.81"],"fontName":"SJUTSY+Arial,Bold","x":236.69,"y":308.81,"line":4}
+{"page":82,"change":"ContentChange","types":["H4"],"str":"Semicolons","dir":"ltr","width":"101.05","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","240.41"],"fontName":"SJUTSY+Arial,Bold","x":72.0238,"y":240.41000000000003,"line":5}
+{"page":84,"change":"ContentChange","types":["H4"],"str":"Colons","dir":"ltr","width":"61.07","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","567.22"],"fontName":"SJUTSY+Arial,Bold","x":72.02412000000005,"y":567.2197000000001,"line":7}
+{"page":86,"change":"ContentChange","types":["H4"],"str":"Periods ","dir":"ltr","width":"71.00","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","606.82"],"fontName":"SJUTSY+Arial,Bold","x":72.02418000000007,"y":606.8197000000001,"line":6}
+{"page":88,"change":"ContentChange","types":["H4"],"str":"Question Marks","dir":"ltr","width":"135.04","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","629.38"],"fontName":"SJUTSY+Arial,Bold","x":72.02412000000005,"y":629.3799,"line":3}
+{"page":88,"change":"ContentChange","types":["H4"],"str":"Exclamation Points","dir":"ltr","width":"166.01","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","113.90"],"fontName":"SJUTSY+Arial,Bold","x":72.02326000000002,"y":113.89969999999985,"line":25}
+{"page":89,"change":"ContentChange","types":["H4"],"str":"Hyphens","dir":"ltr","width":"76.00","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","615.58"],"fontName":"SJUTSY+Arial,Bold","x":72.02408000000005,"y":615.58,"line":3}
+{"page":90,"change":"ContentChange","types":["H4"],"str":"Dashes","dir":"ltr","width":"63.99","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","622.42"],"fontName":"SJUTSY+Arial,Bold","x":72.02416000000005,"y":622.4197000000001,"line":4}
+{"page":91,"change":"ContentChange","types":["H4"],"str":"Parentheses","dir":"ltr","width":"106.97","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","177.50"],"fontName":"SJUTSY+Arial,Bold","x":72.02426000000003,"y":177.49990000000003,"line":23}
+{"page":93,"change":"ContentChange","types":["H4"],"str":"Quotation Marks","dir":"ltr","width":"141.98","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","332.57"],"fontName":"SJUTSY+Arial,Bold","x":72.02400000000002,"y":332.5688000000003,"line":18}
+{"page":94,"change":"ContentChange","types":["H4"],"str":"Italics","dir":"ltr","width":"51.08","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","290.09"],"fontName":"SJUTSY+Arial,Bold","x":72.02380000000001,"y":290.08959999999996,"line":23}
+{"page":95,"change":"ContentChange","types":["H4"],"str":"Brackets","dir":"ltr","width":"75.98","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","555.22"],"fontName":"SJUTSY+Arial,Bold","x":72.02468000000005,"y":555.2199000000002,"line":5}
+{"page":95,"change":"ContentChange","types":["H4"],"str":"Apostrophes","dir":"ltr","width":"110.95","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","343.13"],"fontName":"SJUTSY+Arial,Bold","x":72.02370000000002,"y":343.13009999999997,"line":16}
+{"page":96,"change":"ContentChange","types":["H2"],"str":"Capitalization","dir":"ltr","width":"155.95","height":"24.00","transform":["24.00","0.00","0.00","24.00","228.05","304.13"],"fontName":"SJUTSY+Arial,Bold","x":228.05050000000017,"y":304.129,"line":8}
+{"page":101,"change":"ContentChange","types":["H2"],"str":"Numbers","dir":"ltr","width":"103.94","height":"24.00","transform":["24.00","0.00","0.00","24.00","253.97","274.61"],"fontName":"SJUTSY+Arial,Bold","x":253.9699,"y":274.6094,"line":16}
+{"page":106,"change":"ContentChange","types":["H4"],"str":"Quick Rules for Numbers","dir":"ltr","width":"216.00","height":"18.00","transform":["18.00","0.00","0.00","18.00","72.02","703.42"],"fontName":"SJUTSY+Arial,Bold","x":72.02389999999997,"y":703.4200000000001,"line":1}
+{"page":107,"change":"ContentChange","types":["H2"],"str":"Commonly Confused Words and ","dir":"ltr","width":"378.65","height":"24.00","transform":["24.00","0.00","0.00","24.00","120.02","262.97"],"fontName":"SJUTSY+Arial,Bold","x":120.01999999999997,"y":262.97240000000016,"line":2}
+{"page":107,"change":"ContentChange","types":["H2"],"str":"Phrases","dir":"ltr","width":"93.31","height":"24.00","transform":["24.00","0.00","0.00","24.00","259.37","235.37"],"fontName":"SJUTSY+Arial,Bold","x":259.37,"y":235.37,"line":3}
+{"page":113,"change":"ContentChange","types":["H3"],"str":"Grammar Matters ","dir":"ltr","width":"171.19","height":"20.04","transform":["20.04","0.00","0.00","20.04","223.25","310.73"],"fontName":"SJUTSY+Arial,Bold","x":223.2498,"y":310.7289999999999,"line":9}
+{"page":113,"change":"ContentChange","types":["H4"],"str":"Bibliography","dir":"ltr","width":"110.05","height":"18.00","transform":["18.00","0.00","0.00","18.00","250.97","276.29"],"fontName":"SJUTSY+Arial,Bold","x":250.97,"y":276.29,"line":10}

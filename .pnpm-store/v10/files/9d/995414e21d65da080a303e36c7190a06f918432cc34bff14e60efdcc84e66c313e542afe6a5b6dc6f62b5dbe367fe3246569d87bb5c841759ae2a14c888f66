@@ -1,0 +1,9 @@
+export default class Range {
+    min: number;
+    median: number;
+    max: number;
+    constructor(min: number, median: number, max: number);
+    description(): string;
+}
+export declare function fromMiddle(middle: number, maxDeviation: number): Range;
+export declare function deriveFromUnsorted(numbers: number[]): Range;

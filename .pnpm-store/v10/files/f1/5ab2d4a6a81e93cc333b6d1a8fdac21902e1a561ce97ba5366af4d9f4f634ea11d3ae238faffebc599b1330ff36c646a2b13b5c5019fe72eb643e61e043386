@@ -1,0 +1,41 @@
+{
+  "pages": 137,
+  "items": 24828,
+  "groupedItems": 3105,
+  "changes": 2,
+  "schema": [
+    {
+      "name": "line"
+    },
+    {
+      "name": "token types"
+    },
+    {
+      "name": "types"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "str"
+    },
+    {
+      "name": "fontName"
+    },
+    {
+      "name": "dir"
+    }
+  ],
+  "globals": {}
+}
+{"page":26,"change":"ContentChange","types":["LIST"],"str":"•","dir":"ltr","width":"1.01","height":"1.68","transform":["1.68","0.00","0.00","1.68","256.45","106.17"],"x":256.45095,"y":106.17213,"line":23}
+{"page":89,"change":"ContentChange","types":["NUMBERED_LIST"],"str":".","dir":"ltr","width":"1.44","height":"2.39","transform":["2.39","0.00","0.00","2.39","67.09","432.30"],"x":67.09389,"y":432.30303,"line":24}

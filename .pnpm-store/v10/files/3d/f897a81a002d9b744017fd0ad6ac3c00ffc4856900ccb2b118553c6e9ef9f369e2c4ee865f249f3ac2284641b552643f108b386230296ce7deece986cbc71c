@@ -1,0 +1,54 @@
+{
+  "name": "hast-util-to-string",
+  "version": "3.0.1",
+  "description": "hast utility to get the plain-text value of a node",
+  "license": "MIT",
+  "keywords": [
+    "content",
+    "hast",
+    "hast-util",
+    "html",
+    "serialize",
+    "string",
+    "stringify",
+    "text",
+    "unist",
+    "util",
+    "utility"
+  ],
+  "repository": "https://github.com/rehypejs/rehype-minify/tree/main/packages/hast-util-to-string",
+  "bugs": "https://github.com/rehypejs/rehype-minify/issues",
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/unified"
+  },
+  "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
+  "contributors": [
+    "Titus Wormer <tituswormer@gmail.com>"
+  ],
+  "sideEffects": false,
+  "type": "module",
+  "exports": "./index.js",
+  "files": [
+    "index.d.ts",
+    "index.d.ts.map",
+    "index.js",
+    "lib/"
+  ],
+  "dependencies": {
+    "@types/hast": "^3.0.0"
+  },
+  "scripts": {},
+  "typeCoverage": {
+    "atLeast": 100,
+    "detail": true,
+    "ignoreCatch": true,
+    "strict": true
+  },
+  "xo": {
+    "prettier": true,
+    "rules": {
+      "capitalized-comments": "off"
+    }
+  }
+}

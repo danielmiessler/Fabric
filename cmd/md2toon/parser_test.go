@@ -343,7 +343,7 @@ func TestBoundary_VeryLongContent(t *testing.T) {
 	// Generate a prompt with many items
 	var sb strings.Builder
 	sb.WriteString("# IDENTITY\nYou are an expert analyst.\n\n# STEPS\n")
-	for i := 0; i < 100; i++ {
+	for i := range 100 {
 		sb.WriteString("- Step number ")
 		sb.WriteString(string(rune('0' + i%10)))
 		sb.WriteString(" in the process\n")
@@ -504,11 +504,11 @@ func TestFuzz_RandomContent(t *testing.T) {
 	// Property test: parser should never panic on random input
 	r := rand.New(rand.NewSource(42))
 
-	for i := 0; i < 100; i++ {
+	for i := range 100 {
 		// Generate random "markdown-like" content
 		var sb strings.Builder
 		lines := r.Intn(20) + 1
-		for j := 0; j < lines; j++ {
+		for range lines {
 			switch r.Intn(5) {
 			case 0:
 				sb.WriteString("# HEADER\n")

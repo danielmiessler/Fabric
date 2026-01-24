@@ -1,15 +1,7 @@
 ### PR [#1955](https://github.com/danielmiessler/Fabric/pull/1955) by [copyleftdev](https://github.com/copyleftdev): feat: add md2toon Markdown to TOON transpiler
 
-- Feat: add md2toon Markdown to TOON transpiler
-Add a Python tool that converts fabric Markdown prompts to TOON format
-(Token-Oriented Object Notation) for ~80% token savings when sending
-prompts to LLMs.
-Features:
-- Rule-based parser extracts structure from Markdown prompts
-
-- TOON encoder per Spec v3.0 with tabular array compression
-- Optional LLM-powered extraction (Anthropic/OpenAI)
-
-- CLI with single file and batch conversion modes
-- Benchmarking to show token savings
-Tested against full pattern corpus: 233/233 success, 79.9% savings.
+- Added md2toon Markdown to TOON transpiler that converts fabric Markdown prompts to TOON format for approximately 80% token savings when sending prompts to LLMs
+- Implemented rule-based parser that extracts structure from Markdown prompts with TOON encoder per Spec v3.0 and tabular array compression
+- Rewrote md2toon in Go to align with Fabric codebase and simplified to follow Unix philosophy with stdin→stdout by default and optional file output
+- Achieved 234/234 test passes against full pattern corpus with 78.4% token savings after Go rewrite
+- Updated to use strings.SplitSeq for Go 1.23+ compatibility

@@ -164,7 +164,7 @@ func encodeDict(obj map[string]any, indent int) string {
 		switch v := value.(type) {
 		case map[string]any:
 			lines = append(lines, key+":")
-			for _, ln := range strings.Split(encodeDict(v, indent+1), "\n") {
+			for ln := range strings.SplitSeq(encodeDict(v, indent+1), "\n") {
 				if ln != "" {
 					lines = append(lines, "  "+ln)
 				}

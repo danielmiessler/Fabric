@@ -20,7 +20,7 @@ func validateTOON(toon string) []string {
 	if len(strings.TrimSpace(toon)) < 50 {
 		errs = append(errs, "output too short")
 	}
-	for _, line := range strings.Split(toon, "\n") {
+	for line := range strings.SplitSeq(toon, "\n") {
 		line = strings.TrimSpace(line)
 		if strings.Contains(line, "[") && strings.Contains(line, "]") {
 			if strings.Count(line, "[") != strings.Count(line, "]") {

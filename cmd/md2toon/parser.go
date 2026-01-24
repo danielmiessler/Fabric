@@ -101,7 +101,7 @@ func splitSections(content string) map[string]string {
 	var header string
 	var lines []string
 
-	for _, line := range strings.Split(content, "\n") {
+	for line := range strings.SplitSeq(content, "\n") {
 		if m := headerRe.FindStringSubmatch(line); m != nil {
 			if header != "" {
 				sections[header] = strings.TrimSpace(strings.Join(lines, "\n"))
@@ -174,7 +174,7 @@ func extractExpertise(text string) []string {
 
 func parseSteps(text string) []map[string]any {
 	var steps []map[string]any
-	for _, line := range strings.Split(text, "\n") {
+	for line := range strings.SplitSeq(text, "\n") {
 		line = strings.TrimSpace(line)
 		if line == "" {
 			continue

@@ -5,21 +5,36 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"strings"
 )
 
 func main() {
 	output := flag.String("o", "", "output file")
 	flag.Usage = func() {
-		fmt.Fprintf(os.Stderr, "Usage: md2toon [file.md] [-o output.toon]\n")
+		fmt.Fprintf(os.Stderr, "Usage: md2toon [-o output.toon] [file.md]\n")
+		fmt.Fprintf(os.Stderr, "       md2toon [file.md] -o output.toon\n")
 		fmt.Fprintf(os.Stderr, "Converts Markdown prompts to TOON format.\n\n")
 		flag.PrintDefaults()
 	}
-	flag.Parse()
+	// Parse flags allowing them after positional args
+	args := os.Args[1:]
+	var inputFile string
+	for i := 0; i < len(args); i++ {
+		if args[i] == "-o" && i+1 < len(args) {
+			*output = args[i+1]
+			i++
+		} else if args[i] == "-h" || args[i] == "--help" {
+			flag.Usage()
+			os.Exit(0)
+		} else if !strings.HasPrefix(args[i], "-") && inputFile == "" {
+			inputFile = args[i]
+		}
+	}
 
 	var content []byte
 	var err error
-	if flag.NArg() > 0 {
-		content, err = os.ReadFile(flag.Arg(0))
+	if inputFile != "" {
+		content, err = os.ReadFile(inputFile)
 	} else {
 		content, err = io.ReadAll(os.Stdin)
 	}

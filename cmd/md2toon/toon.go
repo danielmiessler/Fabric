@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"regexp"
+	"sort"
 	"strings"
 )
 
@@ -55,9 +56,10 @@ func encodeValue(value any) string {
 	case float64:
 		return fmt.Sprintf("%g", v)
 	case string:
-		return quote(v, ",")
+		// Always quote strings for consistent output formatting
+		return fmt.Sprintf(`"%s"`, escape(v))
 	default:
-		return quote(fmt.Sprintf("%v", v), ",")
+		return fmt.Sprintf(`"%s"`, escape(fmt.Sprintf("%v", v)))
 	}
 }
 
@@ -100,6 +102,7 @@ func keys(m map[string]any) []string {
 	for k := range m {
 		result = append(result, k)
 	}
+	sort.Strings(result)
 	return result
 }
 

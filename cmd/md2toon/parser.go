@@ -207,14 +207,38 @@ func parseOutput(text string) ([]map[string]any, []map[string]any) {
 	}
 
 	var instructions []map[string]any
-	for _, p := range outputPatterns {
-		if m := p.re.FindStringSubmatch(text); m != nil {
-			instructions = append(instructions, map[string]any{"instruction": p.result(m)})
+	seen := make(map[string]bool)
+
+	for _, m := range bulletLineRe.FindAllStringSubmatch(text, -1) {
+		bullet := strings.TrimSpace(m[1])
+		if len(bullet) >= 100 {
+			continue
+		}
+		// Skip bullets that match output patterns (pattern provides normalized form)
+		matchesPattern := false
+		for _, p := range outputPatterns {
+			if p.re.MatchString(bullet) {
+				matchesPattern = true
+				break
+			}
+		}
+		if !matchesPattern {
+			lower := strings.ToLower(bullet)
+			if !seen[lower] {
+				seen[lower] = true
+				instructions = append(instructions, map[string]any{"instruction": bullet})
+			}
 		}
 	}
-	for _, m := range bulletLineRe.FindAllStringSubmatch(text, -1) {
-		if bullet := strings.TrimSpace(m[1]); len(bullet) < 100 {
-			instructions = append(instructions, map[string]any{"instruction": bullet})
+	// Add normalized pattern results
+	for _, p := range outputPatterns {
+		if m := p.re.FindStringSubmatch(text); m != nil {
+			result := p.result(m)
+			lower := strings.ToLower(result)
+			if !seen[lower] {
+				seen[lower] = true
+				instructions = append(instructions, map[string]any{"instruction": result})
+			}
 		}
 	}
 	return sections, instructions

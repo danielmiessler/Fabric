@@ -60,6 +60,16 @@ func (c *Client) ListModels() ([]string, error) {
 	return c.DirectlyGetModels(context.Background())
 }
 
+// NeedsRawMode overrides the parent implementation to handle provider-specific raw mode requirements
+func (c *Client) NeedsRawMode(modelName string) bool {
+	// MiniMax models require raw mode for proper message formatting
+	if c.GetName() == "MiniMax" {
+		return true
+	}
+	// Fall back to parent OpenAI client implementation for other providers
+	return c.Client.NeedsRawMode(modelName)
+}
+
 // getStaticModels returns a predefined list of models for providers that don't support model discovery
 func (c *Client) getStaticModels(modelsKey string) ([]string, error) {
 	switch modelsKey {
@@ -117,6 +127,12 @@ func (c *Client) getStaticModels(modelsKey string) ([]string, error) {
 			"zai-org/glm-4.5",
 			"zai-org/glm-4.6",
 		}, nil
+	case "static:minimax":
+		return []string{
+			"MiniMax-M2",
+			"MiniMax-M2.1",
+			"MiniMax-M2.1-lightning",
+		}, nil
 	default:
 		return nil, fmt.Errorf("unknown static model list: %s", modelsKey)
 	}
@@ -172,7 +188,8 @@ var ProviderMap = map[string]ProviderConfig{
 	},
 	"MiniMax": {
 		Name:                "MiniMax",
-		BaseURL:             "https://api.minimaxi.com/v1",
+		BaseURL:             "https://api.minimax.io/v1",
+		ModelsURL:           "static:minimax",
 		ImplementsResponses: false,
 	},
 	"Mistral": {

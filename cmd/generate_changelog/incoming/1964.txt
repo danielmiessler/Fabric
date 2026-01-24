@@ -1,6 +1,0 @@
-MiniMax unexpected status code: 404 from provider MiniMax, response body: 404 page not found
-### PR [#1964](https://github.com/danielmiessler/Fabric/pull/1964) by [jessesep](https://github.com/jessesep): feat: add design system, golden rules, and discord structure patterns
-
-- Added create_design_system pattern to generate CSS design systems with tokens, typography scales, and dark/light mode support from requirements
-- Added create_golden_rules pattern to extract implicit and explicit rules from codebases into testable, enforceable guidelines  
-- Added analyze_discord_structure pattern to audit Discord server organization, permissions, and naming conventions

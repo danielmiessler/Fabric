@@ -1,5 +1,22 @@
 # Changelog
 
+## v1.4.390 (2026-01-24)
+
+MiniMax unexpected status code: 404 from provider MiniMax, response body: 404 page not found
+### PR [#1964](https://github.com/danielmiessler/Fabric/pull/1964) by [jessesep](https://github.com/jessesep): feat: add design system, golden rules, and discord structure patterns
+
+- Added create_design_system pattern to generate CSS design systems with tokens, typography scales, and dark/light mode support from requirements
+- Added create_golden_rules pattern to extract implicit and explicit rules from codebases into testable, enforceable guidelines  
+- Added analyze_discord_structure pattern to audit Discord server organization, permissions, and naming conventions
+
+### PR [#1967](https://github.com/danielmiessler/Fabric/pull/1967) by [ksylvan](https://github.com/ksylvan): chore: add MiniMax provider support and update API endpoints
+
+- Add MiniMax provider configuration with API endpoint updates
+- Implement NeedsRawMode method for MiniMax model handling
+- Define static MiniMax model list with M2 variants
+- Add Infermatic and Novita to VS Code extensions
+- Configure MiniMax models as static discovery
+
 ## v1.4.389 (2026-01-23)
 
 ### PR [#1960](https://github.com/danielmiessler/Fabric/pull/1960) by [ksylvan](https://github.com/ksylvan): fix: consume all positional arguments as input

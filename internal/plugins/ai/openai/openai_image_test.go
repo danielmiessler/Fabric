@@ -2,6 +2,7 @@ package openai
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 	"os"
 	"strings"
@@ -587,7 +588,7 @@ func TestSendResponses_WithWarningIntegration(t *testing.T) {
 			}
 
 			// Call sendResponses - this will trigger the warning and potentially error
-			_, err := client.sendResponses(nil, msgs, opts)
+			_, err := client.sendResponses(context.TODO(), msgs, opts)
 
 			// Close writer and read warning output
 			w.Close()

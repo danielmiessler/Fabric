@@ -1,3 +1,14 @@
+// md2toon - Markdown to TOON transpiler
+//
+// Converts Fabric Markdown prompts to TOON (Token-Oriented Object Notation)
+// format for significant token savings when sending prompts to LLMs.
+//
+// Usage:
+//
+//	md2toon file.md              # file → stdout
+//	cat file.md | md2toon        # stdin → stdout
+//	md2toon file.md -o out.toon  # file → file
+//	md2toon -o out.toon file.md  # file → file (alternate order)
 package main
 
 import (

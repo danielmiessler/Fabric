@@ -20,7 +20,7 @@
     "@skeletonlabs/tw-plugin": "^0.3.1",
     "@sveltejs/adapter-auto": "^3.3.1",
     "@sveltejs/kit": "^2.49.5",
-    "@sveltejs/vite-plugin-svelte": "^3.1.2",
+    "@sveltejs/vite-plugin-svelte": "^6.2.4",
     "@tailwindcss/forms": "^0.5.10",
     "@tailwindcss/typography": "^0.5.16",
     "@types/node": "^20.17.50",
@@ -45,8 +45,8 @@
     "svelte-youtube-lite": "^0.6.2",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.8.3",
-    "vite": "^5.4.21",
-    "vite-plugin-tailwind-purgecss": "^0.2.1"
+    "vite": "^7.3.1",
+    "vite-plugin-tailwind-purgecss": "^0.3.5"
   },
   "type": "module",
   "overrides": {

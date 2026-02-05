@@ -39,8 +39,8 @@ Example input:
 ]
 ```
 
-The object with `"type": "instructions"`, and field `"details"` contains the
-for the instructions for the suggested code changes. The `"name"` field is always
+The object with `"type": "instructions"`, and field `"details"` contains
+the instructions for the suggested code changes. The `"name"` field is always
 `"code_change_instructions"`
 
 The `"details"` field above, with type `"instructions"` contains the instructions for the suggested code changes.

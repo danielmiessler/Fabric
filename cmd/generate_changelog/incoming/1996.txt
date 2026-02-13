@@ -1,0 +1,7 @@
+### PR [#1996](https://github.com/danielmiessler/Fabric/pull/1996) by [ksylvan](https://github.com/ksylvan): chore: bump Go dependencies and remove deprecated Anthropic models
+
+- Bump anthropic-sdk-go from v1.22.0 to v1.22.1
+- Bump go-sqlite3 from v1.14.33 to v1.14.34
+- Bump ollama from v0.15.6 to v0.16.1
+- Bump google.golang.org/api from v0.265.0 to v0.266.0
+- Remove deprecated Claude 3.x model references from Anthropic client

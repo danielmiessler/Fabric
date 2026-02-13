@@ -151,7 +151,6 @@ func (c *Client) getStaticModels(modelsKey string) ([]string, error) {
 			"gpt-5.2-chat-latest",
 			"gpt-5.2-codex",
 			"openai/gpt-oss-120b",
-			"claude-3-7-sonnet-20250219",
 			"claude-sonnet-4-20250514",
 			"claude-opus-4-20250514",
 			"claude-opus-4-1-20250805",

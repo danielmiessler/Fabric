@@ -3,7 +3,7 @@ module github.com/danielmiessler/fabric
 go 1.25.1
 
 require (
-	github.com/anthropics/anthropic-sdk-go v1.22.0
+	github.com/anthropics/anthropic-sdk-go v1.22.1
 	github.com/atotto/clipboard v0.1.4
 	github.com/aws/aws-sdk-go-v2 v1.41.1
 	github.com/aws/aws-sdk-go-v2/config v1.32.7
@@ -18,9 +18,9 @@ require (
 	github.com/jessevdk/go-flags v1.6.1
 	github.com/joho/godotenv v1.5.1
 	github.com/kballard/go-shellquote v0.0.0-20180428030007-95032a82bc51
-	github.com/mattn/go-sqlite3 v1.14.33
+	github.com/mattn/go-sqlite3 v1.14.34
 	github.com/nicksnyder/go-i18n/v2 v2.6.1
-	github.com/ollama/ollama v0.15.6
+	github.com/ollama/ollama v0.16.1
 	github.com/openai/openai-go v1.12.0
 	github.com/otiai10/copy v1.14.1
 	github.com/pkg/errors v0.9.1
@@ -33,7 +33,7 @@ require (
 	github.com/swaggo/swag v1.16.6
 	golang.org/x/oauth2 v0.35.0
 	golang.org/x/text v0.34.0
-	google.golang.org/api v0.265.0
+	google.golang.org/api v0.266.0
 	gopkg.in/yaml.v3 v3.0.1
 )
 
@@ -155,7 +155,7 @@ require (
 	golang.org/x/sys v0.41.0 // indirect
 	google.golang.org/genai v1.46.0
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20260209200024-4cfbd4190f57 // indirect
-	google.golang.org/grpc v1.78.0 // indirect
+	google.golang.org/grpc v1.79.0 // indirect
 	google.golang.org/protobuf v1.36.11 // indirect
 	gopkg.in/warnings.v0 v0.1.2 // indirect
 )

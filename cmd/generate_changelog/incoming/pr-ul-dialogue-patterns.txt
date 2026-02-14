@@ -1,0 +1,7 @@
+# Release Notes
+
+### PR by [ghrom](https://github.com/ghrom): feat: add 3 patterns from cross-model AI dialogue research
+
+- Add `audit_consent` pattern for detecting manufactured consent through power asymmetry analysis
+- Add `detect_silent_victims` pattern for identifying parties harmed but unable to speak up (future, voiceless, unaware, diffuse, structural)
+- Add `audit_transparency` pattern for evaluating whether decisions are explainable to affected parties

@@ -19,9 +19,15 @@ schema = 3
   [mod."github.com/Azure/azure-sdk-for-go/sdk/azcore"]
     version = "v1.21.0"
     hash = "sha256-D4o1uNsQrI4HiSxpfQUL2dNr5/TT3MmF3bRmP1UibNE="
+  [mod."github.com/Azure/azure-sdk-for-go/sdk/azidentity"]
+    version = "v1.13.1"
+    hash = "sha256-PGB5CIcrLDr4BssBXNCnd1mOzkfQBhrfJqUh1f3ofK8="
   [mod."github.com/Azure/azure-sdk-for-go/sdk/internal"]
     version = "v1.11.2"
     hash = "sha256-O4Vo6D/fus3Qhs/Te644+jh2LfiG5PpiMkW0YWIbLCs="
+  [mod."github.com/AzureAD/microsoft-authentication-library-for-go"]
+    version = "v1.6.0"
+    hash = "sha256-2M14/PIMKbm0kCg2Hz9r4H0eRrePG/m4FZomw7kx4V0="
   [mod."github.com/KyleBanks/depth"]
     version = "v1.2.1"
     hash = "sha256-czR52MfeKA2FdStXCebTMQRKT8jaWQcbV214O3j49qU="
@@ -211,6 +217,9 @@ schema = 3
   [mod."github.com/gogs/chardet"]
     version = "v0.0.0-20211120154057-b7413eaefb8f"
     hash = "sha256-4MeqBJsh4U+ZEbfdDwdciTYMlQWkCil2KJbUxHjBSIo="
+  [mod."github.com/golang-jwt/jwt/v5"]
+    version = "v5.3.0"
+    hash = "sha256-VdN9Eo74ncMFJEVUSiJ1VRPMbC09FdVGno8wAReseXU="
   [mod."github.com/golang/groupcache"]
     version = "v0.0.0-20241129210726-2c02b8208cf8"
     hash = "sha256-AdLZ3dJLe/yduoNvZiXugZxNfmwJjNQyQGsIdzYzH74="
@@ -265,6 +274,9 @@ schema = 3
   [mod."github.com/klauspost/cpuid/v2"]
     version = "v2.3.0"
     hash = "sha256-50JhbQyT67BK38HIdJihPtjV7orYp96HknI2VP7A9Yc="
+  [mod."github.com/kylelemons/godebug"]
+    version = "v1.1.0"
+    hash = "sha256-DJ0re9mGqZb6PROQI8NPC0JVyDHdZ/y4uehNH7MbczY="
   [mod."github.com/leodido/go-urn"]
     version = "v1.4.0"
     hash = "sha256-Q6kplWkY37Tzy6GOme3Wut40jFK4Izun+ij/BJvcEu0="
@@ -304,6 +316,9 @@ schema = 3
   [mod."github.com/pjbgf/sha1cd"]
     version = "v0.5.0"
     hash = "sha256-11XBkhdciQGsQ7jEMZ6PgphRKjruTSc7ZxfOwDuPCr8="
+  [mod."github.com/pkg/browser"]
+    version = "v0.0.0-20240102092130-5ac0b6a4141c"
+    hash = "sha256-9iaSHHpcA1fXVF5f8RlKyo1DSoHx7eGXIC2/4LFaoBY="
   [mod."github.com/pkg/errors"]
     version = "v0.9.1"
     hash = "sha256-mNfQtcrQmu3sNg/7IwiieKWOgFQOVVe2yXgKBpe/wZw="

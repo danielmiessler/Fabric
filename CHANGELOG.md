@@ -1,5 +1,14 @@
 # Changelog
 
+## v1.4.416 (2026-02-21)
+
+### PR [#2013](https://github.com/danielmiessler/Fabric/pull/2013) by [ByronPogson](https://github.com/ByronPogson) and [ksylvan](https://github.com/ksylvan): feat: add Azure Entra ID authentication plugin
+
+- Added a new Azure Entra ID authentication plugin with shared Azure utilities, integrating it into the plugin registry.
+- Extracted shared Azure logic into a new `azurecommon` package, consolidating `ParseDeployments`, `BuildEndpoint`, and middleware.
+- Upgraded `azidentity` to v1.13.1 with Entra ID/MSAL support, and added `golang-jwt`, `pkg/browser`, and `go-keychain` as new dependencies.
+- Added `azure_credential_failure` and `azure_base_url_question` i18n keys across all locales, and enforced non-empty validation for Azure deployment names on configure.
+
 ## v1.4.415 (2026-02-19)
 
 ### PR [#2016](https://github.com/danielmiessler/Fabric/pull/2016) by [ksylvan](https://github.com/ksylvan): Extend Anthropic model beta map with 1M context models

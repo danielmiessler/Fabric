@@ -11,6 +11,7 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/danielmiessler/fabric/internal/i18n"
 	"github.com/gabriel-vasile/mimetype"
 )
 
@@ -73,7 +74,7 @@ func (a *Attachment) ResolveType() (ret string, err error) {
 		ret = mimetype.Detect(a.Content).String()
 		return
 	}
-	err = fmt.Errorf("attachment has no type and no content to derive it from")
+	err = fmt.Errorf("%s", i18n.T("attachment_no_type_no_content"))
 	return
 }
 
@@ -99,7 +100,7 @@ func (a *Attachment) ContentBytes() (ret []byte, err error) {
 		}
 		return
 	}
-	err = fmt.Errorf("no content available")
+	err = fmt.Errorf("%s", i18n.T("attachment_no_content_available"))
 	return
 }
 
@@ -130,7 +131,7 @@ func NewAttachment(value string) (ret *Attachment, err error) {
 		return
 	}
 	if _, err = os.Stat(absPath); os.IsNotExist(err) {
-		err = fmt.Errorf("file %s does not exist", value)
+		err = fmt.Errorf(i18n.T("attachment_file_not_exist"), value)
 		return
 	}
 
@@ -153,7 +154,7 @@ func detectMimeTypeFromURL(url string) (string, error) {
 	defer resp.Body.Close()
 	mimeType := resp.Header.Get("Content-Type")
 	if mimeType == "" {
-		return "", fmt.Errorf("could not determine mimetype of URL")
+		return "", fmt.Errorf("%s", i18n.T("attachment_could_not_determine_mimetype"))
 	}
 	return mimeType, nil
 }

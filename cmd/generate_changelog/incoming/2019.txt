@@ -1,0 +1,7 @@
+### PR [#2019](https://github.com/danielmiessler/Fabric/pull/2019) by [ksylvan](https://github.com/ksylvan): feat: replace hardcoded error strings with i18n translation keys
+
+- Replace hardcoded error messages with `i18n.T()` calls across Go source files
+- Add ~80 new translation keys to all locale files (en, de, es, fa, fr, it, ja, pt-BR, pt-PT, zh)
+- Internationalize error strings in chat, attachment, storage, template, plugin registry, server, and utility modules
+- Add i18n support for DigitalOcean, Gemini, and OpenAI-compatible providers
+- Sort existing locale keys alphabetically in JSON files

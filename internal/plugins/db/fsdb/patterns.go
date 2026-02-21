@@ -61,12 +61,12 @@ func (o *PatternsEntity) loadPattern(source string) (pattern *Pattern, err error
 		// Resolve the file path using GetAbsolutePath
 		var absPath string
 		if absPath, err = util.GetAbsolutePath(source); err != nil {
-			return nil, fmt.Errorf("could not resolve file path: %v", err)
+			return nil, fmt.Errorf(i18n.T("patterns_error_resolve_file_path"), err)
 		}
 
 		// Use the resolved absolute path to get the pattern
 		if pattern, err = o.getFromFile(absPath); err != nil {
-			return nil, fmt.Errorf("could not load pattern from file %s: %w", absPath, err)
+			return nil, fmt.Errorf(i18n.T("patterns_error_load_from_file"), absPath, err)
 		}
 	} else {
 		// Otherwise, get the pattern from the database
@@ -154,7 +154,7 @@ func (o *PatternsEntity) getFromDB(name string) (ret *Pattern, err error) {
 func (o *PatternsEntity) PrintLatestPatterns(latestNumber int) (err error) {
 	var contents []byte
 	if contents, err = os.ReadFile(o.UniquePatternsFilePath); err != nil {
-		err = fmt.Errorf("could not read unique patterns file. Please run --updatepatterns (%s)", err)
+		err = fmt.Errorf(i18n.T("patterns_error_read_unique_file"), err)
 		return
 	}
 	uniquePatterns := strings.Split(string(contents), "\n")
@@ -174,7 +174,7 @@ func (o *PatternsEntity) getFromFile(pathStr string) (pattern *Pattern, err erro
 	if strings.HasPrefix(pathStr, "~/") {
 		var homedir string
 		if homedir, err = os.UserHomeDir(); err != nil {
-			err = fmt.Errorf("could not get home directory: %v", err)
+			err = fmt.Errorf(i18n.T("patterns_error_get_home_directory"), err)
 			return
 		}
 		pathStr = filepath.Join(homedir, pathStr[2:])
@@ -182,7 +182,7 @@ func (o *PatternsEntity) getFromFile(pathStr string) (pattern *Pattern, err erro
 
 	var content []byte
 	if content, err = os.ReadFile(pathStr); err != nil {
-		err = fmt.Errorf("could not read pattern file %s: %v", pathStr, err)
+		err = fmt.Errorf(i18n.T("patterns_error_read_pattern_file"), pathStr, err)
 		return
 	}
 	pattern = &Pattern{
@@ -265,11 +265,11 @@ func (o *PatternsEntity) Get(name string) (*Pattern, error) {
 func (o *PatternsEntity) Save(name string, content []byte) (err error) {
 	patternDir := filepath.Join(o.Dir, name)
 	if err = os.MkdirAll(patternDir, os.ModePerm); err != nil {
-		return fmt.Errorf("could not create pattern directory: %v", err)
+		return fmt.Errorf(i18n.T("patterns_error_create_directory"), err)
 	}
 	patternPath := filepath.Join(patternDir, o.SystemPatternFile)
 	if err = os.WriteFile(patternPath, content, 0644); err != nil {
-		return fmt.Errorf("could not save pattern: %v", err)
+		return fmt.Errorf(i18n.T("patterns_error_save_pattern"), err)
 	}
 	return nil
 }

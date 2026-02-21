@@ -7,6 +7,7 @@ import (
 	"regexp"
 	"strings"
 
+	"github.com/danielmiessler/fabric/internal/i18n"
 	debuglog "github.com/danielmiessler/fabric/internal/log"
 )
 
@@ -80,7 +81,7 @@ func ApplyTemplate(content string, variables map[string]string, input string) (s
 					debugf("Extension call: name=%s operation=%s value=%s\n", name, operation, value)
 					result, err := extensionManager.ProcessExtension(name, operation, value)
 					if err != nil {
-						return "", fmt.Errorf("extension %s error: %v", name, err)
+						return "", fmt.Errorf(i18n.T("template_extension_error"), name, err)
 					}
 					content = strings.ReplaceAll(content, full, result)
 					progress = true
@@ -114,11 +115,11 @@ func ApplyTemplate(content string, variables map[string]string, input string) (s
 						debugf("Executing sys plugin\n")
 						result, err = sysPlugin.Apply(operation, value)
 					default:
-						return "", fmt.Errorf("unknown plugin namespace: %s", namespace)
+						return "", fmt.Errorf(i18n.T("template_unknown_plugin_namespace"), namespace)
 					}
 					if err != nil {
 						debugf("Plugin error: %v\n", err)
-						return "", fmt.Errorf("plugin %s error: %v", namespace, err)
+						return "", fmt.Errorf(i18n.T("template_plugin_error"), namespace, err)
 					}
 					content = strings.ReplaceAll(content, full, result)
 					progress = true
@@ -134,7 +135,7 @@ func ApplyTemplate(content string, variables map[string]string, input string) (s
 			default:
 				val, ok := variables[raw]
 				if !ok {
-					return "", fmt.Errorf("missing required variable: %s", raw)
+					return "", fmt.Errorf(i18n.T("template_missing_required_variable"), raw)
 				}
 				content = strings.ReplaceAll(content, full, val)
 				progress = true
@@ -142,7 +143,7 @@ func ApplyTemplate(content string, variables map[string]string, input string) (s
 		}
 
 		if !progress {
-			return "", fmt.Errorf("template processing stuck - potential infinite loop")
+			return "", fmt.Errorf("%s", i18n.T("template_processing_stuck"))
 		}
 	}
 

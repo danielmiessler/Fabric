@@ -478,7 +478,7 @@ func (o *PluginRegistry) Configure() (err error) {
 	o.ConfigureVendors()
 	_ = o.Defaults.Configure()
 	if err := o.CustomPatterns.Configure(); err != nil {
-		return fmt.Errorf("error configuring CustomPatterns: %w", err)
+		return fmt.Errorf(i18n.T("plugin_registry_error_configuring_custom_patterns"), err)
 	}
 	_ = o.PatternsLoader.Configure()
 
@@ -559,7 +559,7 @@ func (o *PluginRegistry) GetChatter(model string, modelContextLength int, vendor
 				return strings.EqualFold(name, vendorName)
 			})
 			if ret.vendor == nil || !vendorAvailable {
-				err = fmt.Errorf("model %s not available for vendor %s", model, vendorName)
+				err = fmt.Errorf(i18n.T("plugin_registry_model_not_available_for_vendor"), model, vendorName)
 				return
 			}
 		} else {

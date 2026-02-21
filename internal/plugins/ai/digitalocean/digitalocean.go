@@ -63,7 +63,7 @@ func (c *Client) ListModels() ([]string, error) {
 				err,
 			)
 		}
-		return nil, fmt.Errorf("DigitalOcean model list unavailable. Set DIGITALOCEAN_TOKEN to fetch models from the control plane")
+		return nil, fmt.Errorf("%s", i18n.T("digitalocean_model_list_unavailable"))
 	}
 	return c.fetchModelsFromControlPlane(context.Background())
 }
@@ -75,7 +75,7 @@ func (c *Client) fetchModelsFromControlPlane(ctx context.Context) ([]string, err
 
 	fullURL, err := url.Parse(controlPlaneModelsURL)
 	if err != nil {
-		return nil, fmt.Errorf("failed to parse DigitalOcean control plane URL: %w", err)
+		return nil, fmt.Errorf(i18n.T("digitalocean_failed_parse_control_plane_url"), err)
 	}
 
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, fullURL.String(), nil)

@@ -13,6 +13,7 @@ import (
 
 	"github.com/danielmiessler/fabric/internal/core"
 	"github.com/danielmiessler/fabric/internal/domain"
+	"github.com/danielmiessler/fabric/internal/i18n"
 	"github.com/danielmiessler/fabric/internal/plugins/db/fsdb"
 	"github.com/gin-gonic/gin"
 )
@@ -75,7 +76,7 @@ func (h *ChatHandler) HandleChat(c *gin.Context) {
 	if err := c.BindJSON(&request); err != nil {
 		log.Printf("Error binding JSON: %v", err)
 		c.Writer.Header().Set("Strict-Transport-Security", "max-age=63072000; includeSubDomains")
-		c.JSON(http.StatusBadRequest, gin.H{"error": fmt.Sprintf("Invalid request format: %v", err)})
+		c.JSON(http.StatusBadRequest, gin.H{"error": fmt.Sprintf(i18n.T("server_invalid_request_format"), err)})
 		return
 	}
 
@@ -122,7 +123,7 @@ func (h *ChatHandler) HandleChat(c *gin.Context) {
 				chatter, err := h.registry.GetChatter(p.Model, request.ModelContextLength, p.Vendor, "", true, false)
 				if err != nil {
 					log.Printf("Error creating chatter: %v", err)
-					streamChan <- domain.StreamUpdate{Type: domain.StreamTypeError, Content: fmt.Sprintf("Error: %v", err)}
+					streamChan <- domain.StreamUpdate{Type: domain.StreamTypeError, Content: fmt.Sprintf(i18n.T("server_chat_error"), err)}
 					return
 				}
 
@@ -209,11 +210,11 @@ func (h *ChatHandler) HandleChat(c *gin.Context) {
 func writeSSEResponse(w gin.ResponseWriter, response StreamResponse) error {
 	data, err := json.Marshal(response)
 	if err != nil {
-		return fmt.Errorf("error marshaling response: %v", err)
+		return fmt.Errorf("%s", fmt.Sprintf(i18n.T("server_error_marshaling_response"), err))
 	}
 
 	if _, err := fmt.Fprintf(w, "data: %s\n\n", string(data)); err != nil {
-		return fmt.Errorf("error writing response: %v", err)
+		return fmt.Errorf("%s", fmt.Sprintf(i18n.T("server_error_writing_response"), err))
 	}
 
 	w.(http.Flusher).Flush()

@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"io"
 	"os"
+
+	"github.com/danielmiessler/fabric/internal/i18n"
 )
 
 // ComputeHash computes SHA-256 hash of a file at given path.
@@ -13,13 +15,13 @@ import (
 func ComputeHash(path string) (string, error) {
 	f, err := os.Open(path)
 	if err != nil {
-		return "", fmt.Errorf("open file: %w", err)
+		return "", fmt.Errorf(i18n.T("template_hash_open_file"), err)
 	}
 	defer f.Close()
 
 	h := sha256.New()
 	if _, err := io.Copy(h, f); err != nil {
-		return "", fmt.Errorf("read file: %w", err)
+		return "", fmt.Errorf(i18n.T("template_hash_read_file"), err)
 	}
 
 	return hex.EncodeToString(h.Sum(nil)), nil

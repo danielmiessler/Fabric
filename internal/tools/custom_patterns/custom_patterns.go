@@ -50,7 +50,7 @@ func (o *CustomPatterns) configure() error {
 		if _, err := os.Stat(o.CustomPatternsDir.Value); os.IsNotExist(err) {
 			if err := os.MkdirAll(o.CustomPatternsDir.Value, 0755); err != nil {
 				// Log the error but don't clear the value - let it persist in env file
-				fmt.Printf("Warning: Could not create custom patterns directory %s: %v\n", o.CustomPatternsDir.Value, err)
+				fmt.Printf(i18n.T("custom_patterns_warning_create_directory"), o.CustomPatternsDir.Value, err)
 			}
 		}
 	}

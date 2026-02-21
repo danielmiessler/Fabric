@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/danielmiessler/fabric/internal/i18n"
 	"github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing/object"
 	"github.com/go-git/go-git/v5/storage/memory"
@@ -41,30 +42,30 @@ func FetchFilesFromRepo(opts FetchOptions) error {
 		Depth: 1,
 	})
 	if err != nil {
-		return fmt.Errorf("failed to clone repository: %w", err)
+		return fmt.Errorf(i18n.T("githelper_failed_clone_repository"), err)
 	}
 
 	// Get HEAD reference
 	ref, err := r.Head()
 	if err != nil {
-		return fmt.Errorf("failed to get repository HEAD: %w", err)
+		return fmt.Errorf(i18n.T("githelper_failed_get_head"), err)
 	}
 
 	// Get commit object
 	commit, err := r.CommitObject(ref.Hash())
 	if err != nil {
-		return fmt.Errorf("failed to get commit: %w", err)
+		return fmt.Errorf(i18n.T("githelper_failed_get_commit"), err)
 	}
 
 	// Get the file tree
 	tree, err := commit.Tree()
 	if err != nil {
-		return fmt.Errorf("failed to get tree: %w", err)
+		return fmt.Errorf(i18n.T("githelper_failed_get_tree"), err)
 	}
 
 	// Ensure destination directory exists
 	if err := os.MkdirAll(opts.DestDir, 0755); err != nil {
-		return fmt.Errorf("failed to create destination directory: %w", err)
+		return fmt.Errorf(i18n.T("githelper_failed_create_dest_directory"), err)
 	}
 
 	// Extract files from the tree

@@ -7,6 +7,8 @@ import (
 	"os/user"
 	"path/filepath"
 	"strings"
+
+	"github.com/danielmiessler/fabric/internal/i18n"
 )
 
 // ExpandPath expands the ~ to user's home directory and returns absolute path
@@ -20,7 +22,7 @@ func ExpandPath(path string) (string, error) {
 	if strings.HasPrefix(path, "~/") {
 		usr, err := user.Current()
 		if err != nil {
-			return "", fmt.Errorf("failed to get user home directory: %w", err)
+			return "", fmt.Errorf(i18n.T("template_utils_failed_get_home_dir"), err)
 		}
 		// Replace ~/ with actual home directory
 		path = filepath.Join(usr.HomeDir, path[2:])
@@ -29,12 +31,12 @@ func ExpandPath(path string) (string, error) {
 	// Convert to absolute path
 	absPath, err := filepath.Abs(path)
 	if err != nil {
-		return "", fmt.Errorf("failed to get absolute path: %w", err)
+		return "", fmt.Errorf(i18n.T("template_utils_failed_get_absolute_path"), err)
 	}
 
 	// Check if path exists
 	if _, err := os.Stat(absPath); err != nil {
-		return "", fmt.Errorf("path does not exist: %w", err)
+		return "", fmt.Errorf(i18n.T("template_utils_path_not_exist"), err)
 	}
 
 	return absPath, nil

@@ -9,6 +9,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/danielmiessler/fabric/internal/i18n"
 	"github.com/danielmiessler/fabric/internal/plugins/ai/openai"
 )
 
@@ -92,7 +93,7 @@ func (c *Client) fetchAbacusModels() ([]string, error) {
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("abacus models endpoint returned status %d", resp.StatusCode)
+		return nil, fmt.Errorf(i18n.T("abacus_models_endpoint_status"), resp.StatusCode)
 	}
 
 	var response struct {
@@ -200,7 +201,7 @@ func (c *Client) getStaticModels(modelsKey string) ([]string, error) {
 			"MiniMax-M2.1-lightning",
 		}, nil
 	default:
-		return nil, fmt.Errorf("unknown static model list: %s", modelsKey)
+		return nil, fmt.Errorf(i18n.T("openai_compatible_unknown_static_model_list"), modelsKey)
 	}
 }
 

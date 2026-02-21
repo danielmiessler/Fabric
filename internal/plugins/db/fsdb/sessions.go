@@ -5,6 +5,7 @@ import (
 
 	"github.com/danielmiessler/fabric/internal/chat"
 	"github.com/danielmiessler/fabric/internal/domain"
+	"github.com/danielmiessler/fabric/internal/i18n"
 )
 
 type SessionsEntity struct {
@@ -17,7 +18,7 @@ func (o *SessionsEntity) Get(name string) (session *Session, err error) {
 	if o.Exists(name) {
 		err = o.LoadAsJson(name, &session.Messages)
 	} else {
-		fmt.Printf("Creating new session: %s\n", name)
+		fmt.Printf(i18n.T("sessions_creating_new"), name)
 	}
 	return
 }

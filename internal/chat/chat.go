@@ -3,6 +3,8 @@ package chat
 import (
 	"encoding/json"
 	"errors"
+
+	"github.com/danielmiessler/fabric/internal/i18n"
 )
 
 const (
@@ -14,7 +16,7 @@ const (
 	ChatMessageRoleDeveloper = "developer"
 )
 
-var ErrContentFieldsMisused = errors.New("can't use both Content and MultiContent properties simultaneously")
+var ErrContentFieldsMisused = errors.New(i18n.T("chat_error_content_fields_misused"))
 
 type ChatMessagePartType string
 

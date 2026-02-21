@@ -1,0 +1,3 @@
+### PR [#2014](https://github.com/danielmiessler/Fabric/pull/2014) by [jlec](https://github.com/jlec): feat: add Azure AI Gateway plugin support
+
+- Adds support for Azure AI Gateway as a new AI provider plugin, with backends for Azure OpenAI, AWS Bedrock, and Google Vertex AI.

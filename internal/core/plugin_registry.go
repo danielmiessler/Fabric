@@ -15,6 +15,7 @@ import (
 	"github.com/danielmiessler/fabric/internal/plugins/ai/anthropic"
 	"github.com/danielmiessler/fabric/internal/plugins/ai/azure"
 	"github.com/danielmiessler/fabric/internal/plugins/ai/azure_entra"
+	"github.com/danielmiessler/fabric/internal/plugins/ai/azureaigateway"
 	"github.com/danielmiessler/fabric/internal/plugins/ai/bedrock"
 	"github.com/danielmiessler/fabric/internal/plugins/ai/copilot"
 	"github.com/danielmiessler/fabric/internal/plugins/ai/digitalocean"
@@ -106,6 +107,7 @@ func NewPluginRegistry(db *fsdb.Db) (ret *PluginRegistry, err error) {
 		digitalocean.NewClient(),
 		ollama.NewClient(),
 		azure.NewClient(),
+		azureaigateway.NewClient(),
 		azure_entra.NewClient(),
 		gemini.NewClient(),
 		anthropic.NewClient(),

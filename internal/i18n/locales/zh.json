@@ -20,7 +20,7 @@
   "azure_api_version_question": "请输入 Azure API 版本（留空使用默认值）",
   "azure_base_url_question": "API 基础 URL",
   "azure_base_url_required": "Azure 基础 URL 是必需的",
-  "azure_credential_failure": "创建 Azure 凭据失败",
+  "azure_credential_failure": "Azure凭据创建失败",
   "azure_deployments_question": "请输入您的 Azure 部署名称（用逗号分隔）",
   "azure_deployments_required": "至少需要一个 Azure 部署名称",
   "azure_failed_extract_deployment": "无法从请求中提取部署名称",
@@ -88,7 +88,7 @@
   "custom_patterns_label": "自定义模式",
   "custom_patterns_setup_description": "自定义模式 - 设置您的自定义模式目录",
   "custom_patterns_warning_create_directory": "警告：无法创建自定义模式目录%s：%v\n",
-  "db_error_loading_env_file": "加载.env文件错误：%s",
+  "db_error_loading_env_file": "加载.env文件错误：%w",
   "defaults_model_context_length_question": "请输入模型上下文长度",
   "defaults_model_question": "请输入您的默认模型的索引或名称",
   "defaults_setup_description": "默认 AI 提供商和模型",
@@ -650,5 +650,7 @@
   "youtube_url_is_playlist_not_video": "URL 是播放列表，而不是视频",
   "youtube_video_id_title_header": "视频ID: 标题",
   "youtube_ytdlp_not_found": "在 PATH 中未找到 yt-dlp。请安装 yt-dlp 以使用 YouTube 转录功能",
-  "youtube_ytdlp_stderr_error": "读取 yt-dlp stderr 时出错"
+  "youtube_ytdlp_stderr_error": "读取 yt-dlp stderr 时出错",
+  "plugin_registry_run_setup_select_defaults": "请运行 'fabric --setup' 并选择默认模型和供应商",
+  "plugin_registry_could_not_find_vendor": "找不到供应商"
 }

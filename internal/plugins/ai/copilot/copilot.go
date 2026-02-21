@@ -16,6 +16,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -107,7 +108,7 @@ type Client struct {
 // configure initializes the client with OAuth2 configuration.
 func (c *Client) configure() error {
 	if c.TenantID.Value == "" || c.ClientID.Value == "" {
-		return fmt.Errorf("%s", i18n.T("copilot_tenant_client_id_required"))
+		return errors.New(i18n.T("copilot_tenant_client_id_required"))
 	}
 
 	// Build OAuth2 configuration

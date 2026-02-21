@@ -3,6 +3,7 @@ package template
 import (
 	"crypto/sha256"
 	"encoding/hex"
+	"errors"
 	"fmt"
 	"io"
 	"os"
@@ -116,7 +117,7 @@ func (r *ExtensionRegistry) Register(configPath string) error {
 
 	// Validate extension name
 	if ext.Name == "" {
-		return fmt.Errorf("%s", i18n.T("extension_name_empty"))
+		return errors.New(i18n.T("extension_name_empty"))
 	}
 
 	if strings.Contains(ext.Name, " ") {
@@ -159,13 +160,13 @@ func (r *ExtensionRegistry) Register(configPath string) error {
 func (r *ExtensionRegistry) validateExtensionDefinition(ext *ExtensionDefinition) error {
 	// Validate required fields
 	if ext.Name == "" {
-		return fmt.Errorf("%s", i18n.T("extension_name_required"))
+		return errors.New(i18n.T("extension_name_required"))
 	}
 	if ext.Executable == "" {
-		return fmt.Errorf("%s", i18n.T("extension_executable_required"))
+		return errors.New(i18n.T("extension_executable_required"))
 	}
 	if ext.Type == "" {
-		return fmt.Errorf("%s", i18n.T("extension_type_required"))
+		return errors.New(i18n.T("extension_type_required"))
 	}
 
 	// Validate timeout format
@@ -177,7 +178,7 @@ func (r *ExtensionRegistry) validateExtensionDefinition(ext *ExtensionDefinition
 
 	// Validate operations
 	if len(ext.Operations) == 0 {
-		return fmt.Errorf("%s", i18n.T("extension_operation_required"))
+		return errors.New(i18n.T("extension_operation_required"))
 	}
 	for name, op := range ext.Operations {
 		if op.CmdTemplate == "" {

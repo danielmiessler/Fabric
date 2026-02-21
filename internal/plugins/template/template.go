@@ -1,6 +1,7 @@
 package template
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -143,7 +144,7 @@ func ApplyTemplate(content string, variables map[string]string, input string) (s
 		}
 
 		if !progress {
-			return "", fmt.Errorf("%s", i18n.T("template_processing_stuck"))
+			return "", errors.New(i18n.T("template_processing_stuck"))
 		}
 	}
 

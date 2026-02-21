@@ -2,6 +2,7 @@
 package template
 
 import (
+	"errors"
 	"fmt"
 	"strconv"
 	"time"
@@ -104,7 +105,7 @@ func (p *DateTimePlugin) handleRelative(now time.Time, value string) (string, er
 	debugf("DateTime: handling relative time value=%q", value)
 
 	if value == "" {
-		return "", fmt.Errorf("%s", i18n.T("template_datetime_error_relative_requires_value"))
+		return "", errors.New(i18n.T("template_datetime_error_relative_requires_value"))
 	}
 
 	// Try standard duration first (hours, minutes)
@@ -116,7 +117,7 @@ func (p *DateTimePlugin) handleRelative(now time.Time, value string) (string, er
 
 	// Handle date units
 	if len(value) < 2 {
-		return "", fmt.Errorf("%s", i18n.T("template_datetime_error_invalid_relative_format"))
+		return "", errors.New(i18n.T("template_datetime_error_invalid_relative_format"))
 	}
 
 	unit := value[len(value)-1:]

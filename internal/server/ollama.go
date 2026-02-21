@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"bytes"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"log"
@@ -109,28 +110,28 @@ func parseOllamaNumCtx(options map[string]any) (int, error) {
 	switch v := val.(type) {
 	case float64:
 		if math.IsNaN(v) || math.IsInf(v, 0) {
-			return 0, fmt.Errorf("%s", i18n.T("ollama_num_ctx_must_be_finite"))
+			return 0, errors.New(i18n.T("ollama_num_ctx_must_be_finite"))
 		}
 		if math.Trunc(v) != v {
-			return 0, fmt.Errorf("%s", i18n.T("ollama_num_ctx_must_be_integer"))
+			return 0, errors.New(i18n.T("ollama_num_ctx_must_be_integer"))
 		}
 		// Check for overflow on 32-bit systems (negative values handled by validation at line 166)
 		if v > float64(maxInt) {
-			return 0, fmt.Errorf("%s", i18n.T("ollama_num_ctx_value_out_of_range"))
+			return 0, errors.New(i18n.T("ollama_num_ctx_value_out_of_range"))
 		}
 		contextLength = int(v)
 
 	case float32:
 		f64 := float64(v)
 		if math.IsNaN(f64) || math.IsInf(f64, 0) {
-			return 0, fmt.Errorf("%s", i18n.T("ollama_num_ctx_must_be_finite"))
+			return 0, errors.New(i18n.T("ollama_num_ctx_must_be_finite"))
 		}
 		if math.Trunc(f64) != f64 {
-			return 0, fmt.Errorf("%s", i18n.T("ollama_num_ctx_must_be_integer"))
+			return 0, errors.New(i18n.T("ollama_num_ctx_must_be_integer"))
 		}
 		// Check for overflow on 32-bit systems (negative values handled by validation at line 177)
 		if f64 > float64(maxInt) {
-			return 0, fmt.Errorf("%s", i18n.T("ollama_num_ctx_value_out_of_range"))
+			return 0, errors.New(i18n.T("ollama_num_ctx_value_out_of_range"))
 		}
 		contextLength = int(v)
 
@@ -149,7 +150,7 @@ func parseOllamaNumCtx(options map[string]any) (int, error) {
 	case json.Number:
 		i64, err := v.Int64()
 		if err != nil {
-			return 0, fmt.Errorf("%s", i18n.T("ollama_num_ctx_must_be_valid_number"))
+			return 0, errors.New(i18n.T("ollama_num_ctx_must_be_valid_number"))
 		}
 		if i64 < 0 {
 			return 0, fmt.Errorf(i18n.T("ollama_num_ctx_must_be_positive"), i64)
@@ -172,7 +173,7 @@ func parseOllamaNumCtx(options map[string]any) (int, error) {
 		contextLength = parsed
 
 	default:
-		return 0, fmt.Errorf("%s", i18n.T("ollama_num_ctx_invalid_type"))
+		return 0, errors.New(i18n.T("ollama_num_ctx_invalid_type"))
 	}
 
 	if contextLength <= 0 {
@@ -493,7 +494,7 @@ func buildFinalOllamaResponse(model string, content string, duration int64) Olla
 // contains a path component.
 func buildFabricChatURL(addr string) (string, error) {
 	if addr == "" {
-		return "", fmt.Errorf("%s", i18n.T("ollama_empty_address"))
+		return "", errors.New(i18n.T("ollama_empty_address"))
 	}
 	if strings.HasPrefix(addr, "http://") || strings.HasPrefix(addr, "https://") {
 		parsed, err := url.Parse(addr)
@@ -501,10 +502,10 @@ func buildFabricChatURL(addr string) (string, error) {
 			return "", fmt.Errorf(i18n.T("ollama_invalid_address"), err)
 		}
 		if parsed.Host == "" {
-			return "", fmt.Errorf("%s", i18n.T("ollama_invalid_address_missing_host"))
+			return "", errors.New(i18n.T("ollama_invalid_address_missing_host"))
 		}
 		if strings.HasPrefix(parsed.Host, ":") {
-			return "", fmt.Errorf("%s", i18n.T("ollama_invalid_address_missing_hostname"))
+			return "", errors.New(i18n.T("ollama_invalid_address_missing_hostname"))
 		}
 		return strings.TrimRight(parsed.String(), "/"), nil
 	}
@@ -517,14 +518,14 @@ func buildFabricChatURL(addr string) (string, error) {
 		return "", fmt.Errorf(i18n.T("ollama_invalid_address"), err)
 	}
 	if parsed.Host == "" {
-		return "", fmt.Errorf("%s", i18n.T("ollama_invalid_address_missing_host"))
+		return "", errors.New(i18n.T("ollama_invalid_address_missing_host"))
 	}
 	if strings.HasPrefix(parsed.Host, ":") {
-		return "", fmt.Errorf("%s", i18n.T("ollama_invalid_address_missing_hostname"))
+		return "", errors.New(i18n.T("ollama_invalid_address_missing_hostname"))
 	}
 	// Bare addresses should be host[:port] only - reject path components
 	if parsed.Path != "" && parsed.Path != "/" {
-		return "", fmt.Errorf("%s", i18n.T("ollama_invalid_address_path_not_allowed"))
+		return "", errors.New(i18n.T("ollama_invalid_address_path_not_allowed"))
 	}
 	return strings.TrimRight(parsed.String(), "/"), nil
 }

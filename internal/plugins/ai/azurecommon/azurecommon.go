@@ -3,6 +3,7 @@ package azurecommon
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -78,7 +79,7 @@ func AzureDeploymentMiddleware(req *http.Request, next option.MiddlewareNext) (*
 // and restores the body for subsequent use.
 func ExtractDeploymentFromBody(req *http.Request) (string, error) {
 	if req.Body == nil {
-		return "", fmt.Errorf("%s", i18n.T("azure_request_body_nil"))
+		return "", errors.New(i18n.T("azure_request_body_nil"))
 	}
 
 	bodyBytes, err := io.ReadAll(req.Body)
@@ -96,7 +97,7 @@ func ExtractDeploymentFromBody(req *http.Request) (string, error) {
 	}
 
 	if payload.Model == "" {
-		return "", fmt.Errorf("%s", i18n.T("azure_model_field_empty"))
+		return "", errors.New(i18n.T("azure_model_field_empty"))
 	}
 
 	return payload.Model, nil

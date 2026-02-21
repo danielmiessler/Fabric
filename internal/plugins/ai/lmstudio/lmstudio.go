@@ -5,6 +5,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -244,18 +245,18 @@ func (c *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, o
 	var choices []any
 	var ok bool
 	if choices, ok = result["choices"].([]any); !ok || len(choices) == 0 {
-		err = fmt.Errorf("%s", i18n.T("lmstudio_invalid_response_missing_choices"))
+		err = errors.New(i18n.T("lmstudio_invalid_response_missing_choices"))
 		return
 	}
 
 	var message map[string]any
 	if message, ok = choices[0].(map[string]any)["message"].(map[string]any); !ok {
-		err = fmt.Errorf("%s", i18n.T("lmstudio_invalid_response_missing_message"))
+		err = errors.New(i18n.T("lmstudio_invalid_response_missing_message"))
 		return
 	}
 
 	if content, ok = message["content"].(string); !ok {
-		err = fmt.Errorf("%s", i18n.T("lmstudio_invalid_response_missing_content"))
+		err = errors.New(i18n.T("lmstudio_invalid_response_missing_content"))
 		return
 	}
 
@@ -307,12 +308,12 @@ func (c *Client) Complete(ctx context.Context, prompt string, opts *domain.ChatO
 	var choices []any
 	var ok bool
 	if choices, ok = result["choices"].([]any); !ok || len(choices) == 0 {
-		err = fmt.Errorf("%s", i18n.T("lmstudio_invalid_response_missing_choices"))
+		err = errors.New(i18n.T("lmstudio_invalid_response_missing_choices"))
 		return
 	}
 
 	if text, ok = choices[0].(map[string]any)["text"].(string); !ok {
-		err = fmt.Errorf("%s", i18n.T("lmstudio_invalid_response_missing_text"))
+		err = errors.New(i18n.T("lmstudio_invalid_response_missing_text"))
 		return
 	}
 
@@ -367,7 +368,7 @@ func (c *Client) GetEmbeddings(ctx context.Context, input string, opts *domain.C
 	}
 
 	if len(result.Data) == 0 {
-		err = fmt.Errorf("%s", i18n.T("lmstudio_no_embeddings_returned"))
+		err = errors.New(i18n.T("lmstudio_no_embeddings_returned"))
 		return
 	}
 

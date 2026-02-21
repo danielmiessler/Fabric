@@ -373,7 +373,7 @@ func validateImageParameters(imagePath, size, quality, background string, compre
 	if imagePath == "" {
 		// Check if any image parameters are specified without --image-file
 		if size != "" || quality != "" || background != "" || compression != 0 {
-			return fmt.Errorf("%s", i18n.T("image_parameters_require_image_file"))
+			return errors.New(i18n.T("image_parameters_require_image_file"))
 		}
 		return nil
 	}

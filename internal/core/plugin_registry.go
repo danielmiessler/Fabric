@@ -2,6 +2,7 @@ package core
 
 import (
 	"bytes"
+	"errors"
 	"fmt"
 	"io"
 	"os"
@@ -300,7 +301,7 @@ func (o *PluginRegistry) runVendorSetup() (err error) {
 	}
 
 	if setupQuestion.Value == "" {
-		return fmt.Errorf("%s", i18n.T("setup_no_ai_provider_selected"))
+		return errors.New(i18n.T("setup_no_ai_provider_selected"))
 	}
 
 	number, parseErr := strconv.Atoi(setupQuestion.Value)
@@ -576,9 +577,9 @@ func (o *PluginRegistry) GetChatter(model string, modelContextLength int, vendor
 	if ret.vendor == nil {
 		var errMsg string
 		if defaultModel == "" || defaultVendor == "" {
-			errMsg = "Please run, fabric --setup, and select default model and vendor."
+			errMsg = i18n.T("plugin_registry_run_setup_select_defaults")
 		} else {
-			errMsg = "could not find vendor."
+			errMsg = i18n.T("plugin_registry_could_not_find_vendor")
 		}
 		err = fmt.Errorf(
 			" Requested Model = %s\n Default Model = %s\n Default Vendor = %s.\n\n%s",

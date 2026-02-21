@@ -3,6 +3,7 @@ package openai
 import (
 	"bytes"
 	"context"
+	"errors"
 	"fmt"
 	"os"
 	"os/exec"
@@ -141,7 +142,7 @@ func (o *Client) TranscribeFile(ctx context.Context, filePath, model string, spl
 // It returns the list of chunk file paths and a cleanup function.
 func splitAudioFile(src, ext string, maxSize int64) (files []string, cleanup func(), err error) {
 	if _, err = exec.LookPath("ffmpeg"); err != nil {
-		return nil, nil, fmt.Errorf("%s", i18n.T("openai_audio_ffmpeg_not_found_install"))
+		return nil, nil, errors.New(i18n.T("openai_audio_ffmpeg_not_found_install"))
 	}
 
 	var dir string
@@ -184,7 +185,7 @@ func splitAudioFile(src, ext string, maxSize int64) (files []string, cleanup fun
 			_ = os.Remove(f)
 		}
 		if segmentTime <= 1 {
-			return nil, cleanup, fmt.Errorf("%s", i18n.T("openai_audio_unable_to_split_acceptable_size_chunks"))
+			return nil, cleanup, errors.New(i18n.T("openai_audio_unable_to_split_acceptable_size_chunks"))
 		}
 		segmentTime /= 2
 	}

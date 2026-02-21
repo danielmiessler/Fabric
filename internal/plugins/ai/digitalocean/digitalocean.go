@@ -3,6 +3,7 @@ package digitalocean
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -63,7 +64,7 @@ func (c *Client) ListModels() ([]string, error) {
 				err,
 			)
 		}
-		return nil, fmt.Errorf("%s", i18n.T("digitalocean_model_list_unavailable"))
+		return nil, errors.New(i18n.T("digitalocean_model_list_unavailable"))
 	}
 	return c.fetchModelsFromControlPlane(context.Background())
 }

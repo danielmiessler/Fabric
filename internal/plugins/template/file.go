@@ -5,6 +5,7 @@ package template
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -30,7 +31,7 @@ func (p *FilePlugin) safePath(path string) (string, error) {
 
 	// Basic security check - no path traversal
 	if strings.Contains(path, "..") {
-		return "", fmt.Errorf("%s", i18n.T("template_file_error_path_contains_parent_ref"))
+		return "", errors.New(i18n.T("template_file_error_path_contains_parent_ref"))
 	}
 
 	// Expand home directory if needed
@@ -61,7 +62,7 @@ func (p *FilePlugin) Apply(operation string, value string) (string, error) {
 	case "tail":
 		parts := strings.Split(value, "|")
 		if len(parts) != 2 {
-			return "", fmt.Errorf("%s", i18n.T("template_file_error_tail_requires_path_lines"))
+			return "", errors.New(i18n.T("template_file_error_tail_requires_path_lines"))
 		}
 
 		path, err := p.safePath(parts[0])
@@ -75,7 +76,7 @@ func (p *FilePlugin) Apply(operation string, value string) (string, error) {
 		}
 
 		if n < 1 {
-			return "", fmt.Errorf("%s", i18n.T("template_file_error_line_count_positive"))
+			return "", errors.New(i18n.T("template_file_error_line_count_positive"))
 		}
 
 		lines, err := p.lastNLines(path, n)

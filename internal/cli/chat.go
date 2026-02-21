@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"os/exec"
@@ -185,7 +186,7 @@ func sendNotification(options *domain.ChatOptions, patternName, result string) e
 	// Use built-in notification system
 	notificationManager := notifications.NewNotificationManager()
 	if !notificationManager.IsAvailable() {
-		return fmt.Errorf("%s", i18n.T("no_notification_system_available"))
+		return errors.New(i18n.T("no_notification_system_available"))
 	}
 
 	return notificationManager.Send(title, message)

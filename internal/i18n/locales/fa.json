@@ -88,7 +88,7 @@
   "custom_patterns_label": "الگوهای سفارشی",
   "custom_patterns_setup_description": "الگوهای سفارشی - تنظیم دایرکتوری برای الگوهای سفارشی شما",
   "custom_patterns_warning_create_directory": "هشدار: امکان ایجاد پوشه الگوهای سفارشی %s وجود ندارد: %v\n",
-  "db_error_loading_env_file": "خطا در بارگذاری فایل .env: %s",
+  "db_error_loading_env_file": "خطا در بارگذاری فایل .env: %w",
   "defaults_model_context_length_question": "طول زمینه مدل را وارد کنید",
   "defaults_model_question": "شاخص یا نام مدل پیش‌فرض خود را وارد کنید",
   "defaults_setup_description": "ارائه‌دهنده و مدل هوش مصنوعی پیش‌فرض",
@@ -650,5 +650,7 @@
   "youtube_url_is_playlist_not_video": "URL یک فهرست پخش است، نه یک ویدیو",
   "youtube_video_id_title_header": "شناسه ویدیو: عنوان",
   "youtube_ytdlp_not_found": "yt-dlp در PATH یافت نشد. لطفاً yt-dlp را نصب کنید تا از قابلیت رونویسی یوتیوب استفاده کنید",
-  "youtube_ytdlp_stderr_error": "خطا در خواندن stderr yt-dlp"
+  "youtube_ytdlp_stderr_error": "خطا در خواندن stderr yt-dlp",
+  "plugin_registry_run_setup_select_defaults": "لطفاً 'fabric --setup' را اجرا کنید و مدل و ارائه‌دهنده پیش‌فرض را انتخاب کنید",
+  "plugin_registry_could_not_find_vendor": "ارائه‌دهنده پیدا نشد"
 }

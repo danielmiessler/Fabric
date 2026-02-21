@@ -5,6 +5,7 @@ import (
 	"crypto/sha256"
 	"encoding/base64"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -74,7 +75,7 @@ func (a *Attachment) ResolveType() (ret string, err error) {
 		ret = mimetype.Detect(a.Content).String()
 		return
 	}
-	err = fmt.Errorf("%s", i18n.T("attachment_no_type_no_content"))
+	err = errors.New(i18n.T("attachment_no_type_no_content"))
 	return
 }
 
@@ -100,7 +101,7 @@ func (a *Attachment) ContentBytes() (ret []byte, err error) {
 		}
 		return
 	}
-	err = fmt.Errorf("%s", i18n.T("attachment_no_content_available"))
+	err = errors.New(i18n.T("attachment_no_content_available"))
 	return
 }
 
@@ -154,7 +155,7 @@ func detectMimeTypeFromURL(url string) (string, error) {
 	defer resp.Body.Close()
 	mimeType := resp.Header.Get("Content-Type")
 	if mimeType == "" {
-		return "", fmt.Errorf("%s", i18n.T("attachment_could_not_determine_mimetype"))
+		return "", errors.New(i18n.T("attachment_could_not_determine_mimetype"))
 	}
 	return mimeType, nil
 }

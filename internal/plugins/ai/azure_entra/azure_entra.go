@@ -1,6 +1,7 @@
 package azure_entra
 
 import (
+	"errors"
 	"fmt"
 	"strings"
 
@@ -39,12 +40,12 @@ type Client struct {
 func (c *Client) configure() error {
 	c.apiDeployments = azurecommon.ParseDeployments(c.ApiDeployments.Value)
 	if len(c.apiDeployments) == 0 {
-		return fmt.Errorf("%s", i18n.T("azure_deployments_required"))
+		return errors.New(i18n.T("azure_deployments_required"))
 	}
 
 	baseURL := strings.TrimSpace(c.ApiBaseURL.Value)
 	if baseURL == "" {
-		return fmt.Errorf("%s", i18n.T("azure_base_url_required"))
+		return errors.New(i18n.T("azure_base_url_required"))
 	}
 
 	apiVersion := strings.TrimSpace(c.ApiVersion.Value)

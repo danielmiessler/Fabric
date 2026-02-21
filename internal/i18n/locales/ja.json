@@ -20,7 +20,7 @@
   "azure_api_version_question": "Azure APIバージョンを入力してください（デフォルトの場合は空白のまま）",
   "azure_base_url_question": "API ベース URL",
   "azure_base_url_required": "Azure ベースURLが必要です",
-  "azure_credential_failure": "Azure 認証情報の作成に失敗しました",
+  "azure_credential_failure": "Azure資格情報の作成に失敗しました",
   "azure_deployments_question": "Azureデプロイメント名を入力してください（カンマ区切り）",
   "azure_deployments_required": "少なくとも1つのAzureデプロイメント名が必要です",
   "azure_failed_extract_deployment": "リクエストからデプロイメント名を抽出できませんでした",
@@ -88,7 +88,7 @@
   "custom_patterns_label": "カスタムパターン",
   "custom_patterns_setup_description": "カスタムパターン - カスタムパターン用のディレクトリを設定",
   "custom_patterns_warning_create_directory": "警告: カスタムパターンディレクトリ%sを作成できませんでした: %v\n",
-  "db_error_loading_env_file": ".envファイルの読み込みエラー: %s",
+  "db_error_loading_env_file": ".envファイルの読み込みエラー: %w",
   "defaults_model_context_length_question": "モデルのコンテキスト長を入力してください",
   "defaults_model_question": "デフォルトモデルのインデックスまたは名前を入力してください",
   "defaults_setup_description": "デフォルトのAIプロバイダーとモデル",
@@ -650,5 +650,7 @@
   "youtube_url_is_playlist_not_video": "URLはプレイリストであり、動画ではありません",
   "youtube_video_id_title_header": "動画ID: タイトル",
   "youtube_ytdlp_not_found": "PATHにyt-dlpが見つかりません。YouTubeトランスクリプト機能を使用するにはyt-dlpをインストールしてください",
-  "youtube_ytdlp_stderr_error": "yt-dlp stderrの読み取りエラー"
+  "youtube_ytdlp_stderr_error": "yt-dlp stderrの読み取りエラー",
+  "plugin_registry_run_setup_select_defaults": "'fabric --setup' を実行して、デフォルトのモデルとベンダーを選択してください",
+  "plugin_registry_could_not_find_vendor": "ベンダーが見つかりません"
 }

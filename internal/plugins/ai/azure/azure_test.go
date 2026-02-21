@@ -5,6 +5,8 @@ import (
 	"io"
 	"net/http"
 	"testing"
+
+	"github.com/danielmiessler/fabric/internal/plugins/ai/azurecommon"
 )
 
 // Test generated using Keploy
@@ -66,8 +68,8 @@ func TestClientConfigureDefaultAPIVersion(t *testing.T) {
 		t.Fatalf("Expected no error, got %v", err)
 	}
 
-	if client.ApiVersion.Value != defaultAPIVersion {
-		t.Errorf("Expected API version to default to %s, got %s", defaultAPIVersion, client.ApiVersion.Value)
+	if client.ApiVersion.Value != azurecommon.DefaultAPIVersion {
+		t.Errorf("Expected API version to default to %s, got %s", azurecommon.DefaultAPIVersion, client.ApiVersion.Value)
 	}
 }
 
@@ -135,7 +137,7 @@ func TestMiddlewareResponsesRoute(t *testing.T) {
 		return &http.Response{StatusCode: 200}, nil
 	}
 
-	_, err = azureDeploymentMiddleware(req, mockNext)
+	_, err = azurecommon.AzureDeploymentMiddleware(req, mockNext)
 	if err != nil {
 		t.Fatalf("Middleware returned error: %v", err)
 	}
@@ -159,7 +161,7 @@ func TestMiddlewareChatCompletionsRoute(t *testing.T) {
 		return &http.Response{StatusCode: 200}, nil
 	}
 
-	_, err = azureDeploymentMiddleware(req, mockNext)
+	_, err = azurecommon.AzureDeploymentMiddleware(req, mockNext)
 	if err != nil {
 		t.Fatalf("Middleware returned error: %v", err)
 	}

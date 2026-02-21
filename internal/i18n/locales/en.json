@@ -94,6 +94,9 @@
   "defaults_setup_description": "Default AI Vendor and Model",
   "digitalocean_failed_parse_control_plane_url": "failed to parse DigitalOcean control plane URL: %w",
   "digitalocean_model_list_unavailable": "DigitalOcean model list unavailable. Set DIGITALOCEAN_TOKEN to fetch models from the control plane",
+  "digitalocean_model_list_unavailable_with_error": "DigitalOcean model list unavailable: %w. Set DIGITALOCEAN_TOKEN to fetch models from the control plane",
+  "digitalocean_models_request_failed_read_error": "DigitalOcean models request failed with status %d: %w",
+  "digitalocean_models_request_failed_with_status": "DigitalOcean models request failed with status %d: %s",
   "disable_openai_responses_api": "Disable OpenAI Responses API (default: false)",
   "disable_pattern_variable_replacement": "Disable pattern variable replacement",
   "enable_web_search_tool": "Enable web search tool for supported models (Anthropic, OpenAI, Gemini)",
@@ -395,8 +398,10 @@
   "plugin_question_bool": "%v%v (true/false, leave empty for '%s' or type '%v' to remove the value):",
   "plugin_question_optional": "%v%v (leave empty to skip):",
   "plugin_question_with_default": "%v%v (leave empty for '%s' or type '%v' to remove the value):",
+  "plugin_registry_could_not_find_vendor": "could not find vendor",
   "plugin_registry_error_configuring_custom_patterns": "error configuring CustomPatterns: %w",
   "plugin_registry_model_not_available_for_vendor": "model %s not available for vendor %s",
+  "plugin_registry_run_setup_select_defaults": "please run 'fabric --setup' and select default model and vendor",
   "plugin_setting_not_valid": "%v=%v, is not valid",
   "plugin_setup_configured": "[%v] configured",
   "plugin_setup_skipped": "[%v] skipped\n",
@@ -650,7 +655,5 @@
   "youtube_url_is_playlist_not_video": "URL is a playlist, not a video",
   "youtube_video_id_title_header": "VideoID: Title",
   "youtube_ytdlp_not_found": "yt-dlp not found in PATH. Please install yt-dlp to use YouTube transcript functionality",
-  "youtube_ytdlp_stderr_error": "error reading yt-dlp stderr",
-  "plugin_registry_run_setup_select_defaults": "please run 'fabric --setup' and select default model and vendor",
-  "plugin_registry_could_not_find_vendor": "could not find vendor"
+  "youtube_ytdlp_stderr_error": "error reading yt-dlp stderr"
 }

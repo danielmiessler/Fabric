@@ -94,6 +94,9 @@
   "defaults_setup_description": "Provedor e modelo de IA padrão",
   "digitalocean_failed_parse_control_plane_url": "Falha ao analisar a URL do plano de controle do DigitalOcean: %w",
   "digitalocean_model_list_unavailable": "lista de modelos do DigitalOcean indisponível. Defina DIGITALOCEAN_TOKEN para buscar modelos do plano de controle",
+  "digitalocean_model_list_unavailable_with_error": "lista de modelos do DigitalOcean indisponível: %w. Defina DIGITALOCEAN_TOKEN para buscar modelos do plano de controle",
+  "digitalocean_models_request_failed_read_error": "requisição de modelos do DigitalOcean falhou com status %d: %w",
+  "digitalocean_models_request_failed_with_status": "requisição de modelos do DigitalOcean falhou com status %d: %s",
   "disable_openai_responses_api": "Desabilitar API OpenAI Responses (padrão: false)",
   "disable_pattern_variable_replacement": "Desabilitar substituição de variáveis de padrão",
   "enable_web_search_tool": "Habilitar ferramenta de busca web para modelos suportados (Anthropic, OpenAI, Gemini)",
@@ -395,8 +398,10 @@
   "plugin_question_bool": "%v%v (true/false, deixe em branco para '%s' ou digite '%v' para remover o valor):",
   "plugin_question_optional": "%v%v (deixe em branco para pular):",
   "plugin_question_with_default": "%v%v (deixe em branco para '%s' ou digite '%v' para remover o valor):",
+  "plugin_registry_could_not_find_vendor": "não foi possível encontrar o fornecedor",
   "plugin_registry_error_configuring_custom_patterns": "Erro ao configurar CustomPatterns: %w",
   "plugin_registry_model_not_available_for_vendor": "Modelo %s não disponível para o fornecedor %s",
+  "plugin_registry_run_setup_select_defaults": "execute 'fabric --setup' e selecione o modelo e fornecedor padrão",
   "plugin_setting_not_valid": "%v=%v não é válido",
   "plugin_setup_configured": "[%v] configurado",
   "plugin_setup_skipped": "[%v] ignorado\\n",
@@ -650,7 +655,5 @@
   "youtube_url_is_playlist_not_video": "a URL é uma playlist, não um vídeo",
   "youtube_video_id_title_header": "VideoID: Título",
   "youtube_ytdlp_not_found": "yt-dlp não encontrado no PATH. Por favor instale o yt-dlp para usar a funcionalidade de transcrição do YouTube",
-  "youtube_ytdlp_stderr_error": "erro ao ler stderr do yt-dlp",
-  "plugin_registry_run_setup_select_defaults": "execute 'fabric --setup' e selecione o modelo e fornecedor padrão",
-  "plugin_registry_could_not_find_vendor": "não foi possível encontrar o fornecedor"
+  "youtube_ytdlp_stderr_error": "erro ao ler stderr do yt-dlp"
 }

@@ -94,6 +94,9 @@
   "defaults_setup_description": "デフォルトのAIプロバイダーとモデル",
   "digitalocean_failed_parse_control_plane_url": "DigitalOceanコントロールプレーンURLの解析に失敗しました: %w",
   "digitalocean_model_list_unavailable": "DigitalOceanモデルリストが利用できません。DIGITALOCEAN_TOKENを設定してコントロールプレーンからモデルを取得してください",
+  "digitalocean_model_list_unavailable_with_error": "DigitalOceanモデルリストが利用できません: %w。コントロールプレーンからモデルを取得するにはDIGITALOCEAN_TOKENを設定してください",
+  "digitalocean_models_request_failed_read_error": "DigitalOceanモデルリクエストがステータス%dで失敗しました: %w",
+  "digitalocean_models_request_failed_with_status": "DigitalOceanモデルリクエストがステータス%dで失敗しました: %s",
   "disable_openai_responses_api": "OpenAI Responses APIを無効化（デフォルト：false）",
   "disable_pattern_variable_replacement": "パターン変数の置換を無効化",
   "enable_web_search_tool": "サポートされているモデル（Anthropic、OpenAI、Gemini）でウェブ検索ツールを有効化",
@@ -395,8 +398,10 @@
   "plugin_question_bool": "%v%v (true/false、'%s' を使うには空欄のまま、値を削除するには '%v' と入力):",
   "plugin_question_optional": "%v%v (スキップするには空欄のまま):",
   "plugin_question_with_default": "%v%v ('%s' を使うには空欄のまま、値を削除するには '%v' と入力):",
+  "plugin_registry_could_not_find_vendor": "ベンダーが見つかりません",
   "plugin_registry_error_configuring_custom_patterns": "CustomPatternsの設定エラー: %w",
   "plugin_registry_model_not_available_for_vendor": "モデル%sはベンダー%sでは利用できません",
+  "plugin_registry_run_setup_select_defaults": "'fabric --setup' を実行して、デフォルトのモデルとベンダーを選択してください",
   "plugin_setting_not_valid": "%v=%v は無効です",
   "plugin_setup_configured": "[%v] 設定済み",
   "plugin_setup_skipped": "[%v] スキップされました\\n",
@@ -650,7 +655,5 @@
   "youtube_url_is_playlist_not_video": "URLはプレイリストであり、動画ではありません",
   "youtube_video_id_title_header": "動画ID: タイトル",
   "youtube_ytdlp_not_found": "PATHにyt-dlpが見つかりません。YouTubeトランスクリプト機能を使用するにはyt-dlpをインストールしてください",
-  "youtube_ytdlp_stderr_error": "yt-dlp stderrの読み取りエラー",
-  "plugin_registry_run_setup_select_defaults": "'fabric --setup' を実行して、デフォルトのモデルとベンダーを選択してください",
-  "plugin_registry_could_not_find_vendor": "ベンダーが見つかりません"
+  "youtube_ytdlp_stderr_error": "yt-dlp stderrの読み取りエラー"
 }

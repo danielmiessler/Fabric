@@ -94,6 +94,9 @@
   "defaults_setup_description": "Standard-KI-Anbieter und -Modell",
   "digitalocean_failed_parse_control_plane_url": "DigitalOcean Control Plane URL konnte nicht geparst werden: %w",
   "digitalocean_model_list_unavailable": "DigitalOcean-Modellliste nicht verfügbar. Setzen Sie DIGITALOCEAN_TOKEN, um Modelle von der Control Plane abzurufen",
+  "digitalocean_model_list_unavailable_with_error": "DigitalOcean-Modellliste nicht verfügbar: %w. Setzen Sie DIGITALOCEAN_TOKEN, um Modelle von der Control Plane abzurufen",
+  "digitalocean_models_request_failed_read_error": "DigitalOcean-Modellanfrage fehlgeschlagen mit Status %d: %w",
+  "digitalocean_models_request_failed_with_status": "DigitalOcean-Modellanfrage fehlgeschlagen mit Status %d: %s",
   "disable_openai_responses_api": "OpenAI Responses API deaktivieren (Standard: false)",
   "disable_pattern_variable_replacement": "Mustervariablenersetzung deaktivieren",
   "enable_web_search_tool": "Web-Such-Tool für unterstützte Modelle aktivieren (Anthropic, OpenAI, Gemini)",
@@ -395,8 +398,10 @@
   "plugin_question_bool": "%v%v (true/false, leer lassen für '%s' oder '%v' eingeben, um den Wert zu entfernen):",
   "plugin_question_optional": "%v%v (leer lassen zum Überspringen):",
   "plugin_question_with_default": "%v%v (leer lassen für '%s' oder '%v' eingeben, um den Wert zu entfernen):",
+  "plugin_registry_could_not_find_vendor": "Anbieter konnte nicht gefunden werden",
   "plugin_registry_error_configuring_custom_patterns": "Fehler beim Konfigurieren von CustomPatterns: %w",
   "plugin_registry_model_not_available_for_vendor": "Modell %s nicht verfügbar für Anbieter %s",
+  "plugin_registry_run_setup_select_defaults": "bitte führen Sie 'fabric --setup' aus und wählen Sie Standardmodell und -anbieter",
   "plugin_setting_not_valid": "%v=%v ist nicht gültig",
   "plugin_setup_configured": "[%v] konfiguriert",
   "plugin_setup_skipped": "[%v] übersprungen\\n",
@@ -650,7 +655,5 @@
   "youtube_url_is_playlist_not_video": "URL ist eine Playlist, kein Video",
   "youtube_video_id_title_header": "VideoID: Titel",
   "youtube_ytdlp_not_found": "yt-dlp wurde nicht in PATH gefunden. Bitte installiere yt-dlp, um die YouTube-Transkript-Funktionalität zu nutzen",
-  "youtube_ytdlp_stderr_error": "fehler beim Lesen von yt-dlp stderr",
-  "plugin_registry_run_setup_select_defaults": "bitte führen Sie 'fabric --setup' aus und wählen Sie Standardmodell und -anbieter",
-  "plugin_registry_could_not_find_vendor": "Anbieter konnte nicht gefunden werden"
+  "youtube_ytdlp_stderr_error": "fehler beim Lesen von yt-dlp stderr"
 }

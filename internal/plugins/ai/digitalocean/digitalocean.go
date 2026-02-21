@@ -59,10 +59,7 @@ func (c *Client) ListModels() ([]string, error) {
 			return models, nil
 		}
 		if err != nil {
-			return nil, fmt.Errorf(
-				"DigitalOcean model list unavailable: %w. Set DIGITALOCEAN_TOKEN to fetch models from the control plane",
-				err,
-			)
+			return nil, fmt.Errorf(i18n.T("digitalocean_model_list_unavailable_with_error"), err)
 		}
 		return nil, errors.New(i18n.T("digitalocean_model_list_unavailable"))
 	}
@@ -101,17 +98,9 @@ func (c *Client) fetchModelsFromControlPlane(ctx context.Context) ([]string, err
 	if resp.StatusCode != http.StatusOK {
 		bodyBytes, readErr := io.ReadAll(io.LimitReader(resp.Body, errorResponseLimit))
 		if readErr != nil {
-			return nil, fmt.Errorf(
-				"DigitalOcean models request failed with status %d: %w",
-				resp.StatusCode,
-				readErr,
-			)
+			return nil, fmt.Errorf(i18n.T("digitalocean_models_request_failed_read_error"), resp.StatusCode, readErr)
 		}
-		return nil, fmt.Errorf(
-			"DigitalOcean models request failed with status %d: %s",
-			resp.StatusCode,
-			string(bodyBytes),
-		)
+		return nil, fmt.Errorf(i18n.T("digitalocean_models_request_failed_with_status"), resp.StatusCode, string(bodyBytes))
 	}
 
 	bodyBytes, err := io.ReadAll(io.LimitReader(resp.Body, maxResponseSize+1))

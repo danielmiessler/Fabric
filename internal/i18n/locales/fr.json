@@ -94,6 +94,9 @@
   "defaults_setup_description": "Fournisseur et modèle d'IA par défaut",
   "digitalocean_failed_parse_control_plane_url": "Impossible d'analyser l'URL du plan de contrôle DigitalOcean : %w",
   "digitalocean_model_list_unavailable": "liste des modèles DigitalOcean non disponible. Définissez DIGITALOCEAN_TOKEN pour récupérer les modèles depuis le plan de contrôle",
+  "digitalocean_model_list_unavailable_with_error": "liste des modèles DigitalOcean non disponible : %w. Définissez DIGITALOCEAN_TOKEN pour récupérer les modèles depuis le plan de contrôle",
+  "digitalocean_models_request_failed_read_error": "échec de la requête de modèles DigitalOcean avec le statut %d : %w",
+  "digitalocean_models_request_failed_with_status": "échec de la requête de modèles DigitalOcean avec le statut %d : %s",
   "disable_openai_responses_api": "Désactiver l'API OpenAI Responses (par défaut : false)",
   "disable_pattern_variable_replacement": "Désactiver le remplacement des variables de motif",
   "enable_web_search_tool": "Activer l'outil de recherche web pour les modèles pris en charge (Anthropic, OpenAI, Gemini)",
@@ -395,8 +398,10 @@
   "plugin_question_bool": "%v%v (true/false, laissez vide pour '%s' ou tapez '%v' pour supprimer la valeur) :",
   "plugin_question_optional": "%v%v (laissez vide pour passer) :",
   "plugin_question_with_default": "%v%v (laissez vide pour '%s' ou tapez '%v' pour supprimer la valeur) :",
+  "plugin_registry_could_not_find_vendor": "fournisseur introuvable",
   "plugin_registry_error_configuring_custom_patterns": "Erreur lors de la configuration de CustomPatterns : %w",
   "plugin_registry_model_not_available_for_vendor": "Modèle %s non disponible pour le fournisseur %s",
+  "plugin_registry_run_setup_select_defaults": "veuillez exécuter 'fabric --setup' et sélectionner le modèle et le fournisseur par défaut",
   "plugin_setting_not_valid": "%v=%v n'est pas valide",
   "plugin_setup_configured": "[%v] configuré",
   "plugin_setup_skipped": "[%v] ignoré\\n",
@@ -650,7 +655,5 @@
   "youtube_url_is_playlist_not_video": "l'URL est une liste de lecture, pas une vidéo",
   "youtube_video_id_title_header": "VideoID : Titre",
   "youtube_ytdlp_not_found": "yt-dlp introuvable dans PATH. Veuillez installer yt-dlp pour utiliser la fonctionnalité de transcription YouTube",
-  "youtube_ytdlp_stderr_error": "erreur lors de la lecture du stderr de yt-dlp",
-  "plugin_registry_run_setup_select_defaults": "veuillez exécuter 'fabric --setup' et sélectionner le modèle et le fournisseur par défaut",
-  "plugin_registry_could_not_find_vendor": "fournisseur introuvable"
+  "youtube_ytdlp_stderr_error": "erreur lors de la lecture du stderr de yt-dlp"
 }

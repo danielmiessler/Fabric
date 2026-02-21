@@ -94,6 +94,9 @@
   "defaults_setup_description": "ارائه‌دهنده و مدل هوش مصنوعی پیش‌فرض",
   "digitalocean_failed_parse_control_plane_url": "تجزیه URL صفحه کنترل DigitalOcean ناموفق بود: %w",
   "digitalocean_model_list_unavailable": "لیست مدل‌های DigitalOcean در دسترس نیست. DIGITALOCEAN_TOKEN را تنظیم کنید تا مدل‌ها از صفحه کنترل دریافت شوند",
+  "digitalocean_model_list_unavailable_with_error": "لیست مدل‌های DigitalOcean در دسترس نیست: %w. برای دریافت مدل‌ها از کنترل پلین، DIGITALOCEAN_TOKEN را تنظیم کنید",
+  "digitalocean_models_request_failed_read_error": "درخواست مدل‌های DigitalOcean با وضعیت %d ناموفق بود: %w",
+  "digitalocean_models_request_failed_with_status": "درخواست مدل‌های DigitalOcean با وضعیت %d ناموفق بود: %s",
   "disable_openai_responses_api": "غیرفعال کردن API OpenAI Responses (پیش‌فرض: false)",
   "disable_pattern_variable_replacement": "غیرفعال کردن جایگزینی متغیرهای الگو",
   "enable_web_search_tool": "فعال‌سازی ابزار جستجوی وب برای مدل‌های پشتیبانی شده (Anthropic، OpenAI، Gemini)",
@@ -395,8 +398,10 @@
   "plugin_question_bool": "%v%v (true/false، برای '%s' خالی بگذارید یا '%v' را برای حذف مقدار بنویسید):",
   "plugin_question_optional": "%v%v (برای رد کردن خالی بگذارید):",
   "plugin_question_with_default": "%v%v (برای '%s' خالی بگذارید یا '%v' را برای حذف مقدار بنویسید):",
+  "plugin_registry_could_not_find_vendor": "ارائه‌دهنده پیدا نشد",
   "plugin_registry_error_configuring_custom_patterns": "خطا در پیکربندی CustomPatterns: %w",
   "plugin_registry_model_not_available_for_vendor": "مدل %s برای ارائه‌دهنده %s در دسترس نیست",
+  "plugin_registry_run_setup_select_defaults": "لطفاً 'fabric --setup' را اجرا کنید و مدل و ارائه‌دهنده پیش‌فرض را انتخاب کنید",
   "plugin_setting_not_valid": "%v=%v معتبر نیست",
   "plugin_setup_configured": "[%v] پیکربندی شد",
   "plugin_setup_skipped": "[%v] رد شد\\n",
@@ -650,7 +655,5 @@
   "youtube_url_is_playlist_not_video": "URL یک فهرست پخش است، نه یک ویدیو",
   "youtube_video_id_title_header": "شناسه ویدیو: عنوان",
   "youtube_ytdlp_not_found": "yt-dlp در PATH یافت نشد. لطفاً yt-dlp را نصب کنید تا از قابلیت رونویسی یوتیوب استفاده کنید",
-  "youtube_ytdlp_stderr_error": "خطا در خواندن stderr yt-dlp",
-  "plugin_registry_run_setup_select_defaults": "لطفاً 'fabric --setup' را اجرا کنید و مدل و ارائه‌دهنده پیش‌فرض را انتخاب کنید",
-  "plugin_registry_could_not_find_vendor": "ارائه‌دهنده پیدا نشد"
+  "youtube_ytdlp_stderr_error": "خطا در خواندن stderr yt-dlp"
 }

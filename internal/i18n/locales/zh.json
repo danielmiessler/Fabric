@@ -94,6 +94,9 @@
   "defaults_setup_description": "默认 AI 提供商和模型",
   "digitalocean_failed_parse_control_plane_url": "解析DigitalOcean控制面板URL失败：%w",
   "digitalocean_model_list_unavailable": "DigitalOcean模型列表不可用。请设置DIGITALOCEAN_TOKEN以从控制面板获取模型",
+  "digitalocean_model_list_unavailable_with_error": "DigitalOcean模型列表不可用：%w。请设置DIGITALOCEAN_TOKEN以从控制面板获取模型",
+  "digitalocean_models_request_failed_read_error": "DigitalOcean模型请求失败，状态码 %d：%w",
+  "digitalocean_models_request_failed_with_status": "DigitalOcean模型请求失败，状态码 %d：%s",
   "disable_openai_responses_api": "禁用 OpenAI 响应 API（默认：false）",
   "disable_pattern_variable_replacement": "禁用模式变量替换",
   "enable_web_search_tool": "为支持的模型启用网络搜索工具（Anthropic、OpenAI、Gemini）",
@@ -395,8 +398,10 @@
   "plugin_question_bool": "%v%v（true/false，留空表示使用 '%s'，或输入 '%v' 清除值）：",
   "plugin_question_optional": "%v%v（留空以跳过）：",
   "plugin_question_with_default": "%v%v（留空表示使用 '%s'，或输入 '%v' 清除值）：",
+  "plugin_registry_could_not_find_vendor": "找不到供应商",
   "plugin_registry_error_configuring_custom_patterns": "配置CustomPatterns错误：%w",
   "plugin_registry_model_not_available_for_vendor": "模型%s对供应商%s不可用",
+  "plugin_registry_run_setup_select_defaults": "请运行 'fabric --setup' 并选择默认模型和供应商",
   "plugin_setting_not_valid": "%v=%v 无效",
   "plugin_setup_configured": "[%v] 已配置",
   "plugin_setup_skipped": "[%v] 已跳过\\n",
@@ -650,7 +655,5 @@
   "youtube_url_is_playlist_not_video": "URL 是播放列表，而不是视频",
   "youtube_video_id_title_header": "视频ID: 标题",
   "youtube_ytdlp_not_found": "在 PATH 中未找到 yt-dlp。请安装 yt-dlp 以使用 YouTube 转录功能",
-  "youtube_ytdlp_stderr_error": "读取 yt-dlp stderr 时出错",
-  "plugin_registry_run_setup_select_defaults": "请运行 'fabric --setup' 并选择默认模型和供应商",
-  "plugin_registry_could_not_find_vendor": "找不到供应商"
+  "youtube_ytdlp_stderr_error": "读取 yt-dlp stderr 时出错"
 }

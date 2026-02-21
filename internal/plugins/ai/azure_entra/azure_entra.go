@@ -1,9 +1,10 @@
-package azure
+package azure_entra
 
 import (
 	"fmt"
 	"strings"
 
+	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
 	"github.com/danielmiessler/fabric/internal/i18n"
 	"github.com/danielmiessler/fabric/internal/plugins"
 	"github.com/danielmiessler/fabric/internal/plugins/ai/azurecommon"
@@ -15,7 +16,10 @@ import (
 
 func NewClient() (ret *Client) {
 	ret = &Client{}
-	ret.Client = openai.NewClientCompatible("Azure", "", ret.configure)
+	ret.Client = openai.NewClientCompatibleNoSetupQuestions("AzureEntra", ret.configure)
+
+	ret.ApiBaseURL = ret.AddSetupQuestionCustom("API Base URL", true,
+		i18n.T("azure_base_url_question"))
 	ret.ApiDeployments = ret.AddSetupQuestionCustom("deployments", true,
 		i18n.T("azure_deployments_question"))
 	ret.ApiVersion = ret.AddSetupQuestionCustom("API Version", false,
@@ -25,48 +29,48 @@ func NewClient() (ret *Client) {
 }
 
 type Client struct {
-	*openai.Client
+	*openai.Client // ApiBaseURL is inherited from the embedded openai.Client
 	ApiDeployments *plugins.SetupQuestion
 	ApiVersion     *plugins.SetupQuestion
 
 	apiDeployments []string
 }
 
-func (oi *Client) configure() error {
-	oi.apiDeployments = azurecommon.ParseDeployments(oi.ApiDeployments.Value)
-	if len(oi.apiDeployments) == 0 {
+func (c *Client) configure() error {
+	c.apiDeployments = azurecommon.ParseDeployments(c.ApiDeployments.Value)
+	if len(c.apiDeployments) == 0 {
 		return fmt.Errorf("%s", i18n.T("azure_deployments_required"))
 	}
 
-	apiKey := strings.TrimSpace(oi.ApiKey.Value)
-	if apiKey == "" {
-		return fmt.Errorf("%s", i18n.T("azure_api_key_required"))
-	}
-
-	baseURL := strings.TrimSpace(oi.ApiBaseURL.Value)
+	baseURL := strings.TrimSpace(c.ApiBaseURL.Value)
 	if baseURL == "" {
 		return fmt.Errorf("%s", i18n.T("azure_base_url_required"))
 	}
 
-	apiVersion := strings.TrimSpace(oi.ApiVersion.Value)
+	apiVersion := strings.TrimSpace(c.ApiVersion.Value)
 	if apiVersion == "" {
 		apiVersion = azurecommon.DefaultAPIVersion
-		oi.ApiVersion.Value = apiVersion
+		c.ApiVersion.Value = apiVersion
+	}
+
+	credential, err := azidentity.NewDefaultAzureCredential(nil)
+	if err != nil {
+		return fmt.Errorf("%s: %w", i18n.T("azure_credential_failure"), err)
 	}
 
 	endpoint := azurecommon.BuildEndpoint(baseURL)
 
 	client := openaiapi.NewClient(
-		azure.WithAPIKey(apiKey),
+		azure.WithTokenCredential(credential),
 		option.WithBaseURL(endpoint),
 		option.WithQueryAdd("api-version", apiVersion),
 		option.WithMiddleware(azurecommon.AzureDeploymentMiddleware),
 	)
-	oi.ApiClient = &client
+	c.ApiClient = &client
 	return nil
 }
 
-func (oi *Client) ListModels() (ret []string, err error) {
-	ret = oi.apiDeployments
+func (c *Client) ListModels() (ret []string, err error) {
+	ret = c.apiDeployments
 	return
 }

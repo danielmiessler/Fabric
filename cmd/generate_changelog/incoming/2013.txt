@@ -1,0 +1,3 @@
+### PR [#2013](https://github.com/danielmiessler/Fabric/pull/2013) by [ByronPogson](https://github.com/ByronPogson) and [ksylvan](https://github.com/ksylvan): feat: add Azure Entra ID authentication plugin
+
+- Feat: add Azure Entra ID authentication plugin

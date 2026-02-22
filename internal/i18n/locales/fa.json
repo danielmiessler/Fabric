@@ -426,7 +426,7 @@
   "server_error_writing_response": "خطا در نوشتن پاسخ: %v",
   "server_invalid_request_format": "فرمت درخواست نامعتبر: %v",
   "sessions_creating_new": "ایجاد نشست جدید: %s\n",
-  "set_debug_level": "تنظیم سطح اشکال‌زدایی (0=خاموش، 1=پایه، 2=تفصیلی، 3=ردیابی)",
+  "set_debug_level": "تنظیم سطح اشکال‌زدایی (0=خاموش، 1=پایه، 2=تفصیلی، 3=ردیابی، 4=wire)",
   "set_frequency_penalty": "تنظیم جریمه فرکانس",
   "set_location_web_search": "تنظیم مکان برای نتایج جستجوی وب (مثال: 'America/Los_Angeles')",
   "set_presence_penalty": "تنظیم جریمه حضور",

@@ -426,7 +426,7 @@
   "server_error_writing_response": "レスポンスの書き込みエラー: %v",
   "server_invalid_request_format": "無効なリクエスト形式: %v",
   "sessions_creating_new": "新しいセッションを作成中: %s\n",
-  "set_debug_level": "デバッグレベルを設定（0=オフ、1=基本、2=詳細、3=トレース）",
+  "set_debug_level": "デバッグレベルを設定（0=オフ、1=基本、2=詳細、3=トレース、4=wire）",
   "set_frequency_penalty": "頻度ペナルティを設定",
   "set_location_web_search": "ウェブ検索結果の場所を設定（例：'America/Los_Angeles'）",
   "set_presence_penalty": "プレゼンスペナルティを設定",

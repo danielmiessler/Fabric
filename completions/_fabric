@@ -145,7 +145,7 @@ _fabric() {
     '(--transcribe-file)--transcribe-file[Audio or video file to transcribe]:audio file:_files -g "*.mp3 *.mp4 *.mpeg *.mpga *.m4a *.wav *.webm"' \
     '(--transcribe-model)--transcribe-model[Model to use for transcription (separate from chat model)]:transcribe model:_fabric_transcription_models' \
     '(--split-media-file)--split-media-file[Split audio/video files larger than 25MB using ffmpeg]' \
-    '(--debug)--debug[Set debug level (0=off, 1=basic, 2=detailed, 3=trace)]:debug level:(0 1 2 3)' \
+    '(--debug)--debug[Set debug level (0=off, 1=basic, 2=detailed, 3=trace, 4=wire)]:debug level:(0 1 2 3 4)' \
     '(--notification)--notification[Send desktop notification when command completes]' \
     '(--notification-command)--notification-command[Custom command to run for notifications]:notification command:' \
     '(--spotify)--spotify[Spotify podcast or episode URL to grab metadata]:spotify url:' \

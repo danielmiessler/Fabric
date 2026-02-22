@@ -83,7 +83,7 @@ _fabric() {
     return 0
     ;;
   --debug)
-    COMPREPLY=($(compgen -W "0 1 2 3" -- "${cur}"))
+    COMPREPLY=($(compgen -W "0 1 2 3 4" -- "${cur}"))
     return 0
     ;;
   # Options requiring file/directory paths

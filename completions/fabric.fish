@@ -99,7 +99,7 @@ function __fabric_register_completions
         complete -c $cmd -l voice -d "TTS voice name for supported models (e.g., Kore, Charon, Puck)" -a "(__fabric_get_gemini_voices)"
         complete -c $cmd -l transcribe-file -d "Audio or video file to transcribe" -r -a "*.mp3 *.mp4 *.mpeg *.mpga *.m4a *.wav *.webm"
         complete -c $cmd -l transcribe-model -d "Model to use for transcription (separate from chat model)" -a "(__fabric_get_transcription_models)"
-        complete -c $cmd -l debug -d "Set debug level (0=off, 1=basic, 2=detailed, 3=trace)" -a "0 1 2 3"
+        complete -c $cmd -l debug -d "Set debug level (0=off, 1=basic, 2=detailed, 3=trace, 4=wire)" -a "0 1 2 3 4"
         complete -c $cmd -l notification-command -d "Custom command to run for notifications (overrides built-in notifications)"
 
         # Boolean flags (no arguments)

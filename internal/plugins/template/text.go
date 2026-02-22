@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"strings"
 	"unicode"
+
+	"github.com/danielmiessler/fabric/internal/i18n"
 )
 
 // TextPlugin provides string manipulation operations
@@ -34,7 +36,7 @@ func (p *TextPlugin) Apply(operation string, value string) (string, error) {
 	debugf("TextPlugin: operation=%s value=%q", operation, value)
 
 	if value == "" {
-		return "", fmt.Errorf("text: empty input for operation %q", operation)
+		return "", fmt.Errorf(i18n.T("template_text_empty_input"), operation)
 	}
 
 	switch operation {
@@ -59,6 +61,6 @@ func (p *TextPlugin) Apply(operation string, value string) (string, error) {
 		return result, nil
 
 	default:
-		return "", fmt.Errorf("text: unknown text operation %q (supported: upper, lower, title, trim)", operation)
+		return "", fmt.Errorf(i18n.T("template_text_unknown_operation"), operation)
 	}
 }

@@ -14,6 +14,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/csv"
+	"errors"
 	"flag"
 	"fmt"
 	"io"
@@ -86,7 +87,7 @@ type YouTube struct {
 func (o *YouTube) initService() (err error) {
 	if o.service == nil {
 		if o.ApiKey.Value == "" {
-			err = fmt.Errorf("%s", i18n.T("youtube_api_key_required"))
+			err = errors.New(i18n.T("youtube_api_key_required"))
 			return
 		}
 		o.normalizeRegex = regexp.MustCompile(`[^a-zA-Z0-9]+`)
@@ -124,10 +125,10 @@ func (o *YouTube) extractAndValidateVideoId(url string) (videoId string, err err
 		return "", err
 	}
 	if videoId == "" && playlistId != "" {
-		return "", fmt.Errorf("%s", i18n.T("youtube_url_is_playlist_not_video"))
+		return "", errors.New(i18n.T("youtube_url_is_playlist_not_video"))
 	}
 	if videoId == "" {
-		return "", fmt.Errorf("%s", i18n.T("youtube_no_video_id_found"))
+		return "", errors.New(i18n.T("youtube_no_video_id_found"))
 	}
 	return videoId, nil
 }
@@ -192,7 +193,7 @@ func detectError(ytOutput io.Reader) error {
 		}
 	}
 	if err := scanner.Err(); err != nil {
-		return fmt.Errorf("%s", i18n.T("youtube_ytdlp_stderr_error"))
+		return errors.New(i18n.T("youtube_ytdlp_stderr_error"))
 	}
 	return nil
 }
@@ -218,7 +219,7 @@ func noLangs(args []string) []string {
 func (o *YouTube) tryMethodYtDlpInternal(videoId string, language string, additionalArgs string, processVTTFileFunc func(filename string) (string, error)) (ret string, err error) {
 	// Check if yt-dlp is available
 	if _, err = exec.LookPath("yt-dlp"); err != nil {
-		err = fmt.Errorf("%s", i18n.T("youtube_ytdlp_not_found"))
+		err = errors.New(i18n.T("youtube_ytdlp_not_found"))
 		return
 	}
 
@@ -328,7 +329,7 @@ func (o *YouTube) readAndCleanVTTFile(filename string) (ret string, err error) {
 
 	ret = strings.TrimSpace(textBuilder.String())
 	if ret == "" {
-		err = fmt.Errorf("%s", i18n.T("youtube_no_transcript_content"))
+		err = errors.New(i18n.T("youtube_no_transcript_content"))
 	}
 	return
 }
@@ -398,7 +399,7 @@ func (o *YouTube) readAndFormatVTTWithTimestamps(filename string) (ret string, e
 
 	ret = strings.TrimSpace(textBuilder.String())
 	if ret == "" {
-		err = fmt.Errorf("%s", i18n.T("youtube_no_transcript_content"))
+		err = errors.New(i18n.T("youtube_no_transcript_content"))
 	}
 	return
 }
@@ -476,7 +477,7 @@ func parseTimestampToSeconds(timestamp string) (int, error) {
 
 func parseSeconds(secondsStr string) (int, error) {
 	if secondsStr == "" {
-		return 0, fmt.Errorf("%s", i18n.T("youtube_empty_seconds_string"))
+		return 0, errors.New(i18n.T("youtube_empty_seconds_string"))
 	}
 
 	// Extract integer part (before decimal point if present)
@@ -723,7 +724,7 @@ func (o *YouTube) findVTTFilesWithFallback(dir, requestedLanguage string) ([]str
 	}
 
 	if len(vttFiles) == 0 {
-		return nil, fmt.Errorf("%s", i18n.T("youtube_no_vtt_files_found"))
+		return nil, errors.New(i18n.T("youtube_no_vtt_files_found"))
 	}
 
 	// If no specific language requested, return the first file

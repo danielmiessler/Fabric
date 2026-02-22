@@ -3,6 +3,7 @@ package ai
 import (
 	"bytes"
 	"context"
+	"errors"
 	"fmt"
 	"sort"
 	"strings"
@@ -75,7 +76,7 @@ func (o *VendorsManager) FindByName(name string) Vendor {
 
 func (o *VendorsManager) readModels() (err error) {
 	if len(o.Vendors) == 0 {
-		err = fmt.Errorf("%s", i18n.T("vendors_no_ai_vendors_configured_read_models"))
+		err = errors.New(i18n.T("vendors_no_ai_vendors_configured_read_models"))
 		return
 	}
 

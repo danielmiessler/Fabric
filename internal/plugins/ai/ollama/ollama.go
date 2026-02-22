@@ -3,6 +3,7 @@ package ollama
 import (
 	"context"
 	"encoding/base64"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -226,7 +227,7 @@ func (o *Client) loadImageBytes(ctx context.Context, imageURL string) (ret []byt
 	if strings.HasPrefix(imageURL, "data:") {
 		parts := strings.SplitN(imageURL, ",", 2)
 		if len(parts) != 2 {
-			err = fmt.Errorf("%s", i18n.T("ollama_invalid_data_url_format"))
+			err = errors.New(i18n.T("ollama_invalid_data_url_format"))
 			return
 		}
 		if ret, err = base64.StdEncoding.DecodeString(parts[1]); err != nil {

@@ -7,6 +7,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/danielmiessler/fabric/internal/i18n"
 	"github.com/joho/godotenv"
 )
 
@@ -80,7 +81,7 @@ func (o *Db) Configure() (err error) {
 
 func (o *Db) LoadEnvFile() (err error) {
 	if err = godotenv.Load(o.EnvFilePath); err != nil {
-		err = fmt.Errorf("error loading .env file: %s", err)
+		err = fmt.Errorf(i18n.T("db_error_loading_env_file"), err)
 	}
 	return
 }

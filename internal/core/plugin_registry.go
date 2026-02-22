@@ -2,6 +2,7 @@ package core
 
 import (
 	"bytes"
+	"errors"
 	"fmt"
 	"io"
 	"os"
@@ -302,7 +303,7 @@ func (o *PluginRegistry) runVendorSetup() (err error) {
 	}
 
 	if setupQuestion.Value == "" {
-		return fmt.Errorf("%s", i18n.T("setup_no_ai_provider_selected"))
+		return errors.New(i18n.T("setup_no_ai_provider_selected"))
 	}
 
 	number, parseErr := strconv.Atoi(setupQuestion.Value)
@@ -480,7 +481,7 @@ func (o *PluginRegistry) Configure() (err error) {
 	o.ConfigureVendors()
 	_ = o.Defaults.Configure()
 	if err := o.CustomPatterns.Configure(); err != nil {
-		return fmt.Errorf("error configuring CustomPatterns: %w", err)
+		return fmt.Errorf(i18n.T("plugin_registry_error_configuring_custom_patterns"), err)
 	}
 	_ = o.PatternsLoader.Configure()
 
@@ -561,7 +562,7 @@ func (o *PluginRegistry) GetChatter(model string, modelContextLength int, vendor
 				return strings.EqualFold(name, vendorName)
 			})
 			if ret.vendor == nil || !vendorAvailable {
-				err = fmt.Errorf("model %s not available for vendor %s", model, vendorName)
+				err = fmt.Errorf(i18n.T("plugin_registry_model_not_available_for_vendor"), model, vendorName)
 				return
 			}
 		} else {
@@ -578,9 +579,9 @@ func (o *PluginRegistry) GetChatter(model string, modelContextLength int, vendor
 	if ret.vendor == nil {
 		var errMsg string
 		if defaultModel == "" || defaultVendor == "" {
-			errMsg = "Please run, fabric --setup, and select default model and vendor."
+			errMsg = i18n.T("plugin_registry_run_setup_select_defaults")
 		} else {
-			errMsg = "could not find vendor."
+			errMsg = i18n.T("plugin_registry_could_not_find_vendor")
 		}
 		err = fmt.Errorf(
 			" Requested Model = %s\n Default Model = %s\n Default Vendor = %s.\n\n%s",

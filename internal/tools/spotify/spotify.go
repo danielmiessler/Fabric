@@ -13,6 +13,7 @@ package spotify
 import (
 	"encoding/base64"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -89,7 +90,7 @@ func (s *Spotify) initClient() error {
 // refreshAccessToken obtains a new access token using Client Credentials flow.
 func (s *Spotify) refreshAccessToken() error {
 	if s.ClientId.Value == "" || s.ClientSecret.Value == "" {
-		return fmt.Errorf("%s", i18n.T("spotify_not_configured"))
+		return errors.New(i18n.T("spotify_not_configured"))
 	}
 
 	// Prepare the token request

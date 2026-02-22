@@ -48,7 +48,7 @@ func (o *Chatter) Send(request *domain.ChatRequest, opts *domain.ChatOptions) (s
 				return
 			}
 		}
-		err = fmt.Errorf("%s", i18n.T("chatter_error_no_messages_provided"))
+		err = errors.New(i18n.T("chatter_error_no_messages_provided"))
 		return
 	}
 
@@ -136,7 +136,7 @@ func (o *Chatter) Send(request *domain.ChatRequest, opts *domain.ChatOptions) (s
 
 	if message == "" {
 		session = nil
-		err = fmt.Errorf("%s", i18n.T("chatter_error_empty_response"))
+		err = errors.New(i18n.T("chatter_error_empty_response"))
 		return
 	}
 

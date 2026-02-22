@@ -1,7 +1,7 @@
 package azure
 
 import (
-	"fmt"
+	"errors"
 	"strings"
 
 	"github.com/danielmiessler/fabric/internal/i18n"
@@ -35,17 +35,17 @@ type Client struct {
 func (oi *Client) configure() error {
 	oi.apiDeployments = azurecommon.ParseDeployments(oi.ApiDeployments.Value)
 	if len(oi.apiDeployments) == 0 {
-		return fmt.Errorf("%s", i18n.T("azure_deployments_required"))
+		return errors.New(i18n.T("azure_deployments_required"))
 	}
 
 	apiKey := strings.TrimSpace(oi.ApiKey.Value)
 	if apiKey == "" {
-		return fmt.Errorf("%s", i18n.T("azure_api_key_required"))
+		return errors.New(i18n.T("azure_api_key_required"))
 	}
 
 	baseURL := strings.TrimSpace(oi.ApiBaseURL.Value)
 	if baseURL == "" {
-		return fmt.Errorf("%s", i18n.T("azure_base_url_required"))
+		return errors.New(i18n.T("azure_base_url_required"))
 	}
 
 	apiVersion := strings.TrimSpace(oi.ApiVersion.Value)

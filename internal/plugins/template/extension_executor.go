@@ -3,6 +3,7 @@ package template
 import (
 	"bytes"
 	"context"
+	"errors"
 	"fmt"
 	"os"
 	"os/exec"
@@ -48,7 +49,7 @@ func (e *ExtensionExecutor) Execute(name, operation, value string) (string, erro
 	// Split the command string into command and arguments
 	cmdParts := strings.Fields(cmdStr)
 	if len(cmdParts) < 1 {
-		return "", fmt.Errorf("%s", i18n.T("extension_empty_command"))
+		return "", errors.New(i18n.T("extension_empty_command"))
 	}
 
 	// Create command with the Executable and formatted arguments
@@ -128,7 +129,7 @@ func (e *ExtensionExecutor) executeWithFile(cmd *exec.Cmd, ext *ExtensionDefinit
 
 	fileConfig := ext.GetFileConfig()
 	if fileConfig == nil {
-		return "", fmt.Errorf("%s", i18n.T("extension_no_file_config"))
+		return "", errors.New(i18n.T("extension_no_file_config"))
 	}
 
 	// Handle path from stdout case
@@ -141,7 +142,7 @@ func (e *ExtensionExecutor) executeWithFile(cmd *exec.Cmd, ext *ExtensionDefinit
 	outputFile, _ := fileConfig["output_file"].(string)
 
 	if outputFile == "" {
-		return "", fmt.Errorf("%s", i18n.T("extension_no_output_file"))
+		return "", errors.New(i18n.T("extension_no_output_file"))
 	}
 
 	// Set working directory if specified

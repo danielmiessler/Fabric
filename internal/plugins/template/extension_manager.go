@@ -1,6 +1,7 @@
 package template
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -30,7 +31,7 @@ func NewExtensionManager(configDir string) *ExtensionManager {
 // ListExtensions handles the listextensions flag action
 func (em *ExtensionManager) ListExtensions() error {
 	if em.registry == nil || em.registry.registry.Extensions == nil {
-		return fmt.Errorf("%s", i18n.T("extension_registry_not_initialized"))
+		return errors.New(i18n.T("extension_registry_not_initialized"))
 	}
 
 	for name, entry := range em.registry.registry.Extensions {

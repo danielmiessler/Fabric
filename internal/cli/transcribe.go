@@ -2,6 +2,7 @@ package cli
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"github.com/danielmiessler/fabric/internal/core"
@@ -28,7 +29,7 @@ func handleTranscription(flags *Flags, registry *core.PluginRegistry) (message s
 	}
 	model := flags.TranscribeModel
 	if model == "" {
-		return "", fmt.Errorf("%s", i18n.T("transcription_model_required"))
+		return "", errors.New(i18n.T("transcription_model_required"))
 	}
 	if message, err = tr.TranscribeFile(context.Background(), flags.TranscribeFile, model, flags.SplitMediaFile); err != nil {
 		return

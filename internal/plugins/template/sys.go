@@ -2,6 +2,7 @@
 package template
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"os/user"
@@ -58,7 +59,7 @@ func (p *SysPlugin) Apply(operation string, value string) (string, error) {
 	case "env":
 		if value == "" {
 			debugf("Sys: env error: missing variable name")
-			return "", fmt.Errorf("%s", i18n.T("template_sys_error_env_requires_var"))
+			return "", errors.New(i18n.T("template_sys_error_env_requires_var"))
 		}
 		result := os.Getenv(value)
 		debugf("Sys: env %q=%q", value, result)

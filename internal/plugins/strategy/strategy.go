@@ -2,6 +2,7 @@ package strategy
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/fs"
 	"os"
@@ -218,7 +219,7 @@ func LoadStrategy(filename string) (*Strategy, error) {
 // ListStrategies prints available strategies
 func (sm *StrategiesManager) ListStrategies(shellCompleteList bool) error {
 	if len(sm.Strategies) == 0 {
-		return fmt.Errorf("%s", i18n.T("strategies_none_found"))
+		return errors.New(i18n.T("strategies_none_found"))
 	}
 	if !shellCompleteList {
 		fmt.Print(i18n.T("strategies_available_header"), "\n\n")

@@ -1,10 +1,12 @@
 package notifications
 
 import (
-	"fmt"
+	"errors"
 	"os"
 	"os/exec"
 	"runtime"
+
+	"github.com/danielmiessler/fabric/internal/i18n"
 )
 
 // NotificationProvider interface for different notification backends
@@ -43,7 +45,7 @@ func NewNotificationManager() *NotificationManager {
 // Send sends a notification using the configured provider
 func (nm *NotificationManager) Send(title, message string) error {
 	if nm.provider == nil {
-		return fmt.Errorf("no notification provider available")
+		return errors.New(i18n.T("notifications_no_provider_available"))
 	}
 	return nm.provider.Send(title, message)
 }

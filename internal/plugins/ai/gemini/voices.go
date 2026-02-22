@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"sort"
 	"strings"
+
+	"github.com/danielmiessler/fabric/internal/i18n"
 )
 
 // GeminiVoice represents a Gemini TTS voice with its characteristics
@@ -119,7 +121,7 @@ func GetGeminiVoiceByName(name string) (*GeminiVoice, error) {
 			return &voice, nil
 		}
 	}
-	return nil, fmt.Errorf("voice '%s' not found", name)
+	return nil, fmt.Errorf(i18n.T("gemini_voice_not_found"), name)
 }
 
 // ListGeminiVoices formats the voice list for display

@@ -1,0 +1,7 @@
+### PR [#2019](https://github.com/danielmiessler/Fabric/pull/2019) by [ksylvan](https://github.com/ksylvan): feat: replace hardcoded error strings with i18n translation keys
+
+- Replace hardcoded error messages with `i18n.T()` calls across Go source files, covering chat, attachment, storage, template, plugin registry, server, and utility packages
+- Added approximately 80 new translation keys to all locale files (en, de, es, fa, fr, it, ja, pt-BR, pt-PT, zh), with keys sorted alphabetically
+- Internationalized error strings across githelper, notifications, patterns, sessions, and provider modules (DigitalOcean, Gemini, OpenAI-compatible)
+- Refactored `fmt.Errorf("%s", ...)` usages to `errors.New()` and normalized i18n error strings to lowercase per Go conventions
+- Updated `db_error_loading_env_file` format verb from `%s` to `%w` to support proper error wrapping

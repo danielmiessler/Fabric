@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.4.419 (2026-02-22)
+
+### PR [#2020](https://github.com/danielmiessler/Fabric/pull/2020) by [ksylvan](https://github.com/ksylvan): Add `wire` Debug Level for LLM Request/Response Logging
+
+- Feat: add `wire` debug level (4) for full LLM request/response debug logging
+- Add `Wire` log level constant to debug level enum and expose `GetLevel()` for safe concurrent level reads
+- Log outbound message roles/content, inbound stream updates, token usage, and non-streaming LLM responses at wire debug level
+- Update `--debug` flag description and `set_debug_level` locale strings across all 10 languages to include new level 4
+- Update zsh, bash, and fish shell completions to include the new `4` (`wire`) debug level value
+
 ## v1.4.418 (2026-02-22)
 
 ### PR [#2019](https://github.com/danielmiessler/Fabric/pull/2019) by [ksylvan](https://github.com/ksylvan): feat: replace hardcoded error strings with i18n translation keys

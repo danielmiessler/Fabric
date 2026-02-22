@@ -426,7 +426,7 @@
   "server_error_writing_response": "Fehler beim Schreiben der Antwort: %v",
   "server_invalid_request_format": "ungültiges Anfrageformat: %v",
   "sessions_creating_new": "Erstelle neue Sitzung: %s\n",
-  "set_debug_level": "Debug-Level festlegen (0=aus, 1=grundlegend, 2=detailliert, 3=Trace)",
+  "set_debug_level": "Debug-Level festlegen (0=aus, 1=grundlegend, 2=detailliert, 3=Trace, 4=wire)",
   "set_frequency_penalty": "Häufigkeitsstrafe festlegen",
   "set_location_web_search": "Standort für Web-Suchergebnisse festlegen (z.B., 'America/Los_Angeles')",
   "set_presence_penalty": "Präsenzstrafe festlegen",

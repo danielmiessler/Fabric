@@ -426,7 +426,7 @@
   "server_error_writing_response": "写入响应错误: %v",
   "server_invalid_request_format": "无效的请求格式: %v",
   "sessions_creating_new": "正在创建新会话：%s\n",
-  "set_debug_level": "设置调试级别（0=关闭，1=基本，2=详细，3=跟踪）",
+  "set_debug_level": "设置调试级别（0=关闭，1=基本，2=详细，3=跟踪，4=wire）",
   "set_frequency_penalty": "设置频率惩罚",
   "set_location_web_search": "设置网络搜索结果的位置（例如，'America/Los_Angeles'）",
   "set_presence_penalty": "设置存在惩罚",

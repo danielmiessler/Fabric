@@ -426,7 +426,7 @@
   "server_error_writing_response": "erreur d'écriture de la réponse : %v",
   "server_invalid_request_format": "format de requête invalide : %v",
   "sessions_creating_new": "Création d'une nouvelle session : %s\n",
-  "set_debug_level": "Définir le niveau de débogage (0=désactivé, 1=basique, 2=détaillé, 3=trace)",
+  "set_debug_level": "Définir le niveau de débogage (0=désactivé, 1=basique, 2=détaillé, 3=trace, 4=wire)",
   "set_frequency_penalty": "Définir la pénalité de fréquence",
   "set_location_web_search": "Définir l'emplacement pour les résultats de recherche web (ex. 'America/Los_Angeles')",
   "set_presence_penalty": "Définir la pénalité de présence",

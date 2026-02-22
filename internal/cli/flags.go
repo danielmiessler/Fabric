@@ -106,7 +106,7 @@ type Flags struct {
 	NotificationCommand             string               `long:"notification-command" yaml:"notificationCommand" description:"Custom command to run for notifications (overrides built-in notifications)"`
 	Thinking                        domain.ThinkingLevel `long:"thinking" yaml:"thinking" description:"Set reasoning/thinking level (e.g., off, low, medium, high, or numeric tokens for Anthropic or Google Gemini)"`
 	ShowMetadata                    bool                 `long:"show-metadata" description:"Print metadata to stderr"`
-	Debug                           int                  `long:"debug" description:"Set debug level (0=off, 1=basic, 2=detailed, 3=trace)" default:"0"`
+	Debug                           int                  `long:"debug" description:"Set debug level (0=off, 1=basic, 2=detailed, 3=trace, 4=wire)" default:"0"`
 }
 
 // Init Initialize flags. returns a Flags struct and an error

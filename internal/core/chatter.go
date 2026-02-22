@@ -11,6 +11,7 @@ import (
 
 	"github.com/danielmiessler/fabric/internal/domain"
 	"github.com/danielmiessler/fabric/internal/i18n"
+	debuglog "github.com/danielmiessler/fabric/internal/log"
 	"github.com/danielmiessler/fabric/internal/plugins/ai"
 	"github.com/danielmiessler/fabric/internal/plugins/db/fsdb"
 	"github.com/danielmiessler/fabric/internal/plugins/strategy"
@@ -41,6 +42,16 @@ func (o *Chatter) Send(request *domain.ChatRequest, opts *domain.ChatOptions) (s
 	}
 
 	vendorMessages := session.GetVendorMessages()
+
+	if debuglog.GetLevel() >= debuglog.Wire {
+		debuglog.Debug(debuglog.Wire, "FABRIC->LLM request messages (%d)\n", len(vendorMessages))
+		for i, msg := range vendorMessages {
+			debuglog.Debug(debuglog.Wire, "FABRIC->LLM [%d] role=%s content=%q\n", i, msg.Role, msg.Content)
+			if len(msg.MultiContent) > 0 {
+				debuglog.Debug(debuglog.Wire, "FABRIC->LLM [%d] parts=%d\n", i, len(msg.MultiContent))
+			}
+		}
+	}
 	if len(vendorMessages) == 0 {
 		if session.Name != "" {
 			err = o.db.Sessions.SaveSession(session)
@@ -76,6 +87,12 @@ func (o *Chatter) Send(request *domain.ChatRequest, opts *domain.ChatOptions) (s
 		}()
 
 		for update := range responseChan {
+			if debuglog.GetLevel() >= debuglog.Wire {
+				debuglog.Debug(debuglog.Wire, "LLM->FABRIC stream update type=%s content=%q\n", update.Type, update.Content)
+				if update.Usage != nil {
+					debuglog.Debug(debuglog.Wire, "LLM->FABRIC stream usage input=%d output=%d total=%d\n", update.Usage.InputTokens, update.Usage.OutputTokens, update.Usage.TotalTokens)
+				}
+			}
 			if opts.UpdateChan != nil {
 				opts.UpdateChan <- update
 			}
@@ -127,6 +144,9 @@ func (o *Chatter) Send(request *domain.ChatRequest, opts *domain.ChatOptions) (s
 	} else {
 		if message, err = o.vendor.Send(context.Background(), session.GetVendorMessages(), opts); err != nil {
 			return
+		}
+		if debuglog.GetLevel() >= debuglog.Wire {
+			debuglog.Debug(debuglog.Wire, "LLM->FABRIC response content=%q\n", message)
 		}
 	}
 

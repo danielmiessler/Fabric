@@ -426,7 +426,7 @@
   "server_error_writing_response": "erro ao escrever resposta: %v",
   "server_invalid_request_format": "formato de solicitação inválido: %v",
   "sessions_creating_new": "Criando nova sessão: %s\n",
-  "set_debug_level": "Definir nível de debug (0=desligado, 1=básico, 2=detalhado, 3=rastreamento)",
+  "set_debug_level": "Definir nível de debug (0=desligado, 1=básico, 2=detalhado, 3=rastreamento, 4=wire)",
   "set_frequency_penalty": "Definir penalidade de frequência",
   "set_location_web_search": "Definir localização para resultados de busca web (ex. 'America/Los_Angeles')",
   "set_presence_penalty": "Definir penalidade de presença",

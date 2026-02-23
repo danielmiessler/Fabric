@@ -3,15 +3,28 @@ package azureaigateway
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 	"net/http/httptest"
+	"os"
 	"strings"
 	"testing"
 
 	"github.com/danielmiessler/fabric/internal/chat"
 	"github.com/danielmiessler/fabric/internal/domain"
+	"github.com/danielmiessler/fabric/internal/i18n"
 )
+
+// TestMain pins the locale to English so that i18n.T() assertions
+// are deterministic regardless of the CI machine's system locale.
+func TestMain(m *testing.M) {
+	if _, err := i18n.Init("en"); err != nil {
+		fmt.Fprintf(os.Stderr, "failed to init i18n: %v\n", err)
+		os.Exit(1)
+	}
+	os.Exit(m.Run())
+}
 
 // --- Bedrock Backend Tests ---
 
@@ -732,13 +745,20 @@ func TestSendModelNotFoundError(t *testing.T) {
 	}
 }
 
+// failingRoundTripper always returns an error, simulating a network failure.
+type failingRoundTripper struct{}
+
+func (f *failingRoundTripper) RoundTrip(*http.Request) (*http.Response, error) {
+	return nil, fmt.Errorf("connection refused")
+}
+
 func TestSendNetworkError(t *testing.T) {
-	// ISC-C17: Test unreachable gateway URL → connection error
+	// ISC-C17: Test network failure → connection error (deterministic, no real DNS)
 	c := NewClient()
-	c.GatewayURL.Value = "https://non-existent-gateway-12345.invalid"
+	c.GatewayURL.Value = "https://gateway.example.com"
 	c.SubscriptionKey.Value = "test-key"
 	c.BackendType.Value = "bedrock"
-	c.httpClient = &http.Client{Timeout: gatewayTimeout}
+	c.httpClient = &http.Client{Transport: &failingRoundTripper{}}
 	c.backend = NewBedrockBackend("test-key")
 
 	msgs := []*chat.ChatCompletionMessage{
@@ -752,7 +772,7 @@ func TestSendNetworkError(t *testing.T) {
 
 	_, err := c.Send(context.Background(), msgs, opts)
 	if err == nil {
-		t.Fatal("Send() expected error for unreachable gateway")
+		t.Fatal("Send() expected error for network failure")
 	}
 	if !strings.Contains(err.Error(), "HTTP request failed") {
 		t.Errorf("error should mention HTTP request failure: %v", err)
@@ -903,11 +923,11 @@ func TestSendStreamFallback(t *testing.T) {
 // --- ISC-C18: API Version Compatibility Test ---
 
 func TestAzureOpenAIAPIVersionCompatibility(t *testing.T) {
-	// ISC-C18: Azure OpenAI API version 2025-04-01-preview compatibility with Azure APIM Gateway
+	// ISC-C18: Azure OpenAI API version compatibility with Azure APIM Gateway
 	// Reference: https://learn.microsoft.com/en-us/azure/ai-services/openai/api-version-deprecation
-	// This test verifies that the API version in the endpoint is compatible with Azure APIM Gateway.
-	// The version 2024-10-21 is currently used, which is compatible with APIM gateways.
-	// When updating to 2025-04-01-preview, ensure APIM gateway supports the new version.
+	// This test verifies that the default API version in the endpoint (currently 2025-04-01-preview)
+	// is explicitly set and is compatible with Azure APIM Gateway. When changing the default API
+	// version in the backend, ensure that APIM gateways are updated to support the new version.
 
 	b := NewAzureOpenAIBackend("key", "")
 	endpoint := b.BuildEndpoint("https://gw.example.com", "gpt-4")

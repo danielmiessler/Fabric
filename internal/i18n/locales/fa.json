@@ -43,6 +43,7 @@
   "azureaigateway_invalid_gateway_url": "آدرس Gateway نامعتبر: %w",
   "azureaigateway_no_valid_messages": "هیچ پیام معتبری پس از فیلتر کردن محتوای خالی وجود ندارد",
   "azureaigateway_prepare_request_failed": "AzureAIGateway: %w",
+  "azureaigateway_response_too_large": "AzureAIGateway: پاسخ خیلی بزرگ است (>%d بایت)",
   "azureaigateway_subscription_key_question": "کلید اشتراک Azure APIM خود را وارد کنید",
   "azureaigateway_subscription_key_required": "کلید اشتراک Azure APIM الزامی است",
   "azureaigateway_unsupported_backend": "بک‌اند پشتیبانی نشده: %s (گزینه‌های معتبر: bedrock، azure-openai، vertex-ai)",

@@ -43,6 +43,7 @@
   "azureaigateway_invalid_gateway_url": "無効なゲートウェイURL: %w",
   "azureaigateway_no_valid_messages": "空のコンテンツをフィルタリングした後、有効なメッセージがありません",
   "azureaigateway_prepare_request_failed": "AzureAIGateway: %w",
+  "azureaigateway_response_too_large": "AzureAIGateway: レスポンスが大きすぎます (>%dバイト)",
   "azureaigateway_subscription_key_question": "Azure APIMサブスクリプションキーを入力してください",
   "azureaigateway_subscription_key_required": "Azure APIMサブスクリプションキーは必須です",
   "azureaigateway_unsupported_backend": "サポートされていないバックエンド: %s（有効なオプション: bedrock、azure-openai、vertex-ai）",

@@ -169,11 +169,15 @@ func (c *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, o
 	}
 	defer resp.Body.Close()
 
-	// Limit response body size to 10MB to prevent memory exhaustion
-	limitedBody := io.LimitReader(resp.Body, 10*1024*1024)
+	// Read up to 10MB+1 byte to detect truncation
+	const maxResponseSize = 10 * 1024 * 1024
+	limitedBody := io.LimitReader(resp.Body, maxResponseSize+1)
 	respBody, err := io.ReadAll(limitedBody)
 	if err != nil {
 		return "", fmt.Errorf(i18n.T("azureaigateway_failed_read_response"), err)
+	}
+	if len(respBody) > maxResponseSize {
+		return "", fmt.Errorf(i18n.T("azureaigateway_response_too_large"), maxResponseSize)
 	}
 
 	debuglog.Debug(debuglog.Detailed, "AzureAIGateway response status: %d\n", resp.StatusCode)

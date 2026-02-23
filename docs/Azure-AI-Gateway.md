@@ -173,7 +173,7 @@ fabric --youtube "https://youtube.com/watch?v=example" --model us.anthropic.clau
 curl -s https://example.com/article | fabric --model gpt-4o --pattern summarize
 
 # Create content from a prompt (Vertex AI)
-fabric --model gemini-1.5-pro --pattern write_essay --stream
+fabric --model gemini-1.5-pro --pattern write_essay
 ```
 
 ### Switching Between Backends
@@ -327,10 +327,10 @@ Fabric configuration is stored in `~/.config/fabric/.env`. Manual editing is sup
 
 ```bash
 # Example configuration
-AZURE_AI_GATEWAY_BACKEND=bedrock
-AZURE_AI_GATEWAY_GATEWAY_URL=https://gateway.company.com
-AZURE_AI_GATEWAY_SUBSCRIPTION_KEY=your-key-here
-AZURE_AI_GATEWAY_API_VERSION=2025-04-01-preview
+AZUREAIGATEWAY_BACKEND=bedrock
+AZUREAIGATEWAY_GATEWAY_URL=https://gateway.company.com
+AZUREAIGATEWAY_SUBSCRIPTION_KEY=your-key-here
+AZUREAIGATEWAY_API_VERSION=2025-04-01-preview
 ```
 
 ## Support

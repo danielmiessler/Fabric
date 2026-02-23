@@ -43,6 +43,7 @@
   "azureaigateway_invalid_gateway_url": "URL de gateway inválida: %w",
   "azureaigateway_no_valid_messages": "sin mensajes válidos después de filtrar contenido vacío",
   "azureaigateway_prepare_request_failed": "AzureAIGateway: %w",
+  "azureaigateway_response_too_large": "AzureAIGateway: respuesta demasiado grande (>%d bytes)",
   "azureaigateway_subscription_key_question": "Ingrese su clave de suscripción de Azure APIM",
   "azureaigateway_subscription_key_required": "se requiere la clave de suscripción de Azure APIM",
   "azureaigateway_unsupported_backend": "backend no soportado: %s (opciones válidas: bedrock, azure-openai, vertex-ai)",

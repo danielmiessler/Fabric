@@ -43,6 +43,7 @@
   "azureaigateway_invalid_gateway_url": "无效的网关 URL: %w",
   "azureaigateway_no_valid_messages": "过滤空内容后没有有效消息",
   "azureaigateway_prepare_request_failed": "AzureAIGateway: %w",
+  "azureaigateway_response_too_large": "AzureAIGateway: 响应太大 (>%d字节)",
   "azureaigateway_subscription_key_question": "输入您的 Azure APIM 订阅密钥",
   "azureaigateway_subscription_key_required": "Azure APIM 订阅密钥是必需的",
   "azureaigateway_unsupported_backend": "不支持的后端: %s（有效选项: bedrock、azure-openai、vertex-ai）",

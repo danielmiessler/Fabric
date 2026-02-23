@@ -1,13 +1,16 @@
+// Package azureaigateway - Vertex AI backend for Google Vertex AI using Gemini API format
 package azureaigateway
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net/url"
 	"strings"
 
 	"github.com/danielmiessler/fabric/internal/chat"
 	"github.com/danielmiessler/fabric/internal/domain"
+	"github.com/danielmiessler/fabric/internal/i18n"
 	debuglog "github.com/danielmiessler/fabric/internal/log"
 )
 
@@ -35,6 +38,9 @@ func (b *VertexAIBackend) ListModels() ([]string, error) {
 }
 
 // BuildEndpoint constructs the Vertex AI API endpoint URL
+// Uses /publishers/google/models/{model}:generateContent path per Azure APIM Gateway routing
+// This is the APIM-specific path that proxies to Google's Vertex AI service
+// (differs from direct Vertex AI API which uses /v1beta/models/{model}:generateContent)
 func (b *VertexAIBackend) BuildEndpoint(baseURL, model string) string {
 	return fmt.Sprintf("%s/publishers/google/models/%s:generateContent",
 		strings.TrimSuffix(baseURL, "/"), url.PathEscape(model))
@@ -52,6 +58,7 @@ func (b *VertexAIBackend) PrepareRequest(msgs []*chat.ChatCompletionMessage, opt
 	var contents []map[string]any
 	for _, msg := range msgs {
 		if strings.TrimSpace(msg.Content) == "" {
+			debuglog.Debug(debuglog.Basic, "Skipping empty message\n")
 			continue
 		}
 		if msg.Role == chat.ChatMessageRoleSystem {
@@ -71,6 +78,10 @@ func (b *VertexAIBackend) PrepareRequest(msgs []*chat.ChatCompletionMessage, opt
 	}
 
 	debuglog.Debug(debuglog.Basic, "Vertex AI backend: %d input → %d API messages, %d system parts\n", len(msgs), len(contents), len(systemParts))
+
+	if len(contents) == 0 {
+		return nil, errors.New(i18n.T("azureaigateway_no_valid_messages"))
+	}
 
 	body := map[string]any{
 		"contents": contents,
@@ -109,10 +120,10 @@ func (b *VertexAIBackend) ParseResponse(body []byte) (string, error) {
 		} `json:"candidates"`
 	}
 	if err := json.Unmarshal(body, &resp); err != nil {
-		return "", fmt.Errorf("failed to parse Vertex AI response: %w", err)
+		return "", fmt.Errorf(i18n.T("azureaigateway_vertexai_parse_response_failed"), err)
 	}
 	if len(resp.Candidates) == 0 || len(resp.Candidates[0].Content.Parts) == 0 {
-		return "", fmt.Errorf("no content in Vertex AI response")
+		return "", errors.New(i18n.T("azureaigateway_vertexai_no_content"))
 	}
 
 	var parts []string

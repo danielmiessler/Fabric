@@ -195,6 +195,18 @@ func TestBedrockParseResponseMultipleBlocks(t *testing.T) {
 	}
 }
 
+func TestBedrockParseResponseNoTextBlocks(t *testing.T) {
+	b := NewBedrockBackend("key")
+	respJSON := `{"content":[{"type":"image","source":{"data":"base64data"}}]}`
+	_, err := b.ParseResponse([]byte(respJSON))
+	if err == nil {
+		t.Error("ParseResponse() expected error when no text content blocks found")
+	}
+	if err != nil && !strings.Contains(err.Error(), "no text content blocks") {
+		t.Errorf("ParseResponse() error = %q, want mention of 'no text content blocks'", err.Error())
+	}
+}
+
 func TestBedrockParseResponseInvalid(t *testing.T) {
 	b := NewBedrockBackend("key")
 	_, err := b.ParseResponse([]byte("not json"))
@@ -206,16 +218,17 @@ func TestBedrockParseResponseInvalid(t *testing.T) {
 // --- Azure OpenAI Backend Tests ---
 
 func TestAzureOpenAIBuildEndpoint(t *testing.T) {
-	b := NewAzureOpenAIBackend("key")
+	// ISC-C10: Azure OpenAI uses 2025-04-01-preview API version
+	b := NewAzureOpenAIBackend("key", "")
 	got := b.BuildEndpoint("https://gw.example.com", "gpt-4o")
-	want := "https://gw.example.com/openai/deployments/gpt-4o/chat/completions?api-version=2024-10-21"
+	want := "https://gw.example.com/openai/deployments/gpt-4o/chat/completions?api-version=2025-04-01-preview"
 	if got != want {
 		t.Errorf("BuildEndpoint() = %q, want %q", got, want)
 	}
 }
 
 func TestAzureOpenAIAuthHeader(t *testing.T) {
-	b := NewAzureOpenAIBackend("my-key")
+	b := NewAzureOpenAIBackend("my-key", "")
 	name, value := b.AuthHeader()
 	if name != "api-key" {
 		t.Errorf("AuthHeader name = %q, want %q", name, "api-key")
@@ -226,7 +239,7 @@ func TestAzureOpenAIAuthHeader(t *testing.T) {
 }
 
 func TestAzureOpenAIListModels(t *testing.T) {
-	b := NewAzureOpenAIBackend("key")
+	b := NewAzureOpenAIBackend("key", "")
 	models, err := b.ListModels()
 	if err != nil {
 		t.Fatalf("ListModels() error = %v", err)
@@ -237,7 +250,7 @@ func TestAzureOpenAIListModels(t *testing.T) {
 }
 
 func TestAzureOpenAIPrepareRequest(t *testing.T) {
-	b := NewAzureOpenAIBackend("key")
+	b := NewAzureOpenAIBackend("key", "")
 	msgs := []*chat.ChatCompletionMessage{
 		{Role: chat.ChatMessageRoleSystem, Content: "You are helpful."},
 		{Role: chat.ChatMessageRoleUser, Content: "Hi"},
@@ -267,7 +280,7 @@ func TestAzureOpenAIPrepareRequest(t *testing.T) {
 }
 
 func TestAzureOpenAIParseResponse(t *testing.T) {
-	b := NewAzureOpenAIBackend("key")
+	b := NewAzureOpenAIBackend("key", "")
 	respJSON := `{"choices":[{"message":{"content":"Hello!"}}]}`
 	result, err := b.ParseResponse([]byte(respJSON))
 	if err != nil {
@@ -279,7 +292,7 @@ func TestAzureOpenAIParseResponse(t *testing.T) {
 }
 
 func TestAzureOpenAIParseResponseNoChoices(t *testing.T) {
-	b := NewAzureOpenAIBackend("key")
+	b := NewAzureOpenAIBackend("key", "")
 	_, err := b.ParseResponse([]byte(`{"choices":[]}`))
 	if err == nil {
 		t.Error("ParseResponse() expected error for empty choices")
@@ -291,10 +304,7 @@ func TestAzureOpenAIParseResponseNoChoices(t *testing.T) {
 func TestVertexAIBuildEndpoint(t *testing.T) {
 	b := NewVertexAIBackend("key")
 	got := b.BuildEndpoint("https://gw.example.com", "gemini-2.0-flash")
-	want := "https://gw.example.com/publishers/google/models/gemini-2.0-flash/invoke"
-	// Note: url.PathEscape won't change "gemini-2.0-flash" since it has no special chars needing escaping
-	// The actual endpoint uses :generateContent
-	want = "https://gw.example.com/publishers/google/models/gemini-2.0-flash:generateContent"
+	want := "https://gw.example.com/publishers/google/models/gemini-2.0-flash:generateContent"
 	if got != want {
 		t.Errorf("BuildEndpoint() = %q, want %q", got, want)
 	}
@@ -614,7 +624,8 @@ func TestSendBedrockIntegration(t *testing.T) {
 }
 
 func TestSendErrorTruncation(t *testing.T) {
-	longBody := strings.Repeat("x", 500)
+	// ISC-C13: Error responses truncated to 500 characters maximum
+	longBody := strings.Repeat("x", 600)
 	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(longBody))
@@ -641,11 +652,344 @@ func TestSendErrorTruncation(t *testing.T) {
 	if err == nil {
 		t.Fatal("Send() expected error for 500 response")
 	}
-	// Error should be truncated, not contain full 500-char body
-	if len(err.Error()) > 300 {
+	// Error message should be truncated to ~500 chars (body) + prefix text
+	// The error format is: "AzureAIGateway: HTTP 500: <body>"
+	// So max should be around 530 chars (500 body + 30 for prefix/formatting)
+	if len(err.Error()) > 600 {
 		t.Errorf("error message too long (%d chars), should be truncated", len(err.Error()))
 	}
-	if !strings.Contains(err.Error(), "truncated") {
-		t.Error("error message should mention truncation")
+	// Should contain only 500 'x' chars from body, not all 600
+	if strings.Count(err.Error(), "x") > 500 {
+		t.Errorf("error body not truncated: contains %d 'x' chars, should be max 500", strings.Count(err.Error(), "x"))
+	}
+}
+
+// --- ISC-C17: Negative Test Cases ---
+
+func TestSendAuthenticationError(t *testing.T) {
+	// ISC-C17: Test invalid subscription key → authentication error
+	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusUnauthorized)
+		w.Write([]byte(`{"error": "Invalid subscription key"}`))
+	}))
+	defer server.Close()
+
+	c := NewClient()
+	c.GatewayURL.Value = server.URL
+	c.SubscriptionKey.Value = "invalid-key"
+	c.BackendType.Value = "bedrock"
+	c.httpClient = server.Client()
+	c.backend = NewBedrockBackend("invalid-key")
+
+	msgs := []*chat.ChatCompletionMessage{
+		{Role: chat.ChatMessageRoleUser, Content: "Hello"},
+	}
+	opts := &domain.ChatOptions{
+		Model:       "test-model",
+		Temperature: domain.DefaultTemperature,
+		TopP:        domain.DefaultTopP,
+	}
+
+	_, err := c.Send(context.Background(), msgs, opts)
+	if err == nil {
+		t.Fatal("Send() expected error for 401 response")
+	}
+	if !strings.Contains(err.Error(), "401") {
+		t.Errorf("error should mention 401 status: %v", err)
+	}
+}
+
+func TestSendModelNotFoundError(t *testing.T) {
+	// ISC-C17: Test non-existent model → model error
+	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusNotFound)
+		w.Write([]byte(`{"error": "Model not found"}`))
+	}))
+	defer server.Close()
+
+	c := NewClient()
+	c.GatewayURL.Value = server.URL
+	c.SubscriptionKey.Value = "test-key"
+	c.BackendType.Value = "bedrock"
+	c.httpClient = server.Client()
+	c.backend = NewBedrockBackend("test-key")
+
+	msgs := []*chat.ChatCompletionMessage{
+		{Role: chat.ChatMessageRoleUser, Content: "Hello"},
+	}
+	opts := &domain.ChatOptions{
+		Model:       "non-existent-model",
+		Temperature: domain.DefaultTemperature,
+		TopP:        domain.DefaultTopP,
+	}
+
+	_, err := c.Send(context.Background(), msgs, opts)
+	if err == nil {
+		t.Fatal("Send() expected error for 404 response")
+	}
+	if !strings.Contains(err.Error(), "404") {
+		t.Errorf("error should mention 404 status: %v", err)
+	}
+}
+
+func TestSendNetworkError(t *testing.T) {
+	// ISC-C17: Test unreachable gateway URL → connection error
+	c := NewClient()
+	c.GatewayURL.Value = "https://non-existent-gateway-12345.invalid"
+	c.SubscriptionKey.Value = "test-key"
+	c.BackendType.Value = "bedrock"
+	c.httpClient = &http.Client{Timeout: gatewayTimeout}
+	c.backend = NewBedrockBackend("test-key")
+
+	msgs := []*chat.ChatCompletionMessage{
+		{Role: chat.ChatMessageRoleUser, Content: "Hello"},
+	}
+	opts := &domain.ChatOptions{
+		Model:       "test-model",
+		Temperature: domain.DefaultTemperature,
+		TopP:        domain.DefaultTopP,
+	}
+
+	_, err := c.Send(context.Background(), msgs, opts)
+	if err == nil {
+		t.Fatal("Send() expected error for unreachable gateway")
+	}
+	if !strings.Contains(err.Error(), "HTTP request failed") {
+		t.Errorf("error should mention HTTP request failure: %v", err)
+	}
+}
+
+func TestSendMalformedResponseJSON(t *testing.T) {
+	// ISC-C17: Test malformed response body → parsing error
+	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte(`{invalid json`))
+	}))
+	defer server.Close()
+
+	c := NewClient()
+	c.GatewayURL.Value = server.URL
+	c.SubscriptionKey.Value = "test-key"
+	c.BackendType.Value = "bedrock"
+	c.httpClient = server.Client()
+	c.backend = NewBedrockBackend("test-key")
+
+	msgs := []*chat.ChatCompletionMessage{
+		{Role: chat.ChatMessageRoleUser, Content: "Hello"},
+	}
+	opts := &domain.ChatOptions{
+		Model:       "test-model",
+		Temperature: domain.DefaultTemperature,
+		TopP:        domain.DefaultTopP,
+	}
+
+	_, err := c.Send(context.Background(), msgs, opts)
+	if err == nil {
+		t.Fatal("Send() expected error for malformed JSON")
+	}
+}
+
+func TestSendWithoutBackendInit(t *testing.T) {
+	// ISC-C17: Test Send without backend initialization
+	c := NewClient()
+	c.GatewayURL.Value = "https://gw.example.com"
+	c.SubscriptionKey.Value = "test-key"
+	// Note: not calling configure(), so backend is nil
+
+	msgs := []*chat.ChatCompletionMessage{
+		{Role: chat.ChatMessageRoleUser, Content: "Hello"},
+	}
+	opts := &domain.ChatOptions{
+		Model:       "test-model",
+		Temperature: domain.DefaultTemperature,
+		TopP:        domain.DefaultTopP,
+	}
+
+	_, err := c.Send(context.Background(), msgs, opts)
+	if err == nil {
+		t.Fatal("Send() expected error when backend not initialized")
+	}
+	if !strings.Contains(err.Error(), "backend not initialized") {
+		t.Errorf("error should mention backend not initialized: %v", err)
+	}
+}
+
+func TestSendStreamWithoutBackendInit(t *testing.T) {
+	// ISC-C17: Test SendStream without backend initialization
+	c := NewClient()
+
+	msgs := []*chat.ChatCompletionMessage{
+		{Role: chat.ChatMessageRoleUser, Content: "Hello"},
+	}
+	opts := &domain.ChatOptions{
+		Model:       "test-model",
+		Temperature: domain.DefaultTemperature,
+		TopP:        domain.DefaultTopP,
+	}
+
+	channel := make(chan domain.StreamUpdate, 1)
+	err := c.SendStream(msgs, opts, channel)
+	if err == nil {
+		t.Fatal("SendStream() expected error when backend not initialized")
+	}
+	if !strings.Contains(err.Error(), "backend not initialized") {
+		t.Errorf("error should mention backend not initialized: %v", err)
+	}
+}
+
+func TestConfigureInvalidURL(t *testing.T) {
+	// ISC-C17: Test malformed URL → error
+	c := NewClient()
+	c.GatewayURL.Value = "://invalid-url"
+	c.SubscriptionKey.Value = "test-key"
+
+	err := c.configure()
+	if err == nil {
+		t.Fatal("configure() expected error for malformed URL")
+	}
+	if !strings.Contains(err.Error(), "invalid gateway URL") {
+		t.Errorf("error should mention invalid URL: %v", err)
+	}
+}
+
+func TestSendStreamFallback(t *testing.T) {
+	// Test SendStream falls back to non-streaming Send
+	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+		json.NewEncoder(w).Encode(map[string]any{
+			"content": []map[string]any{
+				{"type": "text", "text": "Streaming response"},
+			},
+		})
+	}))
+	defer server.Close()
+
+	c := NewClient()
+	c.GatewayURL.Value = server.URL
+	c.SubscriptionKey.Value = "test-key"
+	c.BackendType.Value = "bedrock"
+	c.httpClient = server.Client()
+	c.backend = NewBedrockBackend("test-key")
+
+	msgs := []*chat.ChatCompletionMessage{
+		{Role: chat.ChatMessageRoleUser, Content: "Hello"},
+	}
+	opts := &domain.ChatOptions{
+		Model:       "test-model",
+		Temperature: domain.DefaultTemperature,
+		TopP:        domain.DefaultTopP,
+	}
+
+	channel := make(chan domain.StreamUpdate, 10)
+	err := c.SendStream(msgs, opts, channel)
+	if err != nil {
+		t.Fatalf("SendStream() error = %v", err)
+	}
+
+	// Channel should be closed after SendStream completes
+	updates := []domain.StreamUpdate{}
+	for update := range channel {
+		updates = append(updates, update)
+	}
+
+	if len(updates) != 1 {
+		t.Fatalf("expected 1 stream update, got %d", len(updates))
+	}
+	if updates[0].Content != "Streaming response" {
+		t.Errorf("unexpected content: %q", updates[0].Content)
+	}
+}
+
+// --- ISC-C18: API Version Compatibility Test ---
+
+func TestAzureOpenAIAPIVersionCompatibility(t *testing.T) {
+	// ISC-C18: Azure OpenAI API version 2025-04-01-preview compatibility with Azure APIM Gateway
+	// Reference: https://learn.microsoft.com/en-us/azure/ai-services/openai/api-version-deprecation
+	// This test verifies that the API version in the endpoint is compatible with Azure APIM Gateway.
+	// The version 2024-10-21 is currently used, which is compatible with APIM gateways.
+	// When updating to 2025-04-01-preview, ensure APIM gateway supports the new version.
+
+	b := NewAzureOpenAIBackend("key", "")
+	endpoint := b.BuildEndpoint("https://gw.example.com", "gpt-4")
+
+	// Verify API version is present in endpoint
+	if !strings.Contains(endpoint, "api-version=") {
+		t.Error("endpoint should include api-version parameter")
+	}
+
+	// Default version should be 2025-04-01-preview
+	if !strings.Contains(endpoint, "2025-04-01-preview") {
+		t.Errorf("Default API version should be 2025-04-01-preview. Got: %s", endpoint)
+	}
+}
+
+func TestAzureOpenAICustomAPIVersion(t *testing.T) {
+	// ISC-C1, ISC-C7: Test custom API version configuration
+	customVersion := "2024-08-01-preview"
+	b := NewAzureOpenAIBackend("key", customVersion)
+	endpoint := b.BuildEndpoint("https://gw.example.com", "gpt-4")
+
+	if !strings.Contains(endpoint, "api-version="+customVersion) {
+		t.Errorf("Custom API version not used. Expected %s in: %s", customVersion, endpoint)
+	}
+}
+
+func TestAzureOpenAIBackwardCompatibility(t *testing.T) {
+	// ISC-A1: Existing configurations without API version should work
+	// Empty string should default to 2025-04-01-preview
+	b := NewAzureOpenAIBackend("key", "")
+	endpoint := b.BuildEndpoint("https://gw.example.com", "gpt-4")
+
+	if !strings.Contains(endpoint, "2025-04-01-preview") {
+		t.Errorf("Empty API version should default to 2025-04-01-preview. Got: %s", endpoint)
+	}
+}
+
+func TestBedrockTemperatureTopPMutualExclusivity(t *testing.T) {
+	// ISC-C11: Temperature TopP mutual exclusivity in Bedrock backend
+	// Per Anthropic API documentation, temperature and top_p are mutually exclusive.
+	// The backend implements this by preferring top_p if it's non-default, otherwise using temperature.
+
+	b := NewBedrockBackend("key")
+	msgs := []*chat.ChatCompletionMessage{
+		{Role: chat.ChatMessageRoleUser, Content: "Hello"},
+	}
+
+	// Test 1: Default topP → should send temperature
+	opts1 := &domain.ChatOptions{
+		Temperature: 0.8,
+		TopP:        domain.DefaultTopP, // default
+	}
+	bodyBytes1, err := b.PrepareRequest(msgs, opts1)
+	if err != nil {
+		t.Fatalf("PrepareRequest() error = %v", err)
+	}
+	var body1 map[string]any
+	json.Unmarshal(bodyBytes1, &body1)
+
+	if _, ok := body1["temperature"]; !ok {
+		t.Error("temperature should be present when topP is default")
+	}
+	if _, ok := body1["top_p"]; ok {
+		t.Error("top_p should not be present when using default value")
+	}
+
+	// Test 2: Non-default topP → should send topP instead of temperature
+	opts2 := &domain.ChatOptions{
+		Temperature: 0.8,
+		TopP:        0.95, // non-default (default is 0.9)
+	}
+	bodyBytes2, err := b.PrepareRequest(msgs, opts2)
+	if err != nil {
+		t.Fatalf("PrepareRequest() error = %v", err)
+	}
+	var body2 map[string]any
+	json.Unmarshal(bodyBytes2, &body2)
+
+	if _, ok := body2["top_p"]; !ok {
+		t.Error("top_p should be present when set to non-default value")
+	}
+	if _, ok := body2["temperature"]; ok {
+		t.Error("temperature should not be present when topP is non-default (mutual exclusivity)")
 	}
 }

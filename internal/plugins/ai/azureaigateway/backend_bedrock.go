@@ -1,13 +1,16 @@
+// Package azureaigateway - Bedrock backend for AWS Bedrock using Anthropic Messages API format
 package azureaigateway
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net/url"
 	"strings"
 
 	"github.com/danielmiessler/fabric/internal/chat"
 	"github.com/danielmiessler/fabric/internal/domain"
+	"github.com/danielmiessler/fabric/internal/i18n"
 	debuglog "github.com/danielmiessler/fabric/internal/log"
 )
 
@@ -37,7 +40,7 @@ func (b *BedrockBackend) ListModels() ([]string, error) {
 		"us.anthropic.claude-opus-4-20250514-v1:0",
 		"us.anthropic.claude-opus-4-1-20250805-v1:0",
 		"us.anthropic.claude-opus-4-5-20251101-v1:0",
-		"us.anthropic.claude-opus-4-6-v1",
+		"us.anthropic.claude-opus-4-6-v1:0",
 		"us.anthropic.claude-sonnet-4-20250514-v1:0",
 		"us.anthropic.claude-sonnet-4-5-20250929-v1:0",
 	}, nil
@@ -60,6 +63,7 @@ func (b *BedrockBackend) PrepareRequest(msgs []*chat.ChatCompletionMessage, opts
 	var messages []map[string]any
 	for _, msg := range msgs {
 		if strings.TrimSpace(msg.Content) == "" {
+			debuglog.Debug(debuglog.Basic, "Skipping empty message\n")
 			continue
 		}
 		if msg.Role == chat.ChatMessageRoleSystem {
@@ -74,9 +78,13 @@ func (b *BedrockBackend) PrepareRequest(msgs []*chat.ChatCompletionMessage, opts
 
 	debuglog.Debug(debuglog.Basic, "Bedrock backend: %d input → %d API messages, %d system parts\n", len(msgs), len(messages), len(systemParts))
 
-	maxTokens := 4096
-	if opts.MaxTokens > 0 {
-		maxTokens = opts.MaxTokens
+	if len(messages) == 0 {
+		return nil, errors.New(i18n.T("azureaigateway_no_valid_messages"))
+	}
+
+	maxTokens := opts.MaxTokens
+	if maxTokens == 0 {
+		maxTokens = 4096
 	}
 
 	body := map[string]any{
@@ -87,6 +95,8 @@ func (b *BedrockBackend) PrepareRequest(msgs []*chat.ChatCompletionMessage, opts
 	if len(systemParts) > 0 {
 		body["system"] = strings.Join(systemParts, "\n\n")
 	}
+	// Anthropic API: temperature and top_p are mutually exclusive
+	// Set only the non-default parameter to avoid API conflicts
 	if opts.TopP != domain.DefaultTopP {
 		body["top_p"] = opts.TopP
 	} else {
@@ -105,7 +115,7 @@ func (b *BedrockBackend) ParseResponse(body []byte) (string, error) {
 		} `json:"content"`
 	}
 	if err := json.Unmarshal(body, &resp); err != nil {
-		return "", fmt.Errorf("failed to parse Bedrock response: %w", err)
+		return "", fmt.Errorf(i18n.T("azureaigateway_bedrock_parse_response_failed"), err)
 	}
 
 	var parts []string
@@ -113,6 +123,9 @@ func (b *BedrockBackend) ParseResponse(body []byte) (string, error) {
 		if block.Type == "text" && block.Text != "" {
 			parts = append(parts, block.Text)
 		}
+	}
+	if len(parts) == 0 {
+		return "", errors.New(i18n.T("azureaigateway_bedrock_no_text_blocks"))
 	}
 	return strings.Join(parts, ""), nil
 }

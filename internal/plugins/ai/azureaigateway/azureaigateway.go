@@ -8,6 +8,7 @@ package azureaigateway
 import (
 	"bytes"
 	"context"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -17,6 +18,7 @@ import (
 
 	"github.com/danielmiessler/fabric/internal/chat"
 	"github.com/danielmiessler/fabric/internal/domain"
+	"github.com/danielmiessler/fabric/internal/i18n"
 	debuglog "github.com/danielmiessler/fabric/internal/log"
 	"github.com/danielmiessler/fabric/internal/plugins"
 	"github.com/danielmiessler/fabric/internal/plugins/ai"
@@ -60,6 +62,7 @@ type Client struct {
 	BackendType     *plugins.SetupQuestion
 	GatewayURL      *plugins.SetupQuestion
 	SubscriptionKey *plugins.SetupQuestion
+	APIVersion      *plugins.SetupQuestion
 
 	backend    Backend
 	httpClient *http.Client
@@ -73,11 +76,13 @@ func NewClient() *Client {
 	client.PluginBase = plugins.NewVendorPluginBase(vendorName, client.configure)
 
 	client.BackendType = client.AddSetupQuestionCustom("backend", true,
-		"Select backend type (bedrock, azure-openai, vertex-ai)")
+		i18n.T("azureaigateway_backend_type_question"))
 	client.GatewayURL = client.AddSetupQuestionCustom("gateway_url", true,
-		"Enter your Azure APIM Gateway base URL (e.g., https://gateway.company.com)")
+		i18n.T("azureaigateway_gateway_url_question"))
 	client.SubscriptionKey = client.AddSetupQuestionCustom("subscription_key", true,
-		"Enter your Azure APIM subscription key")
+		i18n.T("azureaigateway_subscription_key_question"))
+	client.APIVersion = client.AddSetupQuestionCustom("api_version", false,
+		i18n.T("azureaigateway_api_version_question"))
 
 	return client
 }
@@ -85,17 +90,17 @@ func NewClient() *Client {
 // configure initializes the HTTP client and instantiates the appropriate backend
 func (c *Client) configure() error {
 	if c.GatewayURL.Value == "" {
-		return fmt.Errorf("Azure APIM Gateway URL is required")
+		return errors.New(i18n.T("azureaigateway_gateway_url_required"))
 	}
 	parsed, err := url.Parse(c.GatewayURL.Value)
 	if err != nil {
-		return fmt.Errorf("invalid gateway URL: %w", err)
+		return fmt.Errorf(i18n.T("azureaigateway_invalid_gateway_url"), err)
 	}
 	if parsed.Scheme != "https" {
-		return fmt.Errorf("gateway URL must use HTTPS scheme, got %q", parsed.Scheme)
+		return errors.New(i18n.T("azureaigateway_gateway_url_https_required"))
 	}
 	if c.SubscriptionKey.Value == "" {
-		return fmt.Errorf("Azure APIM subscription key is required")
+		return errors.New(i18n.T("azureaigateway_subscription_key_required"))
 	}
 
 	// Normalize backend type; default to bedrock for backward compatibility
@@ -111,11 +116,11 @@ func (c *Client) configure() error {
 	case "bedrock":
 		c.backend = NewBedrockBackend(c.SubscriptionKey.Value)
 	case "azure-openai":
-		c.backend = NewAzureOpenAIBackend(c.SubscriptionKey.Value)
+		c.backend = NewAzureOpenAIBackend(c.SubscriptionKey.Value, c.APIVersion.Value)
 	case "vertex-ai":
 		c.backend = NewVertexAIBackend(c.SubscriptionKey.Value)
 	default:
-		return fmt.Errorf("unsupported backend: %s (valid options: bedrock, azure-openai, vertex-ai)", backendType)
+		return fmt.Errorf(i18n.T("azureaigateway_unsupported_backend"), backendType)
 	}
 
 	return nil
@@ -129,7 +134,7 @@ func (c *Client) IsConfigured() bool {
 // ListModels delegates to the active backend
 func (c *Client) ListModels() ([]string, error) {
 	if c.backend == nil {
-		return nil, fmt.Errorf("backend not initialized - run 'fabric --setup' to configure")
+		return nil, errors.New(i18n.T("azureaigateway_backend_not_initialized"))
 	}
 	return c.backend.ListModels()
 }
@@ -138,12 +143,12 @@ func (c *Client) ListModels() ([]string, error) {
 // This is the single implementation of HTTP plumbing shared by all backends.
 func (c *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions) (string, error) {
 	if c.backend == nil {
-		return "", fmt.Errorf("backend not initialized - run 'fabric --setup' to configure")
+		return "", errors.New(i18n.T("azureaigateway_backend_not_initialized"))
 	}
 
 	bodyBytes, err := c.backend.PrepareRequest(msgs, opts)
 	if err != nil {
-		return "", fmt.Errorf("AzureAIGateway: %w", err)
+		return "", fmt.Errorf(i18n.T("azureaigateway_prepare_request_failed"), err)
 	}
 
 	endpoint := c.backend.BuildEndpoint(c.GatewayURL.Value, opts.Model)
@@ -151,7 +156,7 @@ func (c *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, o
 
 	req, err := http.NewRequestWithContext(ctx, "POST", endpoint, bytes.NewReader(bodyBytes))
 	if err != nil {
-		return "", fmt.Errorf("AzureAIGateway: failed to create request: %w", err)
+		return "", fmt.Errorf(i18n.T("azureaigateway_failed_create_request"), err)
 	}
 
 	req.Header.Set("Content-Type", "application/json")
@@ -160,37 +165,51 @@ func (c *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, o
 
 	resp, err := c.httpClient.Do(req)
 	if err != nil {
-		return "", fmt.Errorf("AzureAIGateway: HTTP request failed: %w", err)
+		return "", fmt.Errorf(i18n.T("azureaigateway_http_request_failed"), err)
 	}
 	defer resp.Body.Close()
 
-	respBody, err := io.ReadAll(resp.Body)
+	// Limit response body size to 10MB to prevent memory exhaustion
+	limitedBody := io.LimitReader(resp.Body, 10*1024*1024)
+	respBody, err := io.ReadAll(limitedBody)
 	if err != nil {
-		return "", fmt.Errorf("AzureAIGateway: failed to read response: %w", err)
+		return "", fmt.Errorf(i18n.T("azureaigateway_failed_read_response"), err)
 	}
 
 	debuglog.Debug(debuglog.Detailed, "AzureAIGateway response status: %d\n", resp.StatusCode)
 
 	if resp.StatusCode != http.StatusOK {
-		debuglog.Debug(debuglog.Detailed, "AzureAIGateway error body: %s\n", string(respBody))
-		errMsg := string(respBody)
-		if len(errMsg) > 200 {
-			errMsg = errMsg[:200] + "... (truncated)"
+		debugBody := string(respBody)
+		if len(debugBody) > 2000 {
+			debugBody = debugBody[:2000] + "...[truncated]"
 		}
-		return "", fmt.Errorf("AzureAIGateway: HTTP %d: %s", resp.StatusCode, errMsg)
+		debuglog.Debug(debuglog.Detailed, "AzureAIGateway error body: %s\n", debugBody)
+		errMsg := string(respBody)
+		if len(errMsg) > 500 {
+			errMsg = errMsg[:500] + "..."
+		}
+		return "", fmt.Errorf(i18n.T("azureaigateway_http_error"), resp.StatusCode, errMsg)
 	}
 
 	return c.backend.ParseResponse(respBody)
 }
 
 // SendStream falls back to non-streaming (APIM gateway doesn't support SSE pass-through).
+//
+// NOTE: This method uses context.Background() because the ai.Vendor interface does not
+// accept a context parameter for SendStream. If the caller disconnects, this request will
+// continue until the gateway timeout (300s). A future update to the ai.Vendor interface
+// should add context propagation to SendStream.
 func (c *Client) SendStream(msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan domain.StreamUpdate) error {
 	defer close(channel)
 	if c.backend == nil {
-		return fmt.Errorf("backend not initialized - run 'fabric --setup' to configure")
+		return errors.New(i18n.T("azureaigateway_backend_not_initialized"))
 	}
 
-	result, err := c.Send(context.Background(), msgs, opts)
+	ctx, cancel := context.WithTimeout(context.Background(), gatewayTimeout)
+	defer cancel()
+
+	result, err := c.Send(ctx, msgs, opts)
 	if err != nil {
 		return err
 	}

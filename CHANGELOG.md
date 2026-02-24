@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.4.420 (2026-02-23)
+
+### PR [#2021](https://github.com/danielmiessler/Fabric/pull/2021) by [jlec](https://github.com/jlec) and [ksylvan](https://github.com/ksylvan): Enhanced Azure AI Gateway with i18n Support and documentation
+
+- Added configurable API version support for the Azure OpenAI backend, defaulting to `2025-04-01-preview` while maintaining backward compatibility.
+- Implemented URL validation with HTTPS enforcement and a cancellable context in `SendStream` with a 300-second timeout.
+- Added a 10MB response body size limit using `io.LimitReader` and improved error body truncation from 200 to 500 characters.
+- Added file-level documentation across all backend files and enforced lowercase error messages per Go convention.
+- Fixed Bedrock `max_tokens` to correctly respect `opts.MaxTokens` with a fallback, and added error checks for empty message lists across all backends.
+
 ## v1.4.419 (2026-02-22)
 
 ### PR [#2020](https://github.com/danielmiessler/Fabric/pull/2020) by [ksylvan](https://github.com/ksylvan): Add `wire` Debug Level for LLM Request/Response Logging

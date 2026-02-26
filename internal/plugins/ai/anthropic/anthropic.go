@@ -548,7 +548,3 @@ func isPDFURL(url string) bool {
 	}
 	return strings.EqualFold(path.Ext(parsedURL.Path), ".pdf")
 }
-
-func (an *Client) NeedsRawMode(modelName string) bool {
-	return false
-}

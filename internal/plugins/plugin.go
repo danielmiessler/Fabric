@@ -133,6 +133,12 @@ func (o *PluginBase) SetupFillEnvFileContent(fileEnvFileContent *bytes.Buffer) {
 	o.Settings.FillEnvFileContent(fileEnvFileContent)
 }
 
+// NeedsRawMode returns false by default. Vendors that need raw mode
+// (e.g., perplexity, ollama, openai for certain models) override this method.
+func (o *PluginBase) NeedsRawMode(modelName string) bool {
+	return false
+}
+
 func NewSetting(envVariable string, required bool) *Setting {
 	return &Setting{
 		EnvVariable: envVariable,

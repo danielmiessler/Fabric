@@ -1,5 +1,24 @@
 # Changelog
 
+## v1.4.422 (2026-02-26)
+
+### PR [#2031](https://github.com/danielmiessler/Fabric/pull/2031) by [ksylvan](https://github.com/ksylvan): Web UI: Add Vendor Filter Dropdown to Model Selection UI
+
+- Add a vendor selector dropdown to filter available models in the chat UI
+- Introduce `selectedVendor` writable store and `vendorNames` derived store with sorted, unique vendor names
+- Add `filteredModels` derived store to dynamically filter models by the selected vendor
+- Fix model deduplication to use a `vendor:name` composite key, with models sorted by vendor then name (case-insensitive)
+- Display the vendor prefix in model option labels for improved clarity
+
+## v1.4.421 (2026-02-26)
+
+### PR [#2029](https://github.com/danielmiessler/Fabric/pull/2029) by [ksylvan](https://github.com/ksylvan): Web UI: Fix streaming chat: tokens now accumulate in order into a single message
+
+- Feat: improve streaming message handling and SSE buffer parsing
+- Append content to existing assistant messages instead of replacing, and fix loading message removal to search by index rather than position
+- Refactor SSE buffer splitting to always retain incomplete segments, and trim segments before parsing to handle whitespace edge cases
+- Consolidate duplicate message update logic across chat components and process remaining buffer after stream completion more reliably
+
 ## v1.4.420 (2026-02-23)
 
 ### PR [#2021](https://github.com/danielmiessler/Fabric/pull/2021) by [jlec](https://github.com/jlec) and [ksylvan](https://github.com/ksylvan): Enhanced Azure AI Gateway with i18n Support and documentation

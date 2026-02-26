@@ -142,31 +142,41 @@ export class ChatService {
 						if (done) break;
 
 						buffer += new TextDecoder().decode(value);
-						const messages = buffer
-							.split("\n\n")
-							.filter((msg) => msg.startsWith("data: "));
-
-						if (messages.length > 1) {
-							buffer = messages.pop() || "";
-							for (const msg of messages) {
-								try {
-									let response = JSON.parse(msg.slice(6)) as StreamResponse;
-									response = processResponse(response);
-									controller.enqueue(response);
-								} catch (parseError) {
-									console.error("Error parsing stream message:", parseError);
-								}
+						const segments = buffer.split("\n\n");
+						// Last segment may be incomplete; keep it as buffer
+						buffer = segments.pop() || "";
+						for (const segment of segments) {
+							const trimmed = segment.trim();
+							if (!trimmed.startsWith("data: ")) continue;
+							try {
+								let response = JSON.parse(
+									trimmed.slice(6),
+								) as StreamResponse;
+								response = processResponse(response);
+								controller.enqueue(response);
+							} catch (parseError) {
+								console.error(
+									"Error parsing stream message:",
+									parseError,
+								);
 							}
 						}
 					}
 
-					if (buffer.startsWith("data: ")) {
+					// Process any remaining complete message in the buffer
+					const trimmed = buffer.trim();
+					if (trimmed.startsWith("data: ")) {
 						try {
-							let response = JSON.parse(buffer.slice(6)) as StreamResponse;
+							let response = JSON.parse(
+								trimmed.slice(6),
+							) as StreamResponse;
 							response = processResponse(response);
 							controller.enqueue(response);
 						} catch (parseError) {
-							console.error("Error parsing final message:", parseError);
+							console.error(
+								"Error parsing final message:",
+								parseError,
+							);
 						}
 					}
 				} catch (error) {

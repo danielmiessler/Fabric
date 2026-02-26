@@ -132,7 +132,7 @@ export async function sendMessage(
 						const lastMessage = newMessages[newMessages.length - 1];
 
 						if (lastMessage?.role === "assistant") {
-							lastMessage.content = content;
+							lastMessage.content += content;
 							lastMessage.format = response?.format;
 							console.log("Message updated:", {
 								role: "assistant",

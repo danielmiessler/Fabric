@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.4.423 (2026-02-26)
+
+### PR [#2032](https://github.com/danielmiessler/Fabric/pull/2032) by [ksylvan](https://github.com/ksylvan): Refactor: Consolidate `NeedsRawMode` Default Implementation into `PluginBase`
+
+- Refactor: move `NeedsRawMode` default implementation to `PluginBase`
+- Add default `NeedsRawMode` method to shared `PluginBase` struct
+- Remove redundant `NeedsRawMode` implementations across all AI vendor plugins
+- Consolidate default `false` return logic into single base plugin method
+- Clean up duplicate boilerplate from anthropic, bedrock, copilot, gemini plugins
+
 ## v1.4.422 (2026-02-26)
 
 ### PR [#2031](https://github.com/danielmiessler/Fabric/pull/2031) by [ksylvan](https://github.com/ksylvan): Web UI: Add Vendor Filter Dropdown to Model Selection UI

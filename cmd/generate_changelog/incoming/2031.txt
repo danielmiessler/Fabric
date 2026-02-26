@@ -1,7 +1,0 @@
-### PR [#2031](https://github.com/danielmiessler/Fabric/pull/2031) by [ksylvan](https://github.com/ksylvan): Web UI: Add Vendor Filter Dropdown to Model Selection UI
-
-- Add a vendor selector dropdown to filter available models in the chat UI
-- Introduce `selectedVendor` writable store and `vendorNames` derived store with sorted, unique vendor names
-- Add `filteredModels` derived store to dynamically filter models by the selected vendor
-- Fix model deduplication to use a `vendor:name` composite key, with models sorted by vendor then name (case-insensitive)
-- Display the vendor prefix in model option labels for improved clarity

@@ -456,7 +456,3 @@ func (c *Client) toMessages(msgs []*chat.ChatCompletionMessage) []anthropic.Mess
 
 	return anthropicMessages
 }
-
-func (c *Client) NeedsRawMode(modelName string) bool {
-	return false
-}

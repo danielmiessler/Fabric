@@ -249,12 +249,6 @@ func (c *BedrockClient) Send(ctx context.Context, msgs []*chat.ChatCompletionMes
 	return text.Value, nil
 }
 
-// NeedsRawMode indicates whether the model requires raw mode processing.
-// Bedrock models do not require raw mode.
-func (c *BedrockClient) NeedsRawMode(modelName string) bool {
-	return false
-}
-
 // toMessages converts the array of input messages from the ChatCompletionMessageType to the
 // Bedrock Converse Message type.
 // The system role messages are mapped to the user role as they contain a mix of system messages,

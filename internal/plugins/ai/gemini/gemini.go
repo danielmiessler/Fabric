@@ -179,10 +179,6 @@ func (o *Client) SendStream(msgs []*chat.ChatCompletionMessage, opts *domain.Cha
 	return
 }
 
-func (o *Client) NeedsRawMode(modelName string) bool {
-	return false
-}
-
 func parseThinkingConfig(level domain.ThinkingLevel) (*genai.ThinkingConfig, bool) {
 	lower := strings.ToLower(strings.TrimSpace(string(level)))
 	switch domain.ThinkingLevel(lower) {

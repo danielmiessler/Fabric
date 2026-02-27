@@ -1,0 +1,3 @@
+### PR [#2034](https://github.com/danielmiessler/Fabric/pull/2034) by [konstantint](https://github.com/konstantint): feat: add create_slides pattern
+
+- Feat: add create_slides pattern

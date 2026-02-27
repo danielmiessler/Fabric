@@ -2074,6 +2074,15 @@
         "ANALYSIS",
         "CR THINKING"
       ]
+    },
+    {
+      "patternName": "create_slides",
+      "description": "Transform content into visual Reveal.js HTML slideshows with minimal text and rich SVG illustrations.",
+      "tags": [
+        "VISUALIZE",
+        "WRITING",
+        "CONVERSION"
+      ]
     }
   ]
 }

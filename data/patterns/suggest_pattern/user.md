@@ -662,6 +662,10 @@ Write concise newsletter content focusing on key insights.
 
 Craft compelling podcast/show intros to engage audience.
 
+### create_slides
+
+Transform content into visual Reveal.js HTML slideshows with minimal text and rich SVG illustrations.
+
 ### create_story_about_people_interaction
 
 Analyze two personas, compare their dynamics, and craft a realistic, character-driven story from those insights.
@@ -1036,6 +1040,10 @@ Transform concepts into visual diagrams using Mermaid syntax.
 
 Create Mermaid diagrams to visualize workflows in documentation.
 
+### create_slides
+
+Transform content into visual Reveal.js HTML slideshows with minimal text and rich SVG illustrations.
+
 ### create_visualization
 
 Transform concepts to ASCII art with explanations of relationships.
@@ -1057,6 +1065,10 @@ Extract data and convert to CSV, preserving data integrity.
 ### sanitize_broken_html_to_markdown
 
 Clean/convert malformed HTML to markdown.
+
+### create_slides
+
+Transform content into visual Reveal.js HTML slideshows with minimal text and rich SVG illustrations.
 
 ### translate
 

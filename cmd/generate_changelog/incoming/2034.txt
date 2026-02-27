@@ -1,0 +1,7 @@
+### PR [#2034](https://github.com/danielmiessler/Fabric/pull/2034) by [konstantint](https://github.com/konstantint) and [ksylvan](https://github.com/ksylvan): feat: add create_slides pattern
+
+- Add new `create_slides` pattern for generating Reveal.js HTML slideshows
+- Register `create_slides` across CONVERSION, VISUALIZE, and WRITING categories
+- Add `create_slides` to the pattern explanations index and `suggest_pattern` user guide
+- Insert `create_slides` entry into `pattern_descriptions.json` and `pattern_extracts.json` with relevant tags
+- Shift pattern numbering from 97 onward to accommodate the new entry

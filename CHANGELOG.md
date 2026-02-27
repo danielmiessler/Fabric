@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.4.424 (2026-02-27)
+
+### PR [#2025](https://github.com/danielmiessler/Fabric/pull/2025) by [dependabot]](https://github.com/apps/dependabot): chore(deps): bump the npm_and_yarn group across 1 directory with 5 updates
+
+- Updated `@sveltejs/kit` from version 2.49.5 to 2.53.1 in the `/web` directory.
+- Updated `svelte` from version 4.2.20 to 5.51.5 in the `/web` directory.
+- Updated `ajv` from version 6.12.6 to 6.14.0 in the `/web` directory.
+- Updated `devalue` from version 5.6.2 to 5.6.3 in the `/web` directory.
+- Updated `minimatch` from version 3.1.2 to 3.1.4 in the `/web` directory.
+
 ## v1.4.423 (2026-02-26)
 
 ### PR [#2032](https://github.com/danielmiessler/Fabric/pull/2032) by [ksylvan](https://github.com/ksylvan): Refactor: Consolidate `NeedsRawMode` Default Implementation into `PluginBase`

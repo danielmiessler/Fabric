@@ -376,10 +376,6 @@ func (c *Client) GetEmbeddings(ctx context.Context, input string, opts *domain.C
 	return
 }
 
-func (c *Client) NeedsRawMode(modelName string) bool {
-	return false
-}
-
 func (c *Client) addAuthorizationHeader(req *http.Request) {
 	if c.ApiKey == nil {
 		return

@@ -329,15 +329,22 @@ async function readFileContent(file: File): Promise<string> {
                   messageStore.update(messages => {
                       const newMessages = [...messages];
                       // Replace the processing message with actual content
-                      const lastMessage = newMessages[newMessages.length - 1];
-                      if (lastMessage?.format === 'loading') {
-                          newMessages.pop();
+                      const loadingIndex = newMessages.findIndex(m => m.format === 'loading');
+                      if (loadingIndex !== -1) {
+                          newMessages.splice(loadingIndex, 1);
                       }
-                      newMessages.push({
-                          role: 'assistant',
-                          content,
-                          format: response?.format
-                      });
+
+                      const lastMessage = newMessages[newMessages.length - 1];
+                      if (lastMessage?.role === 'assistant') {
+                          lastMessage.content += content;
+                          lastMessage.format = response?.format;
+                      } else {
+                          newMessages.push({
+                              role: 'assistant',
+                              content,
+                              format: response?.format
+                          });
+                      }
                       return newMessages;
                   });
               },
@@ -442,13 +449,18 @@ async function readFileContent(file: File): Promise<string> {
             if (loadingIndex !== -1) {
               newMessages.splice(loadingIndex, 1);
             }
-            
-            // Always append a new assistant message
-            newMessages.push({
-              role: 'assistant',
-              content,
-              format: response?.format
-            });
+
+            const lastMessage = newMessages[newMessages.length - 1];
+            if (lastMessage?.role === 'assistant') {
+              lastMessage.content += content;
+              lastMessage.format = response?.format;
+            } else {
+              newMessages.push({
+                role: 'assistant',
+                content,
+                format: response?.format
+              });
+            }
             return newMessages;
           });
         },

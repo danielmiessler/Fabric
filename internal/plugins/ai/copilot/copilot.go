@@ -208,11 +208,6 @@ func (c *Client) SendStream(msgs []*chat.ChatCompletionMessage, opts *domain.Cha
 	return nil
 }
 
-// NeedsRawMode returns whether the model needs raw mode.
-func (c *Client) NeedsRawMode(modelName string) bool {
-	return false
-}
-
 // buildMessageText combines chat messages into a single prompt for Copilot.
 func (c *Client) buildMessageText(msgs []*chat.ChatCompletionMessage) string {
 	var parts []string

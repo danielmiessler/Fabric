@@ -223,8 +223,3 @@ func (c *Client) SendStream(msgs []*chat.ChatCompletionMessage, opts *domain.Cha
 	}
 	return nil
 }
-
-// NeedsRawMode returns false as Azure AI Gateway doesn't require raw mode
-func (c *Client) NeedsRawMode(modelName string) bool {
-	return false
-}

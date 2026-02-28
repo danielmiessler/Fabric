@@ -86,7 +86,7 @@
     disabled={loading || !url}
   >
     {#if loading}
-      <div class="spinner-border" />
+      <div class="spinner-border"></div>
     {:else}
       Get 
     {/if}

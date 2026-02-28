@@ -11,6 +11,7 @@
   import type { Message } from '$lib/interfaces/chat-interface';
   import { get } from 'svelte/store';
   import { selectedPatternName } from '$lib/store/pattern-store';
+  import { ChatService } from '$lib/services/ChatService';
 
 
   let showPatternModal = false;
@@ -73,10 +74,18 @@ function shouldRenderAsMarkdown(message: Message): boolean {
     return message.role === 'assistant' && message.format !== 'plain';
 }
 
-// Keep the original renderContent function
+// Clean pattern output on accumulated content at render time
+const chatService = new ChatService();
+
 function renderContent(message: Message): string {
-    const content = message.content.replace(/\\n/g, '\n');
-    
+    let content = message.content.replace(/\\n/g, '\n');
+
+    // Apply pattern cleaning on the full accumulated content (not per-token)
+    const pattern = get(selectedPatternName);
+    if (pattern && message.role === 'assistant') {
+        content = chatService.cleanPatternOutput(content);
+    }
+
     if (shouldRenderAsMarkdown(message)) {
         try {
             return marked.parse(content, { async: false }) as string;

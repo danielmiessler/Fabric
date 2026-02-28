@@ -306,78 +306,21 @@ async function readFileContent(file: File): Promise<string> {
   }
 
   // Centralized language instruction logic in ChatService.ts; YouTube flow now passes plain transcript and system prompt
-  async function processYouTubeURL(input: string) {
-      console.log('\n=== YouTube Flow Start ===');
-      const originalLanguage = get(languageStore);
+  function extractYouTubeURLs(input: string): string[] {
+      const youtubePattern = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=[\w-]+(?:&[^\s]*)?|youtu\.be\/[\w-]+(?:\?[^\s]*)?)/gi;
+      return input.match(youtubePattern) || [];
+  }
 
-      try {
-          // Add processing message first
-          messageStore.update(messages => [...messages, {
-              role: 'system',
-              content: 'Processing YouTube video...',
-              format: 'loading'
-          }]);
+  async function replaceYouTubeURLsWithTranscripts(input: string): Promise<string> {
+      const urls = extractYouTubeURLs(input);
+      if (urls.length === 0) return input;
 
-          // Get transcript but don't display it
-          const { transcript } = await getTranscript(input);
-
-          // Pass plain transcript and system prompt; ChatService will handle language instruction
-          const stream = await chatService.streamChat(transcript, $systemPrompt);
-          await chatService.processStream(
-              stream,
-              (content, response) => {
-                  messageStore.update(messages => {
-                      const newMessages = [...messages];
-                      // Replace the processing message with actual content
-                      const loadingIndex = newMessages.findIndex(m => m.format === 'loading');
-                      if (loadingIndex !== -1) {
-                          newMessages.splice(loadingIndex, 1);
-                      }
-
-                      const lastMessage = newMessages[newMessages.length - 1];
-                      if (lastMessage?.role === 'assistant') {
-                          lastMessage.content += content;
-                          lastMessage.format = response?.format;
-                      } else {
-                          newMessages.push({
-                              role: 'assistant',
-                              content,
-                              format: response?.format
-                          });
-                      }
-                      return newMessages;
-                  });
-              },
-              (error) => {
-                  messageStore.update(messages => 
-                      messages.filter(m => m.format !== 'loading')
-                  );
-                  throw error;
-              }
-          );
-
-          // Handle Obsidian saving if needed
-          if ($obsidianSettings.saveToObsidian) {
-              let lastContent = '';
-              messageStore.subscribe(messages => {
-                  const lastMessage = messages[messages.length - 1];
-                  if (lastMessage?.role === 'assistant') {
-                      lastContent = lastMessage.content;
-                  }
-              })();
-              if (lastContent) await saveToObsidian(lastContent);
-          }
-
-          userInput = "";
-          uploadedFiles = [];
-          fileContents = [];
-      } catch (error) {
-          console.error('Error processing YouTube URL:', error);
-          messageStore.update(messages => 
-              messages.filter(m => m.format !== 'loading')
-          );
-          throw error;
+      let result = input;
+      for (const url of urls) {
+          const { transcript } = await getTranscript(url);
+          result = result.replace(url, `[YouTube Transcript]:\n${transcript}`);
       }
+      return result;
   }
 
   async function handleSubmit() {
@@ -385,46 +328,48 @@ async function readFileContent(file: File): Promise<string> {
 
   try {
     console.log('\n=== Submit Handler Start ===');
-    
+
     // Store the user input before any processing
     const inputText = userInput.trim();
     console.log('Captured user input:', inputText);
-    
-    // Handle YouTube URLs with the existing flow
-    if (isYouTubeURL) {
-      console.log('2a. Starting YouTube flow');
-      await processYouTubeURL(inputText);
-      return;
-    }
-    
-    // For regular text input, add the user message to the UI first
+
+    // Add the user message to the UI first
     messageStore.update(messages => [...messages, {
       role: 'user',
       content: inputText
     }]);
-    
+
     // Add loading indicator
     messageStore.update(messages => [...messages, {
       role: 'system',
-      content: 'Processing...',
+      content: isYouTubeURL ? 'Processing YouTube video...' : 'Processing...',
       format: 'loading'
     }]);
-    
+
     // Clear input fields
     userInput = "";
+    const hadYouTubeURL = isYouTubeURL;
+    isYouTubeURL = false;
     const filesForProcessing = [...uploadedFiles];
     const contentsForProcessing = [...fileContents];
     uploadedFiles = [];
     fileContents = [];
     fileButtonKey = !fileButtonKey;
-    
+
+    // If the message contains YouTube URLs, replace them with transcripts
+    let processedText = inputText;
+    if (hadYouTubeURL) {
+      console.log('Replacing YouTube URLs with transcripts');
+      processedText = await replaceYouTubeURLsWithTranscripts(inputText);
+    }
+
     // Prepare content with file attachments if any
-    const contentWithFiles = contentsForProcessing.length > 0 
-      ? `${inputText}\n\nFile Contents (${filesForProcessing.map(f => f.endsWith('.pdf') ? 'PDF' : 'Text').join(', ')}):\n${contentsForProcessing.join('\n\n---\n\n')}`
-      : inputText;
-    
+    const contentWithFiles = contentsForProcessing.length > 0
+      ? `${processedText}\n\nFile Contents (${filesForProcessing.map(f => f.endsWith('.pdf') ? 'PDF' : 'Text').join(', ')}):\n${contentsForProcessing.join('\n\n---\n\n')}`
+      : processedText;
+
     // Get the enhanced prompt
-    const enhancedPrompt = contentsForProcessing.length > 0 
+    const enhancedPrompt = contentsForProcessing.length > 0
       ? `${$systemPrompt}\nAnalyze and process the provided content according to these instructions.`
       : $systemPrompt;
     

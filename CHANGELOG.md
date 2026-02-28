@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.4.426 (2026-02-28)
+
+### PR [#2036](https://github.com/danielmiessler/Fabric/pull/2036) by [ksylvan](https://github.com/ksylvan): WebUI: YouTube URL Processing Refactor & Dependency Updates
+
+- Feat: Inline YouTube transcripts into the chat flow, replacing YouTube URLs with fetched transcript blocks and supporting multiple links per message
+- Feat: Always render the user message before processing the response, with a YouTube-specific loading indicator displayed during transcript fetch
+- Fix: Reset YouTube URL state after submission processing to prevent stale data across messages
+- Chore: Upgrade SvelteKit, Svelte, Tailwind, and TypeScript toolchain versions, along with bumped `pdfjs-dist` and `@napi-rs/canvas` optional dependency versions
+- Chore: Regenerate `pnpm`/`npm` lockfiles to reflect updated transitive dependencies
+
 ## v1.4.425 (2026-02-28)
 
 ### PR [#2033](https://github.com/danielmiessler/Fabric/pull/2033) by [dependabot](https://github.com/apps/dependabot) and [ksylvan](https://github.com/ksylvan): Web UI: Dependabot upgrades and bug fixes

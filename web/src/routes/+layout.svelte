@@ -27,7 +27,7 @@
     <svelte:fragment slot="header">
       <Header />
 
-      <div class="h-2 py-4">
+      <div class="h-2 py-4"></div>
     </svelte:fragment>
     <div 
       in:fly={{ duration: 500, delay: 100, y: 100 }}

@@ -80,10 +80,10 @@
 		<div 
 			class="absolute h-full bg-white/30 transition-all" 
 			style="width: {percentage}%" 
-		/>
+		></div>
 	</div>
 	<div
 		class="absolute h-2.5 w-2.5 rounded-full bg-white/70 ring-1 ring-white/10 shadow-sm transition-all hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30 disabled:pointer-events-none disabled:opacity-50"
 		style="left: calc({percentage}% - 0.3125rem)"
-	/>
+	></div>
 </div>

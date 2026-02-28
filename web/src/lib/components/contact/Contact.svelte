@@ -19,7 +19,7 @@
   </div>
   <label class="label">
     <span class="font-bold pl-2">Message</span>
-    <textarea class="textarea" rows="4" placeholder="Enter your message ..." />
+    <textarea class="textarea" rows="4" placeholder="Enter your message ..."></textarea>
   </label>
   <a href="/" title=""><button class="button variant-filled-secondary rounded-lg p-2"><Contact /></button></a>
 

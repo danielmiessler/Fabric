@@ -25,21 +25,21 @@ A user-friendly web interface for [Fabric](https://github.com/danielmiessler/Fab
 > [!NOTE]
 > Requires Node.js ≥18 and Fabric installed globally (`fabric --version` to check).
 
-From the Fabric root directory:
+From the `web/` directory:
 
 **Using npm:**
 
 ```bash
-./web/scripts/npm-install.sh
+npm install
 ```
 
 **Or using pnpm (recommended for speed):**
 
 ```bash
-./web/scripts/pnpm-install.sh
+pnpm install
 ```
 
-These scripts install Svelte dependencies and patch PDF-to-Markdown libraries (e.g., pdfjs-dist, pdf-to-markdown). Link to scripts:[npm-install.sh](./scripts/npm-install.sh) and [pnpm-install.sh](./scripts/pnpm-install.sh)
+This will install all dependencies including Svelte, PDF-to-Markdown libraries, and run necessary setup tasks.
 
 ## Running the App
 
@@ -70,10 +70,6 @@ pnpm run dev
 ```
 
 Visit [http://localhost:5173](http://localhost:5173) (default port).
-
-> [!TIP]
->
-> Sync Svelte types if needed: `npx svelte-kit sync`
 
 ## Streamlit UI
 

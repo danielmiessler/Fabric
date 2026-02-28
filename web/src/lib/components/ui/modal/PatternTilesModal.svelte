@@ -193,9 +193,12 @@ $: filteredPatterns = $patterns
             : "md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
         )}>
           {#each filteredPatterns as pattern}
-            <button
-              class="text-left border-2 border-primary-600/40 rounded-lg shadow-md hover:shadow-lg p-4 flex flex-col h-58 bg-primary-700/30 hover:bg-primary-700/50 transition-all transform hover:-translate-y-1 duration-200"
+            <div
+              class="text-left border-2 border-primary-600/40 rounded-lg shadow-md hover:shadow-lg p-4 flex flex-col h-58 bg-primary-700/30 hover:bg-primary-700/50 transition-all transform hover:-translate-y-1 duration-200 cursor-pointer"
+              role="button"
+              tabindex="0"
               on:click={() => selectPattern(pattern.Name)}
+              on:keydown={(e) => e.key === 'Enter' && selectPattern(pattern.Name)}
             >
               <div class="flex justify-between items-start mb-2">
                 <h3 class="pattern-name font-bold text-base text-primary-200 leading-tight break-all overflow-hidden pr-2 w-[85%]">{pattern.Name}</h3>
@@ -227,7 +230,7 @@ $: filteredPatterns = $patterns
                   {/each}
                 </div>
               {/if}
-            </button>
+            </div>
           {/each}
         </div>
       {/if}

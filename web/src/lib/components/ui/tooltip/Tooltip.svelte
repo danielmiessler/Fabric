@@ -68,7 +68,7 @@
     role="button"
     tabindex="0"
   >
-    <slot />
+    <slot></slot>
   </div>
 
   {#if tooltipVisible}
@@ -83,7 +83,7 @@
       role="tooltip"
     >
       {text}
-      <div class="tooltip-arrow" role="presentation" />
+      <div class="tooltip-arrow" role="presentation"></div>
     </div>
   {/if}
 </div>

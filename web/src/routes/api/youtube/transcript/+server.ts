@@ -25,7 +25,7 @@ export const POST: RequestHandler = async ({ request }) => {
     const transcriptItems = await YoutubeTranscript.fetchTranscript(videoId);
     const transcript = transcriptItems
       .map(item => item.text)
-      .join(' ');
+      .join('\n');
 
     const response = {
       transcript,

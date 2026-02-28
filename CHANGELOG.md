@@ -1,5 +1,23 @@
 # Changelog
 
+## v1.4.425 (2026-02-28)
+
+### PR [#2033](https://github.com/danielmiessler/Fabric/pull/2033) by [dependabot](https://github.com/apps/dependabot) and [ksylvan](https://github.com/ksylvan): Web UI: Dependabot upgrades and bug fixes
+
+- Update Svelte to version 5.53.5 and upgrade @sveltejs/vite-plugin-svelte to 4.0.0, keeping core dependencies current
+- Upgrade Rollup to version 4.59.0 and lucide-svelte to version 0.575.0 for improved bundling and iconography support
+- Replace custom npm and pnpm install scripts with a standardized postinstall script for svelte-kit sync, simplifying the setup process
+- Fix self-closing tags in Svelte components and update transcript joining to use newlines, resolving rendering and formatting issues
+- Make the `cleanPatternOutput` method public in `ChatService` and remove the `svelte-markdown` dependency, reducing bundle size and improving API accessibility
+
+### PR [#2034](https://github.com/danielmiessler/Fabric/pull/2034) by [konstantint](https://github.com/konstantint) and [ksylvan](https://github.com/ksylvan): feat: add create_slides pattern
+
+- Add new `create_slides` pattern for generating Reveal.js HTML slideshows
+- Register `create_slides` across CONVERSION, VISUALIZE, and WRITING categories
+- Add `create_slides` to the pattern explanations index and `suggest_pattern` user guide
+- Insert `create_slides` entry into `pattern_descriptions.json` and `pattern_extracts.json` with relevant tags
+- Shift pattern numbering from 97 onward to accommodate the new entry
+
 ## v1.4.424 (2026-02-27)
 
 ### PR [#2025](https://github.com/danielmiessler/Fabric/pull/2025) by [dependabot]](https://github.com/apps/dependabot): chore(deps): bump the npm_and_yarn group across 1 directory with 5 updates

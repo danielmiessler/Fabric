@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.4.427 (2026-03-01)
+
+### PR [#2038](https://github.com/danielmiessler/Fabric/pull/2038) by [ksylvan](https://github.com/ksylvan): Add Git CLI Fallback to `FetchFilesFromRepo`
+
+- Feat: add git CLI fallback to `FetchFilesFromRepo` for improved compatibility
+- Add git CLI fallback when go-git in-memory clone fails, with detection via `exec.LookPath`
+- Implement `fetchFilesViaGitCLI` using a shallow `--depth 1` clone into a temp directory with deferred cleanup
+- Respect `SingleDirectory` and `PathPrefix` options in the CLI path, and surface a combined error when both go-git and CLI fallback fail
+- Extract `fetchFilesViaGoGit` into a dedicated helper function and add a `copyFile` helper to support CLI-based file extraction
+
 ## v1.4.426 (2026-02-28)
 
 ### PR [#2036](https://github.com/danielmiessler/Fabric/pull/2036) by [ksylvan](https://github.com/ksylvan): WebUI: YouTube URL Processing Refactor & Dependency Updates

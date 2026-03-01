@@ -54,7 +54,7 @@ func FetchFilesFromRepo(opts FetchOptions) error {
 		return nil
 	}
 
-	return fmt.Errorf("%w; git CLI fallback also failed: %v", goGitErr, cliErr)
+	return fmt.Errorf(i18n.T("githelper_failed_git_cli_fallback"), goGitErr, cliErr)
 }
 
 // fetchFilesViaGoGit clones a repo in memory using go-git and extracts files.
@@ -127,13 +127,13 @@ func fetchFilesViaGoGit(opts FetchOptions) error {
 func fetchFilesViaGitCLI(opts FetchOptions) error {
 	tmpDir, err := os.MkdirTemp("", "fabric-git-clone-*")
 	if err != nil {
-		return fmt.Errorf("failed to create temp directory: %w", err)
+		return fmt.Errorf(i18n.T("githelper_failed_create_temp_directory"), err)
 	}
 	defer os.RemoveAll(tmpDir)
 
 	cmd := exec.Command("git", "clone", "--depth", "1", opts.RepoURL, tmpDir)
 	if output, err := cmd.CombinedOutput(); err != nil {
-		return fmt.Errorf("git clone failed: %w: %s", err, string(output))
+		return fmt.Errorf(i18n.T("githelper_failed_git_cli_clone"), err, string(output))
 	}
 
 	// Source directory within the clone (trim trailing slash for filepath.Join)

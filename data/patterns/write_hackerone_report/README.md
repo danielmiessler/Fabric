@@ -26,15 +26,15 @@ This pattern is intended to be used with the `bbReportFormatter` tool which can 
 This utility automatically helps with the format that this pattern ingests which looks like this:
 
 Request 1:
-```
+```text
 GET /...
 ```
 Response 1:
-```
+```text
 HTTP/1.1 200 found...
 ```
 Comment 1:
-```
+```text
 This request is vulnerable to blah blah blah
 ```
 

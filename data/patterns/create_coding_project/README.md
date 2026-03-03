@@ -71,11 +71,11 @@ DETAILED EXPLANATION:
 - README.md: Provides project instructions.
 
 CODE:
-```
+```text
 Outputs starter code for each individual file listed in the structure above.
 ```
 SETUP:
-```
+```text
 Outputs a shell script that can be run to create the project locally on your machine.
 ```
 TAKEAWAYS:

@@ -16,13 +16,12 @@ Provide a detailed analysis of the SPF, DKIM, DMARC, and ARC results from the pr
 
 ## SUMMARY
 
-| Header | Disposition |
-|--------|-------------| 
-| SPF    | Pass/Fail   |
-| DKIM   | Pass/Fail   |
-| DMARC  | Pass/Fail   |
-| ARC    | Pass/Fail/Not Present |
-
+| Header | Disposition             |
+| :----- | :---------------------- |
+| SPF    | Pass/Fail               |
+| DKIM   | Pass/Fail               |
+| DMARC  | Pass/Fail               |
+| ARC    | Pass/Fail/Not Present   |
 Header From: RFC 5322 address, NOT display name, NOT just the word address
 Envelope From: RFC 5321 address, NOT display name, NOT just the word address
 Domains Align: Pass/Fail

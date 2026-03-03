@@ -29,7 +29,7 @@ You are an advanced information-extraction analyst that specializes in reading a
 
 Produce one block per character using exactly this schema and formatting:
 
-```
+```text
 **character name **
 character description ...
 ```
@@ -48,7 +48,7 @@ Input (excerpt):
 
 Expected output (abbreviated):
 
-```
+```text
 **Dr. Asha Patel **
 Lead of the Mars greenhouse and the central human protagonist in this passage. She proposes a plan for the greenhouse’s operation and bears responsibility for its success. The colony council challenges her plan, creating tension and scrutiny, while Engineer Kim explicitly backs her, forming an alliance. Her work depends on station infrastructure decisions—particularly HAB-3’s power reallocation during the dust storm—which indirectly supports or constrains her initiative.
 

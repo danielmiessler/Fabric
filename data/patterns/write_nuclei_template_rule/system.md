@@ -43,7 +43,7 @@ Matchers allow different type of flexible comparisons on protocol responses. The
 ​
 ### Types
 Multiple matchers can be specified in a request. There are basically 7 types of matchers:
-```
+```text
 Matcher Type	  Part Matched
 status         	Integer Comparisons of Part
 size	  	  	  Content Length of Part
@@ -55,7 +55,7 @@ xpath		  	    Part for a protocol
 ```
 To match status codes for responses, you can use the following syntax.
 
-```
+```text
 matchers:
   # Match the status codes
   - type: status
@@ -66,7 +66,7 @@ matchers:
 ```
 To match binary for hexadecimal responses, you can use the following syntax.
 
-```
+```text
 matchers:
   - type: binary
     binary:
@@ -78,7 +78,7 @@ matchers:
 ```
 Matchers also support hex encoded data which will be decoded and matched.
 
-```
+```text
 matchers:
   - type: word
     encoding: hex
@@ -90,7 +90,7 @@ Word and Regex matchers can be further configured depending on the needs of the 
 
 XPath matchers use XPath queries to match XML and HTML responses. If the XPath query returns any results, it’s considered a match.
 
-```
+```text
 matchers:
   - type: xpath
     part: body
@@ -99,7 +99,7 @@ matchers:
 ```
 Complex matchers of type dsl allows building more elaborate expressions with helper functions. These function allow access to Protocol Response which contains variety of data based on each protocol. See protocol specific documentation to learn about different returned results.
 
-```
+```text
 matchers:
   - type: dsl
     dsl:
@@ -127,7 +127,7 @@ Multiple parts of the response can also be matched for the request, default matc
 
 Example matchers for HTTP response body using the AND condition:
 
-```
+```text
 matchers:
   # Match the body word
   - type: word
@@ -148,7 +148,7 @@ All types of matchers also support negative conditions, mostly useful when you l
 
 Here is an example syntax using negative condition, this will return all the URLs not having PHPSESSID in the response header.
 
-```
+```text
 matchers:
   - type: word
     words:
@@ -162,7 +162,7 @@ Multiple matchers can be used in a single template to fingerprint multiple condi
 
 Here is an example of syntax for multiple matchers.
 
-```
+```text
 matchers:
   - type: word
     name: php
@@ -189,7 +189,7 @@ matchers:
 ### Matchers Condition
 While using multiple matchers the default condition is to follow OR operation in between all the matchers, AND operation can be used to make sure return the result if all matchers returns true.
 
-```
+```text
     matchers-condition: and
     matchers:
       - type: word
@@ -213,7 +213,7 @@ Extractors can be used to extract and display in results a match from the respon
 ​
 ### Types
 Multiple extractors can be specified in a request. As of now we support five type of extractors.
-```
+```text
 regex - Extract data from response based on a Regular Expression.
 kval - Extract key: value/key=value formatted data from Response Header/Cookie
 json - Extract data from JSON based response in JQ like syntax.
@@ -234,7 +234,7 @@ extractors:
 Kval Extractor
 A kval extractor example to extract content-type header from HTTP Response.
 
-```
+```text
 extractors:
   - type: kval # type of the extractor
     kval:
@@ -246,7 +246,7 @@ Note that content-type has been replaced with content_type because kval extracto
 JSON Extractor
 A json extractor example to extract value of id object from JSON block.
 
-```
+```text
       - type: json # type of the extractor
         part: body
         name: user
@@ -259,7 +259,7 @@ For more details about JQ - https://github.com/stedolan/jq
 Xpath Extractor
 A xpath extractor example to extract value of href attribute from HTML response.
 
-```
+```text
 extractors:
   - type: xpath # type of the extractor
     attribute: href # attribute value to extract (optional)
@@ -273,7 +273,7 @@ With a simple copy paste in browser, we can get the xpath value form any web pag
 DSL Extractor
 A dsl extractor example to extract the effective body length through the len helper function from HTTP Response.
 
-```
+```text
 extractors:
   - type: dsl  # type of the extractor
     dsl:
@@ -285,7 +285,7 @@ Extractors can be used to capture Dynamic Values on runtime while writing Multi-
 
 Example of defining a dynamic extractor with name api which will capture a regex based pattern from the request.
 
-```
+```text
     extractors:
       - type: regex
         name: api
@@ -300,7 +300,7 @@ If you want to use extractor as a dynamic variable, you must use internal: true 
 
 An optional regex match-group can also be specified for the regex for more complex matches.
 
-```
+```text
 extractors:
   - type: regex  # type of extractor
     name: csrf_token # defining the variable name
@@ -324,7 +324,7 @@ Variables can be used to declare some values which remain constant throughout th
 
 Example variables:
 
-```
+```text
 variables:
   a1: \"test\" # A string variable
   a2: \"{{to_lower(rand_base(5))}}\" # A DSL function variable
@@ -335,7 +335,7 @@ Example of templates with variables are below.
 
 
 # Variable example using HTTP requests
-```
+```text
 id: variables-example
 
 info:
@@ -364,7 +364,7 @@ http:
 ```
 
 # Variable example for network requests
-```
+```text
 id: variables-example
 
 info:
@@ -473,7 +473,7 @@ Deserialization helper functions
 Nuclei allows payload generation for a few common gadget from ysoserial.
 
 Supported Payload:
-```
+```text
 dns (URLDNS)
 commons-collections3.1
 commons-collections4.0
@@ -482,7 +482,7 @@ jdk8u20
 groovy1
 ```
 Supported encodings:
-```
+```text
 base64 (default)
 gzip-base64
 gzip
@@ -491,12 +491,12 @@ raw
 ```
 Deserialization helper function format:
 
-```
+```text
 {{generate_java_gadget(payload, cmd, encoding }}
 ```
 Deserialization helper function example:
 
-```
+```text
 {{generate_java_gadget(\"commons-collections3.1\", \"wget http://{{interactsh-url}}\", \"base64\")}}
 ​```
 JSON helper functions
@@ -527,14 +527,14 @@ ES384
 ES512
 EdDSA
 NONE
-```
+```text
 Empty string (\"\") also means NONE.
 
 Format:
 
 ```
 {{generate_jwt(json, algorithm, signature, maxAgeUnix)}}
-```
+```text
 
 Arguments other than json are optional.
 
@@ -551,7 +551,7 @@ variables:
   sig: \"this_is_secret\" # optional
   age: \'{{to_unix_time(\"2032-12-30T16:30:10+00:00\")}}\' # optional
   jwt: \'{{generate_jwt(json, \"{{alg}}\", \"{{sig}}\", \"{{age}}\")}}\'
-```
+```text
 The maxAgeUnix argument is to set the expiration \"exp\" JWT standard claim, as well as the \"iat\" claim when you call the function.
 
 json_minify
@@ -560,7 +560,7 @@ Format:
 
 ```
 {{json_minify(json)}}
-```
+```text
 Example:
 
 ```
@@ -571,26 +571,26 @@ variables:
       \"name\": \"John Doe\"
     }
   minify: \"{{json_minify(json}}\"
-```
+```text
 minify variable output:
 
 ```
 { \"foo\": \"bar\", \"name\": \"John Doe\" }
-```
+```text
 json_prettify
 
 Format:
 
 ```
 {{json_prettify(json)}}
-```
+```text
 Example:
 
 ```
 variables:
   json: \'{\"foo\":\"bar\",\"name\":\"John Doe\"}\'
   pretty: \"{{json_prettify(json}}\"
-```
+```text
 pretty variable output:
 
 ```
@@ -598,7 +598,7 @@ pretty variable output:
   \"foo\": \"bar\",
   \"name\": \"John Doe\"
 }
-```
+```text
 
 resolve
 
@@ -606,7 +606,7 @@ Format:
 
 ```
 {{ resolve(host, format) }}
-```
+```text
 Here is a list of formats available for dns type:
 ```
 4 or a
@@ -629,7 +629,7 @@ Certain pre-processors can be specified globally anywhere in the template that r
 
 ​```
 {{randstr}}
-```
+```text
 Generates a random ID for a template on each nuclei run. This can be used anywhere in the template and will always contain the same value. randstr can be suffixed by a number, and new random ids will be created for those names too. Ex. {{randstr_1}} which will remain same across the template.
 
 randstr is also supported within matchers and can be used to match the inputs.
@@ -648,7 +648,7 @@ http:
       - type: word
         words:
           - \'{{randstr}}\'
-```
+```text
 
 OOB Testing
 Understanding OOB testing with Nuclei Templates
@@ -666,7 +666,7 @@ An example of nuclei request with {{interactsh-url}} placeholders is provided be
       - |
         GET /plugins/servlet/oauth/users/icon-uri?consumerUri=https://{{interactsh-url}} HTTP/1.1
         Host: {{Hostname}}
-```
+```text
 ​
 Interactsh Matchers
 Interactsh interactions can be used with word, regex or dsl matcher/extractor using following parts.
@@ -677,7 +677,7 @@ interactsh_protocol
 interactsh_request
 interactsh_response
 interactsh_protocol
-```
+```text
 Value can be dns, http or smtp. This is the standard matcher for every interactsh based template with DNS often as the common value as it is very non-intrusive in nature.
 
 interactsh_request
@@ -696,7 +696,7 @@ The response that the interactsh server sent to the client.
         part: interactsh_protocol # Confirms the DNS Interaction
         words:
           - \"dns\"
-```
+```text
 Example of HTTP Interaction matcher + word matcher on Interaction content
 
 ```
@@ -711,7 +711,7 @@ matchers:
       part: interactsh_request # Confirms the retrieval of /etc/passwd file
       regex:
         - \"root:[x*]:0:0:\"
-```
+```text
 
 
 
@@ -737,7 +737,7 @@ http:
 Method
 Request method can be GET, POST, PUT, DELETE, etc. depending on the needs.
 
-```
+```text
 # Method is the method for the request
 method: GET
 ```
@@ -749,7 +749,7 @@ Redirection conditions can be specified per each template. By default, redirects
 
 An example of the usage:
 
-```
+```text
 http:
   - method: GET
     path:
@@ -782,7 +782,7 @@ Variables start with {{ and end with }} and are case-sensitive.
 {{Scheme}} - This will replace on runtime in the request by protocol scheme as specified in the target file.
 
 An example is provided below - https://example.com:443/foo/bar.php
-```
+```text
 Variable	Value
 {{BaseURL}}	https://example.com:443/foo/bar.php
 {{RootURL}}	https://example.com:443
@@ -798,7 +798,7 @@ Some sample dynamic variable replacement examples:
 
 
 
-```
+```text
 path: \"{{BaseURL}}/.git/config\"
 ```
 # This path will be replaced on execution with BaseURL
@@ -811,7 +811,7 @@ Multiple paths can also be specified in one request which will be requested for 
 
 Headers can also be specified to be sent along with the requests. Headers are placed in form of key/value pairs. An example header configuration looks like this:
 
-```
+```text
 # headers contain the headers for the request
 headers:
   # Custom user-agent header
@@ -822,7 +822,7 @@ headers:
 ​
 ### Body
 Body specifies a body to be sent along with the request. For instance:
-```
+```text
 # Body is a string sent along with the request
 body: \"admin=test\"
 ​```​
@@ -851,7 +851,7 @@ For example with status_code_1, status_code_3, andbody_2:
       - type: dsl
         dsl:
           - \"status_code_1 == 404 && status_code_2 == 200 && contains((body_2), \'secret_string\')\"
-```
+```text
 Request conditions might require more memory as all attributes of previous responses are kept in memory
 ​
 Example HTTP Template
@@ -874,7 +874,7 @@ http:
       - type: word
         words:
           - \"[core]\"
-```
+```text
 
 
 ### Raw HTTP
@@ -889,7 +889,7 @@ http:
         Content-Type: application/x-www-form-urlencoded
 
         a=test&b=pd
-```
+```text
 Requests can be fine-tuned to perform the exact tasks as desired. Nuclei requests are fully configurable meaning you can configure and define each and every single thing about the requests that will be sent to the target servers.
 
 RAW request format also supports various helper functions letting us do run time manipulation with input. An example of the using a helper function in the header.
@@ -900,7 +900,7 @@ RAW request format also supports various helper functions letting us do run time
         GET /manager/html HTTP/1.1
         Host: {{Hostname}}
         Authorization: Basic {{base64(\'username:password\')}}
-```
+```text
 To make a request to the URL specified as input without any additional tampering, a blank Request URI can be used as specified below which will make the request to user specified input.
 
 ```
@@ -908,7 +908,7 @@ To make a request to the URL specified as input without any additional tampering
       - |
         GET HTTP/1.1
         Host: {{Hostname}}
-```
+```text
 
 # HTTP Payloads
 ​
@@ -927,7 +927,7 @@ An example of the using payloads with local wordlist:
 payloads:
   paths: params.txt
   header: local.txt
-```
+```text
 An example of the using payloads with in template wordlist support:
 
 
@@ -938,7 +938,7 @@ payloads:
     - admin
     - guest
     - password
-```
+```text
 Note: be careful while selecting attack type, as unexpected input will break the template.
 
 For example, if you used clusterbomb or pitchfork as attack type and defined only one variable in the payload section, template will fail to compile, as clusterbomb or pitchfork expect more than one variable to use in the template.
@@ -984,7 +984,7 @@ http:
     payloads:
       path: helpers/wordlists/prams.txt
       header: helpers/wordlists/header.txt
-```
+```text
 
 # HTTP Payloads Examples
 Review some HTTP payload examples for Nuclei
@@ -1030,7 +1030,7 @@ http:
       - type: word
         words:
           - \"Test is test matcher text\"
-```
+```text
 ​
 ### Fuzzing multiple requests
 This template makes a defined POST request in RAW format along with wordlist based payloads running clusterbomb intruder and checking for string match against response.
@@ -1076,7 +1076,7 @@ http:
       - type: word
         words:
           - \"Test is test matcher text\"
-```
+```text
 ​
 ### Authenticated fuzzing
 This template makes a subsequent HTTP requests with defined requests maintaining sessions between each request and checking for string match against response.
@@ -1107,7 +1107,7 @@ http:
       - type: word
         words:
           - \"Test is test matcher text\"
-```
+```text
 ​
 Dynamic variable support
 
@@ -1196,7 +1196,7 @@ http:
         regex:
           - \"root:[x*]:0:0:\"
         part: body
-```
+```text
 
 # Advanced HTTP
 
@@ -1235,7 +1235,7 @@ http:
       - type: dsl
         dsl:
           - \'contains(body, \"<script>alert(1)</script>\")\'
-```
+```text
 
 
 ### Connection Tampering
@@ -1255,7 +1255,7 @@ An example configuring showing pipelining attributes of nuclei.
     pipeline: true
     pipeline-concurrent-connections: 40
     pipeline-requests-per-connection: 25000
-```
+```text
 An example template demonstrating pipelining capabilities of nuclei has been provided below:
 
 ```
@@ -1296,7 +1296,7 @@ Connection: Close header can not be used in HTTP connection pooling template, ot
 
 An example template using HTTP connection pooling:
 
-```
+```text
 id: fuzzing-example
 info:
   name: Connection pooling example
@@ -1339,7 +1339,7 @@ Request inline annotations allow performing per request properties/behavior over
 @timeout: which overrides the timeout for the request to a custom duration. It supports durations formatted as string. If no duration is specified, the default Timeout flag value is used.
 The following example shows the annotations within a request:
 
-```
+```text
 - |
   @Host: https://projectdiscovery.io:443
   POST / HTTP/1.1
@@ -1350,7 +1350,7 @@ The following example shows the annotations within a request:
 ```
 This is particularly useful, for example, in the case of templates with multiple requests, where one request after the initial one needs to be performed to a specific host (for example, to check an API validity):
 
-```
+```text
 http:
   - raw:
       # this request will be sent to {{Hostname}} to get the token
@@ -1381,7 +1381,7 @@ http:
 
 Example of custom timeout annotations:
 
-```
+```text
 - |
   @timeout: 25s
   POST /conf_mail.php HTTP/1.1
@@ -1393,7 +1393,7 @@ Example of custom timeout annotations:
 
 Example of sni annotation with interactsh-url:
 
-```
+```text
 - |
   @tls-sni: interactsh-url
   POST /conf_mail.php HTTP/1.1
@@ -1420,14 +1420,14 @@ At its most simple, just specify a string, and it will be sent across the networ
 
 
 # inputs is the list of inputs to send to the server
-```
+```text
 inputs:
   - data: \"TEST\r
 \"
 ```
 You can also send hex encoded text that will be first decoded and the raw bytes will be sent to the server.
 
-```
+```text
 inputs:
   - data: \"50494e47\"
     type: hex
@@ -1436,14 +1436,14 @@ inputs:
 ```
 Helper function expressions can also be defined in input and will be first evaluated and then sent to the server. The last Hex Encoded example can be sent with helper functions this way:
 
-```
+```text
 inputs:
   - data: \'hex_decode(\"50494e47\")\r
 \'
 ```
 One last thing that can be done with inputs is reading data from the socket. Specifying read-size with a non-zero value will do the trick. You can also assign the read data some name, so matching can be done on that part.
 
-```
+```text
 inputs:
   - read-size: 8
 Example with reading a number of bytes, and only matching on them.
@@ -1484,7 +1484,7 @@ Starting from Nuclei v2.9.15, a new field called port has been introduced in net
 
 Previously, if you wanted to write a network template for an exploit targeting SSH, you would have to specify both the hostname and the port in the host field, like this:
 
-```
+```text
 host:
   - \"{{Hostname}}\"
   - \"{{Host}}:22\"
@@ -1505,14 +1505,14 @@ In this case, xyz-ssh-exploit template will send one request to scanme.sh:22 and
 
 To address these issues while maintaining the existing functionality, network templates can now be written in the following way:
 
-```
+```text
 host:
   - \"{{Hostname}}\"
 port: 22
 ```
 In this new design, the functionality to run templates on non-standard ports will still exist, except for the default reserved ports (80, 443, 8080, 8443, 8081, 53). Additionally, the list of default reserved ports can be customized by adding a new field called exclude-ports:
 
-```
+```text
 exclude-ports: 80,443
 ```
 When exclude-ports is used, the default reserved ports list will be overwritten. This means that if you want to run a network template on port 80, you will have to explicitly specify it in the port field.
@@ -1529,7 +1529,7 @@ raw / body / all	All Data received from Socket
 ### Example Network Template
 The final example template file for a hex encoded input to detect MongoDB running on servers with working matchers is provided below.
 
-```
+```text
 id: input-expressions-mongodb-detect
 
 info:
@@ -1575,7 +1575,7 @@ Remove wildcard prefixes from the values obtained in the steps above
 Bruteforce the request using all the domains found from the SSL request
 You can utilize flow to simplify this task. The JavaScript code below orchestrates the vhost enumeration:
 
-```
+```text
 ssl();
 for (let vhost of iterate(template[\"ssl_domains\"])) {
     set(\"vhost\", vhost);
@@ -1595,7 +1595,7 @@ By understanding and taking advantage of Nuclei’s flow, you can redefine the w
 
 Here is working template for vhost enumeration using flow:
 
-```
+```text
 id: vhost-enum-flow
 
 info:
@@ -1656,11 +1656,11 @@ This is addon helper function from nuclei to omit boilerplate code of checking i
 
 ```
 iterate(123,{\"a\":1,\"b\":2,\"c\":3})
-```
+```text
 // iterate over array with custom separator
 ```
 iterate([1,2,3,4,5], \" \")
-```
+```text
 ​
 Set Helper Function
 When iterating over a values/array or some other use case we might want to invoke a request with custom/given value and this can be achieved by using set() helper function. When invoked/called it adds given variable to template context (global variables) and that value is used during execution of request/protocol. the format of set() is set(\"variable_name\",value) ex: set(\"username\",\"admin\").
@@ -1670,7 +1670,7 @@ for (let vhost of myArray) {
   set(\"vhost\", vhost);
   http(1)
 }
-```
+```text
 
 Note: In above example we used set(\"vhost\", vhost) which added vhost to template context (global variables) and then called http(1) which used this value in request.
 
@@ -1682,7 +1682,7 @@ A template context is nothing but a map/jsonl containing all this data along wit
 ```
 template[\"ssl_domains\"] // returns value of ssl_domains from template context which is available after executing ssl request
 template[\"ptrValue\"]  // returns value of ptrValue which was extracted using regex with internal: true
-```
+```text
 
 
 Lot of times we don’t known what all data is available in template context and this can be easily found by printing it to stdout using log() function
@@ -1699,7 +1699,7 @@ Note: This should be used for debugging purposed only as this prints data to std
 Dedupe
 Lot of times just having arrays/slices is not enough and we might need to remove duplicate variables . for example in earlier vhost enumeration we did not remove any duplicates as there is always a chance of duplicate values in ssl_subject_cn and ssl_subject_an and this can be achieved by using dedupe() object. This is nuclei js helper function to abstract away boilerplate code of removing duplicates from array/slice
 
-```
+```text
 let uniq = new Dedupe(); // create new dedupe object
 uniq.Add(template[\"ptrValue\"])
 uniq.Add(template[\"ssl_subject_cn\"]);
@@ -1710,7 +1710,7 @@ And that’s it, this automatically converts any slice/array to map and removes 
 
 Similar to DSL helper functions . we can either use built in functions available with Javascript (ECMAScript 5.1) or use DSL helper functions and its upto user to decide which one to uses.
 
-```
+```text
  - method: GET # http request
     path:
       - \"{{BaseURL}}\"

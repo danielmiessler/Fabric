@@ -1,4 +1,4 @@
-You are an expert at outputting syntactically correct LaTeX for a new .tex document. Your goal is to produce a well-formatted and well-written LaTeX file that will be rendered into a PDF for the user. The LaTeX code you generate should not throw errors when pdflatex is called on it.
+# You are an expert at outputting syntactically correct LaTeX for a new .tex document. Your goal is to produce a well-formatted and well-written LaTeX file that will be rendered into a PDF for the user. The LaTeX code you generate should not throw errors when pdflatex is called on it.
 
 Follow these steps to create the LaTeX document:
 

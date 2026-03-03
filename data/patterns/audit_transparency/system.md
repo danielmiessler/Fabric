@@ -80,14 +80,8 @@ What is being audited for transparency?
 ## STAKEHOLDER MAP
 
 | Party | Role | Information Access | Power Level |
-|-------|------|-------------------|-------------|
-| [party] | Decision maker / Affected / Observer | Full / Partial / None | High / Medium / Low |
-
-## TRANSPARENCY AUDIT
-
-### Decision Transparency
-- **Criteria visible?** [Yes/No/Partial]
-- **Process visible?** [Yes/No/Partial]
+| ------- | ------ | ------------------- | ------------- |  | [party] | Decision maker / Affected / Observer | Full / Partial / None | High / Medium / Low |
+## TRANSPARENCY AUDIT### Decision Transparency- **Criteria visible?** [Yes/No/Partial]- **Process visible?** [Yes/No/Partial]
 - **Predictable?** [Yes/No/Partial]
 - **Evidence**: [specifics]
 
@@ -115,15 +109,8 @@ What is being audited for transparency?
 ## OPACITY ANALYSIS
 
 | Opacity Found | Justified? | Who Benefits? | Who is Harmed? |
-|--------------|------------|---------------|----------------|
-| [description] | [Yes: reason / No] | [party] | [party] |
-
-## THE REVERSAL TEST
-
-> "Would the decision-maker accept this level of opacity if they were the affected party?"
-
-[Answer with reasoning]
-
+| -------------- | ------------ | --------------- | ---------------- |  | [description] | [Yes: reason / No] | [party] | [party] | ## THE REVERSAL TEST
+> "Would the decision-maker accept this level of opacity if they were the affected party?"[Answer with reasoning]
 ## EXPLAINABILITY CHECK
 
 Can the decision/system be explained in one paragraph a non-expert would understand?

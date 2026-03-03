@@ -37,11 +37,7 @@ echo "Users agree to data collection by using the service" | fabric -p audit_con
 ## The Verdict Scale
 
 | Verdict | Meaning |
-|---------|---------|
-| GENUINE | All five tests pass, low power asymmetry |
-| PRESSURED BUT FUNCTIONAL | Some asymmetry, but refusal is possible |
-| MANUFACTURED | Appearance of choice masks predetermined outcome |
-| COERCED | Refusal carries disproportionate penalty |
+| --------- | --------- |  | GENUINE | All five tests pass, low power asymmetry |  | PRESSURED BUT FUNCTIONAL | Some asymmetry, but refusal is possible |  | MANUFACTURED | Appearance of choice masks predetermined outcome || COERCED | Refusal carries disproportionate penalty |
 | ILLUSORY | No meaningful alternative exists |
 
 ## Source

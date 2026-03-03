@@ -102,13 +102,7 @@ List the main claims or beliefs being promoted (3-5 bullet points).
 ## COGNITIVE EXPLOIT ANALYSIS
 
 | Exploit Type | Present? | Evidence |
-|--------------|----------|----------|
-| Fear-based | Yes/No/Partial | [specific examples] |
-| Guilt-based | Yes/No/Partial | [specific examples] |
-| Identity-based | Yes/No/Partial | [specific examples] |
-| Authority-based | Yes/No/Partial | [specific examples] |
-| Zero-sum | Yes/No/Partial | [specific examples] |
-| Unfalsifiability | Yes/No/Partial | [specific examples] |
+| -------------- | ---------- | ---------- |  | Fear-based | Yes/No/Partial | [specific examples] |  | Guilt-based | Yes/No/Partial | [specific examples] |  | Identity-based | Yes/No/Partial | [specific examples] |  | Authority-based | Yes/No/Partial | [specific examples] |  | Zero-sum | Yes/No/Partial | [specific examples] || Unfalsifiability | Yes/No/Partial | [specific examples] |
 
 ## TERM REDEFINITION CHECK
 

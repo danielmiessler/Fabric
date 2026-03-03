@@ -28,12 +28,12 @@ These MUST be followed. Violations cause significant problems.
 **Why**: [Consequence of violation]
 
 **Do**:
-```
+```text
 // Correct example
 ```
 
 **Don't**:
-```
+```text
 // Incorrect example
 ```
 
@@ -61,13 +61,7 @@ Best practices. Violations are acceptable with justification.
 ### Quick Reference
 
 | Category | Rule | Priority |
-|----------|------|----------|
-| Security | [Short rule] | Critical |
-| Style | [Short rule] | Important |
-| Process | [Short rule] | Guideline |
-
-### Checklist
-
+| ---------- | ------ | ---------- |  | Security | [Short rule] | Critical |  | Style | [Short rule] | Important |  | Process | [Short rule] | Guideline | ### Checklist
 Pre-commit/deploy checklist derived from rules:
 
 - [ ] [Check 1]

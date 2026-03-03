@@ -54,8 +54,6 @@ console('hello, JavaScript')
 
 ![](/favicon.png)
 
-```
-
 # STEPS
 
 - Take the input given and create a visualization that best explains it using proper MarkMap syntax.
@@ -85,4 +83,4 @@ console('hello, JavaScript')
 # INPUT:
 
 INPUT:
-```
+```text

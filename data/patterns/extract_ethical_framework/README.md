@@ -18,11 +18,7 @@ Making them explicit allows:
 ## What It Extracts
 
 | Question | What to Find |
-|----------|--------------|
-| Who counts? | Whose interests matter? |
-| What's harm? | What are agents protected from? |
-| What's consent? | How is agreement established? |
-| Who decides? | Who has authority and why? |
+| ---------- | -------------- |  | Who counts? | Whose interests matter? |  | What's harm? | What are agents protected from? |  | What's consent? | How is agreement established? || Who decides? | Who has authority and why? |
 | When is force OK? | What justifies coercion? |
 | What wins? | Hierarchy when values conflict |
 

@@ -13,7 +13,7 @@ Here are some examples of how the syntax of `git diff` might look for different 
 
 BEGIN EXAMPLES
 * Adding a file:
-```
+```text
 +++ b/newfile.txt
 @@ -0,0 +1 @@
 +This is the contents of the new file.
@@ -21,7 +21,7 @@ BEGIN EXAMPLES
 In this example, the line `+++ b/newfile.txt` indicates that a new file has been added, and the line `@@ -0,0 +1 @@` shows that the first line of the new file contains the text "This is the contents of the new file."
 
 * Deleting a file:
-```
+```text
 --- a/oldfile.txt
 +++ b/deleted
 @@ -1 +0,0 @@
@@ -30,7 +30,7 @@ In this example, the line `+++ b/newfile.txt` indicates that a new file has been
 In this example, the line `--- a/oldfile.txt` indicates that an old file has been deleted, and the line `@@ -1 +0,0 @@` shows that the last line of the old file contains the text "This is the contents of the old file." The line `+++ b/deleted` indicates that the file has been deleted.
 
 * Modifying a file:
-```
+```text
 --- a/oldfile.txt
 +++ b/newfile.txt
 @@ -1,3 +1,4 @@
@@ -42,7 +42,7 @@ In this example, the line `--- a/oldfile.txt` indicates that an old file has bee
 In this example, the line `--- a/oldfile.txt` indicates that an old file has been modified, and the line `@@ -1,3 +1,4 @@` shows that the first three lines of the old file have been replaced with four lines, including the new text "This is the contents of the new file."
 
 * Moving a file:
-```
+```text
 --- a/oldfile.txt
 +++ b/newfile.txt
 @@ -1 +1 @@
@@ -51,7 +51,7 @@ In this example, the line `--- a/oldfile.txt` indicates that an old file has bee
 In this example, the line `--- a/oldfile.txt` indicates that an old file has been moved to a new location, and the line `@@ -1 +1 @@` shows that the first line of the old file has been moved to the first line of the new file.
 
 * Renaming a file:
-```
+```text
 --- a/oldfile.txt
 +++ b/newfile.txt
 @@ -1 +1,2 @@

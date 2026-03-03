@@ -23,7 +23,7 @@ Create a narrative summary with three parts:
 - Avoid journalistic adjectives: "alarming", "groundbreaking", "shocking", etc.
 
 Example:
-```
+```text
 In this interview, the researcher introduces a theory that DNA is basically software that unfolds to create not only our bodies, but our minds and souls.
 ```
 
@@ -34,7 +34,7 @@ In this interview, the researcher introduces a theory that DNA is basically soft
 - Natural rhythm that feels human-written
 
 Example:
-```
+```text
 The speaker is a scientist who studies DNA and the brain.
 
 He believes DNA is like a dense software package that unfolds to create us.

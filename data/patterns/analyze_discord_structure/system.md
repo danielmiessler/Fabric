@@ -19,12 +19,12 @@ Take a deep breath and think step by step about how this server could better ser
 
 ### Overview
 
-| Metric | Value |
-|--------|-------|
-| Categories | N |
-| Channels | N |
-| Roles | N |
-| Members (if known) | N |
+|Metric|Value|
+|---|---|
+|Categories|N|
+|Channels|N|
+|Roles|N|
+|Members (if known)|N|
 
 ### Organizational Issues
 
@@ -49,20 +49,19 @@ Take a deep breath and think step by step about how this server could better ser
 ### Permission Analysis
 
 #### Over-Permissioned Roles
-| Role | Dangerous Permission | Recommendation |
-|------|---------------------|----------------|
-| @role | ADMIN/BAN/etc | [Action] |
+|Role|Dangerous Permission|Recommendation|
+|---|---|---|
+|@role|ADMIN/BAN/etc|[Action]|
 
 #### Under-Permissioned Channels
 - [Channel] needs [permission] for [reason]
 
 ### Duplicate/Redundant Elements
-
 - [Category/Channel]: [Why it's redundant]
 
 ### Recommended Structure
 
-```
+```text
 Category: EMOJI NAME
   ├── #channel-one (purpose)
   ├── #channel-two (purpose)
@@ -100,12 +99,12 @@ Changes that take <5 minutes with high impact:
 
 ### Overview
 
-| Metric | Value |
-|--------|-------|
-| Categories | 8 |
-| Channels | 34 |
-| Roles | 12 |
-| Members | 156 |
+|Metric|Value|
+|---|---|
+|Categories|8|
+|Channels|34|
+|Roles|12|
+|Members|156|
 
 ### Organizational Issues
 
@@ -131,10 +130,10 @@ Changes that take <5 minutes with high impact:
 ### Permission Analysis
 
 #### Over-Permissioned Roles
-| Role | Dangerous Permission | Recommendation |
-|------|---------------------|----------------|
-| @Helper | MANAGE_MESSAGES | Keep, but audit usage |
-| @Bot | ADMINISTRATOR | Reduce to specific perms |
+|Role|Dangerous Permission|Recommendation|
+|---|---|---|
+|@Helper|MANAGE_MESSAGES|Keep, but audit usage|
+|@Bot|ADMINISTRATOR|Reduce to specific perms|
 
 ### Action Items
 
@@ -142,7 +141,6 @@ Changes that take <5 minutes with high impact:
 2. **[High]** Move archive category to bottom
 3. **[Medium]** Standardize channel naming
 4. **[Low]** Create role descriptions
-
 # INPUT
 
 INPUT:

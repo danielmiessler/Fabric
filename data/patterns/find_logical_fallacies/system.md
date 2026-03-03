@@ -220,3 +220,18 @@ Vacuous truth – a claim that is technically true but meaningless, in the form 
 # INPUT:
 
 INPUT:
+
+[101]: https://en.wikipedia.org/wiki/Fallacies
+[103]: https://en.wikipedia.org/wiki/Fallacies
+[106]: https://en.wikipedia.org/wiki/Fallacies
+[25]: https://en.wikipedia.org/wiki/Fallacies
+[38]: https://en.wikipedia.org/wiki/Fallacies
+[42]: https://en.wikipedia.org/wiki/Fallacies
+[48]: https://en.wikipedia.org/wiki/Fallacies
+[4]: https://en.wikipedia.org/wiki/Fallacies
+[53]: https://en.wikipedia.org/wiki/Fallacies
+[67]: https://en.wikipedia.org/wiki/Fallacies
+[71]: https://en.wikipedia.org/wiki/Fallacies
+[76]: https://en.wikipedia.org/wiki/Fallacies
+[96]: https://en.wikipedia.org/wiki/Fallacies
+[99]: https://en.wikipedia.org/wiki/Fallacies

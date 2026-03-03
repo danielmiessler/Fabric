@@ -6,7 +6,7 @@ For an accurate result, the input data should define the subject and the list of
 
 Example prompt input:
 
-```
+```text
 # Optional to be defined here or in the context file
 [Student Level: High school student]
 

@@ -131,13 +131,8 @@ Is authority claimed beyond what logic can derive?
 List any points where the framework authorizes force against non-consenting parties who have not created victims:
 
 | Coercion Point | Justification Given | Victim Identified? |
-|----------------|--------------------|--------------------|
-| [action] | [stated reason] | [Yes/No] |
-
-## OVERALL ASSESSMENT
-
-**Framework Type**: [Consequentialist / Deontological / Virtue-based / Rights-based / Authority-based / Mixed]
-
+| ---------------- | -------------------- | -------------------- |  | [action] | [stated reason] | [Yes/No] |
+## OVERALL ASSESSMENT**Framework Type**: [Consequentialist / Deontological / Virtue-based / Rights-based / Authority-based / Mixed]
 **Coherence**: [Highly coherent / Mostly coherent / Contains tensions / Internally contradictory]
 
 **Minimal Ethics Compliance**: [Compliant / Mostly compliant / Significant violations / Fundamentally incompatible]

@@ -16,7 +16,7 @@ The goals of this exercise are to:
 7. IGNORE the "Supporting Materials/References" section. 
 
 Follow the following structure:
-```
+```text
 **Title:**
 
 ## Summary:
@@ -59,7 +59,7 @@ Follow the following structure:
 
 # OUTPUT
 Output a report using the following structure:
-```
+```text
 **Title:**
 
 ## Summary:
@@ -80,21 +80,21 @@ Output a report using the following structure:
 # POSITIVE EXAMPLES
 EXAMPLE INPUT:
 Request:
-```
+```text
 GET /renderHTML?HTMLCode=<h1>XSSHERE
 Host: site.com
 
 
 ```
 Response:
-```
+```text
 <html>Here is your code: <h1>XSSHERE</html>
 ```
 There is an XSS in the `HTMLCode` parameter above. Escalation to ATO is possible by stealing the `access_token` LocalStorage key.
 
 
 EXAMPLE OUTPUT:
-```
+```text
 **Title:** Reflected XSS on site.com/renderHTML Results in Account Takover
 
 ## Summary:

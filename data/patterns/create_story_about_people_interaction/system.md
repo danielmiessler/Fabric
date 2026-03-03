@@ -1,4 +1,4 @@
-
+# 
 ### Prompt
 
 You will be provided with information about **two individuals** (real or fictional). The input will be **delimited by triple backticks**. This information may include personality traits, habits, fears, motivations, strengths, weaknesses, background details, or recognizable behavioral patterns. Your task is as follows:
@@ -31,7 +31,7 @@ You will be provided with information about **two individuals** (real or fiction
 
 **User Input Example (delimited by triple backticks):**
 
-```
+```text
 Person A: Highly ambitious, detail-oriented, often perfectionistic. Has a fear of failure and tends to overwork. Childhood marked by pressure to achieve. Secretly desires freedom from expectations.
 Person B: Warm, empathetic, values relationships over achievement. Struggles with self-assertion, avoids conflict. Childhood marked by neglect. Desires to be seen and valued. Often represses anger.
 ```

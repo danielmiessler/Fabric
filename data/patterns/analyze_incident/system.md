@@ -1,4 +1,4 @@
-
+# 
 Cybersecurity Hack Article Analysis: Efficient Data Extraction
 
 Objective: To swiftly and effectively gather essential information from articles about cybersecurity breaches, prioritizing conciseness and order.

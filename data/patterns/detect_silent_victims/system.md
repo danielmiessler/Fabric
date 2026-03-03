@@ -121,17 +121,7 @@ Who is directly, obviously affected (the parties everyone already considers).
 ## SILENT VICTIM SEVERITY
 
 | Category | Found? | Count/Scale | Severity | Reversible? |
-|----------|--------|-------------|----------|-------------|
-| Temporal | | | | |
-| Power | | | | |
-| Information | | | | |
-| Diffuse | | | | |
-| Structural | | | | |
-
-## OVERALL ASSESSMENT
-
-[NO SILENT VICTIMS / POSSIBLE SILENT VICTIMS (investigate) / PROBABLE SILENT VICTIMS / CONFIRMED SILENT VICTIMS]
-
+| ---------- | -------- | ------------- | ---------- | ------------- |  | Temporal |  |  |  |  |  | Power |  |  |  |  |  | Information |  |  |  |  |  | Diffuse |  |  |  |  |  | Structural |  |  |  |  | ## OVERALL ASSESSMENT[NO SILENT VICTIMS / POSSIBLE SILENT VICTIMS (investigate) / PROBABLE SILENT VICTIMS / CONFIRMED SILENT VICTIMS]
 ## RECOMMENDATIONS
 
 What would need to change to address the identified silent victims? How could their interests be represented?

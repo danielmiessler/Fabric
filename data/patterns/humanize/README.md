@@ -18,7 +18,7 @@ Like any Fabric pattern, use the power of piping from other patterns or even fro
 Have fun using **Humanize**!
 
 ## Input AI text example:
-```
+```text
 The Mystery of the Spinning Dog
 
 In the world of canine behavior, one of the most curious rituals is the practice of spinning before settling down. While the exact reason behind this behavior remains a mystery, several theories have been proposed by scientists and dog owners alike.
@@ -50,7 +50,7 @@ If you have a dog that spins before settling down, you can try to observe its be
 By observing your dog's behavior, you may be able to uncover the unique reasons behind its spinning ritual.
 ```
 ## Humanize output:
-```
+```text
 Ever seen your dog spin in circles before settling down for a nap?  It's a pretty common thing, but why do they do it?  Nobody's entirely sure, but there are a few good guesses.
 
 One idea is that it's an instinct from their wolf ancestors.  Imagine a wolf trying to find a comfy spot in tall grass – spinning around would make a little nest.

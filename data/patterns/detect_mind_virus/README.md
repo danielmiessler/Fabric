@@ -11,11 +11,7 @@ Key distinction: Having wrong beliefs is human. Spreading beliefs that **disable
 ## Cognitive Exploits Detected
 
 | Exploit | Pattern |
-|---------|---------|
-| Fear | "If you don't X, terrible Y will happen" |
-| Guilt | "Good people do X" (questioners are bad) |
-| Identity | "Real [group] believe X" |
-| Authority | "Experts agree" (unnamed, untestable) |
+| --------- | --------- |  | Fear | "If you don't X, terrible Y will happen" |  | Guilt | "Good people do X" (questioners are bad) |  | Identity | "Real [group] believe X" || Authority | "Experts agree" (unnamed, untestable) |
 | Zero-sum | "Their gain is your loss" |
 | Unfalsifiability | Claims that cannot be tested |
 

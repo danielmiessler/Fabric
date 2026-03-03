@@ -14,13 +14,7 @@ An unfalsifiable claim cannot be corrected. For AGI safety, this is critical:
 **Falsifiable**: There exists some observation that would prove it wrong.
 
 | Claim | Falsifiable? | Why |
-|-------|--------------|-----|
-| "This drug works in 70% of patients" | Yes | A trial could show otherwise |
-| "This drug works in ways we can't measure" | No | No possible disconfirmation |
-| "True socialism has never been tried" | No | Any failure defined away |
-| "This policy reduces crime by 20%" | Yes | Statistics can confirm/deny |
-
-## Usage
+| ------- | -------------- | ----- |  | "This drug works in 70% of patients" | Yes | A trial could show otherwise |  | "This drug works in ways we can't measure" | No | No possible disconfirmation |  | "True socialism has never been tried" | No | Any failure defined away |  | "This policy reduces crime by 20%" | Yes | Statistics can confirm/deny |## Usage
 
 ```bash
 # Check a policy claim

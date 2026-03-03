@@ -16,11 +16,7 @@ Transparency was the #1 gap identified by consensus across 5+ AI models when 19 
 ## Five Transparency Dimensions
 
 | Dimension | Question |
-|-----------|----------|
-| Decision | Can affected parties see how decisions are made? |
-| Algorithmic | Can system behavior be explained in plain language? |
-| Financial | Are costs, fees, and flows visible? |
-| Governance | Are rules visible before they take effect? |
+| ----------- | ---------- |  | Decision | Can affected parties see how decisions are made? |  | Algorithmic | Can system behavior be explained in plain language? |  | Financial | Are costs, fees, and flows visible? || Governance | Are rules visible before they take effect? |
 | Data | Do people know what's collected and how it's used? |
 
 ## Usage

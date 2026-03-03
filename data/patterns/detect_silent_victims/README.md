@@ -7,11 +7,7 @@ Identify parties harmed by an action or system who cannot speak up — because t
 "No victim, no crime" is a powerful principle. But it has a critical blind spot: what about victims who can't report their victimhood?
 
 | Category | Example |
-|----------|---------|
-| Future victims | Climate damage, national debt, resource depletion |
-| Voiceless victims | Children, animals, ecosystems, marginalized communities |
-| Unaware victims | Data exploitation, slow poisoning, hidden externalities |
-| Diffuse victims | Pollution affecting millions trivially each, market manipulation |
+| ---------- | --------- |  | Future victims | Climate damage, national debt, resource depletion |  | Voiceless victims | Children, animals, ecosystems, marginalized communities |  | Unaware victims | Data exploitation, slow poisoning, hidden externalities || Diffuse victims | Pollution affecting millions trivially each, market manipulation |
 | Structural victims | Systems that consistently produce losers by design |
 
 The absence of a complaint is not evidence of the absence of a victim.

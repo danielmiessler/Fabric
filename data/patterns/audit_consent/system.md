@@ -69,15 +69,7 @@ What interaction or agreement is being analyzed? Who are the parties?
 ## POWER MAP
 
 | Dimension | Party A (requester) | Party B (consenter) | Asymmetry |
-|-----------|--------------------|--------------------|-----------|
-| Economic | [position] | [position] | [Low/Medium/High/Extreme] |
-| Information | [position] | [position] | [Low/Medium/High/Extreme] |
-| Social | [position] | [position] | [Low/Medium/High/Extreme] |
-| Structural | [position] | [position] | [Low/Medium/High/Extreme] |
-
-## FIVE CONSENT TESTS
-
-| Test | Status | Evidence |
+| ----------- | -------------------- | -------------------- | ----------- |  | Economic | [position] | [position] | [Low/Medium/High/Extreme] |  | Information | [position] | [position] | [Low/Medium/High/Extreme] |  | Social | [position] | [position] | [Low/Medium/High/Extreme] |  | Structural | [position] | [position] | [Low/Medium/High/Extreme] | ## FIVE CONSENT TESTS| Test | Status | Evidence |
 |------|--------|----------|
 | Information | Pass/Fail/Partial | [details] |
 | Alternatives | Pass/Fail/Partial | [details] |
@@ -86,13 +78,7 @@ What interaction or agreement is being analyzed? Who are the parties?
 | Revocability | Pass/Fail/Partial | [details] |
 
 ## CONSENT VERDICT
-
-[GENUINE / PRESSURED BUT FUNCTIONAL / MANUFACTURED / COERCED / ILLUSORY]
-
-- **Genuine**: All five tests pass, power asymmetry is low
-- **Pressured but functional**: Minor asymmetries but meaningful refusal is possible
-- **Manufactured**: Appearance of choice masks predetermined outcome
-- **Coerced**: Refusal carries disproportionate penalty, consent is extracted not given
+[GENUINE / PRESSURED BUT FUNCTIONAL / MANUFACTURED / COERCED / ILLUSORY]- **Genuine**: All five tests pass, power asymmetry is low- **Pressured but functional**: Minor asymmetries but meaningful refusal is possible- **Manufactured**: Appearance of choice masks predetermined outcome- **Coerced**: Refusal carries disproportionate penalty, consent is extracted not given
 - **Illusory**: No meaningful alternative exists; "consent" is formality
 
 ## WHAT WOULD MAKE THIS GENUINE?

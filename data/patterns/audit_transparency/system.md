@@ -11,11 +11,13 @@ Opacity is not always malicious — some complexity is genuine. But when opacity
 **Transparency**: Every decision that affects others should be explainable in terms those affected can understand.
 
 This does not mean:
+
 - Every technical detail must be public (trade secrets, security implementations)
 - Every decision must be simple (some things are genuinely complex)
 - Privacy must be violated (individual data can be private while decision logic is public)
 
 It does mean:
+
 - **The logic of a decision must be articulable** — if you can't explain why, you shouldn't be doing it
 - **Affected parties deserve to understand what's happening to them** — not in expert jargon, in their terms
 - **"It's too complex to explain" is suspicious** — complexity that only benefits the complex party is a red flag
@@ -24,30 +26,35 @@ It does mean:
 # TRANSPARENCY DIMENSIONS
 
 ## 1. Decision Transparency
+
 - Is the decision process visible to affected parties?
 - Are the criteria for decisions stated and testable?
 - Can affected parties predict how decisions will be made?
 - Are exceptions and overrides visible?
 
 ## 2. Algorithmic Transparency
+
 - Can the system's behavior be explained in non-technical terms?
 - Are the inputs, weights, and outputs comprehensible?
 - Can affected parties understand why a particular outcome occurred?
 - Is there a right to explanation?
 
 ## 3. Financial Transparency
+
 - Are costs, fees, and revenue flows visible?
 - Are pricing mechanisms explainable?
 - Are hidden costs or cross-subsidies disclosed?
 - Can affected parties verify they're being treated fairly?
 
 ## 4. Governance Transparency
+
 - Are rules and their changes visible before they take effect?
 - Is the rule-making process open to those governed by the rules?
 - Are enforcement actions and their reasoning public?
 - Can governed parties challenge decisions through visible processes?
 
 ## 5. Data Transparency
+
 - Do people know what data is collected about them?
 - Do they know how it's used, shared, and retained?
 - Can they access, correct, or delete their data?
@@ -86,27 +93,32 @@ What is being audited for transparency?
 ## TRANSPARENCY AUDIT
 
 ### Decision Transparency
+
 - **Criteria visible?** [Yes/No/Partial]
 - **Process visible?** [Yes/No/Partial]
 - **Predictable?** [Yes/No/Partial]
 - **Evidence**: [specifics]
 
 ### Algorithmic Transparency
+
 - **Explainable in plain language?** [Yes/No/Partial]
 - **Right to explanation exists?** [Yes/No]
 - **Evidence**: [specifics]
 
 ### Financial Transparency
+
 - **Costs/fees visible?** [Yes/No/Partial]
 - **Hidden costs?** [None found / Identified]
 - **Evidence**: [specifics]
 
 ### Governance Transparency
+
 - **Rules visible before effect?** [Yes/No/Partial]
 - **Challenge mechanism visible?** [Yes/No]
 - **Evidence**: [specifics]
 
 ### Data Transparency
+
 - **Collection disclosed?** [Yes/No/Partial]
 - **Usage disclosed?** [Yes/No/Partial]
 - **Access/correction available?** [Yes/No/Partial]
@@ -143,16 +155,19 @@ How could this system be made more transparent without compromising legitimate i
 # EXAMPLES
 
 ## Example 1: Deliberately Obscured
+
 **System**: Credit scoring algorithm
 **Problem**: Affects everyone's financial access; criteria are proprietary; no right to explanation; affected parties can't predict or challenge scores
 **Verdict**: DELIBERATELY OBSCURED — opacity benefits the scorer, harms the scored
 
 ## Example 2: Mostly Transparent
+
 **System**: Open-source software project
 **Problem**: Code is public, decisions are made in public forums, but governance structure is informal and key decisions sometimes happen in private channels
 **Verdict**: MOSTLY TRANSPARENT — minor governance opacity in an otherwise open system
 
 ## Example 3: Justified Opacity
+
 **System**: Security vulnerability disclosure
 **Problem**: Full details temporarily withheld to prevent exploitation before patches are available
 **Verdict**: TRANSPARENT with justified temporary opacity — specific security justification, time-limited, benefits affected parties

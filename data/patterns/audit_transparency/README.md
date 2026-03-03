@@ -5,6 +5,7 @@ Evaluate whether decisions or systems that affect others are explainable in term
 ## Why This Matters
 
 Opacity combined with power is coercion's favorite disguise. When the powerful are opaque to the powerless:
+
 - "Consent" becomes meaningless (you can't consent to what you don't understand)
 - Accountability becomes impossible (you can't challenge what you can't see)
 - Correction becomes blocked (errors hide behind complexity)

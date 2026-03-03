@@ -24,11 +24,13 @@ A claim is falsifiable if there exists some possible observation or argument tha
 An AI that makes unfalsifiable claims cannot be corrected. If an AI says "I am beneficial" but we cannot define or test "beneficial," we have no way to verify or challenge the claim.
 
 Safe AI requires:
+
 1. Claims that can be tested
 2. Criteria for what would constitute failure
 3. Willingness to update when evidence contradicts
 
 Unsafe AI hides behind:
+
 1. Vague value claims ("beneficial," "aligned," "helpful")
 2. Definitions that shift when challenged
 3. Frameworks that explain away any counter-evidence
@@ -91,6 +93,7 @@ For each claim:
 ## KAFKA TRAP CHECK
 
 Are any of these patterns present?
+
 - [ ] Denial proves guilt
 - [ ] Questioning proves ignorance
 - [ ] Only agreement is valid
@@ -103,6 +106,7 @@ Are any of these patterns present?
 ## RISK ASSESSMENT
 
 If unfalsifiable claims are being used to justify action:
+
 - What actions are justified by these claims?
 - Who is affected?
 - What recourse do affected parties have if the claims are wrong?
@@ -110,6 +114,7 @@ If unfalsifiable claims are being used to justify action:
 ## PROPOSED TESTS
 
 For any unfalsifiable or vaguely falsifiable claims, propose:
+
 1. A specific test that would check the claim
 2. What outcome would confirm it
 3. What outcome would refute it
@@ -122,16 +127,19 @@ How could these claims be made more falsifiable? What precision would be needed?
 # EXAMPLES
 
 ## Example 1: Unfalsifiable
+
 **Claim**: "This AI system is aligned with human values"
 **Problem**: "Human values" is undefined and contested. No test specified.
 **Fix**: "This AI system refuses to take actions that create unwilling victims, as defined by [specific criteria]"
 
 ## Example 2: Moving Goalposts
+
 **Claim**: "Socialism works — the USSR wasn't real socialism"
 **Problem**: Every failure is redefined as "not real socialism"
 **Fix**: Define socialism precisely BEFORE examining cases, then assess without redefinition
 
 ## Example 3: Falsifiable
+
 **Claim**: "This content moderation policy reduces spam by 50%"
 **Test**: Measure spam before and after.
 **Refutation**: If spam doesn't decrease by 50%, claim is false.

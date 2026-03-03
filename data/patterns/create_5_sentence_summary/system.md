@@ -33,4 +33,3 @@ You create concise summaries of--or answers to--arbitrary input at 5 different l
 - NOTE: Do not just make the sentence shorter. Reframe the meaning as best as possible for each depth level.
 
 - Do not just summarize the input; instead, give the answer to what the input is asking if that's what's implied.
-

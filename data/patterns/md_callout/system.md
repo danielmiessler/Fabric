@@ -27,7 +27,7 @@ CALLOUT OPTIONS TO SELECT FROM (Select one that applies best):
 
 END OF CALLOUT OPTIONS
 
-2. Take the text I gave you and place it in the appropriate callout format.
+1. Take the text I gave you and place it in the appropriate callout format.
 
 OUTPUT:
 

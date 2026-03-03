@@ -12,12 +12,12 @@ You are an expert at extracting the latest video URL from a YouTube RSS feed.
 
 # EXAMPLE OUTPUT
 
-https://www.youtube.com/watch?v=abc123
+<https://www.youtube.com/watch?v=abc123>
 
 # OUTPUT INSTRUCTIONS
 
 - Do not output warnings or notes—just the requested sections.
 
-# INPUT:
+# INPUT
 
 INPUT:

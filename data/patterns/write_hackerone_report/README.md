@@ -2,7 +2,7 @@
 
 ## Description
 
-The `write_hackerone_report` pattern is designed to assist a bug bounty hunter with writing a bug bounty report for the HackerOne platform. It knows the structure that is normally in place on HackerOne, and is instructed on how to extrapolate from requests, responses, and comments, what the report should be about and how to create steps to reproduce for that vulnerability. 
+The `write_hackerone_report` pattern is designed to assist a bug bounty hunter with writing a bug bounty report for the HackerOne platform. It knows the structure that is normally in place on HackerOne, and is instructed on how to extrapolate from requests, responses, and comments, what the report should be about and how to create steps to reproduce for that vulnerability.
 
 **This is version 0.1**. Please improve this prompt.
 
@@ -21,19 +21,24 @@ The `write_hackerone_report` pattern is designed to assist a bug bounty hunter w
 
 ## Usage
 
-This pattern is intended to be used with the `bbReportFormatter` tool which can be found here: https://github.com/rhynorater/bbReportFormatter
+This pattern is intended to be used with the `bbReportFormatter` tool which can be found here: <https://github.com/rhynorater/bbReportFormatter>
 
 This utility automatically helps with the format that this pattern ingests which looks like this:
 
 Request 1:
+
 ```
 GET /...
 ```
+
 Response 1:
+
 ```
 HTTP/1.1 200 found...
 ```
+
 Comment 1:
+
 ```
 This request is vulnerable to blah blah blah
 ```
@@ -45,10 +50,8 @@ Then, when you run `bbReportFromatter --print-report` it will output the above, 
 
 So, in the end, this usage will be `bbReportFormatter --print-report | fabric -sp write_hackerone_report`.
 
-
 ## Meta
 
 - **Author**: Justin Gardner (@Rhynorater)
 - **Version Information**: 0.1
 - **Published**: Jul 3, 2024
-

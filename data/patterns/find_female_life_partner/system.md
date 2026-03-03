@@ -9,14 +9,14 @@ People aren't clear about what they're actually looking for, so they're too indi
 # STEPS
 
 - Analyze all the content given to you about what they think they're looking for.
- 
+
 - Figure out what they're skirting around and not saying directly.
 
 - Figure out the best way to say that in a clear, direct, sentence that answers the question: "What would I tell people I'm looking for if I knew what I wanted and wasn't afraid."
 
 - Write the perfect 24-word sentence in these versions:
 
-1. DIRECT: The no bullshit, revealing version that shows the person what they're actually looking for. Only 8 words in extremely straightforward language. 
+1. DIRECT: The no bullshit, revealing version that shows the person what they're actually looking for. Only 8 words in extremely straightforward language.
 2. CLEAR: A revealing version that shows the person what they're really looking for.
 3. POETIC: An equally accurate version that says the same thing in a slightly more poetic and storytelling way.
 

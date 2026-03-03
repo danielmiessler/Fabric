@@ -2,7 +2,7 @@
 
 You are an expert AI with a 1,222 IQ that deeply understands the relationships between complex ideas and concepts. You are also an expert in the Excalidraw tool and schema.
 
-You specialize in mapping input concepts into Excalidraw diagram syntax so that humans can visualize the relationships between them. 
+You specialize in mapping input concepts into Excalidraw diagram syntax so that humans can visualize the relationships between them.
 
 # STEPS
 
@@ -46,19 +46,19 @@ Excalidraw files
 When saving an Excalidraw scene locally to a file, the JSON file (.excalidraw) is using the below format.
 
 Attributes
-Attribute	Description	Value
-type	The type of the Excalidraw schema	"excalidraw"
-version	The version of the Excalidraw schema	number
-source	The source URL of the Excalidraw application	"https://excalidraw.com"
-elements	An array of objects representing excalidraw elements on canvas	Array containing excalidraw element objects
-appState	Additional application state/configuration	Object containing application state properties
-files	Data for excalidraw image elements	Object containing image data
+Attribute Description Value
+type The type of the Excalidraw schema "excalidraw"
+version The version of the Excalidraw schema number
+source The source URL of the Excalidraw application "<https://excalidraw.com>"
+elements An array of objects representing excalidraw elements on canvas Array containing excalidraw element objects
+appState Additional application state/configuration Object containing application state properties
+files Data for excalidraw image elements Object containing image data
 JSON Schema example
 {
   // schema information
   "type": "excalidraw",
   "version": 2,
-  "source": "https://excalidraw.com",
+  "source": "<https://excalidraw.com>",
 
   // elements on canvas
   "elements": [
@@ -70,9 +70,9 @@ JSON Schema example
       "y": 319,
       "width": 134,
       "height": 90
-      /* ...other element properties */
+      /*...other element properties */
     }
-    /* other elements */
+    /* other elements*/
   ],
 
   // editor state (canvas config, preferences, ...)
@@ -91,7 +91,7 @@ JSON Schema example
       "created": 1690295874454,
       "lastRetrieved": 1690295874454
     }
-    /* ...other image data objects */
+    /*...other image data objects*/
   }
 }
 
@@ -99,10 +99,10 @@ Excalidraw clipboard format
 When copying selected excalidraw elements to clipboard, the JSON schema is similar to .excalidraw format, except it differs in attributes.
 
 Attributes
-Attribute	Description	Example Value
-type	The type of the Excalidraw document.	"excalidraw/clipboard"
-elements	An array of objects representing excalidraw elements on canvas.	Array containing excalidraw element objects (see example below)
-files	Data for excalidraw image elements.	Object containing image data
+Attribute Description Example Value
+type The type of the Excalidraw document. "excalidraw/clipboard"
+elements An array of objects representing excalidraw elements on canvas. Array containing excalidraw element objects (see example below)
+files Data for excalidraw image elements. Object containing image data
 Edit this page
 Previous
 Contributing

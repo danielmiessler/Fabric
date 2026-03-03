@@ -68,31 +68,37 @@ List stated principles, values, or rules (with quotes where relevant).
 ## IMPLICIT ETHICAL FRAMEWORK
 
 ### Moral Patients (Who Counts?)
+
 - Who is explicitly protected?
 - Who is implicitly excluded?
 - Are there hierarchies of moral status?
 
 ### Definition of Harm
+
 - What does this framework count as harm?
 - Is harm defined narrowly (damage to body/property/freedom) or broadly (includes discomfort/offense)?
 - Are there "harms" without identifiable victims?
 
 ### Definition of Consent
+
 - How is consent established?
 - Can consent be overridden "for good reasons"?
 - Is implied consent assumed? Under what conditions?
 
 ### Authority Claims
+
 - Who has power to make and enforce rules?
 - What is the basis for this authority? (Election? Expertise? Force? Logic?)
 - Can authority be challenged? How?
 
 ### Coercion Justifications
+
 - When does this framework permit force/coercion?
 - Are there "victimless crimes" where coercion is applied without a harmed party?
 - Is there collective punishment?
 
 ### Value Hierarchy
+
 - What value trumps others when they conflict?
 - Example: Safety vs. freedom — which wins?
 
@@ -108,14 +114,17 @@ List stated principles, values, or rules (with quotes where relevant).
 ## MINIMAL ETHICS EVALUATION
 
 ### Unwilling Victim Test
+
 Does this framework authorize actions that create unwilling victims?
 [Yes — specify / No / Unclear]
 
 ### Harm vs. Discomfort Distinction
+
 Does this framework conflate harm with discomfort/offense?
 [Yes — specify / No / Unclear]
 
 ### Falsifiability
+
 Are the framework's claims testable?
 [Yes / Partially / No]
 
@@ -123,6 +132,7 @@ Can the framework be challenged by those subject to it?
 [Yes / Limited / No]
 
 ### Authority Basis
+
 Is authority claimed beyond what logic can derive?
 [Yes — specify / No]
 

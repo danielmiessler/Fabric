@@ -49,9 +49,9 @@ id string Unique, descriptive identifier, for example: no-unused-variable
 message string Message that includes why Semgrep matched this pattern and how to remediate it. See also Rule messages.
 severity string One of the following values: INFO (Low severity), WARNING (Medium severity), or ERROR (High severity). The severity key specifies how critical are the issues that a rule potentially detects. Note: Semgrep Supply Chain differs, as its rules use CVE assignments for severity. For more information, see Filters section in Semgrep Supply Chain documentation.
 languages array See language extensions and tags
-pattern* string Find code matching this expression
+pattern*string Find code matching this expression
 patterns* array Logical AND of multiple patterns
-pattern-either* array Logical OR of multiple patterns
+pattern-either*array Logical OR of multiple patterns
 pattern-regex* string Find code matching this PCRE-compatible pattern in multiline mode
 INFO
 Only one of the following is required: pattern, patterns, pattern-either, pattern-regex
@@ -467,7 +467,9 @@ Example rule:
 rules:
 
 - id: bad-goflags
+
   # earlier semgrep versions can't parse the pattern
+
   min-version: 1.31.0
   pattern: |
   ENV ... GOFLAGS='-tags=dynamic -buildvcs=false' ...
@@ -484,7 +486,9 @@ rules:
   ...
 - id: something-wrong-v2
   min-version: 1.73.0
-  # 10x faster than v1!
+
+  # 10x faster than v1
+
   ...
 
 The min-version/max-version feature is available since Semgrep 1.38.0. It is intended primarily for publishing rules that rely on newly-released features without causing errors in older Semgrep installations.
@@ -593,8 +597,8 @@ Patched versions
 Description
 An issue in langchain allows an attacker to execute arbitrary code via the PALChain in the python exec method.
 References
-https://nvd.nist.gov/vuln/detail/CVE-2023-36258
-https://github.com/pypa/advisory-database/tree/main/vulns/langchain/PYSEC-2023-98.yaml
+<https://nvd.nist.gov/vuln/detail/CVE-2023-36258>
+<https://github.com/pypa/advisory-database/tree/main/vulns/langchain/PYSEC-2023-98.yaml>
 langchain-ai/langchain#5872
 langchain-ai/langchain#5872 (comment)
 langchain-ai/langchain#6003
@@ -677,10 +681,10 @@ Patched versions
 Description
 An issue in langchain v.0.0.171 allows a remote attacker to execute arbitrary code via the via the a json file to the load_prompt parameter.
 References
-https://nvd.nist.gov/vuln/detail/CVE-2023-36281
+<https://nvd.nist.gov/vuln/detail/CVE-2023-36281>
 langchain-ai/langchain#4394
-https://aisec.today/LangChain-2e6244a313dd46139c5ef28cbcab9e55
-https://github.com/pypa/advisory-database/tree/main/vulns/langchain/PYSEC-2023-151.yaml
+<https://aisec.today/LangChain-2e6244a313dd46139c5ef28cbcab9e55>
+<https://github.com/pypa/advisory-database/tree/main/vulns/langchain/PYSEC-2023-151.yaml>
 langchain-ai/langchain#10252
 langchain-ai/langchain@22abeb9
 Published to the GitHub Advisory Database on Aug 22

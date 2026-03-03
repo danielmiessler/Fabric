@@ -46,6 +46,6 @@ A 1-3 sentence summary of the most important issues talked about in the output a
 - Do not repeat items in the output sections.
 - Do not start items with the same opening words.
 
-# INPUT:
+# INPUT
 
 INPUT:

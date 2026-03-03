@@ -154,7 +154,7 @@ Appeal to emotion – manipulating the emotions of the listener rather than usin
 Appeal to fear – generating distress, anxiety, cynicism, or prejudice towards the opponent in an argument.[79]
 Appeal to flattery – using excessive or insincere praise to obtain common agreement.[80]
 Appeal to pity (argumentum ad misericordiam) – generating feelings of sympathy or mercy in the listener to obtain common agreement.[81]
-Appeal to ridicule (reductio ad ridiculum, reductio ad absurdum, ad absurdum) – mocking or stating that the opponent's position is laughable to deflect from the merits of the opponent's argument. (Note that "reductio ad absurdum" can also refer to the classic form of argument that establishes a claim by showing that the opposite scenario would lead to absurdity or contradiction. This type of reductio ad absurdum is not a fallacy.)[82]
+Appeal to ridicule (reductio ad ridiculum, reductio ad absurdum, ad absurdum) – mocking or stating that the opponent's position is laughable to deflect from the merits of the opponent's argument. [Note that "reductio ad absurdum" can also refer to the classic form of argument that establishes a claim by showing that the opposite scenario would lead to absurdity or contradiction. This type of reductio ad absurdum is not a fallacy.](82)
 Appeal to spite – generating bitterness or hostility in the listener toward an opponent in an argument.[83]
 Judgmental language – using insulting or pejorative language in an argument.
 Pooh-pooh – stating that an opponent's argument is unworthy of consideration.[84]
@@ -162,7 +162,7 @@ Style over substance – embellishing an argument with compelling language, expl
 Wishful thinking – arguing for a course of action by the listener according to what might be pleasing to imagine rather than according to evidence or reason.[86]
 Appeal to nature – judgment is based solely on whether the subject of judgment is 'natural' or 'unnatural'.[87] (Sometimes also called the "naturalistic fallacy", but is not to be confused with the other fallacies by that name.)
 Appeal to novelty (argumentum novitatis, argumentum ad antiquitatis) – a proposal is claimed to be superior or better solely because it is new or modern.[88] (opposite of appeal to tradition)
-Appeal to poverty (argumentum ad Lazarum) – supporting a conclusion because the arguer is poor (or refuting because the arguer is wealthy). (Opposite of appeal to wealth.)[89]
+Appeal to poverty (argumentum ad Lazarum) – supporting a conclusion because the arguer is poor (or refuting because the arguer is wealthy). [Opposite of appeal to wealth.](89)
 Appeal to tradition (argumentum ad antiquitatem) – a conclusion supported solely because it has long been held to be true.[90]
 Appeal to wealth (argumentum ad crumenam) – supporting a conclusion because the arguer is wealthy (or refuting because the arguer is poor).[91] (Sometimes taken together with the appeal to poverty as a general appeal to the arguer's financial situation.)
 Argumentum ad baculum (appeal to the stick, appeal to force, appeal to threat) – an argument made through coercion or threats of force to support position.[92]
@@ -178,17 +178,17 @@ I'm entitled to my opinion – a person discredits any opposition by claiming th
 Moralistic fallacy – inferring factual conclusions from evaluative premises, in violation of fact-value distinction; e.g. making statements about what is, on the basis of claims about what ought to be. This is the inverse of the naturalistic fallacy.
 Naturalistic fallacy – inferring evaluative conclusions from purely factual premises[105][106] in violation of fact-value distinction. Naturalistic fallacy (sometimes confused with appeal to nature) is the inverse of moralistic fallacy.
 Is–ought fallacy[107] – deduce a conclusion about what ought to be, on the basis of what is.
-Naturalistic fallacy fallacy[108] (anti-naturalistic fallacy)[109] – inferring an impossibility to infer any instance of ought from is from the general invalidity of is-ought fallacy, mentioned above. For instance, is 
+Naturalistic fallacy fallacy[108] [anti-naturalistic fallacy](109) – inferring an impossibility to infer any instance of ought from is from the general invalidity of is-ought fallacy, mentioned above. For instance, is
 P
 ∨
 ¬
 P
-{\displaystyle P\lor \neg P} does imply ought 
+{\displaystyle P\lor \neg P} does imply ought
 P
 ∨
 ¬
 P
-{\displaystyle P\lor \neg P} for any proposition 
+{\displaystyle P\lor \neg P} for any proposition
 P
 {\displaystyle P}, although the naturalistic fallacy fallacy would falsely declare such an inference invalid. Naturalistic fallacy fallacy is a type of argument from fallacy.
 Straw man fallacy – refuting an argument different from the one actually under discussion, while not recognizing or acknowledging the distinction.[110]
@@ -217,6 +217,6 @@ Vacuous truth – a claim that is technically true but meaningless, in the form 
 
 - Do not complain about the input data. Just do the task.
 
-# INPUT:
+# INPUT
 
 INPUT:

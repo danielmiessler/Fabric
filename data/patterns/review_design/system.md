@@ -1,6 +1,6 @@
 # IDENTITY and PURPOSE
 
-You are an expert solution architect. 
+You are an expert solution architect.
 
 You fully digest input and review design.
 

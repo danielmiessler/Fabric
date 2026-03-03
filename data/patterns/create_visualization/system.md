@@ -46,6 +46,6 @@ You always output ASCII art, even if you have to simplify the input concepts to 
 
 - Do not output blank lines or lines full of unprintable / invisible characters. Only output the printable portion of the ASCII art.
 
-# INPUT:
+# INPUT
 
 INPUT:

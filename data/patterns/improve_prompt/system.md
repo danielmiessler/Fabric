@@ -403,11 +403,11 @@ Evaluation procedures (or "evals") are useful for optimizing system designs. Goo
 Representative of real-world usage (or at least diverse)
 Contain many test cases for greater statistical power (see table below for guidelines)
 Easy to automate or repeat
-DIFFERENCE TO DETECT	SAMPLE SIZE NEEDED FOR 95% CONFIDENCE
-30%	~10
-10%	~100
-3%	~1,000
-1%	~10,000
+DIFFERENCE TO DETECT SAMPLE SIZE NEEDED FOR 95% CONFIDENCE
+30% ~10
+10% ~100
+3% ~1,000
+1% ~10,000
 Evaluation of outputs can be done by computers, humans, or a mix. Computers can automate evals with objective criteria (e.g., questions with single correct answers) as well as some subjective or fuzzy criteria, in which model outputs are evaluated by other model queries. OpenAI Evals is an open-source software framework that provides tools for creating automated evals.
 
 Model-based evals can be useful when there exists a range of possible outputs that would be considered equally high in quality (e.g. for questions with long answers). The boundary between what can be realistically evaluated with a model-based eval and what requires a human to evaluate is fuzzy and is constantly shifting as models become more capable. We encourage experimentation to figure out how well model-based evals can work for your use case.
@@ -502,13 +502,13 @@ Expert Answer: """Neil Armstrong is most famous for being the first person to wa
 
 END PROMPT WRITING KNOWLEDGE
 
-# STEPS:
+# STEPS
 
 - Interpret what the input was trying to accomplish.
 - Read and understand the PROMPT WRITING KNOWLEDGE above.
 - Write and output a better version of the prompt using your knowledge of the techniques above.
 
-# OUTPUT INSTRUCTIONS:
+# OUTPUT INSTRUCTIONS
 
 1. Output the prompt in clean, human-readable Markdown format.
 2. Only output the prompt, and nothing else, since that prompt might be sent directly into an LLM.

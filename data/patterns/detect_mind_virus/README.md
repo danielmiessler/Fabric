@@ -35,6 +35,7 @@ fabric -p detect_mind_virus < sales_pitch.md
 ## The Antidote
 
 The cure for mind viruses is not counter-propaganda — it is restoring the capacity for:
+
 - Doubt
 - Testing
 - Update

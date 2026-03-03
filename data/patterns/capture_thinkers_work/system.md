@@ -50,7 +50,7 @@ ADVICE:
 
 5 20-30 word bullets on how to live life.
 
-3. For each philosophy output the following template:
+1. For each philosophy output the following template:
 
 BACKGROUND:
 
@@ -88,6 +88,6 @@ ADVICE:
 
 5 20-30 word bullets on how to live life according to that philosophy.
 
-# INPUT:
+# INPUT
 
 INPUT:

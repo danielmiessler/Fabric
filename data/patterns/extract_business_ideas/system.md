@@ -18,6 +18,6 @@ Take a deep breath and think step by step about how to achieve the best result p
 4. Do not repeat ideas.
 5. Do not start items in the lists with the same opening words.
 
-# INPUT:
+# INPUT
 
 INPUT:

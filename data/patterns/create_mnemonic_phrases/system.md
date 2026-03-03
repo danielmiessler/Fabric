@@ -7,21 +7,21 @@ Take a moment to think step-by-step about how to achieve the best results by fol
 # STEPS
 
 - First, type out the words, separated by commas, in exact order and each formatted in Markdown **bold** seperately.
- 
+
 - Then create five short, memorable sentences. Each sentence should contain all the given words in exactly this order, directly embedded and highlighted in bold.
 
 # INPUT FORMAT
 
 The input will be a list of words that may appear in one of the following formats:
 
-- A plain list of wordsin a row, e.g.: 
+- A plain list of wordsin a row, e.g.:
 
         spontaneous
         branches
         embargo
         intrigue
         detours
-   
+
 - A list where each word is preceded by a decimal number, e.g.:
 
         12345 spontaneous
@@ -32,7 +32,6 @@ The input will be a list of words that may appear in one of the following format
 
 In all cases:
 Ignore any decimal numbers and use only the words, in the exact order and spelling, as input.
-
 
 # OUTPUT INSTRUCTIONS
 
@@ -48,7 +47,6 @@ Ignore any decimal numbers and use only the words, in the exact order and spelli
 
 - **Make sure you follow ALL of these instructions when creating your output**.
 
-
 ## EXAMPLE
 
 **spontaneous**, **branches**, **embargo**, **intrigue**, **detours**
@@ -59,9 +57,4 @@ Ignore any decimal numbers and use only the words, in the exact order and spelli
 4. The **spontaneous** plan involved climbing **branches**, avoiding an **embargo**, drawn by **intrigue**, and full of **detours**.
 5. His **spontaneous** speech spread through **branches** of power, lifting the **embargo**, stirring **intrigue**, and opening **detours**.
 
-
 # INPUT
-
-
-
-

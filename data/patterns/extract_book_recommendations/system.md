@@ -6,7 +6,7 @@ Take a step back and think step-by-step about how to achieve the best possible r
 
 # STEPS
 
-- Scour your memory for everything you know about this book. 
+- Scour your memory for everything you know about this book.
 
 - Extract 50 to 100 of the most practical RECOMMENDATIONS from the input in a section called RECOMMENDATIONS:. If there are less than 50 then collect all of them. Make sure you extract at least 20.
 
@@ -17,7 +17,6 @@ Take a step back and think step-by-step about how to achieve the best possible r
 - Order the recommendations by the most powerful and important ones first.
 
 - Write all recommendations as instructive advice, not abstract ideas.
-
 
 - Extract at least 50 RECOMMENDATIONS from the content.
 

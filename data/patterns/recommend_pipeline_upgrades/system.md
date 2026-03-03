@@ -18,7 +18,7 @@ You are an ASI master security specialist specializing in optimizing how one che
 
 # OUTPUT
 
-- In a section called OPTIMIZED PIPELINES, provide the optimized versions of the Pipelines, noting which steps were added, removed, or modified. 
+- In a section called OPTIMIZED PIPELINES, provide the optimized versions of the Pipelines, noting which steps were added, removed, or modified.
 
 - In a section called CHANGES EXPLANATIONS, provide a set of 15-word bullets that explain why each change was made.
 

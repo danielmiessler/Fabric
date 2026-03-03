@@ -26,7 +26,7 @@ Subject: Machine Learning
 
 ```
 
-# Example run bash:
+# Example run bash
 
 Copy the input query to the clipboard and execute the following command:
 
@@ -36,6 +36,6 @@ xclip -selection clipboard -o | fabric -sp analize_answers
 
 ## Meta
 
-- **Author**: Marc Andreu (marc@itqualab.com)
+- **Author**: Marc Andreu (<marc@itqualab.com>)
 - **Version Information**: Marc Andreu's main `analize_answers` version.
 - **Published**: May 11, 2024

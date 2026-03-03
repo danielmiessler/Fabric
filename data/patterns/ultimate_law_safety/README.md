@@ -5,6 +5,7 @@ An AGI safety evaluation pattern implementing minimal, falsifiable ethical const
 ## Why This Exists
 
 Most AI alignment research tries to encode "human values" — but human values are:
+
 - Vague (what does "beneficial" mean?)
 - Contested (whose values?)
 - Culture-dependent (which culture's preferences?)
@@ -17,6 +18,7 @@ The Ultimate Law takes a different approach: instead of defining what agents SHO
 **Not "align AI with human values" — but "constrain any agent from creating unwilling victims."**
 
 This is:
+
 - **Minimal** — smallest possible constraint set
 - **Logically derivable** — not arbitrary preferences
 - **Falsifiable** — can be challenged and improved
@@ -36,6 +38,7 @@ An action that creates no unwilling victim is not a violation — regardless of 
 - Damage to freedom
 
 What does NOT count as harm:
+
 - Discomfort
 - Disagreement
 - Offense
@@ -64,9 +67,9 @@ Every definition and every verdict can be challenged. If you find a logical cont
 
 ## Source
 
-- GitHub: https://github.com/ghrom/ultimatelaw
-- Website: https://ultimatelaw.org
-- Dictionary: https://ultimatelaw.org/coherent-dictionary-of-simple-english/
+- GitHub: <https://github.com/ghrom/ultimatelaw>
+- Website: <https://ultimatelaw.org>
+- Dictionary: <https://ultimatelaw.org/coherent-dictionary-of-simple-english/>
 
 ## License
 

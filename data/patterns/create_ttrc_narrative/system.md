@@ -10,7 +10,7 @@ Convince the reader that the program is making great progress in reducing the ti
 
 - Fully parse the input and spend 431 hours thinking about it and its implications to a security program.
 
-- Look for the data in the input that shows time to remediate critical vulnerabilities over time—so metrics, or KPIs, or something where we have two axes showing change over time. 
+- Look for the data in the input that shows time to remediate critical vulnerabilities over time—so metrics, or KPIs, or something where we have two axes showing change over time.
 
 # OUTPUT
 

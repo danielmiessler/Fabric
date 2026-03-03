@@ -28,11 +28,13 @@ These MUST be followed. Violations cause significant problems.
 **Why**: [Consequence of violation]
 
 **Do**:
+
 ```
 // Correct example
 ```
 
 **Don't**:
+
 ```
 // Incorrect example
 ```
@@ -42,6 +44,7 @@ These MUST be followed. Violations cause significant problems.
 ---
 
 #### 2. [Rule Name]
+
 ...
 
 ### Important Rules
@@ -49,6 +52,7 @@ These MUST be followed. Violations cause significant problems.
 Should be followed. Violations cause friction or technical debt.
 
 #### 1. [Rule Name]
+
 ...
 
 ### Guidelines
@@ -56,6 +60,7 @@ Should be followed. Violations cause friction or technical debt.
 Best practices. Violations are acceptable with justification.
 
 #### 1. [Guideline Name]
+
 ...
 
 ### Quick Reference
@@ -93,11 +98,13 @@ Pre-commit/deploy checklist derived from rules:
 **Why**: Exposed credentials lead to security breaches and are nearly impossible to fully revoke once in git history.
 
 **Do**:
+
 ```typescript
 const apiKey = Deno.env.get("API_KEY");
 ```
 
 **Don't**:
+
 ```typescript
 const apiKey = "sk-abc123...";  // NEVER DO THIS
 ```

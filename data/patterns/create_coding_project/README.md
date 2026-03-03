@@ -10,11 +10,14 @@ echo "INSERT_YOUR_IDEA_HERE" | fabric -p create_coding_project
 
 ## Example
 
-### <u>Input</u>:
+### <u>Input</u>
+
 ```bash
 echo "I want to create a project that can generate shell scripts from yaml files then upload them to a Jamf Pro server via the Jamf Pro API." | fabric -p create_coding_project
 ```
-### <u>Output</u>:
+
+### <u>Output</u>
+
 PROJECT:
 
 Automate shell script generation from YAML files and upload to Jamf Pro server using Jamf Pro API.
@@ -33,6 +36,7 @@ STEPS:
 6. Log upload details.
 
 STRUCTURE:
+
 ```css
 jamf-script-generator/
 ├── src/
@@ -71,13 +75,17 @@ DETAILED EXPLANATION:
 - README.md: Provides project instructions.
 
 CODE:
+
 ```
 Outputs starter code for each individual file listed in the structure above.
 ```
+
 SETUP:
+
 ```
 Outputs a shell script that can be run to create the project locally on your machine.
 ```
+
 TAKEAWAYS:
 
 - YAML files simplify script configuration.

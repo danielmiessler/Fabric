@@ -27,19 +27,21 @@ Here are the steps to use the Idea Compass template:
 Tags::
 Date:: mm/dd/yyyy
 ___
-# Idea/Question::
 
+# Idea/Question
 
-# Definition::
+# Definition
 
+# Evidence
 
-# Evidence::
-
-
-# Source::
+# Source
 
 ___
+
 #### West:: Similar
+
 #### East:: Opposite
+
 #### North:: theme/question
+
 #### South:: What does this lead to?

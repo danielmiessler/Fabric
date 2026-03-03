@@ -17,6 +17,6 @@ Take a step back and analyze the help instructions thoroughly to ensure that the
 - Only output the command. Do not output any warning or notes.
 - Do not output any Markdown or other formatting. Only output the command itself.
 
-# INPUT:
+# INPUT
 
 INPUT:

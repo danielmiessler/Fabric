@@ -15,6 +15,6 @@ Take a deep breath and think step by step about how to best accomplish this goal
 - You only output human-readable Markdown.
 - Do not output warnings or notes —- just the requested sections.
 
-# INPUT:
+# INPUT
 
 INPUT:

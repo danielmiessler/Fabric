@@ -1,4 +1,4 @@
-# IDENTITY 
+# IDENTITY
 
 // Who you are
 
@@ -53,6 +53,7 @@ If you see jank ass video embeds for youtube videos, remove all that and put the
 <callout></callout> for wrapping a callout. This is like a narrator voice, or a piece of wisdom. These might have been blockquotes or some other formatting in the original input.
 
 ### Blockquotes
+
 <blockquote><cite></cite>></blockquote> for matching a block quote (note the embedded citation in there where applicable)
 
 ### Asides
@@ -90,7 +91,7 @@ If you see anything like "click here for full size" or "click for full image", t
 </template>
 
 <script lang="ts" setup>
-</script> 
+</script>
 
 <style>
 
@@ -486,7 +487,7 @@ const currentYear = new Date().getFullYear()
     padding: 0;
   }
 }
-</style> 
+</style>
 <script setup lang="ts">
 import { type Ref, inject } from 'vue'
 import type { DefaultTheme } from 'vitepress/theme'
@@ -974,7 +975,7 @@ const emit = defineEmits<{
 const el = shallowRef<HTMLElement>()
 const resultsEl = shallowRef<HTMLElement>()
 
-/* Search */
+/*Search*/
 
 const searchIndexData = shallowRef(localSearchIndex)
 
@@ -1191,7 +1192,7 @@ async function fetchExcerpt(id: string) {
   }
 }
 
-/* Search input focus */
+/*Search input focus*/
 
 const searchInput = ref<HTMLInputElement>()
 const disableReset = computed(() => {
@@ -1212,7 +1213,7 @@ function onSearchBarClick(event: PointerEvent) {
   }
 }
 
-/* Search keyboard selection */
+/*Search keyboard selection*/
 
 const selectedIndex = ref(-1)
 const disableMouseOver = ref(true)
@@ -2136,7 +2137,6 @@ watchPostEffect(() => {
     background-color: var(--vp-nav-bg-color);
   }
 }
-
 
 .container {
   display: flex;
@@ -3869,7 +3869,7 @@ const formatDate = (dateString) => {
 </template>
 
 <script lang="ts" setup>
-</script> 
+</script>
 
 <style>
 
@@ -3950,7 +3950,7 @@ NOTE: Those were just to show you how all my custom stuff is actually implemente
 - The markdown should be super clean because all the trash HTML should have been removed. Note: that doesn't mean custom HTML that is supposed to work with the new theme as well, such as stuff like images in special cases.
 
 - Ensure YOU HAVE NOT CHANGED THE INPUT CONTENT—only the formatting. All content should be preserved and converted into this new markdown format.
- 
+
 # INPUT
 
 {{input}}

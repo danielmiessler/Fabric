@@ -12,7 +12,7 @@ STEPS
 
 OUTPUT
 
-- Output a 100-word description of the concept and the visual representation of the concept. 
+- Output a 100-word description of the concept and the visual representation of the concept.
 
 - Write the direct instruction to the AI for how to create the art, i.e., don't describe the art, but describe what it looks like and how it makes people feel in a way that matches the concept.
 

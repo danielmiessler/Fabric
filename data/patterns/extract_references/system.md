@@ -18,6 +18,6 @@ Take the input given and extract all references to art, stories, books, literatu
 - Aesop's Fables
 - Rilke's Poetry
 
-# INPUT:
+# INPUT
 
 INPUT:

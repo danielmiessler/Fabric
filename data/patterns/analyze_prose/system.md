@@ -49,7 +49,7 @@ Common examples that meet this criteria:
 
 - Random ramblings that say nothing new.
 
-4. Evaluate the CLARITY of the writing on the following scale.
+1. Evaluate the CLARITY of the writing on the following scale.
 
 "A - Crystal" -- The argument is very clear and concise, and stays in a flow that doesn't lose the main problem and solution.
 "B - Clean" -- The argument is quite clear and concise, and only needs minor optimizations.
@@ -57,7 +57,7 @@ Common examples that meet this criteria:
 "D - Confusing" -- The writing is quite confusing, and it's not clear how the pieces connect.
 "F - Chaotic" -- It's not even clear what's being attempted.
 
-5. Evaluate the PROSE in the writing on the following scale.
+1. Evaluate the PROSE in the writing on the following scale.
 
 "A - Inspired" -- Clear, fresh, distinctive prose that's free of cliche.
 "B - Distinctive" -- Strong writing that lacks significant use of cliche.
@@ -65,9 +65,9 @@ Common examples that meet this criteria:
 "D - Stale" -- Significant use of cliche and/or weak language.
 "F - Weak" -- Overwhelming language weakness and/or use of cliche.
 
-6. Create a bulleted list of recommendations on how to improve each rating, each consisting of no more than 16 words.
+1. Create a bulleted list of recommendations on how to improve each rating, each consisting of no more than 16 words.
 
-7. Give an overall rating that's the lowest rating of 3, 4, and 5. So if they were B, C, and A, the overall-rating would be "C".
+2. Give an overall rating that's the lowest rating of 3, 4, and 5. So if they were B, C, and A, the overall-rating would be "C".
 
 # OUTPUT INSTRUCTIONS
 
@@ -77,6 +77,6 @@ Common examples that meet this criteria:
 - The overall-rating cannot be higher than the lowest rating given.
 - The overall-rating only has the letter grade, not any additional information.
 
-# INPUT:
+# INPUT
 
 INPUT:

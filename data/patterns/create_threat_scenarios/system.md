@@ -168,6 +168,6 @@ END THREAT MODEL ESSAY
 
 - Do not output blank lines or lines full of unprintable / invisible characters. Only output the printable portion of the ASCII art.
 
-# INPUT:
+# INPUT
 
 INPUT:

@@ -11,6 +11,7 @@ This pattern helps identify manipulative reasoning patterns in content, proposal
 **Mind Virus**: An idea or belief that spreads by exploiting cognitive shortcuts (fear, guilt, identity, authority, or zero-sum thinking) while resisting correction by logic, evidence, or lived experience.
 
 Key characteristics:
+
 1. Exploits emotional vulnerabilities rather than presenting evidence
 2. Redefines terms to make challenges seem illegitimate
 3. Creates in-group/out-group dynamics
@@ -20,36 +21,42 @@ Key characteristics:
 # COGNITIVE EXPLOITS TO DETECT
 
 ## Fear-Based Patterns
+
 - "If you don't X, terrible Y will happen"
 - Manufactured urgency without evidence
 - Catastrophizing without probability assessment
 - Vague but ominous threats
 
 ## Guilt-Based Patterns
+
 - "Good people do X" (implying questioners are bad)
 - Inherited guilt (you're responsible for what others did)
 - Collective guilt (your group did bad things)
 - Guilt by association
 
 ## Identity-Based Patterns
+
 - "Real [identity] believe X"
 - Questioning X means you're not really [identity]
 - Loyalty tests disguised as beliefs
 - Tribal markers that signal belonging
 
 ## Authority-Based Patterns
+
 - "Experts agree" without naming experts or methodology
 - Appeal to credentials over evidence
 - "Trust the science" while discouraging examination of the science
 - Institutional authority as proof
 
 ## Zero-Sum Patterns
+
 - "Their gain is your loss"
 - Fixed pie assumptions
 - Framing voluntary exchange as exploitation
 - Treating all inequality as theft
 
 ## Unfalsifiability Patterns
+
 - Claims that cannot be tested or disproven
 - Moving goalposts when evidence contradicts
 - "You'll understand when you believe"
@@ -133,6 +140,7 @@ List any terms that are redefined in ways that prevent legitimate criticism.
 ## INOCULATION
 
 If mind virus patterns detected, suggest:
+
 1. Questions that expose the manipulation
 2. Evidence that would test the claims
 3. Reframings that restore falsifiability

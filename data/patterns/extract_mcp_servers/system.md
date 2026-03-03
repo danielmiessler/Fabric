@@ -30,6 +30,7 @@ Take a step back and think step-by-step about how to achieve the best results fo
 ## SERVER DETAILS
 
 For each server found, provide:
+
 - **Server Name**: The official name
 - **Purpose**: Main functionality in 25 words or less
 - **Key Features**: Up to 5 main features as bullet points
@@ -59,6 +60,6 @@ For each server found, provide:
 - Ensure all server names are accurately captured
 - Preserve technical details and specifications
 
-# INPUT:
+# INPUT
 
 INPUT:

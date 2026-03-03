@@ -41,6 +41,6 @@ Take a deep breath and think step-by-step about how best to achieve this using t
 
 - Ensure the speaker notes are in the voice of the speaker, i.e. they're what they're actually going to say.
 
-# INPUT:
+# INPUT
 
 INPUT:

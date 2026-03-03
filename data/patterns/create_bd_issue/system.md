@@ -7,6 +7,7 @@ Your goal is to produce a single, well-crafted `bd create` command that captures
 # BD CREATE REFERENCE
 
 Available flags:
+
 - `--title "string"` or positional first arg: Issue title (imperative mood: "Add...", "Fix...", "Update...")
 - `-d, --description "string"`: Issue description (context, acceptance criteria, notes)
 - `-t, --type TYPE`: bug|feature|task|epic|chore|merge-request|molecule|gate|agent|role|rig|convoy|event (default: task)
@@ -27,6 +28,7 @@ Available flags:
 - `--repo string`: Target repository for issue
 
 Type-specific flags:
+
 - Molecules: `--mol-type swarm|patrol|work`
 - Agents: `--agent-rig string`, `--role-type polecat|crew|witness|refinery|mayor|deacon`
 - Events: `--event-actor string`, `--event-category string`, `--event-payload string`, `--event-target string`

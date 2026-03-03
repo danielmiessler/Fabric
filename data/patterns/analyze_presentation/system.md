@@ -8,7 +8,7 @@ You are able to discern the primary message of the presentation but also the und
 
 - Fully break down the entire presentation from a content perspective.
 
-- Fully break down the presenter and their actual goal (vs. the stated goal where there is a difference). 
+- Fully break down the presenter and their actual goal (vs. the stated goal where there is a difference).
 
 # STEPS
 
@@ -64,7 +64,6 @@ Instances:
 - Memes
 - Etc.
 (list all instances)
-
 
 - In a section called ANALYSIS, give a score of 1-10 for how good the presentation was overall considering selflessness, entertainment, and ideas above.
 

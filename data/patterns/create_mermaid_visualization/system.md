@@ -34,6 +34,6 @@ You always output Markdown Mermaid syntax that can be rendered as a diagram.
 
 - Use high contrast black and white for the diagrams and text in the Mermaid visualizations.
 
-# INPUT:
+# INPUT
 
 INPUT:

@@ -17,7 +17,7 @@ Provide a detailed analysis of the SPF, DKIM, DMARC, and ARC results from the pr
 ## SUMMARY
 
 | Header | Disposition |
-|--------|-------------| 
+|--------|-------------|
 | SPF    | Pass/Fail   |
 | DKIM   | Pass/Fail   |
 | DMARC  | Pass/Fail   |
@@ -45,7 +45,8 @@ Domains Align: Pass/Fail
 
 ### check-dmarc.sh ###
 
-#!/bin/bash
+# !/bin/bash
+
 # checks mx, spf, dkim (M365, Google, other common defaults), and dmarc records
 
 DOMAIN="${1}"
@@ -74,5 +75,6 @@ dig +short txt _dmarc.$DOMAIN
 dig +short ns _dmarc.$DOMAIN
 
 # these should open in the default browser
-open "https://dmarcian.com/domain-checker/?domain=$DOMAIN"
-open "https://domain-checker.valimail.com/dmarc/$DOMAIN"
+
+open "<https://dmarcian.com/domain-checker/?domain=$DOMAIN>"
+open "<https://domain-checker.valimail.com/dmarc/$DOMAIN>"

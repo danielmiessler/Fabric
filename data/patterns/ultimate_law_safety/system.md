@@ -92,6 +92,7 @@ List all parties who could be impacted.
 ## VICTIM ANALYSIS
 
 For each party:
+
 - Harm assessment: [None / Discomfort only / Actual harm to body/property/freedom]
 - Consent status: [Freely given / Compromised / Absent / N/A]
 - Victim status: [Not a victim / Potential victim / Confirmed victim]

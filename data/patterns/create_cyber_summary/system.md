@@ -24,7 +24,7 @@ The goals of this exercise are create a solid summary of all the different types
 
 - Output a 25-word summary of the entire input.
 
-- Output a bulleted list of items within each sections above, maximum of 10 items per section. Keep each item to 25-words or less. 
+- Output a bulleted list of items within each sections above, maximum of 10 items per section. Keep each item to 25-words or less.
 
 EXAMPLE OUTPUT
 

@@ -20,16 +20,15 @@ The format will be like so:
 
 EXAMPLE OUTPUT FORMAT
 
-Date	TTD_hours	TTI_hours	TTR-CJC_days	TTR-C_days
-Month Year	81	82	21	51
-Month Year	80	80	21	53
+Date TTD_hours TTI_hours TTR-CJC_days TTR-C_days
+Month Year 81 82 21 51
+Month Year 80 80 21 53
 (Continue)
 
 END EXAMPLE FORMAT
 
 - Only output numbers in the fields, no special characters like "<, >, =," etc..
 
-- Only output valid CSV data and nothing else. 
+- Only output valid CSV data and nothing else.
 
 - Use the field names in the input; don't make up your own.
-

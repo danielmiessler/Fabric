@@ -202,11 +202,11 @@ Including multiple focus metavariables using set intersection semantics
 
 Include more focus-metavariable keys with different metavariables under the pattern to match results only for the overlapping region of all the focused code:
 
-    patterns:
-      - pattern: foo($X, ..., $Y)
-      - focus-metavariable:
-        - $X
-        - $Y
+patterns:
+  - pattern: foo($X, ..., $Y)
+  - focus-metavariable:
+    - $X
+    - $Y
 
 EXAMPLE
 Try this pattern in the Semgrep Playground.

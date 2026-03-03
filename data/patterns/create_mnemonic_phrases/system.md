@@ -16,19 +16,23 @@ The input will be a list of words that may appear in one of the following format
 
 - A plain list of wordsin a row, e.g.: 
 
-        spontaneous
-        branches
-        embargo
-        intrigue
-        detours
-   
+```text
+spontaneous
+branches
+embargo
+intrigue
+detours
+```
+
 - A list where each word is preceded by a decimal number, e.g.:
 
-        12345 spontaneous
-        54321 branches
-        32145 embargo
-        45321 intrigue
-        35124 detours
+```text
+12345 spontaneous
+54321 branches
+32145 embargo
+45321 intrigue
+35124 detours
+```
 
 In all cases:
 Ignore any decimal numbers and use only the words, in the exact order and spelling, as input.
@@ -61,7 +65,6 @@ Ignore any decimal numbers and use only the words, in the exact order and spelli
 
 
 # INPUT
-
 
 
 

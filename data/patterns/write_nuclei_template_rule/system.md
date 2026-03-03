@@ -691,26 +691,26 @@ The response that the interactsh server sent to the client.
 # Example of Interactsh DNS Interaction matcher:
 
 ```
-    matchers:
-      - type: word
-        part: interactsh_protocol # Confirms the DNS Interaction
-        words:
-          - \"dns\"
+matchers:
+  - type: word
+    part: interactsh_protocol # Confirms the DNS Interaction
+    words:
+      - \"dns\"
 ```text
 Example of HTTP Interaction matcher + word matcher on Interaction content
 
 ```
 matchers-condition: and
 matchers:
-    - type: word
-      part: interactsh_protocol # Confirms the HTTP Interaction
-      words:
-        - \"http\"
+  - type: word
+    part: interactsh_protocol # Confirms the HTTP Interaction
+    words:
+      - \"http\"
 
-    - type: regex
-      part: interactsh_request # Confirms the retrieval of /etc/passwd file
-      regex:
-        - \"root:[x*]:0:0:\"
+  - type: regex
+    part: interactsh_request # Confirms the retrieval of /etc/passwd file
+    regex:
+      - \"root:[x*]:0:0:\"
 ```text
 
 
@@ -847,10 +847,10 @@ status_code_1 and status_code_2 will refer to the response codes of the sequenti
 For example with status_code_1, status_code_3, andbody_2:
 
 ```
-    matchers:
-      - type: dsl
-        dsl:
-          - \"status_code_1 == 404 && status_code_2 == 200 && contains((body_2), \'secret_string\')\"
+matchers:
+  - type: dsl
+    dsl:
+      - \"status_code_1 == 404 && status_code_2 == 200 && contains((body_2), \'secret_string\')\"
 ```text
 Request conditions might require more memory as all attributes of previous responses are kept in memory
 ​
@@ -882,21 +882,21 @@ Another way to create request is using raw requests which comes with more flexib
 
 ```
 http:
-  - raw:
-    - |
+ - raw:
+  - |
         POST /path2/ HTTP/1.1
         Host: {{Hostname}}
         Content-Type: application/x-www-form-urlencoded
 
-        a=test&b=pd
+      a=test&b=pd
 ```text
 Requests can be fine-tuned to perform the exact tasks as desired. Nuclei requests are fully configurable meaning you can configure and define each and every single thing about the requests that will be sent to the target servers.
 
 RAW request format also supports various helper functions letting us do run time manipulation with input. An example of the using a helper function in the header.
 
 ```
-    - raw:
-      - |
+ - raw:
+  - |
         GET /manager/html HTTP/1.1
         Host: {{Hostname}}
         Authorization: Basic {{base64(\'username:password\')}}
@@ -904,8 +904,8 @@ RAW request format also supports various helper functions letting us do run time
 To make a request to the URL specified as input without any additional tampering, a blank Request URI can be used as specified below which will make the request to user specified input.
 
 ```
-    - raw:
-      - |
+ - raw:
+  - |
         GET HTTP/1.1
         Host: {{Hostname}}
 ```text
@@ -1251,10 +1251,10 @@ If you want to confirm the given domain or list of subdomains supports HTTP Pipe
 An example configuring showing pipelining attributes of nuclei.
 
 ```
-    unsafe: true
-    pipeline: true
-    pipeline-concurrent-connections: 40
-    pipeline-requests-per-connection: 25000
+unsafe: true
+pipeline: true
+pipeline-concurrent-connections: 40
+pipeline-requests-per-connection: 25000
 ```text
 An example template demonstrating pipelining capabilities of nuclei has been provided below:
 

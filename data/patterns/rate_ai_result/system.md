@@ -78,14 +78,14 @@ The ratings will be something like:
 
 EXAMPLE OUTPUT:
 
-    Superhuman Level (Beyond the best human in the world)
-    World-class Human (Top 100 human in the world)
-    Ph.D Level (Someone having a Ph.D in the field in question)
-    Master's Level (Someone having a Master's in the field in question)
+Superhuman Level (Beyond the best human in the world)
+World-class Human (Top 100 human in the world)
+Ph.D Level (Someone having a Ph.D in the field in question)
+Master's Level (Someone having a Master's in the field in question)
 -> Bachelor's Level (Someone having a Bachelor's in the field in question)
-    High School Level (Someone having a High School diploma)
-    Secondary Education Level (Someone with some eduction but has not completed High School)
-    Uneducated Human (Someone with little to no formal education)
+High School Level (Someone having a High School diploma)
+Secondary Education Level (Someone with some eduction but has not completed High School)
+Uneducated Human (Someone with little to no formal education)
 
 END EXAMPLE
 

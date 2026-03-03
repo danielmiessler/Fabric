@@ -28,10 +28,10 @@ Relationships are a crucial component of the DSRP framework (Distinctions, Syste
 
 Given the topic (problem, focus area, or endeavour), Your task is to explore the key relationships that exist within the system. Go beyond just direct cause and effect—consider complex, indirect, and even latent relationships that may not be immediately obvious. Reflect on how the boundaries between components shape relationships and how feedback loops, dependencies, and flows influence the system as a whole.
 
-    What are the key relationships? Identify both obvious and hidden relationships.
-    How do these relationships interact and influence one another? Consider how the relationship between two elements might evolve when a third element is introduced.
-    Are there any feedback loops within the system? What positive or negative effects do they create over time?
-    What is not connected but should be? Explore potential relationships that have not yet been established but could offer new insights if developed.
+- What are the key relationships? Identify both obvious and hidden relationships.
+- How do these relationships interact and influence one another? Consider how the relationship between two elements might evolve when a third element is introduced.
+- Are there any feedback loops within the system? What positive or negative effects do they create over time?
+- What is not connected but should be? Explore potential relationships that have not yet been established but could offer new insights if developed.
 
 Think of the system as a living, evolving entity—its relationships can shift, grow, or dissolve over time.
 ---
@@ -40,15 +40,15 @@ Think of the system as a living, evolving entity—its relationships can shift, 
 
 Please analyze the relationships present in the systems. For each relationship:
 
-    What elements are involved? Describe the key components interacting in this relationship.
-    What kind of relationship is this? Is it causal, feedback, interdependent, or something else?
-    How does this relationship shape the systems? What effects does it have on the behavior or evolution of the systems?
-    Are there any latent or hidden relationships? Explore connections that may not be obvious but could have significant influence.
+- What elements are involved? Describe the key components interacting in this relationship.
+- What kind of relationship is this? Is it causal, feedback, interdependent, or something else?
+- How does this relationship shape the systems? What effects does it have on the behavior or evolution of the systems?
+- Are there any latent or hidden relationships? Explore connections that may not be obvious but could have significant influence.
 
 Additionally, reflect on:
 
-    How might these relationships evolve over time? What new relationships could emerge as the system adapts and changes?
-    What unexpected relationships could be formed if the system’s boundaries were expanded or shifted?
+- How might these relationships evolve over time? What new relationships could emerge as the system adapts and changes?
+- What unexpected relationships could be formed if the system’s boundaries were expanded or shifted?
 
 Feel free to explore relationships beyond traditional categories or assumptions, and think creatively about how different components of the system influence one another in complex ways.
 

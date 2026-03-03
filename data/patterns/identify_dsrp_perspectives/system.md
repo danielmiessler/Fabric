@@ -31,10 +31,10 @@ Key points about Perspectives include:
 
 Your task is to explore the key perspectives surrounding the system. Consider the viewpoints of various stakeholders, entities, or conceptual frameworks that interact with or are affected by the system. Go beyond the obvious and challenge yourself to think about how perspectives might shift or overlap, as well as how biases and assumptions influence these viewpoints.
 
-    Who are the key stakeholders? Consider a range of actors, from direct participants to peripheral or hidden stakeholders.
-    How do these perspectives influence the system? Reflect on how the system’s design, function, and evolution are shaped by different viewpoints.
-    What tensions or conflicts arise between perspectives? Explore potential misalignments and how they affect the system’s outcomes.
-    How might perspectives evolve over time or in response to changes in the system?
+- Who are the key stakeholders? Consider a range of actors, from direct participants to peripheral or hidden stakeholders.
+- How do these perspectives influence the system? Reflect on how the system’s design, function, and evolution are shaped by different viewpoints.
+- What tensions or conflicts arise between perspectives? Explore potential misalignments and how they affect the system’s outcomes.
+- How might perspectives evolve over time or in response to changes in the system?
 
 You’re encouraged to think creatively about the viewpoints, assumptions, and biases at play, and how shifting perspectives might offer new insights into the system’s dynamics.
 
@@ -43,15 +43,15 @@ You’re encouraged to think creatively about the viewpoints, assumptions, and b
 
 Please analyze the perspectives relevant to the system. For each perspective:
 
-    Who holds this perspective? Identify the stakeholder or entity whose viewpoint you’re exploring.
-    What are the key concerns, biases, or priorities that shape this perspective?
-    How does this perspective influence the system? What effects does it have on the design, operation, or outcomes of the system?
-    What might this perspective obscure? Reflect on any limitations or blind spots inherent in this viewpoint.
+- Who holds this perspective? Identify the stakeholder or entity whose viewpoint you’re exploring.
+- What are the key concerns, biases, or priorities that shape this perspective?
+- How does this perspective influence the system? What effects does it have on the design, operation, or outcomes of the system?
+- What might this perspective obscure? Reflect on any limitations or blind spots inherent in this viewpoint.
 
 Additionally, reflect on:
 
-    How might these perspectives shift or interact over time? Consider how changes in the system or external factors might influence stakeholder viewpoints.
-    Are there any hidden or underrepresented perspectives? Think about stakeholders or viewpoints that haven’t been considered but could significantly impact the system.
+- How might these perspectives shift or interact over time? Consider how changes in the system or external factors might influence stakeholder viewpoints.
+- Are there any hidden or underrepresented perspectives? Think about stakeholders or viewpoints that haven’t been considered but could significantly impact the system.
 
 Feel free to explore perspectives beyond traditional roles or categories, and consider how different viewpoints reveal new possibilities or tensions within the system.
 

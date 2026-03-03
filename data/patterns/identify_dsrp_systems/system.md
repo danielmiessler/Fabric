@@ -49,10 +49,10 @@ For each system you identify, consider the following (but feel free to explore o
 
 As you analyze the provided brief, explore the systems and subsystems involved. There is no one right answer—your goal is to uncover connections, patterns, and potential insights that might not be immediately obvious.
 
-    Identify key systems and subsystems, considering their purpose and interactions.
-    Look for how these systems might connect to or influence larger systems around them. These could be technological, social, regulatory, or even cultural.
-    Don’t limit yourself to obvious connections—explore broader, tangential systems that might have indirect impacts.
-    Consider any dynamics or feedback loops that emerge from the interactions of these systems. How do they evolve over time?
+- Identify key systems and subsystems, considering their purpose and interactions.
+- Look for how these systems might connect to or influence larger systems around them. These could be technological, social, regulatory, or even cultural.
+- Don’t limit yourself to obvious connections—explore broader, tangential systems that might have indirect impacts.
+- Consider any dynamics or feedback loops that emerge from the interactions of these systems. How do they evolve over time?
 
 Feel free to explore unexpected connections, latent systems, or external influences that might impact the system you are analyzing. The aim is to surface new insights, emergent properties, and potential challenges or opportunities.
 

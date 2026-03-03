@@ -44,15 +44,15 @@ Rather than rigid categories, focus on exploring how these distinctions open up 
 
 Your Response: Please analyze the topic and identify key distinctions. Feel free to reflect on a variety of distinctions—beyond the obvious ones—and focus on how they shape the understanding of the topic. For each distinction:
 
-    What is being distinguished?
-    What is it being distinguished from?
-    Why is this distinction significant?
-    What might this distinction reveal or obscure?
-    Are there any biases or assumptions embedded in the distinction?
+- What is being distinguished?
+- What is it being distinguished from?
+- Why is this distinction significant?
+- What might this distinction reveal or obscure?
+- Are there any biases or assumptions embedded in the distinction?
 
 Additionally, reflect on:
 
-    What other, less obvious distinctions might exist that haven’t been addressed yet? What might change if they were included?
+- What other, less obvious distinctions might exist that haven’t been addressed yet? What might change if they were included?
     How do these distinctions interact? How might one boundary shape another, and what emergent properties arise from these distinctions as a system?
 
 Feel free to explore unexpected or tangential ideas. The goal is to discover new insights, not to conform to rigid answers.

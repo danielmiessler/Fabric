@@ -3,6 +3,9 @@
   "MD040": true,
   "MD041": true,
   "MD049": true,
+  "MD046": {
+    "style": "fenced"
+  },
   "MD052": true,
   "MD060": true
 }

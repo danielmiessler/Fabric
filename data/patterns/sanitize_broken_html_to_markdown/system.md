@@ -193,23 +193,23 @@ function initialize(userOptions: DefaultTheme.AlgoliaSearchOptions) {
   >({}, userOptions, {
     container: '#docsearch',
 
-    navigator: {
+  navigator: {
       navigate({ itemUrl }) {
         const { pathname: hitPathname } = new URL(
           window.location.origin + itemUrl
         )
 
-        // router doesn't handle same-page navigation so we use the native
-        // browser location API for anchor navigation
-        if (route.path === hitPathname) {
-          window.location.assign(window.location.origin + itemUrl)
-        } else {
-          router.go(itemUrl)
-        }
+  // router doesn't handle same-page navigation so we use the native
+  // browser location API for anchor navigation
+  if (route.path === hitPathname) {
+    window.location.assign(window.location.origin + itemUrl)
+  } else {
+    router.go(itemUrl)
+  }
       }
     },
 
-    transformItems(items) {
+  transformItems(items) {
       return items.map((item) => {
         return Object.assign({}, item, {
           url: getRelativePath(item.url)
@@ -217,7 +217,7 @@ function initialize(userOptions: DefaultTheme.AlgoliaSearchOptions) {
       })
     },
 
-    hitComponent({ hit, children }) {
+  hitComponent({ hit, children }) {
       return {
         __v: null,
         type: 'a',
@@ -324,10 +324,10 @@ function onBlur() {
         <span class="vpi-chevron-down text-icon" />
       </span>
 
-      <span v-else class="vpi-more-horizontal icon" />
+  <span v-else class="vpi-more-horizontal icon" />
     </button>
 
-    <div class="menu">
+  <div class="menu">
       <DPMenu :items="items">
         <slot />
       </DPMenu>
@@ -524,7 +524,7 @@ const heroImageSlotExists = inject('hero-image-slot-exists') as Ref<boolean>
         </slot>
         <slot name="home-hero-info-after" />
 
-        <div v-if="actions" class="actions">
+  <div v-if="actions" class="actions">
           <div v-for="action in actions" :key="action.link" class="action">
             <button
               tag="a"
@@ -540,7 +540,7 @@ const heroImageSlotExists = inject('hero-image-slot-exists') as Ref<boolean>
         <slot name="home-hero-actions-after" />
       </div>
 
-      <div v-if="image || heroImageSlotExists" class="image">
+  <div v-if="image || heroImageSlotExists" class="image">
         <div class="image-container">
           <div class="image-bg" />
           <slot name="home-hero-image">
@@ -821,14 +821,14 @@ const heroImageSlotExists = inject('hero-image-slot-exists') as Ref<boolean>
   }
 }
 </style><template>
-    <div class="w-full px-4 sm:px-6 xl:px-0 max-w-theme mx-auto mt-12 sm:mt-24">
+<div class="w-full px-4 sm:px-6 xl:px-0 max-w-theme mx-auto mt-12 sm:mt-24">
       <div class="main">
         <div v-if="frontmatter.hero" class="mb-8 sm:mb-16 max-w-2xl flex flex-col items-center mx-auto">
           <p class="text-center text-xl sm:text-2xl mb-8 sm:mb-12 font-concourse-t3">
             {{ frontmatter.hero.tagline }}
           </p>
   
-          <div class="flex flex-wrap justify-center gap-4 sm:gap-x-8 font-concourse-t3 text-base sm:text-lg">
+  <div class="flex flex-wrap justify-center gap-4 sm:gap-x-8 font-concourse-t3 text-base sm:text-lg">
             <a v-for="action in frontmatter.hero.actions"
                :key="action.link"
                :href="action.link"
@@ -1086,20 +1086,20 @@ debouncedWatch(
       cache.clear()
     }
 
-    let canceled = false
+let canceled = false
     onCleanup(() => {
       canceled = true
     })
 
-    if (!index) return
+  if (!index) return
 
-    // Search
+  // Search
     results.value = index
       .search(filterTextValue)
       .slice(0, 16) as (SearchResult & Result)[]
     enableNoResults.value = true
 
-    // Highlighting
+  // Highlighting
     const mods = showDetailedListValue
       ? await Promise.all(results.value.map((r) => fetchExcerpt(r.id)))
       : []
@@ -1145,9 +1145,9 @@ debouncedWatch(
       if (canceled) return
     }
 
-    const terms = new Set<string>()
+  const terms = new Set<string>()
 
-    results.value = results.value.map((r) => {
+results.value = results.value.map((r) => {
       const [id, anchor] = r.id.split('#')
       const map = cache.get(id)
       const text = map?.get(anchor) ?? ''
@@ -1157,10 +1157,10 @@ debouncedWatch(
       return { ...r, text }
     })
 
-    await nextTick()
+await nextTick()
     if (canceled) return
 
-    await new Promise((r) => {
+await new Promise((r) => {
       mark.value?.unmark({
         done: () => {
           mark.value?.markRegExp(formMarkRegex(terms), { done: r })
@@ -1168,7 +1168,7 @@ debouncedWatch(
       })
     })
 
-    const excerpts = el.value?.querySelectorAll('.result .excerpt') ?? []
+const excerpts = el.value?.querySelectorAll('.result .excerpt') ?? []
     for (const excerpt of excerpts) {
       excerpt
         .querySelector('mark[data-markjs="true"]')
@@ -1357,7 +1357,7 @@ function onMouseMove(e: MouseEvent) {
     >
       <div class="backdrop" @click="$emit('close')" />
 
-      <div class="shell">
+  <div class="shell">
         <form
           class="search-bar"
           @pointerup="onSearchBarClick($event)"
@@ -1371,7 +1371,7 @@ function onMouseMove(e: MouseEvent) {
             <span aria-hidden="true" class="vpi-search search-icon local-search-icon" />
           </label>
           <div class="search-actions before">
-            <button
+  <button
               class="back-button"
               :title="'back'"
               @click="$emit('close')"
@@ -1398,7 +1398,7 @@ function onMouseMove(e: MouseEvent) {
             type="search"
           />
           <div class="search-actions">
-            <button
+  <button
               v-if="!disableDetailedView"
               class="toggle-layout-button"
               type="button"
@@ -1411,7 +1411,7 @@ function onMouseMove(e: MouseEvent) {
               <span class="vpi-layout-list local-search-icon" />
             </button>
 
-            <button
+  <button
               class="clear-button"
               type="reset"
               :disabled="disableReset"
@@ -1423,7 +1423,7 @@ function onMouseMove(e: MouseEvent) {
           </div>
         </form>
 
-        <ul
+  <ul
           ref="resultsEl"
           :id="results?.length ? 'localsearch-list' : undefined"
           :role="results?.length ? 'listbox' : undefined"
@@ -1466,7 +1466,7 @@ function onMouseMove(e: MouseEvent) {
                   </span>
                 </div>
 
-                <div v-if="showDetailedList" class="excerpt-wrapper">
+  <div v-if="showDetailedList" class="excerpt-wrapper">
                   <div v-if="p.text" class="excerpt" inert>
                     <div class="vp-doc" v-html="p.text" />
                   </div>
@@ -1485,7 +1485,7 @@ function onMouseMove(e: MouseEvent) {
           </li>
         </ul>
 
-        <div class="search-keyboard-shortcuts">
+  <div class="search-keyboard-shortcuts">
           <span>
             <kbd :aria-label="'up'">
               <span class="vpi-arrow-up navigate-icon" />
@@ -1825,7 +1825,7 @@ defineProps<{
       </template>
     </div>
 
-    <slot />
+  <slot />
   </div>
 </template>
 
@@ -1891,7 +1891,7 @@ defineProps<{
   <div class="VPMenuGroup">
     <p v-if="text" class="title">{{ text }}</p>
 
-    <template v-for="item in items">
+<template v-for="item in items">
       <DPMenuLink v-if="'link' in item" :item="item" />
     </template>
   </div>
@@ -2087,7 +2087,7 @@ watchPostEffect(() => {
           </VPNavBarTitle>
         </div>
 
-        <div class="content">
+  <div class="content">
           <div class="content-body">
             <slot name="nav-bar-content-before" />
             <VPNavBarSearch class="search" />
@@ -2102,7 +2102,7 @@ watchPostEffect(() => {
       </div>
     </div>
 
-    <div class="divider">
+  <div class="divider">
       <div class="divider-line" />
     </div>
   </div>
@@ -2324,12 +2324,12 @@ const hasExtraContent = computed(
     >
       <p class="trans-title">{{ currentLang.label }}</p>
 
-      <template v-for="locale in localeLinks" :key="locale.link">
+  <template v-for="locale in localeLinks" :key="locale.link">
         <VPMenuLink :item="locale" />
       </template>
     </div> -->
 
-    <div
+  <div
       v-if="
         site.appearance &&
         site.appearance !== 'force-dark' &&
@@ -2347,7 +2347,7 @@ const hasExtraContent = computed(
       </div>
     </div>
 
-    <div v-if="theme.socialLinks" class="group">
+  <div v-if="theme.socialLinks" class="group">
       <div class="item social-links">
         <DPSocialLinks class="social-links-list" :links="theme.socialLinks" />
       </div>
@@ -2755,19 +2755,19 @@ const provider = __ALGOLIA__ ? 'algolia' : __VP_LOCAL_SEARCH__ ? 'local' : ''
         @close="showSearch = false"
       />
 
-      <div id="local-search">
+  <div id="local-search">
         <DPNavBarSearchButton @click="showSearch = true" />
       </div>
     </template>
 
-    <template v-else-if="provider === 'algolia'">
+<template v-else-if="provider === 'algolia'">
       <DPAlgoliaSearchBox
         v-if="loaded"
         :algolia="theme.search?.options ?? theme.algolia"
         @vue:beforeMount="actuallyLoaded = true"
       />
 
-      <div v-if="!actuallyLoaded" id="docsearch">
+  <div v-if="!actuallyLoaded" id="docsearch">
         <DPNavBarSearchButton @click="load" />
       </div>
     </template>
@@ -3299,17 +3299,17 @@ function toggle() {
       <span class="vpi-plus button-icon" />
     </button>
 
-    <div :id="groupId" class="items">
+  <div :id="groupId" class="items">
       <template v-for="item in items" :key="JSON.stringify(item)">
         <div v-if="'link' in item" class="item">
           <VPNavScreenMenuGroupLink :item="item" />
         </div>
 
-        <div v-else-if="'component' in item" class="item">
+  <div v-else-if="'component' in item" class="item">
           <component :is="item.component" v-bind="item.props" screen-menu />
         </div>
 
-        <div v-else class="group">
+  <div v-else class="group">
           <VPNavScreenMenuGroupSection :text="item.text" :items="item.items" />
         </div>
       </template>
@@ -3689,7 +3689,7 @@ defineProps<{
   justify-content: center;
 }
 </style><template>
-    <button class="VPSwitch" type="button" role="switch">
+  <button class="VPSwitch" type="button" role="switch">
       <span class="check">
         <span class="icon" v-if="$slots.default">
           <slot />
@@ -3804,7 +3804,7 @@ watchPostEffect(() => {
   transform: translateX(18px);
 }
 </style><template>
-    <div class="w-full px-5 sm:px-6 xl:px-0 max-w-theme mx-auto mt-24">
+  <div class="w-full px-5 sm:px-6 xl:px-0 max-w-theme mx-auto mt-24">
       <div class="main">
         <h1 class="text-4xl font-bold mb-8">{{ frontmatter.title }}</h1>
         <Content />
@@ -3816,7 +3816,7 @@ watchPostEffect(() => {
 import { useData } from "vitepress";
 const { frontmatter } = useData();
 </script><template>
-    <div class="w-full px-5 sm:px-6 xl:px-0 max-w-theme mx-auto mt-24">
+  <div class="w-full px-5 sm:px-6 xl:px-0 max-w-theme mx-auto mt-24">
       <div class="main">
         <h1 class="text-4xl font-bold mb-8">{{ frontmatter.title }}</h1>
         <Content />

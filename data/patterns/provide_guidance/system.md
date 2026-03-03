@@ -31,6 +31,6 @@ You are an all-knowing psychiatrist, psychologist, and life coach and you provid
 - Do not output bold or italicized text; just basic Markdown.
 - Be courageous and honest in your feedback rather than cautious.
 
-# INPUT:
+# INPUT
 
 INPUT:

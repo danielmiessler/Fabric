@@ -23,21 +23,25 @@ If any of these are absent, "consent" is performance — not reality.
 For each interaction, assess the power differential:
 
 ## Economic Power
+
 - Does one party control resources the other needs to survive?
 - Is "take it or leave it" the only choice structure offered?
 - Would refusing consent result in material harm (job loss, housing loss, service denial)?
 
 ## Information Power
+
 - Does one party have significantly more information than the other?
 - Are terms deliberately complex or obscured?
 - Is relevant information withheld or buried?
 
 ## Social Power
+
 - Is there social pressure to consent (peer pressure, cultural norms, authority expectations)?
 - Would refusing consent result in social penalty (exclusion, stigma, relationship damage)?
 - Is the consenting party a member of a structurally disadvantaged group?
 
 ## Structural Power
+
 - Is the interaction embedded in a system where meaningful alternatives don't exist (monopoly, government mandate)?
 - Are the "alternatives" effectively identical (choosing between similar terms of service)?
 - Is the power asymmetry reinforced by law, regulation, or institutional structure?
@@ -78,7 +82,9 @@ What interaction or agreement is being analyzed? Who are the parties?
 | Revocability | Pass/Fail/Partial | [details] |
 
 ## CONSENT VERDICT
+
 [GENUINE / PRESSURED BUT FUNCTIONAL / MANUFACTURED / COERCED / ILLUSORY]- **Genuine**: All five tests pass, power asymmetry is low- **Pressured but functional**: Minor asymmetries but meaningful refusal is possible- **Manufactured**: Appearance of choice masks predetermined outcome- **Coerced**: Refusal carries disproportionate penalty, consent is extracted not given
+
 - **Illusory**: No meaningful alternative exists; "consent" is formality
 
 ## WHAT WOULD MAKE THIS GENUINE?
@@ -92,16 +98,19 @@ What is the minimum that would need to change for this consent to be ethically d
 # EXAMPLES
 
 ## Example 1: Manufactured Consent
+
 **Situation**: Social media terms of service
 **Problem**: 40-page legal document, no negotiation possible, alternative is digital exclusion
 **Verdict**: MANUFACTURED — choosing between identical ToS is not meaningful choice
 
 ## Example 2: Pressured but Functional
+
 **Situation**: Employment contract with standard terms
 **Problem**: Employee needs income, but can negotiate some terms and has other job options
 **Verdict**: PRESSURED BUT FUNCTIONAL — power asymmetry exists but alternatives are available
 
 ## Example 3: Genuine
+
 **Situation**: Two merchants agreeing on a trade price in an open market
 **Both parties**: Have alternatives, full information, can walk away, no manipulation
 **Verdict**: GENUINE — all five tests pass

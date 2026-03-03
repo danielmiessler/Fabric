@@ -45,6 +45,6 @@ AVERAGE CLAIM SCORE:
 
 - In a section called OVERALL ANALYSIS:, give a 30-word summary of the quality of the argument(s) made in the input, its weaknesses, its strengths, and a recommendation for how to possibly update one's understanding of the world based on the arguments provided.
 
-# INPUT:
+# INPUT
 
 INPUT:

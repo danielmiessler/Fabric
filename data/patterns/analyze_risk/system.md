@@ -39,17 +39,9 @@ The following assumptions:
 
 * The data is considered public data aka Category 1, however very specialized in audio.
 
-
-
-
-
 Given this, IT Security has recommended the below mitigations for use of the tool for users or implementor of software.
 
-
-
 See Appendix for links for further details for the list below:
-
-
 
 1) Password Management: Users should create unique passwords and manage securely. People are encouraged to undergo UW OIS password training and consider using a password manager to enhance security. It’s crucial not to reuse their NETID password for the vendor account.
 
@@ -71,10 +63,7 @@ See Appendix for links for further details for the list below:
 
 This is not a comprehensive list of Risks.
 
-
 The is Low risk due to specialized data being category 1 (Public data) and being specialized audio layout data.
-
-
 
 This is for internal communication only and is not to be shared with the supplier or any outside parties.
 

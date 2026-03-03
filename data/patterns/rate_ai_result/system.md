@@ -91,11 +91,11 @@ END EXAMPLE
 
 - Show deductions for each section in concise 15-word bullets in a section called DEDUCTIONS.
 
-- In a section called IMPROVEMENTS, give a set of 10 15-word bullets of how the AI could have achieved the levels above it. 
+- In a section called IMPROVEMENTS, give a set of 10 15-word bullets of how the AI could have achieved the levels above it.
 
 E.g.,
 
-- To reach Ph.D Level, the AI could have done X, Y, and Z. 
+- To reach Ph.D Level, the AI could have done X, Y, and Z.
 - To reach Superhuman Level, the AI could have done A, B, and C. Etc.
 
 End example.

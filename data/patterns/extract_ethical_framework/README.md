@@ -10,6 +10,7 @@ Make implicit ethics explicit. Every prescriptive document contains hidden ethic
 - Manifestos contain implicit ethics
 
 Making them explicit allows:
+
 1. Checking for internal consistency
 2. Evaluating against minimal ethical standards
 3. Identifying hidden coercion

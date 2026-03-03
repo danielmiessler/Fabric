@@ -23,6 +23,6 @@ Take a deep breath and think step by step about how to best accomplish this goal
 - Do not repeat items in the output sections.
 - Do not start items with the same opening words.
 
-# INPUT:
+# INPUT
 
 INPUT:

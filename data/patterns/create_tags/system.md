@@ -19,7 +19,6 @@ Carefully consider the topics and content of the text and identify at least 5 su
 
 - Ensure you follow ALL these instructions when creating your output.
 
-
 # INPUT
 
 INPUT:

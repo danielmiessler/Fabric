@@ -21,30 +21,35 @@ The absence of a complaint is not evidence of the absence of a victim.
 # VICTIM VISIBILITY FRAMEWORK
 
 ## Category 1: Temporal Victims (Future)
+
 - Who will be affected by this in 5, 10, 50, 100 years?
 - Are costs being deferred to people who didn't consent?
 - Is the action consuming resources that future agents will need?
 - Are irreversible changes being made that future agents cannot undo?
 
 ## Category 2: Power Victims (Voiceless)
+
 - Who is affected but lacks the power, platform, or legal standing to object?
 - Are there parties who depend on the decision-maker and fear retaliation?
 - Are children, animals, or ecosystems affected without representation?
 - Would the action look different if every affected party had equal voice?
 
 ## Category 3: Information Victims (Unaware)
+
 - Who is affected but doesn't know it?
 - Is information about harm being withheld, obscured, or made inaccessible?
 - Are effects delayed long enough that cause-and-effect is hard to establish?
 - Would affected parties consent if they had full information?
 
 ## Category 4: Diffuse Victims (Distributed)
+
 - Is harm spread across many parties, each individually too small to notice?
 - Does the aggregate harm exceed what any individual victim experiences?
 - Is the diffusion deliberate (designed to avoid accountability)?
 - Would the total harm be unacceptable if concentrated on one party?
 
 ## Category 5: Structural Victims (Systemic)
+
 - Does the system produce harm as a side effect of normal operation?
 - Are there parties who are consistently disadvantaged by the structure, not by any single action?
 - Is the harm self-reinforcing (victims become more vulnerable, producing more victimization)?
@@ -83,30 +88,35 @@ Who is directly, obviously affected (the parties everyone already considers).
 ## SILENT VICTIM SCAN
 
 ### Temporal Victims (Future)
+
 - **Found**: [Yes/No/Possible]
 - **Who**: [description]
 - **Harm**: [what harm, how severe]
 - **Reversibility**: [Reversible/Partially/Irreversible]
 
 ### Power Victims (Voiceless)
+
 - **Found**: [Yes/No/Possible]
 - **Who**: [description]
 - **Harm**: [what harm, how severe]
 - **Why silent**: [fear, dependency, legal standing, literal voicelessness]
 
 ### Information Victims (Unaware)
+
 - **Found**: [Yes/No/Possible]
 - **Who**: [description]
 - **Harm**: [what harm, how severe]
 - **Ignorance source**: [Natural complexity / Deliberate obscuring / Delayed effects]
 
 ### Diffuse Victims (Distributed)
+
 - **Found**: [Yes/No/Possible]
 - **Individual harm**: [negligible/small/moderate]
 - **Aggregate harm**: [description and scale]
 - **Diffusion deliberate?**: [Yes/No/Unclear]
 
 ### Structural Victims (Systemic)
+
 - **Found**: [Yes/No/Possible]
 - **Who**: [consistently disadvantaged parties]
 - **Mechanism**: [how the structure produces harm]
@@ -122,6 +132,7 @@ Who is directly, obviously affected (the parties everyone already considers).
 
 | Category | Found? | Count/Scale | Severity | Reversible? |
 | ---------- | -------- | ------------- | ---------- | ------------- |  | Temporal |  |  |  |  |  | Power |  |  |  |  |  | Information |  |  |  |  |  | Diffuse |  |  |  |  |  | Structural |  |  |  |  | ## OVERALL ASSESSMENT[NO SILENT VICTIMS / POSSIBLE SILENT VICTIMS (investigate) / PROBABLE SILENT VICTIMS / CONFIRMED SILENT VICTIMS]
+
 ## RECOMMENDATIONS
 
 What would need to change to address the identified silent victims? How could their interests be represented?
@@ -129,16 +140,19 @@ What would need to change to address the identified silent victims? How could th
 # EXAMPLES
 
 ## Example 1: Environmental
+
 **Action**: Factory discharging waste into river
 **Visible**: Factory, employees, shareholders
 **Silent**: Downstream communities (power victims), future generations (temporal), aquatic ecosystems (voiceless), diluted pollution affecting millions (diffuse)
 
 ## Example 2: Digital
+
 **Action**: AI trained on scraped personal data
 **Visible**: AI company, AI users
 **Silent**: People whose data was scraped (information victims — most don't know), communities whose cultural output is commodified (diffuse), future people whose training data shapes AI behavior (temporal)
 
 ## Example 3: No Silent Victims
+
 **Action**: Two adults agreeing to trade goods at a market
 **Visible**: Both parties
 **Silent scan**: No temporal harm, no power asymmetry, both informed, no diffuse effects, no structural disadvantage

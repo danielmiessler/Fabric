@@ -64,6 +64,6 @@ You are an expert at extracting all of the inspirational, educational quotes and
 - List all quotes
 - Do not output warnings or notes—just the requested sections
 
-# INPUT:
+# INPUT
 
 INPUT:

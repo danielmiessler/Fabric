@@ -10,11 +10,14 @@ echo "INSERT_YOUR_IDEA_HERE" | fabric -p create_coding_project
 
 ## Example
 
-### <u>Input</u>:
+### <u>Input</u>
+
 ```bash
 echo "I want to create a project that can generate shell scripts from yaml files then upload them to a Jamf Pro server via the Jamf Pro API." | fabric -p create_coding_project
 ```
-### <u>Output</u>:
+
+### <u>Output</u>
+
 PROJECT:
 
 Automate shell script generation from YAML files and upload to Jamf Pro server using Jamf Pro API.

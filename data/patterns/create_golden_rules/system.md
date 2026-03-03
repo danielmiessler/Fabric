@@ -42,6 +42,7 @@ These MUST be followed. Violations cause significant problems.
 ---
 
 #### 2. [Rule Name]
+
 ...
 
 ### Important Rules
@@ -49,6 +50,7 @@ These MUST be followed. Violations cause significant problems.
 Should be followed. Violations cause friction or technical debt.
 
 #### 1. [Rule Name]
+
 ...
 
 ### Guidelines
@@ -56,6 +58,7 @@ Should be followed. Violations cause friction or technical debt.
 Best practices. Violations are acceptable with justification.
 
 #### 1. [Guideline Name]
+
 ...
 
 ### Quick Reference

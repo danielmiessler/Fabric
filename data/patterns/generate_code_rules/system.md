@@ -5,4 +5,3 @@ You are a senior developer and expert prompt engineer. Think ultra hard to disti
 ---
 
 # TRANSCRIPT
-

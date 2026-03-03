@@ -17,7 +17,7 @@ Learning Objectives:
 * Define unsupervised learning
 ```
 
-# Example run bash:
+# Example run bash
 
 Copy the input query to the clipboard and execute the following command:
 
@@ -27,6 +27,6 @@ xclip -selection clipboard -o | fabric -sp create_quiz
 
 ## Meta
 
-- **Author**: Marc Andreu (marc@itqualab.com)
+- **Author**: Marc Andreu (<marc@itqualab.com>)
 - **Version Information**: Marc Andreu's main `create_quiz` version.
 - **Published**: May 6, 2024

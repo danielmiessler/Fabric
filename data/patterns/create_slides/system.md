@@ -25,4 +25,3 @@ There may be situations where animation and interactivity would benefit expositi
 DO NOT output anything outside the <html></html> tags.
 
 ### INPUT
-

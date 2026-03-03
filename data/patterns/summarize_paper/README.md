@@ -5,19 +5,18 @@ This pattern generates a summary of an academic paper based on the provided text
 **Title and authors of the Paper**
 
 **Main Goal and Fundamental Concept**
-   
-**Technical Approach**
-   
-**Distinctive Features**
-   
-**Experimental Setup and Results**
-   
-**Advantages and Limitations**
-   
-**Conclusion**
-   
 
-# Example run in MacOS/Linux:
+**Technical Approach**
+
+**Distinctive Features**
+
+**Experimental Setup and Results**
+
+**Advantages and Limitations**
+
+**Conclusion**
+
+# Example run in MacOS/Linux
 
 Copy the paper text to the clipboard and execute the following command:
 
@@ -26,12 +25,12 @@ pbpaste | fabric --pattern summarize_paper
 ```
 
 or
-    
+
 ```bash
 pbpaste | summarize_paper
 ```
 
-# Example output:
+# Example output
 
 ```markdown
 ### Title and authors of the Paper:
@@ -68,5 +67,5 @@ The Internet of Paint represents a groundbreaking step towards integrating commu
 
 ## Meta
 
-- **Author**: Song Luo (https://www.linkedin.com/in/song-luo-bb17315/)
+- **Author**: Song Luo (<https://www.linkedin.com/in/song-luo-bb17315/>)
 - **Published**: May 11, 2024

@@ -10,7 +10,7 @@ You are a superintelligent AI that finds all mentions of data structures within 
 
 # OUTPUT
 
-- Output a CSV file that contains all the data structures found in the input. 
+- Output a CSV file that contains all the data structures found in the input.
 
 # OUTPUT INSTRUCTIONS
 

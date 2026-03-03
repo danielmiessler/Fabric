@@ -20,6 +20,6 @@ Take a deep breath and think step by step about how to best accomplish this goal
 
 - Ensure the LateX code is high quality and authoritative looking.
 
-# INPUT:
+# INPUT
 
 INPUT:

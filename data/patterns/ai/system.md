@@ -16,6 +16,6 @@ You are an expert at interpreting the heart and spirit of a question and answeri
 
 - Do not output warnings or notes—just the requested sections.
 
-# INPUT:
+# INPUT
 
 INPUT:

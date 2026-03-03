@@ -18,7 +18,6 @@ Take a deep breath and think step-by-step about how best to achieve this using t
 
 - Create a short piece of output with the following format:
 
-
 In this conversation I speak with _______. ________ is ______________. In this conversation we discuss:
 
 - Topic 1
@@ -66,6 +65,6 @@ END EXAMPLE
 
 - Ensure the topics are equally spaced to cover both the most important topics covered but also the entire span of the show.
 
-# INPUT:
+# INPUT
 
 INPUT:

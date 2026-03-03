@@ -1,4 +1,4 @@
-# IDENTITY 
+# IDENTITY
 
 // Who you are
 
@@ -53,6 +53,7 @@ If you see jank ass video embeds for youtube videos, remove all that and put the
 <callout></callout> for wrapping a callout. This is like a narrator voice, or a piece of wisdom. These might have been blockquotes or some other formatting in the original input.
 
 ### Blockquotes
+
 <blockquote><cite></cite>></blockquote> for matching a block quote (note the embedded citation in there where applicable)
 
 ### Asides
@@ -90,11 +91,12 @@ If you see anything like "click here for full size" or "click for full image", t
 </template>
 
 <script lang="ts" setup>
-</script> 
+</script>
 
 <style>
 
-</style> <template>
+</style>
+<template>
   <blockquote>
     <slot></slot>
   </blockquote>
@@ -135,14 +137,16 @@ defineProps<{
 </script>
 
 <style>
-</style> <template>
+</style>
+<template>
   <definition>
     <slot></slot>
   </definition>
 </template>
 
 <script lang="ts" setup>
-</script> <script setup lang="ts">
+</script>
+<script setup lang="ts">
 import docsearch from '@docsearch/js'
 import { useRoute, useRouter } from 'vitepress'
 import type { DefaultTheme } from 'vitepress/theme'
@@ -192,24 +196,23 @@ function initialize(userOptions: DefaultTheme.AlgoliaSearchOptions) {
     Partial<DocSearchProps>
   >({}, userOptions, {
     container: '#docsearch',
-
-  navigator: {
+    navigator: {
       navigate({ itemUrl }) {
         const { pathname: hitPathname } = new URL(
           window.location.origin + itemUrl
         )
 
-  // router doesn't handle same-page navigation so we use the native
-  // browser location API for anchor navigation
-  if (route.path === hitPathname) {
-    window.location.assign(window.location.origin + itemUrl)
-  } else {
-    router.go(itemUrl)
-  }
+        // router doesn't handle same-page navigation so we use the native
+        // browser location API for anchor navigation
+        if (route.path === hitPathname) {
+          window.location.assign(window.location.origin + itemUrl)
+        } else {
+          router.go(itemUrl)
+        }
       }
     },
 
-  transformItems(items) {
+    transformItems(items) {
       return items.map((item) => {
         return Object.assign({}, item, {
           url: getRelativePath(item.url)
@@ -217,7 +220,7 @@ function initialize(userOptions: DefaultTheme.AlgoliaSearchOptions) {
       })
     },
 
-  hitComponent({ hit, children }) {
+    hitComponent({ hit, children }) {
       return {
         __v: null,
         type: 'a',
@@ -240,7 +243,8 @@ function getRelativePath(url: string) {
 
 <template>
   <div id="docsearch" />
-</template><script setup lang="ts">
+</template>
+<script setup lang="ts">
 import { useData } from "vitepress";
 import DPDoc from "./DPDoc.vue";
 import DPHome from "./DPHome.vue";
@@ -416,7 +420,8 @@ function onBlur() {
   visibility: hidden;
   transition: opacity 0.25s, visibility 0.25s, transform 0.25s;
 }
-</style><template>
+</style>
+<template>
   <footer class="VPFooter">
     <div class="container">
       <div class="footer-content">
@@ -486,7 +491,7 @@ const currentYear = new Date().getFullYear()
     padding: 0;
   }
 }
-</style> 
+</style>
 <script setup lang="ts">
 import { type Ref, inject } from 'vue'
 import type { DefaultTheme } from 'vitepress/theme'
@@ -820,7 +825,8 @@ const heroImageSlotExists = inject('hero-image-slot-exists') as Ref<boolean>
     max-height: 320px;
   }
 }
-</style><template>
+</style>
+<template>
 <div class="w-full px-4 sm:px-6 xl:px-0 max-w-theme mx-auto mt-12 sm:mt-24">
       <div class="main">
         <div v-if="frontmatter.hero" class="mb-8 sm:mb-16 max-w-2xl flex flex-col items-center mx-auto">
@@ -896,7 +902,8 @@ html:not(.dark) .VPImage.dark {
 .dark .VPImage.light {
   display: none;
 }
-</style><script lang="ts" setup>
+</style>
+<script lang="ts" setup>
 import { computed } from 'vue'
 import { normalizeLink } from '../utils/normalizeLink'
 import { EXTERNAL_URL_RE } from '../utils/shared'
@@ -932,7 +939,8 @@ const isExternal = computed(
   >
     <slot />
   </component>
-</template><script lang="ts" setup>
+</template>
+<script lang="ts" setup>
 import {
   computedAsync,
   debouncedWatch,
@@ -1803,7 +1811,8 @@ function onMouseMove(e: MouseEvent) {
 svg {
   flex: none;
 }
-</style><script lang="ts" setup>
+</style>
+<script lang="ts" setup>
 import DPMenuLink from './DPMenuLink.vue'
 import DPMenuGroup from './DPMenuGroup.vue'
 
@@ -1879,7 +1888,8 @@ defineProps<{
 .VPMenu :deep(.action) {
   padding-left: 24px;
 }
-</style><script lang="ts" setup>
+</style>
+<script lang="ts" setup>
 import DPMenuLink from './DPMenuLink.vue'
 
 defineProps<{
@@ -1925,7 +1935,8 @@ defineProps<{
   white-space: nowrap;
   transition: color 0.25s;
 }
-</style><script lang="ts" setup>
+</style>
+<script lang="ts" setup>
 import type { DefaultTheme } from 'vitepress/theme'
 import { isActive } from '../utils/shared'
 import DPLink from './DPLink.vue'
@@ -1987,7 +1998,8 @@ const { page } = useData()
 .link.active {
   color: var(--vp-c-brand-1);
 }
-</style><script setup lang="ts">
+</style>
+<script setup lang="ts">
 import { inBrowser, useData } from 'vitepress'
 import { computed, provide, watchEffect } from 'vue'
 import { useNav } from '../composables/nav'
@@ -2043,7 +2055,8 @@ watchEffect(() => {
    top: var(--vp-layout-top-height, 0px);
   }
 }
-</style><script lang="ts" setup>
+</style>
+<script lang="ts" setup>
 import { useWindowScroll } from '@vueuse/core'
 import { useData } from 'vitepress'
 import { ref, watchPostEffect } from 'vue'
@@ -2137,7 +2150,6 @@ watchPostEffect(() => {
     background-color: var(--vp-nav-bg-color);
   }
 }
-
 
 .container {
   display: flex;
@@ -2263,7 +2275,8 @@ watchPostEffect(() => {
     background-color: var(--vp-c-gutter);
   }
 }
-</style><script lang="ts" setup>
+</style>
+<script lang="ts" setup>
 import { useData } from 'vitepress';
 import DPSwitchAppearance from './DPSwitchAppearance.vue'
 
@@ -3590,7 +3603,8 @@ function focusOnTargetAnchor({ target }: Event) {
     left: 16px;
   }
 }
-</style><script lang="ts" setup>
+</style>
+<script lang="ts" setup>
 import type { DefaultTheme } from 'vitepress/theme'
 import { computed, nextTick, onMounted, ref, useSSRContext } from 'vue'
 
@@ -3663,7 +3677,8 @@ if (import.meta.env.SSR) {
   height: 20px;
   fill: currentColor;
 }
-</style><script lang="ts" setup>
+</style>
+<script lang="ts" setup>
 import type { DefaultTheme } from 'vitepress/theme'
 import DPSocialLink from './DPSocialLink.vue'
 
@@ -3689,7 +3704,8 @@ defineProps<{
   display: flex;
   justify-content: center;
 }
-</style><template>
+</style>
+<template>
   <button class="VPSwitch" type="button" role="switch">
       <span class="check">
         <span class="icon" v-if="$slots.default">
@@ -3751,7 +3767,8 @@ defineProps<{
     color: var(--vp-c-text-1);
     transition: opacity 0.25s !important;
   }
-  </style><script lang="ts" setup>
+  </style>
+<script lang="ts" setup>
 import { inject, ref, watchPostEffect } from 'vue'
 import { useData } from 'vitepress'
 import DPSwitch from './DPSwitch.vue'
@@ -3804,7 +3821,8 @@ watchPostEffect(() => {
   /*rtl:ignore*/
   transform: translateX(18px);
 }
-</style><template>
+</style>
+<template>
   <div class="w-full px-5 sm:px-6 xl:px-0 max-w-theme mx-auto mt-24">
       <div class="main">
         <h1 class="text-4xl font-bold mb-8">{{ frontmatter.title }}</h1>
@@ -3816,7 +3834,8 @@ watchPostEffect(() => {
 <script setup lang="ts">
 import { useData } from "vitepress";
 const { frontmatter } = useData();
-</script><template>
+</script>
+<template>
   <div class="w-full px-5 sm:px-6 xl:px-0 max-w-theme mx-auto mt-24">
       <div class="main">
         <h1 class="text-4xl font-bold mb-8">{{ frontmatter.title }}</h1>
@@ -3828,7 +3847,8 @@ const { frontmatter } = useData();
 <script setup lang="ts">
 import { useData } from "vitepress";
 const { frontmatter } = useData();
-</script><template>
+</script>
+<template>
   <div class="page-title">
     <h1 class="frontmatter-title text-pretcty">
       {{ formatTitle(frontmatter.title) }}
@@ -3870,11 +3890,12 @@ const formatDate = (dateString) => {
 </template>
 
 <script lang="ts" setup>
-</script> 
+</script>
 
 <style>
 
-</style><template>
+</style>
+<template>
   <div class="post-date">{{ formattedDate }}</div>
 </template>
 
@@ -3887,7 +3908,8 @@ const formattedDate = computed(() => {
   if (!frontmatter.value.date) return ''
   return frontmatter.value.date
 })
-</script> <template>
+</script>
+<template>
   <a :href="link" :class="classList" class="font-bold py-1.5 px-4 rounded-sm">
     {{ text }}
   </a>
@@ -3951,7 +3973,7 @@ NOTE: Those were just to show you how all my custom stuff is actually implemente
 - The markdown should be super clean because all the trash HTML should have been removed. Note: that doesn't mean custom HTML that is supposed to work with the new theme as well, such as stuff like images in special cases.
 
 - Ensure YOU HAVE NOT CHANGED THE INPUT CONTENT—only the formatting. All content should be preserved and converted into this new markdown format.
- 
+
 # INPUT
 
 {{input}}

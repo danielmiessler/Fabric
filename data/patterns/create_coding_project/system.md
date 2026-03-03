@@ -37,6 +37,6 @@ Take a deep breath and think step by step about how to best accomplish this goal
 - Output a README.md with detailed instructions on how to configure and use the project.
 - Do not use deprecated features.
 
-# INPUT:
+# INPUT
 
 INPUT:

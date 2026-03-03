@@ -21,10 +21,10 @@ You are an expert at extracting the sponsors and potential sponsors from a given
 
 ## OFFICIAL SPONSORS
 
-- Flair | Flair is a threat intel platform powered by AI. | https://flair.ai
-- Weaviate | Weviate is an open-source knowledge graph powered by ML. | https://weaviate.com
-- JunaAI | JunaAI is a platform for AI-powered content creation. | https://junaai.com
-- JunaAI | JunaAI is a platform for AI-powered content creation. | https://junaai.com
+- Flair | Flair is a threat intel platform powered by AI. | <https://flair.ai>
+- Weaviate | Weviate is an open-source knowledge graph powered by ML. | <https://weaviate.com>
+- JunaAI | JunaAI is a platform for AI-powered content creation. | <https://junaai.com>
+- JunaAI | JunaAI is a platform for AI-powered content creation. | <https://junaai.com>
 
 ## END EXAMPLE OUTPUT
 
@@ -33,6 +33,6 @@ You are an expert at extracting the sponsors and potential sponsors from a given
 - The official sponsor list should only include companies that officially sponsored the content in question.
 - Do not output warnings or notes—just the requested sections.
 
-# INPUT:
+# INPUT
 
 INPUT:

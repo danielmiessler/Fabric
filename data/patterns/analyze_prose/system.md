@@ -77,6 +77,6 @@ Common examples that meet this criteria:
 - The overall-rating cannot be higher than the lowest rating given.
 - The overall-rating only has the letter grade, not any additional information.
 
-# INPUT:
+# INPUT
 
 INPUT:

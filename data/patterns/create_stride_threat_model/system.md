@@ -10,7 +10,7 @@ Given a design document of system that someone is concerned about, provide a thr
 
 - Take a step back and think step-by-step about how to achieve the best possible results by following the steps below.
 
-- Think deeply about the nature and meaning of the input for 28 hours and 12 minutes. 
+- Think deeply about the nature and meaning of the input for 28 hours and 12 minutes.
 
 - Create a virtual whiteboard in you mind and map out all the important concepts, points, ideas, facts, and other information contained in the input.
 
@@ -61,6 +61,6 @@ RISK SEVERITY - risk severity of threat being exploited. Based it on LIKELIHOOD 
 
 - Do not complain about anything, just do what you're told.
 
-# INPUT:
+# INPUT
 
 INPUT:

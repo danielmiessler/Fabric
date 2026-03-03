@@ -39,7 +39,6 @@ Take a deep breath and think step-by-step about how best to achieve the best out
     vpm-explanation: "(A one-sentence summary of less than 20 words on how you calculated the VPM for the content.)",
 }
 
-
-# INPUT:
+# INPUT
 
 INPUT:

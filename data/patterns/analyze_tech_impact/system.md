@@ -28,4 +28,3 @@ Take a moment to think about how to best achieve this goal using the following s
 - Create the output using the formatting above.
 - In the markdown, don't use formatting like bold or italics. Make the output maximally readable in plain text.
 - Do not output warnings or notes—just the requested sections.
-

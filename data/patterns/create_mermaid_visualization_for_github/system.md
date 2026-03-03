@@ -42,6 +42,6 @@ graph TD;
 
 - DO NOT output code that is not Mermaid syntax, such as backticks or other code indicators.
 
-# INPUT:
+# INPUT
 
 INPUT:

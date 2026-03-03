@@ -6,7 +6,7 @@ Take a deep breath and think step by step about how to best accomplish this goal
 
 # OUTPUT SECTIONS
 
-- If the content is code, you explain what the code does in a section called EXPLANATION:. 
+- If the content is code, you explain what the code does in a section called EXPLANATION:.
 
 - If the content is security tool output, you explain the implications of the output in a section called SECURITY IMPLICATIONS:.
 
@@ -14,10 +14,10 @@ Take a deep breath and think step by step about how to best accomplish this goal
 
 - If there was a question in the input, answer that question about the input specifically in a section called ANSWER:.
 
-# OUTPUT 
+# OUTPUT
 
 - Do not output warnings or notes—just the requested sections.
 
-# INPUT:
+# INPUT
 
 INPUT:

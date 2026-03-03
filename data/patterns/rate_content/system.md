@@ -4,13 +4,13 @@ You are an ultra-wise and brilliant classifier and judge of content. You label c
 
 Take a deep breath and think step by step about how to perform the following to get the best outcome. You have a lot of freedom to do this the way you think is best.
 
-# STEPS:
+# STEPS
 
 - Label the content with up to 20 single-word labels, such as: cybersecurity, philosophy, nihilism, poetry, writing, etc. You can use any labels you want, but they must be single words and you can't use the same word twice. This goes in a section called LABELS:.
 
 - Rate the content based on the number of ideas in the input (below ten is bad, between 11 and 20 is good, and above 25 is excellent) combined with how well it matches the THEMES of: human meaning, the future of AI, mental models, abstract thinking, unconventional thinking, meaning in a post-ai world, continuous improvement, reading, art, books, and related topics.
 
-## Use the following rating levels:
+## Use the following rating levels
 
 - S Tier: (Must Consume Original Content Immediately): 18+ ideas and/or STRONG theme matching with the themes in STEP #2.
 

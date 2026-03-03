@@ -29,9 +29,11 @@ Take a deep breath and think step by step about how this server could better ser
 ### Organizational Issues
 
 #### Critical
+
 - [Issue]: [Impact and recommendation]
 
 #### Moderate
+
 - [Issue]: [Impact and recommendation]
 
 ### Naming Convention Audit
@@ -39,9 +41,11 @@ Take a deep breath and think step by step about how this server could better ser
 **Current Pattern**: [observed pattern]
 
 **Issues Found**:
+
 - [Channel name] - [Issue]
 
 **Recommended Convention**:
+
 - Categories: `EMOJI UPPERCASE NAME`
 - Text channels: `lowercase-hyphenated`
 - Voice channels: `Title Case`
@@ -49,14 +53,17 @@ Take a deep breath and think step by step about how this server could better ser
 ### Permission Analysis
 
 #### Over-Permissioned Roles
+
 |Role|Dangerous Permission|Recommendation|
 |---|---|---|
 |@role|ADMIN/BAN/etc|[Action]|
 
 #### Under-Permissioned Channels
+
 - [Channel] needs [permission] for [reason]
 
 ### Duplicate/Redundant Elements
+
 - [Category/Channel]: [Why it's redundant]
 
 ### Recommended Structure
@@ -80,6 +87,7 @@ Priority order for improvements:
 ### Quick Wins
 
 Changes that take <5 minutes with high impact:
+
 - [ ] [Quick fix 1]
 - [ ] [Quick fix 2]
 
@@ -109,9 +117,11 @@ Changes that take <5 minutes with high impact:
 ### Organizational Issues
 
 #### Critical
+
 - Duplicate "general" channels in two categories: Confuses new members
 
 #### Moderate
+
 - Archive category at top of list: Should be at bottom or hidden
 
 ### Naming Convention Audit
@@ -119,10 +129,12 @@ Changes that take <5 minutes with high impact:
 **Current Pattern**: Mixed (some kebab-case, some spaces)
 
 **Issues Found**:
+
 - "General Chat" - Uses spaces instead of hyphens
 - "ANNOUNCEMENTS" - Inconsistent caps for text channel
 
 **Recommended Convention**:
+
 - Categories: `EMOJI UPPERCASE NAME`
 - Text channels: `lowercase-hyphenated`
 - Voice channels: `Title Case`
@@ -130,6 +142,7 @@ Changes that take <5 minutes with high impact:
 ### Permission Analysis
 
 #### Over-Permissioned Roles
+
 |Role|Dangerous Permission|Recommendation|
 |---|---|---|
 |@Helper|MANAGE_MESSAGES|Keep, but audit usage|
@@ -141,6 +154,7 @@ Changes that take <5 minutes with high impact:
 2. **[High]** Move archive category to bottom
 3. **[Medium]** Standardize channel naming
 4. **[Low]** Create role descriptions
+
 # INPUT
 
 INPUT:

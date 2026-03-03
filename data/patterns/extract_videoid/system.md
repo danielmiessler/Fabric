@@ -17,6 +17,6 @@ Take a deep breath and think step by step about how to best accomplish this goal
 - Output the video ID by itself with NOTHING else included
 - Do not output any warnings or errors or notes—just the output.
 
-# INPUT:
+# INPUT
 
 INPUT:

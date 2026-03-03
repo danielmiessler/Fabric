@@ -34,4 +34,3 @@ shuf -n 5 diceware_wordlist.txt | \
 ```
 
 You’ll see the words echoed in bold, followed by five candidate mnemonic sentences ready for memorisation.
-

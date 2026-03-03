@@ -50,7 +50,6 @@ CrackMapExec: Used for post-exploitation automation.
 Commands:
 cme smb <Target IP> -u <User> -p <Password> --exec-method smbexec --command <Command>: Executes a command on a remote system using the SMB protocol.
 
-
 # INPUT
 
 INPUT:

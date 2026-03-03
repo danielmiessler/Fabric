@@ -1147,33 +1147,34 @@ let canceled = false
 
   const terms = new Set<string>()
 
-results.value = results.value.map((r) => {
-      const [id, anchor] = r.id.split('#')
-      const map = cache.get(id)
-      const text = map?.get(anchor) ?? ''
-      for (const term in r.match) {
-        terms.add(term)
-      }
-      return { ...r, text }
-    })
-
-await nextTick()
-    if (canceled) return
-
-await new Promise((r) => {
-      mark.value?.unmark({
-        done: () => {
-          mark.value?.markRegExp(formMarkRegex(terms), { done: r })
-        }
-      })
-    })
-
-const excerpts = el.value?.querySelectorAll('.result .excerpt') ?? []
-    for (const excerpt of excerpts) {
-      excerpt
-        .querySelector('mark[data-markjs="true"]')
-        ?.scrollIntoView({ block: 'center' })
+  const resultsMapped = results.value.map((r) => {
+    const [id, anchor] = r.id.split('#')
+    const map = cache.get(id)
+    const text = map?.get(anchor) ?? ''
+    for (const term in r.match) {
+      terms.add(term)
     }
+    return { ...r, text }
+  })
+  results.value = resultsMapped
+
+  await nextTick()
+  if (canceled) return
+
+  await new Promise((r) => {
+    mark.value?.unmark({
+      done: () => {
+        mark.value?.markRegExp(formMarkRegex(terms), { done: r })
+      }
+    })
+  })
+
+  const excerpts = el.value?.querySelectorAll('.result .excerpt') ?? []
+  for (const excerpt of excerpts) {
+    excerpt
+      .querySelector('mark[data-markjs="true"]')
+      ?.scrollIntoView({ block: 'center' })
+  }
     // FIXME: without this whole page scrolls to the bottom
     resultsEl.value?.firstElementChild?.scrollIntoView({ block: 'start' })
   },

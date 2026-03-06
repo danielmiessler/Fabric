@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.4.432 (2026-03-06)
+
+### PR [#2050](https://github.com/danielmiessler/Fabric/pull/2050) by [ksylvan](https://github.com/ksylvan): Update web dependencies - fix npm override issue
+
+- Chore: update web dependencies - fix npm override issue
+
 ## v1.4.431 (2026-03-06)
 
 ### PR [#2049](https://github.com/danielmiessler/Fabric/pull/2049) by [ksylvan](https://github.com/ksylvan): Security Hardening: API Key Redaction, Path Traversal Prevention, and Shell Injection Elimination

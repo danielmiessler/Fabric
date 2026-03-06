@@ -24,7 +24,7 @@ That makes it excellent for one-step transformations, but the target user experi
 
 - one command to start a note pipeline
 - visible stage-by-stage execution
-- recoverable artifacts
+- inspectable temporary run artifacts
 - support for both quick note generation and richer multi-stage workflows
 
 There is also an explicit constraint:
@@ -103,6 +103,7 @@ Users need:
 - a way to keep existing pipelines intact
 - a way to add custom pipelines without editing Fabric source
 - a way to run external stage logic regardless of implementation language
+- a way to list and validate pipelines before execution
 
 ## 7. Product Principles
 
@@ -156,7 +157,7 @@ As an operator, I want manifests and validation reports, so I can inspect failur
 - support for external command stages
 - support for user-defined custom pipeline definitions
 - support for language-agnostic script and executable stages
-- deterministic artifact output for full runs
+- deterministic per-run artifact output for full runs
 - output to stdout and files
 
 ### Out of scope for V1
@@ -177,12 +178,14 @@ As an operator, I want manifests and validation reports, so I can inspect failur
 4. The product must provide quick note commands.
 5. The product must provide a full pipeline run command.
 6. The product must display stage-by-stage progress in the terminal.
-7. The product must persist artifacts for full pipeline runs.
+7. The product must create temporary, inspectable per-run artifacts for full pipeline runs.
 8. The product must support multiple profiles.
 9. The product must support wrapping existing external pipelines.
 10. The product must support output to stdout or files.
-11. The product must support loading custom pipeline definitions from a user-controlled path.
-12. The product must support command stages that run arbitrary host-language executables or scripts.
+11. The product must support loading custom pipeline definitions from `~/.config/fabric/pipelines/`.
+12. The product must support listing and validating pipelines before execution.
+13. The product must support command stages that run arbitrary host-language executables or scripts.
+14. The product must support a YAML-based, versioned pipeline definition language with explicit pipeline names, stage IDs, and executor types.
 
 ### Non-functional requirements
 
@@ -195,6 +198,7 @@ As an operator, I want manifests and validation reports, so I can inspect failur
 7. The system must be extensible to new profiles and new pipeline definitions.
 8. The pipeline definition format must be versioned for future compatibility.
 9. User-defined pipelines must not be overwritten by Fabric upgrades.
+10. Pipeline runs must remain chainable through stdout while progress and diagnostics stay on stderr.
 
 ## 11. Solution Overview
 
@@ -249,6 +253,14 @@ fabric --pipeline zoom-tech-note --source ./session.txt
 fabric --pipeline nontech-note --source ./session.txt
 ```
 
+### Discovery and validation
+
+```bash
+fabric --listpipelines
+fabric --validate-pipeline ~/.config/fabric/pipelines/tech-note.yaml
+fabric --pipeline tech-note --validate-only
+```
+
 ### Stage output model
 
 The operator sees stage status as the run progresses:
@@ -263,6 +275,8 @@ The operator sees stage status as the run progresses:
 [5/6] validate ...... PASS
 [6/6] publish ....... PASS
 ```
+
+These labels are illustrative. Stage IDs are explicit and rendered in the UI, but stage names themselves are conventions rather than reserved semantics.
 
 ## 14. Success Metrics
 
@@ -343,7 +357,7 @@ Mitigation:
 - more profiles
 - better output destinations and integration hooks
 
-## 17. Resolved Product Decisions and Remaining Question
+## 17. Resolved Product Decisions
 
 Resolved product decisions:
 
@@ -352,10 +366,11 @@ Resolved product decisions:
 3. Quick single-step usage will continue to use `fabric --pattern ...`.
 4. Built-in pipeline definitions will live in `data/pipelines/`.
 5. User-defined pipeline definitions will live in `~/.config/fabric/pipelines/`.
+6. Pipeline definitions will be authored in `.yaml` and validated through a versioned structured schema plus semantic preflight.
+7. Pipeline-managed artifacts will live temporarily under `.pipeline/<run-id>/` in the current working directory with automatic cleanup.
+8. The pipeline runner will support three executor types: `command`, `fabric_pattern`, and `builtin`.
 
-Remaining question:
-
-1. How much of the Zoom pipeline contract should be normalized vs simply wrapped?
+At this point, no product-direction ambiguity remains. The remaining work is implementation detail inside the Fabric repo.
 
 ## 18. Decision
 
@@ -367,7 +382,7 @@ The pipeline layer should add:
 
 - stage orchestration
 - stage visibility
-- artifact persistence
+- temporary per-run artifact management
 - custom pipeline definition loading
 - language-agnostic command execution
 - reusable adapters for existing external pipelines

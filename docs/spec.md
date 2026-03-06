@@ -42,7 +42,7 @@ Important boundary:
   - custom patterns
 - Reuse external pipelines, such as the Zoom technical pipeline, without modifying them.
 - Support both quick single-step note generation and full artifact-producing pipeline runs.
-- Persist pipeline artifacts in a deterministic structure for audit and recovery.
+- Persist pipeline artifacts in a deterministic per-run structure during execution and short-lived post-run inspection.
 - Keep the design extensible across technical and non-technical note workflows.
 
 ### 2.2 Non-Goals
@@ -111,14 +111,14 @@ fabric --pipeline nontech-note --source ./MyTherapySessions
 
 #### FR4. Stage-aware execution
 
-The system must execute and report a stage model with, at minimum:
+The system must execute and report an explicit, linear stage model.
 
-1. intake
-2. normalization
-3. semantic mapping
-4. rendering
-5. validation
-6. publish
+At minimum:
+
+- every stage must declare an explicit `id`
+- every stage must declare an explicit executor type
+- stage names are conventions, not reserved semantics
+- exactly one stage must be designated as the final output stage in V1
 
 #### FR5. Stage UI visibility
 
@@ -146,14 +146,21 @@ At minimum, the design must support wrapping the current Zoom technical pipeline
 
 #### FR8. Artifact preservation
 
-Full pipeline runs must persist artifacts such as:
+Full pipeline runs must write Fabric-managed artifacts under:
 
-- `final_notes.md`
-- `.pipeline/run_manifest.json`
-- `.pipeline/source_manifest.json`
-- `.pipeline/semantic_map.json`
-- `.pipeline/validation_report.md`
+- `.pipeline/<run-id>/`
+
+in the current working directory where `fabric` was invoked.
+
+At minimum, the system must support run-scoped artifacts such as:
+
+- `run_manifest.json`
+- `source_manifest.json`
+- declared named stage artifacts
+- validation artifacts when validation exists
 - optional publish artifacts
+
+These artifacts are temporary by default and must follow the agreed hybrid cleanup model.
 
 #### FR9. Profile support
 
@@ -166,9 +173,10 @@ The system must support multiple note-generation profiles, at minimum:
 
 The operator must be able to choose:
 
-- stdout only
-- output file
-- artifact folder output
+- stdout final output
+- `-o/--output` for the final rendered file
+
+Pipeline-managed artifacts remain under `.pipeline/<run-id>/` in the current working directory and are not user-routed through a separate artifact-root flag in V1.
 
 #### FR11. Custom pipeline support
 
@@ -177,9 +185,13 @@ The system must support user-defined pipelines in addition to built-in pipelines
 At minimum:
 
 - built-in pipeline definitions must live in the Fabric repository
-- user-defined pipeline definitions must live in a Fabric-managed config directory
+- user-defined pipeline definitions must live in `~/.config/fabric/pipelines/`
 - user-defined pipelines must be loadable without recompiling Fabric
 - user-defined pipelines may override built-in pipelines by name
+- pipeline discovery must be available through `fabric --listpipelines`
+- validation must be available through both:
+  - `fabric --validate-pipeline <file>`
+  - `fabric --pipeline <name> --validate-only`
 
 #### FR12. Polyglot command execution
 
@@ -205,6 +217,16 @@ Examples include:
 #### FR13. Schema versioning
 
 Pipeline definitions must declare a schema version so the format can evolve without breaking existing custom pipelines.
+
+#### FR14. Pipeline definition language
+
+Pipeline definitions must:
+
+- be authored in YAML
+- use the `.yaml` extension in V1
+- declare a mandatory top-level `name`
+- match that `name` exactly to the filename stem
+- be validated against a versioned structured schema plus semantic preflight checks
 
 ### 4.2 Non-Functional Requirements
 
@@ -344,7 +366,7 @@ The central idea is that Fabric should add a declarative pipeline model rather t
 
 1. `Pipeline Definition Loader`
    - Loads pipeline definitions from Fabric-managed paths.
-   - Parses metadata, profile bindings, stage graph, and output contract.
+   - Parses top-level metadata, accepted input modes, stage graph, and output contract.
 
 2. `Pipeline Runner`
    - Owns stage sequencing.
@@ -371,7 +393,7 @@ The central idea is that Fabric should add a declarative pipeline model rather t
    - Must be language-agnostic and process-oriented rather than Python-specific.
 
 7. `Artifact Manager`
-   - Owns `.pipeline/` directories, output paths, and stage file references.
+   - Owns `.pipeline/<run-id>/`, run-scoped manifests, declared artifact references, and cleanup lifecycle.
 
 8. `Terminal Status Renderer`
    - Prints live stage status, stream output, and run summaries.
@@ -398,53 +420,68 @@ A pipeline definition is the contract that tells Fabric how to run a named multi
 
 It must declare:
 
-- schema version
+- version
 - pipeline name
-- profile name
-- accepted input types
+- accepted input types when restricted
 - stages in order
 - executor for each stage
 - stage inputs and outputs
 - artifact policy
-- default output behavior
+- final output behavior
 
 ### 7.2 Logical example
 
 ```yaml
-schema_version: 1
+version: 1
 name: zoom-tech-note
-profile: technical-study-guide
+description: Technical lecture-note pipeline
 accepts:
   - stdin
-  - file
-  - directory
+  - source
+  - scrape_url
 stages:
   - id: intake
     executor: builtin
+    builtin:
+      name: source_capture
   - id: normalize
     executor: command
+    input:
+      from: source
     command:
       program: python3
       args:
         - /path/to/existing/zoom/intake.py
         - "{{source}}"
       cwd: /path/to/existing/zoom
-      timeout: 10m
+      timeout: 600
+    artifacts:
+      - name: normalized_source
+        path: normalized_source.md
   - id: semantic_map
     executor: fabric_pattern
     pattern: tech_semantic_map
     stream: true
+    primary_output:
+      from: stdout
   - id: render
     executor: fabric_pattern
     pattern: tech_note
     stream: true
-  - id: validate
+    final_output: true
+    primary_output:
+      from: stdout
+  - id: validate_contract
     executor: builtin
+    builtin:
+      name: validate_declared_outputs
   - id: publish
     executor: builtin
+    builtin:
+      name: write_publish_manifest
 ```
 
-This is illustrative. The exact syntax may change, but the contract must preserve the same semantics.
+This is the intended V1 direction. Implementation may add small field-level details, but the semantics here are now the source-of-truth model.
 
 ### 7.3 Definition discovery and override rules
 
@@ -469,6 +506,8 @@ V1 will use:
 
 - `fabric --pattern ...` for quick prompt execution
 - `fabric --pipeline ...` for multi-stage pipeline execution
+- `fabric --listpipelines` for discovery
+- `fabric --validate-pipeline ...` and `fabric --pipeline ... --validate-only` for preflight validation
 
 ### 8.2 Required command families
 
@@ -508,7 +547,7 @@ Required:
 
 - stdout
 - `-o/--output`
-- artifact folder mode
+- automatic `.pipeline/<run-id>/` artifact management in the current working directory
 
 ## 9. Stage UI Requirements
 
@@ -529,6 +568,8 @@ Minimum terminal rendering:
 [6/6] publish ....... PASS
 ```
 
+These labels are illustrative. Stage names are not reserved semantics; Fabric renders the declared stage IDs.
+
 Required behaviors:
 
 - stage start marker
@@ -539,21 +580,26 @@ Required behaviors:
 
 ## 10. Artifact Contract
 
-For full pipeline mode, the system must persist a `.pipeline/` folder adjacent to the output or source session directory.
+For full pipeline mode, the system must create `.pipeline/<run-id>/` in the current working directory where `fabric` was invoked.
 
 Required V1 artifacts:
 
-- `.pipeline/run_manifest.json`
-- `.pipeline/source_manifest.json`
-- `.pipeline/semantic_map.json` if semantic mapping is part of the selected pipeline
-- `.pipeline/validation_report.md` or `.json`
-- `final_notes.md`
+- `run_manifest.json`
+- `source_manifest.json`
+- declared named artifacts referenced by the pipeline
+- validation outputs when a validation stage or builtin validation exists
 
 Recommended optional artifacts:
 
-- `.pipeline/stage_logs/`
-- `.pipeline/publish_manifest.json`
-- `.pipeline/exceptions.json`
+- `stage_logs/`
+- `publish_manifest.json`
+- `exceptions.json`
+
+Lifecycle rule:
+
+- `.pipeline/<run-id>/` is temporary by default
+- cleanup uses the agreed hybrid cleanup model
+- startup janitor cleanup and delayed per-run cleanup are both part of the design
 
 ## 11. Fabric Features to Reuse Directly
 

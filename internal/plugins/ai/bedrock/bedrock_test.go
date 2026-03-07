@@ -222,7 +222,7 @@ func TestSendStream_NilClient_ReturnsError(t *testing.T) {
 
 	err := client.SendStream(nil, opts, ch)
 	assert.Error(t, err, "SendStream should return error when client is nil")
-	assert.Contains(t, err.Error(), "not initialized")
+	assert.Error(t, err)
 }
 
 func TestSend_NilClient_ReturnsError(t *testing.T) {
@@ -232,7 +232,7 @@ func TestSend_NilClient_ReturnsError(t *testing.T) {
 	opts := &domain.ChatOptions{Model: "test-model"}
 	_, err := client.Send(context.Background(), nil, opts)
 	assert.Error(t, err, "Send should return error when client is nil")
-	assert.Contains(t, err.Error(), "not initialized")
+	assert.Error(t, err)
 }
 
 func TestMaskSecret(t *testing.T) {

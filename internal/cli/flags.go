@@ -27,6 +27,9 @@ import (
 
 type Flags struct {
 	Pattern                         string               `short:"p" long:"pattern" yaml:"pattern" description:"Choose a pattern from the available patterns" default:""`
+	Pipeline                        string               `long:"pipeline" description:"Run a named pipeline"`
+	ValidatePipeline                string               `long:"validate-pipeline" description:"Validate a pipeline definition file and exit"`
+	ValidateOnly                    bool                 `long:"validate-only" description:"Validate the selected pipeline and exit"`
 	PatternVariables                map[string]string    `short:"v" long:"variable" description:"Values for pattern variables, e.g. -v=#role:expert -v=#points:30"`
 	Context                         string               `short:"C" long:"context" description:"Choose a context from the available contexts" default:""`
 	Session                         string               `long:"session" description:"Choose a session from the available sessions"`
@@ -39,6 +42,7 @@ type Flags struct {
 	Raw                             bool                 `short:"r" long:"raw" yaml:"raw" description:"Use the defaults of the model without sending chat options (temperature, top_p, etc.). Only affects OpenAI-compatible providers. Anthropic models always use smart parameter selection to comply with model-specific requirements."`
 	FrequencyPenalty                float64              `short:"F" long:"frequencypenalty" yaml:"frequencypenalty" description:"Set frequency penalty" default:"0.0"`
 	ListPatterns                    bool                 `short:"l" long:"listpatterns" description:"List all patterns"`
+	ListPipelines                   bool                 `long:"listpipelines" description:"List all pipelines"`
 	ListAllModels                   bool                 `short:"L" long:"listmodels" description:"List all available models"`
 	ListAllContexts                 bool                 `short:"x" long:"listcontexts" description:"List all contexts"`
 	ListAllSessions                 bool                 `short:"X" long:"listsessions" description:"List all sessions"`
@@ -62,6 +66,7 @@ type Flags struct {
 	Spotify                         string               `long:"spotify" description:"Spotify podcast or episode URL to grab metadata from and send to chat"`
 	Language                        string               `short:"g" long:"language" description:"Specify the Language Code for the chat, e.g. -g=en -g=zh" default:""`
 	ScrapeURL                       string               `short:"u" long:"scrape_url" description:"Scrape website URL to markdown using Jina AI"`
+	Source                          string               `long:"source" description:"File or directory source for pipeline execution"`
 	ScrapeQuestion                  string               `short:"q" long:"scrape_question" description:"Search question using Jina AI"`
 	Seed                            int                  `short:"e" long:"seed" yaml:"seed" description:"Seed to be used for LMM generation"`
 	WipeContext                     string               `short:"w" long:"wipecontext" description:"Wipe context"`
@@ -107,6 +112,10 @@ type Flags struct {
 	Thinking                        domain.ThinkingLevel `long:"thinking" yaml:"thinking" description:"Set reasoning/thinking level (e.g., off, low, medium, high, or numeric tokens for Anthropic or Google Gemini)"`
 	ShowMetadata                    bool                 `long:"show-metadata" description:"Print metadata to stderr"`
 	Debug                           int                  `long:"debug" description:"Set debug level (0=off, 1=basic, 2=detailed, 3=trace, 4=wire)" default:"0"`
+
+	stdinMessage    string
+	stdinProvided   bool
+	argumentMessage string
 }
 
 // Init Initialize flags. returns a Flags struct and an error
@@ -223,7 +232,8 @@ func Init() (ret *Flags, err error) {
 
 	// Append positional arguments to the message (custom message)
 	if len(args) > 0 {
-		ret.Message = AppendMessage(ret.Message, strings.Join(args, " "))
+		ret.argumentMessage = strings.Join(args, " ")
+		ret.Message = AppendMessage(ret.Message, ret.argumentMessage)
 	}
 
 	if pipedToStdin {
@@ -231,6 +241,8 @@ func Init() (ret *Flags, err error) {
 		if pipedMessage, err = readStdin(); err != nil {
 			return
 		}
+		ret.stdinProvided = true
+		ret.stdinMessage = pipedMessage
 		ret.Message = AppendMessage(ret.Message, pipedMessage)
 	}
 	return

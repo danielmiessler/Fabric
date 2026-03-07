@@ -1,0 +1,15 @@
+version: 1
+name: passthrough
+description: Emit the selected input payload unchanged.
+accepts:
+  - stdin
+  - source
+  - scrape_url
+stages:
+  - id: passthrough
+    executor: builtin
+    builtin:
+      name: passthrough
+    final_output: true
+    primary_output:
+      from: stdout

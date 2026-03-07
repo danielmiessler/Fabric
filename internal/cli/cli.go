@@ -80,6 +80,12 @@ func Cli(version string) (err error) {
 		return
 	}
 
+	// Handle pipeline commands before tool/chat processing so pipeline source flags
+	// do not fall through into the chat-oriented scrape/tool path.
+	if handled, err = handlePipelineCommands(currentFlags, registry); err != nil || handled {
+		return
+	}
+
 	// Handle transcription if specified
 	if currentFlags.TranscribeFile != "" {
 		var transcriptionMessage string

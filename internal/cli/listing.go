@@ -9,6 +9,7 @@ import (
 
 	"github.com/danielmiessler/fabric/internal/core"
 	"github.com/danielmiessler/fabric/internal/i18n"
+	"github.com/danielmiessler/fabric/internal/pipeline"
 	"github.com/danielmiessler/fabric/internal/plugins/ai"
 	"github.com/danielmiessler/fabric/internal/plugins/ai/gemini"
 	"github.com/danielmiessler/fabric/internal/plugins/db/fsdb"
@@ -54,6 +55,29 @@ func handleListingCommands(currentFlags *Flags, fabricDb *fsdb.Db, registry *cor
 
 		err = fabricDb.Patterns.ListNames(currentFlags.ShellCompleteOutput)
 		return true, err
+	}
+
+	if currentFlags.ListPipelines {
+		loader, loadErr := pipeline.NewDefaultLoader()
+		if loadErr != nil {
+			return true, loadErr
+		}
+		entries, loadErr := loader.List()
+		if loadErr != nil {
+			return true, loadErr
+		}
+		for _, entry := range entries {
+			if currentFlags.ShellCompleteOutput {
+				fmt.Println(entry.Name)
+				continue
+			}
+			override := ""
+			if entry.OverridesBuiltIn {
+				override = " (overrides built-in)"
+			}
+			fmt.Printf("%s\t%s%s\n", entry.Name, entry.DefinitionSource, override)
+		}
+		return true, nil
 	}
 
 	if currentFlags.ListAllModels {

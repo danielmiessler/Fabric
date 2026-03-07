@@ -3,6 +3,7 @@ package pipeline
 import (
 	"bytes"
 	"context"
+	"encoding/json"
 	"fmt"
 	"io"
 	"os"
@@ -52,6 +53,43 @@ func TestValidateRejectsDuplicateStageIDs(t *testing.T) {
 	err := Validate(p)
 	require.Error(t, err)
 	require.Contains(t, err.Error(), "duplicate stage id")
+}
+
+func TestValidateEnforcesStageRoleOrdering(t *testing.T) {
+	t.Parallel()
+
+	t.Run("validate must appear after final output", func(t *testing.T) {
+		p := &Pipeline{
+			Version:  1,
+			Name:     "role-ordering",
+			FileStem: "role-ordering",
+			Stages: []Stage{
+				{ID: "validate", Executor: ExecutorBuiltin, Builtin: &BuiltinConfig{Name: "validate_declared_outputs"}},
+				{ID: "render", Executor: ExecutorBuiltin, Builtin: &BuiltinConfig{Name: "passthrough"}, FinalOutput: true, PrimaryOutput: &PrimaryOutputConfig{From: PrimaryOutputStdout}},
+			},
+		}
+
+		err := Validate(p)
+		require.Error(t, err)
+		require.Contains(t, err.Error(), "must appear after the final_output stage")
+	})
+
+	t.Run("validate cannot appear after publish", func(t *testing.T) {
+		p := &Pipeline{
+			Version:  1,
+			Name:     "publish-before-validate",
+			FileStem: "publish-before-validate",
+			Stages: []Stage{
+				{ID: "render", Executor: ExecutorBuiltin, Builtin: &BuiltinConfig{Name: "passthrough"}, FinalOutput: true, PrimaryOutput: &PrimaryOutputConfig{From: PrimaryOutputStdout}},
+				{ID: "publish", Role: StageRolePublish, Executor: ExecutorBuiltin, Builtin: &BuiltinConfig{Name: "write_publish_manifest"}},
+				{ID: "validate", Executor: ExecutorBuiltin, Builtin: &BuiltinConfig{Name: "validate_declared_outputs"}},
+			},
+		}
+
+		err := Validate(p)
+		require.Error(t, err)
+		require.Contains(t, err.Error(), "validate role cannot appear after a publish stage")
+	})
 }
 
 func TestLoaderListsUserOverrides(t *testing.T) {
@@ -259,8 +297,9 @@ func TestRunnerValidationStageBlocksFinalStdoutOnFailure(t *testing.T) {
 	var stdout, stderr bytes.Buffer
 	runner := NewRunner(&stdout, &stderr, nil)
 	result, err := runner.Run(context.Background(), p, RunSource{Mode: SourceModeStdin, Payload: "candidate-final-output"}, RunOptions{InvocationDir: tempDir, DisableCleanup: true})
-	require.Nil(t, result)
+	require.NotNil(t, result)
 	require.Error(t, err)
+	require.Empty(t, result.FinalOutput)
 	require.Empty(t, stdout.String())
 	require.Contains(t, stderr.String(), "validate ........ FAIL")
 }
@@ -304,10 +343,108 @@ func TestRunnerPublishFailureStillEmitsValidatedOutput(t *testing.T) {
 	var stdout, stderr bytes.Buffer
 	runner := NewRunner(&stdout, &stderr, nil)
 	result, err := runner.Run(context.Background(), p, RunSource{Mode: SourceModeStdin, Payload: "validated-output"}, RunOptions{InvocationDir: tempDir, DisableCleanup: true})
-	require.Nil(t, result)
+	require.NotNil(t, result)
 	require.Error(t, err)
+	require.Equal(t, "validated-output", result.FinalOutput)
 	require.Contains(t, stdout.String(), "validated-output")
 	require.Contains(t, stderr.String(), "publish ........ FAIL")
+}
+
+func TestRunnerWritePublishManifestUsesFinalizedSnapshot(t *testing.T) {
+	t.Parallel()
+
+	tempDir := t.TempDir()
+	p := &Pipeline{
+		Version:  1,
+		Name:     "publish-manifest-finalized",
+		FileStem: "publish-manifest-finalized",
+		FilePath: filepath.Join(tempDir, "publish-manifest-finalized.yaml"),
+		Stages: []Stage{
+			{
+				ID:            "render",
+				Executor:      ExecutorBuiltin,
+				Builtin:       &BuiltinConfig{Name: "passthrough"},
+				FinalOutput:   true,
+				PrimaryOutput: &PrimaryOutputConfig{From: PrimaryOutputStdout},
+			},
+			{
+				ID:       "publish",
+				Executor: ExecutorBuiltin,
+				Builtin:  &BuiltinConfig{Name: "write_publish_manifest"},
+				Artifacts: []ArtifactDeclaration{
+					{Name: "publish_manifest", Path: "publish_manifest.json"},
+				},
+				PrimaryOutput: &PrimaryOutputConfig{From: PrimaryOutputStdout},
+			},
+		},
+	}
+
+	runner := NewRunner(io.Discard, io.Discard, nil)
+	result, err := runner.Run(context.Background(), p, RunSource{Mode: SourceModeStdin, Payload: "final-content"}, RunOptions{InvocationDir: tempDir, DisableCleanup: true})
+	require.NoError(t, err)
+
+	type publishManifest struct {
+		RunManifest struct {
+			Status   string   `json:"status"`
+			Warnings []string `json:"warnings"`
+			Stages   []struct {
+				ID     string   `json:"id"`
+				Status string   `json:"status"`
+				Files  []string `json:"files"`
+			} `json:"stages"`
+		} `json:"run_manifest"`
+		FinalOutput string `json:"final_output"`
+	}
+
+	content, readErr := os.ReadFile(filepath.Join(result.RunDir, "publish_manifest.json"))
+	require.NoError(t, readErr)
+
+	var manifest publishManifest
+	require.NoError(t, json.Unmarshal(content, &manifest))
+	require.Equal(t, "passed", manifest.RunManifest.Status)
+	require.Equal(t, "final-content", manifest.FinalOutput)
+	require.Len(t, manifest.RunManifest.Warnings, 1)
+	require.Contains(t, manifest.RunManifest.Warnings[0], "has no validate stage")
+	require.Len(t, manifest.RunManifest.Stages, 2)
+	require.Equal(t, "passed", manifest.RunManifest.Stages[1].Status)
+	require.Contains(t, manifest.RunManifest.Stages[1].Files, "publish_manifest.json")
+}
+
+func TestRunnerFailsWhenManifestPersistenceFailsMidRun(t *testing.T) {
+	t.Parallel()
+
+	tempDir := t.TempDir()
+	p := &Pipeline{
+		Version:  1,
+		Name:     "manifest-persistence-failure",
+		FileStem: "manifest-persistence-failure",
+		FilePath: filepath.Join(tempDir, "manifest-persistence-failure.yaml"),
+		Stages: []Stage{
+			{
+				ID:       "lock",
+				Executor: ExecutorCommand,
+				Command: &CommandConfig{
+					Program: os.Args[0],
+					Args:    []string{"-test.run=TestPipelineHelperProcess", "--", "lock-manifests"},
+					Env:     map[string]string{"GO_WANT_HELPER_PROCESS": "1"},
+				},
+				PrimaryOutput: &PrimaryOutputConfig{From: PrimaryOutputStdout},
+			},
+			{
+				ID:            "render",
+				Executor:      ExecutorBuiltin,
+				Builtin:       &BuiltinConfig{Name: "passthrough"},
+				FinalOutput:   true,
+				PrimaryOutput: &PrimaryOutputConfig{From: PrimaryOutputStdout},
+			},
+		},
+	}
+
+	runner := NewRunner(io.Discard, io.Discard, nil)
+	result, err := runner.Run(context.Background(), p, RunSource{Mode: SourceModeStdin, Payload: "ignored"}, RunOptions{InvocationDir: tempDir, DisableCleanup: true})
+	require.NotNil(t, result)
+	require.Error(t, err)
+	require.Contains(t, err.Error(), "run_manifest.json")
 }
 
 func TestCommandStageInterpolatesSourceReference(t *testing.T) {
@@ -447,6 +584,18 @@ func TestPipelineHelperProcess(t *testing.T) {
 	case "fail":
 		fmt.Fprintln(os.Stderr, "intentional helper failure")
 		os.Exit(7)
+	case "lock-manifests":
+		runDir := os.Getenv("FABRIC_PIPELINE_RUN_DIR")
+		if runDir == "" {
+			fmt.Fprintln(os.Stderr, "missing FABRIC_PIPELINE_RUN_DIR")
+			os.Exit(6)
+		}
+		for _, name := range []string{"run_manifest.json", "run.json"} {
+			if err := os.Chmod(filepath.Join(runDir, name), 0o444); err != nil {
+				fmt.Fprintln(os.Stderr, err)
+				os.Exit(8)
+			}
+		}
 	default:
 		os.Exit(5)
 	}

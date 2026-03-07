@@ -11,6 +11,10 @@ import (
 	"github.com/danielmiessler/fabric/internal/pipeline"
 )
 
+var pipelineRunOptions = func(invocationDir string) pipeline.RunOptions {
+	return pipeline.RunOptions{InvocationDir: invocationDir}
+}
+
 func handlePipelineCommands(currentFlags *Flags, registry *core.PluginRegistry) (handled bool, err error) {
 	if currentFlags.ValidatePipeline == "" && currentFlags.Pipeline == "" {
 		return false, nil
@@ -65,17 +69,17 @@ func handlePipelineCommands(currentFlags *Flags, registry *core.PluginRegistry) 
 	}
 
 	runner := pipeline.NewRunner(os.Stdout, os.Stderr, registry)
-	result, err := runner.Run(context.Background(), pipe, source, pipeline.RunOptions{
-		InvocationDir: invocationDir,
-	})
+	result, err := runner.Run(context.Background(), pipe, source, pipelineRunOptions(invocationDir))
+	if currentFlags.Output != "" && result != nil && result.FinalOutput != "" {
+		if outputErr := CreateOutputFile(result.FinalOutput, currentFlags.Output); outputErr != nil {
+			if err != nil {
+				return true, fmt.Errorf("%w; output file error: %w", err, outputErr)
+			}
+			return true, outputErr
+		}
+	}
 	if err != nil {
 		return true, err
-	}
-
-	if currentFlags.Output != "" && result.FinalOutput != "" {
-		if err = CreateOutputFile(result.FinalOutput, currentFlags.Output); err != nil {
-			return true, err
-		}
 	}
 
 	return true, nil

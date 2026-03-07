@@ -32,6 +32,8 @@ func Validate(p *Pipeline) error {
 
 	stageByID := make(map[string]*Stage, len(p.Stages))
 	finalOutputCount := 0
+	finalOutputIndex := -1
+	seenPublishRole := false
 	for i := range p.Stages {
 		stage := &p.Stages[i]
 
@@ -43,10 +45,11 @@ func Validate(p *Pipeline) error {
 		}
 		stageByID[stage.ID] = stage
 
-		switch stage.Role {
+		effectiveRole := effectiveStageRole(*stage)
+		switch effectiveRole {
 		case StageRoleDefault, StageRoleValidate, StageRolePublish:
 		default:
-			return fmt.Errorf("pipeline %q stage %q has unsupported role %q", p.Name, stage.ID, stage.Role)
+			return fmt.Errorf("pipeline %q stage %q has unsupported role %q", p.Name, stage.ID, effectiveRole)
 		}
 
 		switch stage.Executor {
@@ -121,14 +124,31 @@ func Validate(p *Pipeline) error {
 
 		if stage.FinalOutput {
 			finalOutputCount++
+			finalOutputIndex = i
 			if stage.PrimaryOutput == nil {
 				return fmt.Errorf("pipeline %q stage %q is final_output but has no primary_output", p.Name, stage.ID)
 			}
+		}
+
+		if effectiveRole == StageRolePublish {
+			seenPublishRole = true
+		}
+		if effectiveRole == StageRoleValidate && seenPublishRole {
+			return fmt.Errorf("pipeline %q stage %q validate role cannot appear after a publish stage", p.Name, stage.ID)
 		}
 	}
 
 	if finalOutputCount != 1 {
 		return fmt.Errorf("pipeline %q must declare exactly one final_output stage", p.Name)
+	}
+	for i := range p.Stages {
+		stage := &p.Stages[i]
+		switch effectiveStageRole(*stage) {
+		case StageRoleValidate, StageRolePublish:
+			if i <= finalOutputIndex {
+				return fmt.Errorf("pipeline %q stage %q with role %q must appear after the final_output stage", p.Name, stage.ID, effectiveStageRole(*stage))
+			}
+		}
 	}
 
 	for i := range p.Stages {

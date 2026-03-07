@@ -3,6 +3,7 @@ package pipeline
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"os"
@@ -38,6 +39,11 @@ type RunResult struct {
 type StageExecutionResult struct {
 	Stdout       string
 	FilesWritten []string
+}
+
+type publishManifestRequest struct {
+	stageIndex int
+	path       string
 }
 
 func (r *Runner) Run(ctx context.Context, p *Pipeline, source RunSource, opts RunOptions) (*RunResult, error) {
@@ -94,6 +100,10 @@ func (r *Runner) Run(ctx context.Context, p *Pipeline, source RunSource, opts Ru
 		RunDir:     runDir,
 		SourceMode: source.Mode,
 	}
+	result := &RunResult{
+		RunID:  runID,
+		RunDir: runDir,
+	}
 
 	for i, stage := range p.Stages {
 		manifest.Stages[i] = RunStageManifest{
@@ -120,6 +130,7 @@ func (r *Runner) Run(ctx context.Context, p *Pipeline, source RunSource, opts Ru
 
 	stagePayloads := make(map[string]string, len(p.Stages))
 	stageArtifacts := make(map[string]map[string]string, len(p.Stages))
+	publishManifestRequests := make([]publishManifestRequest, 0)
 	finalOutput := ""
 	finalOutputStageID := ""
 	finalOutputEmitted := false
@@ -133,20 +144,29 @@ func (r *Runner) Run(ctx context.Context, p *Pipeline, source RunSource, opts Ru
 		manifest.Stages[i].Status = "running"
 		manifest.Stages[i].StartedAt = &stageStart
 		runState.UpdatedAt = stageStart
-		_ = writeJSON(filepath.Join(runDir, "run_manifest.json"), manifest)
-		_ = writeJSON(filepath.Join(runDir, "run.json"), runState)
+		if err := persistRunState(runDir, manifest, runState); err != nil {
+			return result, r.failRun(runDir, manifest, runState, i, opts.CleanupDelay, opts.DisableCleanup, finalOutputStageID, finalOutput, err, publishManifestRequests, source)
+		}
 		fmt.Fprintf(r.Stderr, "[%d/%d] %s ........ RUNNING\n", i+1, len(p.Stages), stage.ID)
 
 		inputPayload, err := resolveStageInput(stage, i, source.Payload, p.Stages, stagePayloads, stageArtifacts)
 		if err != nil {
-			if r.shouldEmitFinalOutputOnFailure(stage, finalOutput, finalOutputEmitted, validationSatisfied) {
+			emitFinalOutputOnFailure := r.shouldEmitFinalOutputOnFailure(stage, finalOutput, finalOutputEmitted, validationSatisfied)
+			if emitFinalOutputOnFailure {
 				if lastValidateStageIndex == -1 {
-					noValidateWarningEmitted = r.emitNoValidateWarning(runDir, manifest, p.Name, noValidateWarningEmitted)
+					var warningErr error
+					noValidateWarningEmitted, warningErr = r.emitNoValidateWarning(runDir, manifest, p.Name, noValidateWarningEmitted)
+					if warningErr != nil {
+						return result, r.failRun(runDir, manifest, runState, i, opts.CleanupDelay, opts.DisableCleanup, finalOutputStageID, finalOutput, errors.Join(err, warningErr), publishManifestRequests, source)
+					}
 				}
+				result.FinalOutput = finalOutput
 				r.emitFinalOutput(finalOutput)
 				finalOutputEmitted = true
+			} else {
+				result.FinalOutput = ""
 			}
-			return nil, r.failRun(runDir, manifest, runState, i, opts.CleanupDelay, opts.DisableCleanup, finalOutputStageID, finalOutput, err)
+			return result, r.failRun(runDir, manifest, runState, i, opts.CleanupDelay, opts.DisableCleanup, finalOutputStageID, finalOutput, err, publishManifestRequests, source)
 		}
 
 		runtimeCtx := StageRuntimeContext{
@@ -164,26 +184,42 @@ func (r *Runner) Run(ctx context.Context, p *Pipeline, source RunSource, opts Ru
 		}
 		execResult, err := r.executeStage(ctx, stage, runtimeCtx)
 		if err != nil {
-			if r.shouldEmitFinalOutputOnFailure(stage, finalOutput, finalOutputEmitted, validationSatisfied) {
+			emitFinalOutputOnFailure := r.shouldEmitFinalOutputOnFailure(stage, finalOutput, finalOutputEmitted, validationSatisfied)
+			if emitFinalOutputOnFailure {
 				if lastValidateStageIndex == -1 {
-					noValidateWarningEmitted = r.emitNoValidateWarning(runDir, manifest, p.Name, noValidateWarningEmitted)
+					var warningErr error
+					noValidateWarningEmitted, warningErr = r.emitNoValidateWarning(runDir, manifest, p.Name, noValidateWarningEmitted)
+					if warningErr != nil {
+						return result, r.failRun(runDir, manifest, runState, i, opts.CleanupDelay, opts.DisableCleanup, finalOutputStageID, finalOutput, errors.Join(err, warningErr), publishManifestRequests, source)
+					}
 				}
+				result.FinalOutput = finalOutput
 				r.emitFinalOutput(finalOutput)
 				finalOutputEmitted = true
+			} else {
+				result.FinalOutput = ""
 			}
-			return nil, r.failRun(runDir, manifest, runState, i, opts.CleanupDelay, opts.DisableCleanup, finalOutputStageID, finalOutput, err)
+			return result, r.failRun(runDir, manifest, runState, i, opts.CleanupDelay, opts.DisableCleanup, finalOutputStageID, finalOutput, err, publishManifestRequests, source)
 		}
 
 		artifactPaths, writtenFiles, primaryPayload, err := resolveStageOutputs(stage, runDir, execResult.Stdout, execResult.FilesWritten)
 		if err != nil {
-			if r.shouldEmitFinalOutputOnFailure(stage, finalOutput, finalOutputEmitted, validationSatisfied) {
+			emitFinalOutputOnFailure := r.shouldEmitFinalOutputOnFailure(stage, finalOutput, finalOutputEmitted, validationSatisfied)
+			if emitFinalOutputOnFailure {
 				if lastValidateStageIndex == -1 {
-					noValidateWarningEmitted = r.emitNoValidateWarning(runDir, manifest, p.Name, noValidateWarningEmitted)
+					var warningErr error
+					noValidateWarningEmitted, warningErr = r.emitNoValidateWarning(runDir, manifest, p.Name, noValidateWarningEmitted)
+					if warningErr != nil {
+						return result, r.failRun(runDir, manifest, runState, i, opts.CleanupDelay, opts.DisableCleanup, finalOutputStageID, finalOutput, errors.Join(err, warningErr), publishManifestRequests, source)
+					}
 				}
+				result.FinalOutput = finalOutput
 				r.emitFinalOutput(finalOutput)
 				finalOutputEmitted = true
+			} else {
+				result.FinalOutput = ""
 			}
-			return nil, r.failRun(runDir, manifest, runState, i, opts.CleanupDelay, opts.DisableCleanup, finalOutputStageID, finalOutput, err)
+			return result, r.failRun(runDir, manifest, runState, i, opts.CleanupDelay, opts.DisableCleanup, finalOutputStageID, finalOutput, err, publishManifestRequests, source)
 		}
 
 		stageArtifacts[stage.ID] = artifactPaths
@@ -191,6 +227,7 @@ func (r *Runner) Run(ctx context.Context, p *Pipeline, source RunSource, opts Ru
 		manifest.Stages[i].Files = displayPathsForRun(runDir, writtenFiles)
 		if stage.FinalOutput {
 			finalOutput = primaryPayload
+			result.FinalOutput = finalOutput
 			finalOutputStageID = stage.ID
 			manifest.FinalOutput = &FinalOutputReport{
 				StageID: stage.ID,
@@ -200,13 +237,20 @@ func (r *Runner) Run(ctx context.Context, p *Pipeline, source RunSource, opts Ru
 		if effectiveStageRole(stage) == StageRoleValidate && i == lastValidateStageIndex {
 			validationSatisfied = true
 		}
+		if stage.Executor == ExecutorBuiltin && stage.Builtin != nil && stage.Builtin.Name == "write_publish_manifest" {
+			publishManifestRequests = append(publishManifestRequests, publishManifestRequest{
+				stageIndex: i,
+				path:       builtinOutputPath(stage, runDir, "publish_manifest", "publish_manifest.json"),
+			})
+		}
 
 		stageEnd := time.Now().UTC()
 		manifest.Stages[i].Status = "passed"
 		manifest.Stages[i].FinishedAt = &stageEnd
 		runState.UpdatedAt = stageEnd
-		_ = writeJSON(filepath.Join(runDir, "run_manifest.json"), manifest)
-		_ = writeJSON(filepath.Join(runDir, "run.json"), runState)
+		if err := persistRunState(runDir, manifest, runState); err != nil {
+			return result, r.failRun(runDir, manifest, runState, i, opts.CleanupDelay, opts.DisableCleanup, finalOutputStageID, finalOutput, err, publishManifestRequests, source)
+		}
 		fmt.Fprintf(r.Stderr, "[%d/%d] %s ........ PASS\n", i+1, len(p.Stages), stage.ID)
 		if len(manifest.Stages[i].Files) > 0 {
 			fmt.Fprintf(r.Stderr, "           files: %s\n", strings.Join(manifest.Stages[i].Files, ", "))
@@ -223,14 +267,18 @@ func (r *Runner) Run(ctx context.Context, p *Pipeline, source RunSource, opts Ru
 	runState.ExpiresAt = &expiresAt
 
 	if lastValidateStageIndex == -1 && finalOutput != "" {
-		noValidateWarningEmitted = r.emitNoValidateWarning(runDir, manifest, p.Name, noValidateWarningEmitted)
+		var err error
+		noValidateWarningEmitted, err = r.emitNoValidateWarning(runDir, manifest, p.Name, noValidateWarningEmitted)
+		if err != nil {
+			return result, err
+		}
+	}
+	if err := writePublishManifests(runDir, manifest, source, finalOutput, publishManifestRequests); err != nil {
+		return result, err
 	}
 
-	if err := writeJSON(filepath.Join(runDir, "run_manifest.json"), manifest); err != nil {
-		return nil, err
-	}
-	if err := writeJSON(filepath.Join(runDir, "run.json"), runState); err != nil {
-		return nil, err
+	if err := persistRunState(runDir, manifest, runState); err != nil {
+		return result, err
 	}
 
 	if finalOutput != "" {
@@ -239,15 +287,11 @@ func (r *Runner) Run(ctx context.Context, p *Pipeline, source RunSource, opts Ru
 	r.emitRunSummary(manifest, runDir)
 	if !opts.DisableCleanup {
 		if err := startCleanupHelper(runDir, opts.CleanupDelay); err != nil {
-			return nil, err
+			return result, err
 		}
 	}
 
-	return &RunResult{
-		RunID:       runID,
-		RunDir:      runDir,
-		FinalOutput: finalOutput,
-	}, nil
+	return result, nil
 }
 
 func (r *Runner) executeStage(ctx context.Context, stage Stage, runtimeCtx StageRuntimeContext) (*StageExecutionResult, error) {
@@ -355,7 +399,7 @@ func resolveStageOutputs(stage Stage, runDir string, stdout string, execWrittenF
 	return artifactPaths, dedupeStrings(writtenFiles), primaryPayload, nil
 }
 
-func (r *Runner) failRun(runDir string, manifest *RunManifest, runState *RunState, stageIndex int, cleanupDelay time.Duration, disableCleanup bool, finalOutputStageID string, finalOutput string, err error) error {
+func (r *Runner) failRun(runDir string, manifest *RunManifest, runState *RunState, stageIndex int, cleanupDelay time.Duration, disableCleanup bool, finalOutputStageID string, finalOutput string, err error, publishManifestRequests []publishManifestRequest, source RunSource) error {
 	stageEnd := time.Now().UTC()
 	manifest.Stages[stageIndex].Status = "failed"
 	manifest.Stages[stageIndex].FinishedAt = &stageEnd
@@ -374,14 +418,18 @@ func (r *Runner) failRun(runDir string, manifest *RunManifest, runState *RunStat
 	expiresAt := stageEnd.Add(cleanupDelay)
 	runState.ExpiresAt = &expiresAt
 
-	_ = writeJSON(filepath.Join(runDir, "run_manifest.json"), manifest)
-	_ = writeJSON(filepath.Join(runDir, "run.json"), runState)
+	persistErr := writePublishManifests(runDir, manifest, source, finalOutput, publishManifestRequests)
+	if stateErr := persistRunState(runDir, manifest, runState); stateErr != nil {
+		persistErr = errors.Join(persistErr, stateErr)
+	}
 	fmt.Fprintf(r.Stderr, "[%d/%d] %s ........ FAIL\n", stageIndex+1, len(manifest.Stages), manifest.Stages[stageIndex].ID)
 	r.emitRunSummary(manifest, runDir)
 	if !disableCleanup {
-		_ = startCleanupHelper(runDir, cleanupDelay)
+		if cleanupErr := startCleanupHelper(runDir, cleanupDelay); cleanupErr != nil {
+			persistErr = errors.Join(persistErr, cleanupErr)
+		}
 	}
-	return err
+	return errors.Join(err, persistErr)
 }
 
 func (r *Runner) emitFinalOutput(output string) {
@@ -401,15 +449,17 @@ func (r *Runner) shouldEmitFinalOutputOnFailure(stage Stage, finalOutput string,
 	return validationSatisfied
 }
 
-func (r *Runner) emitNoValidateWarning(runDir string, manifest *RunManifest, pipelineName string, alreadyEmitted bool) bool {
+func (r *Runner) emitNoValidateWarning(runDir string, manifest *RunManifest, pipelineName string, alreadyEmitted bool) (bool, error) {
 	if alreadyEmitted {
-		return true
+		return true, nil
 	}
 	warning := fmt.Sprintf("warning: pipeline %s has no validate stage", pipelineName)
 	fmt.Fprintln(r.Stderr, warning)
 	manifest.Warnings = append(manifest.Warnings, warning)
-	_ = writeJSON(filepath.Join(runDir, "run_manifest.json"), manifest)
-	return true
+	if err := persistRunManifest(runDir, manifest); err != nil {
+		return true, err
+	}
+	return true, nil
 }
 
 func (r *Runner) emitRunSummary(manifest *RunManifest, runDir string) {
@@ -463,6 +513,47 @@ func validateAcceptedSource(p *Pipeline, mode SourceMode) error {
 		}
 	}
 	return fmt.Errorf("pipeline %q does not accept source mode %q", p.Name, mode)
+}
+
+func persistRunManifest(runDir string, manifest *RunManifest) error {
+	return writeJSON(filepath.Join(runDir, "run_manifest.json"), manifest)
+}
+
+func persistRunState(runDir string, manifest *RunManifest, runState *RunState) error {
+	if err := persistRunManifest(runDir, manifest); err != nil {
+		return err
+	}
+	return writeJSON(filepath.Join(runDir, "run.json"), runState)
+}
+
+func writePublishManifests(runDir string, manifest *RunManifest, source RunSource, finalOutput string, requests []publishManifestRequest) error {
+	if len(requests) == 0 {
+		return nil
+	}
+	filesByStage := make(map[int][]string, len(requests))
+	for _, request := range requests {
+		filesByStage[request.stageIndex] = append(filesByStage[request.stageIndex], request.path)
+	}
+	for stageIndex, files := range filesByStage {
+		manifest.Stages[stageIndex].Files = displayPathsForRun(runDir, append(files, manifest.Stages[stageIndex].Files...))
+	}
+	for _, request := range requests {
+		if err := os.MkdirAll(filepath.Dir(request.path), 0o755); err != nil {
+			return fmt.Errorf("create publish manifest directory: %w", err)
+		}
+		payload := map[string]any{
+			"run_manifest": manifest,
+			"source": map[string]any{
+				"mode":      source.Mode,
+				"reference": source.Reference,
+			},
+			"final_output": finalOutput,
+		}
+		if err := writeJSON(request.path, payload); err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 func writeJSON(path string, value any) error {

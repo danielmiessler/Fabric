@@ -2,7 +2,6 @@ package pipeline
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -17,7 +16,14 @@ func (r *Runner) executeBuiltinStage(_ context.Context, stage Stage, runtimeCtx 
 	case "validate_declared_outputs":
 		return executeValidateDeclaredOutputs(stage, runtimeCtx)
 	case "write_publish_manifest":
-		return executeWritePublishManifest(stage, runtimeCtx)
+		manifestPath := builtinOutputPath(stage, runtimeCtx.RunDir, "publish_manifest", "publish_manifest.json")
+		if err := os.MkdirAll(filepath.Dir(manifestPath), 0o755); err != nil {
+			return nil, fmt.Errorf("create publish manifest directory: %w", err)
+		}
+		if err := os.WriteFile(manifestPath, []byte("{}\n"), 0o644); err != nil {
+			return nil, fmt.Errorf("write publish manifest placeholder: %w", err)
+		}
+		return &StageExecutionResult{FilesWritten: []string{manifestPath}}, nil
 	default:
 		return nil, fmt.Errorf("builtin stage %q is not implemented in the runner", stage.Builtin.Name)
 	}
@@ -66,39 +72,6 @@ func executeValidateDeclaredOutputs(stage Stage, runtimeCtx StageRuntimeContext)
 	return &StageExecutionResult{
 		Stdout:       "validation passed",
 		FilesWritten: []string{reportPath},
-	}, nil
-}
-
-func executeWritePublishManifest(stage Stage, runtimeCtx StageRuntimeContext) (*StageExecutionResult, error) {
-	manifestPath := builtinOutputPath(stage, runtimeCtx.RunDir, "publish_manifest", "publish_manifest.json")
-	if err := os.MkdirAll(filepath.Dir(manifestPath), 0o755); err != nil {
-		return nil, fmt.Errorf("create publish manifest directory: %w", err)
-	}
-
-	payload := map[string]any{
-		"pipeline_name": runtimeCtx.Pipeline.Name,
-		"run_id":        runtimeCtx.RunID,
-		"run_dir":       runtimeCtx.RunDir,
-		"source": map[string]any{
-			"mode":      runtimeCtx.Source.Mode,
-			"reference": runtimeCtx.Source.Reference,
-		},
-		"final_output_bytes": len(runtimeCtx.FinalOutput),
-		"stages":             runtimeCtx.Manifest.Stages,
-		"warnings":           runtimeCtx.Manifest.Warnings,
-	}
-
-	content, err := json.MarshalIndent(payload, "", "  ")
-	if err != nil {
-		return nil, fmt.Errorf("marshal publish manifest: %w", err)
-	}
-	if err := os.WriteFile(manifestPath, content, 0o644); err != nil {
-		return nil, fmt.Errorf("write publish manifest: %w", err)
-	}
-
-	return &StageExecutionResult{
-		Stdout:       string(content),
-		FilesWritten: []string{manifestPath},
 	}, nil
 }
 

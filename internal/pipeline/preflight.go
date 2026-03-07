@@ -102,12 +102,14 @@ func preflightCommandStage(p *Pipeline, stage *Stage) error {
 		}
 	}
 
-	if resolvedProgram, err := resolveCommandProgram(p, stage.Command.Program); err != nil {
-		return fmt.Errorf("pipeline %q stage %q command.program: %w", p.Name, stage.ID, err)
-	} else {
-		stage.Command.Program = resolvedProgram
+	if !containsRuntimePlaceholder(stage.Command.Program) {
+		if resolvedProgram, err := resolveCommandProgram(p, stage.Command.Program); err != nil {
+			return fmt.Errorf("pipeline %q stage %q command.program: %w", p.Name, stage.ID, err)
+		} else {
+			stage.Command.Program = resolvedProgram
+		}
 	}
-	if stage.Command.Cwd != "" {
+	if stage.Command.Cwd != "" && !containsRuntimePlaceholder(stage.Command.Cwd) {
 		resolvedCwd := resolvePipelinePath(p, stage.Command.Cwd)
 		info, err := os.Stat(resolvedCwd)
 		if err != nil {
@@ -194,9 +196,13 @@ func looksLikeRelativePath(value string) bool {
 	return strings.HasPrefix(value, ".") || strings.ContainsRune(value, filepath.Separator)
 }
 
+func containsRuntimePlaceholder(value string) bool {
+	return runtimePlaceholderPattern.MatchString(value)
+}
+
 func isSupportedBuiltin(name string) bool {
 	switch name {
-	case "passthrough", "noop":
+	case "passthrough", "noop", "source_capture", "validate_declared_outputs", "write_publish_manifest":
 		return true
 	default:
 		return false

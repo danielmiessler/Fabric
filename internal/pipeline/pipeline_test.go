@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"io"
 	"os"
 	"path/filepath"
 	"testing"
@@ -139,6 +140,7 @@ func TestRunnerCreatesRunArtifactsForPassthroughPipeline(t *testing.T) {
 	require.Equal(t, "hello world", result.FinalOutput)
 	require.Contains(t, stdout.String(), "hello world")
 	require.Contains(t, stderr.String(), "PASS")
+	require.Contains(t, stderr.String(), "warning: pipeline passthrough has no validate stage")
 }
 
 func TestRunnerExecutesCommandStageAndCapturesStdout(t *testing.T) {
@@ -223,6 +225,169 @@ func TestRunnerUsesArtifactPrimaryOutput(t *testing.T) {
 	require.FileExists(t, filepath.Join(result.RunDir, "note.md"))
 }
 
+func TestRunnerValidationStageBlocksFinalStdoutOnFailure(t *testing.T) {
+	t.Parallel()
+
+	tempDir := t.TempDir()
+	p := &Pipeline{
+		Version:  1,
+		Name:     "validate-blocks-output",
+		FileStem: "validate-blocks-output",
+		FilePath: filepath.Join(tempDir, "validate-blocks-output.yaml"),
+		Stages: []Stage{
+			{
+				ID:            "render",
+				Executor:      ExecutorBuiltin,
+				Builtin:       &BuiltinConfig{Name: "passthrough"},
+				FinalOutput:   true,
+				PrimaryOutput: &PrimaryOutputConfig{From: PrimaryOutputStdout},
+			},
+			{
+				ID:       "validate",
+				Role:     StageRoleValidate,
+				Executor: ExecutorCommand,
+				Command: &CommandConfig{
+					Program: os.Args[0],
+					Args:    []string{"-test.run=TestPipelineHelperProcess", "--", "fail"},
+					Env:     map[string]string{"GO_WANT_HELPER_PROCESS": "1"},
+				},
+				PrimaryOutput: &PrimaryOutputConfig{From: PrimaryOutputStdout},
+			},
+		},
+	}
+
+	var stdout, stderr bytes.Buffer
+	runner := NewRunner(&stdout, &stderr, nil)
+	result, err := runner.Run(context.Background(), p, RunSource{Mode: SourceModeStdin, Payload: "candidate-final-output"}, RunOptions{InvocationDir: tempDir, DisableCleanup: true})
+	require.Nil(t, result)
+	require.Error(t, err)
+	require.Empty(t, stdout.String())
+	require.Contains(t, stderr.String(), "validate ........ FAIL")
+}
+
+func TestRunnerPublishFailureStillEmitsValidatedOutput(t *testing.T) {
+	t.Parallel()
+
+	tempDir := t.TempDir()
+	p := &Pipeline{
+		Version:  1,
+		Name:     "publish-failure-still-emits",
+		FileStem: "publish-failure-still-emits",
+		FilePath: filepath.Join(tempDir, "publish-failure-still-emits.yaml"),
+		Stages: []Stage{
+			{
+				ID:            "render",
+				Executor:      ExecutorBuiltin,
+				Builtin:       &BuiltinConfig{Name: "passthrough"},
+				FinalOutput:   true,
+				PrimaryOutput: &PrimaryOutputConfig{From: PrimaryOutputStdout},
+			},
+			{
+				ID:       "validate",
+				Executor: ExecutorBuiltin,
+				Builtin:  &BuiltinConfig{Name: "validate_declared_outputs"},
+			},
+			{
+				ID:       "publish",
+				Role:     StageRolePublish,
+				Executor: ExecutorCommand,
+				Command: &CommandConfig{
+					Program: os.Args[0],
+					Args:    []string{"-test.run=TestPipelineHelperProcess", "--", "fail"},
+					Env:     map[string]string{"GO_WANT_HELPER_PROCESS": "1"},
+				},
+				PrimaryOutput: &PrimaryOutputConfig{From: PrimaryOutputStdout},
+			},
+		},
+	}
+
+	var stdout, stderr bytes.Buffer
+	runner := NewRunner(&stdout, &stderr, nil)
+	result, err := runner.Run(context.Background(), p, RunSource{Mode: SourceModeStdin, Payload: "validated-output"}, RunOptions{InvocationDir: tempDir, DisableCleanup: true})
+	require.Nil(t, result)
+	require.Error(t, err)
+	require.Contains(t, stdout.String(), "validated-output")
+	require.Contains(t, stderr.String(), "publish ........ FAIL")
+}
+
+func TestCommandStageInterpolatesSourceReference(t *testing.T) {
+	t.Parallel()
+
+	tempDir := t.TempDir()
+	sourcePath := filepath.Join(tempDir, "session.txt")
+	require.NoError(t, os.WriteFile(sourcePath, []byte("ignored"), 0o644))
+
+	p := &Pipeline{
+		Version:  1,
+		Name:     "source-interpolation",
+		FileStem: "source-interpolation",
+		FilePath: filepath.Join(tempDir, "source-interpolation.yaml"),
+		Stages: []Stage{
+			{
+				ID:       "normalize",
+				Executor: ExecutorCommand,
+				Command: &CommandConfig{
+					Program: os.Args[0],
+					Args: []string{
+						"-test.run=TestPipelineHelperProcess",
+						"--",
+						"stdout",
+						"{{source}}",
+					},
+					Env: map[string]string{"GO_WANT_HELPER_PROCESS": "1"},
+				},
+				FinalOutput:   true,
+				PrimaryOutput: &PrimaryOutputConfig{From: PrimaryOutputStdout},
+			},
+		},
+	}
+
+	var stdout bytes.Buffer
+	runner := NewRunner(&stdout, io.Discard, nil)
+	result, err := runner.Run(context.Background(), p, RunSource{Mode: SourceModeSource, Reference: sourcePath, Payload: "ignored"}, RunOptions{InvocationDir: tempDir, DisableCleanup: true})
+	require.NoError(t, err)
+	require.Equal(t, sourcePath, result.FinalOutput)
+	require.Contains(t, stdout.String(), sourcePath)
+}
+
+func TestValidateBuiltinWritesValidationReport(t *testing.T) {
+	t.Parallel()
+
+	tempDir := t.TempDir()
+	p := &Pipeline{
+		Version:  1,
+		Name:     "validation-report",
+		FileStem: "validation-report",
+		FilePath: filepath.Join(tempDir, "validation-report.yaml"),
+		Stages: []Stage{
+			{
+				ID:       "render",
+				Executor: ExecutorCommand,
+				Command: &CommandConfig{
+					Program: os.Args[0],
+					Args:    []string{"-test.run=TestPipelineHelperProcess", "--", "artifact", "artifact-note"},
+					Env:     map[string]string{"GO_WANT_HELPER_PROCESS": "1"},
+				},
+				Artifacts: []ArtifactDeclaration{
+					{Name: "note", Path: "note.md"},
+				},
+				FinalOutput:   true,
+				PrimaryOutput: &PrimaryOutputConfig{From: PrimaryOutputArtifact, Artifact: "note"},
+			},
+			{
+				ID:       "validate",
+				Executor: ExecutorBuiltin,
+				Builtin:  &BuiltinConfig{Name: "validate_declared_outputs"},
+			},
+		},
+	}
+
+	runner := NewRunner(io.Discard, io.Discard, nil)
+	result, err := runner.Run(context.Background(), p, RunSource{Mode: SourceModeStdin, Payload: "ignored"}, RunOptions{InvocationDir: tempDir, DisableCleanup: true})
+	require.NoError(t, err)
+	require.FileExists(t, filepath.Join(result.RunDir, "validation_report.md"))
+}
+
 func TestCleanupExpiredRunsRemovesExpiredDirectories(t *testing.T) {
 	t.Parallel()
 
@@ -279,6 +444,9 @@ func TestPipelineHelperProcess(t *testing.T) {
 			fmt.Fprintln(os.Stderr, err)
 			os.Exit(4)
 		}
+	case "fail":
+		fmt.Fprintln(os.Stderr, "intentional helper failure")
+		os.Exit(7)
 	default:
 		os.Exit(5)
 	}

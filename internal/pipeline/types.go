@@ -18,6 +18,14 @@ const (
 	ExecutorBuiltin       ExecutorType = "builtin"
 )
 
+type StageRole string
+
+const (
+	StageRoleDefault  StageRole = ""
+	StageRoleValidate StageRole = "validate"
+	StageRolePublish  StageRole = "publish"
+)
+
 type StageInputFrom string
 
 const (
@@ -55,6 +63,7 @@ type Pipeline struct {
 
 type Stage struct {
 	ID            string                `yaml:"id"`
+	Role          StageRole             `yaml:"role,omitempty"`
 	Executor      ExecutorType          `yaml:"executor"`
 	Input         *StageInput           `yaml:"input,omitempty"`
 	Command       *CommandConfig        `yaml:"command,omitempty"`
@@ -125,6 +134,8 @@ type RunManifest struct {
 	FinishedAt   *time.Time         `json:"finished_at,omitempty"`
 	Source       RunSourceManifest  `json:"source"`
 	Stages       []RunStageManifest `json:"stages"`
+	Warnings     []string           `json:"warnings,omitempty"`
+	FinalOutput  *FinalOutputReport `json:"final_output,omitempty"`
 }
 
 type RunSourceManifest struct {
@@ -134,15 +145,22 @@ type RunSourceManifest struct {
 
 type RunStageManifest struct {
 	ID         string       `json:"id"`
+	Role       StageRole    `json:"role,omitempty"`
 	Executor   ExecutorType `json:"executor"`
 	Status     string       `json:"status"`
 	Error      string       `json:"error,omitempty"`
 	StartedAt  *time.Time   `json:"started_at,omitempty"`
 	FinishedAt *time.Time   `json:"finished_at,omitempty"`
+	Files      []string     `json:"files,omitempty"`
 }
 
 type SourceManifest struct {
 	Mode         SourceMode `json:"mode"`
 	Reference    string     `json:"reference,omitempty"`
 	PayloadBytes int        `json:"payload_bytes"`
+}
+
+type FinalOutputReport struct {
+	StageID string `json:"stage_id"`
+	Bytes   int    `json:"bytes"`
 }

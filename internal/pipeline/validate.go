@@ -43,6 +43,12 @@ func Validate(p *Pipeline) error {
 		}
 		stageByID[stage.ID] = stage
 
+		switch stage.Role {
+		case StageRoleDefault, StageRoleValidate, StageRolePublish:
+		default:
+			return fmt.Errorf("pipeline %q stage %q has unsupported role %q", p.Name, stage.ID, stage.Role)
+		}
+
 		switch stage.Executor {
 		case ExecutorBuiltin:
 			if stage.Builtin == nil || stage.Builtin.Name == "" {

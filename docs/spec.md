@@ -424,10 +424,21 @@ It must declare:
 - pipeline name
 - accepted input types when restricted
 - stages in order
+- optional stage role when post-final-output semantics matter
 - executor for each stage
 - stage inputs and outputs
 - artifact policy
 - final output behavior
+
+Stage role semantics in V1:
+
+- `role: validate` marks a stage whose success gates final stdout emission
+- `role: publish` marks a downstream operational stage that may fail after validated output exists
+- built-in stages may imply these roles even when `role` is omitted:
+  - `validate_declared_outputs` behaves as `validate`
+  - `write_publish_manifest` behaves as `publish`
+- any validate or publish stage must appear after the single `final_output` stage
+- publish stages must appear after the last validate stage
 
 ### 7.2 Logical example
 
@@ -472,10 +483,12 @@ stages:
     primary_output:
       from: stdout
   - id: validate_contract
+    role: validate
     executor: builtin
     builtin:
       name: validate_declared_outputs
   - id: publish
+    role: publish
     executor: builtin
     builtin:
       name: write_publish_manifest
@@ -617,17 +630,27 @@ Important note:
 - Fabric strategies are prompt modifiers, not orchestration definitions.
 - Strategies may improve stage quality but do not replace the pipeline model.
 
-## 12. External Pipeline Reuse
+## 12. External Pipeline Reuse and Shippable Built-Ins
 
-The current Zoom technical pipeline must remain external and unchanged.
+Fabric must support both:
 
-The Fabric-side implementation should wrap it through a `command` executor or compatible adapter.
+- user-authored external pipelines executed through `command` stages
+- Fabric-owned built-in pipelines that are fully shippable from this repository alone
 
-This allows Fabric to become the operator-facing interface while Zoom remains the source of truth for that pipeline’s current implementation.
+For local experimentation, existing external pipelines may be reused directly through `command` stages.
 
-This is required to satisfy the “do not reinvent the wheel” constraint.
+For built-in user-facing pipelines that Fabric ships, local absolute-path dependencies are not acceptable. Those pipelines must live entirely inside the Fabric repository.
 
-The same `command` executor model must support any host-language runtime that can be invoked as a process, including Python, Bash, Java, Node.js, and compiled binaries.
+This is the rule that now governs the Zoom technical pipeline:
+
+- the original Zoom pipeline remains the reference behavior
+- the shippable Fabric implementation is a parity port owned by this repo
+- deterministic scripts may be copied into Fabric unchanged where possible
+- AI stages may be adapted into `generate -> materialize` pairs when Fabric execution semantics require it
+
+This preserves behavior without forcing Fabric to depend on a user’s private local Zoom checkout.
+
+The same `command` executor model must still support any host-language runtime that can be invoked as a process, including Python, Bash, Java, Node.js, and compiled binaries.
 
 ## 13. Error Handling
 
@@ -668,11 +691,31 @@ External command execution must be explicit in the pipeline definition and visib
 - implement terminal stage renderer
 - implement basic `fabric --pipeline` flow
 
+Current status:
+
+- implemented on the feature branch
+- includes stronger behavior than the original phase description:
+  - preflight validation
+  - cleanup lifecycle
+  - output-file behavior
+  - stage-role-aware runtime semantics
+
 ### Phase 2
 
-- integrate Zoom technical pipeline adapter
+- ship a Fabric-owned Zoom technical parity pipeline
 - add validation and publish builtins
 - align quick note patterns with pipeline mode
+
+Current status:
+
+- materially implemented
+- done:
+  - `zoom-tech-note`
+  - `zoom-tech-note-deep-pass`
+  - validation builtin
+  - publish builtin
+- not yet done:
+  - quick-note alignment with real note pipelines
 
 ### Phase 3
 
@@ -681,7 +724,76 @@ External command execution must be explicit in the pipeline definition and visib
 - add more profiles and pipeline definitions
 - add partial stage execution controls
 
-## 16. Decision
+Current status:
+
+- largely deferred
+- the current implementation keeps the terminal renderer human-readable and stderr-based, but does not yet expose:
+  - JSON event stream mode
+  - partial execution flags
+  - richer real profile inventory
+
+## 16. Implementation Checkpoint
+
+Checkpoint date: 2026-03-07
+
+Implemented and verified in the current branch:
+
+- YAML-backed pipeline definitions under:
+  - `data/pipelines/`
+  - `~/.config/fabric/pipelines/`
+- pipeline discovery with `fabric --listpipelines`
+- shell-completion-friendly listing with `--shell-complete-list`
+- preflight validation via:
+  - `fabric --validate-pipeline <file>`
+  - `fabric --pipeline <name> --validate-only`
+- exactly-one-source enforcement for pipeline mode:
+  - stdin
+  - `--source`
+  - `--scrape_url`
+- pipeline runner with:
+  - `builtin`
+  - `command`
+  - `fabric_pattern`
+- stdout/stderr split suitable for chaining
+- temporary `.pipeline/<run-id>/` artifacts in the invocation directory
+- delayed cleanup plus startup janitor cleanup
+- explicit primary-output handling across stdout and artifact-backed stages
+- stage-role-aware behavior for validation gating and publish-after-output semantics
+- output-file behavior that remains correct when a later publish stage fails
+- built-in sample pipeline: `passthrough`
+- built-in Zoom parity pipelines:
+  - `zoom-tech-note`
+  - `zoom-tech-note-deep-pass`
+- Fabric-owned Zoom pipeline assets:
+  - copied deterministic scripts under `scripts/pipelines/zoom-tech-note/`
+  - Fabric patterns under `data/patterns/zoom_stage*_*/system.md`
+  - materializer scripts for Stage 1/2/3 multi-artifact output
+- parity-focused deterministic tests for the Zoom pipeline wrappers and artifact flow
+- relative pipeline-path resolution for stage-owned pattern files
+
+Implemented but still minimal:
+
+- built-in pipeline inventory
+- publish integration behavior
+- operator-facing examples
+
+Not yet implemented from the broader spec:
+
+- real built-in note-generation pipelines such as:
+  - `technical-study-guide`
+  - `nontechnical-study-guide`
+- richer profile inventory
+- pipeline dry-run / introspection mode
+- JSON event stream mode
+- partial stage execution controls
+
+Known status at this checkpoint:
+
+- the implemented runner/kernel contracts are covered by the current audit, focused Zoom parity tests, and `go test ./...`
+- the platform is usable, but built-in pipeline parity should still be treated as under active audit while the shipped pipeline inventory expands
+- the remaining work is primarily product-surface completion plus parity hardening, not a redesign of the runner model
+
+## 17. Decision
 
 Fabric should be extended with a pipeline runner and stage executor model.
 

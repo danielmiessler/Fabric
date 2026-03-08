@@ -2993,3 +2993,183 @@ The following were intentionally not finalized here:
 - exact partial-stage execution flags such as `--from-stage` and `--to-stage`
 
 These remain implementation-design topics, not product-direction blockers.
+
+## Implementation Checkpoint: 2026-03-07
+
+This section records what is now implemented in Fabric after the design session and the first execution-focused implementation passes.
+
+### Commits that established the current checkpoint
+
+- `38da8c0b` `Add executable pipeline runner slice`
+- `96bed3fb` `Add pipeline stage roles and builtins`
+- `f886b511` `Tighten pipeline runner contracts`
+
+### Confirmed implemented decisions
+
+- Fabric remains the only operator-facing command surface.
+- `--pipeline` exists and is the multi-stage execution entry point.
+- `--listpipelines` exists and follows Fabric’s dedicated-list-flag style.
+- `--validate-pipeline <file>` exists.
+- `--pipeline <name> --validate-only` exists.
+- pipeline definitions are YAML-authored and use the `.yaml` extension
+- built-in definitions are loaded from `data/pipelines/`
+- user-defined definitions are loaded from `~/.config/fabric/pipelines/`
+- user-defined definitions override built-ins by name
+- pipeline identity uses the filename stem and also requires matching `name:`
+- pipeline mode requires exactly one input source:
+  - stdin
+  - `--source`
+  - `--scrape_url`
+- pipeline mode keeps chaining-safe IO semantics:
+  - final payload on stdout
+  - progress and diagnostics on stderr
+- `-o` writes the final rendered output and still preserves stdout emission
+- `.pipeline/<run-id>/` is created in the current working directory where `fabric` was invoked
+- cleanup is temporary and hybrid:
+  - per-run delayed cleanup
+  - startup janitor cleanup
+- the runner supports all three V1 executor types:
+  - `command`
+  - `fabric_pattern`
+  - `builtin`
+- command stages support:
+  - `program`
+  - `args`
+  - optional `cwd`
+  - optional `env`
+  - optional `timeout`
+- command stages are full-trust and may write outside `.pipeline/<run-id>/`
+- stage-to-stage handoff uses the agreed hybrid model:
+  - one primary payload for the next stage
+  - optional artifacts on disk
+- the primary output source must be declared explicitly
+- exactly one final output stage is enforced in V1
+- validation gates stdout when a validate stage exists
+- missing validation emits an informational stderr warning and still allows final stdout
+- publish-stage failures may still allow validated final stdout
+- publish manifests are written from the finalized run snapshot
+- role semantics are now real in code:
+  - `validate`
+  - `publish`
+- role ordering is enforced:
+  - validate/publish after the final output stage
+  - publish after the last validate stage
+
+### What is implemented but still intentionally minimal
+
+- built-in pipeline inventory is minimal
+- built-in example coverage is minimal
+- operator-facing examples are still sparse
+- profile inventory is still minimal
+
+### What remains from the broader agreed direction
+
+- real built-in note pipelines beyond `passthrough`
+- first-class profile examples for:
+  - `technical-study-guide`
+  - `nontechnical-study-guide`
+- richer operator-facing pipeline authoring documentation
+- future `--dry-run` / introspection mode
+- JSON event stream mode
+- partial stage execution controls such as:
+  - `--from-stage`
+  - `--to-stage`
+
+### Verified implementation state at this checkpoint
+
+- focused pipeline and CLI tests pass
+- full `go test ./...` passes
+- the current known gaps are product-surface and example coverage gaps, not confirmed correctness regressions in the implemented pipeline kernel
+
+### Small doc/code alignment note
+
+The implementation now has explicit and effective stage-role semantics that are stronger than the earliest drafts in this note.
+
+The practical source of truth after this checkpoint is:
+
+- this brainstorming note for design history and decisions
+- `docs/spec.md` for the current technical contract
+- the code for exact runtime behavior
+
+## Implementation Checkpoint Addendum: 2026-03-07 (Zoom Tech Note Parity Port)
+
+This addendum records the next major implementation step after the core pipeline kernel checkpoint above.
+
+### What is now implemented in the working tree
+
+- Fabric now contains two built-in Zoom parity pipelines:
+  - `zoom-tech-note`
+  - `zoom-tech-note-deep-pass`
+- The implementation is Fabric-owned and shippable.
+- It no longer depends on a private local Zoom repository at runtime.
+
+### What was copied or ported into Fabric
+
+- deterministic Zoom scripts were copied into:
+  - `scripts/pipelines/zoom-tech-note/ingest_zoom_captions.py`
+  - `scripts/pipelines/zoom-tech-note/validate_coverage.py`
+  - `scripts/pipelines/zoom-tech-note/publish_tutorial_notes.py`
+- Stage 1/2/3 prompts were ported into Fabric patterns under:
+  - `data/patterns/zoom_stage1_refine/system.md`
+  - `data/patterns/zoom_stage2_synthesize/system.md`
+  - `data/patterns/zoom_stage3_enhance/system.md`
+- Fabric-specific helper scripts were added for:
+  - source/session preparation
+  - ingest-stage orchestration
+  - Stage 1 materialization
+  - Stage 2 materialization
+  - Stage 3 materialization
+  - deep pass
+  - validation-stage orchestration
+  - publish-stage orchestration
+
+### Important compatibility note
+
+The old Zoom runner used a tool-enabled model flow that could write multiple files directly during an AI stage.
+
+Fabric pattern stages emit content, not multiple file writes.
+
+So the required compatibility adaptation is:
+
+- `generate` stage via `fabric_pattern`
+- `materialize` stage via deterministic command script
+
+This is not a product-semantic change.
+It is the minimum execution-model adaptation needed to preserve the old artifact contract inside Fabric.
+
+### What parity now covers
+
+- stable session-root artifacts are written into the real source session directory
+- temporary Fabric run metadata still lives under `.pipeline/<run-id>/` in the invocation directory
+- Stage 1/2/3 outputs preserve the original file contract
+- the deep-pass variant preserves the stricter quality gate as a separate built-in pipeline
+
+### Additional implementation detail now enforced
+
+Pipeline stages may reference pattern files by relative path.
+
+This is now supported in preflight and runtime resolution so a built-in pipeline can own its patterns inside the Fabric repo without relying on globally installed pattern names.
+
+### Verification completed for this parity slice
+
+- `python3 -m py_compile scripts/pipelines/zoom-tech-note/*.py`
+- `go run ./cmd/fabric --validate-pipeline data/pipelines/zoom-tech-note.yaml`
+- `go run ./cmd/fabric --validate-pipeline data/pipelines/zoom-tech-note-deep-pass.yaml`
+- `go test ./internal/pipeline -run 'TestZoomTechNote' -count=1`
+- `go test ./...`
+
+### What still remains after the Zoom parity slice
+
+- first-class built-in generic note pipelines:
+  - `technical-study-guide`
+  - `nontechnical-study-guide`
+- richer operator-facing examples and authoring docs
+- `--dry-run` / introspection mode
+- JSON event stream mode
+- partial stage execution controls
+
+### Current confidence after this addendum
+
+- confidence in the implemented Fabric pipeline kernel remains high
+- confidence in the built-in Zoom parity port is high after the current verification set
+- the remaining gaps are now mostly product-surface expansion, documentation, and continued parity hardening rather than runner-model uncertainty

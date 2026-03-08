@@ -149,9 +149,15 @@ func (r *Runner) executePatternStage(ctx context.Context, stage Stage, runtimeCt
 	if err != nil {
 		return nil, fmt.Errorf("pattern stage %q context: %w", stage.ID, err)
 	}
+	if looksLikeRelativePath(contextName) {
+		contextName = resolvePipelinePath(runtimeCtx.Pipeline, contextName)
+	}
 	patternName, err := interpolateRuntimeValue(stage.Pattern, runtimeCtx)
 	if err != nil {
 		return nil, fmt.Errorf("pattern stage %q pattern: %w", stage.ID, err)
+	}
+	if looksLikeRelativePath(patternName) {
+		patternName = resolvePipelinePath(runtimeCtx.Pipeline, patternName)
 	}
 	variables := make(map[string]string, len(stage.Variables))
 	for key, value := range stage.Variables {

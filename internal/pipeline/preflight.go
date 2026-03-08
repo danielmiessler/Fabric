@@ -16,7 +16,8 @@ import (
 var envReferencePattern = regexp.MustCompile(`\$\{([A-Za-z_][A-Za-z0-9_]*)\}|\$([A-Za-z_][A-Za-z0-9_]*)`)
 
 type PreflightOptions struct {
-	Registry *core.PluginRegistry
+	Registry              *core.PluginRegistry
+	SkipPatternValidation func(Stage) bool
 }
 
 func Preflight(ctx context.Context, p *Pipeline, opts PreflightOptions) error {
@@ -70,6 +71,9 @@ func Preflight(ctx context.Context, p *Pipeline, opts PreflightOptions) error {
 				return err
 			}
 		case ExecutorFabricPattern:
+			if opts.SkipPatternValidation != nil && opts.SkipPatternValidation(*stage) {
+				continue
+			}
 			if err := preflightPatternStage(p, stage, opts.Registry); err != nil {
 				return err
 			}
@@ -127,6 +131,12 @@ func preflightCommandStage(p *Pipeline, stage *Stage) error {
 func preflightPatternStage(p *Pipeline, stage *Stage, registry *core.PluginRegistry) error {
 	if registry == nil {
 		return fmt.Errorf("pipeline %q stage %q cannot validate patterns without plugin registry", p.Name, stage.ID)
+	}
+	if looksLikeRelativePath(stage.Pattern) {
+		stage.Pattern = resolvePipelinePath(p, stage.Pattern)
+	}
+	if looksLikeRelativePath(stage.Context) {
+		stage.Context = resolvePipelinePath(p, stage.Context)
 	}
 	if _, err := registry.Db.Patterns.Get(stage.Pattern); err != nil {
 		return fmt.Errorf("pipeline %q stage %q pattern %q: %w", p.Name, stage.ID, stage.Pattern, err)

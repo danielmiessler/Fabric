@@ -18,6 +18,8 @@ type Runner struct {
 	Stdout   io.Writer
 	Stderr   io.Writer
 	registry *core.PluginRegistry
+
+	stageExecutionOverride func(context.Context, Stage, StageRuntimeContext) (*StageExecutionResult, bool, error)
 }
 
 func NewRunner(stdout, stderr io.Writer, registry *core.PluginRegistry) *Runner {
@@ -47,7 +49,12 @@ type publishManifestRequest struct {
 }
 
 func (r *Runner) Run(ctx context.Context, p *Pipeline, source RunSource, opts RunOptions) (*RunResult, error) {
-	if err := Preflight(ctx, p, PreflightOptions{Registry: r.registry}); err != nil {
+	if err := Preflight(ctx, p, PreflightOptions{
+		Registry: r.registry,
+		SkipPatternValidation: func(stage Stage) bool {
+			return r.stageExecutionOverride != nil && stage.Executor == ExecutorFabricPattern
+		},
+	}); err != nil {
 		return nil, err
 	}
 	if err := validateAcceptedSource(p, source.Mode); err != nil {
@@ -295,6 +302,12 @@ func (r *Runner) Run(ctx context.Context, p *Pipeline, source RunSource, opts Ru
 }
 
 func (r *Runner) executeStage(ctx context.Context, stage Stage, runtimeCtx StageRuntimeContext) (*StageExecutionResult, error) {
+	if r.stageExecutionOverride != nil {
+		if result, handled, err := r.stageExecutionOverride(ctx, stage, runtimeCtx); handled {
+			return result, err
+		}
+	}
+
 	switch stage.Executor {
 	case ExecutorBuiltin:
 		return r.executeBuiltinStage(ctx, stage, runtimeCtx)

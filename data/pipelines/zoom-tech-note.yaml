@@ -1,0 +1,134 @@
+version: 1
+name: zoom-tech-note
+description: Fabric-native parity port of the Zoom transcript-to-tutorial pipeline.
+accepts:
+  - stdin
+  - source
+stages:
+  - id: prepare_source
+    executor: command
+    input:
+      from: source
+    command:
+      program: python3
+      args:
+        - scripts/pipelines/zoom-tech-note/prepare_source.py
+      cwd: ../..
+    artifacts:
+      - name: session_context
+        path: session_context.json
+      - name: stage1_input
+        path: stage1_input.md
+    primary_output:
+      from: stdout
+
+  - id: ingest_segments
+    executor: command
+    command:
+      program: python3
+      args:
+        - scripts/pipelines/zoom-tech-note/run_ingest_stage.py
+        - --session-context
+        - "{{artifact:prepare_source:session_context}}"
+      cwd: ../..
+
+  - id: stage1_refine_generate
+    executor: fabric_pattern
+    input:
+      from: artifact
+      stage: prepare_source
+      artifact: stage1_input
+    pattern: ../patterns/zoom_stage1_refine/system.md
+
+  - id: stage1_refine_materialize
+    executor: command
+    command:
+      program: python3
+      args:
+        - scripts/pipelines/zoom-tech-note/materialize_stage1.py
+        - --session-context
+        - "{{artifact:prepare_source:session_context}}"
+      cwd: ../..
+    artifacts:
+      - name: stage2_input
+        path: stage2_input.md
+    primary_output:
+      from: artifact
+      artifact: stage2_input
+
+  - id: stage2_synthesize_generate
+    executor: fabric_pattern
+    input:
+      from: artifact
+      stage: stage1_refine_materialize
+      artifact: stage2_input
+    pattern: ../patterns/zoom_stage2_synthesize/system.md
+
+  - id: stage2_synthesize_materialize
+    executor: command
+    command:
+      program: python3
+      args:
+        - scripts/pipelines/zoom-tech-note/materialize_stage2.py
+        - --session-context
+        - "{{artifact:prepare_source:session_context}}"
+      cwd: ../..
+    artifacts:
+      - name: stage3_input
+        path: stage3_input.md
+    primary_output:
+      from: artifact
+      artifact: stage3_input
+
+  - id: stage3_enhance_generate
+    executor: fabric_pattern
+    input:
+      from: artifact
+      stage: stage2_synthesize_materialize
+      artifact: stage3_input
+    pattern: ../patterns/zoom_stage3_enhance/system.md
+    stream: true
+
+  - id: stage3_enhance_materialize
+    executor: command
+    command:
+      program: python3
+      args:
+        - scripts/pipelines/zoom-tech-note/materialize_stage3.py
+        - --session-context
+        - "{{artifact:prepare_source:session_context}}"
+      cwd: ../..
+    final_output: true
+    primary_output:
+      from: stdout
+
+  - id: validate_outputs
+    role: validate
+    executor: command
+    command:
+      program: python3
+      args:
+        - scripts/pipelines/zoom-tech-note/run_validate_stage.py
+        - --session-context
+        - "{{artifact:prepare_source:session_context}}"
+      cwd: ../..
+
+  - id: publish_notes
+    role: publish
+    executor: command
+    command:
+      program: python3
+      args:
+        - scripts/pipelines/zoom-tech-note/run_publish_stage.py
+        - --session-context
+        - "{{artifact:prepare_source:session_context}}"
+      cwd: ../..
+
+  - id: write_publish_manifest
+    role: publish
+    executor: builtin
+    builtin:
+      name: write_publish_manifest
+    artifacts:
+      - name: publish_manifest
+        path: publish_manifest.json

@@ -46,9 +46,8 @@ Implemented beyond the original slice:
 
 Still left after this slice:
 
-- real built-in note pipelines beyond `passthrough`
-- the first promised profiles:
-  - `technical-study-guide`
+- built-in note pipelines beyond quick mode and Zoom parity
+- remaining promised pipeline profiles:
   - `nontechnical-study-guide`
 - richer operator-facing examples and authoring guidance
 - pipeline dry-run / introspection mode
@@ -91,12 +90,20 @@ Implemented in this extension slice:
   - publish
 - CLI preflight validation for both built-in Zoom pipelines
 - full repo verification with `go test ./...`
+- built-in quick-mode note patterns aligned with the note product surface:
+  - `data/patterns/techNote/system.md`
+  - `data/patterns/nontechNote/system.md`
+- deterministic built-in pattern tests for:
+  - `techNote`
+  - `nontechNote`
 
 What remains after the Zoom parity slice:
 
-- first-class built-in note profiles that are not Zoom-specific:
-  - `technical-study-guide`
-  - `nontechnical-study-guide`
+- first-class built-in note pipelines beyond quick mode and Zoom parity remain incomplete as a category, but the first generic profile is now implemented:
+  - implemented:
+    - `technical-study-guide`
+  - remaining:
+    - `nontechnical-study-guide`
 - richer operator-facing authoring documentation and examples
 - dry-run / introspection mode
 - JSON event stream mode
@@ -108,6 +115,8 @@ Known status after the Zoom parity slice:
   - `python3 -m py_compile scripts/pipelines/zoom-tech-note/*.py`
   - `go run ./cmd/fabric --validate-pipeline data/pipelines/zoom-tech-note.yaml`
   - `go run ./cmd/fabric --validate-pipeline data/pipelines/zoom-tech-note-deep-pass.yaml`
+  - `go test ./internal/plugins/db/fsdb -run 'TestBuiltinQuickNotePatterns' -count=1`
   - `go test ./internal/pipeline -run 'TestZoomTechNote' -count=1`
   - `go test ./...`
+- Phase 2 is now complete on the current branch.
 - The main remaining work is product-surface expansion plus ongoing parity hardening, not a new runner architecture phase.

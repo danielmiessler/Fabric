@@ -3065,9 +3065,11 @@ This section records what is now implemented in Fabric after the design session 
 ### What remains from the broader agreed direction
 
 - real built-in note pipelines beyond `passthrough`
-- first-class profile examples for:
-  - `technical-study-guide`
-  - `nontechnical-study-guide`
+- first-class profile examples now include:
+  - implemented:
+    - `technical-study-guide`
+  - remaining:
+    - `nontechnical-study-guide`
 - richer operator-facing pipeline authoring documentation
 - future `--dry-run` / introspection mode
 - JSON event stream mode
@@ -3160,9 +3162,14 @@ This is now supported in preflight and runtime resolution so a built-in pipeline
 
 ### What still remains after the Zoom parity slice
 
-- first-class built-in generic note pipelines:
-  - `technical-study-guide`
-  - `nontechnical-study-guide`
+- built-in quick-mode note alignment is now implemented through:
+  - `techNote`
+  - `nontechNote`
+- first-class built-in generic note pipelines beyond quick mode and Zoom parity now include:
+  - implemented:
+    - `technical-study-guide`
+  - remaining:
+    - `nontechnical-study-guide`
 - richer operator-facing examples and authoring docs
 - `--dry-run` / introspection mode
 - JSON event stream mode

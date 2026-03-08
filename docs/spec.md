@@ -708,14 +708,15 @@ Current status:
 
 Current status:
 
-- materially implemented
+- fully implemented
 - done:
   - `zoom-tech-note`
   - `zoom-tech-note-deep-pass`
   - validation builtin
   - publish builtin
-- not yet done:
-  - quick-note alignment with real note pipelines
+  - built-in quick note patterns aligned with pipeline mode:
+    - `techNote`
+    - `nontechNote`
 
 ### Phase 3
 
@@ -764,11 +765,17 @@ Implemented and verified in the current branch:
 - built-in Zoom parity pipelines:
   - `zoom-tech-note`
   - `zoom-tech-note-deep-pass`
+- built-in quick-mode note patterns aligned with the real note surface:
+  - `techNote`
+  - `nontechNote`
 - Fabric-owned Zoom pipeline assets:
   - copied deterministic scripts under `scripts/pipelines/zoom-tech-note/`
   - Fabric patterns under `data/patterns/zoom_stage*_*/system.md`
   - materializer scripts for Stage 1/2/3 multi-artifact output
 - parity-focused deterministic tests for the Zoom pipeline wrappers and artifact flow
+- deterministic built-in pattern tests for:
+  - `techNote`
+  - `nontechNote`
 - relative pipeline-path resolution for stage-owned pattern files
 
 Implemented but still minimal:
@@ -776,11 +783,12 @@ Implemented but still minimal:
 - built-in pipeline inventory
 - publish integration behavior
 - operator-facing examples
+- built-in study-guide profile inventory:
+  - `technical-study-guide`
 
 Not yet implemented from the broader spec:
 
-- real built-in note-generation pipelines such as:
-  - `technical-study-guide`
+- remaining built-in note-generation pipelines such as:
   - `nontechnical-study-guide`
 - richer profile inventory
 - pipeline dry-run / introspection mode
@@ -790,6 +798,7 @@ Not yet implemented from the broader spec:
 Known status at this checkpoint:
 
 - the implemented runner/kernel contracts are covered by the current audit, focused Zoom parity tests, and `go test ./...`
+- the implemented quick-note alignment is covered by focused built-in pattern tests and remains part of the shipped built-in product surface
 - the platform is usable, but built-in pipeline parity should still be treated as under active audit while the shipped pipeline inventory expands
 - the remaining work is primarily product-surface completion plus parity hardening, not a redesign of the runner model
 

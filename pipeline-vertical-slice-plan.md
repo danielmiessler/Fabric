@@ -120,3 +120,61 @@ Known status after the Zoom parity slice:
   - `go test ./...`
 - Phase 2 is now complete on the current branch.
 - The main remaining work is product-surface expansion plus ongoing parity hardening, not a new runner architecture phase.
+
+## 2026-03-09 Ownership Checkpoint
+
+This section is the strict source-of-truth checkpoint for the current branch state. It is intentionally based on committed branch contents plus the live worktree status, not on earlier milestone language.
+
+### Done
+
+- Phase 1 is complete on the branch:
+  - YAML pipeline definitions
+  - built-in and custom loading
+  - `fabric --pipeline`
+  - `fabric --listpipelines`
+  - `fabric --validate-pipeline`
+  - `fabric --pipeline <name> --validate-only`
+  - `command`, `fabric_pattern`, and `builtin` executors
+  - preflight validation and runtime contract checks
+  - stdout/stderr split
+  - `.pipeline/<run-id>/` lifecycle with cleanup
+- Phase 2 is complete on the branch:
+  - built-in `zoom-tech-note`
+  - built-in `zoom-tech-note-deep-pass`
+  - built-in `technical-study-guide`
+  - quick-note alignment through:
+    - `data/patterns/techNote/system.md`
+    - `data/patterns/nontechNote/system.md`
+  - validation and publish builtins are exercised by shipped pipelines
+  - runner-level integration coverage exists for Zoom and `technical-study-guide`
+- Shipped built-in pipelines on the branch are:
+  - `passthrough`
+  - `zoom-tech-note`
+  - `zoom-tech-note-deep-pass`
+  - `technical-study-guide`
+
+### Partial
+
+- Phase 3 is only partially started.
+- Operator-facing documentation exists, but is not yet complete as a full authoring/operations guide.
+- The built-in profile catalog has expanded beyond Zoom parity, but it is still incomplete relative to the current spec/PRD vision.
+
+### Missing
+
+- `nontechnical-study-guide`
+- dry-run / introspection mode
+- JSON event stream mode
+- partial-stage execution controls such as:
+  - `--from-stage`
+  - `--to-stage`
+  - `--only-stage`
+- richer operator-facing examples and authoring guidance
+- live provider-backed smoke validation for model-backed built-ins remains a practical verification gap
+
+### Not Yet Tracked In The Committed Phase Plan
+
+- A separate therapy/conversation notes pipeline has been discussed as the next product slice, but it is not yet reflected as a committed phase item in the current spec/vertical-slice plan.
+
+### Local Workspace Note
+
+- Any local `internal/cli/.pipeline/` directory is runtime residue, not source state, and must not be counted as implementation progress.

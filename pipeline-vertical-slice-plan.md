@@ -166,18 +166,18 @@ This section is the strict source-of-truth checkpoint for the current branch sta
 
 ### Partial
 
-- Phase 3 is only partially started.
+- Phase 3 is materially underway.
 - Operator-facing documentation exists, but is not yet complete as a full authoring/operations guide.
 - The built-in profile catalog has expanded beyond Zoom parity, but it is still incomplete relative to the current spec/PRD vision.
-
-### Missing
-
-- dry-run / introspection mode
-- JSON event stream mode
-- partial-stage execution controls such as:
+- Phase 3 runtime/CLI controls now implemented:
   - `--from-stage`
   - `--to-stage`
   - `--only-stage`
+  - `--pipeline-events-json`
+  - `--dry-run` pipeline execution-plan introspection
+
+### Missing
+
 - richer operator-facing examples and authoring guidance
 - live provider-backed smoke validation for model-backed built-ins remains a practical verification gap
 

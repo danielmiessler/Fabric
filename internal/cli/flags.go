@@ -30,6 +30,10 @@ type Flags struct {
 	Pipeline                        string               `long:"pipeline" description:"Run a named pipeline"`
 	ValidatePipeline                string               `long:"validate-pipeline" description:"Validate a pipeline definition file and exit"`
 	ValidateOnly                    bool                 `long:"validate-only" description:"Validate the selected pipeline and exit"`
+	FromStage                       string               `long:"from-stage" description:"Run pipeline stages starting from the given stage id (inclusive)"`
+	ToStage                         string               `long:"to-stage" description:"Run pipeline stages up to the given stage id (inclusive)"`
+	OnlyStage                       string               `long:"only-stage" description:"Run only the specified pipeline stage id"`
+	PipelineEventsJSON              bool                 `long:"pipeline-events-json" description:"Emit pipeline lifecycle events as JSON lines on stderr"`
 	PatternVariables                map[string]string    `short:"v" long:"variable" description:"Values for pattern variables, e.g. -v=#role:expert -v=#points:30"`
 	Context                         string               `short:"C" long:"context" description:"Choose a context from the available contexts" default:""`
 	Session                         string               `long:"session" description:"Choose a session from the available sessions"`

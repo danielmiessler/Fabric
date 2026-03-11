@@ -8,6 +8,7 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 	"time"
 
@@ -445,6 +446,152 @@ func TestRunnerFailsWhenManifestPersistenceFailsMidRun(t *testing.T) {
 	require.NotNil(t, result)
 	require.Error(t, err)
 	require.Contains(t, err.Error(), "run_manifest.json")
+}
+
+func TestRunnerSupportsFromToStageSelectionAndMarksSkippedStages(t *testing.T) {
+	t.Parallel()
+
+	tempDir := t.TempDir()
+	p := &Pipeline{
+		Version:  1,
+		Name:     "stage-selection",
+		FileStem: "stage-selection",
+		FilePath: filepath.Join(tempDir, "stage-selection.yaml"),
+		Stages: []Stage{
+			{
+				ID:            "prepare",
+				Executor:      ExecutorBuiltin,
+				Builtin:       &BuiltinConfig{Name: "passthrough"},
+				PrimaryOutput: &PrimaryOutputConfig{From: PrimaryOutputStdout},
+			},
+			{
+				ID:       "render",
+				Executor: ExecutorBuiltin,
+				Builtin:  &BuiltinConfig{Name: "passthrough"},
+				Input: &StageInput{
+					From: StageInputSource,
+				},
+				FinalOutput:   true,
+				PrimaryOutput: &PrimaryOutputConfig{From: PrimaryOutputStdout},
+			},
+			{
+				ID:       "publish",
+				Role:     StageRolePublish,
+				Executor: ExecutorBuiltin,
+				Builtin:  &BuiltinConfig{Name: "write_publish_manifest"},
+				Artifacts: []ArtifactDeclaration{
+					{Name: "publish_manifest", Path: "publish_manifest.json"},
+				},
+				PrimaryOutput: &PrimaryOutputConfig{From: PrimaryOutputStdout},
+			},
+		},
+	}
+
+	var stdout, stderr bytes.Buffer
+	runner := NewRunner(&stdout, &stderr, nil)
+	result, err := runner.Run(context.Background(), p, RunSource{Mode: SourceModeStdin, Payload: "selected-run"}, RunOptions{
+		InvocationDir:  tempDir,
+		DisableCleanup: true,
+		FromStage:      "render",
+		ToStage:        "publish",
+	})
+	require.NoError(t, err)
+	require.Equal(t, "selected-run", result.FinalOutput)
+	require.Contains(t, stderr.String(), "[1/2] render ........ PASS")
+	require.Contains(t, stderr.String(), "[2/2] publish ........ PASS")
+
+	var manifest RunManifest
+	readJSONFile(t, filepath.Join(result.RunDir, "run_manifest.json"), &manifest)
+	require.Len(t, manifest.Stages, 3)
+	require.Equal(t, "skipped", manifest.Stages[0].Status)
+	require.Equal(t, "passed", manifest.Stages[1].Status)
+	require.Equal(t, "passed", manifest.Stages[2].Status)
+}
+
+func TestRunnerOnlyStageFailsWhenPreviousOutputUnavailable(t *testing.T) {
+	t.Parallel()
+
+	tempDir := t.TempDir()
+	p := &Pipeline{
+		Version:  1,
+		Name:     "only-stage-missing-input",
+		FileStem: "only-stage-missing-input",
+		FilePath: filepath.Join(tempDir, "only-stage-missing-input.yaml"),
+		Stages: []Stage{
+			{
+				ID:            "prepare",
+				Executor:      ExecutorBuiltin,
+				Builtin:       &BuiltinConfig{Name: "passthrough"},
+				PrimaryOutput: &PrimaryOutputConfig{From: PrimaryOutputStdout},
+			},
+			{
+				ID:            "render",
+				Executor:      ExecutorBuiltin,
+				Builtin:       &BuiltinConfig{Name: "passthrough"},
+				FinalOutput:   true,
+				PrimaryOutput: &PrimaryOutputConfig{From: PrimaryOutputStdout},
+			},
+		},
+	}
+
+	runner := NewRunner(io.Discard, io.Discard, nil)
+	result, err := runner.Run(context.Background(), p, RunSource{Mode: SourceModeStdin, Payload: "ignored"}, RunOptions{
+		InvocationDir:  tempDir,
+		DisableCleanup: true,
+		OnlyStage:      "render",
+	})
+	require.NotNil(t, result)
+	require.Error(t, err)
+	require.Contains(t, err.Error(), "requires previous stage \"prepare\" output")
+}
+
+func TestRunnerJSONEventModeEmitsStructuredEvents(t *testing.T) {
+	t.Parallel()
+
+	tempDir := t.TempDir()
+	p := &Pipeline{
+		Version:  1,
+		Name:     "json-events",
+		FileStem: "json-events",
+		FilePath: filepath.Join(tempDir, "json-events.yaml"),
+		Stages: []Stage{
+			{
+				ID:            "passthrough",
+				Executor:      ExecutorBuiltin,
+				Builtin:       &BuiltinConfig{Name: "passthrough"},
+				FinalOutput:   true,
+				PrimaryOutput: &PrimaryOutputConfig{From: PrimaryOutputStdout},
+			},
+		},
+	}
+
+	var stderr bytes.Buffer
+	runner := NewRunner(io.Discard, &stderr, nil)
+	_, err := runner.Run(context.Background(), p, RunSource{Mode: SourceModeStdin, Payload: "hello"}, RunOptions{
+		InvocationDir:  tempDir,
+		DisableCleanup: true,
+		JSONEvents:     true,
+	})
+	require.NoError(t, err)
+	require.NotContains(t, stderr.String(), "RUNNING")
+	require.NotContains(t, stderr.String(), "PASS")
+
+	lines := strings.Split(strings.TrimSpace(stderr.String()), "\n")
+	require.GreaterOrEqual(t, len(lines), 5)
+	seen := map[string]bool{}
+	for _, line := range lines {
+		var event map[string]any
+		require.NoError(t, json.Unmarshal([]byte(line), &event), line)
+		eventType, ok := event["type"].(string)
+		require.True(t, ok)
+		seen[eventType] = true
+	}
+
+	require.True(t, seen["run_started"])
+	require.True(t, seen["stage_started"])
+	require.True(t, seen["stage_passed"])
+	require.True(t, seen["warning"])
+	require.True(t, seen["run_summary"])
 }
 
 func TestCommandStageInterpolatesSourceReference(t *testing.T) {

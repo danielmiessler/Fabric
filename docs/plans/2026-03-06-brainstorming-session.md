@@ -3064,7 +3064,6 @@ This section records what is now implemented in Fabric after the design session 
 
 ### What remains from the broader agreed direction
 
-- real built-in note pipelines beyond `passthrough`
 - first-class profile examples now include:
   - implemented:
     - `technical-study-guide`
@@ -3072,11 +3071,7 @@ This section records what is now implemented in Fabric after the design session 
     - `note-enhancement`
     - `therapy-conversation-notes`
 - richer operator-facing pipeline authoring documentation
-- future `--dry-run` / introspection mode
-- JSON event stream mode
-- partial stage execution controls such as:
-  - `--from-stage`
-  - `--to-stage`
+- live provider-backed smoke coverage for model-backed stages under configured providers
 
 ### Verified implementation state at this checkpoint
 
@@ -3173,9 +3168,41 @@ This is now supported in preflight and runtime resolution so a built-in pipeline
     - `note-enhancement`
     - `therapy-conversation-notes`
 - richer operator-facing examples and authoring docs
-- `--dry-run` / introspection mode
-- JSON event stream mode
-- partial stage execution controls
+- live provider-backed smoke validation for model-backed stages
+
+## Implementation Checkpoint Addendum: 2026-03-11 (Phase 3 Runtime/CLI Controls)
+
+This addendum records the next major runtime surface milestone after the Phase 2 profile and parity slices.
+
+### Implemented in this checkpoint
+
+- pipeline partial execution controls:
+  - `--from-stage`
+  - `--to-stage`
+  - `--only-stage`
+- pipeline JSON lifecycle events on stderr:
+  - `--pipeline-events-json`
+- pipeline dry-run/introspection output:
+  - `fabric --pipeline <name> --dry-run`
+- runner contract behavior for stage slicing:
+  - non-selected stages are explicitly marked `skipped` in manifests
+  - selected-stage progress counters are ordinal-relative to the selected slice
+  - missing previous-stage payloads now fail explicitly instead of silently passing empty input
+
+### Verification completed for this checkpoint
+
+- focused tests:
+  - `go test ./internal/pipeline ./internal/cli`
+- full suite:
+  - `go test ./...`
+- built-in catalog sanity check:
+  - `go run ./cmd/fabric --listpipelines`
+
+### Remaining work after this checkpoint
+
+- richer operator docs and authoring examples
+- broader profile inventory and deep-pass variants where productized
+- live provider-backed smoke coverage for model-backed stages
 
 ### Current confidence after this addendum
 

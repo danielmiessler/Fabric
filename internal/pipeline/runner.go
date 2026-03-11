@@ -20,6 +20,7 @@ type Runner struct {
 	registry *core.PluginRegistry
 
 	stageExecutionOverride func(context.Context, Stage, StageRuntimeContext) (*StageExecutionResult, bool, error)
+	jsonEvents             bool
 }
 
 func NewRunner(stdout, stderr io.Writer, registry *core.PluginRegistry) *Runner {
@@ -30,6 +31,10 @@ type RunOptions struct {
 	InvocationDir  string
 	CleanupDelay   time.Duration
 	DisableCleanup bool
+	FromStage      string
+	ToStage        string
+	OnlyStage      string
+	JSONEvents     bool
 }
 
 type RunResult struct {
@@ -49,6 +54,11 @@ type publishManifestRequest struct {
 }
 
 func (r *Runner) Run(ctx context.Context, p *Pipeline, source RunSource, opts RunOptions) (*RunResult, error) {
+	r.jsonEvents = opts.JSONEvents
+	defer func() {
+		r.jsonEvents = false
+	}()
+
 	if err := Preflight(ctx, p, PreflightOptions{
 		Registry: r.registry,
 		SkipPatternValidation: func(stage Stage) bool {
@@ -60,6 +70,12 @@ func (r *Runner) Run(ctx context.Context, p *Pipeline, source RunSource, opts Ru
 	if err := validateAcceptedSource(p, source.Mode); err != nil {
 		return nil, err
 	}
+
+	selectedStageIndices, selectedStageSet, err := SelectStageIndices(p.Stages, opts.FromStage, opts.ToStage, opts.OnlyStage)
+	if err != nil {
+		return nil, err
+	}
+
 	if opts.InvocationDir == "" {
 		dir, err := os.Getwd()
 		if err != nil {
@@ -113,11 +129,15 @@ func (r *Runner) Run(ctx context.Context, p *Pipeline, source RunSource, opts Ru
 	}
 
 	for i, stage := range p.Stages {
+		status := "pending"
+		if _, selected := selectedStageSet[i]; !selected {
+			status = "skipped"
+		}
 		manifest.Stages[i] = RunStageManifest{
 			ID:       stage.ID,
 			Role:     effectiveStageRole(stage),
 			Executor: stage.Executor,
-			Status:   "pending",
+			Status:   status,
 		}
 	}
 
@@ -141,22 +161,41 @@ func (r *Runner) Run(ctx context.Context, p *Pipeline, source RunSource, opts Ru
 	finalOutput := ""
 	finalOutputStageID := ""
 	finalOutputEmitted := false
-	lastValidateStageIndex := findLastValidateStageIndex(p.Stages)
+	lastValidateStageIndex := findLastValidateStageIndexForSelection(p.Stages, selectedStageSet)
 	validationSatisfied := lastValidateStageIndex == -1
 	noValidateWarningEmitted := false
+	selectedStageIDs := stageIDsFromIndices(p.Stages, selectedStageIndices)
+	r.emitJSONEvent("run_started", map[string]any{
+		"run_id":             runID,
+		"pipeline":           p.Name,
+		"selected_stage_ids": selectedStageIDs,
+		"selected_count":     len(selectedStageIndices),
+	})
 
-	for i := range p.Stages {
-		stage := p.Stages[i]
+	for selectedIndex, stageIndex := range selectedStageIndices {
+		stage := p.Stages[stageIndex]
+		stageOrdinal := selectedIndex + 1
+		stageTotal := len(selectedStageIndices)
 		stageStart := time.Now().UTC()
-		manifest.Stages[i].Status = "running"
-		manifest.Stages[i].StartedAt = &stageStart
+		manifest.Stages[stageIndex].Status = "running"
+		manifest.Stages[stageIndex].StartedAt = &stageStart
 		runState.UpdatedAt = stageStart
 		if err := persistRunState(runDir, manifest, runState); err != nil {
-			return result, r.failRun(runDir, manifest, runState, i, opts.CleanupDelay, opts.DisableCleanup, finalOutputStageID, finalOutput, err, publishManifestRequests, source)
+			return result, r.failRun(runDir, manifest, runState, stageIndex, stageOrdinal, stageTotal, opts.CleanupDelay, opts.DisableCleanup, finalOutputStageID, finalOutput, err, publishManifestRequests, source)
 		}
-		fmt.Fprintf(r.Stderr, "[%d/%d] %s ........ RUNNING\n", i+1, len(p.Stages), stage.ID)
+		r.emitJSONEvent("stage_started", map[string]any{
+			"run_id":       runID,
+			"stage_id":     stage.ID,
+			"stage_number": stageOrdinal,
+			"stage_total":  stageTotal,
+			"role":         effectiveStageRole(stage),
+			"executor":     stage.Executor,
+		})
+		if !r.jsonEvents {
+			fmt.Fprintf(r.Stderr, "[%d/%d] %s ........ RUNNING\n", stageOrdinal, stageTotal, stage.ID)
+		}
 
-		inputPayload, err := resolveStageInput(stage, i, source.Payload, p.Stages, stagePayloads, stageArtifacts)
+		inputPayload, err := resolveStageInput(stage, stageIndex, source.Payload, p.Stages, stagePayloads, stageArtifacts)
 		if err != nil {
 			emitFinalOutputOnFailure := r.shouldEmitFinalOutputOnFailure(stage, finalOutput, finalOutputEmitted, validationSatisfied)
 			if emitFinalOutputOnFailure {
@@ -164,7 +203,7 @@ func (r *Runner) Run(ctx context.Context, p *Pipeline, source RunSource, opts Ru
 					var warningErr error
 					noValidateWarningEmitted, warningErr = r.emitNoValidateWarning(runDir, manifest, p.Name, noValidateWarningEmitted)
 					if warningErr != nil {
-						return result, r.failRun(runDir, manifest, runState, i, opts.CleanupDelay, opts.DisableCleanup, finalOutputStageID, finalOutput, errors.Join(err, warningErr), publishManifestRequests, source)
+						return result, r.failRun(runDir, manifest, runState, stageIndex, stageOrdinal, stageTotal, opts.CleanupDelay, opts.DisableCleanup, finalOutputStageID, finalOutput, errors.Join(err, warningErr), publishManifestRequests, source)
 					}
 				}
 				result.FinalOutput = finalOutput
@@ -173,7 +212,7 @@ func (r *Runner) Run(ctx context.Context, p *Pipeline, source RunSource, opts Ru
 			} else {
 				result.FinalOutput = ""
 			}
-			return result, r.failRun(runDir, manifest, runState, i, opts.CleanupDelay, opts.DisableCleanup, finalOutputStageID, finalOutput, err, publishManifestRequests, source)
+			return result, r.failRun(runDir, manifest, runState, stageIndex, stageOrdinal, stageTotal, opts.CleanupDelay, opts.DisableCleanup, finalOutputStageID, finalOutput, err, publishManifestRequests, source)
 		}
 
 		runtimeCtx := StageRuntimeContext{
@@ -197,7 +236,7 @@ func (r *Runner) Run(ctx context.Context, p *Pipeline, source RunSource, opts Ru
 					var warningErr error
 					noValidateWarningEmitted, warningErr = r.emitNoValidateWarning(runDir, manifest, p.Name, noValidateWarningEmitted)
 					if warningErr != nil {
-						return result, r.failRun(runDir, manifest, runState, i, opts.CleanupDelay, opts.DisableCleanup, finalOutputStageID, finalOutput, errors.Join(err, warningErr), publishManifestRequests, source)
+						return result, r.failRun(runDir, manifest, runState, stageIndex, stageOrdinal, stageTotal, opts.CleanupDelay, opts.DisableCleanup, finalOutputStageID, finalOutput, errors.Join(err, warningErr), publishManifestRequests, source)
 					}
 				}
 				result.FinalOutput = finalOutput
@@ -206,7 +245,7 @@ func (r *Runner) Run(ctx context.Context, p *Pipeline, source RunSource, opts Ru
 			} else {
 				result.FinalOutput = ""
 			}
-			return result, r.failRun(runDir, manifest, runState, i, opts.CleanupDelay, opts.DisableCleanup, finalOutputStageID, finalOutput, err, publishManifestRequests, source)
+			return result, r.failRun(runDir, manifest, runState, stageIndex, stageOrdinal, stageTotal, opts.CleanupDelay, opts.DisableCleanup, finalOutputStageID, finalOutput, err, publishManifestRequests, source)
 		}
 
 		artifactPaths, writtenFiles, primaryPayload, err := resolveStageOutputs(stage, runDir, execResult.Stdout, execResult.FilesWritten)
@@ -217,7 +256,7 @@ func (r *Runner) Run(ctx context.Context, p *Pipeline, source RunSource, opts Ru
 					var warningErr error
 					noValidateWarningEmitted, warningErr = r.emitNoValidateWarning(runDir, manifest, p.Name, noValidateWarningEmitted)
 					if warningErr != nil {
-						return result, r.failRun(runDir, manifest, runState, i, opts.CleanupDelay, opts.DisableCleanup, finalOutputStageID, finalOutput, errors.Join(err, warningErr), publishManifestRequests, source)
+						return result, r.failRun(runDir, manifest, runState, stageIndex, stageOrdinal, stageTotal, opts.CleanupDelay, opts.DisableCleanup, finalOutputStageID, finalOutput, errors.Join(err, warningErr), publishManifestRequests, source)
 					}
 				}
 				result.FinalOutput = finalOutput
@@ -226,12 +265,12 @@ func (r *Runner) Run(ctx context.Context, p *Pipeline, source RunSource, opts Ru
 			} else {
 				result.FinalOutput = ""
 			}
-			return result, r.failRun(runDir, manifest, runState, i, opts.CleanupDelay, opts.DisableCleanup, finalOutputStageID, finalOutput, err, publishManifestRequests, source)
+			return result, r.failRun(runDir, manifest, runState, stageIndex, stageOrdinal, stageTotal, opts.CleanupDelay, opts.DisableCleanup, finalOutputStageID, finalOutput, err, publishManifestRequests, source)
 		}
 
 		stageArtifacts[stage.ID] = artifactPaths
 		stagePayloads[stage.ID] = primaryPayload
-		manifest.Stages[i].Files = displayPathsForRun(runDir, writtenFiles)
+		manifest.Stages[stageIndex].Files = displayPathsForRun(runDir, writtenFiles)
 		if stage.FinalOutput {
 			finalOutput = primaryPayload
 			result.FinalOutput = finalOutput
@@ -241,26 +280,35 @@ func (r *Runner) Run(ctx context.Context, p *Pipeline, source RunSource, opts Ru
 				Bytes:   len(primaryPayload),
 			}
 		}
-		if effectiveStageRole(stage) == StageRoleValidate && i == lastValidateStageIndex {
+		if effectiveStageRole(stage) == StageRoleValidate && stageIndex == lastValidateStageIndex {
 			validationSatisfied = true
 		}
 		if stage.Executor == ExecutorBuiltin && stage.Builtin != nil && stage.Builtin.Name == "write_publish_manifest" {
 			publishManifestRequests = append(publishManifestRequests, publishManifestRequest{
-				stageIndex: i,
+				stageIndex: stageIndex,
 				path:       builtinOutputPath(stage, runDir, "publish_manifest", "publish_manifest.json"),
 			})
 		}
 
 		stageEnd := time.Now().UTC()
-		manifest.Stages[i].Status = "passed"
-		manifest.Stages[i].FinishedAt = &stageEnd
+		manifest.Stages[stageIndex].Status = "passed"
+		manifest.Stages[stageIndex].FinishedAt = &stageEnd
 		runState.UpdatedAt = stageEnd
 		if err := persistRunState(runDir, manifest, runState); err != nil {
-			return result, r.failRun(runDir, manifest, runState, i, opts.CleanupDelay, opts.DisableCleanup, finalOutputStageID, finalOutput, err, publishManifestRequests, source)
+			return result, r.failRun(runDir, manifest, runState, stageIndex, stageOrdinal, stageTotal, opts.CleanupDelay, opts.DisableCleanup, finalOutputStageID, finalOutput, err, publishManifestRequests, source)
 		}
-		fmt.Fprintf(r.Stderr, "[%d/%d] %s ........ PASS\n", i+1, len(p.Stages), stage.ID)
-		if len(manifest.Stages[i].Files) > 0 {
-			fmt.Fprintf(r.Stderr, "           files: %s\n", strings.Join(manifest.Stages[i].Files, ", "))
+		r.emitJSONEvent("stage_passed", map[string]any{
+			"run_id":       runID,
+			"stage_id":     stage.ID,
+			"stage_number": stageOrdinal,
+			"stage_total":  stageTotal,
+			"files":        manifest.Stages[stageIndex].Files,
+		})
+		if !r.jsonEvents {
+			fmt.Fprintf(r.Stderr, "[%d/%d] %s ........ PASS\n", stageOrdinal, stageTotal, stage.ID)
+			if len(manifest.Stages[stageIndex].Files) > 0 {
+				fmt.Fprintf(r.Stderr, "           files: %s\n", strings.Join(manifest.Stages[stageIndex].Files, ", "))
+			}
 		}
 	}
 
@@ -326,7 +374,11 @@ func resolveStageInput(stage Stage, index int, sourcePayload string, stages []St
 			return sourcePayload, nil
 		}
 		prevStage := stages[index-1]
-		return stagePayloads[prevStage.ID], nil
+		payload, exists := stagePayloads[prevStage.ID]
+		if !exists {
+			return "", fmt.Errorf("stage %q requires previous stage %q output, but it is not available", stage.ID, prevStage.ID)
+		}
+		return payload, nil
 	}
 
 	switch stage.Input.From {
@@ -337,7 +389,11 @@ func resolveStageInput(stage Stage, index int, sourcePayload string, stages []St
 			return sourcePayload, nil
 		}
 		prevStage := stages[index-1]
-		return stagePayloads[prevStage.ID], nil
+		payload, exists := stagePayloads[prevStage.ID]
+		if !exists {
+			return "", fmt.Errorf("stage %q requires previous stage %q output, but it is not available", stage.ID, prevStage.ID)
+		}
+		return payload, nil
 	case StageInputArtifact:
 		stageArtifactsForStage := stageArtifacts[stage.Input.Stage]
 		if stageArtifactsForStage == nil {
@@ -412,7 +468,7 @@ func resolveStageOutputs(stage Stage, runDir string, stdout string, execWrittenF
 	return artifactPaths, dedupeStrings(writtenFiles), primaryPayload, nil
 }
 
-func (r *Runner) failRun(runDir string, manifest *RunManifest, runState *RunState, stageIndex int, cleanupDelay time.Duration, disableCleanup bool, finalOutputStageID string, finalOutput string, err error, publishManifestRequests []publishManifestRequest, source RunSource) error {
+func (r *Runner) failRun(runDir string, manifest *RunManifest, runState *RunState, stageIndex int, stageOrdinal int, stageTotal int, cleanupDelay time.Duration, disableCleanup bool, finalOutputStageID string, finalOutput string, err error, publishManifestRequests []publishManifestRequest, source RunSource) error {
 	stageEnd := time.Now().UTC()
 	manifest.Stages[stageIndex].Status = "failed"
 	manifest.Stages[stageIndex].FinishedAt = &stageEnd
@@ -435,7 +491,16 @@ func (r *Runner) failRun(runDir string, manifest *RunManifest, runState *RunStat
 	if stateErr := persistRunState(runDir, manifest, runState); stateErr != nil {
 		persistErr = errors.Join(persistErr, stateErr)
 	}
-	fmt.Fprintf(r.Stderr, "[%d/%d] %s ........ FAIL\n", stageIndex+1, len(manifest.Stages), manifest.Stages[stageIndex].ID)
+	r.emitJSONEvent("stage_failed", map[string]any{
+		"run_id":       manifest.RunID,
+		"stage_id":     manifest.Stages[stageIndex].ID,
+		"stage_number": stageOrdinal,
+		"stage_total":  stageTotal,
+		"error":        err.Error(),
+	})
+	if !r.jsonEvents {
+		fmt.Fprintf(r.Stderr, "[%d/%d] %s ........ FAIL\n", stageOrdinal, stageTotal, manifest.Stages[stageIndex].ID)
+	}
 	r.emitRunSummary(manifest, runDir)
 	if !disableCleanup {
 		if cleanupErr := startCleanupHelper(runDir, cleanupDelay); cleanupErr != nil {
@@ -467,7 +532,13 @@ func (r *Runner) emitNoValidateWarning(runDir string, manifest *RunManifest, pip
 		return true, nil
 	}
 	warning := fmt.Sprintf("warning: pipeline %s has no validate stage", pipelineName)
-	fmt.Fprintln(r.Stderr, warning)
+	r.emitJSONEvent("warning", map[string]any{
+		"run_id":  manifest.RunID,
+		"message": warning,
+	})
+	if !r.jsonEvents {
+		fmt.Fprintln(r.Stderr, warning)
+	}
 	manifest.Warnings = append(manifest.Warnings, warning)
 	if err := persistRunManifest(runDir, manifest); err != nil {
 		return true, err
@@ -482,7 +553,34 @@ func (r *Runner) emitRunSummary(manifest *RunManifest, runDir string) {
 		finalBytes = manifest.FinalOutput.Bytes
 		finalStageID = manifest.FinalOutput.StageID
 	}
-	fmt.Fprintf(r.Stderr, "run summary: status=%s run_id=%s run_dir=%s final_stage=%s final_bytes=%d\n", manifest.Status, manifest.RunID, runDir, finalStageID, finalBytes)
+	r.emitJSONEvent("run_summary", map[string]any{
+		"run_id":      manifest.RunID,
+		"status":      manifest.Status,
+		"run_dir":     runDir,
+		"final_stage": finalStageID,
+		"final_bytes": finalBytes,
+	})
+	if !r.jsonEvents {
+		fmt.Fprintf(r.Stderr, "run summary: status=%s run_id=%s run_dir=%s final_stage=%s final_bytes=%d\n", manifest.Status, manifest.RunID, runDir, finalStageID, finalBytes)
+	}
+}
+
+func (r *Runner) emitJSONEvent(eventType string, payload map[string]any) {
+	if !r.jsonEvents {
+		return
+	}
+	event := map[string]any{
+		"type": eventType,
+		"time": time.Now().UTC().Format(time.RFC3339Nano),
+	}
+	for key, value := range payload {
+		event[key] = value
+	}
+	encoded, err := json.Marshal(event)
+	if err != nil {
+		return
+	}
+	fmt.Fprintln(r.Stderr, string(encoded))
 }
 
 func displayPathsForRun(runDir string, paths []string) []string {
@@ -526,6 +624,78 @@ func validateAcceptedSource(p *Pipeline, mode SourceMode) error {
 		}
 	}
 	return fmt.Errorf("pipeline %q does not accept source mode %q", p.Name, mode)
+}
+
+func SelectStageIndices(stages []Stage, fromStage string, toStage string, onlyStage string) ([]int, map[int]struct{}, error) {
+	if len(stages) == 0 {
+		return nil, nil, fmt.Errorf("pipeline has no stages")
+	}
+	if onlyStage != "" && (fromStage != "" || toStage != "") {
+		return nil, nil, fmt.Errorf("--only-stage cannot be combined with --from-stage or --to-stage")
+	}
+
+	indexForID := make(map[string]int, len(stages))
+	for i, stage := range stages {
+		indexForID[stage.ID] = i
+	}
+
+	if onlyStage != "" {
+		stageIndex, ok := indexForID[onlyStage]
+		if !ok {
+			return nil, nil, fmt.Errorf("stage %q not found", onlyStage)
+		}
+		set := map[int]struct{}{stageIndex: struct{}{}}
+		return []int{stageIndex}, set, nil
+	}
+
+	start := 0
+	end := len(stages) - 1
+	if fromStage != "" {
+		stageIndex, ok := indexForID[fromStage]
+		if !ok {
+			return nil, nil, fmt.Errorf("stage %q not found", fromStage)
+		}
+		start = stageIndex
+	}
+	if toStage != "" {
+		stageIndex, ok := indexForID[toStage]
+		if !ok {
+			return nil, nil, fmt.Errorf("stage %q not found", toStage)
+		}
+		end = stageIndex
+	}
+	if start > end {
+		return nil, nil, fmt.Errorf("--from-stage %q appears after --to-stage %q", fromStage, toStage)
+	}
+
+	indices := make([]int, 0, end-start+1)
+	set := make(map[int]struct{}, end-start+1)
+	for i := start; i <= end; i++ {
+		indices = append(indices, i)
+		set[i] = struct{}{}
+	}
+	return indices, set, nil
+}
+
+func stageIDsFromIndices(stages []Stage, indices []int) []string {
+	ids := make([]string, 0, len(indices))
+	for _, idx := range indices {
+		ids = append(ids, stages[idx].ID)
+	}
+	return ids
+}
+
+func findLastValidateStageIndexForSelection(stages []Stage, selectedSet map[int]struct{}) int {
+	last := -1
+	for i, stage := range stages {
+		if _, selected := selectedSet[i]; !selected {
+			continue
+		}
+		if effectiveStageRole(stage) == StageRoleValidate {
+			last = i
+		}
+	}
+	return last
 }
 
 func persistRunManifest(runDir string, manifest *RunManifest) error {

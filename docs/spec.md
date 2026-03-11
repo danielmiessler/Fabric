@@ -542,9 +542,15 @@ fabric --pipeline nontech-note --source ./session.txt
 
 This is the orchestrated mode with artifacts and stage visibility.
 
-#### Advanced future mode
+#### Advanced pipeline controls
 
-Future versions may add partial execution controls such as `--from-stage` and `--to-stage`, but these are not required for V1.
+Supported controls:
+
+- `--from-stage <stage-id>`
+- `--to-stage <stage-id>`
+- `--only-stage <stage-id>`
+- `--pipeline-events-json` for JSON lifecycle events on stderr
+- `--dry-run` for execution-plan introspection without stage execution
 
 ### 8.3 Input modes
 
@@ -727,11 +733,16 @@ Current status:
 
 Current status:
 
-- largely deferred
-- the current implementation keeps the terminal renderer human-readable and stderr-based, but does not yet expose:
-  - JSON event stream mode
-  - partial execution flags
-  - richer real profile inventory
+- implemented in part
+- implemented:
+  - JSON event stream mode via `--pipeline-events-json`
+  - partial execution controls:
+    - `--from-stage`
+    - `--to-stage`
+    - `--only-stage`
+  - dry-run/introspection mode via `--dry-run` for pipelines
+- remaining:
+  - richer profile inventory and expanded operator documentation/examples
 
 ## 16. Implementation Checkpoint
 
@@ -761,6 +772,14 @@ Implemented and verified in the current branch:
 - explicit primary-output handling across stdout and artifact-backed stages
 - stage-role-aware behavior for validation gating and publish-after-output semantics
 - output-file behavior that remains correct when a later publish stage fails
+- pipeline partial-stage execution controls:
+  - `--from-stage`
+  - `--to-stage`
+  - `--only-stage`
+- pipeline JSON lifecycle event stream on stderr:
+  - `--pipeline-events-json`
+- pipeline dry-run introspection mode:
+  - `fabric --pipeline <name> --dry-run`
 - built-in sample pipeline: `passthrough`
 - built-in Zoom parity pipelines:
   - `zoom-tech-note`
@@ -797,9 +816,8 @@ Implemented but still minimal:
 Not yet implemented from the broader spec:
 
 - richer profile inventory
-- pipeline dry-run / introspection mode
-- JSON event stream mode
-- partial stage execution controls
+- richer operator-facing examples and authoring guidance
+- live provider-backed smoke validation for model-backed pipeline stages in CI
 
 Known status at this checkpoint:
 

@@ -130,6 +130,29 @@ go test -cover ./...
 - Integration tests for external dependencies
 - Examples in documentation
 
+### Live Pipeline Smoke (Model-Backed)
+
+For model-backed built-in pipeline verification, run the bounded smoke suite locally:
+
+```bash
+go build -o fabric ./cmd/fabric
+OPENAI_API_KEY=... \
+python3 scripts/pipelines/live_smoke.py \
+  --fabric-bin ./fabric \
+  --vendor OpenAI \
+  --model gpt-4.1-mini
+```
+
+Optional subset run:
+
+```bash
+python3 scripts/pipelines/live_smoke.py --fabric-bin ./fabric --pipelines technical-study-guide,zoom-tech-note,zoom-tech-note-deep-pass
+```
+
+CI also runs the same class of checks in:
+
+- `.github/workflows/pipeline-live-smoke.yml`
+
 ## Patterns
 
 ### Creating Patterns

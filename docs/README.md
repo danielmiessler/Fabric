@@ -6,6 +6,9 @@ Welcome to the Fabric documentation! This directory contains detailed guides and
 
 ### Core Features
 
+**[Pipeline-Operations-and-Authoring.md](./Pipeline-Operations-and-Authoring.md)**
+Operator and maintainer guide for Fabric pipelines. Covers run commands, stage-slice controls, JSON event mode, dry-run introspection, custom YAML authoring, and live provider-backed smoke validation.
+
 **[Automated-Changelog-Usage.md](./Automated-Changelog-Usage.md)**
 Complete guide for developers on using the automated changelog system. Covers the workflow for generating PR changelog entries during development, including setup, validation, and CI/CD integration.
 
@@ -70,8 +73,9 @@ Contributing to Fabric? These docs are essential:
 
 1. **[./CONTRIBUTING.md](./CONTRIBUTING.md)** - Contribution guidelines and setup
 2. **[Automated-Changelog-Usage.md](./Automated-Changelog-Usage.md)** - Required workflow for PR submissions
-3. **[Project-Restructured.md](./Project-Restructured.md)** - Understanding project architecture
-4. **[NOTES.md](./NOTES.md)** - Current development priorities and patterns
+3. **[Pipeline-Operations-and-Authoring.md](./Pipeline-Operations-and-Authoring.md)** - Pipeline runtime operations and custom authoring contract
+4. **[Project-Restructured.md](./Project-Restructured.md)** - Understanding project architecture
+5. **[NOTES.md](./NOTES.md)** - Current development priorities and patterns
 
 ## 📝 Documentation Standards
 

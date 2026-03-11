@@ -164,22 +164,20 @@ This section is the strict source-of-truth checkpoint for the current branch sta
   - `note-enhancement`
   - `therapy-conversation-notes`
 
-### Partial
+### Phase 3 Closure (2026-03-12)
 
-- Phase 3 is materially underway.
-- Operator-facing documentation exists, but is not yet complete as a full authoring/operations guide.
-- The built-in profile catalog has expanded beyond Zoom parity, but it is still incomplete relative to the current spec/PRD vision.
-- Phase 3 runtime/CLI controls now implemented:
+- Phase 3 runtime/CLI controls are implemented and shipped:
   - `--from-stage`
   - `--to-stage`
   - `--only-stage`
   - `--pipeline-events-json`
   - `--dry-run` pipeline execution-plan introspection
-
-### Missing
-
-- richer operator-facing examples and authoring guidance
-- live provider-backed smoke validation for model-backed built-ins remains a practical verification gap
+- Operator-facing pipeline docs are now shipped as a dedicated guide:
+  - `docs/Pipeline-Operations-and-Authoring.md`
+- Live provider-backed smoke validation for model-backed built-ins is now implemented:
+  - `scripts/pipelines/live_smoke.py`
+  - `.github/workflows/pipeline-live-smoke.yml`
+- Remaining work is no longer runtime/control hardening; it is profile-catalog expansion and deeper product-surface parity against the broader PRD scope.
 
 ### New Built-In Pipeline Slices Landed
 

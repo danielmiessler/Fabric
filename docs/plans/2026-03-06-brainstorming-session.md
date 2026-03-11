@@ -3209,3 +3209,24 @@ This addendum records the next major runtime surface milestone after the Phase 2
 - confidence in the implemented Fabric pipeline kernel remains high
 - confidence in the built-in Zoom parity port is high after the current verification set
 - the remaining gaps are now mostly product-surface expansion, documentation, and continued parity hardening rather than runner-model uncertainty
+
+## Implementation Checkpoint Addendum: 2026-03-12 (Phase 3 Productization Closure)
+
+This addendum records closure of the Phase 3 items that remained open after the runtime/CLI milestone.
+
+### Implemented in this checkpoint
+
+- operator-facing pipeline operations + authoring guide:
+  - `docs/Pipeline-Operations-and-Authoring.md`
+- provider-backed smoke harness for model-backed built-ins:
+  - `scripts/pipelines/live_smoke.py`
+- scheduled + manual CI execution for live smoke:
+  - `.github/workflows/pipeline-live-smoke.yml`
+- contributor guidance updated for local smoke runs:
+  - `docs/CONTRIBUTING.md`
+  - `docs/README.md`
+
+### Outcome after this checkpoint
+
+- Phase 3 runtime/control and productization hardening scope is complete.
+- Remaining roadmap risk is now concentrated in profile-catalog expansion and deeper product-level parity breadth, not in runner contract ambiguity.

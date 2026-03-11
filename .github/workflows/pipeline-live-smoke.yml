@@ -1,0 +1,86 @@
+name: Pipeline Live Smoke
+
+on:
+  workflow_dispatch:
+    inputs:
+      vendor:
+        description: "Vendor from `fabric --listvendors` (e.g. OpenAI, Anthropic, Gemini)"
+        required: false
+        default: "OpenAI"
+      model:
+        description: "Model id for smoke pipeline runs"
+        required: false
+        default: "gpt-4.1-mini"
+      pipelines:
+        description: "Optional comma-separated subset (technical-study-guide,nontechnical-study-guide,note-enhancement,therapy-conversation-notes,zoom-tech-note,zoom-tech-note-deep-pass)"
+        required: false
+        default: ""
+  schedule:
+    - cron: "0 3 * * *"
+
+jobs:
+  live-smoke:
+    name: Live provider-backed pipeline smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+    env:
+      SMOKE_VENDOR: ${{ github.event.inputs.vendor || 'OpenAI' }}
+      SMOKE_MODEL: ${{ github.event.inputs.model || 'gpt-4.1-mini' }}
+      SMOKE_PIPELINES: ${{ github.event.inputs.pipelines || '' }}
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up Go
+        uses: actions/setup-go@v6
+        with:
+          go-version-file: ./go.mod
+
+      - name: Validate smoke credentials
+        shell: bash
+        run: |
+          set -euo pipefail
+          vendor="${SMOKE_VENDOR,,}"
+          case "$vendor" in
+            openai)
+              [[ -n "${OPENAI_API_KEY:-}" ]] || {
+                echo "OPENAI_API_KEY is required for SMOKE_VENDOR=${SMOKE_VENDOR}" >&2
+                exit 1
+              }
+              ;;
+            anthropic)
+              [[ -n "${ANTHROPIC_API_KEY:-}" ]] || {
+                echo "ANTHROPIC_API_KEY is required for SMOKE_VENDOR=${SMOKE_VENDOR}" >&2
+                exit 1
+              }
+              ;;
+            gemini)
+              [[ -n "${GEMINI_API_KEY:-}" ]] || {
+                echo "GEMINI_API_KEY is required for SMOKE_VENDOR=${SMOKE_VENDOR}" >&2
+                exit 1
+              }
+              ;;
+            *)
+              echo "Unsupported SMOKE_VENDOR=${SMOKE_VENDOR}. Supported: OpenAI, Anthropic, Gemini." >&2
+              exit 1
+              ;;
+          esac
+          echo "Running smoke with vendor=${SMOKE_VENDOR} model=${SMOKE_MODEL}"
+
+      - name: Build fabric
+        run: go build -o fabric ./cmd/fabric
+
+      - name: Run live smoke suite
+        shell: bash
+        run: |
+          set -euo pipefail
+          cmd=(python3 scripts/pipelines/live_smoke.py --fabric-bin ./fabric --vendor "$SMOKE_VENDOR" --model "$SMOKE_MODEL")
+          if [[ -n "${SMOKE_PIPELINES}" ]]; then
+            cmd+=(--pipelines "$SMOKE_PIPELINES")
+          fi
+          "${cmd[@]}"

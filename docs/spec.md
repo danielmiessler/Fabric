@@ -733,7 +733,7 @@ Current status:
 
 Current status:
 
-- implemented in part
+- complete for the runtime/control, operator-docs, and smoke-hardening scope
 - implemented:
   - JSON event stream mode via `--pipeline-events-json`
   - partial execution controls:
@@ -741,12 +741,17 @@ Current status:
     - `--to-stage`
     - `--only-stage`
   - dry-run/introspection mode via `--dry-run` for pipelines
-- remaining:
-  - richer profile inventory and expanded operator documentation/examples
+  - operator-focused pipeline guide:
+    - `docs/Pipeline-Operations-and-Authoring.md`
+  - live provider-backed smoke validation workflow for model-backed built-ins:
+    - `.github/workflows/pipeline-live-smoke.yml`
+    - `scripts/pipelines/live_smoke.py`
+- still open from broader product expansion:
+  - richer profile inventory beyond the current built-in catalog
 
 ## 16. Implementation Checkpoint
 
-Checkpoint date: 2026-03-11
+Checkpoint date: 2026-03-12
 
 Implemented and verified in the current branch:
 
@@ -801,30 +806,35 @@ Implemented and verified in the current branch:
   - `techNote`
   - `nontechNote`
 - relative pipeline-path resolution for stage-owned pattern files
+- operator-facing pipeline runtime/authoring documentation:
+  - `docs/Pipeline-Operations-and-Authoring.md`
+- live provider-backed smoke harness and CI workflow:
+  - `scripts/pipelines/live_smoke.py`
+  - `.github/workflows/pipeline-live-smoke.yml`
 
-Implemented but still minimal:
+Implemented and productized for current Phase 3 scope:
 
-- built-in pipeline inventory
-- publish integration behavior
-- operator-facing examples
-- built-in profile inventory now includes:
+- stage-slice runtime controls, JSON events, and dry-run introspection
+- operator-facing command and authoring guide
+- provider-backed smoke checks for model-backed built-ins in CI
+- built-in profile inventory currently includes:
   - `technical-study-guide`
   - `nontechnical-study-guide`
   - `note-enhancement`
   - `therapy-conversation-notes`
+  - `zoom-tech-note`
+  - `zoom-tech-note-deep-pass`
 
-Not yet implemented from the broader spec:
+Still open from broader product-surface expansion:
 
 - richer profile inventory
-- richer operator-facing examples and authoring guidance
-- live provider-backed smoke validation for model-backed pipeline stages in CI
 
 Known status at this checkpoint:
 
-- the implemented runner/kernel contracts are covered by the current audit, focused Zoom parity tests, and `go test ./...`
+- the implemented runner/kernel contracts are covered by the current audit, focused integration tests, and `go test ./...`
 - the implemented quick-note alignment is covered by focused built-in pattern tests and remains part of the shipped built-in product surface
-- the platform is usable, but built-in pipeline parity should still be treated as under active audit while the shipped pipeline inventory expands
-- the remaining work is primarily product-surface completion plus parity hardening, not a redesign of the runner model
+- provider-backed smoke checks now run as a dedicated CI workflow over bounded first-model-stage slices
+- the remaining work is primarily profile-catalog expansion and incremental parity depth, not a redesign of the runner model
 
 ## 17. Decision
 

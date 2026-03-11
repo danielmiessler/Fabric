@@ -1,0 +1,95 @@
+version: 1
+name: nontechnical-study-guide
+description: Fabric-native nontechnical study guide pipeline for conceptual and narrative material.
+accepts:
+  - stdin
+  - source
+  - scrape_url
+stages:
+  - id: prepare_source
+    executor: command
+    input:
+      from: source
+    command:
+      program: python3
+      args:
+        - scripts/pipelines/nontechnical-study-guide/prepare_source.py
+      cwd: ../..
+    artifacts:
+      - name: session_context
+        path: session_context.json
+      - name: semantic_map_input
+        path: semantic_map_input.md
+    primary_output:
+      from: stdout
+
+  - id: semantic_map_generate
+    executor: fabric_pattern
+    input:
+      from: artifact
+      stage: prepare_source
+      artifact: semantic_map_input
+    pattern: ../patterns/nontechnical_study_guide_semantic_map/system.md
+
+  - id: semantic_map_materialize
+    executor: command
+    command:
+      program: python3
+      args:
+        - scripts/pipelines/nontechnical-study-guide/materialize_semantic_map.py
+        - --session-context
+        - "{{artifact:prepare_source:session_context}}"
+      cwd: ../..
+    artifacts:
+      - name: semantic_map
+        path: semantic_map.json
+      - name: render_input
+        path: render_input.md
+    primary_output:
+      from: artifact
+      artifact: render_input
+
+  - id: render_generate
+    executor: fabric_pattern
+    input:
+      from: artifact
+      stage: semantic_map_materialize
+      artifact: render_input
+    pattern: ../patterns/nontechnical_study_guide_render/system.md
+    stream: true
+
+  - id: render_materialize
+    executor: command
+    command:
+      program: python3
+      args:
+        - scripts/pipelines/nontechnical-study-guide/materialize_rendered_notes.py
+        - --session-context
+        - "{{artifact:prepare_source:session_context}}"
+      cwd: ../..
+    final_output: true
+    primary_output:
+      from: stdout
+
+  - id: validate_outputs
+    role: validate
+    executor: command
+    command:
+      program: python3
+      args:
+        - scripts/pipelines/nontechnical-study-guide/run_validate_stage.py
+        - --session-context
+        - "{{artifact:prepare_source:session_context}}"
+      cwd: ../..
+    artifacts:
+      - name: validation_report
+        path: validation_report.md
+
+  - id: write_publish_manifest
+    role: publish
+    executor: builtin
+    builtin:
+      name: write_publish_manifest
+    artifacts:
+      - name: publish_manifest
+        path: publish_manifest.json

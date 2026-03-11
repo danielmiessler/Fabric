@@ -97,7 +97,7 @@ Implemented in this extension slice:
   - `techNote`
   - `nontechNote`
 
-What remains after the Zoom parity slice:
+What remained immediately after the Zoom parity slice (historical checkpoint):
 
 - first-class built-in note pipelines beyond quick mode and Zoom parity remain incomplete as a category, but the first generic profile is now implemented:
   - implemented:
@@ -121,7 +121,7 @@ Known status after the Zoom parity slice:
 - Phase 2 is now complete on the current branch.
 - The main remaining work is product-surface expansion plus ongoing parity hardening, not a new runner architecture phase.
 
-## 2026-03-09 Ownership Checkpoint
+## 2026-03-11 Ownership Checkpoint
 
 This section is the strict source-of-truth checkpoint for the current branch state. It is intentionally based on committed branch contents plus the live worktree status, not on earlier milestone language.
 
@@ -142,16 +142,27 @@ This section is the strict source-of-truth checkpoint for the current branch sta
   - built-in `zoom-tech-note`
   - built-in `zoom-tech-note-deep-pass`
   - built-in `technical-study-guide`
+  - built-in `nontechnical-study-guide`
+  - built-in `note-enhancement`
+  - built-in `therapy-conversation-notes`
   - quick-note alignment through:
     - `data/patterns/techNote/system.md`
     - `data/patterns/nontechNote/system.md`
   - validation and publish builtins are exercised by shipped pipelines
-  - runner-level integration coverage exists for Zoom and `technical-study-guide`
+  - runner-level integration coverage exists for:
+    - Zoom pipelines
+    - `technical-study-guide`
+    - `nontechnical-study-guide`
+    - `note-enhancement`
+    - `therapy-conversation-notes`
 - Shipped built-in pipelines on the branch are:
   - `passthrough`
   - `zoom-tech-note`
   - `zoom-tech-note-deep-pass`
   - `technical-study-guide`
+  - `nontechnical-study-guide`
+  - `note-enhancement`
+  - `therapy-conversation-notes`
 
 ### Partial
 
@@ -161,7 +172,6 @@ This section is the strict source-of-truth checkpoint for the current branch sta
 
 ### Missing
 
-- `nontechnical-study-guide`
 - dry-run / introspection mode
 - JSON event stream mode
 - partial-stage execution controls such as:
@@ -171,9 +181,11 @@ This section is the strict source-of-truth checkpoint for the current branch sta
 - richer operator-facing examples and authoring guidance
 - live provider-backed smoke validation for model-backed built-ins remains a practical verification gap
 
-### Not Yet Tracked In The Committed Phase Plan
+### New Built-In Pipeline Slices Landed
 
-- A separate therapy/conversation notes pipeline has been discussed as the next product slice, but it is not yet reflected as a committed phase item in the current spec/vertical-slice plan.
+- `nontechnical-study-guide` is implemented as a full multi-stage built-in pipeline.
+- `note-enhancement` is implemented as a separate notes polishing pipeline.
+- `therapy-conversation-notes` is implemented as a separate pipeline with optional local `context/` source support, including `.pdf` ingestion when `pypdf` is available.
 
 ### Local Workspace Note
 

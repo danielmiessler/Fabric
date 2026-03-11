@@ -735,7 +735,7 @@ Current status:
 
 ## 16. Implementation Checkpoint
 
-Checkpoint date: 2026-03-07
+Checkpoint date: 2026-03-11
 
 Implemented and verified in the current branch:
 
@@ -765,6 +765,11 @@ Implemented and verified in the current branch:
 - built-in Zoom parity pipelines:
   - `zoom-tech-note`
   - `zoom-tech-note-deep-pass`
+- built-in study/notes pipelines:
+  - `technical-study-guide`
+  - `nontechnical-study-guide`
+  - `note-enhancement`
+  - `therapy-conversation-notes`
 - built-in quick-mode note patterns aligned with the real note surface:
   - `techNote`
   - `nontechNote`
@@ -783,13 +788,14 @@ Implemented but still minimal:
 - built-in pipeline inventory
 - publish integration behavior
 - operator-facing examples
-- built-in study-guide profile inventory:
+- built-in profile inventory now includes:
   - `technical-study-guide`
+  - `nontechnical-study-guide`
+  - `note-enhancement`
+  - `therapy-conversation-notes`
 
 Not yet implemented from the broader spec:
 
-- remaining built-in note-generation pipelines such as:
-  - `nontechnical-study-guide`
 - richer profile inventory
 - pipeline dry-run / introspection mode
 - JSON event stream mode

@@ -1,0 +1,107 @@
+version: 1
+name: therapy-conversation-notes
+description: Fabric-native therapy conversation notes pipeline with optional local context sources.
+accepts:
+  - stdin
+  - source
+  - scrape_url
+stages:
+  - id: prepare_source
+    executor: command
+    input:
+      from: source
+    command:
+      program: python3
+      args:
+        - scripts/pipelines/therapy-conversation-notes/prepare_source.py
+      cwd: ../..
+    artifacts:
+      - name: session_context
+        path: session_context.json
+      - name: conversation_input
+        path: conversation_input.md
+    primary_output:
+      from: stdout
+
+  - id: materialize_context
+    executor: command
+    command:
+      program: python3
+      args:
+        - scripts/pipelines/therapy-conversation-notes/materialize_context.py
+        - --session-context
+        - "{{artifact:prepare_source:session_context}}"
+      cwd: ../..
+    artifacts:
+      - name: context_pack
+        path: context_pack.md
+      - name: context_manifest
+        path: context_manifest.json
+    primary_output:
+      from: artifact
+      artifact: context_pack
+
+  - id: build_analysis_input
+    executor: command
+    command:
+      program: python3
+      args:
+        - scripts/pipelines/therapy-conversation-notes/build_analysis_input.py
+        - --session-context
+        - "{{artifact:prepare_source:session_context}}"
+        - --conversation-input
+        - "{{artifact:prepare_source:conversation_input}}"
+        - --context-pack
+        - "{{artifact:materialize_context:context_pack}}"
+      cwd: ../..
+    artifacts:
+      - name: analysis_input
+        path: analysis_input.md
+    primary_output:
+      from: artifact
+      artifact: analysis_input
+
+  - id: analyze_generate
+    executor: fabric_pattern
+    input:
+      from: artifact
+      stage: build_analysis_input
+      artifact: analysis_input
+    pattern: ../patterns/therapy_conversation_analyze/system.md
+    stream: true
+
+  - id: analyze_materialize
+    executor: command
+    command:
+      program: python3
+      args:
+        - scripts/pipelines/therapy-conversation-notes/materialize_analysis.py
+        - --session-context
+        - "{{artifact:prepare_source:session_context}}"
+      cwd: ../..
+    final_output: true
+    primary_output:
+      from: stdout
+
+  - id: validate_outputs
+    role: validate
+    executor: command
+    command:
+      program: python3
+      args:
+        - scripts/pipelines/therapy-conversation-notes/run_validate_stage.py
+        - --session-context
+        - "{{artifact:prepare_source:session_context}}"
+      cwd: ../..
+    artifacts:
+      - name: validation_report
+        path: validation_report.md
+
+  - id: write_publish_manifest
+    role: publish
+    executor: builtin
+    builtin:
+      name: write_publish_manifest
+    artifacts:
+      - name: publish_manifest
+        path: publish_manifest.json

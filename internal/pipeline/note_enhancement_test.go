@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -108,6 +109,149 @@ func TestNoteEnhancementRunnerEndToEnd(t *testing.T) {
 
 	assertNoteEnhancementManifest(t, result.RunDir, pipe)
 	assertNoteEnhancementArtifacts(t, fixture, result.RunDir)
+}
+
+func TestNoteEnhancementMaterializeRejectsDuplicateArtifactBlocks(t *testing.T) {
+	t.Parallel()
+
+	fixture := newNoteEnhancementFixture(t)
+	runDir := filepath.Join(fixture.InvocationDir, ".pipeline", "dup-artifacts-run")
+	require.NoError(t, os.MkdirAll(runDir, 0o755))
+
+	runPythonScript(
+		t,
+		fixture.RepoRoot,
+		filepath.Join(fixture.RepoRoot, "scripts", "pipelines", "note-enhancement", "prepare_source.py"),
+		nil,
+		"",
+		map[string]string{
+			"FABRIC_PIPELINE_RUN_DIR":          runDir,
+			"FABRIC_PIPELINE_INVOCATION_DIR":   fixture.InvocationDir,
+			"FABRIC_PIPELINE_SOURCE_MODE":      "source",
+			"FABRIC_PIPELINE_SOURCE_REFERENCE": fixture.SessionDir,
+		},
+	)
+
+	sessionContextPath := filepath.Join(runDir, "session_context.json")
+	require.FileExists(t, sessionContextPath)
+
+	rawOutput := strings.Join([]string{
+		"<<<BEGIN_ARTIFACT:enhanced_notes.md>>>",
+		"# ✨ Enhanced Notes",
+		"## Improved Summary",
+		"ok",
+		"## Key Takeaways",
+		"- a",
+		"- b",
+		"- c",
+		"## Clarifications Added",
+		"- one",
+		"## Suggested Next Questions",
+		"- two",
+		"<<<END_ARTIFACT>>>",
+		"<<<BEGIN_ARTIFACT:enhanced_notes.md>>>",
+		"# ✨ Enhanced Notes",
+		"duplicate body",
+		"<<<END_ARTIFACT>>>",
+		"<<<BEGIN_ARTIFACT:edit_log.md>>>",
+		"# Edit Log",
+		"## Structural Changes",
+		"- one",
+		"## Language Tightening",
+		"- one",
+		"## Assumptions Avoided",
+		"- one",
+		"<<<END_ARTIFACT>>>",
+	}, "\n") + "\n"
+
+	_, stderr := runPythonScriptExpectError(
+		t,
+		fixture.RepoRoot,
+		filepath.Join(fixture.RepoRoot, "scripts", "pipelines", "note-enhancement", "materialize_enhanced_notes.py"),
+		[]string{"--session-context", sessionContextPath},
+		rawOutput,
+		map[string]string{
+			"FABRIC_PIPELINE_RUN_DIR": runDir,
+		},
+	)
+	require.Contains(t, stderr, "duplicate artifact block: enhanced_notes.md")
+}
+
+func TestNoteEnhancementValidateRequiresTitleAtDocumentStart(t *testing.T) {
+	t.Parallel()
+
+	fixture := newNoteEnhancementFixture(t)
+	runDir := filepath.Join(fixture.InvocationDir, ".pipeline", "title-check-run")
+	require.NoError(t, os.MkdirAll(runDir, 0o755))
+
+	runPythonScript(
+		t,
+		fixture.RepoRoot,
+		filepath.Join(fixture.RepoRoot, "scripts", "pipelines", "note-enhancement", "prepare_source.py"),
+		nil,
+		"",
+		map[string]string{
+			"FABRIC_PIPELINE_RUN_DIR":          runDir,
+			"FABRIC_PIPELINE_INVOCATION_DIR":   fixture.InvocationDir,
+			"FABRIC_PIPELINE_SOURCE_MODE":      "source",
+			"FABRIC_PIPELINE_SOURCE_REFERENCE": fixture.SessionDir,
+		},
+	)
+
+	sessionContextPath := filepath.Join(runDir, "session_context.json")
+	require.FileExists(t, sessionContextPath)
+
+	var sessionContext noteEnhancementSessionContext
+	readJSONFile(t, sessionContextPath, &sessionContext)
+	require.NoError(t, os.MkdirAll(sessionContext.StablePipelineDir, 0o755))
+
+	invalidTitleOrder := strings.Join([]string{
+		"Preface line that should not appear before the title.",
+		"",
+		"# ✨ Enhanced Notes",
+		"",
+		"## Improved Summary",
+		"Summary text.",
+		"",
+		"## Key Takeaways",
+		"- one",
+		"- two",
+		"- three",
+		"",
+		"## Clarifications Added",
+		"- one",
+		"",
+		"## Suggested Next Questions",
+		"- one",
+	}, "\n")
+	require.NoError(t, os.WriteFile(sessionContext.FinalOutputPath, []byte(invalidTitleOrder+"\n"), 0o644))
+
+	editLogPath := filepath.Join(sessionContext.StablePipelineDir, "edit_log.md")
+	editLog := strings.Join([]string{
+		"# Edit Log",
+		"",
+		"## Structural Changes",
+		"- one",
+		"",
+		"## Language Tightening",
+		"- one",
+		"",
+		"## Assumptions Avoided",
+		"- one",
+	}, "\n")
+	require.NoError(t, os.WriteFile(editLogPath, []byte(editLog+"\n"), 0o644))
+
+	_, stderr := runPythonScriptExpectError(
+		t,
+		fixture.RepoRoot,
+		filepath.Join(fixture.RepoRoot, "scripts", "pipelines", "note-enhancement", "run_validate_stage.py"),
+		[]string{"--session-context", sessionContextPath},
+		"",
+		map[string]string{
+			"FABRIC_PIPELINE_RUN_DIR": runDir,
+		},
+	)
+	require.Contains(t, stderr, "document must start with title heading: # ✨ Enhanced Notes")
 }
 
 func newNoteEnhancementFixture(t *testing.T) noteEnhancementFixture {
@@ -229,4 +373,32 @@ func assertNoteEnhancementArtifacts(t *testing.T, fixture noteEnhancementFixture
 	require.FileExists(t, filepath.Join(fixture.SessionDir, ".pipeline", "edit_log.md"))
 	require.FileExists(t, filepath.Join(fixture.SessionDir, ".pipeline", "validation_report.md"))
 	require.FileExists(t, filepath.Join(fixture.SessionDir, "enhanced_notes.md"))
+}
+
+func runPythonScriptExpectError(
+	t *testing.T,
+	repoRoot string,
+	scriptPath string,
+	args []string,
+	stdin string,
+	extraEnv map[string]string,
+) (string, string) {
+	t.Helper()
+
+	cmdArgs := append([]string{scriptPath}, args...)
+	cmd := exec.Command("python3", cmdArgs...)
+	cmd.Dir = repoRoot
+	cmd.Stdin = strings.NewReader(stdin)
+	var stdout bytes.Buffer
+	var stderr bytes.Buffer
+	cmd.Stdout = &stdout
+	cmd.Stderr = &stderr
+	cmd.Env = os.Environ()
+	for key, value := range extraEnv {
+		cmd.Env = append(cmd.Env, key+"="+value)
+	}
+
+	err := cmd.Run()
+	require.Errorf(t, err, "script unexpectedly succeeded: %s\nstdout:\n%s\nstderr:\n%s", scriptPath, stdout.String(), stderr.String())
+	return stdout.String(), stderr.String()
 }

@@ -59,6 +59,14 @@ def count_bullets(markdown: str) -> int:
     return len(re.findall(r"(?m)^\s*[-*]\s+", markdown))
 
 
+def first_nonempty_line(markdown: str) -> str:
+    for line in markdown.splitlines():
+        stripped = line.strip()
+        if stripped:
+            return stripped
+    return ""
+
+
 def validate_outputs(session_context) -> list[str]:
     issues: list[str] = []
 
@@ -89,7 +97,10 @@ def validate_outputs(session_context) -> list[str]:
         return issues
 
     final_notes = final_output_path.read_text(encoding="utf-8")
-    for heading in REQUIRED_HEADINGS:
+    if not first_nonempty_line(final_notes).startswith(REQUIRED_HEADINGS[0]):
+        issues.append(f"document must start with title heading: {REQUIRED_HEADINGS[0]}")
+
+    for heading in REQUIRED_HEADINGS[1:]:
         if heading not in final_notes:
             issues.append(f"missing heading: {heading}")
 

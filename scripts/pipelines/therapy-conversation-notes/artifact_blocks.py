@@ -38,6 +38,9 @@ def parse_artifact_blocks(text: str) -> dict[str, ArtifactBlock]:
         if idx >= len(lines):
             raise ValueError(f"unterminated artifact block for {path}")
 
+        if path in blocks:
+            raise ValueError(f"duplicate artifact block: {path}")
+
         content = "\n".join(content_lines).rstrip("\n") + "\n"
         blocks[path] = ArtifactBlock(path=path, content=content)
         idx += 1

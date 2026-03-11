@@ -114,6 +114,159 @@ func TestTherapyConversationNotesRunnerEndToEnd(t *testing.T) {
 	assertTherapyConversationArtifacts(t, fixture, result.RunDir)
 }
 
+func TestTherapyConversationMaterializeContextAppliesDeterministicCaps(t *testing.T) {
+	t.Parallel()
+
+	fixture := newTherapyConversationFixture(t)
+	contextDir := filepath.Join(fixture.SessionDir, "context")
+	for idx := 0; idx < 12; idx++ {
+		path := filepath.Join(contextDir, "bulk-context-"+string(rune('a'+idx))+".md")
+		content := "# Reference\n\n" + strings.Repeat("A", 5000)
+		require.NoError(t, os.WriteFile(path, []byte(content), 0o644))
+	}
+
+	runDir := filepath.Join(fixture.InvocationDir, ".pipeline", "context-cap-run")
+	require.NoError(t, os.MkdirAll(runDir, 0o755))
+
+	runPythonScript(
+		t,
+		fixture.RepoRoot,
+		filepath.Join(fixture.RepoRoot, "scripts", "pipelines", "therapy-conversation-notes", "prepare_source.py"),
+		nil,
+		"",
+		map[string]string{
+			"FABRIC_PIPELINE_RUN_DIR":          runDir,
+			"FABRIC_PIPELINE_INVOCATION_DIR":   fixture.InvocationDir,
+			"FABRIC_PIPELINE_SOURCE_MODE":      "source",
+			"FABRIC_PIPELINE_SOURCE_REFERENCE": fixture.SessionDir,
+		},
+	)
+
+	sessionContextPath := filepath.Join(runDir, "session_context.json")
+	require.FileExists(t, sessionContextPath)
+
+	runPythonScript(
+		t,
+		fixture.RepoRoot,
+		filepath.Join(fixture.RepoRoot, "scripts", "pipelines", "therapy-conversation-notes", "materialize_context.py"),
+		[]string{"--session-context", sessionContextPath},
+		"",
+		map[string]string{
+			"FABRIC_PIPELINE_RUN_DIR": runDir,
+		},
+	)
+
+	var manifest map[string]any
+	readJSONFile(t, filepath.Join(runDir, "context_manifest.json"), &manifest)
+
+	limits, ok := manifest["limits"].(map[string]any)
+	require.True(t, ok)
+	summary, ok := manifest["summary"].(map[string]any)
+	require.True(t, ok)
+	entries, ok := manifest["entries"].([]any)
+	require.True(t, ok)
+	warnings, ok := manifest["warnings"].([]any)
+	require.True(t, ok)
+
+	maxFiles := int(limits["max_files"].(float64))
+	maxCharsPerFile := int(limits["max_chars_per_file"].(float64))
+	maxTotalChars := int(limits["max_total_chars"].(float64))
+
+	require.Equal(t, 8, maxFiles)
+	require.Equal(t, 4000, maxCharsPerFile)
+	require.Equal(t, 20000, maxTotalChars)
+
+	require.Greater(t, int(summary["discovered_files"].(float64)), int(summary["processed_files"].(float64)))
+	require.Equal(t, maxFiles, int(summary["processed_files"].(float64)))
+	require.LessOrEqual(t, int(summary["included_chars"].(float64)), maxTotalChars)
+	require.NotEmpty(t, warnings)
+	require.Len(t, entries, maxFiles)
+
+	for _, rawEntry := range entries {
+		entry := rawEntry.(map[string]any)
+		require.LessOrEqual(t, int(entry["included_chars"].(float64)), maxCharsPerFile)
+	}
+}
+
+func TestTherapyConversationValidateRequiresTitleAtDocumentStart(t *testing.T) {
+	t.Parallel()
+
+	fixture := newTherapyConversationFixture(t)
+	runDir := filepath.Join(fixture.InvocationDir, ".pipeline", "therapy-title-check-run")
+	require.NoError(t, os.MkdirAll(runDir, 0o755))
+
+	runPythonScript(
+		t,
+		fixture.RepoRoot,
+		filepath.Join(fixture.RepoRoot, "scripts", "pipelines", "therapy-conversation-notes", "prepare_source.py"),
+		nil,
+		"",
+		map[string]string{
+			"FABRIC_PIPELINE_RUN_DIR":          runDir,
+			"FABRIC_PIPELINE_INVOCATION_DIR":   fixture.InvocationDir,
+			"FABRIC_PIPELINE_SOURCE_MODE":      "source",
+			"FABRIC_PIPELINE_SOURCE_REFERENCE": fixture.SessionDir,
+		},
+	)
+
+	sessionContextPath := filepath.Join(runDir, "session_context.json")
+	require.FileExists(t, sessionContextPath)
+
+	var sessionContext therapyConversationSessionContext
+	readJSONFile(t, sessionContextPath, &sessionContext)
+	require.NoError(t, os.MkdirAll(sessionContext.StablePipelineDir, 0o755))
+
+	invalidTitleOrder := strings.Join([]string{
+		"Preface content before required title heading.",
+		"",
+		"# 🧠 Therapy Conversation Notes",
+		"",
+		"## Conversation Summary",
+		"Summary text.",
+		"",
+		"## Emotional Signals",
+		"- Anxiety",
+		"- Overwhelm",
+		"",
+		"## Thought Patterns",
+		"- Rumination",
+		"- Catastrophic replay",
+		"",
+		"## Actionable Reflection",
+		"- Do one grounding breath cycle.",
+		"- Write one realistic morning action.",
+		"- Reframe one distortion in neutral language.",
+		"",
+		"## Safety and Boundaries",
+		"These notes are for reflection and are not a substitute for professional care.",
+	}, "\n")
+	require.NoError(t, os.WriteFile(sessionContext.FinalOutputPath, []byte(invalidTitleOrder+"\n"), 0o644))
+
+	snapshot := map[string]any{
+		"summary_points":    []string{"point"},
+		"emotions_observed": []string{"emotion"},
+		"patterns_observed": []string{"pattern"},
+		"actions":           []string{"action"},
+		"safety_flags":      []string{},
+	}
+	snapshotJSON, err := json.MarshalIndent(snapshot, "", "  ")
+	require.NoError(t, err)
+	snapshotPath := filepath.Join(sessionContext.StablePipelineDir, "analysis_snapshot.json")
+	require.NoError(t, os.WriteFile(snapshotPath, append(snapshotJSON, '\n'), 0o644))
+
+	_, stderr := runPythonScriptExpectError(
+		t,
+		fixture.RepoRoot,
+		filepath.Join(fixture.RepoRoot, "scripts", "pipelines", "therapy-conversation-notes", "run_validate_stage.py"),
+		[]string{"--session-context", sessionContextPath},
+		"",
+		map[string]string{
+			"FABRIC_PIPELINE_RUN_DIR": runDir,
+		},
+	)
+	require.Contains(t, stderr, "document must start with title heading: # 🧠 Therapy Conversation Notes")
+}
+
 func newTherapyConversationFixture(t *testing.T) therapyConversationFixture {
 	t.Helper()
 

@@ -14,6 +14,7 @@ import (
 )
 
 var envReferencePattern = regexp.MustCompile(`\$\{([A-Za-z_][A-Za-z0-9_]*)\}|\$([A-Za-z_][A-Za-z0-9_]*)`)
+var templateTokenPattern = regexp.MustCompile(`\{\{([^{}]+)\}\}`)
 
 type PreflightOptions struct {
 	Registry              *core.PluginRegistry
@@ -138,7 +139,11 @@ func preflightPatternStage(p *Pipeline, stage *Stage, registry *core.PluginRegis
 	if looksLikeRelativePath(stage.Context) {
 		stage.Context = resolvePipelinePath(p, stage.Context)
 	}
-	if _, err := registry.Db.Patterns.Get(stage.Pattern); err != nil {
+	patternContent, err := loadRawPatternContent(stage.Pattern, registry)
+	if err != nil {
+		return fmt.Errorf("pipeline %q stage %q pattern %q: %w", p.Name, stage.ID, stage.Pattern, err)
+	}
+	if err := validatePatternVariables(patternContent, stage.Variables); err != nil {
 		return fmt.Errorf("pipeline %q stage %q pattern %q: %w", p.Name, stage.ID, stage.Pattern, err)
 	}
 	if stage.Context != "" {
@@ -149,6 +154,39 @@ func preflightPatternStage(p *Pipeline, stage *Stage, registry *core.PluginRegis
 	if stage.Strategy != "" {
 		if _, err := strategy.LoadStrategy(stage.Strategy); err != nil {
 			return fmt.Errorf("pipeline %q stage %q strategy %q: %w", p.Name, stage.ID, stage.Strategy, err)
+		}
+	}
+	return nil
+}
+
+func loadRawPatternContent(source string, registry *core.PluginRegistry) (string, error) {
+	if filepath.IsAbs(source) || looksLikeRelativePath(source) {
+		content, err := os.ReadFile(source)
+		if err != nil {
+			return "", err
+		}
+		return string(content), nil
+	}
+
+	pattern, err := registry.Db.Patterns.GetRaw(source)
+	if err != nil {
+		return "", err
+	}
+	return pattern.Pattern, nil
+}
+
+func validatePatternVariables(patternContent string, variables map[string]string) error {
+	matches := templateTokenPattern.FindAllStringSubmatch(patternContent, -1)
+	for _, match := range matches {
+		raw := strings.TrimSpace(match[1])
+		if raw == "" || raw == "input" {
+			continue
+		}
+		if strings.HasPrefix(raw, "plugin:") || strings.HasPrefix(raw, "ext:") {
+			continue
+		}
+		if _, ok := variables[raw]; !ok {
+			return fmt.Errorf("missing required variable: %s", raw)
 		}
 	}
 	return nil

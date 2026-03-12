@@ -3,8 +3,10 @@ package openai
 import (
 	"bytes"
 	"context"
+	"encoding/base64"
 	"fmt"
 	"os"
+	"path/filepath"
 	"strings"
 	"testing"
 
@@ -12,6 +14,7 @@ import (
 	"github.com/danielmiessler/fabric/internal/domain"
 	"github.com/openai/openai-go/responses"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestShouldUseImageGeneration(t *testing.T) {
@@ -621,4 +624,54 @@ func TestSendResponses_WithWarningIntegration(t *testing.T) {
 			}
 		})
 	}
+}
+
+func TestExtractAndSaveImages(t *testing.T) {
+	t.Run("writes decoded image to requested path", func(t *testing.T) {
+		client := NewClient()
+		tempDir := t.TempDir()
+		outputPath := filepath.Join(tempDir, "nested", "image.png")
+		resp := mustDecodeImageResponse(t, base64.StdEncoding.EncodeToString([]byte("png-bytes")))
+
+		err := client.extractAndSaveImages(resp, &domain.ChatOptions{ImageFile: outputPath})
+		require.NoError(t, err)
+
+		content, readErr := os.ReadFile(outputPath)
+		require.NoError(t, readErr)
+		require.Equal(t, []byte("png-bytes"), content)
+	})
+
+	t.Run("rejects invalid base64 image payload", func(t *testing.T) {
+		client := NewClient()
+		resp := mustDecodeImageResponse(t, "not-valid-base64!!!")
+
+		err := client.extractAndSaveImages(resp, &domain.ChatOptions{
+			ImageFile: filepath.Join(t.TempDir(), "broken.png"),
+		})
+		require.Error(t, err)
+		require.Contains(t, err.Error(), "decode")
+	})
+
+	t.Run("no image file skips extraction", func(t *testing.T) {
+		client := NewClient()
+		resp := mustDecodeImageResponse(t, base64.StdEncoding.EncodeToString([]byte("png-bytes")))
+
+		err := client.extractAndSaveImages(resp, &domain.ChatOptions{})
+		require.NoError(t, err)
+	})
+}
+
+func mustDecodeImageResponse(t *testing.T, encoded string) *responses.Response {
+	t.Helper()
+
+	var resp responses.Response
+	require.NoError(t, resp.UnmarshalJSON([]byte(`{
+		"output": [{
+			"id": "img_123",
+			"type": "image_generation_call",
+			"status": "completed",
+			"result": "`+encoded+`"
+		}]
+	}`)))
+	return &resp
 }

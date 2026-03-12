@@ -154,6 +154,94 @@ func TestHandlePipelineCommandsRejectsValidateOnlyWithValidatePipeline(t *testin
 	require.Contains(t, err.Error(), "cannot be used with --validate-pipeline")
 }
 
+func TestHandlePipelineCommandsValidatePipelineSuccess(t *testing.T) {
+	tempDir := t.TempDir()
+	pipelinePath := filepath.Join(tempDir, "validate-file.yaml")
+	pipelineYAML := "version: 1\n" +
+		"name: validate-file\n" +
+		"stages:\n" +
+		"  - id: pass\n" +
+		"    executor: builtin\n" +
+		"    builtin:\n" +
+		"      name: passthrough\n" +
+		"    final_output: true\n" +
+		"    primary_output:\n" +
+		"      from: stdout\n"
+	require.NoError(t, os.WriteFile(pipelinePath, []byte(pipelineYAML), 0o644))
+
+	stdout, err := captureStdout(func() error {
+		handled, runErr := handlePipelineCommands(&Flags{ValidatePipeline: pipelinePath}, nil)
+		require.True(t, handled)
+		return runErr
+	})
+	require.NoError(t, err)
+	require.Contains(t, stdout, "pipeline valid: validate-file")
+}
+
+func TestHandlePipelineCommandsValidateOnlySuccess(t *testing.T) {
+	tempDir := t.TempDir()
+	builtInDir := filepath.Join(tempDir, "builtins")
+	require.NoError(t, os.MkdirAll(builtInDir, 0o755))
+
+	pipelineYAML := "version: 1\n" +
+		"name: validate-only-ok\n" +
+		"stages:\n" +
+		"  - id: pass\n" +
+		"    executor: builtin\n" +
+		"    builtin:\n" +
+		"      name: passthrough\n" +
+		"    final_output: true\n" +
+		"    primary_output:\n" +
+		"      from: stdout\n"
+	require.NoError(t, os.WriteFile(filepath.Join(builtInDir, "validate-only-ok.yaml"), []byte(pipelineYAML), 0o644))
+	t.Setenv("FABRIC_BUILTIN_PIPELINES_DIR", builtInDir)
+
+	stdout, err := captureStdout(func() error {
+		handled, runErr := handlePipelineCommands(&Flags{
+			Pipeline:     "validate-only-ok",
+			ValidateOnly: true,
+		}, nil)
+		require.True(t, handled)
+		return runErr
+	})
+	require.NoError(t, err)
+	require.Contains(t, stdout, "pipeline valid: validate-only-ok")
+}
+
+func TestHandlePipelineCommandsRejectsValidatePipelineWithRuntimeFlags(t *testing.T) {
+	tempDir := t.TempDir()
+	pipelinePath := filepath.Join(tempDir, "validate-runtime-conflict.yaml")
+	pipelineYAML := "version: 1\n" +
+		"name: validate-runtime-conflict\n" +
+		"stages:\n" +
+		"  - id: pass\n" +
+		"    executor: builtin\n" +
+		"    builtin:\n" +
+		"      name: passthrough\n" +
+		"    final_output: true\n" +
+		"    primary_output:\n" +
+		"      from: stdout\n"
+	require.NoError(t, os.WriteFile(pipelinePath, []byte(pipelineYAML), 0o644))
+
+	handled, err := handlePipelineCommands(&Flags{
+		ValidatePipeline:   pipelinePath,
+		PipelineEventsJSON: true,
+	}, nil)
+	require.True(t, handled)
+	require.Error(t, err)
+	require.Contains(t, err.Error(), "cannot be combined with runtime pipeline flags")
+}
+
+func TestHandlePipelineCommandsRejectsPatternInputs(t *testing.T) {
+	handled, err := handlePipelineCommands(&Flags{
+		Pipeline: "passthrough",
+		Pattern:  "summarize",
+	}, nil)
+	require.True(t, handled)
+	require.Error(t, err)
+	require.Contains(t, err.Error(), "--pipeline cannot be combined with pattern/chat-style inputs")
+}
+
 func TestHandlePipelineCommandsDryRunRespectsStageSelection(t *testing.T) {
 	tempDir := t.TempDir()
 	builtInDir := filepath.Join(tempDir, "builtins")

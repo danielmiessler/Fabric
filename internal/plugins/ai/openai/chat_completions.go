@@ -109,6 +109,9 @@ func (o *Client) buildChatCompletionParams(
 	if eff, ok := parseReasoningEffort(opts.Thinking); ok {
 		ret.ReasoningEffort = eff
 	}
+	if extraFields := o.buildRequestExtraFields(); len(extraFields) > 0 {
+		ret.SetExtraFields(extraFields)
+	}
 	return
 }
 

@@ -306,6 +306,14 @@ func (o *Client) buildResponseParams(
 	return
 }
 
+// BuildResponseParams exposes the shared Responses API request builder so
+// auth-specialized vendors can reuse Fabric's OpenAI-compatible request shape.
+func (o *Client) BuildResponseParams(
+	inputMsgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions,
+) responses.ResponseNewParams {
+	return o.buildResponseParams(inputMsgs, opts)
+}
+
 func convertMessage(msg chat.ChatCompletionMessage) responses.ResponseInputItemUnionParam {
 	result := convertMessageCommon(msg)
 	role := responses.EasyInputMessageRole(result.Role)
@@ -368,4 +376,10 @@ func (o *Client) extractText(resp *responses.Response) (ret string) {
 	}
 
 	return
+}
+
+// ExtractText exposes the shared Responses API text extraction logic so other
+// vendors can reuse Fabric's response formatting and citation handling.
+func (o *Client) ExtractText(resp *responses.Response) string {
+	return o.extractText(resp)
 }

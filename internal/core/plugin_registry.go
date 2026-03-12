@@ -18,6 +18,7 @@ import (
 	"github.com/danielmiessler/fabric/internal/plugins/ai/azure_entra"
 	"github.com/danielmiessler/fabric/internal/plugins/ai/azureaigateway"
 	"github.com/danielmiessler/fabric/internal/plugins/ai/bedrock"
+	"github.com/danielmiessler/fabric/internal/plugins/ai/codex"
 	"github.com/danielmiessler/fabric/internal/plugins/ai/copilot"
 	"github.com/danielmiessler/fabric/internal/plugins/ai/digitalocean"
 	"github.com/danielmiessler/fabric/internal/plugins/ai/dryrun"
@@ -85,6 +86,7 @@ func NewPluginRegistry(db *fsdb.Db) (ret *PluginRegistry, err error) {
 		lmstudio.NewClient(),
 		exolab.NewClient(),
 		perplexity.NewClient(),
+		codex.NewClient(),
 		copilot.NewClient(), // Microsoft 365 Copilot
 		bedrock.NewClient(), // AWS Bedrock - credentials configured via setup or AWS credential chain
 	)
@@ -527,7 +529,12 @@ func (o *PluginRegistry) GetChatter(model string, modelContextLength int, vendor
 			vendorAvailable := lo.ContainsBy(availableVendors, func(name string) bool {
 				return strings.EqualFold(name, vendorName)
 			})
-			if ret.vendor == nil || !vendorAvailable {
+			// Codex intentionally hides some subscription-backed models from model
+			// listings while still allowing explicit manual selection via -V Codex -m ...
+			allowCodexPassthrough := ret.vendor != nil &&
+				strings.EqualFold(ret.vendor.GetName(), "Codex") &&
+				len(availableVendors) == 0
+			if ret.vendor == nil || (!vendorAvailable && !allowCodexPassthrough) {
 				err = fmt.Errorf(i18n.T("plugin_registry_model_not_available_for_vendor"), model, vendorName)
 				return
 			}

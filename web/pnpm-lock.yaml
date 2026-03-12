@@ -85,7 +85,7 @@ importers:
         specifier: ^2.53.4
         version: 2.53.4(@sveltejs/vite-plugin-svelte@4.0.4(svelte@5.53.7)(vite@5.4.21(@types/node@20.19.37)))(svelte@5.53.7)(typescript@5.9.3)(vite@5.4.21(@types/node@20.19.37))
       '@sveltejs/vite-plugin-svelte':
-        specifier: ^4.0.4
+        specifier: ^4.0.0
         version: 4.0.4(svelte@5.53.7)(vite@5.4.21(@types/node@20.19.37))
       '@tailwindcss/forms':
         specifier: ^0.5.11
@@ -113,7 +113,7 @@ importers:
         version: 8.0.1
       pdf-to-markdown-core:
         specifier: github:jzillmann/pdf-to-markdown#modularize
-        version: https://codeload.github.com/jzillmann/pdf-to-markdown/tar.gz/71b31c2fb5cd15fcb95810fc7aeccdd879e1fb6d
+        version: https://codeload.github.com/jzillmann/pdf-to-markdown/tar.gz/5e930fafd305644cff00a3824030f0d6741acde8
       pdfjs-dist:
         specifier: ^5.5.207
         version: 5.5.207
@@ -343,12 +343,12 @@ packages:
     resolution: {integrity: sha512-GuUdqkyyzQI5RMIWkHhvTWLCyLo1jNK3vzkSyaExH5kHPDHcuL2VOpHjmMY+y3+NC69qAKToBqldTBgYeLSr9Q==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@eslint/core@1.1.0':
-    resolution: {integrity: sha512-/nr9K9wkr3P1EzFTdFdMoLuo1PmIxjmwvPozwoSodjNBdefGujXQUF93u1DDZpEaTuDvMsIQddsd35BwtrW9Xw==}
+  '@eslint/core@1.1.1':
+    resolution: {integrity: sha512-QUPblTtE51/7/Zhfv8BDwO0qkkzQL7P/aWWbqcf4xWLEYn1oKjdO0gglQBB4GAsu7u6wjijbCmzsUTy6mnk6oQ==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24}
 
-  '@eslint/eslintrc@3.3.4':
-    resolution: {integrity: sha512-4h4MVF8pmBsncB60r0wSJiIeUKTSD4m7FmTFThG8RHlsg9ajqckLm9OraguFGZE4vVdpiI1Q4+hFnisopmG6gQ==}
+  '@eslint/eslintrc@3.3.5':
+    resolution: {integrity: sha512-4IlJx0X0qftVsN5E+/vGujTRIFtwuLbNsVUe7TO6zYPDR1O6nFwvwhIKEKSrl6dZchmYBITazxKoUYOjdtjlRg==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
   '@eslint/js@9.17.0':
@@ -363,8 +363,8 @@ packages:
     resolution: {integrity: sha512-VtAOaymWVfZcmZbp6E2mympDIHvyjXs/12LqWYjVw6qjrfF+VK+fyG33kChz3nnK+SU5/NeHOqrTEHS8sXO3OA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@eslint/plugin-kit@0.6.0':
-    resolution: {integrity: sha512-bIZEUzOI1jkhviX2cp5vNyXQc6olzb2ohewQubuYlMXZ2Q/XjBO0x0XhGPvc9fjSIiUN0vw+0hq53BJ4eQSJKQ==}
+  '@eslint/plugin-kit@0.6.1':
+    resolution: {integrity: sha512-iH1B076HoAshH1mLpHMgwdGeTs0CYwL0SPMkGuSebZrwBp16v415e9NZXg2jtrqPVQjf6IANe2Vtlr5KswtcZQ==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24}
 
   '@floating-ui/core@1.7.5':
@@ -437,35 +437,30 @@ packages:
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
-    libc: [glibc]
 
   '@napi-rs/canvas-linux-arm64-musl@0.1.96':
     resolution: {integrity: sha512-UvOi7fii3IE2KDfEfhh8m+LpzSRvhGK7o1eho99M2M0HTik11k3GX+2qgVx9EtujN3/bhFFS1kSO3+vPMaJ0Mg==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
-    libc: [musl]
 
   '@napi-rs/canvas-linux-riscv64-gnu@0.1.96':
     resolution: {integrity: sha512-MBSukhGCQ5nRtf9NbFYWOU080yqkZU1PbuH4o1ROvB4CbPl12fchDR35tU83Wz8gWIM9JTn99lBn9DenPIv7Ig==}
     engines: {node: '>= 10'}
     cpu: [riscv64]
     os: [linux]
-    libc: [glibc]
 
   '@napi-rs/canvas-linux-x64-gnu@0.1.96':
     resolution: {integrity: sha512-I/ccu2SstyKiV3HIeVzyBIWfrJo8cN7+MSQZPnabewWV6hfJ2nY7Df2WqOHmobBRUw84uGR6zfQHsUEio/m5Vg==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
-    libc: [glibc]
 
   '@napi-rs/canvas-linux-x64-musl@0.1.96':
     resolution: {integrity: sha512-H3uov7qnTl73GDT4h52lAqpJPsl1tIUyNPWJyhQ6gHakohNqqRq3uf80+NEpzcytKGEOENP1wX3yGwZxhjiWEQ==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
-    libc: [musl]
 
   '@napi-rs/canvas-win32-arm64-msvc@0.1.96':
     resolution: {integrity: sha512-ATp6Y+djOjYtkfV/VRH7CZ8I1MEtkUQBmKUbuWw5zWEHHqfL0cEcInE4Cxgx7zkNAhEdBbnH8HMVrqNp+/gwxA==}
@@ -532,79 +527,66 @@ packages:
     resolution: {integrity: sha512-t4ONHboXi/3E0rT6OZl1pKbl2Vgxf9vJfWgmUoCEVQVxhW6Cw/c8I6hbbu7DAvgp82RKiH7TpLwxnJeKv2pbsw==}
     cpu: [arm]
     os: [linux]
-    libc: [glibc]
 
   '@rollup/rollup-linux-arm-musleabihf@4.59.0':
     resolution: {integrity: sha512-CikFT7aYPA2ufMD086cVORBYGHffBo4K8MQ4uPS/ZnY54GKj36i196u8U+aDVT2LX4eSMbyHtyOh7D7Zvk2VvA==}
     cpu: [arm]
     os: [linux]
-    libc: [musl]
 
   '@rollup/rollup-linux-arm64-gnu@4.59.0':
     resolution: {integrity: sha512-jYgUGk5aLd1nUb1CtQ8E+t5JhLc9x5WdBKew9ZgAXg7DBk0ZHErLHdXM24rfX+bKrFe+Xp5YuJo54I5HFjGDAA==}
     cpu: [arm64]
     os: [linux]
-    libc: [glibc]
 
   '@rollup/rollup-linux-arm64-musl@4.59.0':
     resolution: {integrity: sha512-peZRVEdnFWZ5Bh2KeumKG9ty7aCXzzEsHShOZEFiCQlDEepP1dpUl/SrUNXNg13UmZl+gzVDPsiCwnV1uI0RUA==}
     cpu: [arm64]
     os: [linux]
-    libc: [musl]
 
   '@rollup/rollup-linux-loong64-gnu@4.59.0':
     resolution: {integrity: sha512-gbUSW/97f7+r4gHy3Jlup8zDG190AuodsWnNiXErp9mT90iCy9NKKU0Xwx5k8VlRAIV2uU9CsMnEFg/xXaOfXg==}
     cpu: [loong64]
     os: [linux]
-    libc: [glibc]
 
   '@rollup/rollup-linux-loong64-musl@4.59.0':
     resolution: {integrity: sha512-yTRONe79E+o0FWFijasoTjtzG9EBedFXJMl888NBEDCDV9I2wGbFFfJQQe63OijbFCUZqxpHz1GzpbtSFikJ4Q==}
     cpu: [loong64]
     os: [linux]
-    libc: [musl]
 
   '@rollup/rollup-linux-ppc64-gnu@4.59.0':
     resolution: {integrity: sha512-sw1o3tfyk12k3OEpRddF68a1unZ5VCN7zoTNtSn2KndUE+ea3m3ROOKRCZxEpmT9nsGnogpFP9x6mnLTCaoLkA==}
     cpu: [ppc64]
     os: [linux]
-    libc: [glibc]
 
   '@rollup/rollup-linux-ppc64-musl@4.59.0':
     resolution: {integrity: sha512-+2kLtQ4xT3AiIxkzFVFXfsmlZiG5FXYW7ZyIIvGA7Bdeuh9Z0aN4hVyXS/G1E9bTP/vqszNIN/pUKCk/BTHsKA==}
     cpu: [ppc64]
     os: [linux]
-    libc: [musl]
 
   '@rollup/rollup-linux-riscv64-gnu@4.59.0':
     resolution: {integrity: sha512-NDYMpsXYJJaj+I7UdwIuHHNxXZ/b/N2hR15NyH3m2qAtb/hHPA4g4SuuvrdxetTdndfj9b1WOmy73kcPRoERUg==}
     cpu: [riscv64]
     os: [linux]
-    libc: [glibc]
 
   '@rollup/rollup-linux-riscv64-musl@4.59.0':
     resolution: {integrity: sha512-nLckB8WOqHIf1bhymk+oHxvM9D3tyPndZH8i8+35p/1YiVoVswPid2yLzgX7ZJP0KQvnkhM4H6QZ5m0LzbyIAg==}
     cpu: [riscv64]
     os: [linux]
-    libc: [musl]
 
   '@rollup/rollup-linux-s390x-gnu@4.59.0':
     resolution: {integrity: sha512-oF87Ie3uAIvORFBpwnCvUzdeYUqi2wY6jRFWJAy1qus/udHFYIkplYRW+wo+GRUP4sKzYdmE1Y3+rY5Gc4ZO+w==}
     cpu: [s390x]
     os: [linux]
-    libc: [glibc]
 
   '@rollup/rollup-linux-x64-gnu@4.59.0':
     resolution: {integrity: sha512-3AHmtQq/ppNuUspKAlvA8HtLybkDflkMuLK4DPo77DfthRb71V84/c4MlWJXixZz4uruIH4uaa07IqoAkG64fg==}
     cpu: [x64]
     os: [linux]
-    libc: [glibc]
 
   '@rollup/rollup-linux-x64-musl@4.59.0':
     resolution: {integrity: sha512-2UdiwS/9cTAx7qIUZB/fWtToJwvt0Vbo0zmnYt7ED35KPg13Q0ym1g442THLC7VyI6JfYTP4PiSOWyoMdV2/xg==}
     cpu: [x64]
     os: [linux]
-    libc: [musl]
 
   '@rollup/rollup-openbsd-x64@4.59.0':
     resolution: {integrity: sha512-M3bLRAVk6GOwFlPTIxVBSYKUaqfLrn8l0psKinkCFxl4lQvOSz8ZrKDz2gxcBwHFpci0B6rttydI4IpS4IS/jQ==}
@@ -957,8 +939,8 @@ packages:
     resolution: {integrity: sha512-reYkTUJAZb9gUuZ2RvVCNhVHdg62RHnJ7WJl8ftMi4diZ6NWlciOzQN88pUhSELEwflJht4oQDv0F0BMlwaYtA==}
     engines: {node: '>=8'}
 
-  devalue@5.6.3:
-    resolution: {integrity: sha512-nc7XjUU/2Lb+SvEFVGcWLiKkzfw8+qHI7zn8WYXKkLMgfGSHbgCEaR6bJpev8Cm6Rmrb19Gfd/tZvGqx9is3wg==}
+  devalue@5.6.4:
+    resolution: {integrity: sha512-Gp6rDldRsFh/7XuouDbxMH3Mx8GMCcgzIb1pDTvNyn8pZGQ22u+Wa+lGV9dQCltFQ7uVw0MhRyb8XDskNFOReA==}
 
   devlop@1.1.0:
     resolution: {integrity: sha512-RWmIqhcFf1lRYBvNmr7qTNuyCt/7/ns2jbpp1+PalgE/rDQcBT0fioSMUpJ93irlUhC5hrg4cYqe6U+0ImW0rA==}
@@ -1136,8 +1118,8 @@ packages:
     resolution: {integrity: sha512-f7ccFPK3SXFHpx15UIGyRJ/FJQctuKZ0zVuN3frBo4HnK3cay9VEW0R6yPYFHC0AgqhukPzKjq22t5DmAyqGyw==}
     engines: {node: '>=16'}
 
-  flatted@3.3.4:
-    resolution: {integrity: sha512-3+mMldrTAPdta5kjX2G2J7iX4zxtnwpdA8Tr2ZSjkyPSanvbZAcy6flmtnXbEybHrDcU9641lxrMfFuUxVz9vA==}
+  flatted@3.4.1:
+    resolution: {integrity: sha512-IxfVbRFVlV8V/yRaGzk0UVIcsKKHMSfYw66T/u4nTwlWteQePsxe//LjudR1AMX4tZW3WFCh3Zqa/sjlqpbURQ==}
 
   fraction.js@5.3.4:
     resolution: {integrity: sha512-1X1NTtiJphryn/uLQz3whtY6jK3fTqoE3ohKs0tT+Ujr1W59oopxmoEh7Lu5p6vBaPbgoM0bzveAW4Qi5RyWDQ==}
@@ -1563,8 +1545,8 @@ packages:
     resolution: {integrity: sha512-3O/iVVsJAPsOnpwWIeD+d6z/7PmqApyQePUtCndjatj/9I5LylHvt5qluFaBT3I5h3r1ejfR056c+FCv+NnNXg==}
     engines: {node: 18 || 20 || >=22}
 
-  pdf-to-markdown-core@https://codeload.github.com/jzillmann/pdf-to-markdown/tar.gz/71b31c2fb5cd15fcb95810fc7aeccdd879e1fb6d:
-    resolution: {tarball: https://codeload.github.com/jzillmann/pdf-to-markdown/tar.gz/71b31c2fb5cd15fcb95810fc7aeccdd879e1fb6d}
+  pdf-to-markdown-core@https://codeload.github.com/jzillmann/pdf-to-markdown/tar.gz/5e930fafd305644cff00a3824030f0d6741acde8:
+    resolution: {tarball: https://codeload.github.com/jzillmann/pdf-to-markdown/tar.gz/5e930fafd305644cff00a3824030f0d6741acde8}
     version: 0.5.0
 
   pdfjs-dist@5.5.207:
@@ -2195,11 +2177,11 @@ snapshots:
     dependencies:
       '@types/json-schema': 7.0.15
 
-  '@eslint/core@1.1.0':
+  '@eslint/core@1.1.1':
     dependencies:
       '@types/json-schema': 7.0.15
 
-  '@eslint/eslintrc@3.3.4':
+  '@eslint/eslintrc@3.3.5':
     dependencies:
       ajv: 6.14.0
       debug: 4.4.3
@@ -2219,9 +2201,9 @@ snapshots:
 
   '@eslint/object-schema@2.1.7': {}
 
-  '@eslint/plugin-kit@0.6.0':
+  '@eslint/plugin-kit@0.6.1':
     dependencies:
-      '@eslint/core': 1.1.0
+      '@eslint/core': 1.1.1
       levn: 0.4.1
 
   '@floating-ui/core@1.7.5':
@@ -2465,7 +2447,7 @@ snapshots:
       '@types/cookie': 0.6.0
       acorn: 8.16.0
       cookie: 1.1.1
-      devalue: 5.6.3
+      devalue: 5.6.4
       esm-env: 1.2.2
       kleur: 4.1.5
       magic-string: 0.30.21
@@ -2709,7 +2691,7 @@ snapshots:
 
   detect-indent@6.1.0: {}
 
-  devalue@5.6.3: {}
+  devalue@5.6.4: {}
 
   devlop@1.1.0:
     dependencies:
@@ -2818,9 +2800,9 @@ snapshots:
       '@eslint-community/regexpp': 4.12.2
       '@eslint/config-array': 0.19.2
       '@eslint/core': 0.9.1
-      '@eslint/eslintrc': 3.3.4
+      '@eslint/eslintrc': 3.3.5
       '@eslint/js': 9.17.0
-      '@eslint/plugin-kit': 0.6.0
+      '@eslint/plugin-kit': 0.6.1
       '@humanfs/node': 0.16.7
       '@humanwhocodes/module-importer': 1.0.1
       '@humanwhocodes/retry': 0.4.3
@@ -2932,10 +2914,10 @@ snapshots:
 
   flat-cache@4.0.1:
     dependencies:
-      flatted: 3.3.4
+      flatted: 3.4.1
       keyv: 4.5.4
 
-  flatted@3.3.4: {}
+  flatted@3.4.1: {}
 
   fraction.js@5.3.4: {}
 
@@ -3378,7 +3360,7 @@ snapshots:
       lru-cache: 11.2.6
       minipass: 7.1.3
 
-  pdf-to-markdown-core@https://codeload.github.com/jzillmann/pdf-to-markdown/tar.gz/71b31c2fb5cd15fcb95810fc7aeccdd879e1fb6d:
+  pdf-to-markdown-core@https://codeload.github.com/jzillmann/pdf-to-markdown/tar.gz/5e930fafd305644cff00a3824030f0d6741acde8:
     dependencies:
       '@types/string-similarity': 4.0.2
       simple-statistics: 7.8.8
@@ -3756,7 +3738,7 @@ snapshots:
       aria-query: 5.3.1
       axobject-query: 4.1.0
       clsx: 2.1.1
-      devalue: 5.6.3
+      devalue: 5.6.4
       esm-env: 1.2.2
       esrap: 2.2.3
       is-reference: 3.0.3

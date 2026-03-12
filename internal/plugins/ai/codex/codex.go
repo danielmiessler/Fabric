@@ -16,6 +16,7 @@ import (
 	"os/exec"
 	"runtime"
 	"runtime/debug"
+	"slices"
 	"strings"
 	"sync"
 	"time"
@@ -1019,10 +1020,8 @@ func normalizeSemverLikeVersion(version string) string {
 	if len(parts) < 3 {
 		return ""
 	}
-	for _, part := range parts[:3] {
-		if part == "" {
-			return ""
-		}
+	if slices.Contains(parts[:3], "") {
+		return ""
 	}
 
 	return strings.Join(parts[:3], ".")

@@ -237,7 +237,7 @@ func TestMapRequestErrorReadsAPIErrorResponseBodyWhenRawJSONMissing(t *testing.T
 }
 
 func TestSendRefreshesAfterUnauthorized(t *testing.T) {
-	var responseCalls int32
+	var responseCalls atomic.Int32
 	var seenAuthHeaders []string
 	var requestBodies []string
 
@@ -266,7 +266,7 @@ func TestSendRefreshesAfterUnauthorized(t *testing.T) {
 			t.Fatalf("ReadAll(r.Body) error = %v", err)
 		}
 		requestBodies = append(requestBodies, string(body))
-		call := atomic.AddInt32(&responseCalls, 1)
+		call := responseCalls.Add(1)
 		if call == 1 {
 			http.Error(w, `{"error":{"message":"expired","code":"invalid_token"}}`, http.StatusUnauthorized)
 			return
@@ -328,8 +328,8 @@ func TestSendRefreshesAfterUnauthorized(t *testing.T) {
 	if message != "hello from codex" {
 		t.Fatalf("Send() = %q, want %q", message, "hello from codex")
 	}
-	if atomic.LoadInt32(&responseCalls) != 2 {
-		t.Fatalf("response call count = %d, want 2", atomic.LoadInt32(&responseCalls))
+	if responseCalls.Load() != 2 {
+		t.Fatalf("response call count = %d, want 2", responseCalls.Load())
 	}
 	if len(seenAuthHeaders) != 2 {
 		t.Fatalf("seenAuthHeaders length = %d, want 2", len(seenAuthHeaders))

@@ -368,6 +368,7 @@ Fabric supports a wide range of AI providers:
 **Native Integrations:**
 
 - OpenAI
+- OpenAI Codex (ChatGPT/Codex subscription OAuth via private backend)
 - Anthropic (Claude)
 - Google Gemini
 - Ollama (local models)

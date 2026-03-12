@@ -1,0 +1,4 @@
+### PR [#2056](https://github.com/danielmiessler/Fabric/pull/2056) by [mikaelpr](https://github.com/mikaelpr): feat: add Codex vendor with OpenAI OAuth
+
+- Feat: add Codex vendor with OpenAI OAuth
+- Fix: surface Codex backend error details

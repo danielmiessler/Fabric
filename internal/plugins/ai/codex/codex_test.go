@@ -17,6 +17,7 @@ import (
 
 	"github.com/danielmiessler/fabric/internal/chat"
 	"github.com/danielmiessler/fabric/internal/domain"
+	openaiapi "github.com/openai/openai-go"
 	"github.com/openai/openai-go/shared/constant"
 )
 
@@ -198,6 +199,40 @@ func TestNormalizeSemverLikeVersion(t *testing.T) {
 		if got := normalizeSemverLikeVersion(input); got != want {
 			t.Fatalf("normalizeSemverLikeVersion(%q) = %q, want %q", input, got, want)
 		}
+	}
+}
+
+func TestMapRequestErrorPreservesCodexAPIErrorMessage(t *testing.T) {
+	client := NewClient()
+	apiErr := &openaiapi.Error{StatusCode: http.StatusBadRequest}
+	if err := apiErr.UnmarshalJSON([]byte(`{"message":"The requested model is not supported.","type":"invalid_request_error","param":"model","code":"invalid_value"}`)); err != nil {
+		t.Fatalf("apiErr.UnmarshalJSON() error = %v", err)
+	}
+
+	err := client.mapRequestError(apiErr)
+	if err == nil {
+		t.Fatal("mapRequestError() returned nil")
+	}
+	if got := err.Error(); got != "The requested model is not supported." {
+		t.Fatalf("mapRequestError() = %q, want %q", got, "The requested model is not supported.")
+	}
+}
+
+func TestMapRequestErrorReadsAPIErrorResponseBodyWhenRawJSONMissing(t *testing.T) {
+	client := NewClient()
+	apiErr := &openaiapi.Error{
+		StatusCode: http.StatusBadRequest,
+		Response: &http.Response{
+			Body: io.NopCloser(strings.NewReader(`{"detail":"The requested model is not supported for Codex."}`)),
+		},
+	}
+
+	err := client.mapRequestError(apiErr)
+	if err == nil {
+		t.Fatal("mapRequestError() returned nil")
+	}
+	if got := err.Error(); got != "The requested model is not supported for Codex." {
+		t.Fatalf("mapRequestError() = %q, want %q", got, "The requested model is not supported for Codex.")
 	}
 }
 

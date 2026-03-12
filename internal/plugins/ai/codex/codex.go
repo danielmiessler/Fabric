@@ -724,6 +724,15 @@ func (c *Client) mapRequestError(err error) error {
 		return nil
 	}
 
+	var apiErr *openaiapi.Error
+	if errors.As(err, &apiErr) {
+		body := []byte(apiErr.RawJSON())
+		if len(body) == 0 {
+			body = readAPIErrorBody(apiErr)
+		}
+		return c.errorFromHTTPResponse(apiErr.StatusCode, body)
+	}
+
 	message := err.Error()
 	lower := strings.ToLower(message)
 
@@ -738,6 +747,19 @@ func (c *Client) mapRequestError(err error) error {
 	default:
 		return err
 	}
+}
+
+func readAPIErrorBody(apiErr *openaiapi.Error) []byte {
+	if apiErr == nil || apiErr.Response == nil || apiErr.Response.Body == nil {
+		return nil
+	}
+
+	body, err := io.ReadAll(apiErr.Response.Body)
+	if err != nil {
+		return nil
+	}
+	apiErr.Response.Body = io.NopCloser(strings.NewReader(string(body)))
+	return body
 }
 
 func (t *authTransport) RoundTrip(req *http.Request) (*http.Response, error) {
@@ -929,6 +951,9 @@ func extractErrorMessage(body []byte) string {
 
 	if message, ok := payload["message"].(string); ok {
 		return strings.TrimSpace(message)
+	}
+	if detail, ok := payload["detail"].(string); ok {
+		return strings.TrimSpace(detail)
 	}
 
 	return strings.TrimSpace(string(body))

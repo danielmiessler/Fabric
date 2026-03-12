@@ -1,5 +1,23 @@
 # Changelog
 
+## v1.4.434 (2026-03-09)
+
+### PR [#2052](https://github.com/danielmiessler/Fabric/pull/2052) by [praxstack](https://github.com/praxstack) and [ksylvan](https://github.com/ksylvan): feat(bedrock): dynamic region fetching and AWS_PROFILE conflict fix
+
+- Added dynamic Bedrock region fetching from `botocore`'s `endpoints.json`, expanding support to 40+ regions instead of a hardcoded list of 6, with a static fallback on error.
+- Fixed `AWS_PROFILE` environment variable conflict that caused `'failed to get shared config profile'` errors for users who had `AWS_PROFILE` set for other tools (e.g., Terraform, AWS CLI) while using explicit access keys or static credentials.
+- Improved empty auth choice handling to gracefully skip the selection instead of throwing an error.
+
+## v1.4.433 (2026-03-07)
+
+### PR [#2054](https://github.com/danielmiessler/Fabric/pull/2054) by [pretyflaco](https://github.com/pretyflaco): fix(ollama): Map thinking levels to Ollama API and convert single system-role messages
+
+- Fix(ollama): map thinking levels and convert single system-role messages
+
+### Direct commits
+
+- Fix: Manual edit of changelog.db and fixes for ChangeLog
+
 ## v1.4.432 (2026-03-06)
 
 ### PR [#2050](https://github.com/danielmiessler/Fabric/pull/2050) by [ksylvan](https://github.com/ksylvan): Update web dependencies - fix npm override issue
@@ -86,7 +104,7 @@
 
 ## v1.4.424 (2026-02-27)
 
-### PR [#2025](https://github.com/danielmiessler/Fabric/pull/2025) by [dependabot]](https://github.com/apps/dependabot): chore(deps): bump the npm_and_yarn group across 1 directory with 5 updates
+### PR [#2025](https://github.com/danielmiessler/Fabric/pull/2025) by [dependabot](https://github.com/apps/dependabot): chore(deps): bump the npm_and_yarn group across 1 directory with 5 updates
 
 - Updated `@sveltejs/kit` from version 2.49.5 to 2.53.1 in the `/web` directory.
 - Updated `svelte` from version 4.2.20 to 5.51.5 in the `/web` directory.
@@ -284,16 +302,22 @@
 
 - MAESTRO: i18n: extract hard-coded strings from internal/tools/spotify/spotify.go
 Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
+
 - MAESTRO: i18n: extract hard-coded strings from internal/plugins/template/extension_executor.go
 Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
+
 - MAESTRO: i18n: extract hard-coded strings from internal/plugins/ai/openai/openai.go
 Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
+
 - MAESTRO: i18n: extract hard-coded strings from internal/plugins/template/extension_registry.go
 Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
+
 - MAESTRO: i18n: extract hard-coded strings from internal/plugins/ai/lmstudio/lmstudio.go
 Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
+
 - MAESTRO: i18n: extract hard-coded strings from internal/plugins/template/extension_manager.go
 Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
+
 - MAESTRO: i18n: extract hard-coded strings from internal/server/ollama.go
 Replace 37 hard-coded error/log strings with i18n.T() calls and add
 translations for all 10 supported languages (en, de, es, fa, fr, it,
@@ -456,9 +480,9 @@ Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
 - Add extract_all_quotes pattern for quote extraction
 - The extract_all_quotes is originally from [PR #176](https://github.com/danielmiessler/Fabric/pull/176) by [@CPAtoCybersecurity](https://github.com/CPAtoCybersecurity)
 - The `suggest_pattern` pattern is updated with the following additions.
-  - extract_bd_ideas for actionable idea extraction
-  - suggest_gt_command for GT command suggestions
-  - create_bd_issue for issue tracking commands
+- extract_bd_ideas for actionable idea extraction
+- suggest_gt_command for GT command suggestions
+- create_bd_issue for issue tracking commands
 
 ## v1.4.391 (2026-01-24)
 

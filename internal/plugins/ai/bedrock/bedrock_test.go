@@ -2,11 +2,14 @@ package bedrock
 
 import (
 	"context"
+	"fmt"
 	"net/http"
+	"net/http/httptest"
 	"testing"
 
 	"github.com/danielmiessler/fabric/internal/chat"
 	"github.com/danielmiessler/fabric/internal/domain"
+	"github.com/danielmiessler/fabric/internal/i18n"
 
 	"github.com/aws/aws-sdk-go-v2/service/bedrockruntime/types"
 	"github.com/stretchr/testify/assert"
@@ -70,6 +73,7 @@ func TestConfigure_InvalidRegion_ReturnsError(t *testing.T) {
 }
 
 func TestConfigure_ValidRegion_BearerToken(t *testing.T) {
+	t.Setenv("AWS_PROFILE", "")
 	client := NewClient()
 	client.bedrockRegion.Value = "us-east-1"
 	client.bedrockAPIKey.Value = "test-absk-token"
@@ -83,6 +87,7 @@ func TestConfigure_ValidRegion_BearerToken(t *testing.T) {
 }
 
 func TestConfigure_ValidRegion_StaticCredentials(t *testing.T) {
+	t.Setenv("AWS_PROFILE", "")
 	client := NewClient()
 	client.bedrockRegion.Value = "us-west-2"
 	client.bedrockAccessKey.Value = "AKIAIOSFODNN7EXAMPLE"
@@ -96,6 +101,7 @@ func TestConfigure_ValidRegion_StaticCredentials(t *testing.T) {
 }
 
 func TestConfigure_ValidRegion_DefaultChain(t *testing.T) {
+	t.Setenv("AWS_PROFILE", "")
 	client := NewClient()
 	client.bedrockRegion.Value = "eu-west-1"
 	// No API key, no access key — should fall back to default credential chain
@@ -108,6 +114,7 @@ func TestConfigure_ValidRegion_DefaultChain(t *testing.T) {
 }
 
 func TestConfigure_BearerTokenPriority(t *testing.T) {
+	t.Setenv("AWS_PROFILE", "")
 	// If both API key and access key are provided, API key (bearer) should win
 	client := NewClient()
 	client.bedrockRegion.Value = "us-east-1"
@@ -222,7 +229,7 @@ func TestSendStream_NilClient_ReturnsError(t *testing.T) {
 
 	err := client.SendStream(nil, opts, ch)
 	assert.Error(t, err, "SendStream should return error when client is nil")
-	assert.Error(t, err)
+	assert.Contains(t, err.Error(), i18n.T("bedrock_client_not_initialized"))
 }
 
 func TestSend_NilClient_ReturnsError(t *testing.T) {
@@ -232,7 +239,7 @@ func TestSend_NilClient_ReturnsError(t *testing.T) {
 	opts := &domain.ChatOptions{Model: "test-model"}
 	_, err := client.Send(context.Background(), nil, opts)
 	assert.Error(t, err, "Send should return error when client is nil")
-	assert.Error(t, err)
+	assert.Contains(t, err.Error(), i18n.T("bedrock_client_not_initialized"))
 }
 
 func TestMaskSecret(t *testing.T) {
@@ -321,6 +328,112 @@ func TestToMessages_Empty(t *testing.T) {
 	client := NewClient()
 	result := client.toMessages(nil)
 	assert.Empty(t, result)
+}
+
+// --- fetchBedrockRegions mock HTTP tests ---
+
+// withMockEndpointsURL temporarily overrides the botocore endpoints URL for testing.
+// NOTE: Not safe with t.Parallel() — tests using this helper must run sequentially.
+func withMockEndpointsURL(url string, fn func()) {
+	orig := botocoreEndpointsURL
+	botocoreEndpointsURL = url
+	defer func() { botocoreEndpointsURL = orig }()
+	fn()
+}
+
+func TestFetchBedrockRegions_ValidJSON(t *testing.T) {
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprint(w, `{"partitions":[{"services":{"bedrock":{"endpoints":{"us-east-1":{},"eu-west-1":{},"ap-southeast-1":{},"bedrock-us-east-1":{"hostname":"x"}}}}}]}`)
+	}))
+	defer server.Close()
+
+	withMockEndpointsURL(server.URL, func() {
+		regions := fetchBedrockRegions()
+		assert.Contains(t, regions, "us-east-1")
+		assert.Contains(t, regions, "eu-west-1")
+		assert.Contains(t, regions, "ap-southeast-1")
+		// bedrock- prefixed should be filtered
+		for _, r := range regions {
+			assert.False(t, len(r) > 8 && r[:8] == "bedrock-", "should filter bedrock- prefix: %s", r)
+		}
+	})
+}
+
+func TestFetchBedrockRegions_HTTPError_ReturnsFallback(t *testing.T) {
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusInternalServerError)
+	}))
+	defer server.Close()
+
+	withMockEndpointsURL(server.URL, func() {
+		regions := fetchBedrockRegions()
+		assert.Equal(t, fallbackRegions, regions)
+	})
+}
+
+func TestFetchBedrockRegions_InvalidJSON_ReturnsFallback(t *testing.T) {
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprint(w, `{not valid json`)
+	}))
+	defer server.Close()
+
+	withMockEndpointsURL(server.URL, func() {
+		regions := fetchBedrockRegions()
+		assert.Equal(t, fallbackRegions, regions)
+	})
+}
+
+func TestFetchBedrockRegions_NoBedrock_ReturnsFallback(t *testing.T) {
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprint(w, `{"partitions":[{"services":{"s3":{"endpoints":{"us-east-1":{}}}}}]}`)
+	}))
+	defer server.Close()
+
+	withMockEndpointsURL(server.URL, func() {
+		regions := fetchBedrockRegions()
+		assert.Equal(t, fallbackRegions, regions)
+	})
+}
+
+func TestFetchBedrockRegions_Unreachable_ReturnsFallback(t *testing.T) {
+	withMockEndpointsURL("http://127.0.0.1:1", func() {
+		regions := fetchBedrockRegions()
+		assert.Equal(t, fallbackRegions, regions)
+	})
+}
+
+func TestFetchBedrockRegions_EmptyEndpoints_ReturnsFallback(t *testing.T) {
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprint(w, `{"partitions":[{"services":{"bedrock":{"endpoints":{}}}}]}`)
+	}))
+	defer server.Close()
+
+	withMockEndpointsURL(server.URL, func() {
+		regions := fetchBedrockRegions()
+		assert.Equal(t, fallbackRegions, regions)
+	})
+}
+
+func TestFetchBedrockRegions_ResultsSorted(t *testing.T) {
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprint(w, `{"partitions":[{"services":{"bedrock":{"endpoints":{"us-west-2":{},"ap-northeast-1":{},"eu-central-1":{}}}}}]}`)
+	}))
+	defer server.Close()
+
+	withMockEndpointsURL(server.URL, func() {
+		regions := fetchBedrockRegions()
+		require.Len(t, regions, 3)
+		assert.Equal(t, "ap-northeast-1", regions[0])
+		assert.Equal(t, "eu-central-1", regions[1])
+		assert.Equal(t, "us-west-2", regions[2])
+	})
+}
+
+func TestFallbackRegions_NotEmpty(t *testing.T) {
+	assert.NotEmpty(t, fallbackRegions)
+	for _, r := range fallbackRegions {
+		assert.True(t, isValidAWSRegion(r), "fallback region %q should be valid", r)
+	}
 }
 
 // roundTripFunc is a helper to create http.RoundTripper from a function

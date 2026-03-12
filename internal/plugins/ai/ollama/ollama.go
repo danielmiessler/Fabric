@@ -160,6 +160,14 @@ func (o *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, o
 }
 
 func (o *Client) createChatRequest(ctx context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions) (ret ollamaapi.ChatRequest, err error) {
+	// Some models (e.g. qwen3-coder, deepseek) return empty responses when
+	// the only message has role=system. Convert to role=user in that case.
+	if len(msgs) == 1 && msgs[0].Role == chat.ChatMessageRoleSystem {
+		copy := *msgs[0]
+		copy.Role = chat.ChatMessageRoleUser
+		msgs = []*chat.ChatCompletionMessage{&copy}
+	}
+
 	messages := make([]ollamaapi.Message, len(msgs))
 	for i, message := range msgs {
 		if messages[i], err = o.convertMessage(ctx, message); err != nil {
@@ -183,6 +191,15 @@ func (o *Client) createChatRequest(ctx context.Context, msgs []*chat.ChatComplet
 		Messages: messages,
 		Options:  options,
 	}
+
+	// Map Fabric's ThinkingLevel to Ollama's Think field
+	switch opts.Thinking {
+	case domain.ThinkingOff:
+		ret.Think = &ollamaapi.ThinkValue{Value: false}
+	case domain.ThinkingLow, domain.ThinkingMedium, domain.ThinkingHigh:
+		ret.Think = &ollamaapi.ThinkValue{Value: true}
+	}
+
 	return
 }
 

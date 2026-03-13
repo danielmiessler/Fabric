@@ -210,6 +210,20 @@ func TestExtractMessages_MultipleSystemsJoined(t *testing.T) {
 	}
 }
 
+func TestExtractMessages_SystemOnlyFallsBackToUserPrompt(t *testing.T) {
+	c := NewClient()
+	msgs := []*chat.ChatCompletionMessage{
+		{Role: chat.ChatMessageRoleSystem, Content: "pattern instructions with embedded input"},
+	}
+	system, userPrompt := c.extractMessages(msgs, &domain.ChatOptions{})
+	if system != "" {
+		t.Fatalf("expected system prompt to be cleared when used as fallback prompt, got %q", system)
+	}
+	if userPrompt != "pattern instructions with embedded input" {
+		t.Fatalf("expected fallback user prompt, got %q", userPrompt)
+	}
+}
+
 func TestBuildArgs_BaseFlags(t *testing.T) {
 	c := NewClient()
 	args := c.buildArgs(&domain.ChatOptions{}, "")
@@ -346,6 +360,39 @@ echo '{"delta":{"type":"text_delta","text":" world"}}'
 	got := strings.Join(parts, "")
 	if got != "Hello world" {
 		t.Fatalf("expected streamed content %q, got %q", "Hello world", got)
+	}
+}
+
+func TestSendStream_ParsesNestedStreamEvents(t *testing.T) {
+	script := writeFakeClaudeScript(t, `
+echo '{"type":"stream_event","event":{"type":"content_block_delta","delta":{"type":"text_delta","text":"streaming"}}}'
+echo '{"type":"stream_event","event":{"type":"content_block_delta","delta":{"type":"text_delta","text":"-ok"}}}'
+`)
+
+	c := NewClient()
+	c.BinaryPath.Value = script
+
+	msgs := []*chat.ChatCompletionMessage{{
+		Role:    chat.ChatMessageRoleUser,
+		Content: "hello",
+	}}
+
+	ch := make(chan domain.StreamUpdate, 8)
+	err := c.SendStream(msgs, &domain.ChatOptions{}, ch)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+
+	var parts []string
+	for u := range ch {
+		if u.Type == domain.StreamTypeContent {
+			parts = append(parts, u.Content)
+		}
+	}
+
+	got := strings.Join(parts, "")
+	if got != "streaming-ok" {
+		t.Fatalf("expected streamed content %q, got %q", "streaming-ok", got)
 	}
 }
 

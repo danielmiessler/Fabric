@@ -33,6 +33,13 @@ type streamEvent struct {
 		Type string `json:"type"`
 		Text string `json:"text"`
 	} `json:"delta"`
+	Event *struct {
+		Type  string `json:"type"`
+		Delta *struct {
+			Type string `json:"type"`
+			Text string `json:"text"`
+		} `json:"delta"`
+	} `json:"event"`
 }
 
 type Client struct {
@@ -113,6 +120,12 @@ func (c *Client) extractMessages(msgs []*chat.ChatCompletionMessage, opts *domai
 
 	system = strings.Join(systemParts, "\n\n")
 	userPrompt = strings.Join(conversationParts, "\n\n")
+	if userPrompt == "" && system != "" {
+		// Fabric patterns can inline the user input into a single system message.
+		// Claude still needs a prompt argument, so fall back to that composed text.
+		userPrompt = system
+		system = ""
+	}
 	if opts.ImageFile != "" {
 		userPrompt += "\n\nPlease read and analyze the image at: " + opts.ImageFile
 	}
@@ -218,21 +231,24 @@ func (c *Client) SendStream(msgs []*chat.ChatCompletionMessage, opts *domain.Cha
 	}
 
 	scanner := bufio.NewScanner(stdout)
+	scanner.Buffer(make([]byte, 0, 64*1024), 1024*1024)
 	for scanner.Scan() {
 		line := strings.TrimSpace(scanner.Text())
 		if line == "" {
 			continue
 		}
-		var event streamEvent
-		if err = json.Unmarshal([]byte(line), &event); err != nil {
+		text, ok := parseStreamDelta(line)
+		if !ok {
 			continue
 		}
-		if event.Delta != nil && event.Delta.Type == "text_delta" && event.Delta.Text != "" {
-			channel <- domain.StreamUpdate{
-				Type:    domain.StreamTypeContent,
-				Content: event.Delta.Text,
-			}
+		channel <- domain.StreamUpdate{
+			Type:    domain.StreamTypeContent,
+			Content: text,
 		}
+	}
+
+	if err = scanner.Err(); err != nil {
+		return fmt.Errorf("claude: scan stdout: %w", err)
 	}
 
 	if err = cmd.Wait(); err != nil {
@@ -244,6 +260,22 @@ func (c *Client) SendStream(msgs []*chat.ChatCompletionMessage, opts *domain.Cha
 
 func (c *Client) NeedsRawMode(_ string) bool {
 	return false
+}
+
+func parseStreamDelta(line string) (string, bool) {
+	var event streamEvent
+	if err := json.Unmarshal([]byte(line), &event); err != nil {
+		return "", false
+	}
+
+	if event.Delta != nil && event.Delta.Type == "text_delta" && event.Delta.Text != "" {
+		return event.Delta.Text, true
+	}
+	if event.Event != nil && event.Event.Delta != nil && event.Event.Delta.Type == "text_delta" && event.Event.Delta.Text != "" {
+		return event.Event.Delta.Text, true
+	}
+
+	return "", false
 }
 
 // cleanEnv returns os.Environ() with select variables removed so the Claude

@@ -4,7 +4,10 @@ import (
 	"bytes"
 	"context"
 	"errors"
+	"os"
+	"path/filepath"
 	"testing"
+	"time"
 
 	"github.com/danielmiessler/fabric/internal/chat"
 	"github.com/danielmiessler/fabric/internal/domain"
@@ -113,6 +116,76 @@ func TestChatter_Send_SuppressThink(t *testing.T) {
 	}
 }
 
+func TestChatter_BuildSession_SeparatesSystemSections(t *testing.T) {
+	tempDir := t.TempDir()
+	db := fsdb.NewDb(tempDir)
+
+	if err := os.MkdirAll(filepath.Join(db.Patterns.Dir, "test-pattern"), 0o755); err != nil {
+		t.Fatalf("failed to create pattern directory: %v", err)
+	}
+	if err := os.MkdirAll(db.Contexts.Dir, 0o755); err != nil {
+		t.Fatalf("failed to create context directory: %v", err)
+	}
+
+	patternPath := filepath.Join(db.Patterns.Dir, "test-pattern", "system.md")
+	if err := os.WriteFile(patternPath, []byte("PATTERN"), 0o644); err != nil {
+		t.Fatalf("failed to write pattern: %v", err)
+	}
+
+	contextPath := filepath.Join(db.Contexts.Dir, "test-context")
+	if err := os.WriteFile(contextPath, []byte("CONTEXT"), 0o644); err != nil {
+		t.Fatalf("failed to write context: %v", err)
+	}
+
+	homeDir := t.TempDir()
+	t.Setenv("HOME", homeDir)
+
+	strategyDir := filepath.Join(homeDir, ".config", "fabric", "strategies")
+	if err := os.MkdirAll(strategyDir, 0o755); err != nil {
+		t.Fatalf("failed to create strategy directory: %v", err)
+	}
+
+	strategyPath := filepath.Join(strategyDir, "test-strategy.json")
+	if err := os.WriteFile(strategyPath, []byte(`{"prompt":"STRATEGY"}`), 0o644); err != nil {
+		t.Fatalf("failed to write strategy: %v", err)
+	}
+
+	chatter := &Chatter{db: db}
+	request := &domain.ChatRequest{
+		ContextName:  "test-context",
+		PatternName:  "test-pattern",
+		StrategyName: "test-strategy",
+		Message: &chat.ChatCompletionMessage{
+			Role:    chat.ChatMessageRoleUser,
+			Content: "user input",
+		},
+	}
+
+	session, err := chatter.BuildSession(request, false)
+	if err != nil {
+		t.Fatalf("BuildSession returned error: %v", err)
+	}
+
+	messages := session.GetVendorMessages()
+	if len(messages) != 1 {
+		t.Fatalf("expected 1 vendor message, got %d", len(messages))
+	}
+
+	systemMessage := messages[0]
+	if systemMessage.Role != chat.ChatMessageRoleSystem {
+		t.Fatalf("expected first message to be system, got %s", systemMessage.Role)
+	}
+
+	expectedSystemMessage := "STRATEGY\nCONTEXT\nPATTERN\nuser input"
+	if systemMessage.Content != expectedSystemMessage {
+		t.Fatalf("expected system message %q, got %q", expectedSystemMessage, systemMessage.Content)
+	}
+
+	if request.Message.Content != "user input" {
+		t.Fatalf("expected request user input to remain unchanged, got %q", request.Message.Content)
+	}
+}
+
 func TestChatter_Send_StreamingErrorPropagation(t *testing.T) {
 	// Create a temporary database for testing
 	tempDir := t.TempDir()
@@ -160,6 +233,63 @@ func TestChatter_Send_StreamingErrorPropagation(t *testing.T) {
 	// Session should still be returned (it was built successfully before the streaming error)
 	if session == nil {
 		t.Error("Expected session to be returned even when streaming error occurs")
+	}
+}
+
+func TestChatter_Send_StreamingErrorUpdateAndReturnDoesNotDeadlock(t *testing.T) {
+	tempDir := t.TempDir()
+	db := fsdb.NewDb(tempDir)
+
+	expectedError := errors.New("streaming error")
+	mockVendor := &mockVendor{
+		sendStreamError: expectedError,
+		streamChunks: []domain.StreamUpdate{
+			{
+				Type:    domain.StreamTypeError,
+				Content: "stream update error",
+			},
+		},
+	}
+
+	chatter := &Chatter{
+		db:     db,
+		Stream: true,
+		vendor: mockVendor,
+		model:  "test-model",
+	}
+
+	request := &domain.ChatRequest{
+		Message: &chat.ChatCompletionMessage{
+			Role:    chat.ChatMessageRoleUser,
+			Content: "test message",
+		},
+	}
+
+	opts := &domain.ChatOptions{
+		Model: "test-model",
+	}
+
+	type sendResult struct {
+		session *fsdb.Session
+		err     error
+	}
+
+	done := make(chan sendResult, 1)
+	go func() {
+		session, err := chatter.Send(request, opts)
+		done <- sendResult{session: session, err: err}
+	}()
+
+	select {
+	case result := <-done:
+		if result.err == nil {
+			t.Fatal("expected streaming error, got nil")
+		}
+		if result.session == nil {
+			t.Fatal("expected session to be returned")
+		}
+	case <-time.After(2 * time.Second):
+		t.Fatal("Send deadlocked when stream emitted an error update and returned an error")
 	}
 }
 

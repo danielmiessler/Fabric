@@ -5,8 +5,6 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"os"
-	"path/filepath"
 	"strings"
 
 	"github.com/danielmiessler/fabric/internal/chat"
@@ -106,39 +104,21 @@ func (h *ChatHandler) HandleChat(c *gin.Context) {
 			go func(p PromptRequest) {
 				defer close(streamChan)
 
-				// Load and prepend strategy prompt if strategyName is set
-				if p.StrategyName != "" {
-					strategyFile := filepath.Join(os.Getenv("HOME"), ".config", "fabric", "strategies", p.StrategyName+".json")
-					data, err := os.ReadFile(strategyFile)
-					if err == nil {
-						var s struct {
-							Prompt string `json:"prompt"`
-						}
-						if err := json.Unmarshal(data, &s); err == nil && s.Prompt != "" {
-							p.UserInput = s.Prompt + "\n" + p.UserInput
-						}
-					}
-				}
-
-				chatter, err := h.registry.GetChatter(p.Model, request.ModelContextLength, p.Vendor, "", true, false)
+				chatter, err := h.registry.GetChatter(
+					p.Model,
+					request.ModelContextLength,
+					p.Vendor,
+					p.StrategyName,
+					true,
+					false,
+				)
 				if err != nil {
 					log.Printf("Error creating chatter: %v", err)
 					streamChan <- domain.StreamUpdate{Type: domain.StreamTypeError, Content: fmt.Sprintf(i18n.T("server_chat_error"), err)}
 					return
 				}
 
-				// Pass the language received in the initial request to the domain.ChatRequest
-				chatReq := &domain.ChatRequest{
-					Message: &chat.ChatCompletionMessage{
-						Role:    "user",
-						Content: p.UserInput,
-					},
-					PatternName:      p.PatternName,
-					ContextName:      p.ContextName,
-					SessionName:      p.SessionName,    // Pass session name for multi-turn conversations
-					PatternVariables: p.Variables,      // Pass pattern variables
-					Language:         request.Language, // Pass the language field
-				}
+				chatReq := buildPromptChatRequest(p, request.Language)
 
 				opts := &domain.ChatOptions{
 					Model:            p.Model,
@@ -204,6 +184,21 @@ func (h *ChatHandler) HandleChat(c *gin.Context) {
 				return
 			}
 		}
+	}
+}
+
+func buildPromptChatRequest(p PromptRequest, language string) *domain.ChatRequest {
+	return &domain.ChatRequest{
+		Message: &chat.ChatCompletionMessage{
+			Role:    chat.ChatMessageRoleUser,
+			Content: p.UserInput,
+		},
+		PatternName:      p.PatternName,
+		ContextName:      p.ContextName,
+		SessionName:      p.SessionName,
+		PatternVariables: p.Variables,
+		StrategyName:     p.StrategyName,
+		Language:         language,
 	}
 }
 

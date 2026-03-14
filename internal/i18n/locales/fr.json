@@ -607,6 +607,7 @@
   "strategies_none_found": "aucune stratégie trouvée. Exécutez 'fabric --setup' pour télécharger les stratégies",
   "strategies_setup_description": "Stratégies - Télécharge des stratégies de prompting (comme chain of thought)",
   "strategy_not_found": "stratégie %s introuvable. Exécutez 'fabric --liststrategies' pour voir la liste",
+  "strategy_path_traversal": "le nom de stratégie %q se résout en dehors du répertoire des stratégies",
   "stream_help": "Streaming",
   "suppress_thinking_tags": "Supprimer le texte encadré par les balises de réflexion",
   "template_datetime_error_invalid_number": "invalid number in relative time: %q",

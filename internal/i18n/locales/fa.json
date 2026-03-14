@@ -607,6 +607,7 @@
   "strategies_none_found": "هیچ راهبردی پیدا نشد. برای دانلود راهبردها 'fabric --setup' را اجرا کنید",
   "strategies_setup_description": "راهبردها - دانلود راهبردهای پرامپت (مثل chain of thought)",
   "strategy_not_found": "راهبرد %s یافت نشد. برای مشاهده فهرست 'fabric --liststrategies' را اجرا کنید",
+  "strategy_path_traversal": "نام راهبرد %q خارج از دایرکتوری راهبردها حل می‌شود",
   "stream_help": "پخش زنده",
   "suppress_thinking_tags": "سرکوب متن محصور در تگ‌های تفکر",
   "template_datetime_error_invalid_number": "invalid number in relative time: %q",

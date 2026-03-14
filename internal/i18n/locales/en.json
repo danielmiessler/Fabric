@@ -607,6 +607,7 @@
   "strategies_none_found": "no strategies found. Please run 'fabric --setup' to download strategies",
   "strategies_setup_description": "Strategies - Downloads Prompting Strategies (like chain of thought)",
   "strategy_not_found": "strategy %s not found. Please run 'fabric --liststrategies' for list",
+  "strategy_path_traversal": "strategy name %q resolves outside the strategy directory",
   "stream_help": "Stream",
   "suppress_thinking_tags": "Suppress text enclosed in thinking tags",
   "template_datetime_error_invalid_number": "invalid number in relative time: %q",

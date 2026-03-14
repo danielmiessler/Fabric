@@ -607,6 +607,7 @@
   "strategies_none_found": "nie znaleziono strategii. Uruchom 'fabric --setup', aby pobrać strategie",
   "strategies_setup_description": "Strategie - Pobiera strategie promptowania (np. chain of thought)",
   "strategy_not_found": "strategia %s nie została znaleziona. Uruchom 'fabric --liststrategies', aby wyświetlić listę",
+  "strategy_path_traversal": "nazwa strategii %q wskazuje poza katalog strategii",
   "stream_help": "Strumieniuj",
   "suppress_thinking_tags": "Pomiń tekst zawarty w tagach myślenia",
   "template_datetime_error_invalid_number": "nieprawidłowa liczba w czasie względnym: %q",

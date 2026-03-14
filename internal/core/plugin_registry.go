@@ -474,7 +474,7 @@ func (o *PluginRegistry) Configure() (err error) {
 	return
 }
 
-func (o *PluginRegistry) GetChatter(model string, modelContextLength int, vendorName string, strategy string, stream bool, dryRun bool) (ret *Chatter, err error) {
+func (o *PluginRegistry) GetChatter(model string, modelContextLength int, vendorName string, stream bool, dryRun bool) (ret *Chatter, err error) {
 	ret = &Chatter{
 		db:     o.Db,
 		Stream: stream,
@@ -561,6 +561,5 @@ func (o *PluginRegistry) GetChatter(model string, modelContextLength int, vendor
 			model, defaultModel, defaultVendor, errMsg)
 		return
 	}
-	ret.strategy = strategy
 	return
 }

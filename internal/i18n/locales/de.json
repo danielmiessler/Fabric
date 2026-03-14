@@ -607,6 +607,7 @@
   "strategies_none_found": "Keine Strategien gefunden. Führen Sie 'fabric --setup' aus, um Strategien herunterzuladen",
   "strategies_setup_description": "Strategien – lädt Prompt-Strategien herunter (z. B. Chain of Thought)",
   "strategy_not_found": "Strategie %s nicht gefunden. Führen Sie 'fabric --liststrategies' aus, um eine Liste zu erhalten",
+  "strategy_path_traversal": "Strategiename %q löst sich außerhalb des Strategieverzeichnisses auf",
   "stream_help": "Streaming",
   "suppress_thinking_tags": "In Denk-Tags eingeschlossenen Text unterdrücken",
   "template_datetime_error_invalid_number": "invalid number in relative time: %q",

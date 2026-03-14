@@ -37,7 +37,7 @@ func handleChatProcessing(currentFlags *Flags, registry *core.PluginRegistry, me
 
 	var chatter *core.Chatter
 	if chatter, err = registry.GetChatter(currentFlags.Model, currentFlags.ModelContextLength,
-		currentFlags.Vendor, currentFlags.Strategy, currentFlags.Stream, currentFlags.DryRun); err != nil {
+		currentFlags.Vendor, currentFlags.Stream, currentFlags.DryRun); err != nil {
 		return
 	}
 

@@ -607,6 +607,7 @@
   "strategies_none_found": "戦略が見つかりません。'fabric --setup' を実行して戦略をダウンロードしてください",
   "strategies_setup_description": "戦略 - プロンプト戦略（chain of thought など）をダウンロード",
   "strategy_not_found": "戦略 %s が見つかりません。'fabric --liststrategies' を実行して一覧を確認してください",
+  "strategy_path_traversal": "戦略名 %q が戦略ディレクトリの外部に解決されます",
   "stream_help": "ストリーミング",
   "suppress_thinking_tags": "思考タグで囲まれたテキストを抑制",
   "template_datetime_error_invalid_number": "invalid number in relative time: %q",

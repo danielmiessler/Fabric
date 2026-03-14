@@ -607,6 +607,7 @@
   "strategies_none_found": "未找到任何策略。请运行 'fabric --setup' 下载策略",
   "strategies_setup_description": "策略 - 下载提示策略（如 chain of thought）",
   "strategy_not_found": "未找到策略 %s。运行 'fabric --liststrategies' 查看列表",
+  "strategy_path_traversal": "策略名称 %q 解析到策略目录之外",
   "stream_help": "流式传输",
   "suppress_thinking_tags": "抑制包含在思考标签中的文本",
   "template_datetime_error_invalid_number": "invalid number in relative time: %q",

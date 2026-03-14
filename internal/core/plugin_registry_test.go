@@ -80,7 +80,7 @@ func TestGetChatter_WarnsOnAmbiguousModel(t *testing.T) {
 		debuglog.SetOutput(oldStderr)
 	}()
 
-	chatter, err := registry.GetChatter("shared-model", 0, "", "", false, false)
+	chatter, err := registry.GetChatter("shared-model", 0, "", false, false)
 	w.Close()
 	warning, _ := io.ReadAll(r)
 
@@ -115,7 +115,7 @@ func TestGetChatter_AllowsExplicitCodexManualModel(t *testing.T) {
 
 	registry := &PluginRegistry{Db: db, VendorManager: vm, Defaults: defaults}
 
-	chatter, err := registry.GetChatter("gpt-5.1-codex", 0, "Codex", "", false, false)
+	chatter, err := registry.GetChatter("gpt-5.1-codex", 0, "Codex", false, false)
 	if err != nil {
 		t.Fatalf("GetChatter() error = %v", err)
 	}
@@ -146,7 +146,7 @@ func TestGetChatter_RejectsExplicitCodexModelFromOtherVendor(t *testing.T) {
 
 	registry := &PluginRegistry{Db: db, VendorManager: vm, Defaults: defaults}
 
-	if _, err := registry.GetChatter("claude-3.7-sonnet", 0, "Codex", "", false, false); err == nil {
+	if _, err := registry.GetChatter("claude-3.7-sonnet", 0, "Codex", false, false); err == nil {
 		t.Fatal("expected GetChatter() to reject models that only belong to another vendor")
 	}
 }

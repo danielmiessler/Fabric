@@ -607,6 +607,7 @@
   "strategies_none_found": "no se encontraron estrategias. Ejecuta 'fabric --setup' para descargar estrategias",
   "strategies_setup_description": "Estrategias - Descarga estrategias de prompting (como chain of thought)",
   "strategy_not_found": "estrategia %s no encontrada. Ejecuta 'fabric --liststrategies' para ver la lista",
+  "strategy_path_traversal": "el nombre de estrategia %q se resuelve fuera del directorio de estrategias",
   "stream_help": "Transmitir",
   "suppress_thinking_tags": "Suprimir texto encerrado en etiquetas de pensamiento",
   "template_datetime_error_invalid_number": "invalid number in relative time: %q",

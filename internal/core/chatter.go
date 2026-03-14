@@ -27,7 +27,33 @@ type Chatter struct {
 	model              string
 	modelContextLength int
 	vendor             ai.Vendor
-	strategy           string
+}
+
+// recordFirstStreamError sends err to errChan if the channel is empty; subsequent errors are discarded.
+func recordFirstStreamError(errChan chan error, err error) {
+	if err == nil {
+		return
+	}
+
+	select {
+	case errChan <- err:
+	default:
+		// Second+ error discarded; log for observability
+		debuglog.Debug(debuglog.Wire, "additional stream error discarded: %v\n", err)
+	}
+}
+
+// joinPromptSections trims each part, drops empty ones, and joins the rest with newline separators.
+func joinPromptSections(parts ...string) string {
+	sections := make([]string, 0, len(parts))
+	for _, part := range parts {
+		trimmed := strings.TrimSpace(part)
+		if trimmed != "" {
+			sections = append(sections, trimmed)
+		}
+	}
+
+	return strings.Join(sections, "\n")
 }
 
 // Send processes a chat request and applies file changes for create_coding_feature pattern
@@ -82,7 +108,7 @@ func (o *Chatter) Send(request *domain.ChatRequest, opts *domain.ChatOptions) (s
 		go func() {
 			defer close(done)
 			if streamErr := o.vendor.SendStream(session.GetVendorMessages(), opts, responseChan); streamErr != nil {
-				errChan <- streamErr
+				recordFirstStreamError(errChan, streamErr)
 			}
 		}()
 
@@ -120,7 +146,7 @@ func (o *Chatter) Send(request *domain.ChatRequest, opts *domain.ChatOptions) (s
 				if !opts.Quiet {
 					fmt.Fprintf(os.Stderr, "%s\n", fmt.Sprintf(i18n.T("chatter_error_stream_update"), update.Content))
 				}
-				errChan <- errors.New(update.Content)
+				recordFirstStreamError(errChan, errors.New(update.Content))
 			}
 		}
 
@@ -251,7 +277,7 @@ func (o *Chatter) BuildSession(request *domain.ChatRequest, raw bool) (session *
 		inputUsed = true
 	}
 
-	systemMessage := strings.TrimSpace(contextContent) + strings.TrimSpace(patternContent)
+	systemMessage := joinPromptSections(contextContent, patternContent)
 
 	if request.StrategyName != "" {
 		strategy, err := strategy.LoadStrategy(request.StrategyName)
@@ -259,8 +285,7 @@ func (o *Chatter) BuildSession(request *domain.ChatRequest, raw bool) (session *
 			return nil, fmt.Errorf(i18n.T("chatter_error_load_strategy"), request.StrategyName, err)
 		}
 		if strategy != nil && strategy.Prompt != "" {
-			// prepend the strategy prompt to the system message
-			systemMessage = fmt.Sprintf("%s\n%s", strategy.Prompt, systemMessage)
+			systemMessage = joinPromptSections(strategy.Prompt, systemMessage)
 		}
 	}
 

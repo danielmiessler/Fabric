@@ -607,6 +607,7 @@
   "strategies_none_found": "nenhuma estratégia encontrada. Execute 'fabric --setup' para transferir estratégias",
   "strategies_setup_description": "Estratégias - Transfere estratégias de prompting (como chain of thought)",
   "strategy_not_found": "estratégia %s não encontrada. Execute 'fabric --liststrategies' para ver a lista",
+  "strategy_path_traversal": "o nome da estratégia %q resolve fora do diretório de estratégias",
   "stream_help": "Streaming",
   "suppress_thinking_tags": "Suprimir texto contido em tags de pensamento",
   "template_datetime_error_invalid_number": "invalid number in relative time: %q",

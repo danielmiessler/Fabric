@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"slices"
 	"strings"
 	"testing"
 
@@ -227,10 +228,10 @@ func TestExtractMessages_SystemOnlyFallsBackToUserPrompt(t *testing.T) {
 func TestBuildArgs_BaseFlags(t *testing.T) {
 	c := NewClient()
 	args := c.buildArgs(&domain.ChatOptions{}, "")
-	if !contains(args, "--print") {
+	if !slices.Contains(args, "--print") {
 		t.Error("expected --print flag")
 	}
-	if !contains(args, "--no-session-persistence") {
+	if !slices.Contains(args, "--no-session-persistence") {
 		t.Error("expected --no-session-persistence flag")
 	}
 }
@@ -254,7 +255,7 @@ func TestBuildArgs_WithSystemPrompt(t *testing.T) {
 func TestBuildArgs_NoSystemPromptWhenEmpty(t *testing.T) {
 	c := NewClient()
 	args := c.buildArgs(&domain.ChatOptions{}, "")
-	if contains(args, "--system-prompt") {
+	if slices.Contains(args, "--system-prompt") {
 		t.Error("expected no --system-prompt when system is empty")
 	}
 }
@@ -280,7 +281,7 @@ func TestBuildArgs_ThinkingLevels(t *testing.T) {
 func TestBuildArgs_ThinkingOffOmitsEffort(t *testing.T) {
 	c := NewClient()
 	args := c.buildArgs(&domain.ChatOptions{Thinking: domain.ThinkingOff}, "")
-	if contains(args, "--effort") {
+	if slices.Contains(args, "--effort") {
 		t.Errorf("expected no --effort for ThinkingOff, got: %v", args)
 	}
 }
@@ -296,7 +297,7 @@ func TestBuildArgs_ImageFileAddsDir(t *testing.T) {
 func TestBuildArgs_NoImageFileNoAddDir(t *testing.T) {
 	c := NewClient()
 	args := c.buildArgs(&domain.ChatOptions{}, "")
-	if contains(args, "--add-dir") {
+	if slices.Contains(args, "--add-dir") {
 		t.Errorf("expected no --add-dir when ImageFile is empty, got: %v", args)
 	}
 }
@@ -436,7 +437,7 @@ func TestCleanEnv_RemovesClaudeCodeVar(t *testing.T) {
 			t.Fatalf("ANTHROPIC_API_KEY should have been removed, got %q", kv)
 		}
 	}
-	if !contains(env, "FABRIC_TEST_KEEP=1") {
+	if !slices.Contains(env, "FABRIC_TEST_KEEP=1") {
 		t.Fatalf("expected FABRIC_TEST_KEEP to remain in env")
 	}
 }
@@ -453,16 +454,6 @@ func writeFakeClaudeScript(t *testing.T, body string) string {
 		t.Fatalf("chmod fake script: %v", err)
 	}
 	return path
-}
-
-// contains reports whether s appears in the slice.
-func contains(slice []string, s string) bool {
-	for _, v := range slice {
-		if v == s {
-			return true
-		}
-	}
-	return false
 }
 
 // containsPair reports whether flag followed immediately by value appears in the slice.

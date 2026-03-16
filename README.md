@@ -77,6 +77,7 @@ Below are the **new features and capabilities** we've added (newest first):
 
 ### Recent Major Features
 
+- [v1.4.437](https://github.com/danielmiessler/fabric/releases/tag/v1.4.437) (March 16, 2026) — **OpenAI Codex PLugin**: Fabric now supports using OpenAI Codex (with your OpenAI subscription) as a backend!
 - [v1.4.417](https://github.com/danielmiessler/fabric/releases/tag/v1.4.417) (Feb 21, 2026) — **Azure AI Gateway Plugin**: Added Azure AI Gateway plugin supporting multiple backends (AWS Bedrock, Azure OpenAI, Google Vertex AI) through a unified Azure APIM Gateway with shared subscription key authentication.
 - [v1.4.416](https://github.com/danielmiessler/fabric/releases/tag/v1.4.416) (Feb 21, 2026) — **Azure Entra ID Authentication**: Added Azure Entra ID authentication plugin with shared Azure utilities, Entra ID/MSAL support, and extracted common Azure logic into a reusable `azurecommon` package.
 - [v1.4.380](https://github.com/danielmiessler/fabric/releases/tag/v1.4.380) (Jan 15, 2026) — **Microsoft 365 Copilot Integration**: Added support for corporate Microsoft 365 Copilot, enabling enterprise users to leverage AI grounded in their organization's Microsoft 365 data (emails, documents, meetings.
@@ -97,38 +98,6 @@ Below are the **new features and capabilities** we've added (newest first):
 - [v1.4.303](https://github.com/danielmiessler/fabric/releases/tag/v1.4.303) (Aug 29, 2025) — **New Binary Releases**: Linux ARM and Windows ARM targets. You can run Fabric on the Raspberry PI and on your Windows Surface!
 - [v1.4.294](https://github.com/danielmiessler/fabric/releases/tag/v1.4.294) (Aug 20, 2025) — **Venice AI Support**: Added the Venice AI provider. Venice is a Privacy-First, Open-Source AI provider. See their ["About Venice"](https://docs.venice.ai/overview/about-venice) page for details.
 - [v1.4.291](https://github.com/danielmiessler/fabric/releases/tag/v1.4.291) (Aug 18, 2025) — **Speech To Text**: Add OpenAI speech-to-text support with `--transcribe-file`, `--transcribe-model`, and `--split-media-file` flags.
-- [v1.4.287](https://github.com/danielmiessler/fabric/releases/tag/v1.4.287) (Aug 16, 2025) — **AI Reasoning**: Add Thinking to Gemini models and introduce `readme_updates` python script
-- [v1.4.286](https://github.com/danielmiessler/fabric/releases/tag/v1.4.286) (Aug 14, 2025) — **AI Reasoning**: Introduce Thinking Config Across Anthropic and OpenAI Providers
-- [v1.4.285](https://github.com/danielmiessler/fabric/releases/tag/v1.4.285) (Aug 13, 2025) — **Extended Context**: Enable One Million Token Context Beta Feature for Sonnet-4
-- [v1.4.284](https://github.com/danielmiessler/fabric/releases/tag/v1.4.284) (Aug 12, 2025) — **Easy Shell Completions Setup**: Introduce One-Liner Curl Install for Completions
-- [v1.4.283](https://github.com/danielmiessler/fabric/releases/tag/v1.4.283) (Aug 12, 2025) — **Model Management**: Add Vendor Selection Support for Models
-- [v1.4.282](https://github.com/danielmiessler/fabric/releases/tag/v1.4.282) (Aug 11, 2025) — **Enhanced Shell Completions**: Enhanced Shell Completions for Fabric CLI Binaries
-- [v1.4.281](https://github.com/danielmiessler/fabric/releases/tag/v1.4.281) (Aug 11, 2025) — **Gemini Search Tool**: Add Web Search Tool Support for Gemini Models
-- [v1.4.278](https://github.com/danielmiessler/fabric/releases/tag/v1.4.278) (Aug 9, 2025) — **Enhance YouTube Transcripts**: Enhance YouTube Support with Custom yt-dlp Arguments
-- [v1.4.277](https://github.com/danielmiessler/fabric/releases/tag/v1.4.277) (Aug 8, 2025) — **Desktop Notifications**: Add cross-platform desktop notifications to Fabric CLI
-- [v1.4.274](https://github.com/danielmiessler/fabric/releases/tag/v1.4.274) (Aug 7, 2025) — **Claude 4.1 Added**: Add Support for Claude Opus 4.1 Model
-- [v1.4.271](https://github.com/danielmiessler/fabric/releases/tag/v1.4.271) (Jul 28, 2025) — **AI Summarized Release Notes**: Enable AI summary updates for GitHub releases
-- [v1.4.268](https://github.com/danielmiessler/fabric/releases/tag/v1.4.268) (Jul 26, 2025) — **Gemini TTS Voice Selection**: add Gemini TTS voice selection and listing functionality
-- [v1.4.267](https://github.com/danielmiessler/fabric/releases/tag/v1.4.267) (Jul 26, 2025) — **Text-to-Speech**: Update Gemini Plugin to New SDK with TTS Support
-- [v1.4.258](https://github.com/danielmiessler/fabric/releases/tag/v1.4.258) (Jul 17, 2025) — **Onboarding Improved**: Add startup check to initialize config and .env file automatically
-- [v1.4.257](https://github.com/danielmiessler/fabric/releases/tag/v1.4.257) (Jul 17, 2025) — **OpenAI Routing Control**: Introduce CLI Flag to Disable OpenAI Responses API
-- [v1.4.252](https://github.com/danielmiessler/fabric/releases/tag/v1.4.252) (Jul 16, 2025) — **Hide Thinking Block**: Optional Hiding of Model Thinking Process with Configurable Tags
-- [v1.4.246](https://github.com/danielmiessler/fabric/releases/tag/v1.4.246) (Jul 14, 2025) — **Automatic ChangeLog Updates**: Add AI-powered changelog generation with high-performance Go tool and comprehensive caching
-- [v1.4.245](https://github.com/danielmiessler/fabric/releases/tag/v1.4.245) (Jul 11, 2025) — **Together AI**: Together AI Support with OpenAI Fallback Mechanism Added
-- [v1.4.232](https://github.com/danielmiessler/fabric/releases/tag/v1.4.232) (Jul 6, 2025) — **Add Custom**: Add Custom Patterns Directory Support
-- [v1.4.230](https://github.com/danielmiessler/fabric/releases/tag/v1.4.230) (Jul 5, 2025) — **Model Management**: Add advanced image generation parameters for OpenAI models with four new CLI flags
-- [v1.4.227](https://github.com/danielmiessler/fabric/releases/tag/v1.4.227) (Jul 4, 2025) — **Add Image**: Add Image Generation Support to Fabric
-- [v1.4.226](https://github.com/danielmiessler/fabric/releases/tag/v1.4.226) (Jul 4, 2025) — **Web Search**: OpenAI Plugin Now Supports Web Search Functionality
-- [v1.4.225](https://github.com/danielmiessler/fabric/releases/tag/v1.4.225) (Jul 4, 2025) — **Web Search**: Runtime Web Search Control via Command-Line `--search` Flag
-- [v1.4.224](https://github.com/danielmiessler/fabric/releases/tag/v1.4.224) (Jul 1, 2025) — **Add code_review**: Add code_review pattern and updates in Pattern_Descriptions
-- [v1.4.222](https://github.com/danielmiessler/fabric/releases/tag/v1.4.222) (Jul 1, 2025) — **OpenAI Plugin**: OpenAI Plugin Migrates to New Responses API
-- [v1.4.218](https://github.com/danielmiessler/fabric/releases/tag/v1.4.218) (Jun 27, 2025) — **Model Management**: Add Support for OpenAI Search and Research Model Variants
-- [v1.4.217](https://github.com/danielmiessler/fabric/releases/tag/v1.4.217) (Jun 26, 2025) — **New YouTube**: New YouTube Transcript Endpoint Added to REST API
-- [v1.4.212](https://github.com/danielmiessler/fabric/releases/tag/v1.4.212) (Jun 23, 2025) — **Add Langdock**: Add Langdock AI and enhance generic OpenAI compatible support
-- [v1.4.211](https://github.com/danielmiessler/fabric/releases/tag/v1.4.211) (Jun 19, 2025) — **REST API**: REST API and Web UI Now Support Dynamic Pattern Variables
-- [v1.4.210](https://github.com/danielmiessler/fabric/releases/tag/v1.4.210) (Jun 18, 2025) — **Add Citations**: Add Citation Support to Perplexity Response
-- [v1.4.208](https://github.com/danielmiessler/fabric/releases/tag/v1.4.208) (Jun 17, 2025) — **Add Perplexity**: Add Perplexity AI Provider with Token Limits Support
-- [v1.4.203](https://github.com/danielmiessler/fabric/releases/tag/v1.4.203) (Jun 14, 2025) — **Add Amazon Bedrock**: Add support for Amazon Bedrock
 
 These features represent our commitment to making Fabric the most powerful and flexible AI augmentation framework available!
 
@@ -368,6 +337,7 @@ Fabric supports a wide range of AI providers:
 **Native Integrations:**
 
 - OpenAI
+- OpenAI Codex (ChatGPT/Codex subscription OAuth via private backend)
 - Anthropic (Claude)
 - Google Gemini
 - Ollama (local models)

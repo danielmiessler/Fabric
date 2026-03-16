@@ -1,5 +1,16 @@
 # Changelog
 
+## v1.4.437 (2026-03-16)
+
+### PR [#2056](https://github.com/danielmiessler/Fabric/pull/2056) by [mikaelpr](https://github.com/mikaelpr) and [ksylvan](https://github.com/ksylvan): feat: add Codex vendor with OpenAI OAuth
+
+- Add new Codex AI vendor plugin with OpenAI OAuth PKCE flow
+- Implement browser-based login with automatic token refresh on 401
+- Allow explicit Codex model selection bypassing model listing
+- Expose shared OpenAI `BuildResponseParams` and `ExtractText` helpers, and move system/developer messages into Codex `instructions` field
+- Add comprehensive unit tests for Codex OAuth, streaming, and retry
+- New internationalization keys added for all 11 languages.
+
 ## v1.4.436 (2026-03-15)
 
 ### PR [#2060](https://github.com/danielmiessler/Fabric/pull/2060) by [octo-patch](https://github.com/octo-patch): feat: add MiniMax-M2.5-highspeed to static model list

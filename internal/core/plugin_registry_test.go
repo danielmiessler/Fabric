@@ -96,3 +96,57 @@ func TestGetChatter_WarnsOnAmbiguousModel(t *testing.T) {
 		t.Fatalf("expected warning about multiple vendors, got %q", string(warning))
 	}
 }
+
+func TestGetChatter_AllowsExplicitCodexManualModel(t *testing.T) {
+	tempDir := t.TempDir()
+	db := fsdb.NewDb(tempDir)
+
+	codexVendor := &testVendor{name: "Codex", models: []string{"gpt-5.4"}}
+
+	vm := ai.NewVendorsManager()
+	vm.AddVendors(codexVendor)
+
+	defaults := &tools.Defaults{
+		PluginBase:         &plugins.PluginBase{},
+		Vendor:             &plugins.Setting{Value: "Codex"},
+		Model:              &plugins.SetupQuestion{Setting: &plugins.Setting{Value: "gpt-5.4"}},
+		ModelContextLength: &plugins.SetupQuestion{Setting: &plugins.Setting{Value: "0"}},
+	}
+
+	registry := &PluginRegistry{Db: db, VendorManager: vm, Defaults: defaults}
+
+	chatter, err := registry.GetChatter("gpt-5.1-codex", 0, "Codex", "", false, false)
+	if err != nil {
+		t.Fatalf("GetChatter() error = %v", err)
+	}
+	if chatter.vendor.GetName() != "Codex" {
+		t.Fatalf("expected Codex vendor, got %s", chatter.vendor.GetName())
+	}
+	if chatter.model != "gpt-5.1-codex" {
+		t.Fatalf("expected manual Codex model to pass through, got %s", chatter.model)
+	}
+}
+
+func TestGetChatter_RejectsExplicitCodexModelFromOtherVendor(t *testing.T) {
+	tempDir := t.TempDir()
+	db := fsdb.NewDb(tempDir)
+
+	codexVendor := &testVendor{name: "Codex", models: []string{"gpt-5.4"}}
+	anthropicVendor := &testVendor{name: "Anthropic", models: []string{"claude-3.7-sonnet"}}
+
+	vm := ai.NewVendorsManager()
+	vm.AddVendors(codexVendor, anthropicVendor)
+
+	defaults := &tools.Defaults{
+		PluginBase:         &plugins.PluginBase{},
+		Vendor:             &plugins.Setting{Value: "Codex"},
+		Model:              &plugins.SetupQuestion{Setting: &plugins.Setting{Value: "gpt-5.4"}},
+		ModelContextLength: &plugins.SetupQuestion{Setting: &plugins.Setting{Value: "0"}},
+	}
+
+	registry := &PluginRegistry{Db: db, VendorManager: vm, Defaults: defaults}
+
+	if _, err := registry.GetChatter("claude-3.7-sonnet", 0, "Codex", "", false, false); err == nil {
+		t.Fatal("expected GetChatter() to reject models that only belong to another vendor")
+	}
+}

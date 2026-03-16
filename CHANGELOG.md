@@ -1,5 +1,17 @@
 # Changelog
 
+## v1.4.436 (2026-03-15)
+
+### PR [#2060](https://github.com/danielmiessler/Fabric/pull/2060) by [octo-patch](https://github.com/octo-patch): feat: add MiniMax-M2.5-highspeed to static model list
+
+- Added the `MiniMax-M2.5-highspeed` model variant to the static MiniMax model list. This variant delivers the same performance as `MiniMax-M2.5` but with faster inference speed.
+
+## v1.4.435 (2026-03-12)
+
+### PR [#2058](https://github.com/danielmiessler/Fabric/pull/2058) by [dependabot](https://github.com/apps/dependabot): chore(deps-dev): bump devalue from 5.6.3 to 5.6.4 in /web in the npm_and_yarn group across 1 directory
+
+- Bumps the indirect dependency `devalue` from version 5.6.3 to 5.6.4 in the `/web` directory as part of the `npm_and_yarn` dependency group.
+
 ## v1.4.434 (2026-03-09)
 
 ### PR [#2052](https://github.com/danielmiessler/Fabric/pull/2052) by [praxstack](https://github.com/praxstack) and [ksylvan](https://github.com/ksylvan): feat(bedrock): dynamic region fetching and AWS_PROFILE conflict fix

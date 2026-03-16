@@ -195,6 +195,7 @@ func (c *Client) getStaticModels(modelsKey string) ([]string, error) {
 	case "static:minimax":
 		return []string{
 			"MiniMax-M2.5",
+			"MiniMax-M2.5-highspeed",
 			"MiniMax-M2.5-lightning",
 			"MiniMax-M2",
 			"MiniMax-M2.1",

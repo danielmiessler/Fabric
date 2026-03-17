@@ -1,0 +1,3 @@
+### PR [#2063](https://github.com/danielmiessler/Fabric/pull/2063) by [mikaelpr](https://github.com/mikaelpr): refactor: split Codex vendor into focused files
+
+- Refactor: split Codex vendor into focused files

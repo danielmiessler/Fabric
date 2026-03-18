@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.4.438 (2026-03-18)
+
+### PR [#2061](https://github.com/danielmiessler/Fabric/pull/2061) by [praxstack](https://github.com/praxstack): fix(chat): prevent streaming deadlock and unify strategy handling
+
+- **Fixed a streaming deadlock in `Chatter.Send`** by introducing `recordFirstStreamError()`, which uses a non-blocking `select/default` to safely send only the first error to the buffered error channel, preventing goroutine leaks when both the `SendStream` goroutine and the stream-update loop attempt to write simultaneously.
+- **Unified strategy handling across the CLI and REST API server** by passing `StrategyName` through to `GetChatter()` and `ChatRequest`, ensuring the core `Chatter.BuildSession()` layer handles strategy loading consistently instead of duplicating logic in the server handler.
+- **Removed inline `os.ReadFile` strategy loading from the server handler**, which previously bypassed the core Chatter layer, causing strategy prompts to be incorrectly prepended to `UserInput` rather than the system message.
+- **Replaced raw string concatenation for system message assembly** with a new `joinPromptSections()` helper that trims whitespace, skips empty sections, and joins strategy, context, and pattern prompts with a single newline separator.
+- **Added regression and unit tests**, including a 2-second timeout deadlock test (`TestChatter_Send_StreamingErrorUpdateAndReturnDoesNotDeadlock`), a session-assembly validation test (`TestChatter_BuildSession_SeparatesSystemSections`), and a helper verification test (`TestBuildPromptChatRequest_PreservesStrategyAndUserInput`).
+
 ## v1.4.437 (2026-03-16)
 
 ### PR [#2056](https://github.com/danielmiessler/Fabric/pull/2056) by [mikaelpr](https://github.com/mikaelpr) and [ksylvan](https://github.com/ksylvan): feat: add Codex vendor with OpenAI OAuth

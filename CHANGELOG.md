@@ -1,5 +1,14 @@
 # Changelog
 
+## v1.4.439 (2026-03-18)
+
+### PR [#2066](https://github.com/danielmiessler/Fabric/pull/2066) by [octo-patch](https://github.com/octo-patch): feat: upgrade MiniMax default model to M2.7
+
+- Upgraded the MiniMax default model to M2.7, the latest flagship model with enhanced reasoning and coding capabilities.
+- Added MiniMax-M2.7 and MiniMax-M2.7-highspeed to the static model list.
+- Placed M2.7 models at the top of the list as the new defaults.
+- Retained all previous models (M2.5, M2.5-highspeed, M2.5-lightning, M2, M2.1, M2.1-lightning) as available alternatives.
+
 ## v1.4.438 (2026-03-18)
 
 ### PR [#2061](https://github.com/danielmiessler/Fabric/pull/2061) by [praxstack](https://github.com/praxstack): fix(chat): prevent streaming deadlock and unify strategy handling

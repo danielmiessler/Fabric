@@ -847,6 +847,36 @@ Now let's look at some things you can do with Fabric.
     fabric -u https://github.com/danielmiessler/fabric/ -p analyze_claims
     ```
 
+### Workflows
+
+A workflow chains multiple patterns together. The output of each step becomes the input to the next, like a pipeline.
+
+```
+stdin → step 1 (summarize) → step 2 (extract_wisdom) → stdout
+```
+
+Define workflows in a YAML file:
+
+```yaml
+steps:
+  - pattern: summarize
+  - pattern: extract_wisdom
+    variables:
+      role: expert
+```
+
+Run it:
+
+```bash
+cat article.md | fabric --workflow examples/workflow.yaml
+```
+
+Step-level variables override CLI-level variables for that step only. In the example above, `extract_wisdom` always gets `role=expert`, even if you pass `-v=#role:beginner` on the command line. Variables not overridden by the step are passed through from the CLI.
+
+All patterns are validated before any step runs. If a pattern doesn't exist, you'll get a clear error pointing to the step and pattern name.
+
+See [`examples/workflow.yaml`](examples/workflow.yaml) for a fully commented example.
+
 ## Just use the Patterns
 
 <img width="1173" alt="fabric-patterns-screenshot" src="https://github.com/danielmiessler/fabric/assets/50654/9186a044-652b-4673-89f7-71cf066f32d8">

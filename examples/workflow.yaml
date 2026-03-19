@@ -1,0 +1,31 @@
+# Example workflow: summarize an article, then extract key insights.
+#
+# Usage:
+#   echo "Some long article text..." | fabric --workflow examples/workflow.yaml
+#   echo "Some long article text..." | fabric --workflow examples/workflow.yaml --stream
+#   echo "Some long article text..." | fabric --workflow examples/workflow.yaml --output result.md
+#
+# How it works:
+#   1. Your piped input goes to the first step (summarize).
+#   2. The output of summarize becomes the input to the next step (extract_wisdom).
+#   3. The final step's output is printed to stdout (or saved with --output).
+#
+# Variables:
+#   - CLI-level variables (-v flags) apply to all steps.
+#   - Step-level variables override CLI-level ones for that step only.
+#   - In this example, extract_wisdom receives role=expert even if you
+#     pass -v=#role:beginner on the command line.
+
+name: summarize and extract
+description: Summarize input, then extract wisdom from the summary.
+
+steps:
+  # Step 1: condense the raw input into a summary.
+  # Receives your piped stdin as input.
+  - pattern: summarize
+
+  # Step 2: extract key insights from the summary (not the original input).
+  # The "role" variable here overrides any -v=#role:... passed on the CLI.
+  - pattern: extract_wisdom
+    variables:
+      role: expert

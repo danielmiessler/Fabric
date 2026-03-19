@@ -109,6 +109,14 @@ func Cli(version string) (err error) {
 		return nil
 	}
 
+	// Handle workflow processing if --workflow is specified
+	if currentFlags.Workflow != "" {
+		if currentFlags.Pattern != "" {
+			return fmt.Errorf("%s", i18n.T("workflow_error_cannot_use_with_pattern"))
+		}
+		return handleWorkflowProcessing(currentFlags, registry, messageTools)
+	}
+
 	// Handle chat processing
 	err = handleChatProcessing(currentFlags, registry, messageTools)
 	return

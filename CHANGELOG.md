@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.4.440 (2026-03-19)
+
+### PR [#2064](https://github.com/danielmiessler/Fabric/pull/2064) by [JasonYeYuhe](https://github.com/JasonYeYuhe) and [ksylvan](https://github.com/ksylvan): docs: add Chinese translation (README.zh.md)
+
+- Added a new Chinese translation of the README file (`README.zh.md`).
+- Refined Chinese translations for improved idiomaticity and natural language flow.
+- Removed a duplicate key in the Chinese (`zh`) locale file.
+
 ## v1.4.439 (2026-03-18)
 
 ### PR [#2066](https://github.com/danielmiessler/Fabric/pull/2066) by [octo-patch](https://github.com/octo-patch): feat: upgrade MiniMax default model to M2.7

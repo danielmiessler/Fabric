@@ -1,0 +1,5 @@
+### PR [#2064](https://github.com/danielmiessler/Fabric/pull/2064) by [JasonYeYuhe](https://github.com/JasonYeYuhe): docs: add Chinese translation (README.zh.md)
+
+- Added a new Chinese translation of the README file (`README.zh.md`).
+- Refined Chinese translations for improved idiomaticity and natural language flow.
+- Removed a duplicate key in the Chinese (`zh`) locale file.

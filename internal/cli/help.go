@@ -68,6 +68,7 @@ var flagDescriptionMap = map[string]string{
 	"addextension":               "register_new_extension",
 	"rmextension":                "remove_registered_extension",
 	"strategy":                   "choose_strategy_from_available",
+	"workflow":                   "workflow_path_to_yaml",
 	"liststrategies":             "list_all_strategies",
 	"listvendors":                "list_all_vendors",
 	"shell-complete-list":        "output_raw_list_shell_completion",

@@ -82,6 +82,7 @@ type Flags struct {
 	AddExtension                    string               `long:"addextension" description:"Register a new extension from config file path"`
 	RemoveExtension                 string               `long:"rmextension" description:"Remove a registered extension by name"`
 	Strategy                        string               `long:"strategy" description:"Choose a strategy from the available strategies" default:""`
+	Workflow                        string               `long:"workflow" description:"Path to a YAML workflow file for sequential pattern execution"`
 	ListStrategies                  bool                 `long:"liststrategies" description:"List all strategies"`
 	ListVendors                     bool                 `long:"listvendors" description:"List all vendors"`
 	ShellCompleteOutput             bool                 `long:"shell-complete-list" description:"Output raw list without headers/formatting (for shell completion)"`

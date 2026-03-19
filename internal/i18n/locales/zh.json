@@ -223,7 +223,6 @@
   "extension_type_label": "  类型：%s\n",
   "extension_type_required": "扩展类型为必填项",
   "extension_version_label": "  版本：%s\n",
-  "extension_version_label": "  版本：%s\n",
   "extension_warning_load_registry": "警告：无法加载扩展注册表：%v\n",
   "fabric_command_complete": "Fabric 命令完成",
   "fabric_command_complete_with_pattern": "Fabric：%s 完成",

@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.4.441 (2026-03-22)
+
+### PR [#2068](https://github.com/danielmiessler/Fabric/pull/2068) by [dependabot](https://github.com/apps/dependabot) and [ksylvan](https://github.com/ksylvan): chore(deps): bump google.golang.org/grpc from 1.79.0 to 1.79.3 in the go_modules group across 1 directory
+
+- Bumped `google.golang.org/grpc` from v1.79.0 to v1.79.3 as an indirect dependency update.
+- Bumped `anthropic-sdk-go` from v1.23.0 to v1.27.1, keeping the Anthropic client library up to date.
+- Removed deprecated `ModelClaude4Sonnet20250514` and `ModelClaude4Opus20250514` model aliases from the Go module.
+- Updated `gin-gonic/gin` to v1.12.0 and `go-git` to v5.17.0, bringing in the latest framework improvements.
+- Bumped `ollama/ollama` from v0.16.2 to v0.18.2, incorporating the latest Ollama client updates.
+
 ## v1.4.440 (2026-03-19)
 
 ### PR [#2064](https://github.com/danielmiessler/Fabric/pull/2064) by [JasonYeYuhe](https://github.com/JasonYeYuhe) and [ksylvan](https://github.com/ksylvan): docs: add Chinese translation (README.zh.md)

@@ -46,12 +46,10 @@ func NewClient() (ret *Client) {
 		string(anthropic.ModelClaudeHaiku4_5_20251001),
 		string(anthropic.ModelClaudeSonnet4_20250514),
 		string(anthropic.ModelClaudeSonnet4_0),
-		string(anthropic.ModelClaude4Sonnet20250514),
 		string(anthropic.ModelClaudeSonnet4_5),
 		string(anthropic.ModelClaudeSonnet4_5_20250929),
 		string(anthropic.ModelClaudeOpus4_0),
 		string(anthropic.ModelClaudeOpus4_20250514),
-		string(anthropic.ModelClaude4Opus20250514),
 		string(anthropic.ModelClaudeOpus4_1_20250805),
 	}
 
@@ -65,7 +63,6 @@ func NewClient() (ret *Client) {
 		// Claude Sonnet 4 variants (1M context support)
 		string(anthropic.ModelClaudeSonnet4_20250514): {"context-1m-2025-08-07"},
 		string(anthropic.ModelClaudeSonnet4_0):        {"context-1m-2025-08-07"},
-		string(anthropic.ModelClaude4Sonnet20250514):  {"context-1m-2025-08-07"},
 
 		// Claude Sonnet 4.5 variants (1M context support)
 		string(anthropic.ModelClaudeSonnet4_5):          {"context-1m-2025-08-07"},

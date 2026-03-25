@@ -107,10 +107,16 @@ Perform a Go-specific code review focusing on Fabric's coding conventions, Go id
     - Channel usage in the OAuth flow is defensive rather than racy. Both `results` and `serveDone` are buffered with capacity 1 in `internal/plugins/ai/codex/oauth.go:84,91`, and `publishOAuthResult()` uses a non-blocking send in `internal/plugins/ai/codex/oauth.go:190-195`, which prevents duplicate callbacks or late error paths from hanging the handler after the first terminal result is delivered.
     - I did not find Codex-specific evidence of a goroutine leak in the reviewed paths. The main concurrency limitation remains outside this checkbox: streaming requests still inherit Fabric's broader `SendStream` interface design, which is reviewed separately under the streaming task below.
 
-- [ ] **Streaming**: For streaming responses:
+- [x] **Streaming**: Reviewed streaming-response behavior in `internal/plugins/ai/codex/codex.go`, the shared `internal/plugins/ai/vendor.go` interface, and the existing Codex streaming coverage in `internal/plugins/ai/codex/codex_test.go`.
   - Channels are properly buffered
   - Errors are communicated correctly
   - Cleanup happens on cancellation
+  - Review notes:
+    - `SendStream()` always closes the caller-provided channel with `defer close(channel)` and also closes the upstream SDK stream with `defer stream.Close()`, so normal completion and early-return error paths do not leak the local channel or the SDK stream handle in `internal/plugins/ai/codex/codex.go:252-289`.
+    - Buffering is delegated to the caller rather than enforced by Codex. The implementation performs direct blocking sends on the provided channel (`channel <- ...` at `internal/plugins/ai/codex/codex.go:273-276` and `internal/plugins/ai/codex/codex.go:283-286`), so the path is safe with the buffered test channel in `internal/plugins/ai/codex/codex_test.go:471` but can stall indefinitely if an unbuffered or unread channel is passed. That matches Fabric's current vendor contract, but it means the provider itself does not guarantee non-blocking streaming behavior.
+    - Errors are only returned from `SendStream()` via `c.mapRequestError(stream.Err())` at `internal/plugins/ai/codex/codex.go:289`; no `domain.StreamTypeError` update is emitted on the channel even though the unified stream payload supports that event type in `internal/domain/stream.go:7-16`. Consumers therefore have to watch both the channel and the function return value, and they cannot receive an in-band terminal error after partially streamed content.
+    - Cancellation cleanup remains limited by the shared interface rather than the Codex loop itself. `ai.Vendor.SendStream` does not accept `context.Context` in `internal/plugins/ai/vendor.go:12-17`, so Codex starts the upstream SSE request with `context.Background()` in `internal/plugins/ai/codex/codex.go:267`. If the caller disconnects or abandons the read side, the request cannot be cancelled proactively; cleanup happens only when the remote stream ends or the transport errors, which is the same architectural gap already called out in `internal/plugins/ai/azureaigateway/azureaigateway.go:201-206`.
+    - Existing coverage exercises the success-path SSE parsing and confirms that the channel closes after the stream is drained in `internal/plugins/ai/codex/codex_test.go:425-493`, but there is no Codex-specific test for mid-stream transport errors or abandoned consumers.
 
 ### Task 5: Review API Changes
 

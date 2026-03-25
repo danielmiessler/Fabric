@@ -60,11 +60,16 @@ Perform a Go-specific code review focusing on Fabric's coding conventions, Go id
 
 ### Task 3: Review Code Organization
 
-- [ ] **Package structure**: Check:
+- [x] **Package structure**: Checked the Codex package layout and dependency boundaries across `internal/plugins/ai/codex/*.go`, plus the registration path in `internal/core/plugin_registry.go`.
   - `internal/` packages are truly internal
   - No circular dependencies
   - Clear package boundaries
   - Appropriate file sizes
+  - Review notes:
+    - `internal/plugins/ai/codex` remains internal-only in practice: the reviewed package is registered from `internal/core/plugin_registry.go:21,86` and no non-internal import sites were found, so the refactor did not create a new externally consumable boundary.
+    - `go list -deps ./internal/plugins/ai/codex` completed successfully, and the import graph stays one-directional through shared internals (`internal/chat`, `internal/domain`, `internal/i18n`, `internal/plugins`, and `internal/plugins/ai/openai`) plus the upstream OpenAI SDK. No circular dependency indicators surfaced in the package graph.
+    - File responsibilities are mostly separated cleanly by concern: `auth_transport.go` owns token injection and retry behavior, `oauth.go` owns the browser callback flow, `errors.go` centralizes HTTP/API error normalization, and `token.go` keeps JWT parsing/version helpers isolated.
+    - The main structural weakness is size and mixed responsibility in `internal/plugins/ai/codex/codex.go`. At 348 lines it currently combines package constants, client construction, setup/configuration, model listing, request/stream execution, and request-shaping helpers, while `oauth.go` is another 304 lines. This is still manageable, but the package is trending toward a "god file" entrypoint; splitting setup/model operations from request execution would make boundaries clearer before more behavior lands there.
 
 - [ ] **Naming conventions**: Verify:
   - CamelCase for exported identifiers

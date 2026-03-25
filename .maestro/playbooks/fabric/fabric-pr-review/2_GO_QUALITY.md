@@ -120,10 +120,15 @@ Perform a Go-specific code review focusing on Fabric's coding conventions, Go id
 
 ### Task 5: Review API Changes
 
-- [ ] **Breaking changes**: If public APIs change:
+- [x] **Breaking changes**: Reviewed API compatibility for the Codex refactor against `origin/main`.
   - Are changes backward compatible?
   - Are deprecation notices added?
   - Is the CHANGELOG updated?
+  - Review notes:
+    - I compared the PR diff against `origin/main` and the change surface is limited to an internal package split plus the changelog fragment in `cmd/generate_changelog/incoming/2063.txt`; there are no edits to shared interfaces in `internal/plugins/ai/vendor.go`, `internal/plugins/plugin.go`, or the embedded OpenAI client contract.
+    - The exported Codex package surface remains unchanged. `Client`, `NewClient`, `Setup`, `ListModels`, `Send`, and `SendStream` in `internal/plugins/ai/codex/codex.go` keep the same names, parameters, and return types as the pre-refactor implementation, so this refactor is backward compatible for Fabric callers.
+    - No deprecation notices were needed or added because the PR does not remove or replace any public API entrypoints; it only moves internal helpers from `codex.go` into focused files.
+    - The repo-level `CHANGELOG.md` is not directly modified in this branch, but the required changelog input was added via `cmd/generate_changelog/incoming/2063.txt`, which is the project’s normal path for changelog generation. That is sufficient for this refactor-sized internal change.
 
 - [ ] **Function signatures**: Verify:
   - Context is first parameter

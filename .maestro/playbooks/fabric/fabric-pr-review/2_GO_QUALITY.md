@@ -185,7 +185,7 @@ Perform a Go-specific code review focusing on Fabric's coding conventions, Go id
   ```
   Note any suggestions.
 
-- [ ] **Check formatting**: Run:
+- [x] **Check formatting**: Ran `gofmt -l .` from `/Users/kayvan/src/fabric`; it exited cleanly and reported no unformatted files.
   ```bash
   gofmt -l .
   ```

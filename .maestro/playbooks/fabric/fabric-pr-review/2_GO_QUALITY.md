@@ -96,11 +96,16 @@ Perform a Go-specific code review focusing on Fabric's coding conventions, Go id
 
 ### Task 4: Review Concurrency
 
-- [ ] **Goroutine safety**: Look for:
+- [x] **Goroutine safety**: Checked shared-state and goroutine behavior in `internal/plugins/ai/codex/auth_transport.go`, `internal/plugins/ai/codex/codex.go`, and `internal/plugins/ai/codex/oauth.go`.
   - Race conditions on shared state
   - Proper channel usage (closing, direction)
   - Context-aware goroutines
   - No goroutine leaks
+  - Review notes:
+    - Shared token state is serialized through `Client.tokenMu` in `internal/plugins/ai/codex/auth_transport.go:26-67`, so concurrent request paths cannot race while reading or refreshing `AccessToken`, `RefreshToken`, or `AccountID`. A package-level race run (`go test -race ./internal/plugins/ai/codex`) completed cleanly.
+    - The only Codex-local goroutine is the OAuth callback server launched in `internal/plugins/ai/codex/oauth.go:91-99`. Its lifecycle is bounded by the outer `select` in `runOAuthFlow()` and both the success and timeout branches call `server.Shutdown(...)` and wait on `serveDone`, so the listener goroutine is not left running after the flow returns.
+    - Channel usage in the OAuth flow is defensive rather than racy. Both `results` and `serveDone` are buffered with capacity 1 in `internal/plugins/ai/codex/oauth.go:84,91`, and `publishOAuthResult()` uses a non-blocking send in `internal/plugins/ai/codex/oauth.go:190-195`, which prevents duplicate callbacks or late error paths from hanging the handler after the first terminal result is delivered.
+    - I did not find Codex-specific evidence of a goroutine leak in the reviewed paths. The main concurrency limitation remains outside this checkbox: streaming requests still inherit Fabric's broader `SendStream` interface design, which is reviewed separately under the streaming task below.
 
 - [ ] **Streaming**: For streaming responses:
   - Channels are properly buffered

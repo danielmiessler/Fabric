@@ -143,11 +143,17 @@ Perform a Go-specific code review focusing on Fabric's coding conventions, Go id
 
 ### Task 6: Check Fabric-Specific Patterns
 
-- [ ] **Plugin patterns**: For AI providers:
+- [x] **Plugin patterns**: Reviewed the Codex refactor against Fabric's AI vendor conventions in `internal/plugins/ai/codex/codex.go`, `internal/plugins/ai/vendor.go`, `internal/plugins/plugin.go`, and the shared OpenAI vendor base. No PR images were attached for this task.
   - Implement `VendorPlugin` interface
   - Handle streaming via callbacks
   - Support model listing
   - Handle context cancellation
+  - Review notes:
+    - Codex still fits Fabric's vendor architecture by embedding the shared OpenAI vendor client created via `openaivendor.NewClientCompatibleNoSetupQuestions(...)` in `internal/plugins/ai/codex/codex.go:73-91`. That inherited client already carries the standardized `plugins.PluginBase` from `internal/plugins/plugin.go:24-47`, so Codex continues to satisfy the combined `plugins.Plugin` and `ai.Vendor` contract in `internal/plugins/ai/vendor.go:12-17` through method promotion plus its Codex-specific overrides.
+    - The provider still supports the required model-listing path. `ListModels()` remains exported on the Codex client and performs an authenticated `/models` request with response filtering in `internal/plugins/ai/codex/codex.go:160-208`, so the refactor did not drop Fabric's model discovery behavior.
+    - Streaming remains aligned with Fabric's current vendor pattern, which is channel-based rather than function-callback based. `SendStream(...)` emits `domain.StreamUpdate` values onto the caller-provided channel and closes it on exit in `internal/plugins/ai/codex/codex.go:252-289`, matching the shared `ai.Vendor.SendStream(..., chan domain.StreamUpdate)` signature in `internal/plugins/ai/vendor.go:14-16`.
+    - Context handling is only partially compliant because the shared interface still splits behavior: normal requests use caller cancellation through `Send(ctx, ...)` in `internal/plugins/ai/codex/codex.go:211-248`, and interactive setup uses a bounded timeout in `Setup()` in `internal/plugins/ai/codex/codex.go:94-125`, but streaming cannot receive caller cancellation because `SendStream` has no `context.Context` parameter in `internal/plugins/ai/vendor.go:14-16`. Codex therefore starts the upstream stream with `context.Background()` in `internal/plugins/ai/codex/codex.go:266`, which preserves existing Fabric behavior but remains a design gap for abandoned or disconnected stream consumers.
+    - I did not find a Codex-specific regression in plugin registration or discovery. The provider is still registered alongside the other AI vendors in `internal/core/plugin_registry.go:71-90`, so the refactor stays within the established plugin-loading path rather than introducing a parallel mechanism.
 
 - [ ] **Configuration patterns**: For config changes:
   - Environment variables via `godotenv`

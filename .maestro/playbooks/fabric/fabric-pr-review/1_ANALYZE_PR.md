@@ -25,7 +25,8 @@ Understand the scope and context of the Fabric pull request before diving into d
 - [x] **Read the PR description**: Use `gh pr view XXXX` to fetch PR details. Note the stated goals, linked issues, and any breaking change warnings.
   - Notes: PR #2063 (`refactor: split Codex vendor into focused files`) targets `main` and states a narrow refactor scope: splitting `internal/plugins/ai/codex/codex.go` into focused files for OAuth, auth transport, error handling, and token helpers. Related issue/follow-up: PR #2056. No breaking change warning was stated.
 
-- [ ] **Identify the base branch**: Determine what branch this PR is targeting (usually `main`).
+- [x] **Identify the base branch**: Determine what branch this PR is targeting (usually `main`).
+  - Notes: Verified with `gh pr view 2063 --json baseRefName`; PR #2063 targets `main`.
 
 - [ ] **Check PR size**: Fabric rejects PRs with 50+ files without justification. Count changed files early.
 

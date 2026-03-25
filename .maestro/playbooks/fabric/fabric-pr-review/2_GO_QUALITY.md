@@ -191,7 +191,7 @@ Perform a Go-specific code review focusing on Fabric's coding conventions, Go id
   ```
   Flag any unformatted files.
 
-- [ ] **Check vet**: Run:
+- [x] **Check vet**: Ran `go vet ./...` from `/Users/kayvan/src/fabric`; it exited cleanly and reported no vet issues.
   ```bash
   go vet ./...
   ```

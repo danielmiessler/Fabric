@@ -34,7 +34,7 @@ For new or modified AI providers in `internal/plugins/ai/`:
   - `Chat(context.Context, *ChatRequest) (*ChatResponse, error)` - Main chat method
   - Any other required interface methods
 
-- [ ] **Verify registration**: Check that the vendor is registered in `internal/core/plugin_registry.go`:
+- [x] **Verify registration**: Confirmed `internal/core/plugin_registry.go` registers Codex exactly once via `codex.NewClient()` in `NewPluginRegistry`, and `VendorsManager.AddVendors` keys vendors by lowercase name so `Codex` remains uniquely addressable with case-insensitive lookup. Checked `internal/plugins/ai/openai_compatible/providers_config.go` and found no `"Codex"` entry in `ProviderMap`, so there is no name collision with OpenAI-compatible providers. Also verified the only Codex-specific model-selection customization is the explicit manual-model passthrough in `PluginRegistry.GetChatter`; there is no separate vendor-alias configuration layer to review for this provider.
   - Vendor name is unique
   - Proper initialization
   - Model aliases configured (if applicable)

@@ -82,11 +82,17 @@ Perform a Go-specific code review focusing on Fabric's coding conventions, Go id
     - Acronym handling is mostly correct in Codex-local names. Examples like `AuthBaseURL`, `AccountID`, `IDToken`, `oauthClientID`, `oauthCallbackPath`, `generatePKCECodes`, and `extractExpiryFromJWT` use standard Go initialism casing consistently.
     - The one naming mismatch against the stated acronym rule is the inherited `ApiBaseURL` and `ApiClient` fields used throughout `internal/plugins/ai/codex/codex.go`. Those names should be `APIBaseURL` and `APIClient` by strict Go style, but they originate from the embedded shared OpenAI vendor client in `internal/plugins/ai/openai/openai.go` rather than being introduced by this Codex refactor. Treat this as an existing cross-provider naming debt, not a Codex-specific regression.
 
-- [ ] **Documentation**: Check:
+- [x] **Documentation**: Checked package and exported API documentation across `internal/plugins/ai/codex/auth_transport.go`, `internal/plugins/ai/codex/codex.go`, `internal/plugins/ai/codex/errors.go`, `internal/plugins/ai/codex/oauth.go`, and `internal/plugins/ai/codex/token.go`.
   - Exported functions have doc comments
   - Package-level documentation exists
   - Complex logic is explained
   - No stale comments
+  - Review notes:
+    - Package-level documentation exists via the `Package codex ...` comment in `internal/plugins/ai/codex/codex.go:1-2`, so the package is discoverable in Go doc output without adding a separate `doc.go`.
+    - Exported functions and methods reviewed in scope are documented: `NewClient`, `Setup`, `ListModels`, `Send`, and `SendStream` in `internal/plugins/ai/codex/codex.go:72,94,160,211,251`, plus the exported `RoundTrip` method in `internal/plugins/ai/codex/auth_transport.go:134`.
+    - The exported `Client` type itself is missing a doc comment at `internal/plugins/ai/codex/codex.go:48`, which is the primary documentation gap in the package surface and should be fixed to satisfy standard Go doc expectations for exported identifiers.
+    - The most non-obvious flow has at least some targeted inline explanation. In particular, `cloneRequest()` documents why `GetBody` must exist for the one-time authenticated retry in `internal/plugins/ai/codex/auth_transport.go:171-178`.
+    - No clearly stale or misleading comments were found in the reviewed files. The existing comments still match current behavior, though complex OAuth callback and error-normalization paths rely more on readable naming than on explanatory comments.
 
 ### Task 4: Review Concurrency
 

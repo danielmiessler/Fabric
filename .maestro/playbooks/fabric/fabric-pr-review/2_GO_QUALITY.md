@@ -166,10 +166,16 @@ Perform a Go-specific code review focusing on Fabric's coding conventions, Go id
     - The reviewed Codex files do not add YAML parsing or YAML-backed config structures. Fabric does use YAML in other subsystems such as template extensions, but this refactor does not touch those paths and does not introduce a parallel YAML configuration source for Codex.
     - One small consistency gap remains in the env naming itself: the Codex setup uses explicit env names with spaces (`\"Base URL\"`, `\"Auth Base URL\"`), which `BuildEnvVariable(...)` normalizes into `CODEX_BASE_URL` and `CODEX_AUTH_BASE_URL` in `internal/plugins/plugin.go:336-348`. That behavior is inherited from the shared plugin helper and matches the pre-refactor implementation, so it is not a regression.
 
-- [ ] **Logging patterns**: For logging:
+- [x] **Logging patterns**: Reviewed logging usage across `internal/plugins/ai/codex/auth_transport.go`, `internal/plugins/ai/codex/codex.go`, `internal/plugins/ai/codex/oauth.go`, the shared logger in `internal/log/log.go`, and debug flag wiring in `internal/cli/flags.go`. No PR images were attached for this task.
   - Use standard `log` package
   - Debug levels via `--debug` flag
   - No sensitive data in logs
+  - Review notes:
+    - The Codex refactor does not use the standard library `log` package directly. Instead it follows Fabric's existing repository-wide convention of routing debug output through `internal/log` via `debuglog.Debug(...)` in `internal/plugins/ai/codex/codex.go:108,155,179`, `internal/plugins/ai/codex/auth_transport.go:64,163`, and `internal/plugins/ai/codex/oauth.go:62`. Relative to the task checklist wording, that is a convention mismatch in the checklist, not a Codex-specific regression.
+    - Debug verbosity is still controlled through Fabric's shared `--debug` flag path rather than any Codex-local switch. `internal/cli/flags.go:110-174,240-251` parses `--debug`, maps numeric levels into `internal/log.Level`, and sets the global logger level with `debuglog.SetLevel(...)`, so Codex inherits the same basic/detailed/trace/wire gating used elsewhere in the project.
+    - The current Codex debug statements avoid logging bearer tokens, refresh tokens, authorization codes, PKCE values, request bodies, or raw provider response bodies. The logged fields are limited to base URLs, the localhost callback port, retry events, and the resolved account ID, which is materially safer than logging credential material.
+    - There is still a small information-exposure concern at trace level: `internal/plugins/ai/codex/codex.go:179` logs the full `/models` request URL including the `client_version` query parameter. That is low risk, but other vendors generally avoid logging fully expanded authenticated request metadata unless needed for troubleshooting.
+    - The more important sensitive-data concern remains adjacent to logging rather than inside the debug statements themselves: provider-supplied auth failure text is still propagated back to the browser callback through `http.Error(w, err.Error(), ...)` in `internal/plugins/ai/codex/oauth.go:174,180`. That is not a log leak, but it is still an externally visible disclosure path worth carrying into the issue summary.
 
 ### Task 7: Run Static Analysis
 

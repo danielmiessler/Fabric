@@ -71,11 +71,16 @@ Perform a Go-specific code review focusing on Fabric's coding conventions, Go id
     - File responsibilities are mostly separated cleanly by concern: `auth_transport.go` owns token injection and retry behavior, `oauth.go` owns the browser callback flow, `errors.go` centralizes HTTP/API error normalization, and `token.go` keeps JWT parsing/version helpers isolated.
     - The main structural weakness is size and mixed responsibility in `internal/plugins/ai/codex/codex.go`. At 348 lines it currently combines package constants, client construction, setup/configuration, model listing, request/stream execution, and request-shaping helpers, while `oauth.go` is another 304 lines. This is still manageable, but the package is trending toward a "god file" entrypoint; splitting setup/model operations from request execution would make boundaries clearer before more behavior lands there.
 
-- [ ] **Naming conventions**: Verify:
+- [x] **Naming conventions**: Verified identifier casing and descriptiveness across `internal/plugins/ai/codex/auth_transport.go`, `internal/plugins/ai/codex/codex.go`, `internal/plugins/ai/codex/errors.go`, `internal/plugins/ai/codex/oauth.go`, and `internal/plugins/ai/codex/token.go`.
   - CamelCase for exported identifiers
   - camelCase for unexported identifiers
   - Meaningful, descriptive names
   - Acronyms are all caps (HTTP, API, ID)
+  - Review notes:
+    - Exported identifiers introduced or exercised by the Codex package follow Go casing conventions: `Client`, `NewClient`, `Setup`, `ListModels`, `Send`, and `SendStream` use CamelCase, while unexported helpers like `ensureAccessToken`, `refreshAccessToken`, `buildAuthorizeURL`, `tokenNeedsRefresh`, and `codexInstructionsAndMessages` stay in camelCase.
+    - Most names are descriptive at the level of responsibility they carry. Transport/authentication helpers (`authTransport`, `cloneRequest`, `refreshErrorFromResponse`), OAuth helpers (`runOAuthFlow`, `exchangeCodeForTokens`, `publishOAuthResult`), and token parsing helpers (`parseTokenClaims`, `extractAccountIDFromJWT`) are all specific enough that the call sites read clearly without extra comments.
+    - Acronym handling is mostly correct in Codex-local names. Examples like `AuthBaseURL`, `AccountID`, `IDToken`, `oauthClientID`, `oauthCallbackPath`, `generatePKCECodes`, and `extractExpiryFromJWT` use standard Go initialism casing consistently.
+    - The one naming mismatch against the stated acronym rule is the inherited `ApiBaseURL` and `ApiClient` fields used throughout `internal/plugins/ai/codex/codex.go`. Those names should be `APIBaseURL` and `APIClient` by strict Go style, but they originate from the embedded shared OpenAI vendor client in `internal/plugins/ai/openai/openai.go` rather than being introduced by this Codex refactor. Treat this as an existing cross-provider naming debt, not a Codex-specific regression.
 
 - [ ] **Documentation**: Check:
   - Exported functions have doc comments

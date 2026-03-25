@@ -55,13 +55,13 @@ For vendors extending `openai_compatible`:
 
 ### Task 4: Review Streaming Implementation
 
-- [ ] **Check streaming support**:
+- [x] **Check streaming support**: Reviewed `internal/plugins/ai/codex/codex.go` streaming against the Responses API path. Confirmed Codex streams via callback channel updates, handles SSE delta events without duplicating the terminal `response.output_text.done` payload, maps non-2xx/API stream errors through `mapRequestError`, and now has package coverage in `internal/plugins/ai/codex/codex_test.go` for both successful SSE reads and error-path channel closure. Limitation noted: `SendStream` uses `context.Background()` because the shared `ai.Vendor` interface does not currently accept a context, so caller-driven cancellation cannot yet terminate an in-flight Codex stream early. This is an existing interface-level gap, not a Codex-only deviation.
   - Implements streaming via callbacks
   - Handles SSE (Server-Sent Events) correctly
   - Properly closes connections on context cancellation
   - Error handling during streams
 
-- [ ] **Verify stream cleanup**:
+- [x] **Verify stream cleanup**: Confirmed normal and error paths both `defer stream.Close()` and `defer close(channel)` in `SendStream`, so the caller's receive loop terminates cleanly without leaving the stream reader goroutine hanging. For auth retries, `internal/plugins/ai/codex/auth_transport.go` drains and closes the 401 body before reissuing the request, avoiding leaked response bodies. Added `go test ./internal/plugins/ai/codex` coverage proving the stream channel closes on HTTP failure; no Codex-specific buffer-flush or resource-release issues were found in scoped files.
   - No goroutine leaks
   - Buffers are flushed
   - Resources are released

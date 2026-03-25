@@ -492,6 +492,37 @@ func TestSendStreamReadsCodexSSE(t *testing.T) {
 	}
 }
 
+func TestSendStreamClosesChannelAndMapsHTTPError(t *testing.T) {
+	apiServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path != "/responses" {
+			http.NotFound(w, r)
+			return
+		}
+		http.Error(w, `{"error":{"message":"usage limit reached"}}`, http.StatusTooManyRequests)
+	}))
+	defer apiServer.Close()
+
+	client := newConfiguredTestClient(t, apiServer.URL, "acct_stream_error", testJWT("acct_stream_error", time.Now().Add(time.Hour)))
+
+	updates := make(chan domain.StreamUpdate, 1)
+	err := client.SendStream([]*chat.ChatCompletionMessage{
+		{Role: chat.ChatMessageRoleUser, Content: "Hello"},
+	}, &domain.ChatOptions{
+		Model: "gpt-5.4",
+	}, updates)
+	if err == nil {
+		t.Fatal("SendStream() error = nil, want mapped HTTP error")
+	}
+	if got := err.Error(); got != "usage limit reached" {
+		t.Fatalf("SendStream() error = %q, want %q", got, "usage limit reached")
+	}
+
+	update, ok := <-updates
+	if ok {
+		t.Fatalf("expected closed channel after stream error, got update %#v", update)
+	}
+}
+
 func newConfiguredTestClient(t *testing.T, apiBaseURL string, accountID string, accessToken string) *Client {
 	t.Helper()
 

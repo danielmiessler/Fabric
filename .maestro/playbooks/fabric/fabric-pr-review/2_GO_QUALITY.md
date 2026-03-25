@@ -47,10 +47,16 @@ Perform a Go-specific code review focusing on Fabric's coding conventions, Go id
     - The main gap is at the Fabric plugin boundary: `ai.Vendor.SendStream` does not accept a context parameter, so `Codex.SendStream()` has to create the OpenAI stream with `context.Background()` in `internal/plugins/ai/vendor.go:12-17` and `internal/plugins/ai/codex/codex.go:252-289`. That means caller cancellation is not propagated for streaming requests, matching the same known limitation already documented in `internal/plugins/ai/azureaigateway/azureaigateway.go:201-224`.
     - Two additional non-interactive paths also detach from caller cancellation by using `context.Background()`: `configure()` refreshes tokens with a background context before requests are sent, and `ListModels()` cannot accept a caller context because the shared vendor interface exposes `ListModels() ([]string, error)` rather than a context-aware variant in `internal/plugins/ai/codex/codex.go:127-142,160-208`. Those calls are still bounded by timeout, but they cannot stop early if the upstream command is cancelled.
 
-- [ ] **Interface compliance**: Verify interfaces:
+- [x] **Interface compliance**: Verified interfaces across `internal/plugins/ai/codex/*.go` and the shared AI/plugin boundaries in `internal/plugins/ai/vendor.go` and `internal/plugins/plugin.go`.
   - Functions accept interfaces, return concrete types
   - Interfaces are defined where they're used
   - No empty interfaces (`interface{}`) without good reason
+  - Review notes:
+    - The Codex refactor does not introduce any new package-local interfaces. It continues to satisfy the existing `ai.Vendor` and `plugins.Plugin` contracts through the concrete `*codex.Client` type, which matches Fabric's current plugin architecture rather than adding one-off abstractions.
+    - Return types in the reviewed package stay concrete and specific (`*Client`, `oauthTokens`, `modelsResponse`, `tokenClaims`, standard library structs, and plain `error`), so the refactor did not widen APIs with interface-typed returns.
+    - Parameter typing is also mostly concrete. The only deliberate interface-style extension points are standard-library seams that are appropriate for the call site: the embedded `http.RoundTripper` in `authTransport` and the injected `openBrowserFn func(string) error` used to make the OAuth flow testable without shelling out.
+    - No `interface{}` usages were added in the Codex package. The only `any` usage in scope is the local `map[string]any` decoding in `internal/plugins/ai/codex/errors.go:84-135`, which is justified because upstream error payloads are schema-variable JSON blobs and need dynamic inspection.
+    - One design limitation remains at the shared boundary rather than in Codex itself: `internal/plugins/ai/vendor.go:12-17` defines `SendStream` and `ListModels` without `context.Context`, so Codex cannot accept interface-shaped cancellation hooks for those operations even though its concrete request paths are otherwise context-aware.
 
 ### Task 3: Review Code Organization
 

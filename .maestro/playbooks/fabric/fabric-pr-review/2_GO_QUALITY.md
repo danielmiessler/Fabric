@@ -130,10 +130,16 @@ Perform a Go-specific code review focusing on Fabric's coding conventions, Go id
     - No deprecation notices were needed or added because the PR does not remove or replace any public API entrypoints; it only moves internal helpers from `codex.go` into focused files.
     - The repo-level `CHANGELOG.md` is not directly modified in this branch, but the required changelog input was added via `cmd/generate_changelog/incoming/2063.txt`, which is the project’s normal path for changelog generation. That is sufficient for this refactor-sized internal change.
 
-- [ ] **Function signatures**: Verify:
+- [x] **Function signatures**: Verified the Codex refactor against Fabric's signature conventions and the existing `ai.Vendor` contract.
   - Context is first parameter
   - Options pattern for many parameters
   - Error is last return value
+  - Review notes:
+    - The exported Codex surface is still signature-compatible with `ai.Vendor` in `internal/plugins/ai/vendor.go:12-17`. `Send(ctx, msgs, opts)` keeps `context.Context` as the first parameter in `internal/plugins/ai/codex/codex.go:212`, while `ListModels() ([]string, error)` and `SendStream(msgs, opts, channel) error` remain unchanged at `internal/plugins/ai/codex/codex.go:161` and `internal/plugins/ai/codex/codex.go:252`.
+    - Package-local helpers that take context also follow the same rule: `runOAuthFlow(ctx, ...)` in `internal/plugins/ai/codex/oauth.go:53`, `exchangeCodeForTokens(ctx, ...)` in `internal/plugins/ai/codex/oauth.go:197`, `ensureAccessToken(ctx, ...)` in `internal/plugins/ai/codex/auth_transport.go:26`, and `refreshAccessToken(ctx)` in `internal/plugins/ai/codex/auth_transport.go:69` all place `context.Context` first.
+    - Error returns consistently stay in the final position across the reviewed signatures, including multi-return helpers like `ensureAccessToken(...) (string, string, error)`, `refreshAccessToken(...) (oauthTokens, error)`, and `Send(...) (string, error)` in `internal/plugins/ai/codex/auth_transport.go:26-69` and `internal/plugins/ai/codex/codex.go:212`.
+    - I did not find a strong options-pattern violation in the refactor itself. The widest package-local signatures are still small and cohesive, and the user-facing request methods already consolidate tunables into `*domain.ChatOptions` rather than adding more positional parameters.
+    - The remaining gap is inherited from the shared interface rather than introduced here: `ai.Vendor` defines `SendStream([]*chat.ChatCompletionMessage, *domain.ChatOptions, chan domain.StreamUpdate) error` and `ListModels() ([]string, error)` without `context.Context` in `internal/plugins/ai/vendor.go:14-16`. Codex therefore cannot expose context-first signatures for those operations even though its internal helpers otherwise follow the convention.
 
 ### Task 6: Check Fabric-Specific Patterns
 

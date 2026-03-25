@@ -43,12 +43,12 @@ For new or modified AI providers in `internal/plugins/ai/`:
 
 For vendors extending `openai_compatible`:
 
-- [ ] **Check base extension**:
+- [x] **Check base extension**: Not applicable for the scoped Codex refactor. Verified `internal/plugins/ai/codex/codex.go` embeds `*internal/plugins/ai/openai.Client` via `openaivendor.NewClientCompatibleNoSetupQuestions(...)`, not `internal/plugins/ai/openai_compatible.Client`, so this PR does not add or modify any vendor that extends the `openai_compatible` provider base. Confirmed there is no `"Codex"` entry in `internal/plugins/ai/openai_compatible/providers_config.go`, which is where OpenAI-compatible vendors are declared and configured.
   - Properly embeds `openai_compatible` base
   - Only overrides necessary methods
   - API endpoint is correctly configured
 
-- [ ] **Verify API differences**:
+- [x] **Verify API differences**: Reviewed Codex for the API-difference concerns this task is meant to catch and documented the intentional divergence: Codex uses OAuth refresh tokens and an authenticated transport in `internal/plugins/ai/codex/auth_transport.go`/`oauth.go`, adds `originator`, `User-Agent`, `Authorization`, and `ChatGPT-Account-ID` headers per request, and points at dedicated Codex/Auth base URLs instead of the generic OpenAI-compatible provider registry. No OpenAI-compatible vendor-specific header/auth/model-mapping changes are present in this PR beyond that standalone Codex implementation.
   - Any provider-specific headers
   - Authentication method (API key, OAuth, etc.)
   - Model name mapping if different

@@ -28,7 +28,7 @@ Verify that new or modified AI providers and plugins follow Fabric's plugin arch
 
 For new or modified AI providers in `internal/plugins/ai/`:
 
-- [ ] **Check interface compliance**: Verify implementation of `VendorPlugin` interface from `internal/plugins/plugin.go`:
+- [x] **Check interface compliance**: Verified Codex against the actual AI vendor interface in `internal/plugins/ai/vendor.go` (the playbook text points to `internal/plugins/plugin.go`, which only defines the generic plugin base). `codex.Client` satisfies the contract via embedded `openai.Client`/`plugins.PluginBase` for lifecycle methods plus Codex-specific `ListModels`, `Send`, and `SendStream` overrides in `internal/plugins/ai/codex/codex.go`. Confirmed with `go test ./internal/plugins/ai/codex ./internal/core`.
   - `Name() string` - Returns vendor identifier
   - `Models() ([]string, error)` - Lists available models
   - `Chat(context.Context, *ChatRequest) (*ChatResponse, error)` - Main chat method

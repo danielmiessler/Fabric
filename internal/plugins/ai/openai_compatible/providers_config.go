@@ -203,13 +203,6 @@ func (c *Client) getStaticModels(modelsKey string) ([]string, error) {
 			"MiniMax-M2.1",
 			"MiniMax-M2.1-lightning",
 		}, nil
-	case "static:novita":
-		return []string{
-			"moonshotai/kimi-k2.5",
-			"zai-org/glm-5",
-			"minimax/minimax-m2.5",
-			"qwen/qwen3-embedding-0.6b",
-		}, nil
 	default:
 		return nil, fmt.Errorf(i18n.T("openai_compatible_unknown_static_model_list"), modelsKey)
 	}
@@ -277,7 +270,6 @@ var ProviderMap = map[string]ProviderConfig{
 	"Novita": {
 		Name:                "Novita",
 		BaseURL:             "https://api.novita.ai/openai",
-		ModelsURL:           "static:novita",
 		ImplementsResponses: false,
 	},
 	"OpenRouter": {

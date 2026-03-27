@@ -60,7 +60,7 @@ func TestBedrockAuthHeader(t *testing.T) {
 
 func TestBedrockListModels(t *testing.T) {
 	b := NewBedrockBackend("key")
-	models, err := b.ListModels()
+	models, err := b.ListModels(context.Background())
 	if err != nil {
 		t.Fatalf("ListModels() error = %v", err)
 	}
@@ -253,7 +253,7 @@ func TestAzureOpenAIAuthHeader(t *testing.T) {
 
 func TestAzureOpenAIListModels(t *testing.T) {
 	b := NewAzureOpenAIBackend("key", "")
-	models, err := b.ListModels()
+	models, err := b.ListModels(context.Background())
 	if err != nil {
 		t.Fatalf("ListModels() error = %v", err)
 	}
@@ -336,7 +336,7 @@ func TestVertexAIAuthHeader(t *testing.T) {
 
 func TestVertexAIListModels(t *testing.T) {
 	b := NewVertexAIBackend("key")
-	models, err := b.ListModels()
+	models, err := b.ListModels(context.Background())
 	if err != nil {
 		t.Fatalf("ListModels() error = %v", err)
 	}
@@ -549,7 +549,7 @@ func TestConfigureInvalidBackend(t *testing.T) {
 
 func TestListModelsWithoutInit(t *testing.T) {
 	c := NewClient()
-	_, err := c.ListModels()
+	_, err := c.ListModels(context.Background())
 	if err == nil {
 		t.Error("ListModels() expected error when backend not initialized")
 	}
@@ -848,7 +848,7 @@ func TestSendStreamWithoutBackendInit(t *testing.T) {
 	}
 
 	channel := make(chan domain.StreamUpdate, 1)
-	err := c.SendStream(msgs, opts, channel)
+	err := c.SendStream(context.Background(), msgs, opts, channel)
 	if err == nil {
 		t.Fatal("SendStream() expected error when backend not initialized")
 	}
@@ -901,7 +901,7 @@ func TestSendStreamFallback(t *testing.T) {
 	}
 
 	channel := make(chan domain.StreamUpdate, 10)
-	err := c.SendStream(msgs, opts, channel)
+	err := c.SendStream(context.Background(), msgs, opts, channel)
 	if err != nil {
 		t.Fatalf("SendStream() error = %v", err)
 	}

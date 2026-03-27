@@ -46,12 +46,10 @@ func NewClient() (ret *Client) {
 		string(anthropic.ModelClaudeHaiku4_5_20251001),
 		string(anthropic.ModelClaudeSonnet4_20250514),
 		string(anthropic.ModelClaudeSonnet4_0),
-		string(anthropic.ModelClaude4Sonnet20250514),
 		string(anthropic.ModelClaudeSonnet4_5),
 		string(anthropic.ModelClaudeSonnet4_5_20250929),
 		string(anthropic.ModelClaudeOpus4_0),
 		string(anthropic.ModelClaudeOpus4_20250514),
-		string(anthropic.ModelClaude4Opus20250514),
 		string(anthropic.ModelClaudeOpus4_1_20250805),
 	}
 
@@ -65,7 +63,6 @@ func NewClient() (ret *Client) {
 		// Claude Sonnet 4 variants (1M context support)
 		string(anthropic.ModelClaudeSonnet4_20250514): {"context-1m-2025-08-07"},
 		string(anthropic.ModelClaudeSonnet4_0):        {"context-1m-2025-08-07"},
-		string(anthropic.ModelClaude4Sonnet20250514):  {"context-1m-2025-08-07"},
 
 		// Claude Sonnet 4.5 variants (1M context support)
 		string(anthropic.ModelClaudeSonnet4_5):          {"context-1m-2025-08-07"},
@@ -128,7 +125,7 @@ func (an *Client) configure() (err error) {
 	return
 }
 
-func (an *Client) ListModels() (ret []string, err error) {
+func (an *Client) ListModels(context.Context) (ret []string, err error) {
 	return an.models, nil
 }
 
@@ -153,7 +150,7 @@ func parseThinking(level domain.ThinkingLevel) (anthropic.ThinkingConfigParamUni
 }
 
 func (an *Client) SendStream(
-	msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan domain.StreamUpdate,
+	ctx context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan domain.StreamUpdate,
 ) (err error) {
 	messages := an.toMessages(msgs)
 	if len(messages) == 0 {
@@ -161,8 +158,6 @@ func (an *Client) SendStream(
 		// No messages to send after normalization, consider this a non-error condition for streaming.
 		return
 	}
-
-	ctx := context.Background()
 
 	params := an.buildMessageParams(messages, opts)
 	betas := an.modelBetas[opts.Model]

@@ -1,5 +1,52 @@
 # Changelog
 
+## v1.4.442 (2026-03-25)
+
+### PR [#2075](https://github.com/danielmiessler/Fabric/pull/2075) by [ksylvan](https://github.com/ksylvan) and [mikaelpr](https://github.com/mikaelpr): refactor: extract OAuth and auth logic from Codex client module
+
+- Refactored the Codex client module by extracting all OAuth and authentication logic into a dedicated module, improving separation of concerns.
+- Removed the OAuth flow, PKCE handling, and token refresh logic from `codex.go`, streamlining the client's core responsibilities.
+- Removed the auth transport round-trip retry logic, simplifying the HTTP transport layer.
+- Removed JWT parsing and token expiry utilities, along with unused OAuth types and helper structs, reducing dead code in the package.
+- Added a test for `SendStream` HTTP error mapping and channel close behavior, improving test coverage for the client module.
+
+## v1.4.441 (2026-03-22)
+
+### PR [#2068](https://github.com/danielmiessler/Fabric/pull/2068) by [dependabot](https://github.com/apps/dependabot) and [ksylvan](https://github.com/ksylvan): chore(deps): bump google.golang.org/grpc from 1.79.0 to 1.79.3 in the go_modules group across 1 directory
+
+- Bumped `google.golang.org/grpc` from v1.79.0 to v1.79.3 as an indirect dependency update.
+- Bumped `anthropic-sdk-go` from v1.23.0 to v1.27.1, keeping the Anthropic client library up to date.
+- Removed deprecated `ModelClaude4Sonnet20250514` and `ModelClaude4Opus20250514` model aliases from the Go module.
+- Updated `gin-gonic/gin` to v1.12.0 and `go-git` to v5.17.0, bringing in the latest framework improvements.
+- Bumped `ollama/ollama` from v0.16.2 to v0.18.2, incorporating the latest Ollama client updates.
+
+## v1.4.440 (2026-03-19)
+
+### PR [#2064](https://github.com/danielmiessler/Fabric/pull/2064) by [JasonYeYuhe](https://github.com/JasonYeYuhe) and [ksylvan](https://github.com/ksylvan): docs: add Chinese translation (README.zh.md)
+
+- Added a new Chinese translation of the README file (`README.zh.md`).
+- Refined Chinese translations for improved idiomaticity and natural language flow.
+- Removed a duplicate key in the Chinese (`zh`) locale file.
+
+## v1.4.439 (2026-03-18)
+
+### PR [#2066](https://github.com/danielmiessler/Fabric/pull/2066) by [octo-patch](https://github.com/octo-patch): feat: upgrade MiniMax default model to M2.7
+
+- Upgraded the MiniMax default model to M2.7, the latest flagship model with enhanced reasoning and coding capabilities.
+- Added MiniMax-M2.7 and MiniMax-M2.7-highspeed to the static model list.
+- Placed M2.7 models at the top of the list as the new defaults.
+- Retained all previous models (M2.5, M2.5-highspeed, M2.5-lightning, M2, M2.1, M2.1-lightning) as available alternatives.
+
+## v1.4.438 (2026-03-18)
+
+### PR [#2061](https://github.com/danielmiessler/Fabric/pull/2061) by [praxstack](https://github.com/praxstack): fix(chat): prevent streaming deadlock and unify strategy handling
+
+- **Fixed a streaming deadlock in `Chatter.Send`** by introducing `recordFirstStreamError()`, which uses a non-blocking `select/default` to safely send only the first error to the buffered error channel, preventing goroutine leaks when both the `SendStream` goroutine and the stream-update loop attempt to write simultaneously.
+- **Unified strategy handling across the CLI and REST API server** by passing `StrategyName` through to `GetChatter()` and `ChatRequest`, ensuring the core `Chatter.BuildSession()` layer handles strategy loading consistently instead of duplicating logic in the server handler.
+- **Removed inline `os.ReadFile` strategy loading from the server handler**, which previously bypassed the core Chatter layer, causing strategy prompts to be incorrectly prepended to `UserInput` rather than the system message.
+- **Replaced raw string concatenation for system message assembly** with a new `joinPromptSections()` helper that trims whitespace, skips empty sections, and joins strategy, context, and pattern prompts with a single newline separator.
+- **Added regression and unit tests**, including a 2-second timeout deadlock test (`TestChatter_Send_StreamingErrorUpdateAndReturnDoesNotDeadlock`), a session-assembly validation test (`TestChatter_BuildSession_SeparatesSystemSections`), and a helper verification test (`TestBuildPromptChatRequest_PreservesStrategyAndUserInput`).
+
 ## v1.4.437 (2026-03-16)
 
 ### PR [#2056](https://github.com/danielmiessler/Fabric/pull/2056) by [mikaelpr](https://github.com/mikaelpr) and [ksylvan](https://github.com/ksylvan): feat: add Codex vendor with OpenAI OAuth

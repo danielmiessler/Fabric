@@ -52,9 +52,9 @@ func NewClient() *Client {
 	return client
 }
 
-func (c *Client) ListModels() ([]string, error) {
+func (c *Client) ListModels(ctx context.Context) ([]string, error) {
 	if c.ControlPlaneToken.Value == "" {
-		models, err := c.Client.ListModels()
+		models, err := c.Client.ListModels(ctx)
 		if err == nil && len(models) > 0 {
 			return models, nil
 		}

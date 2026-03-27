@@ -180,7 +180,8 @@ func getStrategyDir() (ret string, err error) {
 	return filepath.Join(homeDir, ".config", "fabric", "strategies"), nil
 }
 
-// LoadStrategy loads a strategy from the given name
+// LoadStrategy loads a strategy from the given name.
+// The resolved path is validated to stay within the strategy directory to prevent path traversal.
 func LoadStrategy(filename string) (*Strategy, error) {
 	if filename == "" {
 		return nil, nil
@@ -200,6 +201,13 @@ func LoadStrategy(filename string) (*Strategy, error) {
 		if _, err := os.Stat(strategyPath); os.IsNotExist(err) {
 			return nil, fmt.Errorf(i18n.T("strategy_not_found"), filename)
 		}
+	}
+
+	// Validate the resolved path stays within strategyDir to prevent path traversal
+	cleanedPath := filepath.Clean(strategyPath)
+	cleanedDir := filepath.Clean(strategyDir) + string(os.PathSeparator)
+	if !strings.HasPrefix(cleanedPath, cleanedDir) {
+		return nil, fmt.Errorf(i18n.T("strategy_path_traversal"), filename)
 	}
 
 	data, err := os.ReadFile(strategyPath)

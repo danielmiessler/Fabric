@@ -1,6 +1,7 @@
 package azure
 
 import (
+	"context"
 	"errors"
 	"strings"
 
@@ -66,7 +67,7 @@ func (oi *Client) configure() error {
 	return nil
 }
 
-func (oi *Client) ListModels() (ret []string, err error) {
+func (oi *Client) ListModels(context.Context) (ret []string, err error) {
 	ret = oi.apiDeployments
 	return
 }

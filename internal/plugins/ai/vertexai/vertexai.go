@@ -61,7 +61,7 @@ func (c *Client) configure() error {
 	return nil
 }
 
-func (c *Client) ListModels() ([]string, error) {
+func (c *Client) ListModels(_ context.Context) ([]string, error) {
 	ctx := context.Background()
 
 	// Get ADC credentials for API authentication
@@ -179,7 +179,7 @@ func (c *Client) sendClaude(ctx context.Context, msgs []*chat.ChatCompletionMess
 	return strings.Join(textParts, ""), nil
 }
 
-func (c *Client) SendStream(msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan domain.StreamUpdate) error {
+func (c *Client) SendStream(_ context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan domain.StreamUpdate) error {
 	if isGeminiModel(opts.Model) {
 		return c.sendStreamGemini(msgs, opts, channel)
 	}

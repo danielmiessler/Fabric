@@ -52,7 +52,7 @@ func (c *Client) configure() error {
 }
 
 // ListModels returns a list of available models.
-func (c *Client) ListModels() ([]string, error) {
+func (c *Client) ListModels(_ context.Context) ([]string, error) {
 	url := fmt.Sprintf("%s/models", c.ApiUrl.Value)
 
 	req, err := http.NewRequest("GET", url, nil)
@@ -89,7 +89,7 @@ func (c *Client) ListModels() ([]string, error) {
 	return models, nil
 }
 
-func (c *Client) SendStream(msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan domain.StreamUpdate) (err error) {
+func (c *Client) SendStream(_ context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan domain.StreamUpdate) (err error) {
 	url := fmt.Sprintf("%s/chat/completions", c.ApiUrl.Value)
 
 	payload := map[string]any{

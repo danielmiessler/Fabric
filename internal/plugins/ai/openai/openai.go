@@ -96,9 +96,9 @@ func (o *Client) configure() (ret error) {
 	return
 }
 
-func (o *Client) ListModels() (ret []string, err error) {
+func (o *Client) ListModels(ctx context.Context) (ret []string, err error) {
 	var page *pagination.Page[openai.Model]
-	if page, err = o.ApiClient.Models.List(context.Background()); err == nil {
+	if page, err = o.ApiClient.Models.List(ctx); err == nil {
 		for _, mod := range page.Data {
 			ret = append(ret, mod.ID)
 		}
@@ -110,26 +110,26 @@ func (o *Client) ListModels() (ret []string, err error) {
 	// Some providers (e.g., GitHub Models) return non-standard response formats
 	// that the SDK fails to parse.
 	debuglog.Debug(debuglog.Basic, "SDK Models.List failed for %s: %v, falling back to direct API fetch\n", o.GetName(), err)
-	return FetchModelsDirectly(context.Background(), o.ApiBaseURL.Value, o.ApiKey.Value, o.GetName(), o.httpClient)
+	return FetchModelsDirectly(ctx, o.ApiBaseURL.Value, o.ApiKey.Value, o.GetName(), o.httpClient)
 }
 
 func (o *Client) SendStream(
-	msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan domain.StreamUpdate,
+	ctx context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan domain.StreamUpdate,
 ) (err error) {
 	// Use Responses API for OpenAI, Chat Completions API for other providers
 	if o.supportsResponsesAPI() {
-		return o.sendStreamResponses(msgs, opts, channel)
+		return o.sendStreamResponses(ctx, msgs, opts, channel)
 	}
-	return o.sendStreamChatCompletions(msgs, opts, channel)
+	return o.sendStreamChatCompletions(ctx, msgs, opts, channel)
 }
 
 func (o *Client) sendStreamResponses(
-	msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan domain.StreamUpdate,
+	ctx context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan domain.StreamUpdate,
 ) (err error) {
 	defer close(channel)
 
 	req := o.buildResponseParams(msgs, opts)
-	stream := o.ApiClient.Responses.NewStreaming(context.Background(), req)
+	stream := o.ApiClient.Responses.NewStreaming(ctx, req)
 	for stream.Next() {
 		event := stream.Current()
 		switch event.Type {

@@ -36,14 +36,14 @@ type testVendor struct {
 	models []string
 }
 
-func (m *testVendor) GetName() string                       { return m.name }
-func (m *testVendor) GetSetupDescription() string           { return m.name }
-func (m *testVendor) IsConfigured() bool                    { return true }
-func (m *testVendor) Configure() error                      { return nil }
-func (m *testVendor) Setup() error                          { return nil }
-func (m *testVendor) SetupFillEnvFileContent(*bytes.Buffer) {}
-func (m *testVendor) ListModels() ([]string, error)         { return m.models, nil }
-func (m *testVendor) SendStream([]*chat.ChatCompletionMessage, *domain.ChatOptions, chan domain.StreamUpdate) error {
+func (m *testVendor) GetName() string                              { return m.name }
+func (m *testVendor) GetSetupDescription() string                  { return m.name }
+func (m *testVendor) IsConfigured() bool                           { return true }
+func (m *testVendor) Configure() error                             { return nil }
+func (m *testVendor) Setup() error                                 { return nil }
+func (m *testVendor) SetupFillEnvFileContent(*bytes.Buffer)        {}
+func (m *testVendor) ListModels(context.Context) ([]string, error) { return m.models, nil }
+func (m *testVendor) SendStream(context.Context, []*chat.ChatCompletionMessage, *domain.ChatOptions, chan domain.StreamUpdate) error {
 	return nil
 }
 func (m *testVendor) Send(context.Context, []*chat.ChatCompletionMessage, *domain.ChatOptions) (string, error) {
@@ -80,7 +80,7 @@ func TestGetChatter_WarnsOnAmbiguousModel(t *testing.T) {
 		debuglog.SetOutput(oldStderr)
 	}()
 
-	chatter, err := registry.GetChatter("shared-model", 0, "", "", false, false)
+	chatter, err := registry.GetChatter("shared-model", 0, "", false, false)
 	w.Close()
 	warning, _ := io.ReadAll(r)
 
@@ -115,7 +115,7 @@ func TestGetChatter_AllowsExplicitCodexManualModel(t *testing.T) {
 
 	registry := &PluginRegistry{Db: db, VendorManager: vm, Defaults: defaults}
 
-	chatter, err := registry.GetChatter("gpt-5.1-codex", 0, "Codex", "", false, false)
+	chatter, err := registry.GetChatter("gpt-5.1-codex", 0, "Codex", false, false)
 	if err != nil {
 		t.Fatalf("GetChatter() error = %v", err)
 	}
@@ -146,7 +146,7 @@ func TestGetChatter_RejectsExplicitCodexModelFromOtherVendor(t *testing.T) {
 
 	registry := &PluginRegistry{Db: db, VendorManager: vm, Defaults: defaults}
 
-	if _, err := registry.GetChatter("claude-3.7-sonnet", 0, "Codex", "", false, false); err == nil {
+	if _, err := registry.GetChatter("claude-3.7-sonnet", 0, "Codex", false, false); err == nil {
 		t.Fatal("expected GetChatter() to reject models that only belong to another vendor")
 	}
 }

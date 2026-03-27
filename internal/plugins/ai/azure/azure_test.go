@@ -2,6 +2,7 @@ package azure
 
 import (
 	"bytes"
+	"context"
 	"io"
 	"net/http"
 	"testing"
@@ -78,7 +79,7 @@ func TestListModels(t *testing.T) {
 	client := NewClient()
 	client.apiDeployments = []string{"deployment1", "deployment2"}
 
-	models, err := client.ListModels()
+	models, err := client.ListModels(context.Background())
 	if err != nil {
 		t.Fatalf("Expected no error, got %v", err)
 	}

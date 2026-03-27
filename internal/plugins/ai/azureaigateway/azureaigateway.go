@@ -35,7 +35,7 @@ var _ ai.Vendor = (*Client)(nil)
 // are handled by the Client.
 type Backend interface {
 	// ListModels returns the list of models available for this backend
-	ListModels() ([]string, error)
+	ListModels(context.Context) ([]string, error)
 
 	// BuildEndpoint constructs the full API endpoint URL for the given model
 	BuildEndpoint(baseURL, model string) string
@@ -132,11 +132,11 @@ func (c *Client) IsConfigured() bool {
 }
 
 // ListModels delegates to the active backend
-func (c *Client) ListModels() ([]string, error) {
+func (c *Client) ListModels(ctx context.Context) ([]string, error) {
 	if c.backend == nil {
 		return nil, errors.New(i18n.T("azureaigateway_backend_not_initialized"))
 	}
-	return c.backend.ListModels()
+	return c.backend.ListModels(ctx)
 }
 
 // Send sends a non-streaming request through the APIM gateway.
@@ -199,18 +199,13 @@ func (c *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, o
 }
 
 // SendStream falls back to non-streaming (APIM gateway doesn't support SSE pass-through).
-//
-// NOTE: This method uses context.Background() because the ai.Vendor interface does not
-// accept a context parameter for SendStream. If the caller disconnects, this request will
-// continue until the gateway timeout (300s). A future update to the ai.Vendor interface
-// should add context propagation to SendStream.
-func (c *Client) SendStream(msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan domain.StreamUpdate) error {
+func (c *Client) SendStream(ctx context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan domain.StreamUpdate) error {
 	defer close(channel)
 	if c.backend == nil {
 		return errors.New(i18n.T("azureaigateway_backend_not_initialized"))
 	}
 
-	ctx, cancel := context.WithTimeout(context.Background(), gatewayTimeout)
+	ctx, cancel := context.WithTimeout(ctx, gatewayTimeout)
 	defer cancel()
 
 	result, err := c.Send(ctx, msgs, opts)

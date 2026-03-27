@@ -443,7 +443,7 @@ func (c *BedrockClient) configure() error {
 // from AWS Bedrock that can be used with this plugin.
 // When using bearer token auth, the API may not be accessible, so a static
 // fallback list of common models is returned instead.
-func (c *BedrockClient) ListModels() ([]string, error) {
+func (c *BedrockClient) ListModels(_ context.Context) ([]string, error) {
 	models, err := c.listModelsFromAPI()
 	if err != nil && c.bedrockAPIKey.Value != "" {
 		// Bearer token auth may lack ListFoundationModels permissions;
@@ -488,7 +488,7 @@ func (c *BedrockClient) listModelsFromAPI() ([]string, error) {
 }
 
 // SendStream sends the messages to the Bedrock ConverseStream API
-func (c *BedrockClient) SendStream(msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan domain.StreamUpdate) (err error) {
+func (c *BedrockClient) SendStream(_ context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan domain.StreamUpdate) (err error) {
 	// Ensure channel is closed on all exit paths to prevent goroutine leaks
 	defer func() {
 		if r := recover(); r != nil {

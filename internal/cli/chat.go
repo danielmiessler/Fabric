@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"os"
@@ -37,7 +38,7 @@ func handleChatProcessing(currentFlags *Flags, registry *core.PluginRegistry, me
 
 	var chatter *core.Chatter
 	if chatter, err = registry.GetChatter(currentFlags.Model, currentFlags.ModelContextLength,
-		currentFlags.Vendor, currentFlags.Strategy, currentFlags.Stream, currentFlags.DryRun); err != nil {
+		currentFlags.Vendor, currentFlags.Stream, currentFlags.DryRun); err != nil {
 		return
 	}
 
@@ -88,7 +89,7 @@ func handleChatProcessing(currentFlags *Flags, registry *core.PluginRegistry, me
 		chatOptions.AudioFormat = "wav" // Default to WAV format
 	}
 
-	if session, err = chatter.Send(chatReq, chatOptions); err != nil {
+	if session, err = chatter.Send(context.Background(), chatReq, chatOptions); err != nil {
 		return
 	}
 

@@ -325,3 +325,8 @@ tmp/
 
 # Ignore .claude/
 .claude/
+# Claude MEMORY directory
+MEMORY/
+
+# Maestro directory
+.maestro/

@@ -60,7 +60,7 @@ type Client struct {
 	ApiKey *plugins.SetupQuestion
 }
 
-func (o *Client) ListModels() (ret []string, err error) {
+func (o *Client) ListModels(_ context.Context) (ret []string, err error) {
 	ctx := context.Background()
 	var client *genai.Client
 	if client, err = genai.NewClient(ctx, &genai.ClientConfig{
@@ -124,7 +124,7 @@ func (o *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, o
 	return
 }
 
-func (o *Client) SendStream(msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan domain.StreamUpdate) (err error) {
+func (o *Client) SendStream(_ context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan domain.StreamUpdate) (err error) {
 	ctx := context.Background()
 	defer close(channel)
 

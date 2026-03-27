@@ -1,6 +1,7 @@
 package anthropic
 
 import (
+	"context"
 	"strings"
 	"testing"
 
@@ -34,7 +35,7 @@ func TestNewClient_DefaultInitialization(t *testing.T) {
 func TestClientListModels(t *testing.T) {
 	client := NewClient()
 
-	models, err := client.ListModels()
+	models, err := client.ListModels(context.Background())
 	if err != nil {
 		t.Fatalf("Expected no error, got %v", err)
 	}
@@ -52,7 +53,7 @@ func TestClientListModels(t *testing.T) {
 
 func TestClient_ListModels_ReturnsCorrectModels(t *testing.T) {
 	client := NewClient()
-	models, err := client.ListModels()
+	models, err := client.ListModels(context.Background())
 
 	if err != nil {
 		t.Fatalf("Expected no error, got %v", err)

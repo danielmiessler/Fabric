@@ -13,14 +13,14 @@ type stubVendor struct {
 	name string
 }
 
-func (v *stubVendor) GetName() string                       { return v.name }
-func (v *stubVendor) GetSetupDescription() string           { return "" }
-func (v *stubVendor) IsConfigured() bool                    { return true }
-func (v *stubVendor) Configure() error                      { return nil }
-func (v *stubVendor) Setup() error                          { return nil }
-func (v *stubVendor) SetupFillEnvFileContent(*bytes.Buffer) {}
-func (v *stubVendor) ListModels() ([]string, error)         { return nil, nil }
-func (v *stubVendor) SendStream([]*chat.ChatCompletionMessage, *domain.ChatOptions, chan domain.StreamUpdate) error {
+func (v *stubVendor) GetName() string                              { return v.name }
+func (v *stubVendor) GetSetupDescription() string                  { return "" }
+func (v *stubVendor) IsConfigured() bool                           { return true }
+func (v *stubVendor) Configure() error                             { return nil }
+func (v *stubVendor) Setup() error                                 { return nil }
+func (v *stubVendor) SetupFillEnvFileContent(*bytes.Buffer)        {}
+func (v *stubVendor) ListModels(context.Context) ([]string, error) { return nil, nil }
+func (v *stubVendor) SendStream(context.Context, []*chat.ChatCompletionMessage, *domain.ChatOptions, chan domain.StreamUpdate) error {
 	return nil
 }
 func (v *stubVendor) Send(context.Context, []*chat.ChatCompletionMessage, *domain.ChatOptions) (string, error) {

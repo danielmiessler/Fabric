@@ -29,6 +29,10 @@ type Chatter struct {
 	vendor             ai.Vendor
 }
 
+func NewChatter(db *fsdb.Db) *Chatter {
+	return &Chatter{db: db}
+}
+
 // recordFirstStreamError sends err to errChan if the channel is empty; subsequent errors are discarded.
 func recordFirstStreamError(errChan chan error, err error) {
 	if err == nil {
@@ -216,9 +220,18 @@ func (o *Chatter) Send(ctx context.Context, request *domain.ChatRequest, opts *d
 }
 
 func (o *Chatter) BuildSession(request *domain.ChatRequest, raw bool) (session *fsdb.Session, err error) {
+	return o.buildSession(request, raw, true)
+}
+
+func (o *Chatter) BuildSessionQuiet(request *domain.ChatRequest, raw bool) (session *fsdb.Session, err error) {
+	return o.buildSession(request, raw, false)
+}
+
+func (o *Chatter) buildSession(
+	request *domain.ChatRequest, raw bool, announceNewSession bool) (session *fsdb.Session, err error) {
 	if request.SessionName != "" {
 		var sess *fsdb.Session
-		if sess, err = o.db.Sessions.Get(request.SessionName); err != nil {
+		if sess, err = o.db.Sessions.GetWithNotice(request.SessionName, announceNewSession); err != nil {
 			err = fmt.Errorf(i18n.T("chatter_error_find_session"), request.SessionName, err)
 			return
 		}

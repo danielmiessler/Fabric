@@ -24,6 +24,16 @@ func TestInit(t *testing.T) {
 	assert.Equal(t, expectedFlags.Copy, flags.Copy)
 }
 
+func TestInitPrintPrompt(t *testing.T) {
+	oldArgs := os.Args
+	defer func() { os.Args = oldArgs }()
+	os.Args = []string{"cmd", "--print-prompt"}
+
+	flags, err := Init()
+	assert.NoError(t, err)
+	assert.True(t, flags.PrintPrompt)
+}
+
 func TestReadStdin(t *testing.T) {
 	input := "test input"
 	stdin := io.NopCloser(strings.NewReader(input))
@@ -72,6 +82,11 @@ func TestBuildChatOptions(t *testing.T) {
 	options, err := flags.BuildChatOptions()
 	assert.NoError(t, err)
 	assert.Equal(t, expectedOptions, options)
+}
+
+func TestIsChatRequestWithPrintPrompt(t *testing.T) {
+	flags := &Flags{PrintPrompt: true}
+	assert.True(t, flags.IsChatRequest())
 }
 
 func TestBuildChatOptionsDefaultSeed(t *testing.T) {

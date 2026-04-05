@@ -2,7 +2,7 @@
   import { Button } from "$lib/components/ui/button";
   import { Textarea } from "$lib/components/ui/textarea";
   import { sendMessage, messageStore } from '$lib/store/chat-store';
-  import { systemPrompt, selectedPatternName } from '$lib/store/pattern-store';
+  import { systemPrompt, selectedPatternName, patternVariables } from '$lib/store/pattern-store';
   import { getToastStore } from '@skeletonlabs/skeleton';
   import { FileButton } from '@skeletonlabs/skeleton';
   import { Paperclip, Send, FileCheck } from 'lucide-svelte';
@@ -239,7 +239,7 @@ async function readFileContent(file: File): Promise<string> {
 
 
 
-  async function saveToObsidian(content: string) {
+  async function saveToObsidian(content: string, input: string, variables: Record<string, string>) {
     if (!$obsidianSettings.saveToObsidian) {
       console.log('Obsidian saving is disabled');
       return;
@@ -278,7 +278,9 @@ async function readFileContent(file: File): Promise<string> {
         body: JSON.stringify({
           pattern: $selectedPatternName,
           noteName: $obsidianSettings.noteName,
-          content
+          content,
+          input,
+          variables
         })
       });
 
@@ -367,6 +369,7 @@ async function readFileContent(file: File): Promise<string> {
     const contentWithFiles = contentsForProcessing.length > 0
       ? `${processedText}\n\nFile Contents (${filesForProcessing.map(f => f.endsWith('.pdf') ? 'PDF' : 'Text').join(', ')}):\n${contentsForProcessing.join('\n\n---\n\n')}`
       : processedText;
+    const currentPatternVariables = get(patternVariables);
 
     // Get the enhanced prompt
     const enhancedPrompt = contentsForProcessing.length > 0
@@ -380,6 +383,8 @@ async function readFileContent(file: File): Promise<string> {
     });
     
     try {
+      let assistantContent = '';
+
       // Get the chat stream
       const stream = await chatService.streamChat(contentWithFiles, enhancedPrompt);
       
@@ -387,6 +392,7 @@ async function readFileContent(file: File): Promise<string> {
       await chatService.processStream(
         stream,
         (content, response) => {
+          assistantContent += content;
           messageStore.update(messages => {
             const newMessages = [...messages];
             // Remove the loading message
@@ -425,6 +431,14 @@ async function readFileContent(file: File): Promise<string> {
           }]);
         }
       );
+
+      const cleanedAssistantContent = $selectedPatternName
+        ? chatService.cleanPatternOutput(assistantContent)
+        : assistantContent;
+
+      if (cleanedAssistantContent.trim()) {
+        await saveToObsidian(cleanedAssistantContent, contentWithFiles, currentPatternVariables);
+      }
     } catch (error) {
       // Make sure to remove loading message on error
       messageStore.update(messages => 

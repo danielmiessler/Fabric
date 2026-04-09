@@ -57,7 +57,7 @@ func joinPromptSections(parts ...string) string {
 }
 
 // Send processes a chat request and applies file changes for create_coding_feature pattern
-func (o *Chatter) Send(request *domain.ChatRequest, opts *domain.ChatOptions) (session *fsdb.Session, err error) {
+func (o *Chatter) Send(ctx context.Context, request *domain.ChatRequest, opts *domain.ChatOptions) (session *fsdb.Session, err error) {
 	// Use o.model (normalized) for NeedsRawMode check instead of opts.Model
 	// This ensures case-insensitive model names work correctly (e.g., "GPT-5" → "gpt-5")
 	if o.vendor.NeedsRawMode(o.model) {
@@ -107,7 +107,7 @@ func (o *Chatter) Send(request *domain.ChatRequest, opts *domain.ChatOptions) (s
 
 		go func() {
 			defer close(done)
-			if streamErr := o.vendor.SendStream(session.GetVendorMessages(), opts, responseChan); streamErr != nil {
+			if streamErr := o.vendor.SendStream(ctx, session.GetVendorMessages(), opts, responseChan); streamErr != nil {
 				recordFirstStreamError(errChan, streamErr)
 			}
 		}()
@@ -168,7 +168,7 @@ func (o *Chatter) Send(request *domain.ChatRequest, opts *domain.ChatOptions) (s
 			// No errors, continue
 		}
 	} else {
-		if message, err = o.vendor.Send(context.Background(), session.GetVendorMessages(), opts); err != nil {
+		if message, err = o.vendor.Send(ctx, session.GetVendorMessages(), opts); err != nil {
 			return
 		}
 		if debuglog.GetLevel() >= debuglog.Wire {

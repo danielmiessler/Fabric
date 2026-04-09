@@ -2,6 +2,7 @@
 package azureaigateway
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -26,7 +27,7 @@ func NewVertexAIBackend(subscriptionKey string) *VertexAIBackend {
 }
 
 // ListModels returns the list of Gemini models available through Vertex AI
-func (b *VertexAIBackend) ListModels() ([]string, error) {
+func (b *VertexAIBackend) ListModels(_ context.Context) ([]string, error) {
 	return []string{
 		"gemini-3-pro-preview",
 		"gemini-2.5-pro",

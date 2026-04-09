@@ -207,7 +207,7 @@ func TestListModels_NilClient_WithApiKey_ReturnsFallback(t *testing.T) {
 	client.bedrockAPIKey.Value = "test-absk-token"
 	// Don't call configure() — clients are nil
 
-	models, err := client.ListModels()
+	models, err := client.ListModels(context.Background())
 	assert.NoError(t, err, "ListModels should not error when falling back to static list")
 	assert.Equal(t, defaultBedrockModels, models, "should return default models as fallback")
 }
@@ -216,7 +216,7 @@ func TestListModels_NilClient_NoApiKey_ReturnsError(t *testing.T) {
 	client := NewClient()
 	// Don't call configure() and no API key — should propagate error
 
-	_, err := client.ListModels()
+	_, err := client.ListModels(context.Background())
 	assert.Error(t, err, "ListModels should error when client is nil and no API key for fallback")
 }
 
@@ -227,7 +227,7 @@ func TestSendStream_NilClient_ReturnsError(t *testing.T) {
 	ch := make(chan domain.StreamUpdate, 10)
 	opts := &domain.ChatOptions{Model: "test-model", Temperature: 0.7, TopP: 0.9}
 
-	err := client.SendStream(nil, opts, ch)
+	err := client.SendStream(context.Background(), nil, opts, ch)
 	assert.Error(t, err, "SendStream should return error when client is nil")
 	assert.Contains(t, err.Error(), i18n.T("bedrock_client_not_initialized"))
 }

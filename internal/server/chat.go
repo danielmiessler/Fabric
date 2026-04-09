@@ -132,7 +132,7 @@ func (h *ChatHandler) HandleChat(c *gin.Context) {
 					Quiet:            true,
 				}
 
-				_, err = chatter.Send(chatReq, opts)
+				_, err = chatter.Send(c.Request.Context(), chatReq, opts)
 				if err != nil {
 					log.Printf("Error from chatter.Send: %v", err)
 					// Error already sent to streamChan via domain.StreamTypeError if occurred in Send loop

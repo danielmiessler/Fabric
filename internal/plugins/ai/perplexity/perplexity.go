@@ -53,7 +53,7 @@ func (c *Client) Configure() error {
 	return nil
 }
 
-func (c *Client) ListModels() ([]string, error) {
+func (c *Client) ListModels(_ context.Context) ([]string, error) {
 	// Perplexity API does not have a ListModels endpoint.
 	// We return a predefined list.
 	return models, nil
@@ -119,7 +119,7 @@ func (c *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, o
 	return content.String(), nil
 }
 
-func (c *Client) SendStream(msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan domain.StreamUpdate) error {
+func (c *Client) SendStream(_ context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan domain.StreamUpdate) error {
 	if c.client == nil {
 		if err := c.Configure(); err != nil {
 			close(channel) // Ensure channel is closed on error

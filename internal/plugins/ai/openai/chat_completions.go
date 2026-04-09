@@ -30,7 +30,7 @@ func (o *Client) sendChatCompletions(ctx context.Context, msgs []*chat.ChatCompl
 
 // sendStreamChatCompletions sends a streaming request using the Chat Completions API
 func (o *Client) sendStreamChatCompletions(
-	msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan domain.StreamUpdate,
+	ctx context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan domain.StreamUpdate,
 ) (err error) {
 	defer close(channel)
 
@@ -39,7 +39,7 @@ func (o *Client) sendStreamChatCompletions(
 	req.StreamOptions = openai.ChatCompletionStreamOptionsParam{
 		IncludeUsage: openai.Bool(true),
 	}
-	stream := o.ApiClient.Chat.Completions.NewStreaming(context.Background(), req)
+	stream := o.ApiClient.Chat.Completions.NewStreaming(ctx, req)
 	for stream.Next() {
 		chunk := stream.Current()
 		if len(chunk.Choices) > 0 && chunk.Choices[0].Delta.Content != "" {

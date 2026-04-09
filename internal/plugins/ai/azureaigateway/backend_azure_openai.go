@@ -2,6 +2,7 @@
 package azureaigateway
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -34,7 +35,7 @@ func NewAzureOpenAIBackend(subscriptionKey, apiVersion string) *AzureOpenAIBacke
 
 // ListModels returns the list of models available through Azure OpenAI.
 // These are deployment names that must exist in your Azure OpenAI resource.
-func (b *AzureOpenAIBackend) ListModels() ([]string, error) {
+func (b *AzureOpenAIBackend) ListModels(_ context.Context) ([]string, error) {
 	return []string{
 		"DeepSeek-R1",
 		"gpt-4o",

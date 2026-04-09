@@ -73,6 +73,8 @@ function __fabric_register_completions
         complete -c $cmd -s o -l output -d "Output to file" -r
         complete -c $cmd -s n -l latest -d "Number of latest patterns to list (default: 0)"
         complete -c $cmd -s y -l youtube -d "YouTube video or play list URL to grab transcript, comments from it"
+        complete -c $cmd -l visual-sensitivity -d "Tolerance for FFmpeg scene detection (0.0 - 1.0)"
+        complete -c $cmd -l visual-fps -d "Extract a specific number of frames per second instead of using scene detection"
         complete -c $cmd -s g -l language -d "Specify the Language Code for the chat, e.g. -g=en -g=zh"
         complete -c $cmd -s u -l scrape_url -d "Scrape website URL to markdown using Jina AI"
         complete -c $cmd -s q -l scrape_question -d "Search question using Jina AI"
@@ -117,6 +119,7 @@ function __fabric_register_completions
         complete -c $cmd -l playlist -d "Prefer playlist over video if both ids are present in the URL"
         complete -c $cmd -l transcript -d "Grab transcript from YouTube video and send to chat"
         complete -c $cmd -l transcript-with-timestamps -d "Grab transcript from YouTube video with timestamps"
+        complete -c $cmd -l visual -d "Extract visual data from video using OCR and FFmpeg"
         complete -c $cmd -l comments -d "Grab comments from YouTube video and send to chat"
         complete -c $cmd -l metadata -d "Output video metadata"
         complete -c $cmd -l yt-dlp-args -d "Additional arguments to pass to yt-dlp (e.g. '--cookies-from-browser brave')"

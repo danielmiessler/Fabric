@@ -27,7 +27,7 @@ func TestListModelsUsesBearerTokenWhenConfigured(t *testing.T) {
 	client.ApiKey.Value = "secret"
 	client.HttpClient = server.Client()
 
-	models, err := client.ListModels()
+	models, err := client.ListModels(context.Background())
 	require.NoError(t, err)
 	require.Equal(t, []string{"model-1"}, models)
 }
@@ -86,7 +86,7 @@ func TestListModelsDoesNotSendBearerForWhitespaceOnlyKey(t *testing.T) {
 	client.ApiKey.Value = "   "
 	client.HttpClient = server.Client()
 
-	models, err := client.ListModels()
+	models, err := client.ListModels(context.Background())
 	require.NoError(t, err)
 	require.Equal(t, []string{"model-1"}, models)
 }

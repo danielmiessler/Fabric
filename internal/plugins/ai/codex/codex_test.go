@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/base64"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net"
@@ -176,7 +177,7 @@ func TestListModelsFiltersSupportedVisibleModels(t *testing.T) {
 
 	client := newConfiguredTestClient(t, modelsServer.URL, "acct_models", testJWT("acct_models", time.Now().Add(time.Hour)))
 
-	models, err := client.ListModels()
+	models, err := client.ListModels(context.Background())
 	if err != nil {
 		t.Fatalf("ListModels() error = %v", err)
 	}
@@ -220,8 +221,11 @@ func TestMapRequestErrorPreservesCodexAPIErrorMessage(t *testing.T) {
 	if err == nil {
 		t.Fatal("mapRequestError() returned nil")
 	}
-	if got := err.Error(); got != "The requested model is not supported." {
-		t.Fatalf("mapRequestError() = %q, want %q", got, "The requested model is not supported.")
+	if got := err.Error(); got != "codex request failed with status 400" {
+		t.Fatalf("mapRequestError() = %q, want %q", got, "codex request failed with status 400")
+	}
+	if unwrapped := errors.Unwrap(err); unwrapped == nil || !strings.Contains(unwrapped.Error(), "The requested model is not supported.") {
+		t.Fatalf("wrapped error = %v, want provider detail", unwrapped)
 	}
 }
 
@@ -238,8 +242,11 @@ func TestMapRequestErrorReadsAPIErrorResponseBodyWhenRawJSONMissing(t *testing.T
 	if err == nil {
 		t.Fatal("mapRequestError() returned nil")
 	}
-	if got := err.Error(); got != "The requested model is not supported for Codex." {
-		t.Fatalf("mapRequestError() = %q, want %q", got, "The requested model is not supported for Codex.")
+	if got := err.Error(); got != "codex request failed with status 400" {
+		t.Fatalf("mapRequestError() = %q, want %q", got, "codex request failed with status 400")
+	}
+	if unwrapped := errors.Unwrap(err); unwrapped == nil || !strings.Contains(unwrapped.Error(), "The requested model is not supported for Codex.") {
+		t.Fatalf("wrapped error = %v, want provider detail", unwrapped)
 	}
 }
 
@@ -469,7 +476,7 @@ func TestSendStreamReadsCodexSSE(t *testing.T) {
 	client := newConfiguredTestClient(t, apiServer.URL, "acct_stream", testJWT("acct_stream", time.Now().Add(time.Hour)))
 
 	updates := make(chan domain.StreamUpdate, 8)
-	err := client.SendStream([]*chat.ChatCompletionMessage{
+	err := client.SendStream(context.Background(), []*chat.ChatCompletionMessage{
 		{Role: chat.ChatMessageRoleSystem, Content: "Follow the system prompt"},
 		{Role: "user", Content: "Hello"},
 	}, &domain.ChatOptions{
@@ -489,6 +496,37 @@ func TestSendStreamReadsCodexSSE(t *testing.T) {
 
 	if builder.String() != "hello world\n" {
 		t.Fatalf("streamed content = %q, want %q", builder.String(), "hello world\n")
+	}
+}
+
+func TestSendStreamClosesChannelAndMapsHTTPError(t *testing.T) {
+	apiServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path != "/responses" {
+			http.NotFound(w, r)
+			return
+		}
+		http.Error(w, `{"error":{"message":"usage limit reached"}}`, http.StatusTooManyRequests)
+	}))
+	defer apiServer.Close()
+
+	client := newConfiguredTestClient(t, apiServer.URL, "acct_stream_error", testJWT("acct_stream_error", time.Now().Add(time.Hour)))
+
+	updates := make(chan domain.StreamUpdate, 1)
+	err := client.SendStream(context.Background(), []*chat.ChatCompletionMessage{
+		{Role: chat.ChatMessageRoleUser, Content: "Hello"},
+	}, &domain.ChatOptions{
+		Model: "gpt-5.4",
+	}, updates)
+	if err == nil {
+		t.Fatal("SendStream() error = nil, want mapped HTTP error")
+	}
+	if got := err.Error(); got != "codex usage limit reached" {
+		t.Fatalf("SendStream() error = %q, want %q", got, "codex usage limit reached")
+	}
+
+	update, ok := <-updates
+	if ok {
+		t.Fatalf("expected closed channel after stream error, got update %#v", update)
 	}
 }
 

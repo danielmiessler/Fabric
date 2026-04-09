@@ -100,6 +100,9 @@ _fabric() {
     '(--playlist)--playlist[Prefer playlist over video if both ids are present in the URL]' \
     '(--transcript)--transcript[Grab transcript from YouTube video and send to chat]' \
     '(--transcript-with-timestamps)--transcript-with-timestamps[Grab transcript from YouTube video with timestamps]' \
+    '(--visual)--visual[Extract visual data from video using OCR and FFmpeg]' \
+    '(--visual-sensitivity)--visual-sensitivity[Tolerance for FFmpeg scene detection (0.0 - 1.0)]:visual sensitivity:' \
+    '(--visual-fps)--visual-fps[Extract a specific number of frames per second instead of using scene detection]:frames per second:' \
     '(--comments)--comments[Grab comments from YouTube video and send to chat]' \
     '(--metadata)--metadata[Output video metadata]' \
     '(--yt-dlp-args)--yt-dlp-args[Additional arguments to pass to yt-dlp]:yt-dlp args:' \

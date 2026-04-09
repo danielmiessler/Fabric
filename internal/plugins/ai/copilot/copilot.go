@@ -159,7 +159,7 @@ func (c *Client) IsConfigured() bool {
 
 // ListModels returns the available models.
 // Microsoft 365 Copilot exposes a single model - the Copilot service itself.
-func (c *Client) ListModels() ([]string, error) {
+func (c *Client) ListModels(_ context.Context) ([]string, error) {
 	// Copilot doesn't expose multiple models - it's a unified service
 	// We expose it as a single "model" for consistency with Fabric's architecture
 	return []string{copilotModelName}, nil
@@ -186,7 +186,7 @@ func (c *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, o
 }
 
 // SendStream sends a message to Copilot and streams the response.
-func (c *Client) SendStream(msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan domain.StreamUpdate) error {
+func (c *Client) SendStream(_ context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan domain.StreamUpdate) error {
 	defer close(channel)
 
 	ctx := context.Background()

@@ -117,7 +117,7 @@ func (o *VendorsManager) fetchVendorModels(
 
 	defer wg.Done()
 
-	models, err := vendor.ListModels()
+	models, err := vendor.ListModels(ctx)
 	select {
 	case <-ctx.Done():
 		// Context canceled, don't send the result

@@ -18,16 +18,21 @@
 
 # `fabric`
 
-![Static Badge](https://img.shields.io/badge/mission-human_flourishing_via_AI_augmentation-purple)
+[![Static Badge](https://img.shields.io/badge/mission-human_flourishing_via_AI_augmentation-purple)](https://github.com/danielmiessler/fabric)
 <br />
-![GitHub top language](https://img.shields.io/github/languages/top/danielmiessler/fabric)
-![GitHub last commit](https://img.shields.io/github/last-commit/danielmiessler/fabric)
+[![GitHub top language](https://img.shields.io/github/languages/top/danielmiessler/fabric)](https://github.com/danielmiessler/fabric)
+[![GitHub last commit](https://img.shields.io/github/last-commit/danielmiessler/fabric)](https://github.com/danielmiessler/fabric/commits/main)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/danielmiessler/fabric)
 
 <div align="center">
 <h4><code>fabric</code> is an open-source framework for augmenting humans using AI.</h4>
 </div>
+
+<p align="center">
+  <strong>English</strong> ·
+  <a href="README.zh.md">中文</a>
+</p>
 
 ![Screenshot of fabric](./docs/images/fabric-summarize.png)
 
@@ -678,6 +683,9 @@ Application Options:
       --transcript                  Grab transcript from YouTube video and send to chat (it is used per
                                     default).
       --transcript-with-timestamps  Grab transcript from YouTube video with timestamps and send to chat
+      --visual                      Extract visual data from video using OCR and FFmpeg
+      --visual-sensitivity          Tolerance for FFmpeg scene detection (0.0 - 1.0)
+      --visual-fps                  Extract a specific number of frames per second instead of using scene detection
       --comments                    Grab comments from YouTube video and send to chat
       --metadata                    Output video metadata
   -g, --language=                   Specify the Language Code for the chat, e.g. -g=en -g=zh

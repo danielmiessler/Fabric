@@ -22,7 +22,7 @@ func NewClient() *Client {
 	return &Client{PluginBase: &plugins.PluginBase{Name: "DryRun"}}
 }
 
-func (c *Client) ListModels() ([]string, error) {
+func (c *Client) ListModels(_ context.Context) ([]string, error) {
 	return []string{"dry-run-model"}, nil
 }
 
@@ -108,7 +108,7 @@ func (c *Client) constructRequest(msgs []*chat.ChatCompletionMessage, opts *doma
 	return builder.String()
 }
 
-func (c *Client) SendStream(msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan domain.StreamUpdate) error {
+func (c *Client) SendStream(_ context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan domain.StreamUpdate) error {
 	defer close(channel)
 	request := c.constructRequest(msgs, opts)
 	channel <- domain.StreamUpdate{

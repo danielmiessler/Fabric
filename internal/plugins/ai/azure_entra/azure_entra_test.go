@@ -1,6 +1,7 @@
 package azure_entra
 
 import (
+	"context"
 	"testing"
 )
 
@@ -47,7 +48,7 @@ func TestListModels(t *testing.T) {
 	client := NewClient()
 	client.apiDeployments = []string{"gpt-4o", "gpt-5"}
 
-	models, err := client.ListModels()
+	models, err := client.ListModels(context.Background())
 	if err != nil {
 		t.Fatalf("Expected no error, got %v", err)
 	}

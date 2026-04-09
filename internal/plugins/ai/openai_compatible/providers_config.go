@@ -44,7 +44,7 @@ func NewClient(providerConfig ProviderConfig) *Client {
 }
 
 // ListModels overrides the default ListModels to handle different response formats
-func (c *Client) ListModels() ([]string, error) {
+func (c *Client) ListModels(ctx context.Context) ([]string, error) {
 	// If a custom models URL is provided, handle it
 	if c.modelsURL != "" {
 		if c.modelsURL == "static:abacus" {
@@ -65,13 +65,13 @@ func (c *Client) ListModels() ([]string, error) {
 	}
 
 	// First try the standard OpenAI SDK approach
-	models, err := c.Client.ListModels()
+	models, err := c.Client.ListModels(ctx)
 	if err == nil && len(models) > 0 { // only return if OpenAI SDK returns models
 		return models, nil
 	}
 
 	// Fall back to direct API fetch
-	return c.DirectlyGetModels(context.Background())
+	return c.DirectlyGetModels(ctx)
 }
 
 func (c *Client) fetchAbacusModels() ([]string, error) {

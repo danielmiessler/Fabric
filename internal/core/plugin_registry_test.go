@@ -36,14 +36,14 @@ type testVendor struct {
 	models []string
 }
 
-func (m *testVendor) GetName() string                       { return m.name }
-func (m *testVendor) GetSetupDescription() string           { return m.name }
-func (m *testVendor) IsConfigured() bool                    { return true }
-func (m *testVendor) Configure() error                      { return nil }
-func (m *testVendor) Setup() error                          { return nil }
-func (m *testVendor) SetupFillEnvFileContent(*bytes.Buffer) {}
-func (m *testVendor) ListModels() ([]string, error)         { return m.models, nil }
-func (m *testVendor) SendStream([]*chat.ChatCompletionMessage, *domain.ChatOptions, chan domain.StreamUpdate) error {
+func (m *testVendor) GetName() string                              { return m.name }
+func (m *testVendor) GetSetupDescription() string                  { return m.name }
+func (m *testVendor) IsConfigured() bool                           { return true }
+func (m *testVendor) Configure() error                             { return nil }
+func (m *testVendor) Setup() error                                 { return nil }
+func (m *testVendor) SetupFillEnvFileContent(*bytes.Buffer)        {}
+func (m *testVendor) ListModels(context.Context) ([]string, error) { return m.models, nil }
+func (m *testVendor) SendStream(context.Context, []*chat.ChatCompletionMessage, *domain.ChatOptions, chan domain.StreamUpdate) error {
 	return nil
 }
 func (m *testVendor) Send(context.Context, []*chat.ChatCompletionMessage, *domain.ChatOptions) (string, error) {

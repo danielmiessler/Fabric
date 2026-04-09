@@ -1,6 +1,7 @@
 package azure_entra
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"strings"
@@ -71,7 +72,7 @@ func (c *Client) configure() error {
 	return nil
 }
 
-func (c *Client) ListModels() (ret []string, err error) {
+func (c *Client) ListModels(context.Context) (ret []string, err error) {
 	ret = c.apiDeployments
 	return
 }

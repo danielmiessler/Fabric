@@ -44,11 +44,11 @@ func (m *mockVendor) Setup() error {
 func (m *mockVendor) SetupFillEnvFileContent(*bytes.Buffer) {
 }
 
-func (m *mockVendor) ListModels() ([]string, error) {
+func (m *mockVendor) ListModels(context.Context) ([]string, error) {
 	return []string{"test-model"}, nil
 }
 
-func (m *mockVendor) SendStream(messages []*chat.ChatCompletionMessage, opts *domain.ChatOptions, responseChan chan domain.StreamUpdate) error {
+func (m *mockVendor) SendStream(_ context.Context, messages []*chat.ChatCompletionMessage, opts *domain.ChatOptions, responseChan chan domain.StreamUpdate) error {
 	// Send chunks if provided (for successful streaming test)
 	if m.streamChunks != nil {
 		for _, chunk := range m.streamChunks {
@@ -180,7 +180,7 @@ func TestChatter_Send_SuppressThink(t *testing.T) {
 		return "<think>hidden</think> visible", nil
 	}
 
-	session, err := chatter.Send(request, opts)
+	session, err := chatter.Send(context.Background(), request, opts)
 	if err != nil {
 		t.Fatalf("Send returned error: %v", err)
 	}
@@ -296,7 +296,7 @@ func TestChatter_Send_StreamingErrorPropagation(t *testing.T) {
 	}
 
 	// Call Send and expect it to return the streaming error
-	session, err := chatter.Send(request, opts)
+	session, err := chatter.Send(context.Background(), request, opts)
 
 	// Verify that the error from SendStream is propagated
 	if err == nil {
@@ -353,7 +353,7 @@ func TestChatter_Send_StreamingErrorUpdateAndReturnDoesNotDeadlock(t *testing.T)
 
 	done := make(chan sendResult, 1)
 	go func() {
-		session, err := chatter.Send(request, opts)
+		session, err := chatter.Send(context.Background(), request, opts)
 		done <- sendResult{session: session, err: err}
 	}()
 
@@ -411,7 +411,7 @@ func TestChatter_Send_StreamingSuccessfulAggregation(t *testing.T) {
 	}
 
 	// Call Send and expect successful aggregation
-	session, err := chatter.Send(request, opts)
+	session, err := chatter.Send(context.Background(), request, opts)
 
 	// Verify no error occurred
 	if err != nil {
@@ -494,7 +494,7 @@ func TestChatter_Send_StreamingMetadataPropagation(t *testing.T) {
 	}
 
 	// Call Send
-	_, err := chatter.Send(request, opts)
+	_, err := chatter.Send(context.Background(), request, opts)
 	if err != nil {
 		t.Fatalf("Expected no error, but got: %v", err)
 	}

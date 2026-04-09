@@ -1,6 +1,7 @@
 package exolab
 
 import (
+	"context"
 	"strings"
 
 	"github.com/danielmiessler/fabric/internal/plugins"
@@ -42,7 +43,7 @@ func (oi *Client) configure() (err error) {
 	return
 }
 
-func (oi *Client) ListModels() (ret []string, err error) {
+func (oi *Client) ListModels(context.Context) (ret []string, err error) {
 	ret = oi.apiModels
 	return
 }

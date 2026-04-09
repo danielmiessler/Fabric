@@ -1,5 +1,29 @@
 # Changelog
 
+## v1.4.444 (2026-04-09)
+
+### PR [#2088](https://github.com/danielmiessler/Fabric/pull/2088) by [ksylvan](https://github.com/ksylvan): Combined dependabot fixes plus other Go module upgrades
+
+- Upgraded `anthropic-sdk-go` from v1.27.1 to v1.34.0, bringing in several versions of improvements and fixes from the Anthropic Go SDK.
+- Upgraded `ollama` from v0.18.2 to v0.20.4, incorporating two minor version bumps of enhancements to the Ollama client library.
+- Upgraded `google.golang.org/grpc` from v1.79.3 to v1.80.0, picking up the latest gRPC release for Go.
+- Upgraded `google.golang.org/genai` from v1.51.0 to v1.53.0 and bumped `google.golang.org/api` from v0.272.0 to v0.275.0, keeping Google AI and API client libraries current.
+- Bumped `go-sqlite3` from v1.14.37 to v1.14.42, updated `go-git/v5` from v5.17.0 to v5.17.2, and refreshed `golang.org/x` packages (crypto, net, sys, text, mod) and OpenTelemetry packages from v1.42.0 to v1.43.0 alongside AWS SDK v2 patch releases.
+
+## v1.4.443 (2026-04-06)
+
+### PR [#2073](https://github.com/danielmiessler/Fabric/pull/2073) by [sathvikc](https://github.com/sathvikc) and [ksylvan](https://github.com/ksylvan): feat(youtube): Implement visual text extraction via FFmpeg and OCR
+
+- Implemented FFmpeg and Tesseract-based visual text extraction from YouTube videos, enabling OCR on video frames.
+- Added configurable CLI flags for visual extraction parameters, giving users fine-grained control over the feature.
+- Fixed support for multi-line `yt-dlp` outputs and updated syntax compatibility with modern FFmpeg versions.
+- Refactored OCR processing to use bounded concurrency, context timeouts, and hardened CLI argument handling for improved stability and security.
+- Resolved multiple reliability issues including Tesseract CLI argument handling, racy error handling, and timestamp overflow bugs.
+
+### Direct commits
+
+- Docs: make README badges clickable
+
 ## v1.4.442 (2026-03-25)
 
 ### PR [#2075](https://github.com/danielmiessler/Fabric/pull/2075) by [ksylvan](https://github.com/ksylvan) and [mikaelpr](https://github.com/mikaelpr): refactor: extract OAuth and auth logic from Codex client module

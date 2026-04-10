@@ -10,6 +10,7 @@ import (
 	"github.com/danielmiessler/fabric/internal/i18n"
 	"github.com/danielmiessler/fabric/internal/plugins/template"
 	"github.com/danielmiessler/fabric/internal/util"
+	"gopkg.in/yaml.v3"
 )
 
 type PatternsEntity struct {
@@ -24,6 +25,7 @@ type Pattern struct {
 	Name        string
 	Description string
 	Pattern     string
+	Frontmatter map[string]any
 }
 
 // GetApplyVariables main entry point for getting patterns from any source
@@ -93,6 +95,9 @@ func (o *PatternsEntity) ensureInput(pattern *Pattern) {
 func (o *PatternsEntity) applyInput(pattern *Pattern, input string) {
 	o.ensureInput(pattern)
 	pattern.Pattern = strings.ReplaceAll(pattern.Pattern, "{{input}}", input)
+	if pattern.Frontmatter != nil {
+		pattern.Frontmatter = applyInputToFrontmatter(pattern.Frontmatter, input)
+	}
 }
 
 func (o *PatternsEntity) applyVariables(
@@ -114,7 +119,147 @@ func (o *PatternsEntity) applyVariables(
 	// Finally, replace our sentinel with the actual user input
 	// The input has already been processed for variables if InputHasVars was true
 	pattern.Pattern = strings.ReplaceAll(processed, template.InputSentinel, input)
+
+	if pattern.Frontmatter != nil {
+		pattern.Frontmatter, err = applyVariablesToFrontmatter(pattern.Frontmatter, variables, input)
+		if err != nil {
+			return
+		}
+	}
 	return
+}
+
+func parsePatternContent(name, content string) (*Pattern, error) {
+	frontmatter, body, err := parseFrontmatter(content)
+	if err != nil {
+		return nil, err
+	}
+
+	return &Pattern{
+		Name:        name,
+		Pattern:     body,
+		Frontmatter: frontmatter,
+	}, nil
+}
+
+func parseFrontmatter(content string) (map[string]any, string, error) {
+	if !strings.HasPrefix(content, "---") {
+		return nil, content, nil
+	}
+
+	firstLine, rest, found := strings.Cut(content, "\n")
+	if !found {
+		return nil, content, nil
+	}
+	if strings.TrimRight(firstLine, "\r") != "---" {
+		return nil, content, nil
+	}
+
+	offset := len(firstLine) + 1
+	frontmatterLines := make([]string, 0)
+	for len(rest) > 0 {
+		line, remaining, hasNextLine := strings.Cut(rest, "\n")
+		trimmedLine := strings.TrimRight(line, "\r")
+		nextOffset := offset + len(line)
+		if hasNextLine {
+			nextOffset++
+		}
+
+		if trimmedLine == "---" || trimmedLine == "..." {
+			frontmatterRaw := strings.Join(frontmatterLines, "\n")
+			var frontmatter map[string]any
+			if strings.TrimSpace(frontmatterRaw) != "" {
+				if err := yaml.Unmarshal([]byte(frontmatterRaw), &frontmatter); err != nil {
+					return nil, "", fmt.Errorf("invalid YAML frontmatter: %w", err)
+				}
+			}
+
+			body := content[nextOffset:]
+			return frontmatter, body, nil
+		}
+
+		if !hasNextLine {
+			break
+		}
+
+		frontmatterLines = append(frontmatterLines, trimmedLine)
+		offset = nextOffset
+		rest = remaining
+	}
+
+	return nil, "", fmt.Errorf("unterminated YAML frontmatter")
+}
+
+func applyInputToFrontmatter(frontmatter map[string]any, input string) map[string]any {
+	if frontmatter == nil {
+		return nil
+	}
+
+	result, err := transformFrontmatterValue(frontmatter, func(value string) (string, error) {
+		return strings.ReplaceAll(value, "{{input}}", input), nil
+	})
+	if err != nil {
+		return frontmatter
+	}
+
+	typedResult, ok := result.(map[string]any)
+	if !ok {
+		return frontmatter
+	}
+	return typedResult
+}
+
+func applyVariablesToFrontmatter(frontmatter map[string]any, variables map[string]string, input string) (map[string]any, error) {
+	if frontmatter == nil {
+		return nil, nil
+	}
+
+	result, err := transformFrontmatterValue(frontmatter, func(value string) (string, error) {
+		withSentinel := strings.ReplaceAll(value, "{{input}}", template.InputSentinel)
+		processed, err := template.ApplyTemplate(withSentinel, variables, input)
+		if err != nil {
+			return "", err
+		}
+		return strings.ReplaceAll(processed, template.InputSentinel, input), nil
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	typedResult, ok := result.(map[string]any)
+	if !ok {
+		return nil, fmt.Errorf("frontmatter must be a YAML mapping")
+	}
+	return typedResult, nil
+}
+
+func transformFrontmatterValue(value any, transform func(string) (string, error)) (any, error) {
+	switch typedValue := value.(type) {
+	case map[string]any:
+		result := make(map[string]any, len(typedValue))
+		for key, nestedValue := range typedValue {
+			transformedValue, err := transformFrontmatterValue(nestedValue, transform)
+			if err != nil {
+				return nil, err
+			}
+			result[key] = transformedValue
+		}
+		return result, nil
+	case []any:
+		result := make([]any, len(typedValue))
+		for i, nestedValue := range typedValue {
+			transformedValue, err := transformFrontmatterValue(nestedValue, transform)
+			if err != nil {
+				return nil, err
+			}
+			result[i] = transformedValue
+		}
+		return result, nil
+	case string:
+		return transform(typedValue)
+	default:
+		return value, nil
+	}
 }
 
 // retrieves a pattern from the database by name
@@ -123,11 +268,7 @@ func (o *PatternsEntity) getFromDB(name string) (ret *Pattern, err error) {
 	if o.CustomPatternsDir != "" {
 		customPatternPath := filepath.Join(o.CustomPatternsDir, name, o.SystemPatternFile)
 		if pattern, customErr := os.ReadFile(customPatternPath); customErr == nil {
-			ret = &Pattern{
-				Name:    name,
-				Pattern: string(pattern),
-			}
-			return ret, nil
+			return parsePatternContent(name, string(pattern))
 		}
 	}
 
@@ -148,12 +289,7 @@ func (o *PatternsEntity) getFromDB(name string) (ret *Pattern, err error) {
 		return nil, fmt.Errorf(i18n.T("pattern_not_found_list_available"), name)
 	}
 
-	patternStr := string(pattern)
-	ret = &Pattern{
-		Name:    name,
-		Pattern: patternStr,
-	}
-	return
+	return parsePatternContent(name, string(pattern))
 }
 
 func (o *PatternsEntity) PrintLatestPatterns(latestNumber int) (err error) {
@@ -190,11 +326,7 @@ func (o *PatternsEntity) getFromFile(pathStr string) (pattern *Pattern, err erro
 		err = fmt.Errorf(i18n.T("patterns_error_read_pattern_file"), pathStr, err)
 		return
 	}
-	pattern = &Pattern{
-		Name:    pathStr,
-		Pattern: string(content),
-	}
-	return
+	return parsePatternContent(pathStr, string(content))
 }
 
 // GetNames overrides StorageEntity.GetNames to include custom patterns directory

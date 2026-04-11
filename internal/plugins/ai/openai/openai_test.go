@@ -129,6 +129,88 @@ func TestBuildResponseParams_WithSearchAndLocation(t *testing.T) {
 	assert.Equal(t, opts.SearchLocation, userLocation.Timezone.Value)
 }
 
+// TestBuildResponseParams_GrokAI_WithSearch verifies that a client
+// configured with a custom web search tool name and x_search enabled
+// emits both tool entries with the xAI-expected type strings.
+func TestBuildResponseParams_GrokAI_WithSearch(t *testing.T) {
+	client := NewClient()
+	client.SetWebSearchToolName("web_search")
+	client.SetEnableXSearch(true)
+
+	opts := &domain.ChatOptions{
+		Model:       "grok-4-fast-reasoning",
+		Temperature: 0.7,
+		Search:      true,
+	}
+
+	msgs := []*chat.ChatCompletionMessage{
+		{Role: "user", Content: "What happened in the news today?"},
+	}
+
+	params := client.buildResponseParams(msgs, opts)
+
+	assert.NotNil(t, params.Tools, "Expected tools when search is enabled")
+	assert.Len(t, params.Tools, 2, "Expected web_search plus x_search tools")
+
+	webSearchTool := params.Tools[0]
+	assert.NotNil(t, webSearchTool.OfWebSearchPreview, "Expected web search tool slot")
+	assert.Equal(t, responses.WebSearchToolType("web_search"), webSearchTool.OfWebSearchPreview.Type)
+
+	xSearchTool := params.Tools[1]
+	assert.NotNil(t, xSearchTool.OfWebSearchPreview, "Expected x_search tool slot")
+	assert.Equal(t, responses.WebSearchToolType("x_search"), xSearchTool.OfWebSearchPreview.Type)
+}
+
+// TestBuildResponseParams_DefaultProvider_Unchanged guards backwards
+// compatibility. A client that does not set the new override fields
+// must continue emitting a single web_search_preview tool entry.
+func TestBuildResponseParams_DefaultProvider_Unchanged(t *testing.T) {
+	client := NewClient()
+
+	opts := &domain.ChatOptions{
+		Model:       "gpt-4o",
+		Temperature: 0.7,
+		Search:      true,
+	}
+
+	msgs := []*chat.ChatCompletionMessage{
+		{Role: "user", Content: "What is the capital of France?"},
+	}
+
+	params := client.buildResponseParams(msgs, opts)
+
+	assert.NotNil(t, params.Tools, "Expected tools when search is enabled")
+	assert.Len(t, params.Tools, 1, "Expected exactly one tool for default provider")
+
+	tool := params.Tools[0]
+	assert.NotNil(t, tool.OfWebSearchPreview, "Expected web search tool slot")
+	assert.Equal(t, responses.WebSearchToolType("web_search_preview"), tool.OfWebSearchPreview.Type)
+}
+
+// TestBuildResponseParams_GrokAI_WithoutSearch confirms that a GrokAI
+// style client without Search enabled does not append any tools.
+// This protects the no-search path from regressions introduced by the
+// new override logic.
+func TestBuildResponseParams_GrokAI_WithoutSearch(t *testing.T) {
+	client := NewClient()
+	client.SetWebSearchToolName("web_search")
+	client.SetEnableXSearch(true)
+
+	opts := &domain.ChatOptions{
+		Model:       "grok-4-fast-reasoning",
+		Temperature: 0.7,
+		Search:      false,
+	}
+
+	msgs := []*chat.ChatCompletionMessage{
+		{Role: "user", Content: "Hello"},
+	}
+
+	params := client.buildResponseParams(msgs, opts)
+
+	assert.Nil(t, params.Tools, "Expected no tools when search is disabled")
+}
+
 func TestCitationFormatting(t *testing.T) {
 	// Test the citation formatting logic by simulating the citation extraction
 	var textParts []string

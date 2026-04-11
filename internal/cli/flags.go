@@ -88,7 +88,7 @@ type Flags struct {
 	ListStrategies                  bool                 `long:"liststrategies" description:"List all strategies"`
 	ListVendors                     bool                 `long:"listvendors" description:"List all vendors"`
 	ShellCompleteOutput             bool                 `long:"shell-complete-list" description:"Output raw list without headers/formatting (for shell completion)"`
-	Search                          bool                 `long:"search" description:"Enable web search tool for supported models (Anthropic, OpenAI, Gemini)"`
+	Search                          bool                 `long:"search" description:"Enable web search tool for supported models (Anthropic, OpenAI, Gemini, Grok)"`
 	SearchLocation                  string               `long:"search-location" description:"Set location for web search results (e.g., 'America/Los_Angeles')"`
 	ImageFile                       string               `long:"image-file" description:"Save generated image to specified file path (e.g., 'output.png')"`
 	ImageSize                       string               `long:"image-size" description:"Image dimensions: 1024x1024, 1536x1024, 1024x1536, auto (default: auto)"`

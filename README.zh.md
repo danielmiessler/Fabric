@@ -453,6 +453,12 @@ cp completions/fabric.fish ~/.config/fish/completions/
 fabric -h
 ```
 
+处理 YouTube 视频时，还可以使用以下视觉提取选项：
+
+- `--visual`：使用 OCR 和 FFmpeg 从视频中提取视觉信息
+- `--visual-sensitivity`：设置 FFmpeg 场景检测的容差（`0.0` - `1.0`）
+- `--visual-fps`：按固定每秒帧数提取画面，而不是使用场景检测
+
 将你复制的任何文本流式输入到 `fabric` 并选择你想应用的 Pattern：
 
 ```bash

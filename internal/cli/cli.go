@@ -117,7 +117,7 @@ func Cli(version string) (err error) {
 func processYoutubeVideo(
 	flags *Flags, registry *core.PluginRegistry, videoId string) (message string, err error) {
 
-	if (!flags.YouTubeComments && !flags.YouTubeMetadata) || flags.YouTubeTranscript || flags.YouTubeTranscriptWithTimestamps {
+	if (!flags.YouTubeComments && !flags.YouTubeMetadata && !flags.YouTubeVisual) || flags.YouTubeTranscript || flags.YouTubeTranscriptWithTimestamps {
 		var transcript string
 		var language = "en"
 		if flags.Language != "" || registry.Language.DefaultLanguage.Value != "" {
@@ -137,6 +137,20 @@ func processYoutubeVideo(
 			}
 		}
 		message = AppendMessage(message, transcript)
+	}
+
+	if flags.YouTubeVisual {
+		var visualText string
+		var language = "en"
+		if flags.Language != "" {
+			language = flags.Language
+		} else if registry.Language.DefaultLanguage.Value != "" {
+			language = registry.Language.DefaultLanguage.Value
+		}
+		if visualText, err = registry.YouTube.GrabVisual(videoId, language, flags.YtDlpArgs, flags.YouTubeVisualSensitivity, flags.YouTubeVisualFps); err != nil {
+			return
+		}
+		message = AppendMessage(message, visualText)
 	}
 
 	if flags.YouTubeComments {

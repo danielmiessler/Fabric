@@ -98,14 +98,24 @@ func TestGetApplyVariables(t *testing.T) {
 
 	// Create a test pattern
 	createTestPattern(t, entity, "test-pattern", "You are a {{role}}.\n{{input}}")
+	createTestPattern(t, entity, "frontmatter-pattern", `---
+title: "{{role}} review"
+tags:
+  - "{{role}}"
+  - inbox
+summary: "{{input}}"
+---
+You are a {{role}}.
+{{input}}`)
 
 	tests := []struct {
-		name      string
-		source    string
-		variables map[string]string
-		input     string
-		want      string
-		wantErr   bool
+		name            string
+		source          string
+		variables       map[string]string
+		input           string
+		want            string
+		wantFrontmatter map[string]any
+		wantErr         bool
 	}{
 		{
 			name:   "basic pattern with variables and input",
@@ -115,6 +125,20 @@ func TestGetApplyVariables(t *testing.T) {
 			},
 			input: "check this code",
 			want:  "You are a reviewer.\ncheck this code",
+		},
+		{
+			name:   "pattern with frontmatter resolves body and metadata",
+			source: "frontmatter-pattern",
+			variables: map[string]string{
+				"role": "reviewer",
+			},
+			input: "check this code",
+			want:  "You are a reviewer.\ncheck this code",
+			wantFrontmatter: map[string]any{
+				"title":   "reviewer review",
+				"tags":    []any{"reviewer", "inbox"},
+				"summary": "check this code",
+			},
 		},
 		{
 			name:      "pattern with missing variable",
@@ -141,6 +165,7 @@ func TestGetApplyVariables(t *testing.T) {
 
 			require.NoError(t, err)
 			assert.Equal(t, tt.want, result.Pattern)
+			assert.Equal(t, tt.wantFrontmatter, result.Frontmatter)
 		})
 	}
 }
@@ -149,11 +174,15 @@ func TestGetWithoutVariables(t *testing.T) {
 	entity, cleanup := setupTestPatternsEntity(t)
 	defer cleanup()
 
-	createTestPattern(t, entity, "test-pattern", "Prefix {{input}} {{roam}}")
+	createTestPattern(t, entity, "test-pattern", `---
+summary: "{{input}}"
+---
+Prefix {{input}} {{roam}}`)
 
 	result, err := entity.GetWithoutVariables("test-pattern", "hello")
 	require.NoError(t, err)
 	assert.Equal(t, "Prefix hello {{roam}}", result.Pattern)
+	assert.Equal(t, map[string]any{"summary": "hello"}, result.Frontmatter)
 
 	createTestPattern(t, entity, "no-input", "Static content")
 	result, err = entity.GetWithoutVariables("no-input", "hi")
@@ -237,7 +266,10 @@ func TestPatternsEntity_CustomPatterns(t *testing.T) {
 			ItemIsDir: true,
 		},
 		SystemPatternFile: "system.md",
-	}, "shared-pattern", "Custom shared pattern")
+	}, "shared-pattern", `---
+title: "Custom"
+---
+Custom shared pattern`)
 
 	// Test GetNames includes both directories
 	names, err := entity.GetNames()
@@ -250,6 +282,7 @@ func TestPatternsEntity_CustomPatterns(t *testing.T) {
 	pattern, err := entity.getFromDB("shared-pattern")
 	require.NoError(t, err)
 	assert.Equal(t, "Custom shared pattern", pattern.Pattern)
+	assert.Equal(t, map[string]any{"title": "Custom"}, pattern.Frontmatter)
 
 	// Test that main pattern is accessible when not overridden
 	pattern, err = entity.getFromDB("main-pattern")
@@ -260,11 +293,78 @@ func TestPatternsEntity_CustomPatterns(t *testing.T) {
 	rawPattern, err := entity.GetRaw("shared-pattern")
 	require.NoError(t, err)
 	assert.Equal(t, "Custom shared pattern", rawPattern.Pattern)
+	assert.Equal(t, map[string]any{"title": "Custom"}, rawPattern.Frontmatter)
 
 	// Test that custom pattern is accessible
 	pattern, err = entity.getFromDB("custom-pattern")
 	require.NoError(t, err)
 	assert.Equal(t, "Custom pattern content", pattern.Pattern)
+}
+
+func TestGetRawFrontmatterUnresolvedExact(t *testing.T) {
+	entity, cleanup := setupTestPatternsEntity(t)
+	defer cleanup()
+
+	createTestPattern(t, entity, "frontmatter-pattern", `---
+title: "{{role}} review"
+summary: "{{input}}"
+---
+Review {{input}}`)
+
+	result, err := entity.GetRaw("frontmatter-pattern")
+	require.NoError(t, err)
+	assert.Equal(t, "Review {{input}}", result.Pattern)
+	assert.Equal(t, map[string]any{
+		"title":   "{{role}} review",
+		"summary": "{{input}}",
+	}, result.Frontmatter)
+}
+
+func TestInvalidFrontmatterReturnsError(t *testing.T) {
+	entity, cleanup := setupTestPatternsEntity(t)
+	defer cleanup()
+
+	createTestPattern(t, entity, "invalid-frontmatter", `---
+title: [unterminated
+---
+Body`)
+
+	_, err := entity.GetRaw("invalid-frontmatter")
+	require.Error(t, err)
+	assert.Contains(t, err.Error(), "invalid YAML frontmatter")
+}
+
+func TestEmptyFrontmatterBlock(t *testing.T) {
+	entity, cleanup := setupTestPatternsEntity(t)
+	defer cleanup()
+
+	createTestPattern(t, entity, "empty-frontmatter", `---
+---
+Body`)
+
+	result, err := entity.GetRaw("empty-frontmatter")
+	require.NoError(t, err)
+	assert.Equal(t, "Body", result.Pattern)
+	assert.Nil(t, result.Frontmatter)
+}
+
+func TestFilePatternFrontmatter(t *testing.T) {
+	entity := &PatternsEntity{}
+	tmpDir, err := os.MkdirTemp("", "test-pattern-file-*")
+	require.NoError(t, err)
+	defer os.RemoveAll(tmpDir)
+
+	patternPath := filepath.Join(tmpDir, "pattern.md")
+	err = os.WriteFile(patternPath, []byte(`---
+title: "{{role}}"
+---
+Body {{input}}`), 0644)
+	require.NoError(t, err)
+
+	result, err := entity.GetApplyVariables(patternPath, map[string]string{"role": "reviewer"}, "hello")
+	require.NoError(t, err)
+	assert.Equal(t, "Body hello", result.Pattern)
+	assert.Equal(t, map[string]any{"title": "reviewer"}, result.Frontmatter)
 }
 
 func TestPatternsEntity_CustomPatternsEmpty(t *testing.T) {

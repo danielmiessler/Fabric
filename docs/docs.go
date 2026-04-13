@@ -309,6 +309,10 @@ const docTemplate = `{
                 "description": {
                     "type": "string"
                 },
+                "frontmatter": {
+                    "type": "object",
+                    "additionalProperties": true
+                },
                 "name": {
                     "type": "string"
                 },

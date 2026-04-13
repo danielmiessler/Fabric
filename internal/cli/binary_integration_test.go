@@ -9,6 +9,7 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+	"time"
 )
 
 func requireClaudeIntegration(t *testing.T) []string {
@@ -45,6 +46,7 @@ func requireClaudeIntegration(t *testing.T) []string {
 }
 
 func TestIntegrationClaudeCodePatternExecution(t *testing.T) {
+	withTestTimeout(t, 3*time.Minute)
 	env := requireClaudeIntegration(t)
 	h := newBinaryHarness(t, "summarize")
 	input := "Summarize this sentence in one short line: Fabric ships a compiled CLI."
@@ -62,6 +64,7 @@ func TestIntegrationClaudeCodePatternExecution(t *testing.T) {
 }
 
 func TestIntegrationClaudeCodeStreaming(t *testing.T) {
+	withTestTimeout(t, 3*time.Minute)
 	env := requireClaudeIntegration(t)
 	h := newBinaryHarness(t)
 	input := "Reply with exactly the text: streaming-ok"
@@ -76,6 +79,7 @@ func TestIntegrationClaudeCodeStreaming(t *testing.T) {
 }
 
 func TestIntegrationWriteLatexToPDFPipeline(t *testing.T) {
+	withTestTimeout(t, 5*time.Minute)
 	env := requireClaudeIntegration(t)
 	if _, err := exec.LookPath("pdflatex"); err != nil {
 		t.Skip("pdflatex is required for the write_latex -> to_pdf integration test")
@@ -111,6 +115,7 @@ func TestIntegrationWriteLatexToPDFPipeline(t *testing.T) {
 }
 
 func TestIntegrationFabricPipelineCleanTextToSummarize(t *testing.T) {
+	withTestTimeout(t, 5*time.Minute)
 	env := requireClaudeIntegration(t)
 	h := newBinaryHarness(t, "clean_text", "summarize")
 
@@ -138,6 +143,7 @@ func TestIntegrationFabricPipelineCleanTextToSummarize(t *testing.T) {
 }
 
 func TestIntegrationFabricPipelineReviewCodeToSummarize(t *testing.T) {
+	withTestTimeout(t, 5*time.Minute)
 	env := requireClaudeIntegration(t)
 	h := newBinaryHarness(t, "review_code", "summarize")
 
@@ -177,6 +183,7 @@ func TestIntegrationFabricPipelineReviewCodeToSummarize(t *testing.T) {
 }
 
 func TestIntegrationYouTubeSummarizeToExtractWisdomPipeline(t *testing.T) {
+	withTestTimeout(t, 10*time.Minute)
 	env := requireClaudeIntegration(t)
 	if os.Getenv("FABRIC_RUN_NETWORK_INTEGRATION") != "1" {
 		t.Skip("set FABRIC_RUN_NETWORK_INTEGRATION=1 to run network-backed YouTube pipeline integration tests")
@@ -224,4 +231,13 @@ func TestIntegrationYouTubeSummarizeToExtractWisdomPipeline(t *testing.T) {
 	if strings.Contains(strings.ToLower(wisdom.stderr), "pattern") && strings.Contains(strings.ToLower(wisdom.stderr), "not found") {
 		t.Fatalf("unexpected pattern failure in pipeline stderr: %s", wisdom.stderr)
 	}
+}
+
+// withTestTimeout fails the test if it exceeds the given duration.
+func withTestTimeout(t *testing.T, d time.Duration) {
+	t.Helper()
+	timer := time.AfterFunc(d, func() {
+		panic(fmt.Sprintf("test %s timed out after %v", t.Name(), d))
+	})
+	t.Cleanup(timer.Stop)
 }

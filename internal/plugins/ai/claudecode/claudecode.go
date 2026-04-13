@@ -1,3 +1,5 @@
+// Package claudecode provides a Fabric vendor plugin that delegates inference
+// to the locally-installed Claude Code CLI (`claude`).
 package claudecode
 
 import (
@@ -40,6 +42,10 @@ type streamEvent struct {
 			Text string `json:"text"`
 		} `json:"delta"`
 	} `json:"event"`
+	Usage *struct {
+		InputTokens  int `json:"input_tokens"`
+		OutputTokens int `json:"output_tokens"`
+	} `json:"usage"`
 }
 
 type Client struct {
@@ -75,7 +81,7 @@ func (c *Client) getBinary() string {
 	return defaultBinary
 }
 
-func (c *Client) ListModels() ([]string, error) {
+func (c *Client) ListModels(_ context.Context) ([]string, error) {
 	return []string{
 		"claude-opus-4-6",
 		"claude-sonnet-4-6",
@@ -173,13 +179,15 @@ func (c *Client) buildArgs(opts *domain.ChatOptions, system string) []string {
 func (c *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions) (string, error) {
 	system, userPrompt := c.extractMessages(msgs, opts)
 	if userPrompt == "" {
-		return "", nil
+		return "", fmt.Errorf("claude: no prompt content after message extraction")
 	}
+
+	c.logUnsupportedOptions(opts)
 
 	args := c.buildArgs(opts, system)
 	args = append(args, userPrompt)
 	binary := c.getBinary()
-	debuglog.Debug(debuglog.Detailed, "ClaudeCode Send launching: %s %s\n", binary, strings.Join(args, " "))
+	debuglog.Debug(debuglog.Detailed, "ClaudeCode Send launching: %s %s\n", binary, truncateArgs(args))
 	cmd := exec.CommandContext(ctx, binary, args...)
 	cmd.Env = cleanEnv()
 
@@ -201,21 +209,23 @@ func (c *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, o
 	return strings.TrimSpace(stdout.String()), nil
 }
 
-func (c *Client) SendStream(msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan domain.StreamUpdate) error {
+func (c *Client) SendStream(ctx context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan domain.StreamUpdate) error {
 	defer close(channel)
 
 	system, userPrompt := c.extractMessages(msgs, opts)
 	if userPrompt == "" {
-		return nil
+		return fmt.Errorf("claude: no prompt content after message extraction")
 	}
+
+	c.logUnsupportedOptions(opts)
 
 	args := c.buildArgs(opts, system)
 	args = append(args, "--verbose", "--output-format", "stream-json", "--include-partial-messages")
 	args = append(args, userPrompt)
 
 	binary := c.getBinary()
-	debuglog.Debug(debuglog.Detailed, "ClaudeCode SendStream launching: %s %s\n", binary, strings.Join(args, " "))
-	cmd := exec.Command(binary, args...)
+	debuglog.Debug(debuglog.Detailed, "ClaudeCode SendStream launching: %s %s\n", binary, truncateArgs(args))
+	cmd := exec.CommandContext(ctx, binary, args...)
 	cmd.Env = cleanEnv()
 
 	var stderr bytes.Buffer
@@ -237,13 +247,13 @@ func (c *Client) SendStream(msgs []*chat.ChatCompletionMessage, opts *domain.Cha
 		if line == "" {
 			continue
 		}
-		text, ok := parseStreamDelta(line)
-		if !ok {
-			continue
-		}
-		channel <- domain.StreamUpdate{
-			Type:    domain.StreamTypeContent,
-			Content: text,
+
+		if update, ok := parseStreamEvent(line); ok {
+			select {
+			case channel <- update:
+			case <-ctx.Done():
+				return ctx.Err()
+			}
 		}
 	}
 
@@ -262,32 +272,79 @@ func (c *Client) NeedsRawMode(_ string) bool {
 	return false
 }
 
-func parseStreamDelta(line string) (string, bool) {
+// parseStreamEvent parses a single stream-json line and returns a StreamUpdate
+// if it contains a text delta or usage metadata. Returns false if the line
+// should be skipped.
+func parseStreamEvent(line string) (domain.StreamUpdate, bool) {
 	var event streamEvent
 	if err := json.Unmarshal([]byte(line), &event); err != nil {
-		return "", false
+		return domain.StreamUpdate{}, false
 	}
 
 	if event.Delta != nil && event.Delta.Type == "text_delta" && event.Delta.Text != "" {
-		return event.Delta.Text, true
+		return domain.StreamUpdate{Type: domain.StreamTypeContent, Content: event.Delta.Text}, true
 	}
 	if event.Event != nil && event.Event.Delta != nil && event.Event.Delta.Type == "text_delta" && event.Event.Delta.Text != "" {
-		return event.Event.Delta.Text, true
+		return domain.StreamUpdate{Type: domain.StreamTypeContent, Content: event.Event.Delta.Text}, true
 	}
 
-	return "", false
+	if event.Type == "message" && event.Message != nil && event.Usage != nil {
+		return domain.StreamUpdate{
+			Type: domain.StreamTypeUsage,
+			Usage: &domain.UsageMetadata{
+				InputTokens:  event.Usage.InputTokens,
+				OutputTokens: event.Usage.OutputTokens,
+				TotalTokens:  event.Usage.InputTokens + event.Usage.OutputTokens,
+			},
+		}, true
+	}
+
+	return domain.StreamUpdate{}, false
 }
 
-// cleanEnv returns os.Environ() with select variables removed so the Claude
-// subprocess uses local Claude Code session auth and does not detect nested
-// Claude Code execution.
+// cleanEnv returns os.Environ() with CLAUDECODE and all ANTHROPIC_* variables
+// removed so the Claude subprocess uses local Claude Code session auth and does
+// not detect nested Claude Code execution.
 func cleanEnv() []string {
 	env := os.Environ()
 	filtered := env[:0:0]
 	for _, e := range env {
-		if !strings.HasPrefix(e, "CLAUDECODE=") && !strings.HasPrefix(e, "ANTHROPIC_API_KEY=") {
-			filtered = append(filtered, e)
+		if strings.HasPrefix(e, "CLAUDECODE=") || strings.HasPrefix(e, "ANTHROPIC_") {
+			continue
 		}
+		filtered = append(filtered, e)
 	}
 	return filtered
+}
+
+// logUnsupportedOptions emits debug warnings for ChatOptions fields that the
+// Claude CLI does not support.
+func (c *Client) logUnsupportedOptions(opts *domain.ChatOptions) {
+	if opts.Temperature > 0 {
+		debuglog.Debug(debuglog.Detailed, "ClaudeCode: Temperature option is not supported by the Claude CLI and will be ignored\n")
+	}
+	if opts.TopP > 0 {
+		debuglog.Debug(debuglog.Detailed, "ClaudeCode: TopP option is not supported by the Claude CLI and will be ignored\n")
+	}
+	if opts.MaxTokens > 0 {
+		debuglog.Debug(debuglog.Detailed, "ClaudeCode: MaxTokens option is not supported by the Claude CLI and will be ignored\n")
+	}
+	if opts.Seed > 0 {
+		debuglog.Debug(debuglog.Detailed, "ClaudeCode: Seed option is not supported by the Claude CLI and will be ignored\n")
+	}
+}
+
+// truncateArgs returns a string representation of args with the last element
+// (the prompt) truncated to 200 characters to avoid noisy or sensitive log output.
+func truncateArgs(args []string) string {
+	if len(args) == 0 {
+		return ""
+	}
+	display := make([]string, len(args))
+	copy(display, args)
+	last := display[len(display)-1]
+	if len(last) > 200 {
+		display[len(display)-1] = last[:200] + "..."
+	}
+	return strings.Join(display, " ")
 }

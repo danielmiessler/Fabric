@@ -1,6 +1,7 @@
 package claudecode
 
 import (
+	"context"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -30,7 +31,7 @@ func TestNewClient_DefaultInitialization(t *testing.T) {
 
 func TestListModels(t *testing.T) {
 	c := NewClient()
-	models, err := c.ListModels()
+	models, err := c.ListModels(context.Background())
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -302,6 +303,35 @@ func TestBuildArgs_NoImageFileNoAddDir(t *testing.T) {
 	}
 }
 
+func TestSend_EmptyPromptReturnsError(t *testing.T) {
+	c := NewClient()
+	msgs := []*chat.ChatCompletionMessage{
+		{Role: chat.ChatMessageRoleUser, Content: "  "},
+	}
+	_, err := c.Send(context.Background(), msgs, &domain.ChatOptions{})
+	if err == nil {
+		t.Fatal("expected error for empty prompt")
+	}
+	if !strings.Contains(err.Error(), "no prompt content") {
+		t.Fatalf("expected 'no prompt content' error, got %q", err.Error())
+	}
+}
+
+func TestSendStream_EmptyPromptReturnsError(t *testing.T) {
+	c := NewClient()
+	msgs := []*chat.ChatCompletionMessage{
+		{Role: chat.ChatMessageRoleUser, Content: "  "},
+	}
+	ch := make(chan domain.StreamUpdate, 1)
+	err := c.SendStream(context.Background(), msgs, &domain.ChatOptions{}, ch)
+	if err == nil {
+		t.Fatal("expected error for empty prompt")
+	}
+	if !strings.Contains(err.Error(), "no prompt content") {
+		t.Fatalf("expected 'no prompt content' error, got %q", err.Error())
+	}
+}
+
 func TestSend_ExecutesBinaryAndReturnsTrimmedOutput(t *testing.T) {
 	t.Setenv("CLAUDECODE", "nested-session")
 
@@ -346,7 +376,7 @@ echo '{"delta":{"type":"text_delta","text":" world"}}'
 	}}
 
 	ch := make(chan domain.StreamUpdate, 8)
-	err := c.SendStream(msgs, &domain.ChatOptions{}, ch)
+	err := c.SendStream(context.Background(), msgs, &domain.ChatOptions{}, ch)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -379,7 +409,7 @@ echo '{"type":"stream_event","event":{"type":"content_block_delta","delta":{"typ
 	}}
 
 	ch := make(chan domain.StreamUpdate, 8)
-	err := c.SendStream(msgs, &domain.ChatOptions{}, ch)
+	err := c.SendStream(context.Background(), msgs, &domain.ChatOptions{}, ch)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -412,7 +442,7 @@ exit 7
 	}}
 
 	ch := make(chan domain.StreamUpdate, 1)
-	err := c.SendStream(msgs, &domain.ChatOptions{}, ch)
+	err := c.SendStream(context.Background(), msgs, &domain.ChatOptions{}, ch)
 	if err == nil {
 		t.Fatal("expected error")
 	}
@@ -423,9 +453,11 @@ exit 7
 	}
 }
 
-func TestCleanEnv_RemovesClaudeCodeVar(t *testing.T) {
+func TestCleanEnv_RemovesClaudeCodeAndAnthropicVars(t *testing.T) {
 	t.Setenv("CLAUDECODE", "nested-session")
 	t.Setenv("ANTHROPIC_API_KEY", "sk-test")
+	t.Setenv("ANTHROPIC_BASE_URL", "https://example.com")
+	t.Setenv("ANTHROPIC_AUTH_TOKEN", "tok-test")
 	t.Setenv("FABRIC_TEST_KEEP", "1")
 
 	env := cleanEnv()
@@ -433,8 +465,8 @@ func TestCleanEnv_RemovesClaudeCodeVar(t *testing.T) {
 		if strings.HasPrefix(kv, "CLAUDECODE=") {
 			t.Fatalf("CLAUDECODE should have been removed, got %q", kv)
 		}
-		if strings.HasPrefix(kv, "ANTHROPIC_API_KEY=") {
-			t.Fatalf("ANTHROPIC_API_KEY should have been removed, got %q", kv)
+		if strings.HasPrefix(kv, "ANTHROPIC_") {
+			t.Fatalf("ANTHROPIC_* vars should have been removed, got %q", kv)
 		}
 	}
 	if !slices.Contains(env, "FABRIC_TEST_KEEP=1") {

@@ -90,8 +90,7 @@ func (o *Client) configure() (err error) {
 	return
 }
 
-func (o *Client) ListModels(_ context.Context) (ret []string, err error) {
-	ctx := context.Background()
+func (o *Client) ListModels(ctx context.Context) (ret []string, err error) {
 
 	var listResp *ollamaapi.ListResponse
 	if listResp, err = o.client.List(ctx); err != nil {
@@ -104,8 +103,7 @@ func (o *Client) ListModels(_ context.Context) (ret []string, err error) {
 	return
 }
 
-func (o *Client) SendStream(_ context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan domain.StreamUpdate) (err error) {
-	ctx := context.Background()
+func (o *Client) SendStream(ctx context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan domain.StreamUpdate) (err error) {
 
 	var req ollamaapi.ChatRequest
 	if req, err = o.createChatRequest(ctx, msgs, opts); err != nil {

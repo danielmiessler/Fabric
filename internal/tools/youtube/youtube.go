@@ -23,8 +23,10 @@ import (
 	"os/exec"
 	"path/filepath"
 	"regexp"
+	"runtime"
 	"strconv"
 	"strings"
+	"sync"
 	"time"
 
 	"github.com/danielmiessler/fabric/internal/i18n"
@@ -602,6 +604,13 @@ func (o *YouTube) Grab(url string, options *Options) (ret *VideoInfo, err error)
 		}
 	}
 
+	if options.Visual {
+		// Currently defaults to 'en' and no extra args, similar to transcript default behavior in Grab
+		if ret.VisualText, err = o.GrabVisual(videoId, options.Lang, options.YtDlpArgs, options.VisualSensitivity, options.VisualFps); err != nil {
+			return
+		}
+	}
+
 	return
 }
 
@@ -762,13 +771,18 @@ type Options struct {
 	Duration                 bool
 	Transcript               bool
 	TranscriptWithTimestamps bool
+	Visual                   bool
+	VisualSensitivity        float64
+	VisualFps                int
 	Comments                 bool
 	Lang                     string
 	Metadata                 bool
+	YtDlpArgs                string
 }
 
 type VideoInfo struct {
 	Transcript string         `json:"transcript"`
+	VisualText string         `json:"visualText,omitempty"`
 	Duration   int            `json:"duration"`
 	Comments   []string       `json:"comments"`
 	Metadata   *VideoMetadata `json:"metadata,omitempty"`
@@ -826,9 +840,13 @@ func (o *YouTube) GrabByFlags() (ret *VideoInfo, err error) {
 	flag.BoolVar(&options.Duration, "duration", false, "Output only the duration")
 	flag.BoolVar(&options.Transcript, "transcript", false, "Output only the transcript")
 	flag.BoolVar(&options.TranscriptWithTimestamps, "transcriptWithTimestamps", false, "Output only the transcript with timestamps")
+	flag.BoolVar(&options.Visual, "visual", false, i18n.T("youtube_extract_visual_data_help"))
+	flag.Float64Var(&options.VisualSensitivity, "visual-sensitivity", 0.4, i18n.T("youtube_visual_sensitivity_help"))
+	flag.IntVar(&options.VisualFps, "visual-fps", 0, i18n.T("youtube_visual_fps_help"))
 	flag.BoolVar(&options.Comments, "comments", false, "Output the comments on the video")
 	flag.StringVar(&options.Lang, "lang", "en", "Language for the transcript (default: English)")
 	flag.BoolVar(&options.Metadata, "metadata", false, "Output video metadata")
+	flag.StringVar(&options.YtDlpArgs, "yt-dlp-args", "", i18n.T("additional_yt_dlp_args"))
 	flag.Parse()
 
 	if flag.NArg() == 0 {
@@ -838,4 +856,132 @@ func (o *YouTube) GrabByFlags() (ret *VideoInfo, err error) {
 	url := flag.Arg(0)
 	ret, err = o.Grab(url, options)
 	return
+}
+
+// GrabVisual retrieves visual data from the video by extracting frames via FFmpeg and OCR parsing them via Tesseract.
+func (o *YouTube) GrabVisual(videoId string, language string, additionalArgs string, sensitivity float64, fps int) (string, error) {
+	if _, err := exec.LookPath("yt-dlp"); err != nil {
+		return "", errors.New(i18n.T("youtube_ytdlp_required_visual_extraction"))
+	}
+	if _, err := exec.LookPath("ffmpeg"); err != nil {
+		return "", errors.New(i18n.T("youtube_ffmpeg_required_visual_extraction"))
+	}
+	if _, err := exec.LookPath("tesseract"); err != nil {
+		return "", errors.New(i18n.T("youtube_tesseract_required_visual_extraction"))
+	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Minute)
+	defer cancel()
+
+	tempDir, err := os.MkdirTemp("", "fabric-vfabric-"+videoId+"-*")
+	if err != nil {
+		return "", fmt.Errorf(i18n.T("youtube_failed_create_temp_dir"), err)
+	}
+	defer os.RemoveAll(tempDir)
+
+	videoURL := "https://www.youtube.com/watch?v=" + videoId
+
+	ytArgs := []string{"-f", "bv", "--get-url"}
+	if additionalArgs != "" {
+		parsed, parseErr := shellquote.Split(additionalArgs)
+		if parseErr != nil {
+			return "", fmt.Errorf(i18n.T("youtube_invalid_ytdlp_arguments"), parseErr)
+		}
+		ytArgs = append(ytArgs, parsed...)
+	}
+	ytArgs = append(ytArgs, "--", videoURL)
+
+	cmdUrl := exec.CommandContext(ctx, "yt-dlp", ytArgs...)
+	urlBytes, err := cmdUrl.Output()
+	if err != nil {
+		return "", fmt.Errorf(i18n.T("youtube_failed_get_stream_url"), err)
+	}
+
+	streamUrls := strings.Split(strings.TrimSpace(string(urlBytes)), "\n")
+	var streamUrl string
+	for _, u := range streamUrls {
+		if strings.HasPrefix(u, "http") {
+			streamUrl = strings.TrimSpace(u)
+			break
+		}
+	}
+	if streamUrl == "" {
+		return "", errors.New(i18n.T("youtube_failed_parse_http_stream_url"))
+	}
+
+	var filter string
+	if fps > 0 {
+		filter = fmt.Sprintf("fps=%d", fps)
+	} else {
+		filter = fmt.Sprintf("select='gt(scene,%f)'", sensitivity)
+	}
+
+	framePattern := filepath.Join(tempDir, "frame_%04d.jpg")
+	cmdFfmpeg := exec.CommandContext(ctx, "ffmpeg", "-i", streamUrl, "-vf", filter, "-fps_mode", "vfr", framePattern)
+	if out, err := cmdFfmpeg.CombinedOutput(); err != nil {
+		return "", fmt.Errorf(i18n.T("youtube_ffmpeg_frame_extraction_failed"), err, string(out))
+	}
+
+	files, err := filepath.Glob(filepath.Join(tempDir, "frame_*.jpg"))
+	if err != nil {
+		return "", err
+	}
+
+	var wg sync.WaitGroup
+	results := make([]string, len(files))
+	var errs []error
+	var errMut sync.Mutex
+	sem := make(chan struct{}, runtime.NumCPU())
+
+	for i, file := range files {
+		wg.Add(1)
+		sem <- struct{}{}
+		go func(idx int, f string) {
+			defer wg.Done()
+			defer func() { <-sem }()
+
+			cmdOcr := exec.CommandContext(ctx, "tesseract", f, "-", "stdout")
+			var stdoutBuf, stderrBuf bytes.Buffer
+			cmdOcr.Stdout = &stdoutBuf
+			cmdOcr.Stderr = &stderrBuf
+			ocrErr := cmdOcr.Run()
+			if ocrErr != nil {
+				errMut.Lock()
+				errs = append(errs, fmt.Errorf(i18n.T("youtube_tesseract_frame_failed"), idx, ocrErr, stderrBuf.String()))
+				errMut.Unlock()
+				return
+			}
+
+			text := strings.TrimSpace(stdoutBuf.String())
+			if text != "" && len(text) > 10 {
+				results[idx] = text
+			}
+		}(i, file)
+	}
+	wg.Wait()
+
+	if len(errs) > 0 {
+		return "", errs[0]
+	}
+
+	var sb strings.Builder
+	for i, text := range results {
+		if text != "" {
+			secs := i
+			hours := secs / 3600
+			mins := (secs % 3600) / 60
+			sec := secs % 60
+			sb.WriteString(fmt.Sprintf("\n%02d:%02d:%02d.000 --> %02d:%02d:%02d.999\n", hours, mins, sec, hours, mins, sec))
+			sb.WriteString(i18n.T("youtube_visual_frame_cue"))
+			sb.WriteString("\n")
+			sb.WriteString(text)
+			sb.WriteString("\n")
+		}
+	}
+
+	ret := sb.String()
+	if ret == "" {
+		return "", errors.New(i18n.T("youtube_no_clear_text_visual_frames"))
+	}
+	return ret, nil
 }

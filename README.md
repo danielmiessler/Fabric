@@ -284,13 +284,13 @@ docker run --rm -it ghcr.io/ksylvan/fabric:v1.4.305 --version
 
 # Run setup (first time)
 mkdir -p $HOME/.fabric-config
-docker run --rm -it -v $HOME/.fabric-config:/root/.config/fabric kayvan/fabric:latest --setup
+docker run --rm -it -v $HOME/.fabric-config:/home/appuser/.config/fabric kayvan/fabric:latest --setup
 
 # Use Fabric with your patterns
-docker run --rm -it -v $HOME/.fabric-config:/root/.config/fabric kayvan/fabric:latest -p summarize
+docker run --rm -it -v $HOME/.fabric-config:/home/appuser/.config/fabric kayvan/fabric:latest -p summarize
 
 # Run the REST API server (see REST API Server section)
-docker run --rm -it -p 8080:8080 -v $HOME/.fabric-config:/root/.config/fabric kayvan/fabric:latest --serve
+docker run --rm -it -p 8080:8080 -v $HOME/.fabric-config:/home/appuser/.config/fabric kayvan/fabric:latest --serve
 ```
 
 **Images available at:**
@@ -683,6 +683,9 @@ Application Options:
       --transcript                  Grab transcript from YouTube video and send to chat (it is used per
                                     default).
       --transcript-with-timestamps  Grab transcript from YouTube video with timestamps and send to chat
+      --visual                      Extract visual data from video using OCR and FFmpeg
+      --visual-sensitivity          Tolerance for FFmpeg scene detection (0.0 - 1.0)
+      --visual-fps                  Extract a specific number of frames per second instead of using scene detection
       --comments                    Grab comments from YouTube video and send to chat
       --metadata                    Output video metadata
   -g, --language=                   Specify the Language Code for the chat, e.g. -g=en -g=zh

@@ -281,13 +281,13 @@ docker run --rm -it ghcr.io/ksylvan/fabric:v1.4.305 --version
 
 # 首次运行时进行配置
 mkdir -p $HOME/.fabric-config
-docker run --rm -it -v $HOME/.fabric-config:/root/.config/fabric kayvan/fabric:latest --setup
+docker run --rm -it -v $HOME/.fabric-config:/home/appuser/.config/fabric kayvan/fabric:latest --setup
 
 # 使用你的 patterns
-docker run --rm -it -v $HOME/.fabric-config:/root/.config/fabric kayvan/fabric:latest -p summarize
+docker run --rm -it -v $HOME/.fabric-config:/home/appuser/.config/fabric kayvan/fabric:latest -p summarize
 
 # 运行 REST API 服务器
-docker run --rm -it -p 8080:8080 -v $HOME/.fabric-config:/root/.config/fabric kayvan/fabric:latest --serve
+docker run --rm -it -p 8080:8080 -v $HOME/.fabric-config:/home/appuser/.config/fabric kayvan/fabric:latest --serve
 ```
 
 **镜像来源：**
@@ -452,6 +452,12 @@ cp completions/fabric.fish ~/.config/fish/completions/
 ```bash
 fabric -h
 ```
+
+处理 YouTube 视频时，还可以使用以下视觉提取选项：
+
+- `--visual`：使用 OCR 和 FFmpeg 从视频中提取视觉信息
+- `--visual-sensitivity`：设置 FFmpeg 场景检测的容差（`0.0` - `1.0`）
+- `--visual-fps`：按固定每秒帧数提取画面，而不是使用场景检测
 
 将你复制的任何文本流式输入到 `fabric` 并选择你想应用的 Pattern：
 

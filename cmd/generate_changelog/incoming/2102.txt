@@ -1,0 +1,17 @@
+### PR [#2102](https://github.com/danielmiessler/Fabric/pull/2102) by [shaun0927](https://github.com/shaun0927): fix(chat): emit SSE error and skip complete on prompt setup failures
+
+- Prevent false SSE completion after prompt setup failures
+The /chat handler previously relied on stream-originated error updates and
+still emitted a terminal complete event when chatter setup failed before any
+stream updates were sent. This change forwards a server-side error event for
+those early failures, suppresses complete after errors, and adds regression
+coverage for an invalid strategy path.
+Constraint: Keep the fix narrow to the REST SSE path
+Rejected: Broad chatter API redesign | unnecessary for a targeted contract fix
+Confidence: high
+Scope-risk: narrow
+Reversibility: clean
+Directive: Preserve the invariant that complete is emitted only for successful prompt runs
+Tested: go test ./internal/server -v
+Not-tested: End-to-end browser SSE client behavior outside package tests
+Related: #2100

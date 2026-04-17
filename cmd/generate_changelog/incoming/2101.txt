@@ -1,0 +1,17 @@
+### PR [#2101](https://github.com/danielmiessler/Fabric/pull/2101) by [shaun0927](https://github.com/shaun0927): fix(youtube): preserve ffmpeg frame timing in visual OCR cues
+
+- Preserve real visual OCR timing in YouTube frame cues
+The visual OCR path emitted subtitle-style cues using the OCR result index
+instead of the underlying ffmpeg frame time, which made the output look more
+precise than it was. This change parses ffmpeg showinfo timestamps, formats
+cue ranges from real frame times, and adds regression coverage for the timing
+helpers and the end-to-end visual extraction path.
+Constraint: Preserve existing OCR extraction flow and output shape while fixing cue timing
+Rejected: Leave timestamps index-based and document the limitation | still produces misleading time cues
+Confidence: high
+Scope-risk: narrow
+Reversibility: clean
+Directive: Keep ffmpeg-derived frame timing wired through any future visual extraction refactors
+Tested: go test ./internal/tools/youtube -v
+Not-tested: Live yt-dlp/ffmpeg/tesseract execution against a real YouTube video
+Related: #2099

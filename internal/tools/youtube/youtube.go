@@ -44,6 +44,7 @@ var videoPatternRegex *regexp.Regexp
 var playlistPatternRegex *regexp.Regexp
 var vttTagRegex *regexp.Regexp
 var durationRegex *regexp.Regexp
+var ffmpegPtsTimeRegex *regexp.Regexp
 
 const TimeGapForRepeats = 10 // seconds
 
@@ -60,6 +61,7 @@ func init() {
 	vttTagRegex = regexp.MustCompile(`<[^>]*>`)
 	// YouTube duration format PT1H2M3S
 	durationRegex = regexp.MustCompile(`(?i)PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?`)
+	ffmpegPtsTimeRegex = regexp.MustCompile(`pts_time:([0-9]+(?:\.[0-9]+)?)`)
 }
 
 func NewYouTube() (ret *YouTube) {
@@ -501,6 +503,48 @@ func parseSeconds(secondsStr string) (int, error) {
 	return seconds, nil
 }
 
+func parseFFmpegFrameTimes(logOutput string) []float64 {
+	matches := ffmpegPtsTimeRegex.FindAllStringSubmatch(logOutput, -1)
+	frameTimes := make([]float64, 0, len(matches))
+	for _, match := range matches {
+		if len(match) < 2 {
+			continue
+		}
+		frameTime, err := strconv.ParseFloat(match[1], 64)
+		if err != nil {
+			continue
+		}
+		frameTimes = append(frameTimes, frameTime)
+	}
+	return frameTimes
+}
+
+func formatCueTimestamp(seconds float64) string {
+	if seconds < 0 {
+		seconds = 0
+	}
+	totalMilliseconds := int(seconds*1000 + 0.5)
+	hours := totalMilliseconds / 3_600_000
+	minutes := (totalMilliseconds % 3_600_000) / 60_000
+	secs := (totalMilliseconds % 60_000) / 1000
+	milliseconds := totalMilliseconds % 1000
+	return fmt.Sprintf("%02d:%02d:%02d.%03d", hours, minutes, secs, milliseconds)
+}
+
+func visualCueRange(frameTimes []float64, index int) (string, string) {
+	start := float64(index)
+	if index < len(frameTimes) {
+		start = frameTimes[index]
+	}
+
+	end := start + 0.999
+	if index+1 < len(frameTimes) && frameTimes[index+1] > start {
+		end = frameTimes[index+1] - 0.001
+	}
+
+	return formatCueTimestamp(start), formatCueTimestamp(end)
+}
+
 func (o *YouTube) GrabComments(videoId string) (ret []string, err error) {
 	if err = o.initService(); err != nil {
 		return
@@ -911,16 +955,18 @@ func (o *YouTube) GrabVisual(videoId string, language string, additionalArgs str
 
 	var filter string
 	if fps > 0 {
-		filter = fmt.Sprintf("fps=%d", fps)
+		filter = fmt.Sprintf("fps=%d,showinfo", fps)
 	} else {
-		filter = fmt.Sprintf("select='gt(scene,%f)'", sensitivity)
+		filter = fmt.Sprintf("select='gt(scene,%f)',showinfo", sensitivity)
 	}
 
 	framePattern := filepath.Join(tempDir, "frame_%04d.jpg")
 	cmdFfmpeg := exec.CommandContext(ctx, "ffmpeg", "-i", streamUrl, "-vf", filter, "-fps_mode", "vfr", framePattern)
-	if out, err := cmdFfmpeg.CombinedOutput(); err != nil {
-		return "", fmt.Errorf(i18n.T("youtube_ffmpeg_frame_extraction_failed"), err, string(out))
+	ffmpegOutput, err := cmdFfmpeg.CombinedOutput()
+	if err != nil {
+		return "", fmt.Errorf(i18n.T("youtube_ffmpeg_frame_extraction_failed"), err, string(ffmpegOutput))
 	}
+	frameTimes := parseFFmpegFrameTimes(string(ffmpegOutput))
 
 	files, err := filepath.Glob(filepath.Join(tempDir, "frame_*.jpg"))
 	if err != nil {
@@ -967,11 +1013,8 @@ func (o *YouTube) GrabVisual(videoId string, language string, additionalArgs str
 	var sb strings.Builder
 	for i, text := range results {
 		if text != "" {
-			secs := i
-			hours := secs / 3600
-			mins := (secs % 3600) / 60
-			sec := secs % 60
-			sb.WriteString(fmt.Sprintf("\n%02d:%02d:%02d.000 --> %02d:%02d:%02d.999\n", hours, mins, sec, hours, mins, sec))
+			start, end := visualCueRange(frameTimes, i)
+			sb.WriteString(fmt.Sprintf("\n%s --> %s\n", start, end))
 			sb.WriteString(i18n.T("youtube_visual_frame_cue"))
 			sb.WriteString("\n")
 			sb.WriteString(text)

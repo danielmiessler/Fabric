@@ -57,6 +57,7 @@ var flagDescriptionMap = map[string]string{
 	"wipesession":                "wipe_session",
 	"printcontext":               "print_context",
 	"printsession":               "print_session",
+	"print-prompt":               "print_rendered_prompt",
 	"readability":                "convert_html_readability",
 	"input-has-vars":             "apply_variables_to_input",
 	"no-variable-replacement":    "disable_pattern_variable_replacement",

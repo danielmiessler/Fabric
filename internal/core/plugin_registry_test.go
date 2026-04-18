@@ -150,3 +150,63 @@ func TestGetChatter_RejectsExplicitCodexModelFromOtherVendor(t *testing.T) {
 		t.Fatal("expected GetChatter() to reject models that only belong to another vendor")
 	}
 }
+
+func TestGetChatter_ParsesVendorModelPrefix(t *testing.T) {
+	tempDir := t.TempDir()
+	db := fsdb.NewDb(tempDir)
+
+	ollamaVendor := &testVendor{name: "Ollama", models: []string{"some-namespace/model-name"}}
+
+	vm := ai.NewVendorsManager()
+	vm.AddVendors(ollamaVendor)
+
+	defaults := &tools.Defaults{
+		PluginBase:         &plugins.PluginBase{},
+		Vendor:             &plugins.Setting{Value: "Ollama"},
+		Model:              &plugins.SetupQuestion{Setting: &plugins.Setting{Value: "some-namespace/model-name"}},
+		ModelContextLength: &plugins.SetupQuestion{Setting: &plugins.Setting{Value: "0"}},
+	}
+
+	registry := &PluginRegistry{Db: db, VendorManager: vm, Defaults: defaults}
+
+	chatter, err := registry.GetChatter("ollama/some-namespace/model-name", 0, "", false, false)
+	if err != nil {
+		t.Fatalf("GetChatter() error = %v", err)
+	}
+	if chatter.vendor.GetName() != "Ollama" {
+		t.Fatalf("expected Ollama vendor, got %s", chatter.vendor.GetName())
+	}
+	if chatter.model != "some-namespace/model-name" {
+		t.Fatalf("expected model 'some-namespace/model-name', got %s", chatter.model)
+	}
+}
+
+func TestGetChatter_VendorPrefixIgnoredWhenNotAVendor(t *testing.T) {
+	tempDir := t.TempDir()
+	db := fsdb.NewDb(tempDir)
+
+	vendorA := &testVendor{name: "VendorA", models: []string{"notavendor/model"}}
+
+	vm := ai.NewVendorsManager()
+	vm.AddVendors(vendorA)
+
+	defaults := &tools.Defaults{
+		PluginBase:         &plugins.PluginBase{},
+		Vendor:             &plugins.Setting{Value: "VendorA"},
+		Model:              &plugins.SetupQuestion{Setting: &plugins.Setting{Value: "notavendor/model"}},
+		ModelContextLength: &plugins.SetupQuestion{Setting: &plugins.Setting{Value: "0"}},
+	}
+
+	registry := &PluginRegistry{Db: db, VendorManager: vm, Defaults: defaults}
+
+	chatter, err := registry.GetChatter("notavendor/model", 0, "", false, false)
+	if err != nil {
+		t.Fatalf("GetChatter() error = %v", err)
+	}
+	if chatter.vendor.GetName() != "VendorA" {
+		t.Fatalf("expected VendorA vendor, got %s", chatter.vendor.GetName())
+	}
+	if chatter.model != "notavendor/model" {
+		t.Fatalf("expected model 'notavendor/model', got %s", chatter.model)
+	}
+}

@@ -21,6 +21,14 @@ type ProviderConfig struct {
 	BaseURL             string
 	ModelsURL           string // Optional: Custom endpoint for listing models (if different from BaseURL/models)
 	ImplementsResponses bool   // Whether the provider supports OpenAI's new Responses API
+	// WebSearchToolName overrides the default "web_search_preview" tool name
+	// emitted on the Responses API when Search is enabled. Leave empty to keep
+	// the OpenAI default. xAI, for example, requires "web_search".
+	WebSearchToolName string
+	// EnableXSearch, when true, also appends an xAI "x_search" tool entry
+	// alongside the web search tool when Search is enabled. Non-xAI
+	// providers should leave this false.
+	EnableXSearch bool
 }
 
 // Client is the common structure for all OpenAI-compatible providers
@@ -40,6 +48,10 @@ func NewClient(providerConfig ProviderConfig) *Client {
 		providerConfig.ImplementsResponses,
 		nil,
 	)
+	// Apply optional Responses API tool overrides. Zero values preserve
+	// existing behavior for providers that do not set these fields.
+	client.Client.SetWebSearchToolName(providerConfig.WebSearchToolName)
+	client.Client.SetEnableXSearch(providerConfig.EnableXSearch)
 	return client
 }
 
@@ -240,6 +252,11 @@ var ProviderMap = map[string]ProviderConfig{
 		Name:                "GrokAI",
 		BaseURL:             "https://api.x.ai/v1",
 		ImplementsResponses: true,
+		// xAI's Responses API expects the "web_search" tool type, not
+		// OpenAI's "web_search_preview", and additionally accepts an
+		// "x_search" tool entry for live search grounding.
+		WebSearchToolName: "web_search",
+		EnableXSearch:     true,
 	},
 	"Groq": {
 		Name:                "Groq",

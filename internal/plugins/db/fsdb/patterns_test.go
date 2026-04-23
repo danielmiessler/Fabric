@@ -267,6 +267,71 @@ func TestPatternsEntity_CustomPatterns(t *testing.T) {
 	assert.Equal(t, "Custom pattern content", pattern.Pattern)
 }
 
+func TestPrintPattern(t *testing.T) {
+	entity, cleanup := setupTestPatternsEntity(t)
+	defer cleanup()
+
+	createTestPattern(t, entity, "test-pattern", "# IDENTITY\nYou are a test assistant.\n")
+
+	t.Run("prints pattern content to stdout", func(t *testing.T) {
+		// Capture stdout
+		oldStdout := os.Stdout
+		r, w, err := os.Pipe()
+		require.NoError(t, err)
+		os.Stdout = w
+
+		printErr := entity.PrintPattern("test-pattern")
+
+		w.Close()
+		os.Stdout = oldStdout
+
+		var buf [4096]byte
+		n, _ := r.Read(buf[:])
+		output := string(buf[:n])
+
+		require.NoError(t, printErr)
+		assert.Equal(t, "# IDENTITY\nYou are a test assistant.\n", output)
+	})
+
+	t.Run("returns error for non-existent pattern", func(t *testing.T) {
+		err := entity.PrintPattern("nonexistent-pattern")
+		assert.Error(t, err)
+	})
+
+	t.Run("custom pattern directory takes precedence", func(t *testing.T) {
+		customDir, err := os.MkdirTemp("", "test-custom-*")
+		require.NoError(t, err)
+		defer os.RemoveAll(customDir)
+
+		entityWithCustom := &PatternsEntity{
+			StorageEntity:     entity.StorageEntity,
+			SystemPatternFile: entity.SystemPatternFile,
+			CustomPatternsDir: customDir,
+		}
+		createTestPattern(t, &PatternsEntity{
+			StorageEntity:     &StorageEntity{Dir: customDir, Label: "patterns", ItemIsDir: true},
+			SystemPatternFile: "system.md",
+		}, "test-pattern", "# CUSTOM\nCustom version.\n")
+
+		oldStdout := os.Stdout
+		r, w, err := os.Pipe()
+		require.NoError(t, err)
+		os.Stdout = w
+
+		printErr := entityWithCustom.PrintPattern("test-pattern")
+
+		w.Close()
+		os.Stdout = oldStdout
+
+		var buf [4096]byte
+		n, _ := r.Read(buf[:])
+		output := string(buf[:n])
+
+		require.NoError(t, printErr)
+		assert.Equal(t, "# CUSTOM\nCustom version.\n", output)
+	})
+}
+
 func TestPatternsEntity_CustomPatternsEmpty(t *testing.T) {
 	// Test behavior when custom patterns directory is empty or doesn't exist
 	mainDir, err := os.MkdirTemp("", "test-main-patterns-*")

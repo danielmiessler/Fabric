@@ -39,6 +39,7 @@ type Flags struct {
 	Raw                             bool                 `short:"r" long:"raw" yaml:"raw" description:"Use the defaults of the model without sending chat options (temperature, top_p, etc.). Only affects OpenAI-compatible providers. Anthropic models always use smart parameter selection to comply with model-specific requirements."`
 	FrequencyPenalty                float64              `short:"F" long:"frequencypenalty" yaml:"frequencypenalty" description:"Set frequency penalty" default:"0.0"`
 	ListPatterns                    bool                 `short:"l" long:"listpatterns" description:"List all patterns"`
+	ReadPattern                     string               `long:"readpattern" description:"Print the contents of the named pattern to the terminal"`
 	ListAllModels                   bool                 `short:"L" long:"listmodels" description:"List all available models"`
 	ListAllContexts                 bool                 `short:"x" long:"listcontexts" description:"List all contexts"`
 	ListAllSessions                 bool                 `short:"X" long:"listsessions" description:"List all sessions"`
@@ -89,7 +90,7 @@ type Flags struct {
 	ListStrategies                  bool                 `long:"liststrategies" description:"List all strategies"`
 	ListVendors                     bool                 `long:"listvendors" description:"List all vendors"`
 	ShellCompleteOutput             bool                 `long:"shell-complete-list" description:"Output raw list without headers/formatting (for shell completion)"`
-	Search                          bool                 `long:"search" description:"Enable web search tool for supported models (Anthropic, OpenAI, Gemini)"`
+	Search                          bool                 `long:"search" description:"Enable web search tool for supported models (Anthropic, OpenAI, Gemini, Grok)"`
 	SearchLocation                  string               `long:"search-location" description:"Set location for web search results (e.g., 'America/Los_Angeles')"`
 	ImageFile                       string               `long:"image-file" description:"Save generated image to specified file path (e.g., 'output.png')"`
 	ImageSize                       string               `long:"image-size" description:"Image dimensions: 1024x1024, 1536x1024, 1024x1536, auto (default: auto)"`

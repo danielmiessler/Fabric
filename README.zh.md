@@ -131,6 +131,7 @@ Fabric 按照现实世界中的任务来组织 Prompt，允许人们在一个地
       - [macOS (Homebrew)](#macos-homebrew)
       - [Arch Linux (AUR)](#arch-linux-aur)
       - [Windows](#windows)
+      - [Windows (Scoop)](#windows-scoop)
     - [从源码构建](#从源码构建)
     - [Docker](#docker)
     - [环境变量](#环境变量)
@@ -258,6 +259,12 @@ yay -S fabric-ai
 
 ```bash
 winget install danielmiessler.Fabric
+```
+
+#### Windows (Scoop)
+
+```bash
+scoop install fabric-ai
 ```
 
 ### 从源码构建

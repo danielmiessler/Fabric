@@ -82,6 +82,7 @@ Below are the **new features and capabilities** we've added (newest first):
 
 ### Recent Major Features
 
+- [v1.4.447](https://github.com/danielmiessler/fabric/releases/tag/v1.4.447) (April 16, 2026) — **Claude Opus 4.7**: Updates the Anthropic SDK to v1.37.0 and adds the new [Claude Opus 4.7](https://www.anthropic.com/news/claude-opus-4-7) to the available models, including 1M-token context window support.
 - [v1.4.437](https://github.com/danielmiessler/fabric/releases/tag/v1.4.437) (March 16, 2026) — **OpenAI Codex PLugin**: Fabric now supports using OpenAI Codex (with your OpenAI subscription) as a backend!
 - [v1.4.417](https://github.com/danielmiessler/fabric/releases/tag/v1.4.417) (Feb 21, 2026) — **Azure AI Gateway Plugin**: Added Azure AI Gateway plugin supporting multiple backends (AWS Bedrock, Azure OpenAI, Google Vertex AI) through a unified Azure APIM Gateway with shared subscription key authentication.
 - [v1.4.416](https://github.com/danielmiessler/fabric/releases/tag/v1.4.416) (Feb 21, 2026) — **Azure Entra ID Authentication**: Added Azure Entra ID authentication plugin with shared Azure utilities, Entra ID/MSAL support, and extracted common Azure logic into a reusable `azurecommon` package.
@@ -136,6 +137,7 @@ Keep in mind that many of these were recorded when Fabric was Python-based, so r
       - [macOS (Homebrew)](#macos-homebrew)
       - [Arch Linux (AUR)](#arch-linux-aur)
       - [Windows](#windows)
+      - [Windows (Scoop)](#windows-scoop)
     - [From Source](#from-source)
     - [Docker](#docker)
     - [Environment Variables](#environment-variables)
@@ -261,6 +263,10 @@ alias fabric='fabric-ai'
 Use the official Microsoft supported `Winget` tool:
 
 `winget install danielmiessler.Fabric`
+
+#### Windows (Scoop)
+
+`scoop install fabric-ai`
 
 ### From Source
 

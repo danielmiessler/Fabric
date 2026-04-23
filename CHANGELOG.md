@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.4.450 (2026-04-23)
+
+### PR [#2092](https://github.com/danielmiessler/Fabric/pull/2092) by [Resistor52](https://github.com/Resistor52): feat(openai): add GrokAI search grounding via xAI Responses API
+
+- Added support for GrokAI search grounding via xAI's Responses API, fixing HTTP 422 errors caused by a hardcoded OpenAI `web_search_preview` tool name in `buildResponseParams`.
+- Introduced two new fields to `openai_compatible.ProviderConfig`: `WebSearchToolName` (to override the default web search tool name) and `EnableXSearch` (to append xAI's `x_search` tool when search is enabled).
+- Both new fields default to empty/false, preserving full backwards compatibility for all existing providers.
+- GrokAI is pre-configured with `WebSearchToolName` set to `"web_search"` and `EnableXSearch` set to `true`, enabling grounded search results with real source URLs via `fabric -V GrokAI --search`.
+- Added tests in `openai_test.go` covering the new override paths and confirming default provider behavior remains unchanged.
+
 ## v1.4.449 (2026-04-23)
 
 ### PR [#2089](https://github.com/danielmiessler/Fabric/pull/2089) by [dependabot](https://github.com/apps/dependabot) and [ksylvan](https://github.com/ksylvan): chore(deps-dev): bump vite from 5.4.21 to 8.0.8 in /web in the npm_and_yarn group across 1 directory

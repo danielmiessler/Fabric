@@ -38,6 +38,7 @@ func NewClient() (ret *Client) {
 	ret.defaultRequiredUserMessage = "Hi"
 	ret.models = []string{
 		// The following are the current supported models
+		string(anthropic.ModelClaudeOpus4_7),
 		string(anthropic.ModelClaudeSonnet4_6),
 		string(anthropic.ModelClaudeOpus4_6),
 		string(anthropic.ModelClaudeOpus4_5_20251101),
@@ -55,7 +56,7 @@ func NewClient() (ret *Client) {
 
 	ret.modelBetas = map[string][]string{
 		// See https://platform.claude.com/docs/en/build-with-claude/context-windows#1-m-token-context-window
-		// Claude Opus 4.6, Sonnet 4.6, Sonnet 4.5, and Sonnet 4 support a 1-million token context window.
+		// Claude Opus 4.7, Opus 4.6, Sonnet 4.6, Sonnet 4.5, and Sonnet 4 support a 1-million token context window.
 
 		// This list can change over time as Anthropic updates their models and beta features, so we maintain it separately from the main model list
 		// for easier updates.
@@ -71,9 +72,10 @@ func NewClient() (ret *Client) {
 		// Claude Sonnet 4.6 (1M context support)
 		string(anthropic.ModelClaudeSonnet4_6): {"context-1m-2025-08-07"},
 
-		// Claude Opus 4.5 and 4.6 variants (1M context support)
+		// Claude Opus 4.5, 4.6, and 4.7 variants (1M context support)
 		string(anthropic.ModelClaudeOpus4_5):          {"context-1m-2025-08-07"},
 		string(anthropic.ModelClaudeOpus4_6):          {"context-1m-2025-08-07"},
+		string(anthropic.ModelClaudeOpus4_7):          {"context-1m-2025-08-07"},
 		string(anthropic.ModelClaudeOpus4_5_20251101): {"context-1m-2025-08-07"},
 	}
 

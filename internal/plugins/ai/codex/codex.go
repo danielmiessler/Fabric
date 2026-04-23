@@ -242,11 +242,14 @@ func (c *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, o
 	if err := c.mapRequestError(stream.Err()); err != nil {
 		return "", err
 	}
+	streamedText := builder.String()
 	if completedResp != nil {
-		return c.ExtractText(completedResp), nil
+		if extractedText := c.ExtractText(completedResp); strings.TrimSpace(extractedText) != "" {
+			return extractedText, nil
+		}
 	}
 
-	return builder.String(), nil
+	return streamedText, nil
 }
 
 // SendStream sends a request to Codex and streams the response text updates.

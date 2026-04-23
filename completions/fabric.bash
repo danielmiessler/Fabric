@@ -17,7 +17,7 @@ _fabric() {
    fi
 
   # Define all possible options/flags
-  local opts="--pattern -p --variable -v --context -C --session --attachment -a --setup -S --temperature -t --topp -T --stream -s --presencepenalty -P --raw -r --frequencypenalty -F --listpatterns -l --listmodels -L --listcontexts -x --listsessions -X --updatepatterns -U --copy -c --model -m --vendor -V --modelContextLength --output -o --output-session --latest -n --changeDefaultModel -d --youtube -y --playlist --transcript --transcript-with-timestamps --visual --visual-sensitivity --visual-fps --comments --metadata --yt-dlp-args --language -g --scrape_url -u --scrape_question -q --seed -e --thinking --wipecontext -w --wipesession -W --printcontext --printsession --readability --input-has-vars --no-variable-replacement --dry-run --serve --serveOllama --address --api-key --config --search --search-location --image-file --image-size --image-quality --image-compression --image-background --suppress-think --think-start-tag --think-end-tag --disable-responses-api --transcribe-file --transcribe-model --split-media-file --voice --list-gemini-voices --notification --notification-command --debug --version --listextensions --addextension --rmextension --strategy --liststrategies --listvendors --shell-complete-list --help -h"
+  local opts="--pattern -p --variable -v --context -C --session --attachment -a --setup -S --temperature -t --topp -T --stream -s --presencepenalty -P --raw -r --frequencypenalty -F --listpatterns -l --readpattern --listmodels -L --listcontexts -x --listsessions -X --updatepatterns -U --copy -c --model -m --vendor -V --modelContextLength --output -o --output-session --latest -n --changeDefaultModel -d --youtube -y --playlist --transcript --transcript-with-timestamps --visual --visual-sensitivity --visual-fps --comments --metadata --yt-dlp-args --language -g --scrape_url -u --scrape_question -q --seed -e --thinking --wipecontext -w --wipesession -W --printcontext --printsession --readability --input-has-vars --no-variable-replacement --dry-run --serve --serveOllama --address --api-key --config --search --search-location --image-file --image-size --image-quality --image-compression --image-background --suppress-think --think-start-tag --think-end-tag --disable-responses-api --transcribe-file --transcribe-model --split-media-file --voice --list-gemini-voices --notification --notification-command --debug --version --listextensions --addextension --rmextension --strategy --liststrategies --listvendors --shell-complete-list --help -h"
 
   # Helper function for dynamic completions
   _fabric_get_list() {
@@ -26,7 +26,7 @@ _fabric() {
 
   # Handle completions based on the previous word
   case "${prev}" in
-  -p | --pattern)
+  -p | --pattern | --readpattern)
     COMPREPLY=($(compgen -W "$(_fabric_get_list --listpatterns)" -- "${cur}"))
     return 0
     ;;

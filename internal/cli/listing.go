@@ -29,6 +29,11 @@ func handleListingCommands(currentFlags *Flags, fabricDb *fsdb.Db, registry *cor
 		return true, nil
 	}
 
+	if currentFlags.ReadPattern != "" {
+		err = fabricDb.Patterns.PrintPattern(currentFlags.ReadPattern)
+		return true, err
+	}
+
 	if currentFlags.ListPatterns {
 		// Check if patterns exist before listing
 		var names []string

@@ -59,6 +59,7 @@ function __fabric_register_completions
 
         # Flag completions with arguments
         complete -c $cmd -s p -l pattern -d "Choose a pattern from the available patterns" -a "(__fabric_get_patterns)"
+        complete -c $cmd -l readpattern -d "Print the contents of the named pattern to the terminal" -a "(__fabric_get_patterns)"
         complete -c $cmd -s v -l variable -d "Values for pattern variables, e.g. -v=#role:expert -v=#points:30"
         complete -c $cmd -s C -l context -d "Choose a context from the available contexts" -a "(__fabric_get_contexts)"
         complete -c $cmd -l session -d "Choose a session from the available sessions" -a "(__fabric_get_sessions)"

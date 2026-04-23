@@ -281,13 +281,13 @@ docker run --rm -it ghcr.io/ksylvan/fabric:v1.4.305 --version
 
 # 首次运行时进行配置
 mkdir -p $HOME/.fabric-config
-docker run --rm -it -v $HOME/.fabric-config:/root/.config/fabric kayvan/fabric:latest --setup
+docker run --rm -it -v $HOME/.fabric-config:/home/appuser/.config/fabric kayvan/fabric:latest --setup
 
 # 使用你的 patterns
-docker run --rm -it -v $HOME/.fabric-config:/root/.config/fabric kayvan/fabric:latest -p summarize
+docker run --rm -it -v $HOME/.fabric-config:/home/appuser/.config/fabric kayvan/fabric:latest -p summarize
 
 # 运行 REST API 服务器
-docker run --rm -it -p 8080:8080 -v $HOME/.fabric-config:/root/.config/fabric kayvan/fabric:latest --serve
+docker run --rm -it -p 8080:8080 -v $HOME/.fabric-config:/home/appuser/.config/fabric kayvan/fabric:latest --serve
 ```
 
 **镜像来源：**

@@ -4,7 +4,7 @@ go 1.25.1
 
 require (
 	github.com/Azure/azure-sdk-for-go/sdk/azidentity v1.13.1
-	github.com/anthropics/anthropic-sdk-go v1.34.0
+	github.com/anthropics/anthropic-sdk-go v1.37.0
 	github.com/atotto/clipboard v0.1.4
 	github.com/aws/aws-sdk-go-v2 v1.41.5
 	github.com/aws/aws-sdk-go-v2/config v1.32.14

@@ -429,6 +429,61 @@ func TestSendIncludesSourcesFromAnnotatedResponse(t *testing.T) {
 	}
 }
 
+func TestSendFallsBackToDeltaWhenCompletedResponseHasNoText(t *testing.T) {
+	apiServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path != "/responses" {
+			http.NotFound(w, r)
+			return
+		}
+
+		w.Header().Set("Content-Type", "text/event-stream")
+		flusher, ok := w.(http.Flusher)
+		if !ok {
+			t.Fatalf("response writer does not implement http.Flusher")
+		}
+		fmt.Fprintf(w, "data: %s\n\n", marshalJSON(t, map[string]any{
+			"type":  string(constant.ResponseOutputTextDelta("").Default()),
+			"delta": "hello from delta",
+		}))
+		flusher.Flush()
+		fmt.Fprintf(w, "data: %s\n\n", marshalJSON(t, map[string]any{
+			"type": "response.completed",
+			"response": map[string]any{
+				"output": []any{
+					map[string]any{
+						"type": "message",
+						"content": []any{
+							map[string]any{
+								"type": "output_text",
+								"text": "",
+							},
+						},
+					},
+				},
+			},
+		}))
+		flusher.Flush()
+		fmt.Fprint(w, "data: [DONE]\n\n")
+	}))
+	defer apiServer.Close()
+
+	client := newConfiguredTestClient(t, apiServer.URL, "acct_delta_fallback", testJWT("acct_delta_fallback", time.Now().Add(time.Hour)))
+
+	message, err := client.Send(context.Background(), []*chat.ChatCompletionMessage{
+		{Role: chat.ChatMessageRoleUser, Content: "Hello"},
+	}, &domain.ChatOptions{
+		Model:       "gpt-5.4",
+		Temperature: 0.7,
+	})
+	if err != nil {
+		t.Fatalf("Send() error = %v", err)
+	}
+
+	if message != "hello from delta" {
+		t.Fatalf("Send() = %q, want %q", message, "hello from delta")
+	}
+}
+
 func TestSendStreamReadsCodexSSE(t *testing.T) {
 	apiServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if r.URL.Path != "/responses" {

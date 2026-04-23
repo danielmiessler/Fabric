@@ -1,5 +1,69 @@
 # Changelog
 
+## v1.4.448 (2026-04-17)
+
+### Direct commits
+
+- Fix: fall back to streamed delta text when completed Codex response is empty
+
+- Prefer extracted completed text only when content stays non-empty
+- Fall back to accumulated streamed delta text otherwise
+
+- Preserve streamed response text before completed response evaluation
+- Add regression test for empty completed output text
+
+- Simulate SSE delta stream followed by blank completion
+- Verify Send returns delta text when completion lacks content
+
+## v1.4.447 (2026-04-17)
+
+### PR [#2097](https://github.com/danielmiessler/Fabric/pull/2097) by [ksylvan](https://github.com/ksylvan): Add Claude Opus 4.7 model support and bump Anthropic SDK to v1.37.0
+
+- Added Claude Opus 4.7 model support and bumped the Anthropic SDK to v1.37.0.
+- Upgraded the `anthropic-sdk-go` dependency from v1.34.0 to v1.37.0.
+- Added `claude-opus-4-7` to the supported models list.
+- Enabled the 1M context window beta feature for Opus 4.7.
+- Updated model beta comments to reflect Opus 4.7 support.
+
+## v1.4.446 (2026-04-15)
+
+### PR [#2093](https://github.com/danielmiessler/Fabric/pull/2093) by [alecjmckanna](https://github.com/alecjmckanna): feat: add --readpattern flag to print pattern contents to terminal
+
+- Adds a new `--readpattern <name>` CLI flag that prints the raw contents of a named pattern's `system.md` file to stdout, making it easy to inspect a pattern's instructions without navigating the filesystem manually.
+- Custom pattern directories are respected: the user's custom patterns directory is checked first before falling back to the main patterns directory, consistent with all other pattern lookups.
+
+### Direct commits
+
+- Docs: update Docker config mount path for appuser
+
+- Replace container config mount path from root to appuser
+- Align setup example with non-root container home directory
+
+- Align pattern usage example with appuser config location
+- Align REST API example with updated config mount target
+
+- Update English and Chinese README Docker instructions consistently
+
+## v1.4.445 (2026-04-13)
+
+### PR [#2091](https://github.com/danielmiessler/Fabric/pull/2091) by [jimscard](https://github.com/jimscard) and [ksylvan](https://github.com/ksylvan): Update Dockerfile for best practices and critical CVE fixes
+
+- Pins Alpine 3.21 and Go 1.25.9 explicitly for reproducible, auditable builds.
+- Installs the Go toolchain directly in the builder stage, removing the dependency on an unavailable upstream `golang` tag.
+- Upgrades `setuptools` to remediate the critical vulnerability CVE-2025-47273.
+- Refreshes the `yt-dlp` installation path to align with current packaging conventions.
+- Configures the final image to run as a non-root user, reducing the container's attack surface.
+
+## v1.4.444 (2026-04-09)
+
+### PR [#2088](https://github.com/danielmiessler/Fabric/pull/2088) by [ksylvan](https://github.com/ksylvan): Combined dependabot fixes plus other Go module upgrades
+
+- Upgraded `anthropic-sdk-go` from v1.27.1 to v1.34.0, bringing in several versions of improvements and fixes from the Anthropic Go SDK.
+- Upgraded `ollama` from v0.18.2 to v0.20.4, incorporating two minor version bumps of enhancements to the Ollama client library.
+- Upgraded `google.golang.org/grpc` from v1.79.3 to v1.80.0, picking up the latest gRPC release for Go.
+- Upgraded `google.golang.org/genai` from v1.51.0 to v1.53.0 and bumped `google.golang.org/api` from v0.272.0 to v0.275.0, keeping Google AI and API client libraries current.
+- Bumped `go-sqlite3` from v1.14.37 to v1.14.42, updated `go-git/v5` from v5.17.0 to v5.17.2, and refreshed `golang.org/x` packages (crypto, net, sys, text, mod) and OpenTelemetry packages from v1.42.0 to v1.43.0 alongside AWS SDK v2 patch releases.
+
 ## v1.4.443 (2026-04-06)
 
 ### PR [#2073](https://github.com/danielmiessler/Fabric/pull/2073) by [sathvikc](https://github.com/sathvikc) and [ksylvan](https://github.com/ksylvan): feat(youtube): Implement visual text extraction via FFmpeg and OCR

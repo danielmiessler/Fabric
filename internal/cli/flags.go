@@ -39,6 +39,7 @@ type Flags struct {
 	Raw                             bool                 `short:"r" long:"raw" yaml:"raw" description:"Use the defaults of the model without sending chat options (temperature, top_p, etc.). Only affects OpenAI-compatible providers. Anthropic models always use smart parameter selection to comply with model-specific requirements."`
 	FrequencyPenalty                float64              `short:"F" long:"frequencypenalty" yaml:"frequencypenalty" description:"Set frequency penalty" default:"0.0"`
 	ListPatterns                    bool                 `short:"l" long:"listpatterns" description:"List all patterns"`
+	ReadPattern                     string               `long:"readpattern" description:"Print the contents of the named pattern to the terminal"`
 	ListAllModels                   bool                 `short:"L" long:"listmodels" description:"List all available models"`
 	ListAllContexts                 bool                 `short:"x" long:"listcontexts" description:"List all contexts"`
 	ListAllSessions                 bool                 `short:"X" long:"listsessions" description:"List all sessions"`

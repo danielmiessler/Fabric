@@ -1,7 +1,0 @@
-### PR [#2088](https://github.com/danielmiessler/Fabric/pull/2088) by [ksylvan](https://github.com/ksylvan): Combined dependabot fixes plus other Go module upgrades
-
-- Upgraded `anthropic-sdk-go` from v1.27.1 to v1.34.0, bringing in several versions of improvements and fixes from the Anthropic Go SDK.
-- Upgraded `ollama` from v0.18.2 to v0.20.4, incorporating two minor version bumps of enhancements to the Ollama client library.
-- Upgraded `google.golang.org/grpc` from v1.79.3 to v1.80.0, picking up the latest gRPC release for Go.
-- Upgraded `google.golang.org/genai` from v1.51.0 to v1.53.0 and bumped `google.golang.org/api` from v0.272.0 to v0.275.0, keeping Google AI and API client libraries current.
-- Bumped `go-sqlite3` from v1.14.37 to v1.14.42, updated `go-git/v5` from v5.17.0 to v5.17.2, and refreshed `golang.org/x` packages (crypto, net, sys, text, mod) and OpenTelemetry packages from v1.42.0 to v1.43.0 alongside AWS SDK v2 patch releases.

@@ -156,6 +156,17 @@ func (o *PatternsEntity) getFromDB(name string) (ret *Pattern, err error) {
 	return
 }
 
+// PrintPattern prints the raw contents of the named pattern to the terminal.
+// It checks the custom patterns directory first, then falls back to the main directory.
+func (o *PatternsEntity) PrintPattern(name string) (err error) {
+	var pattern *Pattern
+	if pattern, err = o.GetRaw(name); err != nil {
+		return
+	}
+	fmt.Print(pattern.Pattern)
+	return
+}
+
 func (o *PatternsEntity) PrintLatestPatterns(latestNumber int) (err error) {
 	var contents []byte
 	if contents, err = os.ReadFile(o.UniquePatternsFilePath); err != nil {

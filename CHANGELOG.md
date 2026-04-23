@@ -1,5 +1,100 @@
 # Changelog
 
+## v1.4.449 (2026-04-23)
+
+### PR [#2089](https://github.com/danielmiessler/Fabric/pull/2089) by [dependabot](https://github.com/apps/dependabot) and [ksylvan](https://github.com/ksylvan): chore(deps-dev): bump vite from 5.4.21 to 8.0.8 in /web in the npm_and_yarn group across 1 directory
+
+- Chore(deps-dev): bump vite
+Bumps the npm_and_yarn group with 1 update in the /web directory: [vite](<https://github.com/vitejs/vite/tree/HEAD/packages/vite).>
+
+Updates `vite` from 5.4.21 to 8.0.8
+
+- [Release notes](<https://github.com/vitejs/vite/releases)>
+- [Changelog](<https://github.com/vitejs/vite/blob/main/packages/vite/CHANGELOG.md)>
+
+- [Commits](<https://github.com/vitejs/vite/commits/v8.0.8/packages/vite)>
+updated-dependencies:
+- dependency-name: vite
+  dependency-version: 8.0.8
+  dependency-type: direct:development
+  dependency-group: npm_and_yarn
+Signed-off-by: dependabot[bot] <support@github.com>
+
+### PR [#2103](https://github.com/danielmiessler/Fabric/pull/2103) by [dependabot](https://github.com/apps/dependabot) and [ksylvan](https://github.com/ksylvan): chore(deps): bump github.com/go-git/go-git/v5 from 5.17.2 to 5.18.0 in the go_modules group across 1 directory
+
+- Upgraded Vite from 5.4.21 to 8.0.8 in the web layer, representing a significant major-version jump with potential performance and build tooling improvements.
+- Bumped `@sveltejs/vite-plugin-svelte` from 4.0.4 to 7.0.0, a major version update aligning the Svelte plugin with the upgraded Vite 8 runtime.
+- Updated AWS SDK Go v2 modules to their latest patches, ensuring up-to-date cloud integration support and security fixes.
+- Updated the Ollama client from 0.20.4 to 0.21.1, keeping local AI model support current with the latest client improvements.
+- Upgraded `go-git` from 5.17.2 to 5.18.0, incorporating the latest fixes and improvements to Git operations within the Go module ecosystem.
+
+### Direct commits
+
+- Docs: add Scoop install instructions and expand cSpell dictionary
+
+- Add Windows Scoop install section to Chinese README
+- Link Scoop install entry in both README tables of contents
+
+- Extend cSpell dictionary with APIM, MSAL, and related terms
+- Ignore `.vscode/**` paths during cSpell checks
+
+- Allow `strong` tag in cSpell markdown configuration
+- Docs: add Scoop installation instructions
+
+## v1.4.448 (2026-04-17)
+
+### Direct commits
+
+- Fix: fall back to streamed delta text when completed Codex response is empty
+
+- Prefer extracted completed text only when content stays non-empty
+- Fall back to accumulated streamed delta text otherwise
+
+- Preserve streamed response text before completed response evaluation
+- Add regression test for empty completed output text
+
+- Simulate SSE delta stream followed by blank completion
+- Verify Send returns delta text when completion lacks content
+
+## v1.4.447 (2026-04-17)
+
+### PR [#2097](https://github.com/danielmiessler/Fabric/pull/2097) by [ksylvan](https://github.com/ksylvan): Add Claude Opus 4.7 model support and bump Anthropic SDK to v1.37.0
+
+- Added Claude Opus 4.7 model support and bumped the Anthropic SDK to v1.37.0.
+- Upgraded the `anthropic-sdk-go` dependency from v1.34.0 to v1.37.0.
+- Added `claude-opus-4-7` to the supported models list.
+- Enabled the 1M context window beta feature for Opus 4.7.
+- Updated model beta comments to reflect Opus 4.7 support.
+
+## v1.4.446 (2026-04-15)
+
+### PR [#2093](https://github.com/danielmiessler/Fabric/pull/2093) by [alecjmckanna](https://github.com/alecjmckanna): feat: add --readpattern flag to print pattern contents to terminal
+
+- Adds a new `--readpattern <name>` CLI flag that prints the raw contents of a named pattern's `system.md` file to stdout, making it easy to inspect a pattern's instructions without navigating the filesystem manually.
+- Custom pattern directories are respected: the user's custom patterns directory is checked first before falling back to the main patterns directory, consistent with all other pattern lookups.
+
+### Direct commits
+
+- Docs: update Docker config mount path for appuser
+
+- Replace container config mount path from root to appuser
+- Align setup example with non-root container home directory
+
+- Align pattern usage example with appuser config location
+- Align REST API example with updated config mount target
+
+- Update English and Chinese README Docker instructions consistently
+
+## v1.4.445 (2026-04-13)
+
+### PR [#2091](https://github.com/danielmiessler/Fabric/pull/2091) by [jimscard](https://github.com/jimscard) and [ksylvan](https://github.com/ksylvan): Update Dockerfile for best practices and critical CVE fixes
+
+- Pins Alpine 3.21 and Go 1.25.9 explicitly for reproducible, auditable builds.
+- Installs the Go toolchain directly in the builder stage, removing the dependency on an unavailable upstream `golang` tag.
+- Upgrades `setuptools` to remediate the critical vulnerability CVE-2025-47273.
+- Refreshes the `yt-dlp` installation path to align with current packaging conventions.
+- Configures the final image to run as a non-root user, reducing the container's attack surface.
+
 ## v1.4.444 (2026-04-09)
 
 ### PR [#2088](https://github.com/danielmiessler/Fabric/pull/2088) by [ksylvan](https://github.com/ksylvan): Combined dependabot fixes plus other Go module upgrades

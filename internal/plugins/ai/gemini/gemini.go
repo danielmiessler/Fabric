@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"regexp"
+	"slices"
 	"strconv"
 	"strings"
 
@@ -290,9 +291,9 @@ func (o *Client) isTTSModel(modelName string) bool {
 
 // extractTextForTTS extracts text content from chat messages for TTS generation
 func (o *Client) extractTextForTTS(msgs []*chat.ChatCompletionMessage) (string, error) {
-	for i := len(msgs) - 1; i >= 0; i-- {
-		if msgs[i].Role == chat.ChatMessageRoleUser && msgs[i].Content != "" {
-			return msgs[i].Content, nil
+	for _, msg := range slices.Backward(msgs) {
+		if msg.Role == chat.ChatMessageRoleUser && msg.Content != "" {
+			return msg.Content, nil
 		}
 	}
 	return "", errors.New(i18n.T("gemini_no_text_for_tts"))

@@ -66,11 +66,35 @@ type Client struct {
 	ApiClient           *openai.Client
 	ImplementsResponses bool // Whether this provider supports the Responses API
 	httpClient          *http.Client
+	// webSearchToolName, when non-empty, overrides the default
+	// "web_search_preview" tool name emitted on the Responses API.
+	// Used by OpenAI-compatible providers whose upstream API expects a
+	// different tool type string (xAI expects "web_search").
+	webSearchToolName string
+	// enableXSearch, when true, appends an additional "x_search" tool
+	// entry alongside the web search tool when Search is enabled.
+	// This is an xAI-specific live search grounding tool.
+	enableXSearch bool
 }
 
 // SetResponsesAPIEnabled configures whether to use the Responses API
 func (o *Client) SetResponsesAPIEnabled(enabled bool) {
 	o.ImplementsResponses = enabled
+}
+
+// SetWebSearchToolName overrides the default "web_search_preview" tool
+// name emitted on the Responses API when Search is enabled. Pass an empty
+// string to keep the OpenAI default. Non-OpenAI providers (for example,
+// xAI) may require "web_search" instead.
+func (o *Client) SetWebSearchToolName(name string) {
+	o.webSearchToolName = name
+}
+
+// SetEnableXSearch toggles whether an additional xAI "x_search" tool
+// entry is appended when Search is enabled. Non-xAI providers should
+// leave this false.
+func (o *Client) SetEnableXSearch(enabled bool) {
+	o.enableXSearch = enabled
 }
 
 // checkImageGenerationCompatibility warns if the model doesn't support image generation
@@ -253,11 +277,18 @@ func (o *Client) buildResponseParams(
 	// Add tools if enabled
 	var tools []responses.ToolUnionParam
 
-	// Add web search tool if enabled
+	// Add web search tool if enabled. The default tool name is OpenAI's
+	// "web_search_preview", but providers may override it (for example,
+	// xAI's Responses API requires "web_search").
 	if opts.Search {
-		webSearchTool := responses.ToolParamOfWebSearchPreview("web_search_preview")
+		searchToolName := responses.WebSearchToolType("web_search_preview")
+		if o.webSearchToolName != "" {
+			searchToolName = responses.WebSearchToolType(o.webSearchToolName)
+		}
+		webSearchTool := responses.ToolParamOfWebSearchPreview(searchToolName)
 
-		// Add user location if provided
+		// Add user location if provided. Only attach when the caller
+		// asked for it; xAI rejects unexpected location payloads.
 		if opts.SearchLocation != "" {
 			webSearchTool.OfWebSearchPreview.UserLocation = responses.WebSearchToolUserLocationParam{
 				Type:     "approximate",
@@ -266,6 +297,20 @@ func (o *Client) buildResponseParams(
 		}
 
 		tools = append(tools, webSearchTool)
+
+		// Append xAI's live "x_search" tool when the provider opts in.
+		// The xAI Responses API accepts a bare {"type":"x_search"}
+		// entry with no other required fields. We reuse the SDK's
+		// WebSearchToolParam as a minimal container since every other
+		// field is omitzero and will be elided during JSON marshalling.
+		if o.enableXSearch {
+			xSearchTool := responses.ToolUnionParam{
+				OfWebSearchPreview: &responses.WebSearchToolParam{
+					Type: responses.WebSearchToolType("x_search"),
+				},
+			}
+			tools = append(tools, xSearchTool)
+		}
 	}
 
 	// Add image generation tool if needed

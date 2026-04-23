@@ -136,6 +136,10 @@ Examine battles analyzing strategic decisions to extract military lessons.
 
 Analyze past errors to prevent similar mistakes in predictions/decisions.
 
+### analyze_monetization_opportunities
+
+Identify affiliate, sponsorship, digital product, and community revenue opportunities in creator content aligned with audience intent.
+
 ### analyze_paper
 
 Analyze scientific papers to identify findings and assess conclusion.
@@ -442,6 +446,10 @@ Extract world model updates/algorithms to improve decision-making.
 
 Organize video content into timestamped chapters highlighting key topics.
 
+### extract_affiliate_products
+
+Extract commercial products, tools, and brands from transcripts, separating sponsored from organic mentions with commission tier estimates.
+
 ### extract_algorithm_update_recommendations
 
 Extract recommendations for improving algorithms, focusing on steps.
@@ -537,6 +545,10 @@ Extract/classify hard/soft skills from job descriptions into skill inventory.
 ### extract_sponsors
 
 Extract/organize sponsorship info, including names and messages.
+
+### extract_video_commerce_entities
+
+Identify every commercially relevant entity in a video transcript — products, tools, brands, services — with category, mention type, and purchase likelihood.
 
 ### extract_videoid
 

@@ -8,10 +8,13 @@
 		"anthropics",
 		"Aoede",
 		"apikey",
+		"APIM",
 		"aplicar",
+		"appuser",
 		"Astley",
 		"atotto",
 		"Autonoe",
+		"azurecommon",
 		"azureml",
 		"badfile",
 		"Behrens",
@@ -131,6 +134,7 @@
 		"modelines",
 		"Moltbot",
 		"mpga",
+		"MSAL",
 		"mvdan",
 		"mychat",
 		"mygroup",
@@ -222,6 +226,7 @@
 	"cSpell.ignorePaths": [
 		"go.mod",
 		".gitignore",
+		".vscode/**",
 		"CHANGELOG.md",
 		"scripts/installer/install.*",
 		"web/static/data/pattern_descriptions.json",
@@ -255,6 +260,7 @@
 				"module",
 				"p",
 				"summary",
+				"strong",
 				"sup"
 			]
 		},

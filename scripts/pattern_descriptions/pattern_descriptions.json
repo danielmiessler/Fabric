@@ -2083,6 +2083,31 @@
         "WRITING",
         "CONVERSION"
       ]
+    },
+    {
+      "patternName": "analyze_monetization_opportunities",
+      "description": "Identify affiliate, sponsorship, product, and community monetization opportunities in creator content.",
+      "tags": [
+        "ANALYSIS",
+        "BUSINESS",
+        "STRATEGY"
+      ]
+    },
+    {
+      "patternName": "extract_affiliate_products",
+      "description": "Extract products, tools, and brands from transcripts as affiliate revenue opportunities.",
+      "tags": [
+        "EXTRACT",
+        "BUSINESS"
+      ]
+    },
+    {
+      "patternName": "extract_video_commerce_entities",
+      "description": "Extract commercially relevant entities, products, and brands from video transcripts.",
+      "tags": [
+        "EXTRACT",
+        "BUSINESS"
+      ]
     }
   ]
 }

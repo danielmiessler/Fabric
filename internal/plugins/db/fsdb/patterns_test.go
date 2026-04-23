@@ -365,6 +365,8 @@ Body {{input}}`), 0644)
 	require.NoError(t, err)
 	assert.Equal(t, "Body hello", result.Pattern)
 	assert.Equal(t, map[string]any{"title": "reviewer"}, result.Frontmatter)
+}
+
 func TestPrintPattern(t *testing.T) {
 	entity, cleanup := setupTestPatternsEntity(t)
 	defer cleanup()

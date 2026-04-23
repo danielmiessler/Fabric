@@ -1,0 +1,7 @@
+### PR [#2103](https://github.com/danielmiessler/Fabric/pull/2103) by [dependabot](https://github.com/apps/dependabot) and [ksylvan](https://github.com/ksylvan): chore(deps): bump github.com/go-git/go-git/v5 from 5.17.2 to 5.18.0 in the go_modules group across 1 directory
+
+- Upgraded Vite from 5.4.21 to 8.0.8 in the web layer, representing a significant major-version jump with potential performance and build tooling improvements.
+- Bumped `@sveltejs/vite-plugin-svelte` from 4.0.4 to 7.0.0, a major version update aligning the Svelte plugin with the upgraded Vite 8 runtime.
+- Updated AWS SDK Go v2 modules to their latest patches, ensuring up-to-date cloud integration support and security fixes.
+- Updated the Ollama client from 0.20.4 to 0.21.1, keeping local AI model support current with the latest client improvements.
+- Upgraded `go-git` from 5.17.2 to 5.18.0, incorporating the latest fixes and improvements to Git operations within the Go module ecosystem.

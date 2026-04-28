@@ -94,7 +94,7 @@ func ParseFileChanges(output string) (changeSummary string, changes []FileChange
 		}
 
 		// Check for suspicious paths (directory traversal)
-		if strings.Contains(change.Path, "..") {
+		if strings.Contains(change.Path, "..") || filepath.IsAbs(change.Path) {
 			return changeSummary, nil, fmt.Errorf(i18n.T("file_manager_suspicious_path"), i, change.Path)
 		}
 
@@ -169,9 +169,25 @@ func fixInvalidEscapes(jsonStr string) string {
 
 // ApplyFileChanges applies the parsed file changes to the file system
 func ApplyFileChanges(projectRoot string, changes []FileChange) error {
+	absProjectRoot, err := filepath.Abs(projectRoot)
+	if err != nil {
+		return fmt.Errorf("failed to resolve project root: %w", err)
+	}
+	absProjectRoot = filepath.Clean(absProjectRoot)
+
 	for i, change := range changes {
-		// Get the absolute path
-		absPath := filepath.Join(projectRoot, change.Path)
+		// Reject absolute paths
+		if filepath.IsAbs(change.Path) {
+			return fmt.Errorf(i18n.T("file_manager_suspicious_path"), i, change.Path)
+		}
+
+		// Get the absolute path and clean it
+		absPath := filepath.Clean(filepath.Join(absProjectRoot, change.Path))
+
+		// Ensure the resolved path is within the project root
+		if !strings.HasPrefix(absPath+string(filepath.Separator), absProjectRoot+string(filepath.Separator)) && absPath != absProjectRoot {
+			return fmt.Errorf(i18n.T("file_manager_suspicious_path"), i, change.Path)
+		}
 
 		// Create directories if necessary
 		dir := filepath.Dir(absPath)

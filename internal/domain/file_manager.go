@@ -185,7 +185,8 @@ func ApplyFileChanges(projectRoot string, changes []FileChange) error {
 		absPath := filepath.Clean(filepath.Join(absProjectRoot, change.Path))
 
 		// Ensure the resolved path is within the project root
-		if !strings.HasPrefix(absPath+string(filepath.Separator), absProjectRoot+string(filepath.Separator)) && absPath != absProjectRoot {
+		rel, err := filepath.Rel(absProjectRoot, absPath)
+		if err != nil || strings.HasPrefix(rel, "..") {
 			return fmt.Errorf(i18n.T("file_manager_suspicious_path"), i, change.Path)
 		}
 

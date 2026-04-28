@@ -237,6 +237,11 @@ var ProviderMap = map[string]ProviderConfig{
 		BaseURL:             "https://api.deepseek.com",
 		ImplementsResponses: false,
 	},
+	"FuturMix": {
+		Name:                "FuturMix",
+		BaseURL:             "https://futurmix.ai/v1",
+		ImplementsResponses: false,
+	},
 	"GitHub": {
 		Name:                "GitHub",
 		BaseURL:             "https://models.github.ai/inference",

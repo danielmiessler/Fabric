@@ -131,6 +131,13 @@ func (an *Client) ListModels(context.Context) (ret []string, err error) {
 	return an.models, nil
 }
 
+// modelDeprecatesTemperature reports whether the given Anthropic model rejects
+// the `temperature` request parameter. claude-opus-4-7 was the first family to
+// drop it (returns 400 invalid_request_error).
+func modelDeprecatesTemperature(model string) bool {
+	return strings.HasPrefix(model, "claude-opus-4-7")
+}
+
 func parseThinking(level domain.ThinkingLevel) (anthropic.ThinkingConfigParamUnion, bool) {
 	lower := strings.ToLower(string(level))
 	switch domain.ThinkingLevel(lower) {
@@ -223,12 +230,9 @@ func (an *Client) buildMessageParams(msgs []anthropic.MessageParam, opts *domain
 	}
 
 	// Only set one of Temperature or TopP as some models don't allow both
-	// Always set temperature to ensure consistent behavior (Anthropic default is 1.0, Fabric default is 0.7)
 	if opts.TopP != domain.DefaultTopP {
-		// User explicitly set TopP, so use that instead of temperature
 		params.TopP = anthropic.Opt(opts.TopP)
-	} else {
-		// Use temperature (always set to ensure Fabric's default of 0.7, not Anthropic's 1.0)
+	} else if !modelDeprecatesTemperature(opts.Model) {
 		params.Temperature = anthropic.Opt(opts.Temperature)
 	}
 

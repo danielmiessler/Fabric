@@ -7,6 +7,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"os"
 	"os/exec"
@@ -252,13 +253,23 @@ func (c *Client) SendStream(ctx context.Context, msgs []*chat.ChatCompletionMess
 			select {
 			case channel <- update:
 			case <-ctx.Done():
+				killAndReap(cmd)
 				return ctx.Err()
 			}
 		}
 	}
 
 	if err = scanner.Err(); err != nil {
+		if ctx.Err() != nil {
+			reapCommand(cmd)
+			return ctx.Err()
+		}
 		return fmt.Errorf("claude: scan stdout: %w", err)
+	}
+
+	if ctx.Err() != nil {
+		reapCommand(cmd)
+		return ctx.Err()
 	}
 
 	if err = cmd.Wait(); err != nil {
@@ -307,7 +318,7 @@ func parseStreamEvent(line string) (domain.StreamUpdate, bool) {
 // not detect nested Claude Code execution.
 func cleanEnv() []string {
 	env := os.Environ()
-	filtered := env[:0:0]
+	filtered := make([]string, 0, len(env))
 	for _, e := range env {
 		if strings.HasPrefix(e, "CLAUDECODE=") || strings.HasPrefix(e, "ANTHROPIC_") {
 			continue
@@ -315,6 +326,23 @@ func cleanEnv() []string {
 		filtered = append(filtered, e)
 	}
 	return filtered
+}
+
+func killAndReap(cmd *exec.Cmd) {
+	if cmd.Process != nil {
+		if err := cmd.Process.Kill(); err != nil && !errors.Is(err, os.ErrProcessDone) {
+			debuglog.Debug(debuglog.Detailed, "ClaudeCode: kill process failed: %v\n", err)
+		}
+	}
+	reapCommand(cmd)
+}
+
+func reapCommand(cmd *exec.Cmd) {
+	if err := cmd.Wait(); err != nil &&
+		!errors.Is(err, context.Canceled) &&
+		!errors.Is(err, context.DeadlineExceeded) {
+		debuglog.Debug(debuglog.Detailed, "ClaudeCode: wait after cancellation returned: %v\n", err)
+	}
 }
 
 // logUnsupportedOptions emits debug warnings for ChatOptions fields that the

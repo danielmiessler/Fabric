@@ -1,7 +1,0 @@
-### PR [#2079](https://github.com/danielmiessler/Fabric/pull/2079) by [teamsincetoday](https://github.com/teamsincetoday): Add 3 commerce intelligence patterns: affiliate extraction, video entities, monetization
-
-- Added `extract_affiliate_products` pattern to surface both sponsored and organic affiliate opportunities from any video transcript, going beyond the existing `extract_sponsors` pattern.
-- Added `extract_video_commerce_entities` pattern to identify all commercial entities in video content, categorized by type, timestamp position, and purchase likelihood.
-- Added `analyze_monetization_opportunities` pattern to map audience intent to revenue strategies, covering affiliate links, sponsorships, and digital products.
-- Registered all three new patterns in `pattern_descriptions.json` and `pattern_extracts.json` with appropriate metadata and tags.
-- Integrated all three patterns into `suggest_pattern` under the ANALYSIS, BUSINESS, and EXTRACT categories, and documented them in `pattern_explanations.md`.

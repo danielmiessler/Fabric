@@ -170,6 +170,29 @@ func TestBuildMessageParams_WithSearchAndLocation(t *testing.T) {
 	}
 }
 
+func TestBuildMessageParams_Opus47OmitsSamplingParams(t *testing.T) {
+	client := NewClient()
+	opts := &domain.ChatOptions{
+		Model:       string(anthropic.ModelClaudeOpus4_7),
+		Temperature: 0.8,
+		TopP:        0.8,
+		Search:      false,
+	}
+
+	messages := []anthropic.MessageParam{
+		anthropic.NewUserMessage(anthropic.NewTextBlock("Hello")),
+	}
+
+	params := client.buildMessageParams(messages, opts)
+
+	if params.Temperature.Value != 0 {
+		t.Errorf("expected temperature to be omitted for %s, got %f", opts.Model, params.Temperature.Value)
+	}
+	if params.TopP.Value != 0 {
+		t.Errorf("expected top_p to be omitted for %s, got %f", opts.Model, params.TopP.Value)
+	}
+}
+
 func TestModelBetasConfiguration(t *testing.T) {
 	client := NewClient()
 	model := string(anthropic.ModelClaudeSonnet4_20250514)

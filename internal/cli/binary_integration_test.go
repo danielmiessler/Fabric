@@ -3,6 +3,7 @@
 package cli
 
 import (
+	"context"
 	"fmt"
 	"os"
 	"os/exec"
@@ -46,12 +47,12 @@ func requireClaudeIntegration(t *testing.T) []string {
 }
 
 func TestIntegrationClaudeCodePatternExecution(t *testing.T) {
-	withTestTimeout(t, 3*time.Minute)
+	ctx := withTestTimeout(t, 3*time.Minute)
 	env := requireClaudeIntegration(t)
 	h := newBinaryHarness(t, "summarize")
 	input := "Summarize this sentence in one short line: Fabric ships a compiled CLI."
 
-	result := h.runFabric(t, input, "", env, "-V", "ClaudeCode", "-m", "claude-sonnet-4-6", "--pattern", "summarize")
+	result := h.runFabricContext(ctx, t, input, "", env, "-V", "ClaudeCode", "-m", "claude-sonnet-4-6", "--pattern", "summarize")
 	if result.exitCode != 0 {
 		t.Fatalf("expected ClaudeCode execution to succeed, got %d\nstderr: %s", result.exitCode, result.stderr)
 	}
@@ -64,12 +65,12 @@ func TestIntegrationClaudeCodePatternExecution(t *testing.T) {
 }
 
 func TestIntegrationClaudeCodeStreaming(t *testing.T) {
-	withTestTimeout(t, 3*time.Minute)
+	ctx := withTestTimeout(t, 3*time.Minute)
 	env := requireClaudeIntegration(t)
 	h := newBinaryHarness(t)
 	input := "Reply with exactly the text: streaming-ok"
 
-	result := h.runFabric(t, input, "", env, "-V", "ClaudeCode", "-m", "claude-sonnet-4-6", "--stream")
+	result := h.runFabricContext(ctx, t, input, "", env, "-V", "ClaudeCode", "-m", "claude-sonnet-4-6", "--stream")
 	if result.exitCode != 0 {
 		t.Fatalf("expected ClaudeCode stream to succeed, got %d\nstderr: %s", result.exitCode, result.stderr)
 	}
@@ -79,7 +80,7 @@ func TestIntegrationClaudeCodeStreaming(t *testing.T) {
 }
 
 func TestIntegrationWriteLatexToPDFPipeline(t *testing.T) {
-	withTestTimeout(t, 5*time.Minute)
+	ctx := withTestTimeout(t, 5*time.Minute)
 	env := requireClaudeIntegration(t)
 	if _, err := exec.LookPath("pdflatex"); err != nil {
 		t.Skip("pdflatex is required for the write_latex -> to_pdf integration test")
@@ -88,7 +89,8 @@ func TestIntegrationWriteLatexToPDFPipeline(t *testing.T) {
 	h := newBinaryHarness(t, "write_latex")
 	toPDFBinary := buildGoBinary(t, "cmd/to_pdf")
 
-	latex := h.runFabric(
+	latex := h.runFabricContext(
+		ctx,
 		t,
 		"Write a minimal LaTeX document with a title and one short paragraph about Fabric.",
 		"",
@@ -105,7 +107,7 @@ func TestIntegrationWriteLatexToPDFPipeline(t *testing.T) {
 	}
 
 	pdfPath := filepath.Join(t.TempDir(), "fabric.pdf")
-	pdf := runCommand(t, toPDFBinary, latex.stdout, h.repoRoot, h.baseEnv(), pdfPath)
+	pdf := runCommandContext(ctx, t, toPDFBinary, latex.stdout, h.repoRoot, h.baseEnv(), pdfPath)
 	if pdf.exitCode != 0 {
 		t.Fatalf("expected to_pdf to succeed, got %d\nstderr: %s", pdf.exitCode, pdf.stderr)
 	}
@@ -115,12 +117,12 @@ func TestIntegrationWriteLatexToPDFPipeline(t *testing.T) {
 }
 
 func TestIntegrationFabricPipelineCleanTextToSummarize(t *testing.T) {
-	withTestTimeout(t, 5*time.Minute)
+	ctx := withTestTimeout(t, 5*time.Minute)
 	env := requireClaudeIntegration(t)
 	h := newBinaryHarness(t, "clean_text", "summarize")
 
 	input := "  Fabric   is   a   CLI   tool.\n\nIt helps with AI workflows.  "
-	clean := h.runFabric(t, input, "", env, "-V", "ClaudeCode", "-m", "claude-sonnet-4-6", "--pattern", "clean_text")
+	clean := h.runFabricContext(ctx, t, input, "", env, "-V", "ClaudeCode", "-m", "claude-sonnet-4-6", "--pattern", "clean_text")
 	if clean.exitCode != 0 {
 		t.Fatalf("expected clean_text command to succeed, got %d\nstderr: %s", clean.exitCode, clean.stderr)
 	}
@@ -128,7 +130,7 @@ func TestIntegrationFabricPipelineCleanTextToSummarize(t *testing.T) {
 		t.Fatal("expected clean_text output to be non-empty")
 	}
 
-	summary := h.runFabric(t, clean.stdout, "", env, "-V", "ClaudeCode", "-m", "claude-sonnet-4-6", "--pattern", "summarize")
+	summary := h.runFabricContext(ctx, t, clean.stdout, "", env, "-V", "ClaudeCode", "-m", "claude-sonnet-4-6", "--pattern", "summarize")
 	if summary.exitCode != 0 {
 		t.Fatalf("expected summarize command to succeed, got %d\nstderr: %s", summary.exitCode, summary.stderr)
 	}
@@ -143,7 +145,7 @@ func TestIntegrationFabricPipelineCleanTextToSummarize(t *testing.T) {
 }
 
 func TestIntegrationFabricPipelineReviewCodeToSummarize(t *testing.T) {
-	withTestTimeout(t, 5*time.Minute)
+	ctx := withTestTimeout(t, 5*time.Minute)
 	env := requireClaudeIntegration(t)
 	h := newBinaryHarness(t, "review_code", "summarize")
 
@@ -160,7 +162,7 @@ func TestIntegrationFabricPipelineReviewCodeToSummarize(t *testing.T) {
 		"}",
 	}, "\n")
 
-	review := h.runFabric(t, code, "", env, "-V", "ClaudeCode", "-m", "claude-sonnet-4-6", "--pattern", "review_code")
+	review := h.runFabricContext(ctx, t, code, "", env, "-V", "ClaudeCode", "-m", "claude-sonnet-4-6", "--pattern", "review_code")
 	if review.exitCode != 0 {
 		t.Fatalf("expected review_code command to succeed, got %d\nstderr: %s", review.exitCode, review.stderr)
 	}
@@ -168,7 +170,7 @@ func TestIntegrationFabricPipelineReviewCodeToSummarize(t *testing.T) {
 		t.Fatal("expected review_code output to be non-empty")
 	}
 
-	summary := h.runFabric(t, review.stdout, "", env, "-V", "ClaudeCode", "-m", "claude-sonnet-4-6", "--pattern", "summarize")
+	summary := h.runFabricContext(ctx, t, review.stdout, "", env, "-V", "ClaudeCode", "-m", "claude-sonnet-4-6", "--pattern", "summarize")
 	if summary.exitCode != 0 {
 		t.Fatalf("expected summarize command to succeed, got %d\nstderr: %s", summary.exitCode, summary.stderr)
 	}
@@ -183,7 +185,7 @@ func TestIntegrationFabricPipelineReviewCodeToSummarize(t *testing.T) {
 }
 
 func TestIntegrationYouTubeSummarizeToExtractWisdomPipeline(t *testing.T) {
-	withTestTimeout(t, 10*time.Minute)
+	ctx := withTestTimeout(t, 10*time.Minute)
 	env := requireClaudeIntegration(t)
 	if os.Getenv("FABRIC_RUN_NETWORK_INTEGRATION") != "1" {
 		t.Skip("set FABRIC_RUN_NETWORK_INTEGRATION=1 to run network-backed YouTube pipeline integration tests")
@@ -195,7 +197,8 @@ func TestIntegrationYouTubeSummarizeToExtractWisdomPipeline(t *testing.T) {
 	h := newBinaryHarness(t, "summarize", "extract_wisdom")
 	videoURL := "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
 
-	summary := h.runFabric(
+	summary := h.runFabricContext(
+		ctx,
 		t,
 		"",
 		"",
@@ -213,7 +216,8 @@ func TestIntegrationYouTubeSummarizeToExtractWisdomPipeline(t *testing.T) {
 		t.Fatal("expected summarized transcript output to be non-empty")
 	}
 
-	wisdom := h.runFabric(
+	wisdom := h.runFabricContext(
+		ctx,
 		t,
 		summary.stdout,
 		"",
@@ -233,11 +237,15 @@ func TestIntegrationYouTubeSummarizeToExtractWisdomPipeline(t *testing.T) {
 	}
 }
 
-// withTestTimeout fails the test if it exceeds the given duration.
-func withTestTimeout(t *testing.T, d time.Duration) {
+// withTestTimeout returns a context that bounds all subprocesses used by a test.
+func withTestTimeout(t *testing.T, d time.Duration) context.Context {
 	t.Helper()
-	timer := time.AfterFunc(d, func() {
-		panic(fmt.Sprintf("test %s timed out after %v", t.Name(), d))
-	})
-	t.Cleanup(timer.Stop)
+	if deadline, ok := t.Deadline(); ok {
+		if remaining := time.Until(deadline); remaining > 0 && remaining < d {
+			d = remaining
+		}
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), d)
+	t.Cleanup(cancel)
+	return ctx
 }

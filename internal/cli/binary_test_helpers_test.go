@@ -2,6 +2,7 @@ package cli
 
 import (
 	"bytes"
+	"context"
 	"errors"
 	"fmt"
 	"io"
@@ -35,6 +36,83 @@ type binaryHarness struct {
 }
 
 var binaryCache sync.Map
+
+// preBuildBinaries builds all binaries used by tests upfront and in parallel.
+// Called from TestMain so the cost is paid once before any test runs.
+func preBuildBinaries() error {
+	targets := []string{
+		"cmd/fabric",
+		"cmd/to_pdf",
+		"cmd/code2context",
+		"cmd/generate_changelog",
+	}
+
+	root := preBuildRepoRoot()
+	errs := make([]error, len(targets))
+	var wg sync.WaitGroup
+	for i, target := range targets {
+		wg.Add(1)
+		go func(idx int, relativeDir string) {
+			defer wg.Done()
+			errs[idx] = doBuildGoBinary(root, relativeDir)
+		}(i, target)
+	}
+	wg.Wait()
+
+	for i, err := range errs {
+		if err != nil {
+			return fmt.Errorf("pre-build %s: %w", targets[i], err)
+		}
+	}
+	return nil
+}
+
+// preBuildRepoRoot determines the repo root without a *testing.T.
+func preBuildRepoRoot() string {
+	_, filename, _, ok := runtime.Caller(0)
+	if !ok {
+		panic("unable to determine repo root")
+	}
+	return filepath.Clean(filepath.Join(filepath.Dir(filename), "..", ".."))
+}
+
+// doBuildGoBinary performs the actual build, caching the result in binaryCache.
+func doBuildGoBinary(root, relativeDir string) error {
+	entryAny, _ := binaryCache.LoadOrStore(relativeDir, &builtBinary{})
+	entry := entryAny.(*builtBinary)
+
+	entry.once.Do(func() {
+		outputDir, err := os.MkdirTemp("", "fabric-binary-*")
+		if err != nil {
+			entry.err = err
+			return
+		}
+
+		binaryName := filepath.Base(relativeDir)
+		if runtime.GOOS == "windows" {
+			binaryName += ".exe"
+		}
+		entry.path = filepath.Join(outputDir, binaryName)
+
+		cmd := exec.Command("go", "build", "-o", entry.path, "./"+filepath.ToSlash(relativeDir))
+		cmd.Dir = root
+
+		var stderr bytes.Buffer
+		cmd.Stderr = &stderr
+		entry.err = cmd.Run()
+		entry.log = stderr.String()
+	})
+
+	return entry.err
+}
+
+func TestMain(m *testing.M) {
+	if err := preBuildBinaries(); err != nil {
+		fmt.Fprintf(os.Stderr, "pre-build failed: %v\n", err)
+		os.Exit(1)
+	}
+	os.Exit(m.Run())
+}
 
 func newBinaryHarness(t *testing.T, patternNames ...string) *binaryHarness {
 	t.Helper()
@@ -79,36 +157,21 @@ func repoRoot(t *testing.T) string {
 func buildGoBinary(t *testing.T, relativeDir string) string {
 	t.Helper()
 
-	entryAny, _ := binaryCache.LoadOrStore(relativeDir, &builtBinary{})
-	entry := entryAny.(*builtBinary)
-
-	entry.once.Do(func() {
-		outputDir, err := os.MkdirTemp("", "fabric-binary-*")
-		if err != nil {
-			entry.err = err
-			return
+	// Try the cache first (populated by TestMain).
+	if entryAny, ok := binaryCache.Load(relativeDir); ok {
+		entry := entryAny.(*builtBinary)
+		if entry.err != nil {
+			t.Fatalf("build %s: %v\n%s", relativeDir, entry.err, entry.log)
 		}
-
-		binaryName := filepath.Base(relativeDir)
-		if runtime.GOOS == "windows" {
-			binaryName += ".exe"
-		}
-		entry.path = filepath.Join(outputDir, binaryName)
-
-		cmd := exec.Command("go", "build", "-o", entry.path, "./"+filepath.ToSlash(relativeDir))
-		cmd.Dir = repoRoot(t)
-
-		var stderr bytes.Buffer
-		cmd.Stderr = &stderr
-		entry.err = cmd.Run()
-		entry.log = stderr.String()
-	})
-
-	if entry.err != nil {
-		t.Fatalf("build %s: %v\n%s", relativeDir, entry.err, entry.log)
+		return entry.path
 	}
 
-	return entry.path
+	// Fallback: build on demand if not pre-built (e.g. new binary added to a test).
+	if err := doBuildGoBinary(repoRoot(t), relativeDir); err != nil {
+		t.Fatalf("build %s: %v", relativeDir, err)
+	}
+	entryAny, _ := binaryCache.Load(relativeDir)
+	return entryAny.(*builtBinary).path
 }
 
 func copyPatternFixture(t *testing.T, root, patternsDir, patternName string) {
@@ -197,13 +260,27 @@ func (h *binaryHarness) baseEnv(extra ...string) []string {
 
 func (h *binaryHarness) runFabric(t *testing.T, stdin, cwd string, extraEnv []string, args ...string) commandResult {
 	t.Helper()
-	return runCommand(t, h.fabric, stdin, cwdOrDefault(cwd, h.repoRoot), h.baseEnv(extraEnv...), args...)
+	return h.runFabricContext(context.Background(), t, stdin, cwd, extraEnv, args...)
+}
+
+func (h *binaryHarness) runFabricContext(
+	ctx context.Context, t *testing.T, stdin, cwd string, extraEnv []string, args ...string,
+) commandResult {
+	t.Helper()
+	return runCommandContext(ctx, t, h.fabric, stdin, cwdOrDefault(cwd, h.repoRoot), h.baseEnv(extraEnv...), args...)
 }
 
 func runCommand(t *testing.T, binaryPath, stdin, cwd string, env []string, args ...string) commandResult {
 	t.Helper()
+	return runCommandContext(context.Background(), t, binaryPath, stdin, cwd, env, args...)
+}
 
-	cmd := exec.Command(binaryPath, args...)
+func runCommandContext(
+	ctx context.Context, t *testing.T, binaryPath, stdin, cwd string, env []string, args ...string,
+) commandResult {
+	t.Helper()
+
+	cmd := exec.CommandContext(ctx, binaryPath, args...)
 	cmd.Dir = cwd
 	cmd.Env = env
 	if stdin != "" {
@@ -224,6 +301,12 @@ func runCommand(t *testing.T, binaryPath, stdin, cwd string, env []string, args 
 	}
 	if err == nil {
 		return result
+	}
+	if ctxErr := ctx.Err(); ctxErr != nil {
+		if errors.Is(ctxErr, context.DeadlineExceeded) {
+			t.Fatalf("run %s %v: timed out: %v", binaryPath, args, ctxErr)
+		}
+		t.Fatalf("run %s %v: canceled: %v", binaryPath, args, ctxErr)
 	}
 
 	var exitErr *exec.ExitError

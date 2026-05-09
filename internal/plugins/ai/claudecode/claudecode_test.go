@@ -2,12 +2,15 @@ package claudecode
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"slices"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/danielmiessler/fabric/internal/chat"
 	"github.com/danielmiessler/fabric/internal/domain"
@@ -450,6 +453,50 @@ exit 7
 	errStr := err.Error()
 	if !strings.Contains(errStr, "boom from fake claude") {
 		t.Fatalf("expected stderr in error, got %q", errStr)
+	}
+}
+
+func TestSendStream_CancellationReturnsContextError(t *testing.T) {
+	script := writeFakeClaudeScript(t, `
+echo '{"delta":{"type":"text_delta","text":"Hello"}}'
+echo '{"delta":{"type":"text_delta","text":" again"}}'
+sleep 30
+`)
+
+	c := NewClient()
+	c.BinaryPath.Value = script
+
+	msgs := []*chat.ChatCompletionMessage{{
+		Role:    chat.ChatMessageRoleUser,
+		Content: "hello",
+	}}
+
+	ctx, cancel := context.WithTimeout(context.Background(), 50*time.Millisecond)
+	defer cancel()
+
+	ch := make(chan domain.StreamUpdate, 1)
+	err := c.SendStream(ctx, msgs, &domain.ChatOptions{}, ch)
+	if !errors.Is(err, context.DeadlineExceeded) {
+		t.Fatalf("expected deadline exceeded, got %v", err)
+	}
+}
+
+func TestKillAndReap_TerminatesProcess(t *testing.T) {
+	script := writeFakeClaudeScript(t, `
+sleep 30
+`)
+
+	cmd := exec.Command(script)
+	if err := cmd.Start(); err != nil {
+		t.Fatalf("start fake claude: %v", err)
+	}
+	pid := cmd.Process.Pid
+
+	killAndReap(cmd)
+
+	probe := exec.Command("sh", "-c", fmt.Sprintf("kill -0 %d", pid))
+	if err := probe.Run(); err == nil {
+		t.Fatal("expected Claude subprocess to be terminated after cancellation")
 	}
 }
 

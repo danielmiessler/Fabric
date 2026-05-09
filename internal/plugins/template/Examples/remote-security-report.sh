@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # remote-security-report.sh
 # Usage: remote-security-report.sh cert host [report_name]
 

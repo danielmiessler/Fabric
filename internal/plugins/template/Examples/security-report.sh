@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # security-report.sh - Enhanced system security information collection
 # Usage: security-report.sh [output_file]

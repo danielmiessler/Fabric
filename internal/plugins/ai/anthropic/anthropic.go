@@ -24,6 +24,12 @@ const webSearchToolName = "web_search"
 const webSearchToolType = "web_search_20250305"
 const sourcesHeader = "## Sources"
 
+func modelDisallowsSamplingParams(model string) bool {
+	// Anthropic's Opus 4.7 models reject non-default sampling parameters.
+	// Omit these params entirely for safest compatibility.
+	return strings.HasPrefix(model, "claude-opus-4-7")
+}
+
 func NewClient() (ret *Client) {
 	vendorName := "Anthropic"
 	ret = &Client{}
@@ -222,9 +228,10 @@ func (an *Client) buildMessageParams(msgs []anthropic.MessageParam, opts *domain
 		Messages:  msgs,
 	}
 
-	// Only set one of Temperature or TopP as some models don't allow both
-	// Always set temperature to ensure consistent behavior (Anthropic default is 1.0, Fabric default is 0.7)
-	if opts.TopP != domain.DefaultTopP {
+	// Claude Opus 4.7 disallows sampling params; omit both temperature and top_p.
+	if modelDisallowsSamplingParams(opts.Model) {
+		// Intentionally omit both fields.
+	} else if opts.TopP != domain.DefaultTopP {
 		// User explicitly set TopP, so use that instead of temperature
 		params.TopP = anthropic.Opt(opts.TopP)
 	} else {

@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.4.452 (2026-05-04)
+
+### PR [#2111](https://github.com/danielmiessler/Fabric/pull/2111) by [ksylvan](https://github.com/ksylvan): fix: omit Anthropic sampling params for Claude Opus 4.7
+
+- Fix: Omit Anthropic sampling parameters for Claude Opus 4.7 to ensure compatibility.
+- Add a sampling parameter guard specifically for Opus 4.7.
+- Omit `temperature` and `top_p` for models that do not support these parameters.
+- Preserve existing `TopP` and temperature selection behavior for compatible models.
+- Add unit test coverage for the Opus 4.7 sampling parameter omission.
+
 ## v1.4.451 (2026-04-23)
 
 ### PR [#2079](https://github.com/danielmiessler/Fabric/pull/2079) by [teamsincetoday](https://github.com/teamsincetoday): Add 3 commerce intelligence patterns: affiliate extraction, video entities, monetization

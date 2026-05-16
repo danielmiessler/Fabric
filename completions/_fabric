@@ -148,7 +148,9 @@ _fabric() {
     '(--disable-responses-api)--disable-responses-api[Disable OpenAI Responses API (default: false)]' \
     '(--transcribe-file)--transcribe-file[Audio or video file to transcribe]:audio file:_files -g "*.mp3 *.mp4 *.mpeg *.mpga *.m4a *.wav *.webm"' \
     '(--transcribe-model)--transcribe-model[Model to use for transcription (separate from chat model)]:transcribe model:_fabric_transcription_models' \
+    '(--list-transcription-models)--list-transcription-models[List all available transcription models]' \
     '(--split-media-file)--split-media-file[Split audio/video files larger than 25MB using ffmpeg]' \
+    '(--show-metadata)--show-metadata[Print metadata to stderr]' \
     '(--debug)--debug[Set debug level (0=off, 1=basic, 2=detailed, 3=trace, 4=wire)]:debug level:(0 1 2 3 4)' \
     '(--notification)--notification[Send desktop notification when command completes]' \
     '(--notification-command)--notification-command[Custom command to run for notifications]:notification command:' \

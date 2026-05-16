@@ -14,7 +14,7 @@
 #
 # Output: plain text report. Exit 0 even when issues found (use --strict for non-zero exit).
 
-set -euo pipefail
+set -uo pipefail
 
 PATTERNS_DIR="${1:-$(dirname "$0")/../data/patterns}"
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
@@ -30,7 +30,7 @@ RST='\033[0m'
 issues=0
 
 header() { echo; echo "━━━ $1 ━━━"; }
-warn()   { echo -e "  ${YLW}⚠${RST}  $*"; ((issues++)); }
+warn()   { echo -e "  ${YLW}⚠${RST}  $*"; issues=$((issues + 1)); }
 info()   { echo -e "  ${DIM}·${RST}  $*"; }
 ok()     { echo -e "  ${GRN}✓${RST}  $*"; }
 
@@ -136,7 +136,8 @@ if [[ -f "$FLAGS_FILE" ]]; then
     go_flags=$(grep -oP 'long:"[^"]+"' "$FLAGS_FILE" | sed 's/long:"//;s/"//' | sort -u)
 
     found=0
-    for comp_file in "$BASH_FILE" "$FISH_FILE" "$ZSH_FILE"; do
+    # bash and zsh use --flag-name; fish uses -l flag-name
+    for comp_file in "$BASH_FILE" "$ZSH_FILE"; do
         [[ -f "$comp_file" ]] || continue
         comp_name=$(basename "$comp_file")
         while IFS= read -r flag; do
@@ -146,6 +147,16 @@ if [[ -f "$FLAGS_FILE" ]]; then
             fi
         done <<< "$go_flags"
     done
+    if [[ -f "$FISH_FILE" ]]; then
+        comp_name=$(basename "$FISH_FILE")
+        while IFS= read -r flag; do
+            # fish registers long options with: complete -c cmd -l flag-name
+            if ! grep -qF -- "-l $flag" "$FISH_FILE" 2>/dev/null; then
+                warn "$comp_name  →  missing -l $flag"
+                found=1
+            fi
+        done <<< "$go_flags"
+    fi
     [[ $found -eq 0 ]] && ok "All completions in sync"
 fi
 

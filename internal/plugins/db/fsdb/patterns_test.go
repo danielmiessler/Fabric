@@ -332,6 +332,24 @@ func TestPrintPattern(t *testing.T) {
 	})
 }
 
+func TestGetFromDB_PathTraversal(t *testing.T) {
+	entity, cleanup := setupTestPatternsEntity(t)
+	defer cleanup()
+
+	traversalNames := []string{
+		"../etc/passwd",
+		"../../secret",
+		"foo/../bar",
+		"..",
+		"valid/../../../etc/shadow",
+	}
+	for _, name := range traversalNames {
+		_, err := entity.GetRaw(name)
+		assert.Error(t, err, "expected error for traversal name: %q", name)
+		assert.Contains(t, err.Error(), "invalid pattern name", "wrong error for: %q", name)
+	}
+}
+
 func TestPatternsEntity_CustomPatternsEmpty(t *testing.T) {
 	// Test behavior when custom patterns directory is empty or doesn't exist
 	mainDir, err := os.MkdirTemp("", "test-main-patterns-*")

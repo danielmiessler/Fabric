@@ -417,6 +417,7 @@
   "output_video_metadata": "Wyprowadź metadane wideo",
   "path_to_yaml_config": "Ścieżka do pliku konfiguracyjnego YAML",
   "pattern_not_found_list_available": "wzorzec '%s' nie został znaleziony. Uruchom 'fabric -l', aby zobaczyć dostępne wzorce",
+  "pattern_invalid_name": "invalid pattern name: %q",
   "pattern_not_found_no_patterns": "wzorzec '%s' nie został znaleziony.\n\nNie zainstalowano żadnych wzorców! Aby to naprawić:\n  • Uruchom 'fabric --setup', aby skonfigurować i pobrać wzorce\n  • Lub uruchom 'fabric -U', aby bezpośrednio pobrać/zaktualizować wzorce",
   "pattern_variables_help": "Wartości dla zmiennych wzorców, np. -v=#role:ekspert -v=#points:30",
   "patterns_cloning_repository": "Klonowanie repozytorium %s (ścieżka: %s)...\n",

@@ -417,6 +417,7 @@
   "output_video_metadata": "输出视频元数据",
   "path_to_yaml_config": "YAML 配置文件路径",
   "pattern_not_found_list_available": "未找到模式 '%s'。运行 'fabric -l' 查看可用模式",
+  "pattern_from_binary_name_hint": "Hint: no -p flag was given; binary name '%s' was used as the pattern name. Use -p <pattern> to specify a pattern explicitly.",
   "pattern_not_found_no_patterns": "未找到模式 '%s'。\n\n未安装任何模式！要解决此问题：\n  • 运行 'fabric --setup' 配置并下载模式\n  • 或运行 'fabric -U' 直接下载/更新模式",
   "pattern_variables_help": "模式变量的值，例如 -v=#role:expert -v=#points:30",
   "patterns_cloning_repository": "正在克隆仓库 %s（至路径：%s）...\\n",

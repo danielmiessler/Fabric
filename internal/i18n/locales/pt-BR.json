@@ -417,6 +417,7 @@
   "output_video_metadata": "Exibir metadados do vídeo",
   "path_to_yaml_config": "Caminho para arquivo de configuração YAML",
   "pattern_not_found_list_available": "padrão '%s' não encontrado. Execute 'fabric -l' para ver os padrões disponíveis",
+  "pattern_from_binary_name_hint": "Hint: no -p flag was given; binary name '%s' was used as the pattern name. Use -p <pattern> to specify a pattern explicitly.",
   "pattern_not_found_no_patterns": "padrão '%s' não encontrado.\n\nNenhum padrão instalado! Para resolver:\n  • Execute 'fabric --setup' para configurar e baixar padrões\n  • Ou execute 'fabric -U' para baixar/atualizar padrões diretamente",
   "pattern_variables_help": "Valores para variáveis do padrão, ex. -v=#role:expert -v=#points:30",
   "patterns_cloning_repository": "Clonando repositório %s (caminho: %s)...\\n",

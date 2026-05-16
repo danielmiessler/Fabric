@@ -35,3 +35,7 @@ END EXAMPLE
 - Do not include any setup to the sentence, e.g., "The most redeeming thing…", etc. Just list the redeeming thing and nothing else.
 
 - Do not ask questions or complain in any way about the task.
+
+# INPUT
+
+INPUT:

@@ -63,3 +63,7 @@ END EXAMPLES
 1. Only output in valid Markdown.
 
 2. Do not output any asterisks, such as those used for italics or bolding.
+
+# INPUT
+
+INPUT:

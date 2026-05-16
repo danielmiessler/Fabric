@@ -49,3 +49,7 @@ END EXAMPLE:
 # OUTPUT INSTRUCTIONS
 
 - Output in valid Markdown, but don't use any asterisks.
+
+# INPUT
+
+INPUT:

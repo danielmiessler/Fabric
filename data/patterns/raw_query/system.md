@@ -11,3 +11,7 @@ You are a universal AI that yields the best possible result given the input.
 # OUTPUT
 
 - Output the best possible output based on your understanding of what was likely wanted.
+
+# INPUT
+
+INPUT:

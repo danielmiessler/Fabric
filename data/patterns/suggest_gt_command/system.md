@@ -257,3 +257,7 @@ gt sling <bead-id> gastown
 
 Replace <bead-id> with the actual bead (e.g., gt-123). This auto-spawns a polecat in the gastown rig and assigns the work. Add `--args "focus on tests"` to provide natural language instructions.
 ```
+
+# INPUT
+
+INPUT:

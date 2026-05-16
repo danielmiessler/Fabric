@@ -417,6 +417,7 @@
   "output_video_metadata": "Output video metadata",
   "path_to_yaml_config": "Path to YAML config file",
   "pattern_not_found_list_available": "pattern '%s' not found. Run 'fabric -l' to see available patterns",
+  "pattern_from_binary_name_hint": "Hint: no -p flag was given; binary name '%s' was used as the pattern name. Use -p <pattern> to specify a pattern explicitly.",
   "pattern_not_found_no_patterns": "pattern '%s' not found.\n\nNo patterns are installed! To fix this:\n  • Run 'fabric --setup' to configure and download patterns\n  • Or run 'fabric -U' to download/update patterns directly",
   "pattern_variables_help": "Values for pattern variables, e.g. -v=#role:expert -v=#points:30",
   "patterns_cloning_repository": "Cloning repository %s (path: %s)...\n",

@@ -539,11 +539,29 @@ func (o *PluginRegistry) GetChatter(model string, modelContextLength int, vendor
 				return
 			}
 		} else {
-			availableVendors := models.FindGroupsByItem(model)
-			if len(availableVendors) > 1 {
-				debuglog.Log("Warning: multiple vendors provide model %s: %s. Using %s. Specify --vendor to select a vendor.\n", model, strings.Join(availableVendors, ", "), availableVendors[0])
+			// If the model wasn't found and contains a '/', try parsing the first
+			// segment as a vendor name (e.g. "ollama/llama3" -> vendor "ollama", model "llama3").
+			if actualModelName == "" {
+				if idx := strings.Index(model, "/"); idx > 0 {
+					prefix := model[:idx]
+					if v := vendorManager.FindByName(prefix); v != nil {
+						vendorName = prefix
+						model = model[idx+1:]
+						if normalized := models.FindModelNameCaseInsensitive(model); normalized != "" {
+							model = normalized
+						}
+						ret.vendor = v
+					}
+				}
 			}
-			ret.vendor = vendorManager.FindByName(models.FindGroupsByItemFirst(model))
+
+			if ret.vendor == nil {
+				availableVendors := models.FindGroupsByItem(model)
+				if len(availableVendors) > 1 {
+					debuglog.Log("Warning: multiple vendors provide model %s: %s. Using %s. Specify --vendor to select a vendor.\n", model, strings.Join(availableVendors, ", "), availableVendors[0])
+				}
+				ret.vendor = vendorManager.FindByName(models.FindGroupsByItemFirst(model))
+			}
 		}
 
 		ret.model = model

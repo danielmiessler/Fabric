@@ -24,6 +24,7 @@ import (
 	"github.com/danielmiessler/fabric/internal/plugins/ai/dryrun"
 	"github.com/danielmiessler/fabric/internal/plugins/ai/exolab"
 	"github.com/danielmiessler/fabric/internal/plugins/ai/gemini"
+	"github.com/danielmiessler/fabric/internal/plugins/ai/llamacpp"
 	"github.com/danielmiessler/fabric/internal/plugins/ai/lmstudio"
 	"github.com/danielmiessler/fabric/internal/plugins/ai/ollama"
 	"github.com/danielmiessler/fabric/internal/plugins/ai/openai"
@@ -83,6 +84,7 @@ func NewPluginRegistry(db *fsdb.Db) (ret *PluginRegistry, err error) {
 		gemini.NewClient(),
 		anthropic.NewClient(),
 		vertexai.NewClient(),
+		llamacpp.NewClient(),
 		lmstudio.NewClient(),
 		exolab.NewClient(),
 		perplexity.NewClient(),

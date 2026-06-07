@@ -68,6 +68,7 @@ func (o *Chatter) Send(ctx context.Context, request *domain.ChatRequest, opts *d
 	}
 
 	vendorMessages := session.GetVendorMessages()
+	vendorMessages = domain.NormalizeInputShape(vendorMessages)
 
 	if debuglog.GetLevel() >= debuglog.Wire {
 		debuglog.Debug(debuglog.Wire, "FABRIC->LLM request messages (%d)\n", len(vendorMessages))

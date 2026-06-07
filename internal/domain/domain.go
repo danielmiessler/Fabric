@@ -56,7 +56,31 @@ type ChatOptions struct {
 	UpdateChan          chan StreamUpdate `json:"-"`
 }
 
-// NormalizeMessages remove empty messages and ensure messages order user-assist-user
+// NormalizeInputShape ensures every message array has at least one user-role
+// message. Some LLM backends (vLLM, certain Bedrock endpoints) reject
+// requests that contain only system-role messages.
+//
+// When all messages are system, the last system message is promoted to user.
+// This keeps the instructional content semantically similar while satisfying
+// the API contract.
+//
+// The function is idempotent: arrays that already contain a user message are
+// returned unchanged.
+func NormalizeInputShape(msgs []*chat.ChatCompletionMessage) []*chat.ChatCompletionMessage {
+	if len(msgs) == 0 {
+		return msgs
+	}
+
+	for _, msg := range msgs {
+		if msg.Role == chat.ChatMessageRoleUser {
+			return msgs
+		}
+	}
+
+	msgs[len(msgs)-1].Role = chat.ChatMessageRoleUser
+	return msgs
+}
+
 func NormalizeMessages(msgs []*chat.ChatCompletionMessage, defaultUserMessage string) (ret []*chat.ChatCompletionMessage) {
 	// Iterate over messages to enforce the odd position rule for user messages
 	fullMessageIndex := 0

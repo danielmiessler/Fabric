@@ -77,10 +77,23 @@ func NormalizeInputShape(msgs []*chat.ChatCompletionMessage) []*chat.ChatComplet
 		}
 	}
 
-	msgs[len(msgs)-1].Role = chat.ChatMessageRoleUser
-	return msgs
+	// Build a new slice so the caller's original is not mutated.
+	// This prevents side effects when the caller reuses the slice
+	// as session history or passes it to multiple consumers.
+	ret := make([]*chat.ChatCompletionMessage, len(msgs))
+	copy(ret, msgs)
+
+	// Clone the last message (shallow copy is sufficient since we only change Role).
+	orig := ret[len(ret)-1]
+	newMsg := *orig
+	newMsg.Role = chat.ChatMessageRoleUser
+	ret[len(ret)-1] = &newMsg
+	return ret
 }
 
+// NormalizeMessages iterates over messages to enforce the odd-position rule for user
+// messages. Empty messages are dropped. When an even position would not contain a user
+// message, a synthetic user message with the provided default content is inserted.
 func NormalizeMessages(msgs []*chat.ChatCompletionMessage, defaultUserMessage string) (ret []*chat.ChatCompletionMessage) {
 	// Iterate over messages to enforce the odd position rule for user messages
 	fullMessageIndex := 0

@@ -105,3 +105,14 @@ func TestNormalizeInputShape(t *testing.T) {
 		})
 	}
 }
+
+// Regression: ensure NormalizeInputShape does not mutate the caller's slice
+// or the message structs it points to (Copilot PR review #2137).
+func TestNormalizeInputShapeDoesNotMutateOriginal(t *testing.T) {
+	orig := []*chat.ChatCompletionMessage{sys("instruction")}
+	got := NormalizeInputShape(orig)
+	assert.Equal(t, chat.ChatMessageRoleUser, got[0].Role,
+		"normalized message should be user")
+	assert.Equal(t, chat.ChatMessageRoleSystem, orig[0].Role,
+		"original message should remain system")
+}

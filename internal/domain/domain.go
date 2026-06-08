@@ -65,16 +65,32 @@ type ChatOptions struct {
 // the API contract.
 //
 // The function is idempotent: arrays that already contain a user message are
-// returned unchanged.
+// returned unchanged (returning the original slice). When no user message
+// exists, a new slice is returned with the last system message cloned and
+// its role changed to user.
 func NormalizeInputShape(msgs []*chat.ChatCompletionMessage) []*chat.ChatCompletionMessage {
 	if len(msgs) == 0 {
 		return msgs
 	}
 
+	// Scan for existing user message, skipping nil entries.
 	for _, msg := range msgs {
-		if msg.Role == chat.ChatMessageRoleUser {
+		if msg != nil && msg.Role == chat.ChatMessageRoleUser {
 			return msgs
 		}
+	}
+
+	// Find the last non-nil system message to promote.
+	var lastIdx int
+	for i := len(msgs) - 1; i >= 0; i-- {
+		if msgs[i] != nil {
+			lastIdx = i
+			break
+		}
+	}
+	// If all entries are nil, return original slice (nothing to promote).
+	if lastIdx < 0 || msgs[lastIdx] == nil {
+		return msgs
 	}
 
 	// Build a new slice so the caller's original is not mutated.
@@ -83,11 +99,11 @@ func NormalizeInputShape(msgs []*chat.ChatCompletionMessage) []*chat.ChatComplet
 	ret := make([]*chat.ChatCompletionMessage, len(msgs))
 	copy(ret, msgs)
 
-	// Clone the last message (shallow copy is sufficient since we only change Role).
-	orig := ret[len(ret)-1]
+	// Clone the last non-nil message (shallow copy is sufficient since we only change Role).
+	orig := ret[lastIdx]
 	newMsg := *orig
 	newMsg.Role = chat.ChatMessageRoleUser
-	ret[len(ret)-1] = &newMsg
+	ret[lastIdx] = &newMsg
 	return ret
 }
 

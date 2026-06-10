@@ -60,13 +60,13 @@ type ChatOptions struct {
 // message. Some LLM backends (vLLM, certain Bedrock endpoints) reject
 // requests that contain only system-role messages.
 //
-// When all messages are system, the last system message is promoted to user.
-// This keeps the instructional content semantically similar while satisfying
-// the API contract.
+// When no user-role message exists, the last non-nil message (regardless of role)
+// is promoted to user. This keeps the instructional content semantically similar
+// while satisfying the API contract.
 //
 // The function is idempotent: arrays that already contain a user message are
 // returned unchanged (returning the original slice). When no user message
-// exists, a new slice is returned with the last system message cloned and
+// exists, a new slice is returned with the last non-nil message cloned and
 // its role changed to user.
 func NormalizeInputShape(msgs []*chat.ChatCompletionMessage) []*chat.ChatCompletionMessage {
 	if len(msgs) == 0 {
@@ -80,7 +80,7 @@ func NormalizeInputShape(msgs []*chat.ChatCompletionMessage) []*chat.ChatComplet
 		}
 	}
 
-	// Find the last non-nil system message to promote.
+	// Find the last non-nil message to promote.
 	var lastIdx int
 	for i := len(msgs) - 1; i >= 0; i-- {
 		if msgs[i] != nil {
@@ -93,13 +93,13 @@ func NormalizeInputShape(msgs []*chat.ChatCompletionMessage) []*chat.ChatComplet
 		return msgs
 	}
 
-	// Build a new slice so the caller's original is not mutated.
+	// Build a new slice so the caller's original is not mutated (ret).
 	// This prevents side effects when the caller reuses the slice
 	// as session history or passes it to multiple consumers.
 	ret := make([]*chat.ChatCompletionMessage, len(msgs))
 	copy(ret, msgs)
 
-	// Clone the last non-nil message (shallow copy is sufficient since we only change Role).
+	// Clone the last non-nil message (orig, shallow copy is sufficient since we only change Role).
 	orig := ret[lastIdx]
 	newMsg := *orig
 	newMsg.Role = chat.ChatMessageRoleUser

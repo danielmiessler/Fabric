@@ -81,7 +81,7 @@ func NormalizeInputShape(msgs []*chat.ChatCompletionMessage) []*chat.ChatComplet
 	}
 
 	// Find the last non-nil message to promote.
-	var lastIdx int
+	lastIdx := -1
 	for i := len(msgs) - 1; i >= 0; i-- {
 		if msgs[i] != nil {
 			lastIdx = i
@@ -89,7 +89,7 @@ func NormalizeInputShape(msgs []*chat.ChatCompletionMessage) []*chat.ChatComplet
 		}
 	}
 	// If all entries are nil, return original slice (nothing to promote).
-	if lastIdx < 0 || msgs[lastIdx] == nil {
+	if lastIdx < 0 {
 		return msgs
 	}
 

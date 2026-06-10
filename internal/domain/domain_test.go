@@ -122,7 +122,8 @@ func TestNormalizeInputShapeWithNilMessages(t *testing.T) {
 	// Test nil at beginning, user later - should return original slice (has user)
 	in1 := []*chat.ChatCompletionMessage{nil, sys("sys1"), usr("user1")}
 	got1 := NormalizeInputShape(in1)
-	assert.Equal(t, in1, got1) // Should return original slice (has user)
+	assert.Equal(t, in1, got1) // deep equality
+	assert.True(t, &in1[0] == &got1[0], "Should return original slice (same backing array)")
 
 	// Test nil at end, no user - should promote last non-nil system
 	in2 := []*chat.ChatCompletionMessage{sys("sys1"), sys("sys2"), nil}
@@ -138,10 +139,12 @@ func TestNormalizeInputShapeWithNilMessages(t *testing.T) {
 	// Test all nil
 	in3 := []*chat.ChatCompletionMessage{nil, nil, nil}
 	got3 := NormalizeInputShape(in3)
-	assert.Equal(t, in3, got3) // Should return original slice
+	assert.Equal(t, in3, got3) // deep equality
+	assert.True(t, &in3[0] == &got3[0], "Should return original slice (same backing array)")
 
 	// Test nil mixed with user (should return early due to user)
 	in4 := []*chat.ChatCompletionMessage{nil, usr("user1"), nil}
 	got4 := NormalizeInputShape(in4)
-	assert.Equal(t, in4, got4) // Should return original slice (has user)
+	assert.Equal(t, in4, got4) // deep equality
+	assert.True(t, &in4[0] == &got4[0], "Should return original slice (same backing array)")
 }

@@ -336,7 +336,7 @@ var ProviderMap = map[string]ProviderConfig{
 	},
 	"Apple Foundation Models": {
 		Name:                "Apple Foundation Models",
-		BaseURL:             "http://localhost:1976",
+		BaseURL:             "http://localhost:1976/v1",
 		ImplementsResponses: false,
 	},
 }

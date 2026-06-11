@@ -378,6 +378,7 @@ Fabric supports a wide range of AI providers:
 - Together
 - Venice AI
 - Z AI
+- Apple Foundation Models (OpenAI-compatible; default endpoint: `http://localhost:1976`; API key optional)
 
 Run `fabric --setup` to configure your preferred provider(s), or use `fabric --listvendors` to see all available vendors.
 

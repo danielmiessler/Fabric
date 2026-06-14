@@ -296,3 +296,41 @@ func captureInput(input string) func() {
 		os.Stdin = stdin
 	}
 }
+
+func TestSetupQuestion_Ask_CarriageReturn(t *testing.T) {
+	// Test that \r (carriage return) alone is accepted as line ending.
+	// Some terminals (kitty, macOS default) send \r instead of \n on Enter.
+	setting := &Setting{
+		EnvVariable: "TEST_CR_SETTING",
+		Required:    true,
+	}
+	question := &SetupQuestion{
+		Setting:  setting,
+		Question: "Enter test setting:",
+	}
+	input := "user_value\r"
+	fmtInput := captureInput(input)
+	defer fmtInput()
+	err := question.Ask("TestConfigurable")
+	assert.NoError(t, err)
+	assert.Equal(t, "user_value", setting.Value)
+}
+
+func TestSetupQuestion_Ask_EmptyCarriageReturn(t *testing.T) {
+	// Test that pressing Enter (\r) with a default value uses the default.
+	setting := &Setting{
+		EnvVariable: "TEST_CR_DEFAULT",
+		Value:       "default_value",
+		Required:    true,
+	}
+	question := &SetupQuestion{
+		Setting:  setting,
+		Question: "Enter test setting:",
+	}
+	input := "\r"
+	fmtInput := captureInput(input)
+	defer fmtInput()
+	err := question.Ask("TestConfigurable")
+	assert.NoError(t, err)
+	assert.Equal(t, "default_value", setting.Value)
+}

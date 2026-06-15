@@ -1,0 +1,14 @@
+### PR [#2140](https://github.com/danielmiessler/Fabric/pull/2140) by [Resistor52](https://github.com/Resistor52): fix: include Grok in --search help text, completions, and locales
+
+- Fix: include Grok in --search help text, completions, and locales
+PR #2092 added Grok (xAI) web search support and updated the go-flags
+struct tag in internal/cli/flags.go, but `fabric --help` renders flag
+descriptions from the i18n message catalog (internal/cli/help.go maps
+"search" -> "enable_web_search_tool"), not from the struct tag. The
+catalog value was never updated, so --help, the zsh/fish completions,
+and the README help block still listed only Anthropic, OpenAI, Gemini,
+leaving the Grok support undiscoverable even though it works.
+Append "Grok" to the enable_web_search_tool value in all 11 locales
+(matching each locale's list separator), the zsh and fish completions,
+and the generated README help block. No functional change.
+Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>

@@ -178,7 +178,7 @@
   "digitalocean_models_request_failed_with_status": "DigitalOceanモデルリクエストがステータス%dで失敗しました: %s",
   "disable_openai_responses_api": "OpenAI Responses APIを無効化（デフォルト：false）",
   "disable_pattern_variable_replacement": "パターン変数の置換を無効化",
-  "enable_web_search_tool": "サポートされているモデル（Anthropic、OpenAI、Gemini）でウェブ検索ツールを有効化",
+  "enable_web_search_tool": "サポートされているモデル（Anthropic、OpenAI、Gemini、Grok）でウェブ検索ツールを有効化",
   "end_tag_thinking_sections": "思考セクションの終了タグ",
   "error_creating_audio_file": "音声ファイルの作成エラー: %v",
   "error_creating_file": "ファイルの作成エラー: %v",

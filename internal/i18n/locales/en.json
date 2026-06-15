@@ -178,7 +178,7 @@
   "digitalocean_models_request_failed_with_status": "DigitalOcean models request failed with status %d: %s",
   "disable_openai_responses_api": "Disable OpenAI Responses API (default: false)",
   "disable_pattern_variable_replacement": "Disable pattern variable replacement",
-  "enable_web_search_tool": "Enable web search tool for supported models (Anthropic, OpenAI, Gemini)",
+  "enable_web_search_tool": "Enable web search tool for supported models (Anthropic, OpenAI, Gemini, Grok)",
   "end_tag_thinking_sections": "End tag for thinking sections",
   "error_creating_audio_file": "error creating audio file: %v",
   "error_creating_file": "error creating file: %v",

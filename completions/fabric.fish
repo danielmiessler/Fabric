@@ -128,7 +128,7 @@ function __fabric_register_completions
         complete -c $cmd -l input-has-vars -d "Apply variables to user input"
         complete -c $cmd -l no-variable-replacement -d "Disable pattern variable replacement"
         complete -c $cmd -l dry-run -d "Show what would be sent to the model without actually sending it"
-        complete -c $cmd -l search -d "Enable web search tool for supported models (Anthropic, OpenAI, Gemini)"
+        complete -c $cmd -l search -d "Enable web search tool for supported models (Anthropic, OpenAI, Gemini, Grok)"
         complete -c $cmd -l serve -d "Serve the Fabric Rest API"
         complete -c $cmd -l serveOllama -d "Serve the Fabric Rest API with ollama endpoints"
         complete -c $cmd -l version -d "Print current version"

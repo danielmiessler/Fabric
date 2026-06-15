@@ -178,7 +178,7 @@
   "digitalocean_models_request_failed_with_status": "DigitalOcean-Modellanfrage fehlgeschlagen mit Status %d: %s",
   "disable_openai_responses_api": "OpenAI Responses API deaktivieren (Standard: false)",
   "disable_pattern_variable_replacement": "Mustervariablenersetzung deaktivieren",
-  "enable_web_search_tool": "Web-Such-Tool für unterstützte Modelle aktivieren (Anthropic, OpenAI, Gemini)",
+  "enable_web_search_tool": "Web-Such-Tool für unterstützte Modelle aktivieren (Anthropic, OpenAI, Gemini, Grok)",
   "end_tag_thinking_sections": "End-Tag für Denk-Abschnitte",
   "error_creating_audio_file": "Fehler beim Erstellen der Audio-Datei: %v",
   "error_creating_file": "Fehler beim Erstellen der Datei: %v",

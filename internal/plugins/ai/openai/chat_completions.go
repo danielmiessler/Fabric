@@ -47,6 +47,8 @@ func (o *Client) sendChatCompletions(ctx context.Context, msgs []*chat.ChatCompl
 // It builds the request from the provided messages and options instead of
 // relying on SDK param types.
 func (o *Client) sendChatCompletionsDirect(ctx context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions) (ret string, err error) {
+	// Debug: announce direct fallback
+	fmt.Fprintln(os.Stderr, "[DEBUG] sendChatCompletionsDirect: starting fallback")
 	// Build JSON body
 	payload := make(map[string]any)
 	payload["model"] = opts.Model
@@ -94,6 +96,7 @@ func (o *Client) sendChatCompletionsDirect(ctx context.Context, msgs []*chat.Cha
 	defer resp.Body.Close()
 
 	ct := resp.Header.Get("Content-Type")
+	fmt.Fprintln(os.Stderr, "[DEBUG] sendChatCompletionsDirect: Content-Type:", ct)
 	if strings.Contains(ct, "application/json") {
 		var parsed struct {
 			Choices []struct {
@@ -106,14 +109,18 @@ func (o *Client) sendChatCompletionsDirect(ctx context.Context, msgs []*chat.Cha
 			return "", err
 		}
 		if len(parsed.Choices) > 0 {
+			fmt.Fprintln(os.Stderr, "[DEBUG] sendChatCompletionsDirect: parsed JSON choice present")
 			return parsed.Choices[0].Message.Content, nil
 		}
+		fmt.Fprintln(os.Stderr, "[DEBUG] sendChatCompletionsDirect: parsed JSON but no choices")
 		return "", nil
 	}
 
 	// Handle text/event-stream (SSE) by scanning data: lines and concatenating
 	if strings.Contains(ct, "text/event-stream") || strings.Contains(ct, "event-stream") {
-		return parseSSEAndConcat(resp.Body)
+		res, perr := parseSSEAndConcat(resp.Body)
+		fmt.Fprintln(os.Stderr, "[DEBUG] sendChatCompletionsDirect: SSE parsed length:", len(res))
+		return res, perr
 	}
 
 	// Unknown content-type: attempt to read body as text
@@ -121,6 +128,7 @@ func (o *Client) sendChatCompletionsDirect(ctx context.Context, msgs []*chat.Cha
 	if rerr != nil {
 		return "", rerr
 	}
+	fmt.Fprintln(os.Stderr, "[DEBUG] sendChatCompletionsDirect: raw text length:", len(b))
 	return string(b), nil
 }
 

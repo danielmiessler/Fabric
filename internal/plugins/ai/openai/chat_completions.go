@@ -36,42 +36,34 @@ func (o *Client) sendChatCompletions(ctx context.Context, msgs []*chat.ChatCompl
 	}
 
 	// SDK failed - attempt direct HTTP fallback that handles SSE
-	return o.sendChatCompletionsDirect(ctx, req)
+	return o.sendChatCompletionsDirect(ctx, msgs, opts)
 }
 
 // sendChatCompletionsDirect performs a direct HTTP POST to the chat/completions
 // endpoint and handles both application/json and text/event-stream responses.
-func (o *Client) sendChatCompletionsDirect(ctx context.Context, reqParams openai.ChatCompletionNewParams) (ret string, err error) {
+// It builds the request from the provided messages and options instead of
+// relying on SDK param types.
+func (o *Client) sendChatCompletionsDirect(ctx context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions) (ret string, err error) {
 	// Build JSON body
-	// Convert messages param union to a simpler JSON shape expected by OpenAI-compatible servers
 	payload := make(map[string]any)
-	payload["model"] = string(reqParams.Model)
-	// messages
-	var msgs []map[string]any
-	for _, m := range reqParams.Messages {
-		// The SDK's union types expose a String() maybe, but marshal via type switch
-		if m.IsSystem() {
-			msgs = append(msgs, map[string]any{"role": "system", "content": m.OfMessage})
-		} else if m.IsUser() {
-			msgs = append(msgs, map[string]any{"role": "user", "content": m.OfMessage})
-		} else if m.IsAssistant() {
-			msgs = append(msgs, map[string]any{"role": "assistant", "content": m.OfMessage})
-		} else {
-			// Fallback: include as user string
-			msgs = append(msgs, map[string]any{"role": "user", "content": m.OfMessage})
-		}
-	}
-	payload["messages"] = msgs
+	payload["model"] = opts.Model
 
-	// Add simple params if present
-	if reqParams.Temperature != nil {
-		payload["temperature"] = float64(*reqParams.Temperature)
+	// Build messages array
+	var messages []map[string]any
+	for _, m := range msgs {
+		entry := map[string]any{"role": m.Role, "content": m.Content}
+		messages = append(messages, entry)
 	}
-	if reqParams.TopP != nil {
-		payload["top_p"] = float64(*reqParams.TopP)
-	}
-	if reqParams.MaxTokens != nil {
-		payload["max_tokens"] = int(*reqParams.MaxTokens)
+	payload["messages"] = messages
+
+	if !opts.Raw {
+		payload["temperature"] = opts.Temperature
+		if opts.TopP != 0 {
+			payload["top_p"] = opts.TopP
+		}
+		if opts.MaxTokens != 0 {
+			payload["max_tokens"] = opts.MaxTokens
+		}
 	}
 
 	body, jerr := json.Marshal(payload)

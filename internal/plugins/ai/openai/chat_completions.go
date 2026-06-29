@@ -76,6 +76,8 @@ func (o *Client) sendChatCompletionsDirect(ctx context.Context, msgs []*chat.Cha
 	if jerr != nil {
 		return "", jerr
 	}
+	// Save outgoing request for debugging
+	_ = os.WriteFile("/tmp/fabric_request.json", body, 0644)
 
 	// Ensure base URL ends without trailing slash
 	base := strings.TrimRight(o.ApiBaseURL.Value, "/")

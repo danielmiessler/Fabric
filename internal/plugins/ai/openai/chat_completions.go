@@ -98,6 +98,15 @@ func (o *Client) sendChatCompletionsDirect(ctx context.Context, msgs []*chat.Cha
 
 	ct := resp.Header.Get("Content-Type")
 	fmt.Fprintln(os.Stderr, "[DEBUG] sendChatCompletionsDirect: Content-Type:", ct)
+
+	// Read entire body into memory for reliable parsing (debug/robustness)
+	b, rerr := io.ReadAll(resp.Body)
+	if rerr != nil {
+		return "", rerr
+	}
+	// Save a copy for debugging
+	_ = os.WriteFile("/tmp/fabric_resp_dump.txt", b, 0644)
+
 	if strings.Contains(ct, "application/json") {
 		var parsed struct {
 			Choices []struct {
@@ -106,7 +115,7 @@ func (o *Client) sendChatCompletionsDirect(ctx context.Context, msgs []*chat.Cha
 				} `json:"message"`
 			} `json:"choices"`
 		}
-		if err := json.NewDecoder(resp.Body).Decode(&parsed); err != nil {
+		if err := json.Unmarshal(b, &parsed); err != nil {
 			return "", err
 		}
 		if len(parsed.Choices) > 0 {
@@ -119,16 +128,11 @@ func (o *Client) sendChatCompletionsDirect(ctx context.Context, msgs []*chat.Cha
 
 	// Handle text/event-stream (SSE) by scanning data: lines and concatenating
 	if strings.Contains(ct, "text/event-stream") || strings.Contains(ct, "event-stream") {
-		res, perr := parseSSEAndConcat(resp.Body)
+		res, perr := parseSSEAndConcat(bytes.NewReader(b))
 		fmt.Fprintln(os.Stderr, "[DEBUG] sendChatCompletionsDirect: SSE parsed length:", len(res))
 		return res, perr
 	}
 
-	// Unknown content-type: attempt to read body as text
-	b, rerr := io.ReadAll(resp.Body)
-	if rerr != nil {
-		return "", rerr
-	}
 	fmt.Fprintln(os.Stderr, "[DEBUG] sendChatCompletionsDirect: raw text length:", len(b))
 	return string(b), nil
 }

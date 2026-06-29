@@ -132,6 +132,49 @@ func (o *Client) sendChatCompletionsDirect(ctx context.Context, msgs []*chat.Cha
 	if strings.Contains(ct, "text/event-stream") || strings.Contains(ct, "event-stream") {
 		res, perr := parseSSEAndConcat(bytes.NewReader(b))
 		fmt.Fprintln(os.Stderr, "[DEBUG] sendChatCompletionsDirect: SSE parsed length:", len(res))
+		if perr == nil && len(res) == 0 {
+			// Secondary fallback: some providers behave better with a single
+			// user message that concatenates system + user content. Try resending
+			// the request with a single user message and return that result.
+			fmt.Fprintln(os.Stderr, "[DEBUG] sendChatCompletionsDirect: SSE empty, trying concatenated user message fallback")
+			concat := ""
+			for _, m := range msgs {
+				concat += fmt.Sprintf("[%s]\n%s\n\n", m.Role, m.Content)
+			}
+			fallbackPayload := map[string]any{"model": opts.Model, "messages": []map[string]any{{"role": "user", "content": concat}}}
+			fbBody, _ := json.Marshal(fallbackPayload)
+			_ = os.WriteFile("/tmp/fabric_request_fallback.json", fbBody, 0644)
+			fbReq, _ := http.NewRequestWithContext(ctx, http.MethodPost, url, bytes.NewReader(fbBody))
+			fbReq.Header.Set("Content-Type", "application/json")
+			if o.ApiKey != nil && o.ApiKey.Value != "" {
+				fbReq.Header.Set("Authorization", fmt.Sprintf("Bearer %s", o.ApiKey.Value))
+			}
+			fbResp, ferr := o.httpClient.Do(fbReq)
+			if ferr == nil && fbResp != nil {
+				defer fbResp.Body.Close()
+				fbB, _ := io.ReadAll(fbResp.Body)
+				_ = os.WriteFile("/tmp/fabric_resp_dump_fallback.txt", fbB, 0644)
+				if strings.Contains(fbResp.Header.Get("Content-Type"), "text/event-stream") {
+					r2, _ := parseSSEAndConcat(bytes.NewReader(fbB))
+					fmt.Fprintln(os.Stderr, "[DEBUG] sendChatCompletionsDirect: fallback SSE parsed length:", len(r2))
+					if len(r2) > 0 {
+						return r2, nil
+					}
+				} else if strings.Contains(fbResp.Header.Get("Content-Type"), "application/json") {
+					var parsed2 struct {
+						Choices []struct {
+							Message struct {
+								Content string `json:"content"`
+							} `json:"message"`
+						} `json:"choices"`
+					}
+					_ = json.Unmarshal(fbB, &parsed2)
+					if len(parsed2.Choices) > 0 {
+						return parsed2.Choices[0].Message.Content, nil
+					}
+				}
+			}
+		}
 		return res, perr
 	}
 

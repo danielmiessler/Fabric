@@ -12,7 +12,6 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"os"
 	"strings"
 
 	"github.com/danielmiessler/fabric/internal/chat"
@@ -48,8 +47,6 @@ func (o *Client) sendChatCompletions(ctx context.Context, msgs []*chat.ChatCompl
 // It builds the request from the provided messages and options instead of
 // relying on SDK param types.
 func (o *Client) sendChatCompletionsDirect(ctx context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions) (ret string, err error) {
-	// Debug: announce direct fallback
-	fmt.Fprintln(os.Stderr, "[DEBUG] sendChatCompletionsDirect: starting fallback")
 	// Build JSON body
 	payload := make(map[string]any)
 	payload["model"] = opts.Model
@@ -77,7 +74,6 @@ func (o *Client) sendChatCompletionsDirect(ctx context.Context, msgs []*chat.Cha
 		return "", jerr
 	}
 	// Save outgoing request for debugging
-	_ = os.WriteFile("/tmp/fabric_request.json", body, 0644)
 
 	// Ensure base URL ends without trailing slash
 	base := strings.TrimRight(o.ApiBaseURL.Value, "/")
@@ -99,16 +95,12 @@ func (o *Client) sendChatCompletionsDirect(ctx context.Context, msgs []*chat.Cha
 	defer resp.Body.Close()
 
 	ct := resp.Header.Get("Content-Type")
-	fmt.Fprintln(os.Stderr, "[DEBUG] sendChatCompletionsDirect: Content-Type:", ct)
 
-	// Read entire body into memory for reliable parsing (debug/robustness)
+	// Read entire body into memory for reliable parsing
 	b, rerr := io.ReadAll(resp.Body)
 	if rerr != nil {
 		return "", rerr
 	}
-	// Save a copy for debugging
-	_ = os.WriteFile("/tmp/fabric_resp_dump.txt", b, 0644)
-
 	if strings.Contains(ct, "application/json") {
 		var parsed struct {
 			Choices []struct {
@@ -121,29 +113,24 @@ func (o *Client) sendChatCompletionsDirect(ctx context.Context, msgs []*chat.Cha
 			return "", err
 		}
 		if len(parsed.Choices) > 0 {
-			fmt.Fprintln(os.Stderr, "[DEBUG] sendChatCompletionsDirect: parsed JSON choice present")
 			return parsed.Choices[0].Message.Content, nil
 		}
-		fmt.Fprintln(os.Stderr, "[DEBUG] sendChatCompletionsDirect: parsed JSON but no choices")
 		return "", nil
 	}
 
 	// Handle text/event-stream (SSE) by scanning data: lines and concatenating
 	if strings.Contains(ct, "text/event-stream") || strings.Contains(ct, "event-stream") {
 		res, perr := parseSSEAndConcat(bytes.NewReader(b))
-		fmt.Fprintln(os.Stderr, "[DEBUG] sendChatCompletionsDirect: SSE parsed length:", len(res))
 		if perr == nil && len(res) == 0 {
 			// Secondary fallback: some providers behave better with a single
 			// user message that concatenates system + user content. Try resending
 			// the request with a single user message and return that result.
-			fmt.Fprintln(os.Stderr, "[DEBUG] sendChatCompletionsDirect: SSE empty, trying concatenated user message fallback")
 			concat := ""
 			for _, m := range msgs {
 				concat += fmt.Sprintf("[%s]\n%s\n\n", m.Role, m.Content)
 			}
 			fallbackPayload := map[string]any{"model": opts.Model, "messages": []map[string]any{{"role": "user", "content": concat}}}
 			fbBody, _ := json.Marshal(fallbackPayload)
-			_ = os.WriteFile("/tmp/fabric_request_fallback.json", fbBody, 0644)
 			fbReq, _ := http.NewRequestWithContext(ctx, http.MethodPost, url, bytes.NewReader(fbBody))
 			fbReq.Header.Set("Content-Type", "application/json")
 			if o.ApiKey != nil && o.ApiKey.Value != "" {
@@ -153,10 +140,8 @@ func (o *Client) sendChatCompletionsDirect(ctx context.Context, msgs []*chat.Cha
 			if ferr == nil && fbResp != nil {
 				defer fbResp.Body.Close()
 				fbB, _ := io.ReadAll(fbResp.Body)
-				_ = os.WriteFile("/tmp/fabric_resp_dump_fallback.txt", fbB, 0644)
 				if strings.Contains(fbResp.Header.Get("Content-Type"), "text/event-stream") {
 					r2, _ := parseSSEAndConcat(bytes.NewReader(fbB))
-					fmt.Fprintln(os.Stderr, "[DEBUG] sendChatCompletionsDirect: fallback SSE parsed length:", len(r2))
 					if len(r2) > 0 {
 						return r2, nil
 					}
@@ -178,7 +163,6 @@ func (o *Client) sendChatCompletionsDirect(ctx context.Context, msgs []*chat.Cha
 		return res, perr
 	}
 
-	fmt.Fprintln(os.Stderr, "[DEBUG] sendChatCompletionsDirect: raw text length:", len(b))
 	return string(b), nil
 }
 

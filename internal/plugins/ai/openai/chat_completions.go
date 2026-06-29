@@ -136,12 +136,21 @@ func (o *Client) sendChatCompletionsDirect(ctx context.Context, msgs []*chat.Cha
 // parseSSEAndConcat reads an SSE stream and concatenates any 'data:' JSON
 // payloads. It handles both JSON objects containing choices deltas and plain text.
 func parseSSEAndConcat(r io.Reader) (string, error) {
-	scanner := bufio.NewScanner(r)
+	reader := bufio.NewReader(r)
 	var parts []string
-	for scanner.Scan() {
-		line := scanner.Text()
+	for {
+		line, err := reader.ReadString('\n')
+		if err != nil && err != io.EOF {
+			return "", err
+		}
 		line = strings.TrimSpace(line)
 		if line == "" {
+			if err == io.EOF {
+				break
+			}
+			if err != nil {
+				break
+			}
 			continue
 		}
 		// SSE data lines start with 'data:'
@@ -174,14 +183,17 @@ func parseSSEAndConcat(r io.Reader) (string, error) {
 						}
 					}
 				}
+				if err == io.EOF {
+					break
+				}
 				continue
 			}
 			// Not JSON — treat data as raw text
 			parts = append(parts, data)
 		}
-	}
-	if err := scanner.Err(); err != nil {
-		return "", err
+		if err == io.EOF {
+			break
+		}
 	}
 	return strings.Join(parts, ""), nil
 }

@@ -31,11 +31,14 @@ func (o *Client) sendChatCompletions(ctx context.Context, msgs []*chat.ChatCompl
 	if resp, err = o.ApiClient.Chat.Completions.New(ctx, req); err == nil {
 		if len(resp.Choices) > 0 {
 			ret = resp.Choices[0].Message.Content
+			return
 		}
-		return
+		// SDK returned no choices (possible when upstream responds with SSE);
+		// fall back to direct HTTP handling that can parse text/event-stream.
+		// Continue to fallback below.
 	}
 
-	// SDK failed - attempt direct HTTP fallback that handles SSE
+	// SDK failed or returned no choices - attempt direct HTTP fallback that handles SSE
 	return o.sendChatCompletionsDirect(ctx, msgs, opts)
 }
 

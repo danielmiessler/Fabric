@@ -331,3 +331,5 @@ MEMORY/
 
 # Maestro artifacts
 .maestro
+/fabric
+bin/

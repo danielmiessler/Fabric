@@ -142,8 +142,7 @@ func (h *TranslatedHelpWriter) getTranslatedDescription(flagName string) string 
 func (h *TranslatedHelpWriter) getOriginalDescription(flagName string) string {
 	flagsType := reflect.TypeFor[Flags]()
 
-	for i := 0; i < flagsType.NumField(); i++ {
-		field := flagsType.Field(i)
+	for field := range flagsType.Fields() {
 		longTag := field.Tag.Get("long")
 
 		if longTag == flagName {
@@ -222,9 +221,7 @@ func (h *TranslatedHelpWriter) writeAllFlags() {
 	// Use direct reflection on the Flags struct to get all flag definitions
 	flagsType := reflect.TypeFor[Flags]()
 
-	for i := 0; i < flagsType.NumField(); i++ {
-		field := flagsType.Field(i)
-
+	for field := range flagsType.Fields() {
 		shortTag := field.Tag.Get("short")
 		longTag := field.Tag.Get("long")
 		defaultTag := field.Tag.Get("default")

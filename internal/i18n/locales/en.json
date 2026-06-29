@@ -402,6 +402,7 @@
   "openai_image_failed_to_save_image": "failed to save image to %s: %w",
   "openai_image_saved_to": "Image saved to: %s",
   "openai_model_no_image_generation": "model '%s' does not support image generation. Supported models: %s",
+  "openai_models_rate_limited": "rate limit exceeded fetching models from provider %s; retry after %s seconds",
   "openai_models_response_too_large": "models response too large from provider %s (>%d bytes)",
   "openai_unable_to_parse_models_response": "unable to parse models response; raw response: %s",
   "openai_unexpected_status_code_read_error": "unexpected status code: %d from provider %s (failed to read response body: %v)",

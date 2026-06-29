@@ -402,6 +402,7 @@
   "openai_image_failed_to_save_image": "échec de l'enregistrement de l'image dans %s : %w",
   "openai_image_saved_to": "Image enregistrée dans : %s",
   "openai_model_no_image_generation": "le modèle '%s' ne prend pas en charge la génération d'images. Modèles pris en charge : %s",
+  "openai_models_rate_limited": "limite de débit dépassée lors de la récupération des modèles du fournisseur %s ; réessayer après %s secondes",
   "openai_models_response_too_large": "réponse des modèles trop volumineuse du fournisseur %s (>%d octets)",
   "openai_unable_to_parse_models_response": "impossible d'analyser la réponse des modèles ; réponse brute : %s",
   "openai_unexpected_status_code_read_error": "code d'état inattendu : %d du fournisseur %s (échec de lecture du corps de réponse : %v)",

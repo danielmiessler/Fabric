@@ -78,18 +78,30 @@ func (e *ExtensionExecutor) formatCommand(ext *ExtensionDefinition, operation st
 		return "", fmt.Errorf("%s", fmt.Sprintf(i18n.T("extension_operation_not_found"), operation, ext.Name))
 	}
 
+	// Shell-escape all user-controlled values to prevent command injection.
+	// The command string is ultimately passed to "sh -c", so any shell
+	// metacharacters (;, |, $(), backticks, etc.) in the value would be
+	// executed. Wrapping each value in single quotes and escaping embedded
+	// single quotes ensures the value is treated as a literal argument.
 	vars := make(map[string]string)
 	vars["executable"] = ext.Executable
 	vars["operation"] = operation
-	vars["value"] = value
+	vars["value"] = shellEscape(value)
 
 	// Split on pipe for numbered variables
 	values := strings.Split(value, "|")
 	for i, val := range values {
-		vars[fmt.Sprintf("%d", i+1)] = val
+		vars[fmt.Sprintf("%d", i+1)] = shellEscape(val)
 	}
 
 	return ApplyTemplate(opConfig.CmdTemplate, vars, "")
+}
+
+// shellEscape wraps a string in single quotes for safe use in a shell command,
+// escaping any embedded single quotes. This prevents command injection when
+// untrusted input is passed as an argument to "sh -c".
+func shellEscape(s string) string {
+	return "'" + strings.ReplaceAll(s, "'", "'\"'\"'") + "'"
 }
 
 // executeStdout runs the command and captures its stdout

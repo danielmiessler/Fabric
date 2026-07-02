@@ -21,6 +21,9 @@ case "$1" in
     "stdout")
         echo "Hello, $2!"
         ;;
+    "echo")
+        echo "$2"
+        ;;
     "file")
         echo "Hello, $2!" > "$3"
         echo "$3"  # Print the filename for path_from_stdout
@@ -38,6 +41,54 @@ esac`
 	// Create registry and register our test extensions
 	registry := NewExtensionRegistry(tmpDir)
 	executor := NewExtensionExecutor(registry)
+
+	// Test that shell metacharacters in user input are neutralized.
+	// Before the fix, value flowed unescaped into "sh -c", so input
+	// like "; touch /tmp/pwned" would execute arbitrary commands.
+	t.Run("ShellInjectionBlocked", func(t *testing.T) {
+		// Use a marker file to detect if injection succeeded.
+		markerFile := filepath.Join(tmpDir, "injection-marker")
+		_ = os.Remove(markerFile)
+
+		configPath := filepath.Join(tmpDir, "inject-test.yaml")
+		configContent := `name: inject-test
+executable: ` + testScript + `
+type: executable
+timeout: 5s
+operations:
+  echo:
+    cmd_template: "{{executable}} echo {{value}}"
+config:
+  output:
+    method: stdout`
+
+		if err := os.WriteFile(configPath, []byte(configContent), 0644); err != nil {
+			t.Fatalf("Failed to create config: %v", err)
+		}
+
+		if err := registry.Register(configPath); err != nil {
+			t.Fatalf("Failed to register extension: %v", err)
+		}
+
+		// Malicious input: attempt to run a separate command after echo.
+		maliciousValue := "hello; touch " + markerFile
+
+		output, err := executor.Execute("inject-test", "echo", maliciousValue)
+		if err != nil {
+			t.Fatalf("Execute failed: %v", err)
+		}
+
+		// The output should contain the full malicious string as a literal
+		// argument (proving the shell did NOT interpret the semicolon).
+		if !strings.Contains(output, "hello; touch") {
+			t.Errorf("Expected literal value in output, got: %q", output)
+		}
+
+		// The marker file must NOT exist (injection was blocked).
+		if _, err := os.Stat(markerFile); !os.IsNotExist(err) {
+			t.Error("SECURITY: command injection succeeded — marker file was created")
+		}
+	})
 
 	// Test stdout-based extension
 	t.Run("StdoutExecution", func(t *testing.T) {

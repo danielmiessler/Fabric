@@ -125,10 +125,15 @@ func (o *Client) sendChatCompletionsDirect(ctx context.Context, msgs []*chat.Cha
 			// Secondary fallback: some providers behave better with a single
 			// user message that concatenates system + user content. Try resending
 			// the request with a single user message and return that result.
-			concat := ""
+			var bldr strings.Builder
 			for _, m := range msgs {
-				concat += fmt.Sprintf("[%s]\n%s\n\n", m.Role, m.Content)
+				bldr.WriteString("[")
+				bldr.WriteString(m.Role)
+				bldr.WriteString("]\n")
+				bldr.WriteString(m.Content)
+				bldr.WriteString("\n\n")
 			}
+			concat := bldr.String()
 			fallbackPayload := map[string]any{"model": opts.Model, "messages": []map[string]any{{"role": "user", "content": concat}}}
 			fbBody, _ := json.Marshal(fallbackPayload)
 			fbReq, _ := http.NewRequestWithContext(ctx, http.MethodPost, url, bytes.NewReader(fbBody))
@@ -187,8 +192,8 @@ func parseSSEAndConcat(r io.Reader) (string, error) {
 			continue
 		}
 		// SSE data lines start with 'data:'
-		if strings.HasPrefix(line, "data:") {
-			data := strings.TrimSpace(strings.TrimPrefix(line, "data:"))
+		if data, ok := strings.CutPrefix(line, "data:"); ok {
+			data = strings.TrimSpace(data)
 			if data == "[DONE]" || data == "[done]" {
 				break
 			}

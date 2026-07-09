@@ -18,24 +18,6 @@
 - Improve error messaging to guide users toward using `--closed-ok` when validation errors occur on closed PRs.
 - Introduce the `--closed-ok` flag as the primary mechanism for enabling back-fill workflows on previously closed pull requests.
 
-## v1.4.456 (2026-07-09)
-
-### Direct commits
-
-- Chore: cleanups - tidying the duplicate model listed
-- Feat: add Claude Sonnet 5 Anthropic support
-
-- Add Claude Sonnet 5 to supported Anthropic models
-- Omit sampling parameters for Claude Sonnet 5 requests
-
-- Centralize Anthropic sampling restrictions behind prefix matching
-- Enable one-million-token context beta for Claude 5 models
-
-- Remove older Claude 4 aliases from model listings
-- Update Anthropic tests for Sonnet 5 beta mapping
-
-- Refresh Go dependencies across AI provider integrations
-
 ## v1.4.455 (2026-06-09)
 
 ### PR [#2138](https://github.com/danielmiessler/Fabric/pull/2138) by [ksylvan](https://github.com/ksylvan): New Claude Fable model + cache OpenAI model discovery and handle provider rate limits
@@ -112,10 +94,11 @@ Updates `vite` from 5.4.21 to 8.0.8
 
 - [Commits](<https://github.com/vitejs/vite/commits/v8.0.8/packages/vite)>
 updated-dependencies:
+
 - dependency-name: vite
-  dependency-version: 8.0.8
-  dependency-type: direct:development
-  dependency-group: npm_and_yarn
+dependency-version: 8.0.8
+dependency-type: direct:development
+dependency-group: npm_and_yarn
 Signed-off-by: dependabot[bot] <support@github.com>
 
 ### PR [#2103](https://github.com/danielmiessler/Fabric/pull/2103) by [dependabot](https://github.com/apps/dependabot) and [ksylvan](https://github.com/ksylvan): chore(deps): bump github.com/go-git/go-git/v5 from 5.17.2 to 5.18.0 in the go_modules group across 1 directory
@@ -138,21 +121,6 @@ Signed-off-by: dependabot[bot] <support@github.com>
 
 - Allow `strong` tag in cSpell markdown configuration
 - Docs: add Scoop installation instructions
-
-## v1.4.448 (2026-04-17)
-
-### Direct commits
-
-- Fix: fall back to streamed delta text when completed Codex response is empty
-
-- Prefer extracted completed text only when content stays non-empty
-- Fall back to accumulated streamed delta text otherwise
-
-- Preserve streamed response text before completed response evaluation
-- Add regression test for empty completed output text
-
-- Simulate SSE delta stream followed by blank completion
-- Verify Send returns delta text when completion lacks content
 
 ## v1.4.447 (2026-04-17)
 

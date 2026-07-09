@@ -1,5 +1,23 @@
 # Changelog
 
+## v1.4.457 (2026-07-09)
+
+### PR [#2155](https://github.com/danielmiessler/Fabric/pull/2155) by [ksylvan](https://github.com/ksylvan): Claude Sonnet 5 Anthropic support
+
+- Add Claude Sonnet 5 to supported Anthropic models
+- Enable one-million-token context beta for Claude 5 models
+- Omit sampling parameters for Claude Sonnet 5 requests
+- Centralize Anthropic sampling restrictions behind prefix matching
+- Remove older Claude 4 aliases from model listings
+
+### PR [#2156](https://github.com/danielmiessler/Fabric/pull/2156) by [ksylvan](https://github.com/ksylvan): Make it possible to back-fill missing ChangeLog entries
+
+- Add support for changelog generation for closed pull requests via a new `--closed-ok` flag, bypassing open-state validation.
+- Skip mergeability checks when processing closed pull requests to allow smooth back-filling of missing entries.
+- Store the closed pull request allowance setting in the generator configuration for consistent behavior.
+- Improve error messaging to guide users toward using `--closed-ok` when validation errors occur on closed PRs.
+- Introduce the `--closed-ok` flag as the primary mechanism for enabling back-fill workflows on previously closed pull requests.
+
 ## v1.4.456 (2026-07-09)
 
 ### Direct commits

@@ -1,7 +1,0 @@
-### PR [#2155](https://github.com/danielmiessler/Fabric/pull/2155) by [ksylvan](https://github.com/ksylvan): Claude Sonnet 5 Anthropic support
-
-- Add Claude Sonnet 5 to supported Anthropic models
-- Enable one-million-token context beta for Claude 5 models
-- Omit sampling parameters for Claude Sonnet 5 requests
-- Centralize Anthropic sampling restrictions behind prefix matching
-- Remove older Claude 4 aliases from model listings

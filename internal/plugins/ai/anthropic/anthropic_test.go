@@ -195,7 +195,7 @@ func TestBuildMessageParams_Opus47OmitsSamplingParams(t *testing.T) {
 
 func TestModelBetasConfiguration(t *testing.T) {
 	client := NewClient()
-	model := string(anthropic.ModelClaudeSonnet4_20250514)
+	model := string(anthropic.ModelClaudeSonnet5)
 	betas, ok := client.modelBetas[model]
 	if !ok || len(betas) != 1 || betas[0] != "context-1m-2025-08-07" {
 		t.Errorf("expected beta mapping for %s", model)

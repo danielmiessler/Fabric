@@ -1,5 +1,23 @@
 # Changelog
 
+## v1.4.456 (2026-07-09)
+
+### Direct commits
+
+- Chore: cleanups - tidying the duplicate model listed
+- Feat: add Claude Sonnet 5 Anthropic support
+
+- Add Claude Sonnet 5 to supported Anthropic models
+- Omit sampling parameters for Claude Sonnet 5 requests
+
+- Centralize Anthropic sampling restrictions behind prefix matching
+- Enable one-million-token context beta for Claude 5 models
+
+- Remove older Claude 4 aliases from model listings
+- Update Anthropic tests for Sonnet 5 beta mapping
+
+- Refresh Go dependencies across AI provider integrations
+
 ## v1.4.455 (2026-06-09)
 
 ### PR [#2138](https://github.com/danielmiessler/Fabric/pull/2138) by [ksylvan](https://github.com/ksylvan): New Claude Fable model + cache OpenAI model discovery and handle provider rate limits

@@ -1,7 +1,7 @@
 ### PR [#2156](https://github.com/danielmiessler/Fabric/pull/2156) by [ksylvan](https://github.com/ksylvan): Make it possible to back-fill missing ChangeLog entries
 
-- Added Claude Sonnet 5 to the Anthropic model list, with sampling parameters omitted for compatibility.
-- Enabled the 1M context beta for Claude Sonnet 5, significantly expanding its context window support.
-- Removed deprecated Sonnet and Opus model variants, cleaning up outdated model references.
-- Updated Anthropic, AWS, Google, and Ollama dependencies, and refreshed Go module checksums.
-- Added a `--closed-ok` flag to the changelog generator, allowing it to process closed or merged PRs by skipping the open-state validation check.
+- Add support for changelog generation for closed pull requests via a new `--closed-ok` flag, bypassing open-state validation.
+- Skip mergeability checks when processing closed pull requests to allow smooth back-filling of missing entries.
+- Store the closed pull request allowance setting in the generator configuration for consistent behavior.
+- Improve error messaging to guide users toward using `--closed-ok` when validation errors occur on closed PRs.
+- Introduce the `--closed-ok` flag as the primary mechanism for enabling back-fill workflows on previously closed pull requests.

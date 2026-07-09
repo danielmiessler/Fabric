@@ -18,4 +18,5 @@ type Config struct {
 	Push              bool
 	SyncDB            bool
 	Release           string
+	ClosedOK          bool
 }

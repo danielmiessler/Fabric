@@ -402,6 +402,7 @@
   "openai_image_failed_to_save_image": "nie udało się zapisać obrazu do %s: %w",
   "openai_image_saved_to": "Obraz zapisano do: %s",
   "openai_model_no_image_generation": "model '%s' nie obsługuje generowania obrazów. Obsługiwane modele: %s",
+  "openai_models_rate_limited": "przekroczono limit żądań podczas pobierania modeli od dostawcy %s; spróbuj ponownie za %s sekund",
   "openai_models_response_too_large": "odpowiedź z modelami zbyt duża od dostawcy %s (>%d bajtów)",
   "openai_unable_to_parse_models_response": "nie można przetworzyć odpowiedzi z modelami; surowa odpowiedź: %s",
   "openai_unexpected_status_code_read_error": "nieoczekiwany kod statusu: %d od dostawcy %s (nie udało się odczytać treści odpowiedzi: %v)",

@@ -218,8 +218,7 @@ func getLocaleCandidates(locale string) []string {
 	candidates = append(candidates, locale)
 
 	// If it's a regional variant, add the base language as a candidate
-	if strings.Contains(locale, "-") {
-		baseLang := strings.Split(locale, "-")[0]
+	if baseLang, _, found := strings.Cut(locale, "-"); found {
 		candidates = append(candidates, baseLang)
 
 		// Also check if the base language has a default variant

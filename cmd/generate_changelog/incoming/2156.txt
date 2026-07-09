@@ -1,0 +1,7 @@
+### PR [#2156](https://github.com/danielmiessler/Fabric/pull/2156) by [ksylvan](https://github.com/ksylvan): Make it possible to back-fill missing ChangeLog entries
+
+- Added Claude Sonnet 5 to the Anthropic model list, with sampling parameters omitted for compatibility.
+- Enabled the 1M context beta for Claude Sonnet 5, significantly expanding its context window support.
+- Removed deprecated Sonnet and Opus model variants, cleaning up outdated model references.
+- Updated Anthropic, AWS, Google, and Ollama dependencies, and refreshed Go module checksums.
+- Added a `--closed-ok` flag to the changelog generator, allowing it to process closed or merged PRs by skipping the open-state validation check.

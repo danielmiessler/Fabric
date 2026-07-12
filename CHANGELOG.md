@@ -1,5 +1,23 @@
 # Changelog
 
+## v1.4.458 (2026-07-12)
+
+### PR [#2161](https://github.com/danielmiessler/Fabric/pull/2161) by [ksylvan](https://github.com/ksylvan): fix: respect Anthropic chat option max token overrides
+
+- Fix: respect Anthropic chat option max token overrides
+
+- Use configured Anthropic max tokens as default
+- Apply chat option max tokens when provided
+
+- Preserve existing behavior for missing token overrides
+- Add tests for default max token selection
+
+- Add tests for explicit max token overrides
+
+### Direct commits
+
+- Chore: clean up ChangeLog
+
 ## v1.4.457 (2026-07-09)
 
 ### PR [#2155](https://github.com/danielmiessler/Fabric/pull/2155) by [ksylvan](https://github.com/ksylvan): Claude Sonnet 5 Anthropic support

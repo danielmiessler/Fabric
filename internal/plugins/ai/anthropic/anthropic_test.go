@@ -99,6 +99,43 @@ func TestBuildMessageParams_WithoutSearch(t *testing.T) {
 	}
 }
 
+func TestBuildMessageParams_UsesConfiguredMaxTokensByDefault(t *testing.T) {
+	client := NewClient()
+	opts := &domain.ChatOptions{
+		Model:       "claude-3-5-sonnet-latest",
+		Temperature: domain.DefaultTemperature,
+		TopP:        domain.DefaultTopP,
+	}
+	messages := []anthropic.MessageParam{
+		anthropic.NewUserMessage(anthropic.NewTextBlock("Hello")),
+	}
+
+	params := client.buildMessageParams(messages, opts)
+
+	if params.MaxTokens != int64(client.maxTokens) {
+		t.Errorf("Expected default max_tokens %d, got %d", client.maxTokens, params.MaxTokens)
+	}
+}
+
+func TestBuildMessageParams_UsesChatOptionsMaxTokens(t *testing.T) {
+	client := NewClient()
+	opts := &domain.ChatOptions{
+		Model:       "claude-3-5-sonnet-latest",
+		Temperature: domain.DefaultTemperature,
+		TopP:        domain.DefaultTopP,
+		MaxTokens:   8192,
+	}
+	messages := []anthropic.MessageParam{
+		anthropic.NewUserMessage(anthropic.NewTextBlock("Hello")),
+	}
+
+	params := client.buildMessageParams(messages, opts)
+
+	if params.MaxTokens != int64(opts.MaxTokens) {
+		t.Errorf("Expected max_tokens %d, got %d", opts.MaxTokens, params.MaxTokens)
+	}
+}
+
 func TestBuildMessageParams_WithSearch(t *testing.T) {
 	client := NewClient()
 	opts := &domain.ChatOptions{

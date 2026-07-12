@@ -233,9 +233,14 @@ func (an *Client) SendStream(
 func (an *Client) buildMessageParams(msgs []anthropic.MessageParam, opts *domain.ChatOptions) (
 	params anthropic.MessageNewParams) {
 
+	maxTokens := an.maxTokens
+	if opts.MaxTokens > 0 {
+		maxTokens = opts.MaxTokens
+	}
+
 	params = anthropic.MessageNewParams{
 		Model:     anthropic.Model(opts.Model),
-		MaxTokens: int64(an.maxTokens),
+		MaxTokens: int64(maxTokens),
 		Messages:  msgs,
 	}
 

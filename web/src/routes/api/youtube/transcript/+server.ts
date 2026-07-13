@@ -2,9 +2,19 @@ import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { YoutubeTranscript } from 'youtube-transcript';
 
+const MAX_BODY_SIZE = 2048; // 2KB limit for a YouTube URL request
+
 export const POST: RequestHandler = async ({ request }) => {
   try {
-    const body = await request.json();
+    const contentLength = request.headers.get('content-length');
+    if (contentLength && parseInt(contentLength, 10) > MAX_BODY_SIZE) {
+      return json({ error: 'Request body too large' }, { status: 413 });
+    }
+    const bodyText = await request.text();
+    if (bodyText.length > MAX_BODY_SIZE) {
+      return json({ error: 'Request body too large' }, { status: 413 });
+    }
+    const body = JSON.parse(bodyText);
     console.log('Received request body:', body);
 
     const { url } = body;

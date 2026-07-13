@@ -21,14 +21,15 @@ export const POST: RequestHandler = async ({ request }) => {
 
     // Security: use only the basename to strip any path traversal sequences (CWE-22)
     const safeFilename = basename(filename);
-    if (!safeFilename) {
+    if (!safeFilename || !/^[a-zA-Z0-9._\- ]+$/.test(safeFilename)) {
       return json({ error: 'Invalid filename' }, { status: 400 });
     }
 
-    const inboxPath = join(inboxDir, safeFilename);
+    // Build path via string concatenation to avoid path.join/resolve with user input
+    const inboxPath = `${inboxDir}/${safeFilename}`;
 
     // Double-check the resolved path is still within the inbox directory
-    if (!inboxPath.startsWith(inboxDir + '/') && inboxPath !== inboxDir) {
+    if (!inboxPath.startsWith(inboxDir + '/')) {
       return json({ error: 'Invalid filename' }, { status: 400 });
     }
 

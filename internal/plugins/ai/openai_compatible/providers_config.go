@@ -206,14 +206,9 @@ func (c *Client) getStaticModels(modelsKey string) ([]string, error) {
 		}, nil
 	case "static:minimax":
 		return []string{
+			"MiniMax-M3",
 			"MiniMax-M2.7",
 			"MiniMax-M2.7-highspeed",
-			"MiniMax-M2.5",
-			"MiniMax-M2.5-highspeed",
-			"MiniMax-M2.5-lightning",
-			"MiniMax-M2",
-			"MiniMax-M2.1",
-			"MiniMax-M2.1-lightning",
 		}, nil
 	default:
 		return nil, fmt.Errorf(i18n.T("openai_compatible_unknown_static_model_list"), modelsKey)

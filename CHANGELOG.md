@@ -1,5 +1,14 @@
 # Changelog
 
+## v1.4.459 (2026-07-16)
+
+### PR [#2135](https://github.com/danielmiessler/Fabric/pull/2135) by [octo-patch](https://github.com/octo-patch): feat: upgrade MiniMax default model to M3
+
+- Upgraded the MiniMax default model to M3, making it the new flagship selection.
+- Added MiniMax-M3 to the static model list as the first entry, establishing it as the default.
+- Retained MiniMax-M2.7 and MiniMax-M2.7-highspeed as available alternative models.
+- Removed deprecated models (M2.5, M2.5-highspeed, M2.5-lightning, M2, M2.1, and M2.1-lightning) from the static list.
+
 ## v1.4.458 (2026-07-12)
 
 ### PR [#2161](https://github.com/danielmiessler/Fabric/pull/2161) by [ksylvan](https://github.com/ksylvan): fix: respect Anthropic chat option max token overrides

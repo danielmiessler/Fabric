@@ -358,7 +358,7 @@ fabric --setup
 
 **OpenAI 兼容供应商：**
 
-- Abacus、AIML、Cerebras、DeepSeek、DigitalOcean、GitHub Models、GrokAI、Groq、Langdock、LiteLLM、MiniMax、Mistral、Novita AI、OpenRouter、SiliconCloud、Together、Venice AI、Z AI
+- Abacus、AIML、Cerebras、DeepSeek、DigitalOcean、GitHub Models、GrokAI、Groq、Langdock、LiteLLM、MiniMax、Mistral、Novita AI、OpenRouter、Requesty、SiliconCloud、Together、Venice AI、Z AI
 
 运行 `fabric --setup` 配置首选供应商，或使用 `fabric --listvendors` 查看所有可用供应商。
 

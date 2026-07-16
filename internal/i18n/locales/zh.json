@@ -402,6 +402,7 @@
   "openai_image_failed_to_save_image": "保存图像到 %s 失败：%w",
   "openai_image_saved_to": "图像已保存到：%s",
   "openai_model_no_image_generation": "模型 '%s' 不支持图像生成。支持的模型：%s",
+  "openai_models_rate_limited": "从提供商 %s 获取模型时超出速率限制；请在 %s 秒后重试",
   "openai_models_response_too_large": "来自提供商 %s 的模型响应过大（>%d 字节）",
   "openai_unable_to_parse_models_response": "无法解析模型响应；原始响应：%s",
   "openai_unexpected_status_code_read_error": "意外的状态码：来自提供商 %s 的 %d（读取响应主体失败：%v)",

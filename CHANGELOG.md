@@ -1,5 +1,59 @@
 # Changelog
 
+## v1.4.458 (2026-07-12)
+
+### PR [#2161](https://github.com/danielmiessler/Fabric/pull/2161) by [ksylvan](https://github.com/ksylvan): fix: respect Anthropic chat option max token overrides
+
+- Fix: respect Anthropic chat option max token overrides
+
+- Use configured Anthropic max tokens as default
+- Apply chat option max tokens when provided
+
+- Preserve existing behavior for missing token overrides
+- Add tests for default max token selection
+
+- Add tests for explicit max token overrides
+
+### Direct commits
+
+- Chore: clean up ChangeLog
+
+## v1.4.457 (2026-07-09)
+
+### PR [#2155](https://github.com/danielmiessler/Fabric/pull/2155) by [ksylvan](https://github.com/ksylvan): Claude Sonnet 5 Anthropic support
+
+- Add Claude Sonnet 5 to supported Anthropic models
+- Enable one-million-token context beta for Claude 5 models
+- Omit sampling parameters for Claude Sonnet 5 requests
+- Centralize Anthropic sampling restrictions behind prefix matching
+- Remove older Claude 4 aliases from model listings
+
+### PR [#2156](https://github.com/danielmiessler/Fabric/pull/2156) by [ksylvan](https://github.com/ksylvan): Make it possible to back-fill missing ChangeLog entries
+
+- Add support for changelog generation for closed pull requests via a new `--closed-ok` flag, bypassing open-state validation.
+- Skip mergeability checks when processing closed pull requests to allow smooth back-filling of missing entries.
+- Store the closed pull request allowance setting in the generator configuration for consistent behavior.
+- Improve error messaging to guide users toward using `--closed-ok` when validation errors occur on closed PRs.
+- Introduce the `--closed-ok` flag as the primary mechanism for enabling back-fill workflows on previously closed pull requests.
+
+## v1.4.455 (2026-06-09)
+
+### PR [#2138](https://github.com/danielmiessler/Fabric/pull/2138) by [ksylvan](https://github.com/ksylvan): New Claude Fable model + cache OpenAI model discovery and handle provider rate limits
+
+- Add persistent cache for provider model discovery results, improving performance and reliability of provider integrations.
+- Serve stale model caches during discovery failures, ensuring continued operation when upstream providers are unavailable.
+- Add Claude Fable 5 Anthropic model support, with sampling parameters automatically omitted for compatibility.
+- Return concise localized errors for rate-limited model fetches, with updated translations across all supported locales.
+- Update Go dependencies for AI provider integrations to keep upstream libraries current.
+
+## v1.4.454 (2026-06-02)
+
+### PR [#2136](https://github.com/danielmiessler/Fabric/pull/2136) by [ksylvan](https://github.com/ksylvan): chore: extend sampling param exclusion to Opus 4.8 models
+
+- Extends the sampling parameter exclusion logic to cover Opus 4.8 models, ensuring consistent behavior alongside the existing Opus 4.7 exclusion.
+- Adds the `claude-opus-4-8` model prefix to the sampling parameter exclusion check.
+- Updates the associated code comment to explicitly reference Opus 4.8 models.
+
 ## v1.4.453 (2026-05-28)
 
 ### PR [#2132](https://github.com/danielmiessler/Fabric/pull/2132) by [ksylvan](https://github.com/ksylvan): Add Claude Opus 4.8 model and bump Go toolchain and dependencies
@@ -58,10 +112,11 @@ Updates `vite` from 5.4.21 to 8.0.8
 
 - [Commits](<https://github.com/vitejs/vite/commits/v8.0.8/packages/vite)>
 updated-dependencies:
+
 - dependency-name: vite
-  dependency-version: 8.0.8
-  dependency-type: direct:development
-  dependency-group: npm_and_yarn
+dependency-version: 8.0.8
+dependency-type: direct:development
+dependency-group: npm_and_yarn
 Signed-off-by: dependabot[bot] <support@github.com>
 
 ### PR [#2103](https://github.com/danielmiessler/Fabric/pull/2103) by [dependabot](https://github.com/apps/dependabot) and [ksylvan](https://github.com/ksylvan): chore(deps): bump github.com/go-git/go-git/v5 from 5.17.2 to 5.18.0 in the go_modules group across 1 directory
@@ -84,21 +139,6 @@ Signed-off-by: dependabot[bot] <support@github.com>
 
 - Allow `strong` tag in cSpell markdown configuration
 - Docs: add Scoop installation instructions
-
-## v1.4.448 (2026-04-17)
-
-### Direct commits
-
-- Fix: fall back to streamed delta text when completed Codex response is empty
-
-- Prefer extracted completed text only when content stays non-empty
-- Fall back to accumulated streamed delta text otherwise
-
-- Preserve streamed response text before completed response evaluation
-- Add regression test for empty completed output text
-
-- Simulate SSE delta stream followed by blank completion
-- Verify Send returns delta text when completion lacks content
 
 ## v1.4.447 (2026-04-17)
 

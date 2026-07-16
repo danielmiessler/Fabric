@@ -6,6 +6,7 @@ import (
 	neturl "net/url"
 	"os"
 	"path"
+	"slices"
 	"strconv"
 	"strings"
 
@@ -24,10 +25,19 @@ const webSearchToolName = "web_search"
 const webSearchToolType = "web_search_20250305"
 const sourcesHeader = "## Sources"
 
+// These models reject non-default sampling parameters.
+// Omit these params entirely for safest compatibility.
+var samplingParamsDisallowedPrefixes = []string{
+	"claude-opus-4-7",
+	"claude-opus-4-8",
+	"claude-sonnet-5",
+	"claude-fable-5",
+}
+
 func modelDisallowsSamplingParams(model string) bool {
-	// Anthropic's Opus 4.7 models reject non-default sampling parameters.
-	// Omit these params entirely for safest compatibility.
-	return strings.HasPrefix(model, "claude-opus-4-7")
+	return slices.ContainsFunc(samplingParamsDisallowedPrefixes, func(prefix string) bool {
+		return strings.HasPrefix(model, prefix)
+	})
 }
 
 func NewClient() (ret *Client) {
@@ -44,6 +54,8 @@ func NewClient() (ret *Client) {
 	ret.defaultRequiredUserMessage = "Hi"
 	ret.models = []string{
 		// The following are the current supported models
+		string(anthropic.ModelClaudeFable5),
+		string(anthropic.ModelClaudeSonnet5),
 		string(anthropic.ModelClaudeOpus4_8),
 		string(anthropic.ModelClaudeOpus4_7),
 		string(anthropic.ModelClaudeSonnet4_6),
@@ -52,12 +64,8 @@ func NewClient() (ret *Client) {
 		string(anthropic.ModelClaudeOpus4_5),
 		string(anthropic.ModelClaudeHaiku4_5),
 		string(anthropic.ModelClaudeHaiku4_5_20251001),
-		string(anthropic.ModelClaudeSonnet4_20250514),
-		string(anthropic.ModelClaudeSonnet4_0),
 		string(anthropic.ModelClaudeSonnet4_5),
 		string(anthropic.ModelClaudeSonnet4_5_20250929),
-		string(anthropic.ModelClaudeOpus4_0),
-		string(anthropic.ModelClaudeOpus4_20250514),
 		string(anthropic.ModelClaudeOpus4_1_20250805),
 	}
 
@@ -68,9 +76,11 @@ func NewClient() (ret *Client) {
 		// This list can change over time as Anthropic updates their models and beta features, so we maintain it separately from the main model list
 		// for easier updates.
 
-		// Claude Sonnet 4 variants (1M context support)
-		string(anthropic.ModelClaudeSonnet4_20250514): {"context-1m-2025-08-07"},
-		string(anthropic.ModelClaudeSonnet4_0):        {"context-1m-2025-08-07"},
+		// Claude Fable 5 (1M context support)
+		string(anthropic.ModelClaudeFable5): {"context-1m-2025-08-07"},
+
+		// Claude Sonnet 5 (1M context support)
+		string(anthropic.ModelClaudeSonnet5): {"context-1m-2025-08-07"},
 
 		// Claude Sonnet 4.5 variants (1M context support)
 		string(anthropic.ModelClaudeSonnet4_5):          {"context-1m-2025-08-07"},
@@ -223,9 +233,14 @@ func (an *Client) SendStream(
 func (an *Client) buildMessageParams(msgs []anthropic.MessageParam, opts *domain.ChatOptions) (
 	params anthropic.MessageNewParams) {
 
+	maxTokens := an.maxTokens
+	if opts.MaxTokens > 0 {
+		maxTokens = opts.MaxTokens
+	}
+
 	params = anthropic.MessageNewParams{
 		Model:     anthropic.Model(opts.Model),
-		MaxTokens: int64(an.maxTokens),
+		MaxTokens: int64(maxTokens),
 		Messages:  msgs,
 	}
 

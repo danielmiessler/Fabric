@@ -18,6 +18,7 @@ import (
 	"github.com/danielmiessler/fabric/internal/plugins/ai/azure_entra"
 	"github.com/danielmiessler/fabric/internal/plugins/ai/azureaigateway"
 	"github.com/danielmiessler/fabric/internal/plugins/ai/bedrock"
+	"github.com/danielmiessler/fabric/internal/plugins/ai/claudecode"
 	"github.com/danielmiessler/fabric/internal/plugins/ai/codex"
 	"github.com/danielmiessler/fabric/internal/plugins/ai/copilot"
 	"github.com/danielmiessler/fabric/internal/plugins/ai/digitalocean"
@@ -89,6 +90,7 @@ func NewPluginRegistry(db *fsdb.Db) (ret *PluginRegistry, err error) {
 		codex.NewClient(),
 		copilot.NewClient(), // Microsoft 365 Copilot
 		bedrock.NewClient(), // AWS Bedrock - credentials configured via setup or AWS credential chain
+		claudecode.NewClient(),
 	)
 
 	// Add all OpenAI-compatible providers

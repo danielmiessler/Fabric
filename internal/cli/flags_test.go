@@ -482,3 +482,30 @@ func TestExtractFlag(t *testing.T) {
 		})
 	}
 }
+
+func TestPatternFromBinaryName(t *testing.T) {
+	oldArgs := os.Args
+	defer func() { os.Args = oldArgs }()
+
+	tests := []struct {
+		name        string
+		binaryName  string
+		patternName string
+		expected    bool
+	}{
+		{"renamed binary matches pattern", "fabric-ai", "fabric-ai", true},
+		{"renamed binary does not match pattern", "fabric-ai", "summarize", false},
+		{"standard fabric binary", "fabric", "fabric", false},
+		{"main binary skipped", "main", "main", false},
+		{"cmd binary skipped", "cmd", "cmd", false},
+		{"binary with extension stripped", "analyze.exe", "analyze", true},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			os.Args = []string{"/usr/local/bin/" + tt.binaryName}
+			result := patternFromBinaryName(tt.patternName)
+			assert.Equal(t, tt.expected, result)
+		})
+	}
+}

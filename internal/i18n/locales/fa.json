@@ -418,6 +418,7 @@
   "output_video_metadata": "نمایش فراداده ویدیو",
   "path_to_yaml_config": "مسیر فایل پیکربندی YAML",
   "pattern_not_found_list_available": "الگوی '%s' یافت نشد. برای مشاهده الگوهای موجود 'fabric -l' را اجرا کنید",
+  "pattern_from_binary_name_hint": "Hint: no -p flag was given; binary name '%s' was used as the pattern name. Use -p <pattern> to specify a pattern explicitly.",
   "pattern_not_found_no_patterns": "الگوی '%s' یافت نشد.\n\nهیچ الگویی نصب نشده است! برای رفع این مشکل:\n  • 'fabric --setup' را برای پیکربندی و دانلود الگوها اجرا کنید\n  • یا 'fabric -U' را برای دانلود/به‌روزرسانی الگوها اجرا کنید",
   "pattern_variables_help": "مقادیر برای متغیرهای الگو، مثال: -v=#role:expert -v=#points:30",
   "patterns_cloning_repository": "در حال کلون کردن مخزن %s (مسیر: %s)...\\n",

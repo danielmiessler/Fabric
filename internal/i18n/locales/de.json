@@ -418,6 +418,7 @@
   "output_video_metadata": "Video-Metadaten ausgeben",
   "path_to_yaml_config": "Pfad zur YAML-Konfigurationsdatei",
   "pattern_not_found_list_available": "Pattern '%s' nicht gefunden. Führen Sie 'fabric -l' aus, um verfügbare Patterns anzuzeigen",
+  "pattern_invalid_name": "invalid pattern name: %q",
   "pattern_not_found_no_patterns": "Pattern '%s' nicht gefunden.\n\nKeine Patterns installiert! Um dies zu beheben:\n  • Führen Sie 'fabric --setup' aus, um Patterns zu konfigurieren und herunterzuladen\n  • Oder führen Sie 'fabric -U' aus, um Patterns direkt herunterzuladen/zu aktualisieren",
   "pattern_variables_help": "Werte für Mustervariablen, z.B. -v=#role:expert -v=#points:30",
   "patterns_cloning_repository": "Repository %s wird geklont (Pfad: %s)...\\n",

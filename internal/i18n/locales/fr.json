@@ -418,6 +418,7 @@
   "output_video_metadata": "Afficher les métadonnées de la vidéo",
   "path_to_yaml_config": "Chemin vers le fichier de configuration YAML",
   "pattern_not_found_list_available": "modèle '%s' non trouvé. Exécutez 'fabric -l' pour voir les modèles disponibles",
+  "pattern_invalid_name": "invalid pattern name: %q",
   "pattern_not_found_no_patterns": "modèle '%s' non trouvé.\n\nAucun modèle n'est installé ! Pour résoudre ce problème :\n  • Exécutez 'fabric --setup' pour configurer et télécharger les modèles\n  • Ou exécutez 'fabric -U' pour télécharger/mettre à jour les modèles directement",
   "pattern_variables_help": "Valeurs pour les variables de motif, ex. -v=#role:expert -v=#points:30",
   "patterns_cloning_repository": "Clonage du dépôt %s (chemin : %s)...\\n",

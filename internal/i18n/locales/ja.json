@@ -418,6 +418,7 @@
   "output_video_metadata": "動画メタデータを出力",
   "path_to_yaml_config": "YAML設定ファイルのパス",
   "pattern_not_found_list_available": "パターン '%s' が見つかりません。'fabric -l'で利用可能なパターンを確認してください",
+  "pattern_invalid_name": "invalid pattern name: %q",
   "pattern_not_found_no_patterns": "パターン '%s' が見つかりません。\n\nパターンがインストールされていません！解決するには:\n  • 'fabric --setup'を実行してパターンを設定・ダウンロード\n  • または'fabric -U'を実行してパターンをダウンロード/更新",
   "pattern_variables_help": "パターン変数の値、例：-v=#role:expert -v=#points:30",
   "patterns_cloning_repository": "リポジトリ %s をクローン中 (パス: %s)...\\n",

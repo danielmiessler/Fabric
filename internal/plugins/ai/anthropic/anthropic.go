@@ -30,6 +30,7 @@ const sourcesHeader = "## Sources"
 var samplingParamsDisallowedPrefixes = []string{
 	"claude-opus-4-7",
 	"claude-opus-4-8",
+	"claude-opus-5",
 	"claude-sonnet-5",
 	"claude-fable-5",
 }
@@ -56,6 +57,7 @@ func NewClient() (ret *Client) {
 		// The following are the current supported models
 		string(anthropic.ModelClaudeFable5),
 		string(anthropic.ModelClaudeSonnet5),
+		string(anthropic.ModelClaudeOpus5),
 		string(anthropic.ModelClaudeOpus4_8),
 		string(anthropic.ModelClaudeOpus4_7),
 		string(anthropic.ModelClaudeSonnet4_6),
@@ -66,34 +68,34 @@ func NewClient() (ret *Client) {
 		string(anthropic.ModelClaudeHaiku4_5_20251001),
 		string(anthropic.ModelClaudeSonnet4_5),
 		string(anthropic.ModelClaudeSonnet4_5_20250929),
-		string(anthropic.ModelClaudeOpus4_1_20250805),
 	}
 
+	// context1M is the beta header historically required to opt into the
+	// 1-million token context window. On current models 1M is the DEFAULT and
+	// no header is needed; we still send it defensively (Send/SendStream retry
+	// without it if a model rejects it), so only models with a genuine 1M
+	// window belong here.
+	//
+	// Verified against
+	// https://platform.claude.com/docs/en/build-with-claude/context-windows#context-window-sizes-by-model
+	// Excluded because they are 200K-context models: Sonnet 4.5, Opus 4.5,
+	// Opus 4.1, and Haiku 4.5.
+	//
+	// Kept separate from the main model list for easier updates.
+	const context1M = "context-1m-2025-08-07"
 	ret.modelBetas = map[string][]string{
-		// See https://platform.claude.com/docs/en/build-with-claude/context-windows#1-m-token-context-window
-		// Claude Opus 4.7, Opus 4.6, Sonnet 4.6, Sonnet 4.5, and Sonnet 4 support a 1-million token context window.
+		// Claude 5 family
+		string(anthropic.ModelClaudeFable5):  {context1M},
+		string(anthropic.ModelClaudeOpus5):   {context1M},
+		string(anthropic.ModelClaudeSonnet5): {context1M},
 
-		// This list can change over time as Anthropic updates their models and beta features, so we maintain it separately from the main model list
-		// for easier updates.
+		// Claude Opus 4.x (1M-capable)
+		string(anthropic.ModelClaudeOpus4_8): {context1M},
+		string(anthropic.ModelClaudeOpus4_7): {context1M},
+		string(anthropic.ModelClaudeOpus4_6): {context1M},
 
-		// Claude Fable 5 (1M context support)
-		string(anthropic.ModelClaudeFable5): {"context-1m-2025-08-07"},
-
-		// Claude Sonnet 5 (1M context support)
-		string(anthropic.ModelClaudeSonnet5): {"context-1m-2025-08-07"},
-
-		// Claude Sonnet 4.5 variants (1M context support)
-		string(anthropic.ModelClaudeSonnet4_5):          {"context-1m-2025-08-07"},
-		string(anthropic.ModelClaudeSonnet4_5_20250929): {"context-1m-2025-08-07"},
-
-		// Claude Sonnet 4.6 (1M context support)
-		string(anthropic.ModelClaudeSonnet4_6): {"context-1m-2025-08-07"},
-
-		// Claude Opus 4.5, 4.6, and 4.7 variants (1M context support)
-		string(anthropic.ModelClaudeOpus4_5):          {"context-1m-2025-08-07"},
-		string(anthropic.ModelClaudeOpus4_6):          {"context-1m-2025-08-07"},
-		string(anthropic.ModelClaudeOpus4_7):          {"context-1m-2025-08-07"},
-		string(anthropic.ModelClaudeOpus4_5_20251101): {"context-1m-2025-08-07"},
+		// Claude Sonnet 4.x (1M-capable)
+		string(anthropic.ModelClaudeSonnet4_6): {context1M},
 	}
 
 	return

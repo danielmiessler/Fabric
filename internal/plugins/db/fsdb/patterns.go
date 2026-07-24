@@ -119,6 +119,10 @@ func (o *PatternsEntity) applyVariables(
 
 // retrieves a pattern from the database by name
 func (o *PatternsEntity) getFromDB(name string) (ret *Pattern, err error) {
+	if strings.Contains(name, "..") {
+		return nil, fmt.Errorf(i18n.T("pattern_invalid_name"), name)
+	}
+
 	// First check custom patterns directory if it exists
 	if o.CustomPatternsDir != "" {
 		customPatternPath := filepath.Join(o.CustomPatternsDir, name, o.SystemPatternFile)

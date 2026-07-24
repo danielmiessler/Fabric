@@ -136,6 +136,8 @@ function __fabric_register_completions
         complete -c $cmd -l liststrategies -d "List all strategies"
         complete -c $cmd -l listvendors -d "List all vendors"
         complete -c $cmd -l list-gemini-voices -d "List all available Gemini TTS voices"
+        complete -c $cmd -l list-transcription-models -d "List all available transcription models"
+        complete -c $cmd -l show-metadata -d "Print metadata to stderr"
         complete -c $cmd -l shell-complete-list -d "Output raw list without headers/formatting (for shell completion)"
         complete -c $cmd -l suppress-think -d "Suppress text enclosed in thinking tags"
         complete -c $cmd -l disable-responses-api -d "Disable OpenAI Responses API (default: false)"

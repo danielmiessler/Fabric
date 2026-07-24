@@ -141,6 +141,8 @@ _fabric() {
     '(--listvendors)--listvendors[List all vendors]' \
     '(--voice)--voice[TTS voice name for supported models]:voice:_fabric_gemini_voices' \
     '(--list-gemini-voices)--list-gemini-voices[List all available Gemini TTS voices]' \
+    '(--list-transcription-models)--list-transcription-models[List all available transcription models]' \
+    '(--show-metadata)--show-metadata[Print metadata to stderr]' \
     '(--shell-complete-list)--shell-complete-list[Output raw list without headers/formatting (for shell completion)]' \
     '(--suppress-think)--suppress-think[Suppress text enclosed in thinking tags]' \
     '(--think-start-tag)--think-start-tag[Start tag for thinking sections (default: <think>)]:start tag:' \

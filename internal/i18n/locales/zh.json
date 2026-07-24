@@ -178,7 +178,7 @@
   "digitalocean_models_request_failed_with_status": "DigitalOcean 模型请求失败，状态码 %d：%s",
   "disable_openai_responses_api": "禁用 OpenAI 响应 API（默认：false）",
   "disable_pattern_variable_replacement": "禁用模式变量替换",
-  "enable_web_search_tool": "为支持的模型启用网络搜索工具（Anthropic、OpenAI、Gemini）",
+  "enable_web_search_tool": "为支持的模型启用网络搜索工具（Anthropic、OpenAI、Gemini、Grok）",
   "end_tag_thinking_sections": "思考部分的结束标签",
   "error_creating_audio_file": "创建音频文件时出错：%v",
   "error_creating_file": "创建文件时出错：%v",

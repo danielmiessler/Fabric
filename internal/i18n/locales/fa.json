@@ -178,7 +178,7 @@
   "digitalocean_models_request_failed_with_status": "درخواست مدل‌های DigitalOcean با وضعیت %d ناموفق بود: %s",
   "disable_openai_responses_api": "غیرفعال کردن API OpenAI Responses (پیش‌فرض: false)",
   "disable_pattern_variable_replacement": "غیرفعال کردن جایگزینی متغیرهای الگو",
-  "enable_web_search_tool": "فعال‌سازی ابزار جستجوی وب برای مدل‌های پشتیبانی شده (Anthropic، OpenAI، Gemini)",
+  "enable_web_search_tool": "فعال‌سازی ابزار جستجوی وب برای مدل‌های پشتیبانی شده (Anthropic، OpenAI، Gemini، Grok)",
   "end_tag_thinking_sections": "تگ پایان برای بخش‌های تفکر",
   "error_creating_audio_file": "خطا در ایجاد فایل صوتی: %v",
   "error_creating_file": "خطا در ایجاد فایل: %v",

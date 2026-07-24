@@ -719,7 +719,7 @@ Application Options:
       --liststrategies              List all strategies
       --listvendors                 List all vendors
       --shell-complete-list         Output raw list without headers/formatting (for shell completion)
-      --search                      Enable web search tool for supported models (Anthropic, OpenAI, Gemini)
+      --search                      Enable web search tool for supported models (Anthropic, OpenAI, Gemini, Grok)
       --search-location=            Set location for web search results (e.g., 'America/Los_Angeles')
       --image-file=                 Save generated image to specified file path (e.g., 'output.png')
       --image-size=                 Image dimensions: 1024x1024, 1536x1024, 1024x1536, auto (default: auto)

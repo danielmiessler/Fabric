@@ -126,7 +126,7 @@ _fabric() {
     '(--api-key)--api-key[API key used to secure server routes]:api-key:' \
     '(--config)--config[Path to YAML config file]:config file:_files -g "*.yaml *.yml"' \
     '(--version)--version[Print current version]' \
-    '(--search)--search[Enable web search tool for supported models (Anthropic, OpenAI, Gemini)]' \
+    '(--search)--search[Enable web search tool for supported models (Anthropic, OpenAI, Gemini, Grok)]' \
     '(--search-location)--search-location[Set location for web search results]:location:' \
     '(--image-file)--image-file[Save generated image to specified file path]:image file:_files -g "*.png *.webp *.jpeg *.jpg"' \
     '(--image-size)--image-size[Image dimensions]:size:(1024x1024 1536x1024 1024x1536 auto)' \

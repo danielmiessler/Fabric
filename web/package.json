@@ -32,7 +32,7 @@
     "patch-package": "^8.0.1",
     "pdf-to-markdown-core": "github:jzillmann/pdf-to-markdown#modularize",
     "pdfjs-dist": "^5.5.207",
-    "postcss": "^8.5.8",
+    "postcss": "^8.5.14",
     "postcss-load-config": "^6.0.1",
     "rehype-autolink-headings": "^7.1.0",
     "rehype-slug": "^6.0.0",

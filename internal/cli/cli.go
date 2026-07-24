@@ -109,6 +109,12 @@ func Cli(version string) (err error) {
 		return nil
 	}
 
+	// Handle workflow (multi-pattern composition) if requested
+	if currentFlags.Workflow != "" {
+		err = handleWorkflowProcessing(currentFlags, registry, messageTools)
+		return
+	}
+
 	// Handle chat processing
 	err = handleChatProcessing(currentFlags, registry, messageTools)
 	return

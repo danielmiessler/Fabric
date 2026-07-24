@@ -1,0 +1,5 @@
+### PR [#2102](https://github.com/danielmiessler/Fabric/pull/2102) by [shaun0927](https://github.com/shaun0927): fix(chat): emit SSE error and skip complete on prompt setup failures
+
+- Fixes a REST `/chat` SSE bug where prompt setup failures could still end with a terminal `complete` event.
+- Forwards an explicit stream error when `chatter.Send()` fails before any stream update has been emitted, and suppresses the terminal `complete` afterward.
+- Adds regression coverage for the invalid-strategy path.

@@ -1,7 +1,0 @@
-### PR [#2166](https://github.com/danielmiessler/Fabric/pull/2166) by [ksylvan](https://github.com/ksylvan): feat: add Claude Opus 5 support and refresh dependencies
-
-- Add Claude Opus 5 to the supported model selection.
-- Disable sampling parameters for Claude Opus 5 requests.
-- Restrict one-million-token beta headers to compatible Claude models only.
-- Remove unsupported 200K-context models from the beta header mapping.
-- Upgrade Anthropic, AWS, Ollama, Google, and supporting dependencies.

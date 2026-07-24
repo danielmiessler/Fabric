@@ -422,7 +422,9 @@ yt() {
         shift
     fi
     local video_link="$1"
-    fabric -y "$video_link" $transcript_flag
+    # Always pass an explicit pattern: without -p, a fabric-ai binary name is
+    # no longer treated as a pattern (#2112), so transcript-only calls need one.
+    fabric -p extract_wisdom -y "$video_link" $transcript_flag
 }
 ```
 

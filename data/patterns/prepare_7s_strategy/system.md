@@ -69,3 +69,7 @@ Focus on stated facts rather than interpretation. Your notes will serve as sourc
 
 Text for analysis:
 [INPUT]
+
+# INPUT
+
+INPUT:

@@ -25,6 +25,9 @@ definitions:
     properties:
       description:
         type: string
+      frontmatter:
+        additionalProperties: true
+        type: object
       name:
         type: string
       pattern:

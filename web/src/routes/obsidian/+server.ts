@@ -2,16 +2,55 @@ import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { mkdir, writeFile, stat } from 'fs/promises';
 import { resolve, basename, join } from 'path';
+import { config } from '$lib/config/environment';
+import { buildNoteFrontmatter, serializeMarkdownNote, type NoteFrontmatter } from '$lib/utils/frontmatter';
 
 interface ObsidianRequest {
   pattern: string;
   noteName: string;
   content: string;
+  input?: string;
+  variables?: Record<string, string>;
 }
 
 // Allowlist of safe filename characters — prevents command injection (CWE-78)
 // and path traversal (CWE-22) via the noteName field.
 const SAFE_NOTE_NAME = /^[a-zA-Z0-9 _.-]+$/;
+
+interface PatternApplyResponse {
+  Frontmatter?: NoteFrontmatter;
+}
+
+async function fetchPatternFrontmatter(body: ObsidianRequest): Promise<NoteFrontmatter | null> {
+  try {
+    const endpoint = `${config.fabricApiUrl}/patterns/${encodeURIComponent(body.pattern)}/apply`;
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        input: body.input ?? '',
+        variables: body.variables ?? {}
+      })
+    });
+
+    if (!response.ok) {
+      console.warn('Failed to fetch pattern frontmatter:', response.status, response.statusText);
+      return null;
+    }
+
+    const patternResponse = await response.json() as PatternApplyResponse;
+    if (!patternResponse.Frontmatter || Object.keys(patternResponse.Frontmatter).length === 0) {
+      return null;
+    }
+
+    return patternResponse.Frontmatter;
+  } catch (error) {
+    console.warn('Failed to resolve pattern frontmatter:', error);
+    return null;
+  }
+}
 
 export const POST: RequestHandler = async ({ request }) => {
   try {
@@ -38,11 +77,17 @@ export const POST: RequestHandler = async ({ request }) => {
     console.log('2. Note name:', safeNoteName);
     console.log('3. Content length:', body.content.length);
 
-    // Format content with markdown code blocks
-    const formattedContent = `\`\`\`markdown\n${body.content}\n\`\`\``;
+    const now = new Date();
+    const patternFrontmatter = await fetchPatternFrontmatter(body);
+    const frontmatter = buildNoteFrontmatter(body.content, {
+      noteName: safeNoteName,
+      patternFrontmatter,
+      now
+    });
+    const formattedContent = serializeMarkdownNote(frontmatter, body.content);
 
     // Generate file name and path
-    const fileName = `${new Date().toISOString().split('T')[0]}-${safeNoteName}.md`;
+    const fileName = `${now.toISOString().split('T')[0]}-${safeNoteName}.md`;
     const obsidianDir = resolve('myfiles/Fabric_obsidian');
     const filePath = join(obsidianDir, fileName);
 

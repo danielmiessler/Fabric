@@ -18,10 +18,10 @@
 
 # `fabric`
 
-![Static Badge](https://img.shields.io/badge/mission-human_flourishing_via_AI_augmentation-purple)
+[![Static Badge](https://img.shields.io/badge/mission-human_flourishing_via_AI_augmentation-purple)](https://github.com/danielmiessler/fabric)
 <br />
-![GitHub top language](https://img.shields.io/github/languages/top/danielmiessler/fabric)
-![GitHub last commit](https://img.shields.io/github/last-commit/danielmiessler/fabric)
+[![GitHub top language](https://img.shields.io/github/languages/top/danielmiessler/fabric)](https://github.com/danielmiessler/fabric)
+[![GitHub last commit](https://img.shields.io/github/last-commit/danielmiessler/fabric)](https://github.com/danielmiessler/fabric/commits/main)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/danielmiessler/fabric)
 
@@ -79,6 +79,7 @@ Fabric 按照现实世界中的任务来组织 Prompt，允许人们在一个地
 
 ### 最近的主要功能
 
+- [v1.4.447](https://github.com/danielmiessler/fabric/releases/tag/v1.4.447) (2026年4月16日) — **Claude Opus 4.7**：将 Anthropic SDK 更新至 v1.37.0，并在可用模型中添加了新的 [Claude Opus 4.7](https://www.anthropic.com/news/claude-opus-4-7)，支持 100万 Token 的上下文窗口。
 - [v1.4.437](https://github.com/danielmiessler/fabric/releases/tag/v1.4.437) (2026年3月16日) — **OpenAI Codex 插件**：Fabric 现在支持使用 OpenAI Codex 作为后端（需订阅）！
 - [v1.4.417](https://github.com/danielmiessler/fabric/releases/tag/v1.4.417) (2026年2月21日) — **Azure AI Gateway 插件**：添加了 Azure AI Gateway 插件，支持通过统一的 Azure APIM Gateway 和共享订阅密钥身份验证连接多个后端 (AWS Bedrock, Azure OpenAI, Google Vertex AI)。
 - [v1.4.416](https://github.com/danielmiessler/fabric/releases/tag/v1.4.416) (2026年2月21日) — **Azure Entra ID 身份验证**：添加了带有共享 Azure 实用程序、Entra ID/MSAL 支持的认证插件，并将通用的 Azure 逻辑提取到可重用的 `azurecommon` 包中。

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 LOG_DIR="/var/log/package_tracking"
 DATE=$(date +%Y%m%d)

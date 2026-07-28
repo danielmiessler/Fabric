@@ -57,8 +57,7 @@ func (c *Client) mapRequestError(err error) error {
 		return nil
 	}
 
-	var apiErr *openaiapi.Error
-	if errors.As(err, &apiErr) {
+	if apiErr, ok := errors.AsType[*openaiapi.Error](err); ok {
 		body := []byte(apiErr.RawJSON())
 		if len(body) == 0 {
 			body = readAPIErrorBody(apiErr)

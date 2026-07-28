@@ -402,6 +402,7 @@
   "openai_image_failed_to_save_image": "ذخیره تصویر در %s ناموفق بود: %w",
   "openai_image_saved_to": "تصویر ذخیره شد در: %s",
   "openai_model_no_image_generation": "مدل '%s' از تولید تصویر پشتیبانی نمی‌کند. مدل‌های پشتیبانی شده: %s",
+  "openai_models_rate_limited": "محدودیت نرخ هنگام دریافت مدل‌ها از ارائه‌دهنده %s فراتر رفت؛ پس از %s ثانیه دوباره تلاش کنید",
   "openai_models_response_too_large": "پاسخ مدل‌ها از ارائه‌دهنده %s بیش از حد بزرگ است (>%d بایت)",
   "openai_unable_to_parse_models_response": "تجزیه پاسخ مدل‌ها ناموفق بود; پاسخ خام: %s",
   "openai_unexpected_status_code_read_error": "کد وضعیت غیرمنتظره: %d از ارائه‌دهنده %s (خطا در خواندن پاسخ: %v)",

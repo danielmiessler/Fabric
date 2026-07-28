@@ -402,6 +402,7 @@
   "openai_image_failed_to_save_image": "画像を %s に保存できませんでした: %w",
   "openai_image_saved_to": "画像の保存先: %s",
   "openai_model_no_image_generation": "モデル '%s' は画像生成をサポートしていません。サポートされているモデル: %s",
+  "openai_models_rate_limited": "プロバイダー %s からのモデル取得でレート制限を超過しました。%s 秒後に再試行してください",
   "openai_models_response_too_large": "プロバイダー %s からのモデルレスポンスが大きすぎます（>%d バイト）",
   "openai_unable_to_parse_models_response": "モデルレスポンスの解析に失敗しました; 生のレスポンス: %s",
   "openai_unexpected_status_code_read_error": "予期しないステータスコード: プロバイダー %s から %d (レスポンス本文の読み取りに失敗: %v)",

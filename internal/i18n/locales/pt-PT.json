@@ -402,6 +402,7 @@
   "openai_image_failed_to_save_image": "falha ao guardar a imagem em %s: %w",
   "openai_image_saved_to": "Imagem guardada em: %s",
   "openai_model_no_image_generation": "o modelo '%s' não suporta geração de imagens. Modelos suportados: %s",
+  "openai_models_rate_limited": "limite de taxa excedido ao obter modelos do fornecedor %s; tente novamente após %s segundos",
   "openai_models_response_too_large": "resposta de modelos demasiado grande do fornecedor %s (>%d bytes)",
   "openai_unable_to_parse_models_response": "não foi possível analisar a resposta de modelos; resposta bruta: %s",
   "openai_unexpected_status_code_read_error": "código de estado inesperado: %d do fornecedor %s (falha ao ler corpo da resposta: %v)",

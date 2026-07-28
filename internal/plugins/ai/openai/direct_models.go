@@ -7,6 +7,7 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"strings"
 	"time"
 
 	"github.com/danielmiessler/fabric/internal/i18n"
@@ -45,6 +46,13 @@ func FetchModelsDirectly(ctx context.Context, baseURL, apiKey, providerName stri
 		return nil, fmt.Errorf(i18n.T("openai_failed_to_create_models_url"), err)
 	}
 
+	// Serve a fresh cached list when available to avoid re-hitting discovery
+	// endpoints that aggressively rate-limit (e.g. GitHub Models' catalog).
+	if models, ok := readModelsCache(providerName, fullURL, modelsCacheTTL); ok {
+		debuglog.Debug(debuglog.Detailed, "Using cached models list for %s (%d models)\n", providerName, len(models))
+		return models, nil
+	}
+
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, fullURL, nil)
 	if err != nil {
 		return nil, err
@@ -52,6 +60,14 @@ func FetchModelsDirectly(ctx context.Context, baseURL, apiKey, providerName stri
 
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", apiKey))
 	req.Header.Set("Accept", "application/json")
+
+	// GitHub Models' catalog endpoint sits behind GitHub's edge layer, which
+	// throttles requests that omit the documented API version header (returning
+	// HTTP 429 with an HTML body). Send it so the catalog fetch matches GitHub's
+	// API contract and avoids the edge-level rate limiter.
+	if strings.EqualFold(req.URL.Host, "models.github.ai") {
+		req.Header.Set("X-GitHub-Api-Version", "2022-11-28")
+	}
 
 	// Reuse provided HTTP client, or create a new one if not provided
 	client := httpClient
@@ -62,17 +78,40 @@ func FetchModelsDirectly(ctx context.Context, baseURL, apiKey, providerName stri
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		// On a network error, fall back to a stale cached list if we have one.
+		if models, ok := readModelsCache(providerName, fullURL, 0); ok {
+			debuglog.Debug(debuglog.Basic, "Fetch failed for %s (%v); serving stale cached models\n", providerName, err)
+			return models, nil
+		}
 		return nil, err
 	}
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
+		// A failing discovery call (commonly HTTP 429 rate limiting) should not
+		// hard-fail when we already have a list cached from a prior success.
+		if models, ok := readModelsCache(providerName, fullURL, 0); ok {
+			debuglog.Debug(debuglog.Basic, "Status %d from %s; serving stale cached models\n", resp.StatusCode, providerName)
+			return models, nil
+		}
+
 		// Read the response body for debugging, but limit the number of bytes read
 		bodyBytes, readErr := io.ReadAll(io.LimitReader(resp.Body, errorResponseLimit))
 		if readErr != nil {
 			return nil, fmt.Errorf(i18n.T("openai_unexpected_status_code_read_error"),
 				resp.StatusCode, providerName, readErr)
 		}
+
+		// Rate limiting often returns an HTML body; surface a concise, actionable
+		// message instead of dumping the raw page.
+		if resp.StatusCode == http.StatusTooManyRequests {
+			retryAfter := strings.TrimSpace(resp.Header.Get("Retry-After"))
+			if retryAfter == "" {
+				retryAfter = "60"
+			}
+			return nil, fmt.Errorf(i18n.T("openai_models_rate_limited"), providerName, retryAfter)
+		}
+
 		bodyString := string(bodyBytes)
 		return nil, fmt.Errorf(i18n.T("openai_unexpected_status_code_with_body"),
 			resp.StatusCode, providerName, bodyString)
@@ -97,12 +136,16 @@ func FetchModelsDirectly(ctx context.Context, baseURL, apiKey, providerName stri
 
 	if err := json.Unmarshal(bodyBytes, &openAIFormat); err == nil {
 		debuglog.Debug(debuglog.Detailed, "Successfully parsed models response from %s using OpenAI format (found %d models)\n", providerName, len(openAIFormat.Data))
-		return extractModelIDs(openAIFormat.Data), nil
+		ids := extractModelIDs(openAIFormat.Data)
+		_ = writeModelsCache(providerName, fullURL, ids)
+		return ids, nil
 	}
 
 	if err := json.Unmarshal(bodyBytes, &directArray); err == nil {
 		debuglog.Debug(debuglog.Detailed, "Successfully parsed models response from %s using direct array format (found %d models)\n", providerName, len(directArray))
-		return extractModelIDs(directArray), nil
+		ids := extractModelIDs(directArray)
+		_ = writeModelsCache(providerName, fullURL, ids)
+		return ids, nil
 	}
 
 	var truncatedBody string

@@ -244,8 +244,8 @@ func TestChatter_BuildSession_SeparatesSystemSections(t *testing.T) {
 	}
 
 	messages := session.GetVendorMessages()
-	if len(messages) != 1 {
-		t.Fatalf("expected 1 vendor message, got %d", len(messages))
+	if len(messages) != 2 {
+		t.Fatalf("expected 2 vendor messages, got %d", len(messages))
 	}
 
 	systemMessage := messages[0]
@@ -253,9 +253,20 @@ func TestChatter_BuildSession_SeparatesSystemSections(t *testing.T) {
 		t.Fatalf("expected first message to be system, got %s", systemMessage.Role)
 	}
 
-	expectedSystemMessage := "STRATEGY\nCONTEXT\nPATTERN\nuser input"
+	// The system message has the strategy, the context, and the pattern.
+	// It must not contain the user input.
+	expectedSystemMessage := "STRATEGY\nCONTEXT\nPATTERN"
 	if systemMessage.Content != expectedSystemMessage {
 		t.Fatalf("expected system message %q, got %q", expectedSystemMessage, systemMessage.Content)
+	}
+
+	// The user input goes in the user message, one time only.
+	userMessage := messages[1]
+	if userMessage.Role != chat.ChatMessageRoleUser {
+		t.Fatalf("expected second message to be user, got %s", userMessage.Role)
+	}
+	if userMessage.Content != "user input" {
+		t.Fatalf("expected user message %q, got %q", "user input", userMessage.Content)
 	}
 
 	if request.Message.Content != "user input" {

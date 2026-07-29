@@ -81,24 +81,12 @@ func (o *PatternsEntity) loadPattern(source string) (pattern *Pattern, err error
 	return
 }
 
-func (o *PatternsEntity) ensureInput(pattern *Pattern) {
-	if !strings.Contains(pattern.Pattern, "{{input}}") {
-		if !strings.HasSuffix(pattern.Pattern, "\n") {
-			pattern.Pattern += "\n"
-		}
-		pattern.Pattern += "{{input}}"
-	}
-}
-
 func (o *PatternsEntity) applyInput(pattern *Pattern, input string) {
-	o.ensureInput(pattern)
 	pattern.Pattern = strings.ReplaceAll(pattern.Pattern, "{{input}}", input)
 }
 
 func (o *PatternsEntity) applyVariables(
 	pattern *Pattern, variables map[string]string, input string) (err error) {
-
-	o.ensureInput(pattern)
 
 	// Temporarily replace {{input}} with a sentinel token to protect it
 	// from recursive variable resolution

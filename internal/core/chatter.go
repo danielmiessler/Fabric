@@ -261,7 +261,6 @@ func (o *Chatter) BuildSession(request *domain.ChatRequest, raw bool) (session *
 	}
 
 	var patternContent string
-	inputUsed := false
 	if request.PatternName != "" {
 		var pattern *fsdb.Pattern
 		if request.NoVariableReplacement {
@@ -274,7 +273,6 @@ func (o *Chatter) BuildSession(request *domain.ChatRequest, raw bool) (session *
 			return nil, fmt.Errorf(i18n.T("chatter_error_get_pattern"), request.PatternName, err)
 		}
 		patternContent = pattern.Pattern
-		inputUsed = true
 	}
 
 	systemMessage := joinPromptSections(contextContent, patternContent)
@@ -338,9 +336,12 @@ func (o *Chatter) BuildSession(request *domain.ChatRequest, raw bool) (session *
 		if systemMessage != "" {
 			session.Append(&chat.ChatCompletionMessage{Role: chat.ChatMessageRoleSystem, Content: systemMessage})
 		}
-		// If multi-part content, it is in the user message, and should be added.
-		// Otherwise, we should only add it if we have not already used it in the systemMessage.
-		if len(request.Message.MultiContent) > 0 || (request.Message != nil && !inputUsed) {
+		// Add the user message when it has content. The pattern does not
+		// contain the input, so the input goes to the model one time.
+		// The session keeps the usual system-plus-user shape. Some backends
+		// (vLLM, some Bedrock endpoints) reject sessions with system messages
+		// only.
+		if len(request.Message.MultiContent) > 0 || request.Message.Content != "" {
 			session.Append(request.Message)
 		}
 	}

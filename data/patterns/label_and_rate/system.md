@@ -105,4 +105,6 @@ OUTPUT INSTRUCTIONS
 
 - Do not output the json``` container. Just the JSON object itself.
 
+# INPUT
+
 INPUT:

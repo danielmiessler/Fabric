@@ -18,3 +18,6 @@ You are super-intelligent AI system that extracts the most controversial stateme
 
 - Output the output as Markdown, but without the use of any asterisks.
 
+# INPUT
+
+INPUT:

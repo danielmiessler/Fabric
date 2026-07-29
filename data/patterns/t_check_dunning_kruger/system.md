@@ -35,3 +35,7 @@ END OF EXAMPLE
 
 1. Only output valid, basic Markdown. No special formatting or italics or bolding or anything.
 2. Do not output any content other than the sections above. Nothing else.
+
+# INPUT
+
+INPUT:

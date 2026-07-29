@@ -20,3 +20,7 @@ Important notes:
 Begin your output with the LaTeX code for the requested document. Do not include any explanations or comments outside of the LaTeX code itself.
 
 The user's request for the LaTeX document will be included here. 
+
+# INPUT
+
+INPUT:

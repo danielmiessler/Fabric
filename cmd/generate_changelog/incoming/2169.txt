@@ -1,0 +1,4 @@
+### PR [#2169](https://github.com/danielmiessler/Fabric/pull/2169) by [ksylvan](https://github.com/ksylvan): fix(core): route user input to the user message in BuildSession
+
+- Fixed system-only message sessions that some backends (vLLM, some Bedrock endpoints) reject or hang on. BuildSession no longer embeds the user input in the system message; the input now goes in the user message, one time.
+- Removed `ensureInput`. Patterns without an explicit `{{input}}` marker stay unchanged; explicit markers still work. The `/patterns/{name}/apply` endpoint keeps its response contract.

@@ -80,6 +80,13 @@ func Cli(version string) (err error) {
 		return
 	}
 
+	// Validate prompt-export-only combinations before any expensive preprocessing.
+	if currentFlags.PrintPrompt {
+		if err = validatePromptExportFlags(currentFlags); err != nil {
+			return
+		}
+	}
+
 	// Handle transcription if specified
 	if currentFlags.TranscribeFile != "" {
 		var transcriptionMessage string
@@ -107,6 +114,11 @@ func Cli(version string) (err error) {
 	// Return early for non-chat tool operations
 	if messageTools != "" && !currentFlags.IsChatRequest() {
 		return nil
+	}
+
+	// Handle prompt export
+	if handled, err = handlePromptExport(currentFlags, registry, messageTools); err != nil || handled {
+		return
 	}
 
 	// Handle chat processing

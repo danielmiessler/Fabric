@@ -22,7 +22,7 @@ func handleToolProcessing(currentFlags *Flags, registry *core.PluginRegistry) (m
 		if videoId, playlistId, err = registry.YouTube.GetVideoOrPlaylistId(currentFlags.YouTube); err != nil {
 			return
 		} else if (videoId == "" || currentFlags.YouTubePlaylist) && playlistId != "" {
-			if currentFlags.Output != "" {
+			if currentFlags.Output != "" && !currentFlags.IsChatRequest() {
 				err = registry.YouTube.FetchAndSavePlaylist(playlistId, currentFlags.Output)
 			} else {
 				var videos []*youtube.VideoMeta

@@ -13,11 +13,15 @@ type SessionsEntity struct {
 }
 
 func (o *SessionsEntity) Get(name string) (session *Session, err error) {
+	return o.GetWithNotice(name, true)
+}
+
+func (o *SessionsEntity) GetWithNotice(name string, announceNewSession bool) (session *Session, err error) {
 	session = &Session{Name: name}
 
 	if o.Exists(name) {
 		err = o.LoadAsJson(name, &session.Messages)
-	} else {
+	} else if announceNewSession {
 		fmt.Printf(i18n.T("sessions_creating_new"), name)
 	}
 	return

@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"strings"
+	"sync/atomic"
 
 	"github.com/danielmiessler/fabric/internal/chat"
 
@@ -100,6 +101,7 @@ func (h *ChatHandler) HandleChat(c *gin.Context) {
 				i+1, prompt.Model, prompt.PatternName, prompt.ContextName)
 
 			streamChan := make(chan domain.StreamUpdate)
+			var sawError atomic.Bool
 
 			go func(p PromptRequest) {
 				defer close(streamChan)
@@ -118,6 +120,18 @@ func (h *ChatHandler) HandleChat(c *gin.Context) {
 				}
 
 				chatReq := buildPromptChatRequest(p, request.Language)
+				vendorUpdates := make(chan domain.StreamUpdate)
+				var forwardedError atomic.Bool
+				forwardDone := make(chan struct{})
+				go func() {
+					defer close(forwardDone)
+					for update := range vendorUpdates {
+						if update.Type == domain.StreamTypeError {
+							forwardedError.Store(true)
+						}
+						streamChan <- update
+					}
+				}()
 
 				opts := &domain.ChatOptions{
 					Model:            p.Model,
@@ -128,14 +142,21 @@ func (h *ChatHandler) HandleChat(c *gin.Context) {
 					Thinking:         request.Thinking,
 					Search:           request.Search,
 					SearchLocation:   request.SearchLocation,
-					UpdateChan:       streamChan,
+					UpdateChan:       vendorUpdates,
 					Quiet:            true,
 				}
 
 				_, err = chatter.Send(c.Request.Context(), chatReq, opts)
+				close(vendorUpdates)
+				<-forwardDone
 				if err != nil {
 					log.Printf("Error from chatter.Send: %v", err)
-					// Error already sent to streamChan via domain.StreamTypeError if occurred in Send loop
+					if !forwardedError.Load() {
+						streamChan <- domain.StreamUpdate{
+							Type:    domain.StreamTypeError,
+							Content: fmt.Sprintf(i18n.T("server_chat_error"), err),
+						}
+					}
 					return
 				}
 			}(prompt)
@@ -159,6 +180,7 @@ func (h *ChatHandler) HandleChat(c *gin.Context) {
 							Usage: update.Usage,
 						}
 					case domain.StreamTypeError:
+						sawError.Store(true)
 						response = StreamResponse{
 							Type:    "error",
 							Format:  "plain",
@@ -173,14 +195,16 @@ func (h *ChatHandler) HandleChat(c *gin.Context) {
 				}
 			}
 
-			completeResponse := StreamResponse{
-				Type:    "complete",
-				Format:  "plain",
-				Content: "",
-			}
-			if err := writeSSEResponse(c.Writer, completeResponse); err != nil {
-				log.Printf("Error writing completion response: %v", err)
-				return
+			if !sawError.Load() {
+				completeResponse := StreamResponse{
+					Type:    "complete",
+					Format:  "plain",
+					Content: "",
+				}
+				if err := writeSSEResponse(c.Writer, completeResponse); err != nil {
+					log.Printf("Error writing completion response: %v", err)
+					return
+				}
 			}
 		}
 	}

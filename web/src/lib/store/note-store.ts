@@ -1,6 +1,6 @@
 import { writable, get } from 'svelte/store';
 import { browser } from '$app/environment';
-import type { Frontmatter } from '$lib/utils/markdown';
+import { buildNoteFrontmatter, serializeMarkdownNote } from '$lib/utils/frontmatter';
 
 interface NoteState {
   content: string;
@@ -15,26 +15,6 @@ function createNoteStore() {
       isDirty: false
   });
 
-  const createFrontmatter = (content: string): Frontmatter => {
-      const now = new Date();
-      const dateStr = now.toISOString();
-      const title = `Note ${now.toLocaleString()}`;
-      const cleanContent = content
-          .replace(/[#*`_]/g, '')
-          .replace(/\s+/g, ' ')
-          .trim();
-
-      return {
-          title,
-          aliases: [''],
-          description: cleanContent.slice(0, 150) + (cleanContent.length > 150 ? '...' : ''),
-          date: dateStr,
-          tags: ['inbox', 'note'],
-          updated: dateStr,
-          author: 'User',
-      };
-  };
-
   const generateUniqueFilename = () => {
       const now = new Date();
       const date = now.toISOString().split('T')[0];
@@ -48,18 +28,8 @@ function createNoteStore() {
       if (!browser) return;
 
       const filename = generateUniqueFilename();
-      const frontmatter = createFrontmatter(content);
-      const fileContent = `---
-title: ${frontmatter.title}
-aliases: [${(frontmatter.aliases || []).map(alias => `"${alias}"`).join(', ')}]
-description: ${frontmatter.description}
-date: ${frontmatter.date}
-tags: [${(frontmatter.tags || []).map(tag => `"${tag}"`).join(', ')}]
-updated: ${frontmatter.updated}
-author: ${frontmatter.author}
----
-
-${content}`;
+      const frontmatter = buildNoteFrontmatter(content);
+      const fileContent = serializeMarkdownNote(frontmatter, content);
 
       const response = await fetch('/notes', {
           method: 'POST',

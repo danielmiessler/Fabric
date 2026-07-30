@@ -74,6 +74,7 @@ export const patternAPI = {
             Name: pattern,
             Description: desc?.description || pattern.charAt(0).toUpperCase() + pattern.slice(1),
             Pattern: patternData.Pattern || "",
+            Frontmatter: patternData.Frontmatter || undefined,
             tags: desc?.tags || []  // Add tags from description
           };
         } catch (error) {
@@ -84,6 +85,7 @@ export const patternAPI = {
             Name: pattern,
             Description: desc?.description || pattern.charAt(0).toUpperCase() + pattern.slice(1),
             Pattern: "",
+            Frontmatter: undefined,
             tags: desc?.tags || []  // Add tags here too for consistency
           };
         }

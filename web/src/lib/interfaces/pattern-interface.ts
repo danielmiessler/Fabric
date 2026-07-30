@@ -12,5 +12,6 @@ export interface Pattern extends StorageEntity {
   Name: string;        // maps to patternName from JSON
   Description: string; // maps to description from JSON
   Pattern: string;     // pattern content from API
+  Frontmatter?: Record<string, unknown>;
   tags: string[];      // array of tag strings
 }

@@ -289,6 +289,11 @@ var ProviderMap = map[string]ProviderConfig{
 		BaseURL:             "https://openrouter.ai/api/v1",
 		ImplementsResponses: false,
 	},
+	"OrcaRouter": {
+		Name:                "OrcaRouter",
+		BaseURL:             "https://api.orcarouter.ai/v1",
+		ImplementsResponses: false,
+	},
 	"SiliconCloud": {
 		Name:                "SiliconCloud",
 		BaseURL:             "https://api.siliconflow.cn/v1",

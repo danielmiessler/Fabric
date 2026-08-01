@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.4.467 (2026-07-31)
+
+### PR [#2171](https://github.com/danielmiessler/Fabric/pull/2171) by [OdinKral](https://github.com/OdinKral): feat(scripts): add pattern/maintenance audit script
+
+- Adds `scripts/audit-patterns.sh`, a dependency-free audit tool for the patterns library that detects thin patterns (under 15 lines), bloated patterns (over 50 KB), stale hardcoded model references, missing `INPUT` sections, i18n key gaps, and shell completion gaps. The script is read-only and exits with code `0` by default, or `1` when run with `--strict` for CI integration.
+
 ## v1.4.466 (2026-07-30)
 
 ### PR [#2116](https://github.com/danielmiessler/Fabric/pull/2116) by [ksylvan](https://github.com/ksylvan) and [dependabot](https://github.com/apps/dependabot): fix(web): repair the chat page and modernize the build toolchain

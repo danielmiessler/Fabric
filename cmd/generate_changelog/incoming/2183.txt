@@ -1,0 +1,3 @@
+### PR [#2183](https://github.com/danielmiessler/Fabric/pull/2183) by [jinhaosong-source](https://github.com/jinhaosong-source): feat: add OrcaRouter as OpenAI-compatible provider
+
+- Adds OrcaRouter (`https://api.orcarouter.ai/v1`) to the OpenAI-compatible `ProviderMap`, mirroring the existing OpenRouter entry, with documentation updates in both READMEs, a new `CreateClient` test case, and a spell-check dictionary entry.

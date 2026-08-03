@@ -232,6 +232,11 @@ var ProviderMap = map[string]ProviderConfig{
 		BaseURL:             "https://api.deepseek.com",
 		ImplementsResponses: false,
 	},
+	"Eden AI": {
+		Name:                "Eden AI",
+		BaseURL:             "https://api.edenai.run/v3",
+		ImplementsResponses: false,
+	},
 	"GitHub": {
 		Name:                "GitHub",
 		BaseURL:             "https://models.github.ai/inference",

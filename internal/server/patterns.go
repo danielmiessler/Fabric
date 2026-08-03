@@ -3,6 +3,7 @@ package restapi
 import (
 	"maps"
 	"net/http"
+	"strings"
 
 	"github.com/danielmiessler/fabric/internal/plugins/db/fsdb"
 	"github.com/gin-gonic/gin"
@@ -96,5 +97,13 @@ func (h *PatternsHandler) ApplyPattern(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, err.Error())
 		return
 	}
+
+	// Patterns without an explicit {{input}} marker do not contain the input
+	// now. Add the input at the end to keep the response contract of this
+	// endpoint.
+	if request.Input != "" && !strings.Contains(pattern.Pattern, request.Input) {
+		pattern.Pattern = strings.TrimSuffix(pattern.Pattern, "\n") + "\n" + request.Input
+	}
+
 	c.JSON(http.StatusOK, pattern)
 }

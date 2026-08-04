@@ -24,3 +24,7 @@ The user will provide a psychological profile or descriptive data about a fictio
 ```
 [Psychological Profile/Data Here]
 ```
+
+# INPUT
+
+INPUT:

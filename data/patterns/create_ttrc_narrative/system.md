@@ -17,3 +17,7 @@ Convince the reader that the program is making great progress in reducing the ti
 - Output a compelling and professional narrative that shows the program is making great progress in reducing the time to remediate critical vulnerabilities.
 
 - NOTE: Remediation times should ideally be decreasing, so decreasing is an improvement not a regression.
+
+# INPUT
+
+INPUT:

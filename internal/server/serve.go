@@ -33,6 +33,19 @@ func Serve(registry *core.PluginRegistry, address string, apiKey string) (err er
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
 
+	// CORS — required for browser and WebView clients connecting from a different
+	// origin (e.g. localhost:5173 in dev, or tauri://localhost in a desktop app).
+	r.Use(func(c *gin.Context) {
+		c.Header("Access-Control-Allow-Origin", "*")
+		c.Header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+		c.Header("Access-Control-Allow-Headers", "Content-Type, Authorization, X-API-Key")
+		if c.Request.Method == http.MethodOptions {
+			c.AbortWithStatus(http.StatusNoContent)
+			return
+		}
+		c.Next()
+	})
+
 	if apiKey != "" {
 		r.Use(APIKeyMiddleware(apiKey))
 	} else {

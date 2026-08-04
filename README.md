@@ -378,6 +378,32 @@ Fabric supports a wide range of AI providers:
 - Together
 - Venice AI
 - Z AI
+- Apple Foundation Models (OpenAI-compatible; default endpoint: `http://localhost:1976/v1`; API key optional)
+  - Note: Requires an Apple Foundation Models server to be running. Start it with:
+
+    ```bash
+    fm serve --host 0.0.0.0 --port 1976
+    ```
+
+  - Warning: Using `--host 0.0.0.0` exposes the server to the local network. Only use it when you need network access to the server and you trust your local network or have firewall rules. For local-only testing prefer `127.0.0.1` or omit `--host` to bind to the loopback interface.
+
+  - Recommended: Run the FM server in a persistent tmux session so it runs in the background and will not start a new instance if one is already running. Example:
+
+    ```bash
+    # start session if not already running
+    tmux has-session -t fm_server || tmux new -d -s fm_server fm serve --host 0.0.0.0 --port 1976
+    ```
+
+  - Note: Apple FM support requires macOS Golden Gate 27.0 beta 1 or higher.
+
+  - Note: Requires an Apple Foundation Models server to be running. Start it with:
+
+    ```bash
+    fm serve --host 0.0.0.0 --port 1976
+    ```
+
+    (Using `--host 0.0.0.0` ensures the server is reachable from localhost/127.0.0.1.)
+  - Requires macOS Golden Gate 27.0 beta 1 or higher.
 
 Run `fabric --setup` to configure your preferred provider(s), or use `fabric --listvendors` to see all available vendors.
 

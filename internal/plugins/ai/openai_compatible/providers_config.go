@@ -52,6 +52,15 @@ func NewClient(providerConfig ProviderConfig) *Client {
 	// existing behavior for providers that do not set these fields.
 	client.Client.SetWebSearchToolName(providerConfig.WebSearchToolName)
 	client.Client.SetEnableXSearch(providerConfig.EnableXSearch)
+
+	// For Apple Foundation Models, API key is optional; make the setup
+	// prompt reflect that by marking the API key SetupQuestion as not required.
+	if providerConfig.Name == "Apple Foundation Models" {
+		if client.Client.ApiKey != nil {
+			client.Client.ApiKey.Required = false
+		}
+	}
+
 	return client
 }
 
@@ -318,6 +327,11 @@ var ProviderMap = map[string]ProviderConfig{
 	"Mammouth": {
 		Name:                "Mammouth",
 		BaseURL:             "https://api.mammouth.ai/v1",
+		ImplementsResponses: false,
+	},
+	"Apple Foundation Models": {
+		Name:                "Apple Foundation Models",
+		BaseURL:             "http://localhost:1976/v1",
 		ImplementsResponses: false,
 	},
 }

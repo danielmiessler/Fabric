@@ -374,6 +374,7 @@ Fabric supports a wide range of AI providers:
 - Mistral
 - Novita AI
 - OpenRouter
+- Requesty
 - SiliconCloud
 - Together
 - Venice AI

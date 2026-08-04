@@ -389,7 +389,7 @@ yt() {
         shift
     fi
     local video_link="$1"
-    fabric -y "$video_link" $transcript_flag
+    fabric -p extract_wisdom -y "$video_link" $transcript_flag
 }
 ```
 

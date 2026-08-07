@@ -664,37 +664,41 @@ Application Options:
   -T, --topp=                       Set top P (default: 0.9)
   -s, --stream                      Stream
   -P, --presencepenalty=            Set presence penalty (default: 0.0)
-  -r, --raw                         Use the defaults of the model without sending chat options
-                                    (temperature, top_p, etc.). Only affects OpenAI-compatible providers.
-                                    Anthropic models always use smart parameter selection to comply with
-                                    model-specific requirements.
+  -r, --raw                         Use the defaults of the model without sending chat options (temperature,
+                                    top_p, etc.). Only affects OpenAI-compatible providers. Anthropic models
+                                    always use smart parameter selection to comply with model-specific
+                                    requirements.
   -F, --frequencypenalty=           Set frequency penalty (default: 0.0)
   -l, --listpatterns                List all patterns
+      --readpattern=                Print the contents of the named pattern to the terminal
   -L, --listmodels                  List all available models
   -x, --listcontexts                List all contexts
   -X, --listsessions                List all sessions
   -U, --updatepatterns              Update patterns
   -c, --copy                        Copy to clipboard
   -m, --model=                      Choose model
-  -V, --vendor=                     Specify vendor for chosen model (e.g., -V "LM Studio" -m openai/gpt-oss-20b)
+  -V, --vendor=                     Specify vendor for the selected model (e.g., -V "LM Studio" -m
+                                    openai/gpt-oss-20b)
       --modelContextLength=         Model context length (only affects ollama)
   -o, --output=                     Output to file
       --output-session              Output the entire session (also a temporary one) to the output file
-  -n, --latest=                     Number of latest patterns to list (default: 0)
+  -n, --latest=                     Number of latest patterns to list
   -d, --changeDefaultModel          Change default model
-  -y, --youtube=                    YouTube video or play list "URL" to grab transcript, comments from it
-                                    and send to chat or print it put to the console and store it in the
-                                    output file
+  -y, --youtube=                    YouTube video or play list "URL" to grab transcript, comments from it and
+                                    send to chat or print it put to the console and store it in the output file
       --playlist                    Prefer playlist over video if both ids are present in the URL
       --transcript                  Grab transcript from YouTube video and send to chat (it is used per
                                     default).
       --transcript-with-timestamps  Grab transcript from YouTube video with timestamps and send to chat
       --visual                      Extract visual data from video using OCR and FFmpeg
-      --visual-sensitivity          Tolerance for FFmpeg scene detection (0.0 - 1.0)
-      --visual-fps                  Extract a specific number of frames per second instead of using scene detection
+      --visual-sensitivity=         Tolerance for FFmpeg scene detection (0.0 - 1.0) (default: 0.4)
+      --visual-fps=                 Extract a specific number of frames per second instead of using scene
+                                    detection
       --comments                    Grab comments from YouTube video and send to chat
       --metadata                    Output video metadata
-  -g, --language=                   Specify the Language Code for the chat, e.g. -g=en -g=zh
+      --yt-dlp-args=                Additional arguments to pass to yt-dlp (e.g. '--cookies-from-browser brave')
+      --spotify=                    Spotify podcast or episode URL to grab metadata from and send to chat
+  -g, --language=                   Specify the Language Code for the chat, e.g. -g=en -g=zh -g=pt-BR -g=pt-PT
   -u, --scrape_url=                 Scrape website URL to markdown using Jina AI
   -q, --scrape_question=            Search question using Jina AI
   -e, --seed=                       Seed to be used for LMM generation
@@ -719,29 +723,31 @@ Application Options:
       --liststrategies              List all strategies
       --listvendors                 List all vendors
       --shell-complete-list         Output raw list without headers/formatting (for shell completion)
-      --search                      Enable web search tool for supported models (Anthropic, OpenAI, Gemini)
+      --search                      Enable web search tool for supported models (Anthropic, OpenAI, Gemini, Grok)
       --search-location=            Set location for web search results (e.g., 'America/Los_Angeles')
       --image-file=                 Save generated image to specified file path (e.g., 'output.png')
       --image-size=                 Image dimensions: 1024x1024, 1536x1024, 1024x1536, auto (default: auto)
       --image-quality=              Image quality: low, medium, high, auto (default: auto)
       --image-compression=          Compression level 0-100 for JPEG/WebP formats (default: not set)
-      --image-background=           Background type: opaque, transparent (default: opaque, only for
-                                    PNG/WebP)
+      --image-background=           Background type: opaque, transparent (default: opaque, only for PNG/WebP)
       --suppress-think              Suppress text enclosed in thinking tags
       --think-start-tag=            Start tag for thinking sections (default: <think>)
       --think-end-tag=              End tag for thinking sections (default: </think>)
       --disable-responses-api       Disable OpenAI Responses API (default: false)
-      --voice=                      TTS voice name for supported models (e.g., Kore, Charon, Puck)
-                                    (default: Kore)
+      --transcribe-file=            Audio or video file to transcribe
+      --transcribe-model=           Model to use for transcription (separate from chat model)
+      --split-media-file            Split audio/video files larger than 25MB using ffmpeg
+      --voice=                      TTS voice name for supported models (e.g., Kore, Charon, Puck) (default:
+                                    Kore)
       --list-gemini-voices          List all available Gemini TTS voices
+      --list-transcription-models   List all available transcription models
       --notification                Send desktop notification when command completes
-      --notification-command=       Custom command to run for notifications (overrides built-in
-                                    notifications)
-      --yt-dlp-args=                Additional arguments to pass to yt-dlp (e.g. '--cookies-from-browser brave')
-      --thinking=                   Set reasoning/thinking level (e.g., off, low, medium, high, or
-                                    numeric tokens for Anthropic or Google Gemini)
+      --notification-command=       Custom command to run for notifications (overrides built-in notifications)
+      --thinking=                   Set reasoning/thinking level (e.g., off, low, medium, high, or numeric
+                                    tokens for Anthropic or Google Gemini)
       --show-metadata               Print metadata (input/output tokens) to stderr
-      --debug=                     Set debug level (0: off, 1: basic, 2: detailed, 3: trace)
+      --debug=                      Set debug level (0=off, 1=basic, 2=detailed, 3=trace, 4=wire)
+
 Help Options:
   -h, --help                        Show this help message
 ```
@@ -754,6 +760,7 @@ Use the `--debug` flag to control runtime logging:
 - `1`: basic debug info
 - `2`: detailed debugging
 - `3`: trace level
+- `4`: wire level (full request and response bodies)
 
 ### Dry Run Mode
 

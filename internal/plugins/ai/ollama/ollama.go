@@ -106,6 +106,7 @@ func (o *Client) ListModels(_ context.Context) (ret []string, err error) {
 
 func (o *Client) SendStream(_ context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan domain.StreamUpdate) (err error) {
 	ctx := context.Background()
+	defer close(channel)
 
 	var req ollamaapi.ChatRequest
 	if req, err = o.createChatRequest(ctx, msgs, opts); err != nil {
@@ -135,7 +136,6 @@ func (o *Client) SendStream(_ context.Context, msgs []*chat.ChatCompletionMessag
 		return
 	}
 
-	close(channel)
 	return
 }
 

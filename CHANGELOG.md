@@ -1,5 +1,145 @@
 # Changelog
 
+## v1.4.470 (2026-08-04)
+
+### PR [#2186](https://github.com/danielmiessler/Fabric/pull/2186) by [giodamelio](https://github.com/giodamelio): Update Nixpkgs version for newer Go version
+
+- Updated the Nixpkgs version to provide a Go release that satisfies the `go.mod` requirement of Go >= 1.26.0, as the previously pinned Nixpkgs only shipped Go 1.25.4.
+
+## v1.4.469 (2026-08-03)
+
+### PR [#2185](https://github.com/danielmiessler/Fabric/pull/2185) by [ksylvan](https://github.com/ksylvan): feat(web): replace PDF.js pipeline with pdf-inspector WASM worker
+
+- Replaced the PDF.js processing pipeline with the new `pdf-inspector.worker.ts`, backed by `@firecrawl/pdf-inspector-wasm`. The worker initializes WASM one time and processes transferred ArrayBuffers.
+- Added worker error handling. A worker crash now rejects all pending requests with a clear error and terminates the worker. The next request starts a new worker.
+- Fixed the file attachment behavior. The app now parses each file and stores its content without a chat request. One submit sends exactly one `streamChat` call, not one call for each attached file.
+- Removed the legacy PDF dependency chain: `pdf-to-markdown-core`, `pdfjs-dist`, `pdf-config.ts`, and the related build configuration. `@firecrawl/pdf-inspector-wasm` is now the only PDF dependency.
+- Simplified the worker boundary in follow-up refactors: merged redundant methods, removed dead code, and inlined a single-use interface. The full test suite continued to pass.
+
+## v1.4.468 (2026-08-02)
+
+### PR [#2182](https://github.com/danielmiessler/Fabric/pull/2182) by [drawliin](https://github.com/drawliin): fix(ollama): close stream channel on errors
+
+- Fix(ollama): close stream channel on errors
+
+## v1.4.467 (2026-07-31)
+
+### PR [#2171](https://github.com/danielmiessler/Fabric/pull/2171) by [OdinKral](https://github.com/OdinKral): feat(scripts): add pattern/maintenance audit script
+
+- Adds `scripts/audit-patterns.sh`, a dependency-free audit tool for the patterns library that detects thin patterns (under 15 lines), bloated patterns (over 50 KB), stale hardcoded model references, missing `INPUT` sections, i18n key gaps, and shell completion gaps. The script is read-only and exits with code `0` by default, or `1` when run with `--strict` for CI integration.
+
+## v1.4.466 (2026-07-30)
+
+### PR [#2116](https://github.com/danielmiessler/Fabric/pull/2116) by [ksylvan](https://github.com/ksylvan) and [dependabot](https://github.com/apps/dependabot): fix(web): repair the chat page and modernize the build toolchain
+
+- Modernized the web stack by upgrading Tailwind, Skeleton, SvelteKit, Vite, and supporting dependencies.
+- Replaced removed Skeleton components with compatible local implementations to restore UI functionality.
+- Improved pre-stream chat error reporting to prevent duplication of streamed errors, and hardened vendor list parsing to return empty model arrays on malformed input.
+- Fixed stream completion crashes, normalized displayed error messages, corrected toast stacking order, and added warning notification support.
+- Restored linting, formatting, testing, and pnpm override configuration, and preserved custom themes through the Tailwind CSS-based configuration migration.
+
+### PR [#2178](https://github.com/danielmiessler/Fabric/pull/2178) by [OdinKral](https://github.com/OdinKral) and [ksylvan](https://github.com/ksylvan): feat(patterns): add generate_frontmatter for PKM/Obsidian users
+
+- Add `generate_frontmatter` to conversion, extraction, and writing categories
+- Document PKM-ready YAML metadata fields in pattern explanations
+- Register pattern descriptions and extracts for suggestion workflows
+- Credit both contributors in incoming changelog entry
+
+## v1.4.465 (2026-07-29)
+
+### PR [#2180](https://github.com/danielmiessler/Fabric/pull/2180) by [ksylvan](https://github.com/ksylvan): fix: include Grok in localized --search help text
+
+- Fix: Updated all 11 locale entries in the i18n message catalog to include "Grok" in the `enable_web_search_tool` help text, ensuring Grok (xAI) web search support is discoverable via `fabric --help`. Also updates the generated README help block to match. No functional change.
+
+## v1.4.464 (2026-07-29)
+
+### PR [#2179](https://github.com/danielmiessler/Fabric/pull/2179) by [ksylvan](https://github.com/ksylvan): fix: declare completion arguments and synchronize CLI help
+
+- Fix: declare completion arguments and synchronize CLI help
+- Declare Fish completion arguments for dynamic and fixed values
+- Enable filtered file suggestions for supported path options
+- Add Spotify, transcription, metadata, and wire-debug completion options
+- Include Grok among providers supporting web search completion
+- Keep the input/output token detail in the show-metadata description
+
+## v1.4.463 (2026-07-28)
+
+### PR [#2168](https://github.com/danielmiessler/Fabric/pull/2168) by [ksylvan](https://github.com/ksylvan): fix: complete localized setup and error messages for supported locales
+
+- Fix: complete localized setup and error messages across supported locales
+- Translate Bedrock setup prompts across nine supported locales
+- Localize datetime and system template errors consistently
+- Translate Persian Spotify errors and setup guidance
+- Correct Japanese and Polish file operation log labels
+
+## v1.4.462 (2026-07-28)
+
+### PR [#2123](https://github.com/danielmiessler/Fabric/pull/2123) by [ksylvan](https://github.com/ksylvan) and [OdinKral](https://github.com/OdinKral): fix: block path traversal in pattern name lookup
+
+- **Security Fix:** Blocked path traversal attacks in pattern name lookup (closes #2094) — pattern names containing `..` could previously escape the patterns directory and read arbitrary files via `filepath.Join`; a guard has been added at the top of `getFromDB`, an i18n key `pattern_invalid_name` has been added to all 11 locale files, and test cases now cover all common traversal variants.
+- New translations for the "invalid pattern" user-facing string.
+
+## v1.4.461 (2026-07-28)
+
+### PR [#2152](https://github.com/danielmiessler/Fabric/pull/2152) by [AUTHENSOR](https://github.com/AUTHENSOR): fix: shell-escape extension values to prevent command injection
+
+- **Fix:** Shell-escape extension values to prevent command injection in the extension executor, which previously ran commands via `sh -c` with unescaped, user-controlled values interpolated into the command string. All user-controlled values are now wrapped in single quotes with embedded-single-quote escaping prior to interpolation, ensuring the shell treats them as literal arguments. A regression test (`ShellInjectionBlocked`) has been added to verify that malicious input (e.g., `hello; touch /marker`) does not execute unintended shell commands.
+
+## v1.4.460 (2026-07-24)
+
+### PR [#2166](https://github.com/danielmiessler/Fabric/pull/2166) by [ksylvan](https://github.com/ksylvan): feat: add Claude Opus 5 support and refresh dependencies
+
+- Add Claude Opus 5 to the supported model selection.
+- Disable sampling parameters for Claude Opus 5 requests.
+- Restrict one-million-token beta headers to compatible Claude models only.
+- Remove unsupported 200K-context models from the beta header mapping.
+- Upgrade Anthropic, AWS, Ollama, Google, and supporting dependencies.
+
+## v1.4.459 (2026-07-16)
+
+### PR [#2135](https://github.com/danielmiessler/Fabric/pull/2135) by [octo-patch](https://github.com/octo-patch): feat: upgrade MiniMax default model to M3
+
+- Upgraded the MiniMax default model to M3, making it the new flagship selection.
+- Added MiniMax-M3 to the static model list as the first entry, establishing it as the default.
+- Retained MiniMax-M2.7 and MiniMax-M2.7-highspeed as available alternative models.
+- Removed deprecated models (M2.5, M2.5-highspeed, M2.5-lightning, M2, M2.1, and M2.1-lightning) from the static list.
+
+## v1.4.458 (2026-07-12)
+
+### PR [#2161](https://github.com/danielmiessler/Fabric/pull/2161) by [ksylvan](https://github.com/ksylvan): fix: respect Anthropic chat option max token overrides
+
+- Fix: respect Anthropic chat option max token overrides
+
+- Use configured Anthropic max tokens as default
+- Apply chat option max tokens when provided
+
+- Preserve existing behavior for missing token overrides
+- Add tests for default max token selection
+
+- Add tests for explicit max token overrides
+
+### Direct commits
+
+- Chore: clean up ChangeLog
+
+## v1.4.457 (2026-07-09)
+
+### PR [#2155](https://github.com/danielmiessler/Fabric/pull/2155) by [ksylvan](https://github.com/ksylvan): Claude Sonnet 5 Anthropic support
+
+- Add Claude Sonnet 5 to supported Anthropic models
+- Enable one-million-token context beta for Claude 5 models
+- Omit sampling parameters for Claude Sonnet 5 requests
+- Centralize Anthropic sampling restrictions behind prefix matching
+- Remove older Claude 4 aliases from model listings
+
+### PR [#2156](https://github.com/danielmiessler/Fabric/pull/2156) by [ksylvan](https://github.com/ksylvan): Make it possible to back-fill missing ChangeLog entries
+
+- Add support for changelog generation for closed pull requests via a new `--closed-ok` flag, bypassing open-state validation.
+- Skip mergeability checks when processing closed pull requests to allow smooth back-filling of missing entries.
+- Store the closed pull request allowance setting in the generator configuration for consistent behavior.
+- Improve error messaging to guide users toward using `--closed-ok` when validation errors occur on closed PRs.
+- Introduce the `--closed-ok` flag as the primary mechanism for enabling back-fill workflows on previously closed pull requests.
+
 ## v1.4.455 (2026-06-09)
 
 ### PR [#2138](https://github.com/danielmiessler/Fabric/pull/2138) by [ksylvan](https://github.com/ksylvan): New Claude Fable model + cache OpenAI model discovery and handle provider rate limits
@@ -76,10 +216,11 @@ Updates `vite` from 5.4.21 to 8.0.8
 
 - [Commits](<https://github.com/vitejs/vite/commits/v8.0.8/packages/vite)>
 updated-dependencies:
+
 - dependency-name: vite
-  dependency-version: 8.0.8
-  dependency-type: direct:development
-  dependency-group: npm_and_yarn
+dependency-version: 8.0.8
+dependency-type: direct:development
+dependency-group: npm_and_yarn
 Signed-off-by: dependabot[bot] <support@github.com>
 
 ### PR [#2103](https://github.com/danielmiessler/Fabric/pull/2103) by [dependabot](https://github.com/apps/dependabot) and [ksylvan](https://github.com/ksylvan): chore(deps): bump github.com/go-git/go-git/v5 from 5.17.2 to 5.18.0 in the go_modules group across 1 directory
@@ -102,21 +243,6 @@ Signed-off-by: dependabot[bot] <support@github.com>
 
 - Allow `strong` tag in cSpell markdown configuration
 - Docs: add Scoop installation instructions
-
-## v1.4.448 (2026-04-17)
-
-### Direct commits
-
-- Fix: fall back to streamed delta text when completed Codex response is empty
-
-- Prefer extracted completed text only when content stays non-empty
-- Fall back to accumulated streamed delta text otherwise
-
-- Preserve streamed response text before completed response evaluation
-- Add regression test for empty completed output text
-
-- Simulate SSE delta stream followed by blank completion
-- Verify Send returns delta text when completion lacks content
 
 ## v1.4.447 (2026-04-17)
 

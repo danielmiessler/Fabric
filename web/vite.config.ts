@@ -1,21 +1,22 @@
-import { purgeCss } from 'vite-plugin-tailwind-purgecss';
 import { sveltekit } from '@sveltejs/kit/vite';
+import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'vite';
 
 // Get the Fabric base URL from environment variable with fallback
 const FABRIC_BASE_URL = process.env.FABRIC_BASE_URL || 'http://localhost:8080';
 
+// CAUTION: Lightning CSS minifies the CSS, and it refuses a pseudo-class that
+// comes after a pseudo-element. Do not use a Tailwind class that puts the two
+// in that order, such as `file:disabled:opacity-50`, because Lightning CSS
+// stops the build on the `::file-selector-button:disabled` selector that the
+// class produces. See https://github.com/parcel-bundler/lightningcss/issues/1292
+// The Skeleton 2 Tailwind plugin made that selector on its own, and Skeleton 5
+// does not, so the project no longer needs a different minifier.
+
 export default defineConfig({
-  plugins: [sveltekit(), purgeCss()],
-  optimizeDeps: {
-    include: ['pdfjs-dist'],
-    esbuildOptions: {
-      target: 'esnext',
-      supported: {
-        'top-level-await': true
-      }
-    }
-  },
+  // Tailwind 4 gives a Vite plugin, which replaces the PostCSS setup. It must
+  // come before sveltekit() so that it can process the styles in components.
+  plugins: [tailwindcss(), sveltekit()],
   define: {
     'process.env': {
       NODE_ENV: JSON.stringify(process.env.NODE_ENV)

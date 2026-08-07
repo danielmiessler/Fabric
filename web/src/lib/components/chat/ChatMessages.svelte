@@ -139,7 +139,7 @@ function renderContent(message: Message): string {
 
         
           <div class="message-header flex items-center gap-2 mb-1 {message.role === 'assistant' || message.role === 'system' ? '' : 'justify-end'}">
-            <span class="text-xs text-muted-foreground rounded-lg p-1 variant-glass-secondary font-bold uppercase">
+            <span class="text-xs text-muted-foreground rounded-lg p-1 bg-secondary-500/20 backdrop-blur-lg font-bold uppercase">
               {#if message.role === 'system'}
                 SYSTEM
               {:else if message.role === 'assistant'}

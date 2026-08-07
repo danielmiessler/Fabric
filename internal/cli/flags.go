@@ -57,9 +57,9 @@ type Flags struct {
 	YouTubePlaylist                 bool                 `long:"playlist" description:"Prefer playlist over video if both ids are present in the URL"`
 	YouTubeTranscript               bool                 `long:"transcript" description:"Grab transcript from YouTube video and send to chat (it is used per default)."`
 	YouTubeTranscriptWithTimestamps bool                 `long:"transcript-with-timestamps" description:"Grab transcript from YouTube video with timestamps and send to chat"`
-	YouTubeVisual                   bool                 `long:"visual"`
-	YouTubeVisualSensitivity        float64              `long:"visual-sensitivity" default:"0.4"`
-	YouTubeVisualFps                int                  `long:"visual-fps" default:"0"`
+	YouTubeVisual                   bool                 `long:"visual" description:"Extract visual data from video using OCR and FFmpeg"`
+	YouTubeVisualSensitivity        float64              `long:"visual-sensitivity" description:"Tolerance for FFmpeg scene detection (0.0 - 1.0)" default:"0.4"`
+	YouTubeVisualFps                int                  `long:"visual-fps" description:"Extract a specific number of frames per second instead of using scene detection" default:"0"`
 	YouTubeComments                 bool                 `long:"comments" description:"Grab comments from YouTube video and send to chat"`
 	YouTubeMetadata                 bool                 `long:"metadata" description:"Output video metadata"`
 	YtDlpArgs                       string               `long:"yt-dlp-args" yaml:"ytDlpArgs" description:"Additional arguments to pass to yt-dlp (e.g. '--cookies-from-browser brave')"`
@@ -109,7 +109,7 @@ type Flags struct {
 	Notification                    bool                 `long:"notification" yaml:"notification" description:"Send desktop notification when command completes"`
 	NotificationCommand             string               `long:"notification-command" yaml:"notificationCommand" description:"Custom command to run for notifications (overrides built-in notifications)"`
 	Thinking                        domain.ThinkingLevel `long:"thinking" yaml:"thinking" description:"Set reasoning/thinking level (e.g., off, low, medium, high, or numeric tokens for Anthropic or Google Gemini)"`
-	ShowMetadata                    bool                 `long:"show-metadata" description:"Print metadata to stderr"`
+	ShowMetadata                    bool                 `long:"show-metadata" description:"Print metadata (input/output tokens) to stderr"`
 	Debug                           int                  `long:"debug" description:"Set debug level (0=off, 1=basic, 2=detailed, 3=trace, 4=wire)" default:"0"`
 }
 

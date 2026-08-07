@@ -1,18 +1,12 @@
 <script>
-  import '../app.postcss';
-  import { AppShell } from '@skeletonlabs/skeleton';
+  import '../app.css';
   import ToastContainer from '$lib/components/ui/toast/ToastContainer.svelte';
   import Footer from '$lib/components/home/Footer.svelte';
   import Header from '$lib/components/home/Header.svelte';
-  import { initializeStores, getDrawerStore } from '@skeletonlabs/skeleton';
   import { page } from '$app/stores';
   import { fly } from 'svelte/transition';
   import { onMount } from 'svelte';
   import { toastStore } from '$lib/store/toast-store';
-
-  // Initialize stores
-  initializeStores();
-  const drawerStore = getDrawerStore();
 
   onMount(() => {
     toastStore.info("👋 Welcome to the site! Tell people about yourself and what you do.");
@@ -21,15 +15,20 @@
 
 <ToastContainer />
 
+<!-- Skeleton 5 removed the AppShell component and asks each project to write
+  its own layout. The structure below does what AppShell did for this page: a
+  column that fills the window, with a header and a footer that keep their
+  height and a middle section that scrolls. -->
 {#key $page.url.pathname}
-  <AppShell class="relative">
+  <div class="relative flex h-full w-full flex-col overflow-hidden">
     <div class="fixed inset-0 bg-gradient-to-br from-primary-500/20 via-tertiary-500/20 to-secondary-500/20 -z-10"></div>
-    <svelte:fragment slot="header">
+    <header class="flex-none">
       <Header />
 
       <div class="h-2 py-4"></div>
-    </svelte:fragment>
-    <div 
+    </header>
+    <div
+      class="min-h-0 flex-auto overflow-y-auto"
       in:fly={{ duration: 500, delay: 100, y: 100 }}
     >
       <main class="main m-auto">
@@ -37,10 +36,10 @@
       </main>
     </div>
 
-    <svelte:fragment slot="footer">
+    <footer class="flex-none">
       <Footer />
-    </svelte:fragment>
-  </AppShell>
+    </footer>
+  </div>
 {/key}
 
 <style>

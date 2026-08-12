@@ -59,9 +59,21 @@ type PatternsLoader struct {
 
 func (o *PatternsLoader) configure() (err error) {
 	o.pathPatternsPrefix = fmt.Sprintf("%v/", o.DefaultFolder.Value)
+	return
+}
+
+// ensureTempPatternsFolder lazily creates the scratch folder used by the pattern
+// download path. Only PopulateDB and the helpers it calls need it, so it must not
+// be created in configure(): configure() runs on every plugin registry
+// construction, which leaked one empty temp directory per fabric invocation.
+func (o *PatternsLoader) ensureTempPatternsFolder() (err error) {
+	if o.tempPatternsFolder != "" {
+		return
+	}
+
 	// Use a consistent temp folder name regardless of the source path structure
-	tempDir, err := os.MkdirTemp("", "fabric-patterns-")
-	if err != nil {
+	var tempDir string
+	if tempDir, err = os.MkdirTemp("", "fabric-patterns-"); err != nil {
 		return fmt.Errorf(i18n.T("patterns_failed_create_temp_folder"), err)
 	}
 	o.tempPatternsFolder = tempDir
@@ -92,6 +104,16 @@ func (o *PatternsLoader) Setup() (err error) {
 
 // PopulateDB downloads patterns from the internet and populates the patterns folder
 func (o *PatternsLoader) PopulateDB() (err error) {
+	if err = o.ensureTempPatternsFolder(); err != nil {
+		return
+	}
+	// movePatterns removes the folder on success; this also covers the error paths
+	// and leaves the loader reusable if PopulateDB is called again.
+	defer func() {
+		os.RemoveAll(o.tempPatternsFolder)
+		o.tempPatternsFolder = ""
+	}()
+
 	fmt.Printf(i18n.T("patterns_downloading"), o.Patterns.Dir)
 	fmt.Println()
 	fmt.Println()

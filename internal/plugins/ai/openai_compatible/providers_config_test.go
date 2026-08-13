@@ -36,6 +36,11 @@ func TestCreateClient(t *testing.T) {
 			exists:   true,
 		},
 		{
+			name:     "Existing provider - OrcaRouter",
+			provider: "OrcaRouter",
+			exists:   true,
+		},
+		{
 			name:     "Existing provider - MiniMax",
 			provider: "MiniMax",
 			exists:   true,

@@ -299,6 +299,11 @@ var ProviderMap = map[string]ProviderConfig{
 		BaseURL:             "https://api.together.xyz/v1",
 		ImplementsResponses: false,
 	},
+	"TrustedRouter": {
+		Name:                "TrustedRouter",
+		BaseURL:             "https://api.trustedrouter.com/v1",
+		ImplementsResponses: false,
+	},
 	"Venice AI": {
 		Name:                "Venice AI",
 		BaseURL:             "https://api.venice.ai/api/v1",

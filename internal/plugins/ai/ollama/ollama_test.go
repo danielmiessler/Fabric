@@ -3,6 +3,7 @@ package ollama
 import (
 	"context"
 	"encoding/base64"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/http/httptest"
@@ -88,4 +89,32 @@ func TestSendStreamClosesChannelOnChatError(t *testing.T) {
 	require.Error(t, err)
 	_, ok := <-channel
 	assert.False(t, ok, "stream channel should be closed when Ollama chat returns an error")
+}
+
+func TestSendStreamReturnsContextCanceledWhenReceiverStops(t *testing.T) {
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		<-r.Context().Done()
+	}))
+	t.Cleanup(server.Close)
+
+	baseURL, err := url.Parse(server.URL)
+	require.NoError(t, err)
+
+	ctx, cancel := context.WithCancel(context.Background())
+	cancel()
+
+	channel := make(chan domain.StreamUpdate)
+	client := &Client{client: ollamaapi.NewClient(baseURL, server.Client())}
+
+	err = client.SendStream(
+		ctx,
+		[]*chat.ChatCompletionMessage{{Role: chat.ChatMessageRoleUser, Content: "hello"}},
+		&domain.ChatOptions{Model: "test-model"},
+		channel,
+	)
+
+	require.Error(t, err)
+	assert.True(t, errors.Is(err, context.Canceled))
+	_, ok := <-channel
+	assert.False(t, ok, "stream channel should be closed when context is canceled")
 }

@@ -27,6 +27,7 @@ var flagDescriptionMap = map[string]string{
 	"raw":                        "use_model_defaults_raw_help",
 	"frequencypenalty":           "set_frequency_penalty",
 	"listpatterns":               "list_all_patterns",
+	"readpattern":                "print_pattern_contents",
 	"listmodels":                 "list_all_available_models",
 	"listcontexts":               "list_all_contexts",
 	"listsessions":               "list_all_sessions",
@@ -49,6 +50,7 @@ var flagDescriptionMap = map[string]string{
 	"comments":                   "grab_comments_from_youtube",
 	"metadata":                   "output_video_metadata",
 	"yt-dlp-args":                "additional_yt_dlp_args",
+	"spotify":                    "spotify_url_help",
 	"language":                   "specify_language_code",
 	"scrape_url":                 "scrape_website_url",
 	"scrape_question":            "search_question_jina",
@@ -94,6 +96,7 @@ var flagDescriptionMap = map[string]string{
 	"notification":               "send_desktop_notification",
 	"notification-command":       "custom_notification_command",
 	"thinking":                   "set_reasoning_thinking_level",
+	"show-metadata":              "print_metadata_to_stderr",
 	"debug":                      "set_debug_level",
 }
 

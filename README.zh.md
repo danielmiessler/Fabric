@@ -480,6 +480,7 @@ pbpaste | fabric --pattern extract_wisdom
 - `1`：基本调试信息
 - `2`：详细调试
 - `3`：追踪级别
+- `4`：wire 级别（完整的请求和响应内容）
 
 ### 演习模式
 

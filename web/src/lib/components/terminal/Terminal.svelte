@@ -135,7 +135,11 @@
   </div>
 </div>
 
-<style>
+<style lang="postcss">
+  /* Tailwind 4 processes the styles of each component on their own. The
+   * reference below gives @apply the theme without a second copy of the CSS. */
+  @reference '../../../app.css';
+
   .terminal-window {
     @apply rounded-lg border border-gray-700/50 bg-gray-900/95 shadow-2xl;
     box-shadow: 0 0 60px -15px rgba(0, 0, 0, 0.3);

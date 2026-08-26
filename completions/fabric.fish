@@ -53,57 +53,69 @@ function __fabric_get_transcription_models
 end
 
 # Main completion function
+#
+# Options that take a value must declare it. Use -x when only the listed values
+# are valid, and -r when a file path is also valid. Fish ignores the -a list of
+# an option that declares neither, and shows no suggestion after the option.
 function __fabric_register_completions
         set cmd $argv[1]
         complete -c $cmd -f
 
-        # Flag completions with arguments
-        complete -c $cmd -s p -l pattern -d "Choose a pattern from the available patterns" -a "(__fabric_get_patterns)"
-        complete -c $cmd -l readpattern -d "Print the contents of the named pattern to the terminal" -a "(__fabric_get_patterns)"
-        complete -c $cmd -s v -l variable -d "Values for pattern variables, e.g. -v=#role:expert -v=#points:30"
-        complete -c $cmd -s C -l context -d "Choose a context from the available contexts" -a "(__fabric_get_contexts)"
-        complete -c $cmd -l session -d "Choose a session from the available sessions" -a "(__fabric_get_sessions)"
-        complete -c $cmd -s a -l attachment -d "Attachment path or URL (e.g. for OpenAI image recognition messages)" -r
-        complete -c $cmd -s t -l temperature -d "Set temperature (default: 0.7)"
-        complete -c $cmd -s T -l topp -d "Set top P (default: 0.9)"
-        complete -c $cmd -s P -l presencepenalty -d "Set presence penalty (default: 0.0)"
-        complete -c $cmd -s F -l frequencypenalty -d "Set frequency penalty (default: 0.0)"
-        complete -c $cmd -s m -l model -d "Choose model" -a "(__fabric_get_models)"
-        complete -c $cmd -s V -l vendor -d "Specify vendor for chosen model (e.g., -V \"LM Studio\" -m openai/gpt-oss-20b)" -a "(__fabric_get_vendors)"
-        complete -c $cmd -l modelContextLength -d "Model context length (only affects ollama)"
-        complete -c $cmd -s o -l output -d "Output to file" -r
-        complete -c $cmd -s n -l latest -d "Number of latest patterns to list (default: 0)"
-        complete -c $cmd -s y -l youtube -d "YouTube video or play list URL to grab transcript, comments from it"
-        complete -c $cmd -l visual-sensitivity -d "Tolerance for FFmpeg scene detection (0.0 - 1.0)"
-        complete -c $cmd -l visual-fps -d "Extract a specific number of frames per second instead of using scene detection"
-        complete -c $cmd -s g -l language -d "Specify the Language Code for the chat, e.g. -g=en -g=zh"
-        complete -c $cmd -s u -l scrape_url -d "Scrape website URL to markdown using Jina AI"
-        complete -c $cmd -s q -l scrape_question -d "Search question using Jina AI"
-        complete -c $cmd -s e -l seed -d "Seed to be used for LMM generation"
-        complete -c $cmd -l thinking -d "Set reasoning/thinking level" -a "off low medium high"
-        complete -c $cmd -s w -l wipecontext -d "Wipe context" -a "(__fabric_get_contexts)"
-        complete -c $cmd -s W -l wipesession -d "Wipe session" -a "(__fabric_get_sessions)"
-        complete -c $cmd -l printcontext -d "Print context" -a "(__fabric_get_contexts)"
-        complete -c $cmd -l printsession -d "Print session" -a "(__fabric_get_sessions)"
-        complete -c $cmd -l address -d "The address to bind the REST API (default: :8080)"
-        complete -c $cmd -l api-key -d "API key used to secure server routes"
-        complete -c $cmd -l config -d "Path to YAML config file" -r -a "*.yaml *.yml"
-        complete -c $cmd -l search-location -d "Set location for web search results (e.g., 'America/Los_Angeles')"
-        complete -c $cmd -l image-file -d "Save generated image to specified file path (e.g., 'output.png')" -r -a "*.png *.webp *.jpeg *.jpg"
-        complete -c $cmd -l image-size -d "Image dimensions: 1024x1024, 1536x1024, 1024x1536, auto (default: auto)" -a "1024x1024 1536x1024 1024x1536 auto"
-        complete -c $cmd -l image-quality -d "Image quality: low, medium, high, auto (default: auto)" -a "low medium high auto"
-        complete -c $cmd -l image-compression -d "Compression level 0-100 for JPEG/WebP formats (default: not set)" -r
-        complete -c $cmd -l image-background -d "Background type: opaque, transparent (default: opaque, only for PNG/WebP)" -a "opaque transparent"
-        complete -c $cmd -l addextension -d "Register a new extension from config file path" -r -a "*.yaml *.yml"
-        complete -c $cmd -l rmextension -d "Remove a registered extension by name" -a "(__fabric_get_extensions)"
-        complete -c $cmd -l strategy -d "Choose a strategy from the available strategies" -a "(__fabric_get_strategies)"
-        complete -c $cmd -l think-start-tag -d "Start tag for thinking sections (default: <think>)"
-        complete -c $cmd -l think-end-tag -d "End tag for thinking sections (default: </think>)"
-        complete -c $cmd -l voice -d "TTS voice name for supported models (e.g., Kore, Charon, Puck)" -a "(__fabric_get_gemini_voices)"
-        complete -c $cmd -l transcribe-file -d "Audio or video file to transcribe" -r -a "*.mp3 *.mp4 *.mpeg *.mpga *.m4a *.wav *.webm"
-        complete -c $cmd -l transcribe-model -d "Model to use for transcription (separate from chat model)" -a "(__fabric_get_transcription_models)"
-        complete -c $cmd -l debug -d "Set debug level (0=off, 1=basic, 2=detailed, 3=trace, 4=wire)" -a "0 1 2 3 4"
-        complete -c $cmd -l notification-command -d "Custom command to run for notifications (overrides built-in notifications)"
+        # Options that take a value from a dynamic list
+        complete -c $cmd -s p -l pattern -x -d "Choose a pattern from the available patterns" -a "(__fabric_get_patterns)"
+        complete -c $cmd -l readpattern -x -d "Print the contents of the named pattern to the terminal" -a "(__fabric_get_patterns)"
+        complete -c $cmd -s C -l context -x -d "Choose a context from the available contexts" -a "(__fabric_get_contexts)"
+        complete -c $cmd -l session -x -d "Choose a session from the available sessions" -a "(__fabric_get_sessions)"
+        complete -c $cmd -s m -l model -x -d "Choose model" -a "(__fabric_get_models)"
+        complete -c $cmd -s V -l vendor -x -d "Specify vendor for the selected model (e.g., -V \"LM Studio\" -m openai/gpt-oss-20b)" -a "(__fabric_get_vendors)"
+        complete -c $cmd -s w -l wipecontext -x -d "Wipe context" -a "(__fabric_get_contexts)"
+        complete -c $cmd -s W -l wipesession -x -d "Wipe session" -a "(__fabric_get_sessions)"
+        complete -c $cmd -l printcontext -x -d "Print context" -a "(__fabric_get_contexts)"
+        complete -c $cmd -l printsession -x -d "Print session" -a "(__fabric_get_sessions)"
+        complete -c $cmd -l rmextension -x -d "Remove a registered extension by name" -a "(__fabric_get_extensions)"
+        complete -c $cmd -l strategy -x -d "Choose a strategy from the available strategies" -a "(__fabric_get_strategies)"
+        complete -c $cmd -l voice -x -d "TTS voice name for supported models (e.g., Kore, Charon, Puck)" -a "(__fabric_get_gemini_voices)"
+        complete -c $cmd -l transcribe-model -x -d "Model to use for transcription (separate from chat model)" -a "(__fabric_get_transcription_models)"
+
+        # Options that take a value from a fixed list
+        complete -c $cmd -l thinking -x -d "Set reasoning/thinking level" -a "off low medium high"
+        complete -c $cmd -l image-size -x -d "Image dimensions: 1024x1024, 1536x1024, 1024x1536, auto (default: auto)" -a "1024x1024 1536x1024 1024x1536 auto"
+        complete -c $cmd -l image-quality -x -d "Image quality: low, medium, high, auto (default: auto)" -a "low medium high auto"
+        complete -c $cmd -l image-background -x -d "Background type: opaque, transparent (default: opaque, only for PNG/WebP)" -a "opaque transparent"
+        complete -c $cmd -l debug -x -d "Set debug level (0=off, 1=basic, 2=detailed, 3=trace, 4=wire)" -a "0 1 2 3 4"
+
+        # Options that take a file path
+        complete -c $cmd -s a -l attachment -r -d "Attachment path or URL (e.g. for OpenAI image recognition messages)"
+        complete -c $cmd -s o -l output -r -d "Output to file"
+        complete -c $cmd -l config -r -d "Path to YAML config file" -a "(__fish_complete_suffix .yaml .yml)"
+        complete -c $cmd -l addextension -r -d "Register a new extension from config file path" -a "(__fish_complete_suffix .yaml .yml)"
+        complete -c $cmd -l image-file -r -d "Save generated image to specified file path (e.g., 'output.png')" -a "(__fish_complete_suffix .png .webp .jpeg .jpg)"
+        complete -c $cmd -l transcribe-file -r -d "Audio or video file to transcribe" -a "(__fish_complete_suffix .mp3 .mp4 .mpeg .mpga .m4a .wav .webm)"
+
+        # Options that take a value the user types
+        complete -c $cmd -s v -l variable -x -d "Values for pattern variables, e.g. -v=#role:expert -v=#points:30"
+        complete -c $cmd -s t -l temperature -x -d "Set temperature (default: 0.7)"
+        complete -c $cmd -s T -l topp -x -d "Set top P (default: 0.9)"
+        complete -c $cmd -s P -l presencepenalty -x -d "Set presence penalty (default: 0.0)"
+        complete -c $cmd -s F -l frequencypenalty -x -d "Set frequency penalty (default: 0.0)"
+        complete -c $cmd -l modelContextLength -x -d "Model context length (only affects ollama)"
+        complete -c $cmd -s n -l latest -x -d "Number of latest patterns to list (default: 0)"
+        complete -c $cmd -s y -l youtube -x -d "YouTube video or play list URL to grab transcript, comments from it"
+        complete -c $cmd -l visual-sensitivity -x -d "Tolerance for FFmpeg scene detection (0.0 - 1.0) (default: 0.4)"
+        complete -c $cmd -l visual-fps -x -d "Extract a specific number of frames per second instead of using scene detection"
+        complete -c $cmd -l yt-dlp-args -x -d "Additional arguments to pass to yt-dlp (e.g. '--cookies-from-browser brave')"
+        complete -c $cmd -l spotify -x -d "Spotify podcast or episode URL to grab metadata from and send to chat"
+        complete -c $cmd -s g -l language -x -d "Specify the Language Code for the chat, e.g. -g=en -g=zh"
+        complete -c $cmd -s u -l scrape_url -x -d "Scrape website URL to markdown using Jina AI"
+        complete -c $cmd -s q -l scrape_question -x -d "Search question using Jina AI"
+        complete -c $cmd -s e -l seed -x -d "Seed to be used for LMM generation"
+        complete -c $cmd -l address -x -d "The address to bind the REST API (default: :8080)"
+        complete -c $cmd -l api-key -x -d "API key used to secure server routes"
+        complete -c $cmd -l search-location -x -d "Set location for web search results (e.g., 'America/Los_Angeles')"
+        complete -c $cmd -l image-compression -x -d "Compression level 0-100 for JPEG/WebP formats (default: not set)"
+        complete -c $cmd -l think-start-tag -x -d "Start tag for thinking sections (default: <think>)"
+        complete -c $cmd -l think-end-tag -x -d "End tag for thinking sections (default: </think>)"
+        complete -c $cmd -l notification-command -x -d "Custom command to run for notifications (overrides built-in notifications)"
 
         # Boolean flags (no arguments)
         complete -c $cmd -s S -l setup -d "Run setup for all reconfigurable parts of fabric"
@@ -123,12 +135,11 @@ function __fabric_register_completions
         complete -c $cmd -l visual -d "Extract visual data from video using OCR and FFmpeg"
         complete -c $cmd -l comments -d "Grab comments from YouTube video and send to chat"
         complete -c $cmd -l metadata -d "Output video metadata"
-        complete -c $cmd -l yt-dlp-args -d "Additional arguments to pass to yt-dlp (e.g. '--cookies-from-browser brave')"
         complete -c $cmd -l readability -d "Convert HTML input into a clean, readable view"
         complete -c $cmd -l input-has-vars -d "Apply variables to user input"
         complete -c $cmd -l no-variable-replacement -d "Disable pattern variable replacement"
         complete -c $cmd -l dry-run -d "Show what would be sent to the model without actually sending it"
-        complete -c $cmd -l search -d "Enable web search tool for supported models (Anthropic, OpenAI, Gemini)"
+        complete -c $cmd -l search -d "Enable web search tool for supported models (Anthropic, OpenAI, Gemini, Grok)"
         complete -c $cmd -l serve -d "Serve the Fabric Rest API"
         complete -c $cmd -l serveOllama -d "Serve the Fabric Rest API with ollama endpoints"
         complete -c $cmd -l version -d "Print current version"
@@ -136,13 +147,14 @@ function __fabric_register_completions
         complete -c $cmd -l liststrategies -d "List all strategies"
         complete -c $cmd -l listvendors -d "List all vendors"
         complete -c $cmd -l list-gemini-voices -d "List all available Gemini TTS voices"
+        complete -c $cmd -l list-transcription-models -d "List all available transcription models"
         complete -c $cmd -l shell-complete-list -d "Output raw list without headers/formatting (for shell completion)"
         complete -c $cmd -l suppress-think -d "Suppress text enclosed in thinking tags"
         complete -c $cmd -l disable-responses-api -d "Disable OpenAI Responses API (default: false)"
         complete -c $cmd -l split-media-file -d "Split audio/video files larger than 25MB using ffmpeg"
         complete -c $cmd -l notification -d "Send desktop notification when command completes"
+        complete -c $cmd -l show-metadata -d "Print metadata (input/output tokens) to stderr"
         complete -c $cmd -s h -l help -d "Show this help message"
-        complete -c $cmd -l spotify -d 'Spotify podcast or episode URL to grab metadata'
 end
 
 __fabric_register_completions fabric

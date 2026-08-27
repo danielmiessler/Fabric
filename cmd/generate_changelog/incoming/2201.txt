@@ -1,0 +1,6 @@
+### PR [#2201](https://github.com/danielmiessler/Fabric/pull/2201) by [ghrom](https://github.com/ghrom): feat: refresh Ultimate Law patterns to current doctrine, add judge_ultimate_law
+
+- Add `judge_ultimate_law` pattern: derives ethical verdicts by applying the Ultimate Law framework's executable rulebook stratum by stratum — deny-by-default consent, derivation chains, integrity constraints, and a falsifiability line naming the fact that would flip each verdict.
+- Refresh `ultimate_law_safety` to the framework's current doctrine: the Law quoted verbatim, consent channels, and new Forfeiture and Theft-by-withholding definitions (proportionality measured in kinds of harm; inability is never theft).
+- Refresh `audit_consent` with the consent-channel threshold test (words, conduct carrying intention, agreement, or prior permission — otherwise there is no consent to audit) and doctrine-grounded revocability.
+- Register the new pattern in pattern descriptions and extracts JSON files, categorize it under ANALYSIS and CR THINKING in `suggest_pattern`, and update `pattern_explanations.md` with renumbered entries.

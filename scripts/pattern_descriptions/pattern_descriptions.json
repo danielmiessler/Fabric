@@ -1191,6 +1191,14 @@
       ]
     },
     {
+      "patternName": "judge_ultimate_law",
+      "description": "Derive Ultimate Law verdicts step by step through an executable rulebook of If/then rules and integrity constraints, with derivation chains and the facts that would flip each verdict.",
+      "tags": [
+        "ANALYSIS",
+        "CR THINKING"
+      ]
+    },
+    {
       "patternName": "label_and_rate",
       "description": "Categorize/evaluate content by assigning labels and ratings.",
       "tags": [

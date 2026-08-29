@@ -320,6 +320,24 @@ var ProviderMap = map[string]ProviderConfig{
 		BaseURL:             "https://api.mammouth.ai/v1",
 		ImplementsResponses: false,
 	},
+
+	// Chinese AI providers (OpenAI-compatible Chat Completions API)
+
+	"Aliyun DashScope": {
+		Name:                "Aliyun DashScope",
+		BaseURL:             "https://dashscope.aliyuncs.com/compatible-mode/v1",
+		ImplementsResponses: false,
+	},
+	"Zhipu AI": {
+		Name:                "Zhipu AI",
+		BaseURL:             "https://open.bigmodel.cn/api/paas/v4",
+		ImplementsResponses: false,
+	},
+	"ByteDance Ark": {
+		Name:                "ByteDance Ark",
+		BaseURL:             "https://ark.cn-beijing.volces.com/api/v3",
+		ImplementsResponses: false,
+	},
 }
 
 // GetProviderByName returns the provider configuration for a given name with O(1) lookup

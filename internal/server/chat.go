@@ -82,10 +82,9 @@ func (h *ChatHandler) HandleChat(c *gin.Context) {
 	log.Printf("Received chat request - Language: '%s', Prompts: %d", request.Language, len(request.Prompts))
 
 	// Set headers for SSE
-	c.Writer.Header().Set("Content-Type", "text/readystream")
+	c.Writer.Header().Set("Content-Type", "text/event-stream")
 	c.Writer.Header().Set("Cache-Control", "no-cache")
 	c.Writer.Header().Set("Connection", "keep-alive")
-	c.Writer.Header().Set("Access-Control-Allow-Origin", "http://localhost:5173")
 	c.Writer.Header().Set("X-Accel-Buffering", "no")
 
 	clientGone := c.Writer.CloseNotify()

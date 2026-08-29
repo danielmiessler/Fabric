@@ -53,8 +53,7 @@ func (e *ExtensionExecutor) Execute(name, operation, value string) (string, erro
 	}
 
 	// Create command with the Executable and formatted arguments
-	cmd := exec.Command("sh", "-c", cmdStr)
-	//cmd := exec.Command(cmdParts[0], cmdParts[1:]...)
+	cmd := exec.Command(cmdParts[0], cmdParts[1:]...)
 
 	// Set up environment if specified
 	if len(ext.Env) > 0 {

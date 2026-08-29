@@ -359,8 +359,6 @@ func (an *Client) toMessages(msgs []*chat.ChatCompletionMessage) (ret []anthropi
 	var anthropicMessages []anthropic.MessageParam
 	var systemContent string
 
-	// Note: Claude Code spoofing is now handled in buildMessageParams
-
 	isFirstUserMessage := true
 	lastRoleWasUser := false
 

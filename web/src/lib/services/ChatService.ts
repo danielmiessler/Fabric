@@ -122,7 +122,11 @@ export class ChatService {
 				// and .trim() strips leading spaces that serve as word separators.
 				// Cleaning should be done on the final accumulated content at display time.
 
-				// Simplified format determination - always markdown unless mermaid
+				// Simplified format determination - always markdown unless mermaid.
+				// The server leaves the content field out of a message that carries
+				// no text, such as the one that ends the stream, so read an absent
+				// value as empty text.
+				const content = response.content ?? "";
 				const isMermaid = [
 					"graph TD",
 					"gantt",
@@ -130,7 +134,7 @@ export class ChatService {
 					"sequenceDiagram",
 					"classDiagram",
 					"stateDiagram",
-				].some((starter) => response.content.trim().startsWith(starter));
+				].some((starter) => content.trim().startsWith(starter));
 
 				response.format = isMermaid ? "mermaid" : "markdown";
 			}
@@ -141,6 +145,9 @@ export class ChatService {
 
 			return response;
 		};
+		// Persistent decoder: a multi-byte UTF-8 rune split across network chunks is
+		// otherwise decoded as two halves and corrupted into U+FFFD before it is buffered.
+		const decoder = new TextDecoder();
 		return new ReadableStream({
 			async start(controller) {
 				try {
@@ -148,7 +155,7 @@ export class ChatService {
 						const { done, value } = await reader.read();
 						if (done) break;
 
-						buffer += new TextDecoder().decode(value);
+						buffer += decoder.decode(value, { stream: true });
 						const segments = buffer.split("\n\n");
 						// Last segment may be incomplete; keep it as buffer
 						buffer = segments.pop() || "";

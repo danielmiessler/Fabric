@@ -10,6 +10,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"sync"
 
 	"github.com/danielmiessler/fabric/internal/i18n"
 	debuglog "github.com/danielmiessler/fabric/internal/log"
@@ -73,6 +74,24 @@ func NewPluginRegistry(db *fsdb.Db) (ret *PluginRegistry, err error) {
 	vendors := []ai.Vendor{}
 
 	// Add non-OpenAI compatible clients
+	codexClient := codex.NewClient()
+	codexClient.WithStoreLock = func(fn func() error) error {
+		return db.WithEnvLock(func() error {
+			env, err := db.ReadEnvFile()
+			if err != nil {
+				return err
+			}
+			codexClient.LoadEnvSettings(env)
+			return fn()
+		})
+	}
+	codexClient.TokenPersist = func() error {
+		return db.ApplyEnvUpdates(map[string]string{
+			codexClient.AccessToken.EnvVariable:  strings.TrimSpace(codexClient.AccessToken.Value),
+			codexClient.RefreshToken.EnvVariable: strings.TrimSpace(codexClient.RefreshToken.Value),
+			codexClient.AccountID.EnvVariable:    strings.TrimSpace(codexClient.AccountID.Value),
+		})
+	}
 	vendors = append(vendors,
 		openai.NewClient(),
 		digitalocean.NewClient(),
@@ -86,7 +105,7 @@ func NewPluginRegistry(db *fsdb.Db) (ret *PluginRegistry, err error) {
 		lmstudio.NewClient(),
 		exolab.NewClient(),
 		perplexity.NewClient(),
-		codex.NewClient(),
+		codexClient,
 		copilot.NewClient(), // Microsoft 365 Copilot
 		bedrock.NewClient(), // AWS Bedrock - credentials configured via setup or AWS credential chain
 	)
@@ -122,6 +141,8 @@ func (o *PluginRegistry) ListVendors(out io.Writer) error {
 
 type PluginRegistry struct {
 	Db *fsdb.Db
+
+	vendorMu sync.Mutex
 
 	VendorManager      *ai.VendorsManager
 	VendorsAll         *ai.VendorsManager
@@ -288,14 +309,10 @@ func (o *PluginRegistry) runVendorSetup() (err error) {
 		return pluginSetupErr
 	}
 
+	o.registerVendor(plugin)
+
 	if err = o.SaveEnvFile(); err != nil {
 		return
-	}
-
-	if o.VendorManager.FindByName(plugin.GetName()) == nil {
-		if vendor, ok := plugin.(ai.Vendor); ok {
-			o.VendorManager.AddVendors(vendor)
-		}
 	}
 
 	return
@@ -349,14 +366,9 @@ func (o *PluginRegistry) runInteractiveSetup() (err error) {
 			if pluginSetupErr := plugin.Setup(); pluginSetupErr != nil {
 				println(pluginSetupErr.Error())
 			} else {
+				o.registerVendor(plugin)
 				if err = o.SaveEnvFile(); err != nil {
 					break
-				}
-			}
-
-			if o.VendorManager.FindByName(plugin.GetName()) == nil {
-				if vendor, ok := plugin.(ai.Vendor); ok {
-					o.VendorManager.AddVendors(vendor)
 				}
 			}
 		} else {
@@ -425,17 +437,66 @@ func (o *PluginRegistry) SetupVendor(vendorName string) (err error) {
 	if err = o.VendorsAll.SetupVendor(vendorName, o.VendorManager.VendorsByName); err != nil {
 		return
 	}
+	if vendor := o.VendorsAll.FindByName(vendorName); vendor != nil {
+		o.registerVendor(vendor)
+	}
 	err = o.SaveEnvFile()
 	return
 }
 
+func (o *PluginRegistry) registerVendor(plugin plugins.Plugin) {
+	vendor, ok := plugin.(ai.Vendor)
+	if !ok {
+		return
+	}
+	o.vendorMu.Lock()
+	defer o.vendorMu.Unlock()
+	name := vendor.GetName()
+	for _, existing := range o.VendorManager.Vendors {
+		if strings.EqualFold(existing.GetName(), name) {
+			return
+		}
+	}
+	o.VendorManager.AddVendors(vendor)
+}
+
 func (o *PluginRegistry) ConfigureVendors() {
+	o.vendorMu.Lock()
+	defer o.vendorMu.Unlock()
 	o.VendorManager.Clear()
 	for _, vendor := range o.VendorsAll.Vendors {
 		if vendorErr := vendor.Configure(); vendorErr == nil && vendor.IsConfigured() {
 			o.VendorManager.AddVendors(vendor)
 		}
 	}
+}
+
+func (o *PluginRegistry) activateVendor(name string) (ai.Vendor, error) {
+	if strings.TrimSpace(name) == "" {
+		return nil, nil
+	}
+
+	o.vendorMu.Lock()
+	defer o.vendorMu.Unlock()
+
+	if v := o.VendorManager.FindByName(name); v != nil {
+		return v, nil
+	}
+	if o.VendorsAll == nil {
+		return nil, nil
+	}
+	v := o.VendorsAll.FindByName(name)
+	if v == nil {
+		return nil, nil
+	}
+	if err := v.Configure(); err != nil {
+		return nil, err
+	}
+	if !v.IsConfigured() {
+		return nil, nil
+	}
+	o.VendorManager.AddVendors(v)
+	return v, nil
 }
 
 func (o *PluginRegistry) GetModels() (ret *ai.VendorsModels, err error) {
@@ -503,13 +564,25 @@ func (o *PluginRegistry) GetChatter(model string, modelContextLength int, vendor
 			ret.model = defaultModel
 		}
 	} else if model == "" {
-		if vendorName != "" {
-			ret.vendor = vendorManager.FindByName(vendorName)
-		} else {
-			ret.vendor = vendorManager.FindByName(defaultVendor)
+		name := vendorName
+		if name == "" {
+			name = defaultVendor
+		}
+		if ret.vendor, err = o.activateVendor(name); err != nil {
+			return
 		}
 		ret.model = defaultModel
 	} else {
+		if vendorName != "" {
+			if ret.vendor, err = o.activateVendor(vendorName); err != nil {
+				return
+			}
+		} else if !vendorManager.HasVendors() {
+			if _, err = o.activateVendor(defaultVendor); err != nil {
+				return
+			}
+		}
+
 		var models *ai.VendorsModels
 		if models, err = vendorManager.GetModels(); err != nil {
 			return
@@ -565,6 +638,16 @@ func (o *PluginRegistry) GetChatter(model string, modelContextLength int, vendor
 		}
 
 		ret.model = model
+	}
+
+	if ret.vendor == nil {
+		name := vendorName
+		if name == "" {
+			name = defaultVendor
+		}
+		if ret.vendor, err = o.activateVendor(name); err != nil {
+			return
+		}
 	}
 
 	if ret.vendor == nil {

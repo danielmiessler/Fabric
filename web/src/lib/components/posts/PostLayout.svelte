@@ -17,6 +17,9 @@
 </article>
 
 <style lang="postcss">
+/* Tailwind 4 processes the styles of each component on their own. The reference
+ * below gives @apply the theme without a second copy of the CSS. */
+@reference '../../../app.css';
 
 :global(h1) {
   @apply h1; 

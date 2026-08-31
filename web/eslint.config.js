@@ -24,6 +24,14 @@ export default tseslint.config(
 			parserOptions: {
 				parser: tseslint.parser
 			}
+		},
+		rules: {
+			// svelte-eslint-parser gives a `$:` reactive statement a variable
+			// definition of type "ComputedVariable". The typescript-eslint rule
+			// does not know that type and stops ESLint with a TypeError. Use the
+			// core ESLint rule for Svelte components instead.
+			'@typescript-eslint/no-unused-vars': 'off',
+			'no-unused-vars': 'error'
 		}
 	},
 	{

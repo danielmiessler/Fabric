@@ -55,6 +55,7 @@ Use parameterized queries instead of string concatenation...
 - Store secrets in environment variables or secure configuration
 - Use the built-in setup process for key management
 - Regularly rotate API keys
+- `~/.config/fabric/.env` holds API keys and Codex OAuth tokens. Fabric writes it with mode `0600`. Treat the file as secret material. Comments and key order are not preserved when Codex tokens are updated in place.
 
 ### Input Validation
 

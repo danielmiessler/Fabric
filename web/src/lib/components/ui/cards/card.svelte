@@ -1,5 +1,4 @@
 <script>
-  import { Avatar } from '@skeletonlabs/skeleton';
 
   export let header = '';
   export let imageUrl = '';
@@ -11,7 +10,7 @@
   export let link = '';
 </script>
 
-<div class="w-full text-token grid grid-cols-1 md:grid-cols-1 justify-end gap-4">
+<div class="w-full grid grid-cols-1 md:grid-cols-1 justify-end gap-4">
   <a class="card card-hover overflow-hidden" href={link}>
     <header>
       <img src={imageUrl} class="bg-black/50 w-full" alt={imageAlt} />
@@ -27,7 +26,11 @@
     </div>
     <hr class="opacity-50" />
     <footer class="p-4 flex justify-start items-center space-x-4">
-      <Avatar src={authorAvatarUrl} width="w-8" />
+      <img
+        src={authorAvatarUrl}
+        alt="Picture of {authorName}"
+        class="aspect-square w-8 rounded-full object-cover"
+      />
       <div class="flex-auto flex justify-between items-center">
         <h6 class="font-bold" data-toc-ignore>By {authorName}</h6>
         <small>On {new Date().toLocaleDateString()}</small>

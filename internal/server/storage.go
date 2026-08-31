@@ -4,10 +4,18 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"strings"
 
 	"github.com/danielmiessler/fabric/internal/plugins/db"
 	"github.com/gin-gonic/gin"
 )
+
+func rejectTraversal(name string) error {
+	if strings.Contains(name, "..") || strings.ContainsAny(name, `/\`) {
+		return fmt.Errorf("invalid name: %q", name)
+	}
+	return nil
+}
 
 // StorageHandler defines the handler for storage-related operations
 type StorageHandler[T any] struct {
@@ -50,6 +58,10 @@ func (h *StorageHandler[T]) GetNames(c *gin.Context) {
 // Delete handles the DELETE /storage/:name route
 func (h *StorageHandler[T]) Delete(c *gin.Context) {
 	name := c.Param("name")
+	if err := rejectTraversal(name); err != nil {
+		c.JSON(http.StatusBadRequest, err.Error())
+		return
+	}
 	err := h.storage.Delete(name)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err.Error())
@@ -69,6 +81,14 @@ func (h *StorageHandler[T]) Exists(c *gin.Context) {
 func (h *StorageHandler[T]) Rename(c *gin.Context) {
 	oldName := c.Param("oldName")
 	newName := c.Param("newName")
+	if err := rejectTraversal(oldName); err != nil {
+		c.JSON(http.StatusBadRequest, err.Error())
+		return
+	}
+	if err := rejectTraversal(newName); err != nil {
+		c.JSON(http.StatusBadRequest, err.Error())
+		return
+	}
 	err := h.storage.Rename(oldName, newName)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err.Error())
@@ -80,6 +100,10 @@ func (h *StorageHandler[T]) Rename(c *gin.Context) {
 // Save handles the POST /storage/save/:name route
 func (h *StorageHandler[T]) Save(c *gin.Context) {
 	name := c.Param("name")
+	if err := rejectTraversal(name); err != nil {
+		c.JSON(http.StatusBadRequest, err.Error())
+		return
+	}
 
 	// Read the request body
 	body := c.Request.Body

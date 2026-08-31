@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"io"
 	"log"
+	"log/slog"
 	"math"
 	"net/http"
 	"net/url"
@@ -188,12 +189,18 @@ func parseOllamaNumCtx(options map[string]any) (int, error) {
 	return contextLength, nil
 }
 
-func ServeOllama(registry *core.PluginRegistry, address string, version string) (err error) {
+func ServeOllama(registry *core.PluginRegistry, address string, version string, apiKey string) (err error) {
 	r := gin.New()
 
 	// Middleware
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
+
+	if apiKey != "" {
+		r.Use(APIKeyMiddleware(apiKey))
+	} else {
+		slog.Warn("Starting Ollama API server without API key authentication.")
+	}
 
 	// Register routes
 	fabricDb := registry.Db
@@ -305,13 +312,20 @@ func (f APIConvert) ollamaChat(c *gin.Context) {
 		}
 	}
 
+	patternName := strings.Split(prompt.Model, ":")[0]
+	if strings.HasPrefix(patternName, "/") || strings.HasPrefix(patternName, "~") ||
+		strings.HasPrefix(patternName, `\`) || strings.HasPrefix(patternName, ".") {
+		c.JSON(http.StatusBadRequest, gin.H{"error": fmt.Sprintf("invalid pattern name: %q", patternName)})
+		return
+	}
+
 	if len(prompt.Messages) == 1 {
 		chat.Prompts = []PromptRequest{{
 			UserInput:   prompt.Messages[0].Content,
 			Vendor:      "",
 			Model:       "",
 			ContextName: "",
-			PatternName: strings.Split(prompt.Model, ":")[0],
+			PatternName: patternName,
 			Variables:   variables,
 		}}
 	} else if len(prompt.Messages) > 1 {
@@ -324,7 +338,7 @@ func (f APIConvert) ollamaChat(c *gin.Context) {
 			Vendor:      "",
 			Model:       "",
 			ContextName: "",
-			PatternName: strings.Split(prompt.Model, ":")[0],
+			PatternName: patternName,
 			Variables:   variables,
 		}}
 	}

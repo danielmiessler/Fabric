@@ -78,6 +78,14 @@ func (h *ChatHandler) HandleChat(c *gin.Context) {
 		return
 	}
 
+	for _, p := range request.Prompts {
+		if strings.HasPrefix(p.PatternName, "/") || strings.HasPrefix(p.PatternName, "~") ||
+			strings.HasPrefix(p.PatternName, `\`) || strings.HasPrefix(p.PatternName, ".") {
+			c.JSON(http.StatusBadRequest, gin.H{"error": fmt.Sprintf("invalid pattern name: %q", p.PatternName)})
+			return
+		}
+	}
+
 	// Add log to check received language field
 	log.Printf("Received chat request - Language: '%s', Prompts: %d", request.Language, len(request.Prompts))
 

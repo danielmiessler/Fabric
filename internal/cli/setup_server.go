@@ -22,7 +22,7 @@ func handleSetupAndServerCommands(currentFlags *Flags, registry *core.PluginRegi
 
 	if currentFlags.ServeOllama {
 		registry.ConfigureVendors()
-		err = restapi.ServeOllama(registry, currentFlags.ServeAddress, version)
+		err = restapi.ServeOllama(registry, currentFlags.ServeAddress, version, currentFlags.ServeAPIKey)
 		return true, err
 	}
 

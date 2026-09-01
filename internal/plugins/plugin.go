@@ -2,6 +2,7 @@ package plugins
 
 import (
 	"bytes"
+	"bufio"
 	"fmt"
 	"os"
 	"strings"
@@ -226,7 +227,7 @@ func (o *SetupQuestion) Ask(label string) (err error) {
 		fmt.Printf(i18n.T("plugin_question_optional"), prefix, o.Question)
 	}
 	var answer string
-	fmt.Scanln(&answer)
+	answer, _ = readLine()
 	answer = strings.TrimRight(answer, "\n")
 	isReset := strings.ToLower(answer) == AnswerReset
 	if answer == "" {
@@ -347,4 +348,23 @@ func BuildEnvVariable(name string) string {
 	name = strings.ReplaceAll(name, " ", "_")
 	name = strings.ReplaceAll(name, "-", "_")
 	return name
+}
+
+// readLine reads a single line from stdin, handling both \n and \r line endings.
+// This fixes interactive input on terminals (e.g. kitty, some macOS terminals)
+// that send \r instead of \n when the user presses Enter.
+func readLine() (string, error) {
+	reader := bufio.NewReader(os.Stdin)
+	var line []rune
+	for {
+		ch, _, err := reader.ReadRune()
+		if err != nil {
+			return string(line), err
+		}
+		if ch == '\n' || ch == '\r' {
+			break
+		}
+		line = append(line, ch)
+	}
+	return string(line), nil
 }

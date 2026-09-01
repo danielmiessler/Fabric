@@ -49,6 +49,7 @@ type Flags struct {
 	Model                           string               `short:"m" long:"model" yaml:"model" description:"Choose model"`
 	Vendor                          string               `short:"V" long:"vendor" yaml:"vendor" description:"Specify vendor for the selected model (e.g., -V \"LM Studio\" -m openai/gpt-oss-20b)"`
 	ModelContextLength              int                  `long:"modelContextLength" yaml:"modelContextLength" description:"Model context length (only affects ollama)"`
+	MaxTokens                       int                  `long:"maxTokens" yaml:"maxTokens" description:"Maximum tokens the model may generate, including reasoning/thinking tokens (0 = vendor default)"`
 	Output                          string               `short:"o" long:"output" description:"Output to file" default:""`
 	OutputSession                   bool                 `long:"output-session" description:"Output the entire session (also a temporary one) to the output file"`
 	LatestPatterns                  string               `short:"n" long:"latest" description:"Number of latest patterns to list" default:"0"`
@@ -461,6 +462,7 @@ func (o *Flags) BuildChatOptions() (ret *domain.ChatOptions, err error) {
 		Seed:                o.Seed,
 		Thinking:            o.Thinking,
 		ModelContextLength:  o.ModelContextLength,
+		MaxTokens:           o.MaxTokens,
 		Search:              o.Search,
 		SearchLocation:      o.SearchLocation,
 		ImageFile:           o.ImageFile,

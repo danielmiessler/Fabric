@@ -41,6 +41,53 @@ func modelDisallowsSamplingParams(model string) bool {
 	})
 }
 
+// These models reject the legacy `thinking.type=enabled` + `budget_tokens`
+// shape and require `thinking.type=adaptive` with `output_config.effort`.
+// Sending the legacy shape to one of them fails the request outright:
+//
+//	"thinking.type.enabled" is not supported for this model.
+//	Use "thinking.type.adaptive" and "output_config.effort" to control
+//	thinking behavior.
+var adaptiveThinkingPrefixes = []string{
+	"claude-opus-5",
+	"claude-sonnet-5",
+	"claude-fable-5",
+}
+
+func modelUsesAdaptiveThinking(model string) bool {
+	return slices.ContainsFunc(adaptiveThinkingPrefixes, func(prefix string) bool {
+		return strings.HasPrefix(model, prefix)
+	})
+}
+
+// effortForBudget buckets an explicit token budget onto the nearest effort
+// level, so a numeric --thinking value keeps working on adaptive-only models
+// (which have no budget_tokens concept). Thresholds are the same constants the
+// named levels use, so `--thinking=2048` and `--thinking=medium` agree.
+func effortForBudget(tokens int64) anthropic.OutputConfigEffort {
+	switch {
+	case tokens <= domain.TokenBudgetLow:
+		return anthropic.OutputConfigEffortLow
+	case tokens <= domain.TokenBudgetMedium:
+		return anthropic.OutputConfigEffortMedium
+	default:
+		return anthropic.OutputConfigEffortHigh
+	}
+}
+
+// effortForLevel maps a named thinking level onto an effort level.
+func effortForLevel(level domain.ThinkingLevel) (anthropic.OutputConfigEffort, bool) {
+	switch level {
+	case domain.ThinkingLow:
+		return anthropic.OutputConfigEffortLow, true
+	case domain.ThinkingMedium:
+		return anthropic.OutputConfigEffortMedium, true
+	case domain.ThinkingHigh:
+		return anthropic.OutputConfigEffortHigh, true
+	}
+	return "", false
+}
+
 func NewClient() (ret *Client) {
 	vendorName := "Anthropic"
 	ret = &Client{}
@@ -150,24 +197,45 @@ func (an *Client) ListModels(context.Context) (ret []string, err error) {
 	return an.models, nil
 }
 
-func parseThinking(level domain.ThinkingLevel) (anthropic.ThinkingConfigParamUnion, bool) {
+// parseThinking translates a thinking level into the request shape the given
+// model accepts. `effort` is non-empty only for adaptive-thinking models, in
+// which case the caller must also set params.OutputConfig.Effort -- adaptive
+// carries no budget, so effort is where the level actually lands.
+func parseThinking(level domain.ThinkingLevel, model string) (
+	thinking anthropic.ThinkingConfigParamUnion, effort anthropic.OutputConfigEffort, ok bool) {
+
 	lower := strings.ToLower(string(level))
+	adaptive := modelUsesAdaptiveThinking(model)
+
 	switch domain.ThinkingLevel(lower) {
 	case domain.ThinkingOff:
+		// `disabled` is accepted by both generations, so it needs no branch.
 		disabled := anthropic.NewThinkingConfigDisabledParam()
-		return anthropic.ThinkingConfigParamUnion{OfDisabled: &disabled}, true
+		return anthropic.ThinkingConfigParamUnion{OfDisabled: &disabled}, "", true
 	case domain.ThinkingLow, domain.ThinkingMedium, domain.ThinkingHigh:
-		if budget, ok := domain.ThinkingBudgets[domain.ThinkingLevel(lower)]; ok {
-			return anthropic.ThinkingConfigParamOfEnabled(budget), true
+		if adaptive {
+			if e, found := effortForLevel(domain.ThinkingLevel(lower)); found {
+				adaptiveParam := anthropic.ThinkingConfigAdaptiveParam{}
+				return anthropic.ThinkingConfigParamUnion{OfAdaptive: &adaptiveParam}, e, true
+			}
+			return anthropic.ThinkingConfigParamUnion{}, "", false
+		}
+		if budget, found := domain.ThinkingBudgets[domain.ThinkingLevel(lower)]; found {
+			return anthropic.ThinkingConfigParamOfEnabled(budget), "", true
 		}
 	default:
 		if tokens, err := strconv.ParseInt(lower, 10, 64); err == nil {
 			if tokens >= 1 && tokens <= 10000 {
-				return anthropic.ThinkingConfigParamOfEnabled(tokens), true
+				if adaptive {
+					adaptiveParam := anthropic.ThinkingConfigAdaptiveParam{}
+					return anthropic.ThinkingConfigParamUnion{OfAdaptive: &adaptiveParam},
+						effortForBudget(tokens), true
+				}
+				return anthropic.ThinkingConfigParamOfEnabled(tokens), "", true
 			}
 		}
 	}
-	return anthropic.ThinkingConfigParamUnion{}, false
+	return anthropic.ThinkingConfigParamUnion{}, "", false
 }
 
 func (an *Client) SendStream(
@@ -276,8 +344,11 @@ func (an *Client) buildMessageParams(msgs []anthropic.MessageParam, opts *domain
 		}
 	}
 
-	if t, ok := parseThinking(opts.Thinking); ok {
+	if t, effort, ok := parseThinking(opts.Thinking, opts.Model); ok {
 		params.Thinking = t
+		if effort != "" {
+			params.OutputConfig.Effort = effort
+		}
 	}
 
 	return

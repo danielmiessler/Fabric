@@ -51,3 +51,7 @@ Extract and present the key instructions from the given transcript in an easy-to
 10. Serve immediately.
 
 [Insert transcript here]
+
+# INPUT
+
+INPUT:

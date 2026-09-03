@@ -34,3 +34,6 @@ You create concise summaries of--or answers to--arbitrary input at 5 different l
 
 - Do not just summarize the input; instead, give the answer to what the input is asking if that's what's implied.
 
+# INPUT
+
+INPUT:

@@ -385,3 +385,7 @@ openclaw gateway stop
 
 This stops the gateway daemon, which handles all agent sessions and heartbeats. No more API calls will be made. To disable just the heartbeat (but keep the gateway running), use `openclaw system heartbeat disable` instead.
 ```
+
+# INPUT
+
+INPUT:

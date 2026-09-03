@@ -75,3 +75,7 @@ SELFLESSNESS    [--3----------]
 ENTERTAINMENT   [-------5------]
 
 - In a section called CONCLUSION, give a 25-word summary of the presentation and your scoring of it.
+
+# INPUT
+
+INPUT:

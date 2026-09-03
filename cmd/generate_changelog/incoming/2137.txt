@@ -1,0 +1,7 @@
+### PR [#2137](https://github.com/danielmiessler/Fabric/pull/2137) by [genevera](https://github.com/genevera): middleware: add NormalizeInputShape to handle system-only message arrays
+
+- Added NormalizeInputShape middleware to handle system-only message arrays, since backends like vLLM and some Bedrock endpoints reject requests containing only system-role messages.
+- Made NormalizeInputShape idempotent: when a user message is already present it is a no-op, otherwise it promotes the last system message to a user message to satisfy strict backends.
+- Prevented silent session-history mutation by returning a new slice with a cloned last message instead of mutating the caller's slice in place.
+- Added nil safety by skipping nil messages during the scan and when selecting the last system message to promote.
+- Added regression and comprehensive tests covering mutation safety and nil-message handling across all edge cases.

@@ -244,8 +244,8 @@ func TestChatter_BuildSession_SeparatesSystemSections(t *testing.T) {
 	}
 
 	messages := session.GetVendorMessages()
-	if len(messages) != 1 {
-		t.Fatalf("expected 1 vendor message, got %d", len(messages))
+	if len(messages) != 2 {
+		t.Fatalf("expected 2 vendor messages (system + user), got %d", len(messages))
 	}
 
 	systemMessage := messages[0]
@@ -256,6 +256,14 @@ func TestChatter_BuildSession_SeparatesSystemSections(t *testing.T) {
 	expectedSystemMessage := "STRATEGY\nCONTEXT\nPATTERN\nuser input"
 	if systemMessage.Content != expectedSystemMessage {
 		t.Fatalf("expected system message %q, got %q", expectedSystemMessage, systemMessage.Content)
+	}
+
+	userMessage := messages[1]
+	if userMessage.Role != chat.ChatMessageRoleUser {
+		t.Fatalf("expected second message to be user, got %s", userMessage.Role)
+	}
+	if userMessage.Content != "user input" {
+		t.Fatalf("expected user message content %q, got %q", "user input", userMessage.Content)
 	}
 
 	if request.Message.Content != "user input" {
@@ -517,5 +525,53 @@ func TestChatter_Send_StreamingMetadataPropagation(t *testing.T) {
 
 	if !usageReceived {
 		t.Error("Expected to receive a usage metadata update, but didn't")
+	}
+}
+
+func TestBuildSession_PatternAlwaysSendsUserMessage(t *testing.T) {
+	// Regression test: OpenAI-compatible providers that require at least one
+	// user turn must receive one, even when a pattern embeds the user input
+	// into the system message. See https://github.com/danielmiessler/fabric/issues/2208
+	tempDir := t.TempDir()
+	db := fsdb.NewDb(tempDir)
+
+	if err := os.MkdirAll(filepath.Join(db.Patterns.Dir, "summarize"), 0o755); err != nil {
+		t.Fatalf("failed to create pattern directory: %v", err)
+	}
+	patternPath := filepath.Join(db.Patterns.Dir, "summarize", "system.md")
+	if err := os.WriteFile(patternPath, []byte("# IDENTITY and PURPOSE\nYou summarize text.\n# INPUT:\n\n{{input}}"), 0o644); err != nil {
+		t.Fatalf("failed to write pattern: %v", err)
+	}
+
+	chatter := &Chatter{db: db}
+	request := &domain.ChatRequest{
+		PatternName: "summarize",
+		Message: &chat.ChatCompletionMessage{
+			Role:    chat.ChatMessageRoleUser,
+			Content: "The quick brown fox jumps over the lazy dog.",
+		},
+	}
+
+	session, err := chatter.BuildSession(request, false)
+	if err != nil {
+		t.Fatalf("BuildSession returned error: %v", err)
+	}
+
+	messages := session.GetVendorMessages()
+	if len(messages) < 2 {
+		t.Fatalf("expected at least 2 messages (system + user), got %d", len(messages))
+	}
+
+	// First message must be system (contains the pattern)
+	if messages[0].Role != chat.ChatMessageRoleSystem {
+		t.Errorf("expected first message role to be system, got %s", messages[0].Role)
+	}
+
+	// Second message must be user (required by OpenAI-compatible providers)
+	if messages[1].Role != chat.ChatMessageRoleUser {
+		t.Errorf("expected second message role to be user, got %s", messages[1].Role)
+	}
+	if messages[1].Content == "" {
+		t.Error("expected non-empty user message content")
 	}
 }

@@ -1,0 +1,3 @@
+### PR [#2165](https://github.com/danielmiessler/Fabric/pull/2165) by [MVS-source](https://github.com/MVS-source): feat: add Eden AI as an OpenAI-compatible provider
+
+- Feat: add Eden AI as an OpenAI-compatible provider

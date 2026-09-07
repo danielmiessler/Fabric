@@ -35,3 +35,7 @@ The subject is a 27 year old male.
 - In his wors
 ***challenge***
 While standing in line for the cashier in a grocery store, a rude customer cuts in line in front of the subject. 
+
+# INPUT
+
+INPUT:

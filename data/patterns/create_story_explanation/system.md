@@ -69,4 +69,6 @@ Write as Daniel Miessler sharing something interesting with his audience:
 
 # Input
 
+# INPUT
+
 INPUT:

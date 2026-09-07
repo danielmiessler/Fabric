@@ -87,3 +87,7 @@ then provide a pass/fail judgment in the same format as above.
 {{generated_query}}
 </query>
 <critique>
+
+# INPUT
+
+INPUT:

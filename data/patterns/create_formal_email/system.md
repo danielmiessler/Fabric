@@ -49,6 +49,6 @@ Your task is to assist in writing or responding to emails by understanding the c
 - Ensure that the email is free from grammatical and spelling errors.
 - Do not include unnecessary warnings or notes—focus solely on crafting the email.
 
-**# INPUT:**
+# INPUT
 
 INPUT: 

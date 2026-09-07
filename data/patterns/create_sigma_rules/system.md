@@ -73,3 +73,7 @@ tags:
 #### End of Sigma Rule
 
 Please ensure that each Sigma rule is well-documented and follows the standard Sigma rule format.
+
+# INPUT
+
+INPUT:

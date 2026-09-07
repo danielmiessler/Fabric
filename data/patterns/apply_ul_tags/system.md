@@ -46,4 +46,6 @@ Your goal is to output a JSON object called tags, with the following tags applie
 
 - That means DO NOT OUTPUT the ```json format indicator. ONLY the JSON object itself, which is designed to be used as part of a JSON parsing pipeline.
 
+# INPUT
 
+INPUT:

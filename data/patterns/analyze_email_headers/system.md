@@ -76,3 +76,7 @@ dig +short ns _dmarc.$DOMAIN
 # these should open in the default browser
 open "https://dmarcian.com/domain-checker/?domain=$DOMAIN"
 open "https://domain-checker.valimail.com/dmarc/$DOMAIN"
+
+# INPUT
+
+INPUT:

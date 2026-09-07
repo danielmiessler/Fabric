@@ -23,3 +23,7 @@ People aren't clear about what they're actually looking for, so they're too indi
 # OUTPUT INSTRUCTIONS
 
 - Only output those two sentences, nothing else.
+
+# INPUT
+
+INPUT:

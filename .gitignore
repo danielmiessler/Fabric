@@ -1,3 +1,4 @@
+!scripts/
 # Nix
 .direnv
 result
@@ -330,3 +331,5 @@ MEMORY/
 
 # Maestro artifacts
 .maestro
+/fabric
+bin/

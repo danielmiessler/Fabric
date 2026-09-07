@@ -56,7 +56,60 @@ type ChatOptions struct {
 	UpdateChan          chan StreamUpdate `json:"-"`
 }
 
-// NormalizeMessages remove empty messages and ensure messages order user-assist-user
+// NormalizeInputShape ensures every message array has at least one user-role
+// message. Some LLM backends (vLLM, certain Bedrock endpoints) reject
+// requests that contain only system-role messages.
+//
+// When no user-role message exists, the last non-nil message (regardless of role)
+// is promoted to user. This keeps the instructional content semantically similar
+// while satisfying the API contract.
+//
+// The function is idempotent: arrays that already contain a user message are
+// returned unchanged (returning the original slice). When no user message
+// exists, a new slice is returned with the last non-nil message cloned and
+// its role changed to user.
+func NormalizeInputShape(msgs []*chat.ChatCompletionMessage) []*chat.ChatCompletionMessage {
+	if len(msgs) == 0 {
+		return msgs
+	}
+
+	// Scan for existing user message, skipping nil entries.
+	for _, msg := range msgs {
+		if msg != nil && msg.Role == chat.ChatMessageRoleUser {
+			return msgs
+		}
+	}
+
+	// Find the last non-nil message to promote.
+	lastIdx := -1
+	for i := len(msgs) - 1; i >= 0; i-- {
+		if msgs[i] != nil {
+			lastIdx = i
+			break
+		}
+	}
+	// If all entries are nil, return original slice (nothing to promote).
+	if lastIdx < 0 {
+		return msgs
+	}
+
+	// Build a new slice so the caller's original is not mutated (ret).
+	// This prevents side effects when the caller reuses the slice
+	// as session history or passes it to multiple consumers.
+	ret := make([]*chat.ChatCompletionMessage, len(msgs))
+	copy(ret, msgs)
+
+	// Clone the last non-nil message (orig, shallow copy is sufficient since we only change Role).
+	orig := ret[lastIdx]
+	newMsg := *orig
+	newMsg.Role = chat.ChatMessageRoleUser
+	ret[lastIdx] = &newMsg
+	return ret
+}
+
+// NormalizeMessages iterates over messages to enforce the odd-position rule for user
+// messages. Empty messages are dropped. When an even position would not contain a user
+// message, a synthetic user message with the provided default content is inserted.
 func NormalizeMessages(msgs []*chat.ChatCompletionMessage, defaultUserMessage string) (ret []*chat.ChatCompletionMessage) {
 	// Iterate over messages to enforce the odd position rule for user messages
 	fullMessageIndex := 0

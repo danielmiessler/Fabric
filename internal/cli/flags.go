@@ -555,6 +555,14 @@ func (o *Flags) IsChatRequest() (ret bool) {
 	return
 }
 
+// patternFromBinaryName returns true when the pattern matches the binary name fallback
+// (i.e., no -p flag was given and the binary was not named "fabric", "main", or "cmd").
+func patternFromBinaryName(patternName string) bool {
+	execName := filepath.Base(os.Args[0])
+	execName = strings.TrimSuffix(execName, filepath.Ext(execName))
+	return execName != "fabric" && execName != "main" && execName != "cmd" && execName != "" && patternName == execName
+}
+
 func (o *Flags) WriteOutput(message string) (err error) {
 	fmt.Println(message)
 	if o.Output != "" {

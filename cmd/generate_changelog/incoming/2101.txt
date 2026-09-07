@@ -1,0 +1,5 @@
+### PR [#2101](https://github.com/danielmiessler/Fabric/pull/2101) by [shaun0927](https://github.com/shaun0927): fix(youtube): preserve ffmpeg frame timing in visual OCR cues
+
+- Fixes YouTube visual OCR cues so timestamps come from real ffmpeg frame timing instead of the OCR result index.
+- Parses `pts_time` from ffmpeg `showinfo` output and formats cue ranges from actual frame times, with a safe fallback.
+- Adds regression coverage for the timestamp parser, cue-range helper, and the end-to-end visual extraction path.

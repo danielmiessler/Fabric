@@ -1,0 +1,4 @@
+### PR [#2059](https://github.com/danielmiessler/Fabric/pull/2059) by [adamwrose](https://github.com/adamwrose): Claude code Integration Feature and Integration Tests
+
+- New claudecode plugin
+- Feat: add integration tests for ClaudeCode and enhance CLI functionality

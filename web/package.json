@@ -73,7 +73,7 @@
     "date-fns": "^4.4.0",
     "highlight.js": "^11.11.1",
     "marked": "^18.0.7",
-    "nanoid": "5.0.9",
+    "nanoid": "5.1.16",
     "rehype": "^13.0.2",
     "rehype-external-links": "^3.0.0",
     "rehype-unwrap-images": "^1.0.0",

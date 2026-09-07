@@ -168,7 +168,10 @@ func Init() (ret *Flags, err error) {
 	if ret.Pattern == "" {
 		execName := filepath.Base(os.Args[0])
 		execName = strings.TrimSuffix(execName, filepath.Ext(execName))
-		if execName != "fabric" && execName != "main" && execName != "cmd" && execName != "" {
+		// Only treat a renamed binary as an implicit pattern. Packaging names
+		// like fabric-ai (Homebrew/AUR) are not patterns — using them produces
+		// "pattern 'fabric-ai' not found" on flag-only invocations (#2112).
+		if execName != "fabric" && execName != "fabric-ai" && execName != "main" && execName != "cmd" && execName != "" {
 			ret.Pattern = execName
 			usedFlags["pattern"] = true
 		}

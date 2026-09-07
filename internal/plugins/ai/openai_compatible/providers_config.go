@@ -268,6 +268,11 @@ var ProviderMap = map[string]ProviderConfig{
 		BaseURL:             "http://localhost:4000",
 		ImplementsResponses: false,
 	},
+	"llmman": {
+		Name:                "llmman",
+		BaseURL:             "http://localhost:17434/v1",
+		ImplementsResponses: false,
+	},
 	"MiniMax": {
 		Name:                "MiniMax",
 		BaseURL:             "https://api.minimax.io/v1",

@@ -16,6 +16,11 @@ func TestCreateClient(t *testing.T) {
 			exists:   true,
 		},
 		{
+			name:     "Existing provider - Eden AI",
+			provider: "Eden AI",
+			exists:   true,
+		},
+		{
 			name:     "Existing provider - Groq",
 			provider: "Groq",
 			exists:   true,

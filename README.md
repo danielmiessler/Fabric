@@ -365,6 +365,7 @@ Fabric supports a wide range of AI providers:
 - Cerebras
 - DeepSeek
 - DigitalOcean
+- Eden AI
 - GitHub Models
 - GrokAI
 - Groq

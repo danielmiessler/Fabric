@@ -222,8 +222,8 @@ var ProviderMap = map[string]ProviderConfig{
 		BaseURL:             "https://api.aimlapi.com/v1",
 		ImplementsResponses: false,
 	},
-	"API Route": {
-		Name:                "API Route",
+	"API-Route": {
+		Name:                "API-Route",
 		BaseURL:             "https://global.api-route.com/v1",
 		ImplementsResponses: false,
 	},

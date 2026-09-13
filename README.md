@@ -362,7 +362,7 @@ Fabric supports a wide range of AI providers:
 
 - Abacus
 - AIML
-- API Route
+- API-Route
 - Cerebras
 - DeepSeek
 - DigitalOcean

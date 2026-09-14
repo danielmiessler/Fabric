@@ -51,6 +51,8 @@ type Flags struct {
 	ModelContextLength              int                  `long:"modelContextLength" yaml:"modelContextLength" description:"Model context length (only affects ollama)"`
 	Output                          string               `short:"o" long:"output" description:"Output to file" default:""`
 	OutputSession                   bool                 `long:"output-session" description:"Output the entire session (also a temporary one) to the output file"`
+	Extract                         bool                 `long:"extract" description:"Output only the first fenced code block from the response (full response if none is found)"`
+	ExtractLast                     bool                 `long:"extract-last" description:"Output only the last fenced code block from the response (full response if none is found)"`
 	LatestPatterns                  string               `short:"n" long:"latest" description:"Number of latest patterns to list" default:"0"`
 	ChangeDefaultModel              bool                 `short:"d" long:"changeDefaultModel" description:"Change default model"`
 	YouTube                         string               `short:"y" long:"youtube" description:"YouTube video or play list \"URL\" to grab transcript, comments from it and send to chat or print it put to the console and store it in the output file"`
@@ -469,6 +471,7 @@ func (o *Flags) BuildChatOptions() (ret *domain.ChatOptions, err error) {
 		ImageCompression:    o.ImageCompression,
 		ImageBackground:     o.ImageBackground,
 		SuppressThink:       o.SuppressThink,
+		BufferStream:        o.Extract || o.ExtractLast,
 		ThinkStartTag:       startTag,
 		ThinkEndTag:         endTag,
 		Voice:               o.Voice,

@@ -95,6 +95,8 @@ _fabric() {
     '(--modelContextLength)--modelContextLength[Model context length (only affects ollama)]:length:' \
     '(-o --output)'{-o,--output}'[Output to file]:file:_files' \
     '(--output-session)--output-session[Output the entire session to the output file]' \
+    '(--extract)--extract[Output only the first fenced code block from the response]' \
+    '(--extract-last)--extract-last[Output only the last fenced code block from the response]' \
     '(-n --latest)'{-n,--latest}'[Number of latest patterns to list (default: 0)]:number:' \
     '(-d --changeDefaultModel)'{-d,--changeDefaultModel}'[Change default model]' \
     '(-y --youtube)'{-y,--youtube}'[YouTube video or play list URL]:youtube url:' \

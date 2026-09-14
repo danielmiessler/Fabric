@@ -125,7 +125,7 @@ func (o *Chatter) Send(ctx context.Context, request *domain.ChatRequest, opts *d
 			switch update.Type {
 			case domain.StreamTypeContent:
 				message += update.Content
-				if !opts.SuppressThink && !opts.Quiet {
+				if !opts.SuppressThink && !opts.BufferStream && !opts.Quiet {
 					fmt.Print(update.Content)
 					printedStream = true
 				}

@@ -684,6 +684,10 @@ Application Options:
       --modelContextLength=         Model context length (only affects ollama)
   -o, --output=                     Output to file
       --output-session              Output the entire session (also a temporary one) to the output file
+      --extract                     Output only the first fenced code block from the response (full response if
+                                    none is found)
+      --extract-last                Output only the last fenced code block from the response (full response if
+                                    none is found)
   -n, --latest=                     Number of latest patterns to list
   -d, --changeDefaultModel          Change default model
   -y, --youtube=                    YouTube video or play list "URL" to grab transcript, comments from it and

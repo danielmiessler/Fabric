@@ -247,6 +247,8 @@
   "extension_type_required": "扩展类型为必填项",
   "extension_version_label": "  版本：%s\n",
   "extension_warning_load_registry": "警告：无法加载扩展注册表：%v\n",
+  "extract_first_code_block": "仅输出响应中的第一个围栏代码块（未找到时输出完整响应）",
+  "extract_last_code_block": "仅输出响应中的最后一个围栏代码块（未找到时输出完整响应）",
   "fabric_command_complete": "Fabric 命令完成",
   "fabric_command_complete_with_pattern": "Fabric：%s 完成",
   "fetch_content_exceeds_limit": "fetch：内容过大：超过 %d 字节",

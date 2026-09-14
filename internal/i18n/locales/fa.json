@@ -247,6 +247,8 @@
   "extension_type_required": "نوع افزونه الزامی است",
   "extension_version_label": "  نسخه: %s\n",
   "extension_warning_load_registry": "هشدار: بارگذاری رجیستری افزونه‌ها ممکن نبود: %v\n",
+  "extract_first_code_block": "فقط اولین بلوک کد محصور از پاسخ را خروجی بده (در صورت نبودن، کل پاسخ)",
+  "extract_last_code_block": "فقط آخرین بلوک کد محصور از پاسخ را خروجی بده (در صورت نبودن، کل پاسخ)",
   "fabric_command_complete": "دستور Fabric تکمیل شد",
   "fabric_command_complete_with_pattern": "Fabric: %s تکمیل شد",
   "fetch_content_exceeds_limit": "fetch: محتوا بسیار بزرگ است: از %d بایت بیشتر است",

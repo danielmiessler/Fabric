@@ -53,6 +53,7 @@ type ChatOptions struct {
 	NotificationCommand string
 	ShowMetadata        bool
 	Quiet               bool
+	BufferStream        bool              // collect streamed content without printing it
 	UpdateChan          chan StreamUpdate `json:"-"`
 }
 

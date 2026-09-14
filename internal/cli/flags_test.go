@@ -113,6 +113,18 @@ func TestBuildChatOptionsSuppressThink(t *testing.T) {
 	assert.Equal(t, "[[/t]]", options.ThinkEndTag)
 }
 
+func TestBuildChatOptionsExtractBuffersStream(t *testing.T) {
+	for _, flags := range []*Flags{{Extract: true}, {ExtractLast: true}} {
+		options, err := flags.BuildChatOptions()
+		assert.NoError(t, err)
+		assert.True(t, options.BufferStream)
+	}
+
+	options, err := (&Flags{}).BuildChatOptions()
+	assert.NoError(t, err)
+	assert.False(t, options.BufferStream)
+}
+
 func TestInitWithYAMLConfig(t *testing.T) {
 	// Create a temporary YAML config file
 	configContent := `

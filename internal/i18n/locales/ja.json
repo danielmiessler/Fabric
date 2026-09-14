@@ -247,6 +247,8 @@
   "extension_type_required": "拡張機能タイプは必須です",
   "extension_version_label": "  バージョン: %s\n",
   "extension_warning_load_registry": "警告: 拡張機能レジストリを読み込めませんでした: %v\n",
+  "extract_first_code_block": "応答の最初のフェンス付きコードブロックのみを出力（見つからない場合は応答全体）",
+  "extract_last_code_block": "応答の最後のフェンス付きコードブロックのみを出力（見つからない場合は応答全体）",
   "fabric_command_complete": "Fabricコマンド完了",
   "fabric_command_complete_with_pattern": "Fabric：%s 完了",
   "fetch_content_exceeds_limit": "fetch: コンテンツが大きすぎます: %dバイトを超えています",

@@ -247,6 +247,8 @@
   "extension_type_required": "extension type is required",
   "extension_version_label": "  Version: %s\n",
   "extension_warning_load_registry": "Warning: could not load extension registry: %v\n",
+  "extract_first_code_block": "Output only the first fenced code block from the response (full response if none is found)",
+  "extract_last_code_block": "Output only the last fenced code block from the response (full response if none is found)",
   "fabric_command_complete": "Fabric Command Complete",
   "fabric_command_complete_with_pattern": "Fabric: %s Complete",
   "fetch_content_exceeds_limit": "fetch: content too large: exceeds %d bytes",

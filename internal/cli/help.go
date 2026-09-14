@@ -38,6 +38,8 @@ var flagDescriptionMap = map[string]string{
 	"modelContextLength":         "model_context_length_ollama",
 	"output":                     "output_to_file",
 	"output-session":             "output_entire_session",
+	"extract":                    "extract_first_code_block",
+	"extract-last":               "extract_last_code_block",
 	"latest":                     "number_of_latest_patterns",
 	"changeDefaultModel":         "change_default_model",
 	"youtube":                    "youtube_url_help",
@@ -258,7 +260,8 @@ func (h *TranslatedHelpWriter) writeAllFlags() {
 			strings.HasSuffix(longTag, "voices") ||
 			longTag == "setup" || longTag == "stream" || longTag == "raw" ||
 			longTag == "copy" || longTag == "updatepatterns" ||
-			longTag == "output-session" || longTag == "changeDefaultModel" ||
+			longTag == "output-session" || longTag == "extract" ||
+			longTag == "extract-last" || longTag == "changeDefaultModel" ||
 			longTag == "playlist" || longTag == "transcript" ||
 			longTag == "transcript-with-timestamps" || longTag == "comments" ||
 			longTag == "metadata" || longTag == "readability" ||

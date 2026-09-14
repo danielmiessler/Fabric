@@ -247,6 +247,8 @@
   "extension_type_required": "o tipo da extensão é obrigatório",
   "extension_version_label": "  Versão: %s\n",
   "extension_warning_load_registry": "Aviso: não foi possível carregar o registo de extensões: %v\n",
+  "extract_first_code_block": "Mostrar apenas o primeiro bloco de código delimitado da resposta (a resposta completa se nenhum for encontrado)",
+  "extract_last_code_block": "Mostrar apenas o último bloco de código delimitado da resposta (a resposta completa se nenhum for encontrado)",
   "fabric_command_complete": "Comando Fabric concluído",
   "fabric_command_complete_with_pattern": "Fabric: %s concluído",
   "fetch_content_exceeds_limit": "fetch: conteúdo demasiado grande: excede %d bytes",

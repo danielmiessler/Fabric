@@ -247,6 +247,8 @@
   "extension_type_required": "typ rozszerzenia jest wymagany",
   "extension_version_label": "  Wersja: %s\n",
   "extension_warning_load_registry": "Ostrzeżenie: nie można załadować rejestru rozszerzeń: %v\n",
+  "extract_first_code_block": "Wypisz tylko pierwszy ogrodzony blok kodu z odpowiedzi (całą odpowiedź, jeśli nie znaleziono żadnego)",
+  "extract_last_code_block": "Wypisz tylko ostatni ogrodzony blok kodu z odpowiedzi (całą odpowiedź, jeśli nie znaleziono żadnego)",
   "fabric_command_complete": "Polecenie fabric zakończone",
   "fabric_command_complete_with_pattern": "fabric: %s zakończone",
   "fetch_content_exceeds_limit": "fetch: zawartość zbyt duża: przekracza %d bajtów",

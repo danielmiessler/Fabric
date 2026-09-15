@@ -18,10 +18,10 @@
 
 # `fabric`
 
-![Static Badge](https://img.shields.io/badge/mission-human_flourishing_via_AI_augmentation-purple)
+[![Static Badge](https://img.shields.io/badge/mission-human_flourishing_via_AI_augmentation-purple)](https://github.com/danielmiessler/fabric)
 <br />
-![GitHub top language](https://img.shields.io/github/languages/top/danielmiessler/fabric)
-![GitHub last commit](https://img.shields.io/github/last-commit/danielmiessler/fabric)
+[![GitHub top language](https://img.shields.io/github/languages/top/danielmiessler/fabric)](https://github.com/danielmiessler/fabric)
+[![GitHub last commit](https://img.shields.io/github/last-commit/danielmiessler/fabric)](https://github.com/danielmiessler/fabric/commits/main)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/danielmiessler/fabric)
 
@@ -79,6 +79,7 @@ Fabric 按照现实世界中的任务来组织 Prompt，允许人们在一个地
 
 ### 最近的主要功能
 
+- [v1.4.447](https://github.com/danielmiessler/fabric/releases/tag/v1.4.447) (2026年4月16日) — **Claude Opus 4.7**：将 Anthropic SDK 更新至 v1.37.0，并在可用模型中添加了新的 [Claude Opus 4.7](https://www.anthropic.com/news/claude-opus-4-7)，支持 100万 Token 的上下文窗口。
 - [v1.4.437](https://github.com/danielmiessler/fabric/releases/tag/v1.4.437) (2026年3月16日) — **OpenAI Codex 插件**：Fabric 现在支持使用 OpenAI Codex 作为后端（需订阅）！
 - [v1.4.417](https://github.com/danielmiessler/fabric/releases/tag/v1.4.417) (2026年2月21日) — **Azure AI Gateway 插件**：添加了 Azure AI Gateway 插件，支持通过统一的 Azure APIM Gateway 和共享订阅密钥身份验证连接多个后端 (AWS Bedrock, Azure OpenAI, Google Vertex AI)。
 - [v1.4.416](https://github.com/danielmiessler/fabric/releases/tag/v1.4.416) (2026年2月21日) — **Azure Entra ID 身份验证**：添加了带有共享 Azure 实用程序、Entra ID/MSAL 支持的认证插件，并将通用的 Azure 逻辑提取到可重用的 `azurecommon` 包中。
@@ -460,11 +461,108 @@ cp completions/fabric.fish ~/.config/fish/completions/
 fabric -h
 ```
 
-处理 YouTube 视频时，还可以使用以下视觉提取选项：
+```plaintext
+Usage:
+  fabric [OPTIONS]
 
-- `--visual`：使用 OCR 和 FFmpeg 从视频中提取视觉信息
-- `--visual-sensitivity`：设置 FFmpeg 场景检测的容差（`0.0` - `1.0`）
-- `--visual-fps`：按固定每秒帧数提取画面，而不是使用场景检测
+Application Options:
+  -p, --pattern=                    Choose a pattern from the available patterns
+  -v, --variable=                   Values for pattern variables, e.g. -v=#role:expert -v=#points:30
+  -C, --context=                    Choose a context from the available contexts
+      --session=                    Choose a session from the available sessions
+  -a, --attachment=                 Attachment path or URL (e.g. for OpenAI image recognition messages)
+  -S, --setup                       Run setup for all reconfigurable parts of fabric
+  -t, --temperature=                Set temperature (default: 0.7)
+  -T, --topp=                       Set top P (default: 0.9)
+  -s, --stream                      Stream
+  -P, --presencepenalty=            Set presence penalty (default: 0.0)
+  -r, --raw                         Use the defaults of the model without sending chat options (temperature,
+                                    top_p, etc.). Only affects OpenAI-compatible providers. Anthropic models
+                                    always use smart parameter selection to comply with model-specific
+                                    requirements.
+  -F, --frequencypenalty=           Set frequency penalty (default: 0.0)
+  -l, --listpatterns                List all patterns
+      --readpattern=                Print the contents of the named pattern to the terminal
+  -L, --listmodels                  List all available models
+  -x, --listcontexts                List all contexts
+  -X, --listsessions                List all sessions
+  -U, --updatepatterns              Update patterns
+  -c, --copy                        Copy to clipboard
+  -m, --model=                      Choose model
+  -V, --vendor=                     Specify vendor for the selected model (e.g., -V "LM Studio" -m
+                                    openai/gpt-oss-20b)
+      --modelContextLength=         Model context length (only affects ollama)
+  -o, --output=                     Output to file
+      --output-session              Output the entire session (also a temporary one) to the output file
+  -n, --latest=                     Number of latest patterns to list
+  -d, --changeDefaultModel          Change default model
+  -y, --youtube=                    YouTube video or play list "URL" to grab transcript, comments from it and
+                                    send to chat or print it put to the console and store it in the output file
+      --playlist                    Prefer playlist over video if both ids are present in the URL
+      --transcript                  Grab transcript from YouTube video and send to chat (it is used per
+                                    default).
+      --transcript-with-timestamps  Grab transcript from YouTube video with timestamps and send to chat
+      --visual                      Extract visual data from video using OCR and FFmpeg
+      --visual-sensitivity=         Tolerance for FFmpeg scene detection (0.0 - 1.0) (default: 0.4)
+      --visual-fps=                 Extract a specific number of frames per second instead of using scene
+                                    detection
+      --comments                    Grab comments from YouTube video and send to chat
+      --metadata                    Output video metadata
+      --yt-dlp-args=                Additional arguments to pass to yt-dlp (e.g. '--cookies-from-browser brave')
+      --spotify=                    Spotify podcast or episode URL to grab metadata from and send to chat
+  -g, --language=                   Specify the Language Code for the chat, e.g. -g=en -g=zh -g=pt-BR -g=pt-PT
+  -u, --scrape_url=                 Scrape website URL to markdown using Jina AI
+  -q, --scrape_question=            Search question using Jina AI
+  -e, --seed=                       Seed to be used for LMM generation
+  -w, --wipecontext=                Wipe context
+  -W, --wipesession=                Wipe session
+      --printcontext=               Print context
+      --printsession=               Print session
+      --readability                 Convert HTML input into a clean, readable view
+      --input-has-vars              Apply variables to user input
+      --no-variable-replacement     Disable pattern variable replacement
+      --dry-run                     Show what would be sent to the model without actually sending it
+      --serve                       Serve the Fabric Rest API
+      --serveOllama                 Serve the Fabric Rest API with ollama endpoints
+      --address=                    The address to bind the REST API (default: :8080)
+      --api-key=                    API key used to secure server routes
+      --config=                     Path to YAML config file
+      --version                     Print current version
+      --listextensions              List all registered extensions
+      --addextension=               Register a new extension from config file path
+      --rmextension=                Remove a registered extension by name
+      --strategy=                   Choose a strategy from the available strategies
+      --liststrategies              List all strategies
+      --listvendors                 List all vendors
+      --shell-complete-list         Output raw list without headers/formatting (for shell completion)
+      --search                      Enable web search tool for supported models (Anthropic, OpenAI, Gemini, Grok)
+      --search-location=            Set location for web search results (e.g., 'America/Los_Angeles')
+      --image-file=                 Save generated image to specified file path (e.g., 'output.png')
+      --image-size=                 Image dimensions: 1024x1024, 1536x1024, 1024x1536, auto (default: auto)
+      --image-quality=              Image quality: low, medium, high, auto (default: auto)
+      --image-compression=          Compression level 0-100 for JPEG/WebP formats (default: not set)
+      --image-background=           Background type: opaque, transparent (default: opaque, only for PNG/WebP)
+      --suppress-think              Suppress text enclosed in thinking tags
+      --think-start-tag=            Start tag for thinking sections (default: <think>)
+      --think-end-tag=              End tag for thinking sections (default: </think>)
+      --disable-responses-api       Disable OpenAI Responses API (default: false)
+      --transcribe-file=            Audio or video file to transcribe
+      --transcribe-model=           Model to use for transcription (separate from chat model)
+      --split-media-file            Split audio/video files larger than 25MB using ffmpeg
+      --voice=                      TTS voice name for supported models (e.g., Kore, Charon, Puck) (default:
+                                    Kore)
+      --list-gemini-voices          List all available Gemini TTS voices
+      --list-transcription-models   List all available transcription models
+      --notification                Send desktop notification when command completes
+      --notification-command=       Custom command to run for notifications (overrides built-in notifications)
+      --thinking=                   Set reasoning/thinking level (e.g., off, low, medium, high, or numeric
+                                    tokens for Anthropic or Google Gemini)
+      --show-metadata               Print metadata (input/output tokens) to stderr
+      --debug=                      Set debug level (0=off, 1=basic, 2=detailed, 3=trace, 4=wire)
+
+Help Options:
+  -h, --help                        Show this help message
+```
 
 将你复制的任何文本流式输入到 `fabric` 并选择你想应用的 Pattern：
 
@@ -777,3 +875,6 @@ MIT
 ---
 
 *本文档由 [@JasonYeYuhe](https://github.com/JasonYeYuhe) 翻译并维护。如果您发现任何翻译问题或需要增加新特性说明，欢迎提交 Issue 或与我联系。*
+---
+
+> 💡 **文档维护说明**：本中文文档由社区志愿者（@JasonYeYuhe）翻译维护，最后同步更新于 2026年8月31日。如发现内容与官方英文原版存在差异或新特性滞后，欢迎提交 PR 共同完善！

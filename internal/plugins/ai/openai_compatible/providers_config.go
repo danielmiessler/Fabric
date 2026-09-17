@@ -314,6 +314,11 @@ var ProviderMap = map[string]ProviderConfig{
 		BaseURL:             "https://api.venice.ai/api/v1",
 		ImplementsResponses: false,
 	},
+	"Y-API": {
+		Name:                "Y-API",
+		BaseURL:             "https://api.y-api.bestvirtualgoods.com/v1",
+		ImplementsResponses: false,
+	},
 	"Z AI": {
 		Name:                "Z AI",
 		BaseURL:             "https://api.z.ai/api/paas/v4",

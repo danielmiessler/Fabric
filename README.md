@@ -379,6 +379,7 @@ Fabric supports a wide range of AI providers:
 - Synthorai
 - Together
 - Venice AI
+- Y-API
 - Z AI
 
 Run `fabric --setup` to configure your preferred provider(s), or use `fabric --listvendors` to see all available vendors.

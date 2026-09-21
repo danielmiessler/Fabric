@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.4.479 (2026-09-17)
+
+### PR [#2220](https://github.com/danielmiessler/Fabric/pull/2220) by [jiweiyeah](https://github.com/jiweiyeah): feat(providers): add Y-API as an OpenAI-compatible provider
+
+- Feat(providers): add Y-API as an OpenAI-compatible provider
+
 ## v1.4.478 (2026-09-06)
 
 ### PR [#2216](https://github.com/danielmiessler/Fabric/pull/2216) by [ctbaum](https://github.com/ctbaum): fix: enable raw mode for GPT-6 models

@@ -19,6 +19,7 @@ import (
 
 	"github.com/danielmiessler/fabric/internal/chat"
 	"github.com/danielmiessler/fabric/internal/domain"
+	"github.com/danielmiessler/fabric/internal/i18n"
 	openaiapi "github.com/openai/openai-go"
 	"github.com/openai/openai-go/shared/constant"
 )
@@ -211,6 +212,10 @@ func TestNormalizeSemverLikeVersion(t *testing.T) {
 }
 
 func TestMapRequestErrorPreservesCodexAPIErrorMessage(t *testing.T) {
+	if _, err := i18n.Init("en"); err != nil {
+		t.Fatalf("i18n.Init() error = %v", err)
+	}
+
 	client := NewClient()
 	apiErr := &openaiapi.Error{StatusCode: http.StatusBadRequest}
 	if err := apiErr.UnmarshalJSON([]byte(`{"message":"The requested model is not supported.","type":"invalid_request_error","param":"model","code":"invalid_value"}`)); err != nil {
@@ -221,8 +226,9 @@ func TestMapRequestErrorPreservesCodexAPIErrorMessage(t *testing.T) {
 	if err == nil {
 		t.Fatal("mapRequestError() returned nil")
 	}
-	if got := err.Error(); got != "codex request failed with status 400" {
-		t.Fatalf("mapRequestError() = %q, want %q", got, "codex request failed with status 400")
+	want := fmt.Sprintf(i18n.T("codex_request_failed_status"), http.StatusBadRequest)
+	if got := err.Error(); got != want {
+		t.Fatalf("mapRequestError() = %q, want %q", got, want)
 	}
 	if unwrapped := errors.Unwrap(err); unwrapped == nil || !strings.Contains(unwrapped.Error(), "The requested model is not supported.") {
 		t.Fatalf("wrapped error = %v, want provider detail", unwrapped)
@@ -230,6 +236,10 @@ func TestMapRequestErrorPreservesCodexAPIErrorMessage(t *testing.T) {
 }
 
 func TestMapRequestErrorReadsAPIErrorResponseBodyWhenRawJSONMissing(t *testing.T) {
+	if _, err := i18n.Init("en"); err != nil {
+		t.Fatalf("i18n.Init() error = %v", err)
+	}
+
 	client := NewClient()
 	apiErr := &openaiapi.Error{
 		StatusCode: http.StatusBadRequest,
@@ -242,8 +252,9 @@ func TestMapRequestErrorReadsAPIErrorResponseBodyWhenRawJSONMissing(t *testing.T
 	if err == nil {
 		t.Fatal("mapRequestError() returned nil")
 	}
-	if got := err.Error(); got != "codex request failed with status 400" {
-		t.Fatalf("mapRequestError() = %q, want %q", got, "codex request failed with status 400")
+	want := fmt.Sprintf(i18n.T("codex_request_failed_status"), http.StatusBadRequest)
+	if got := err.Error(); got != want {
+		t.Fatalf("mapRequestError() = %q, want %q", got, want)
 	}
 	if unwrapped := errors.Unwrap(err); unwrapped == nil || !strings.Contains(unwrapped.Error(), "The requested model is not supported for Codex.") {
 		t.Fatalf("wrapped error = %v, want provider detail", unwrapped)
@@ -575,13 +586,166 @@ func TestSendStreamClosesChannelAndMapsHTTPError(t *testing.T) {
 	if err == nil {
 		t.Fatal("SendStream() error = nil, want mapped HTTP error")
 	}
-	if got := err.Error(); got != "codex usage limit reached" {
-		t.Fatalf("SendStream() error = %q, want %q", got, "codex usage limit reached")
+	if got := err.Error(); got != i18n.T("codex_usage_limit_reached") {
+		t.Fatalf("SendStream() error = %q, want %q", got, i18n.T("codex_usage_limit_reached"))
 	}
 
 	update, ok := <-updates
 	if ok {
 		t.Fatalf("expected closed channel after stream error, got update %#v", update)
+	}
+}
+
+func TestEnsureAccessTokenPersistsRotatedRefreshToken(t *testing.T) {
+	authServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path != "/oauth/token" {
+			http.NotFound(w, r)
+			return
+		}
+		w.Header().Set("Content-Type", "application/json")
+		_ = json.NewEncoder(w).Encode(refreshResponse{
+			IDToken:      testJWT("acct_persist", time.Now().Add(2*time.Hour)),
+			AccessToken:  testJWT("acct_persist", time.Now().Add(2*time.Hour)),
+			RefreshToken: "refresh-rotated",
+		})
+	}))
+	defer authServer.Close()
+
+	var persisted map[string]string
+	client := NewClient()
+	client.ApiBaseURL.Value = "https://example.invalid"
+	client.AuthBaseURL.Value = authServer.URL
+	client.RefreshToken.Value = "refresh-old"
+	client.AccessToken.Value = testJWT("acct_persist", time.Now().Add(-time.Hour))
+	client.AccountID.Value = "acct_persist"
+	client.TokenPersist = func() error {
+		persisted = map[string]string{
+			"access":  client.AccessToken.Value,
+			"refresh": client.RefreshToken.Value,
+			"account": client.AccountID.Value,
+		}
+		return nil
+	}
+
+	access, account, err := client.ensureAccessToken(context.Background(), false)
+	if err != nil {
+		t.Fatalf("ensureAccessToken() error = %v", err)
+	}
+	if access == "" {
+		t.Fatal("ensureAccessToken() returned empty access token")
+	}
+	if account != "acct_persist" {
+		t.Fatalf("account = %q, want acct_persist", account)
+	}
+	if persisted["refresh"] != "refresh-rotated" {
+		t.Fatalf("persisted refresh = %q, want refresh-rotated", persisted["refresh"])
+	}
+}
+
+func TestEnsureAccessTokenPersistError(t *testing.T) {
+	if _, err := i18n.Init("en"); err != nil {
+		t.Fatalf("i18n.Init() error = %v", err)
+	}
+
+	authServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path != "/oauth/token" {
+			http.NotFound(w, r)
+			return
+		}
+		w.Header().Set("Content-Type", "application/json")
+		_ = json.NewEncoder(w).Encode(refreshResponse{
+			IDToken:      testJWT("acct_persist", time.Now().Add(2*time.Hour)),
+			AccessToken:  testJWT("acct_persist", time.Now().Add(2*time.Hour)),
+			RefreshToken: "refresh-rotated",
+		})
+	}))
+	defer authServer.Close()
+
+	persistErr := errors.New("disk full")
+	client := NewClient()
+	client.ApiBaseURL.Value = "https://example.invalid"
+	client.AuthBaseURL.Value = authServer.URL
+	client.RefreshToken.Value = "refresh-old"
+	client.AccessToken.Value = testJWT("acct_persist", time.Now().Add(-time.Hour))
+	client.AccountID.Value = "acct_persist"
+	client.TokenPersist = func() error {
+		return persistErr
+	}
+
+	_, _, err := client.ensureAccessToken(context.Background(), false)
+	if err == nil {
+		t.Fatal("ensureAccessToken() error = nil, want persist error")
+	}
+	if !errors.Is(err, persistErr) {
+		t.Fatalf("ensureAccessToken() error = %v, want persist error %v", err, persistErr)
+	}
+}
+
+func TestEnsureAccessTokenReloadsStoreBeforeRefresh(t *testing.T) {
+	authHits := 0
+	authServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		authHits++
+		http.Error(w, "unexpected refresh", http.StatusInternalServerError)
+	}))
+	defer authServer.Close()
+
+	fresh := testJWT("acct_reload", time.Now().Add(2*time.Hour))
+	client := NewClient()
+	client.ApiBaseURL.Value = "https://example.invalid"
+	client.AuthBaseURL.Value = authServer.URL
+	client.RefreshToken.Value = "refresh-old"
+	client.AccessToken.Value = testJWT("acct_reload", time.Now().Add(-time.Hour))
+	client.AccountID.Value = "acct_reload"
+	client.WithStoreLock = func(fn func() error) error {
+		client.AccessToken.Value = fresh
+		client.AccountID.Value = "acct_reload"
+		return fn()
+	}
+
+	access, account, err := client.ensureAccessToken(context.Background(), false)
+	if err != nil {
+		t.Fatalf("ensureAccessToken() error = %v", err)
+	}
+	if access != fresh {
+		t.Fatal("ensureAccessToken() did not use reloaded access token")
+	}
+	if account != "acct_reload" {
+		t.Fatalf("account = %q, want acct_reload", account)
+	}
+	if authHits != 0 {
+		t.Fatalf("auth server hits = %d, want 0", authHits)
+	}
+}
+
+// Regression: a valid in-memory token (e.g. just obtained via Setup's OAuth)
+// must not be reloaded from the store, which still holds the stale token until
+// SaveEnvFile runs. The fast path returns before WithStoreLock can clobber it.
+func TestEnsureAccessTokenKeepsFreshTokenOverStore(t *testing.T) {
+	fresh := testJWT("acct_fresh", time.Now().Add(2*time.Hour))
+	client := NewClient()
+	client.ApiBaseURL.Value = "https://example.invalid"
+	client.AuthBaseURL.Value = "https://auth.invalid"
+	client.RefreshToken.Value = "refresh-new"
+	client.AccessToken.Value = fresh
+	client.AccountID.Value = "acct_fresh"
+
+	storeLocked := false
+	client.WithStoreLock = func(fn func() error) error {
+		storeLocked = true
+		client.AccessToken.Value = "stale-from-disk"
+		client.AccountID.Value = "acct_stale"
+		return fn()
+	}
+
+	access, account, err := client.ensureAccessToken(context.Background(), false)
+	if err != nil {
+		t.Fatalf("ensureAccessToken() error = %v", err)
+	}
+	if storeLocked {
+		t.Fatal("store lock ran and clobbered a valid in-memory token")
+	}
+	if access != fresh || account != "acct_fresh" {
+		t.Fatalf("got access=%q account=%q, want fresh token for acct_fresh", access, account)
 	}
 }
 

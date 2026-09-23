@@ -2,9 +2,16 @@ package restapi
 
 import (
 	"encoding/json"
+	"fmt"
 	"math"
+	"net/http"
+	"net/http/httptest"
 	"strings"
 	"testing"
+
+	"github.com/danielmiessler/fabric/internal/core"
+	"github.com/danielmiessler/fabric/internal/plugins/db/fsdb"
+	"github.com/gin-gonic/gin"
 )
 
 func TestBuildFabricChatURL(t *testing.T) {
@@ -359,5 +366,195 @@ func TestParseOllamaNumCtx(t *testing.T) {
 				t.Errorf("parseOllamaNumCtx() = %v, want %v", got, tt.want)
 			}
 		})
+	}
+}
+
+func TestNewOllamaEngine_APIKeyWiring(t *testing.T) {
+	gin.SetMode(gin.TestMode)
+	registry := &core.PluginRegistry{Db: fsdb.NewDb(t.TempDir())}
+
+	getVersion := func(r *gin.Engine, key string) int {
+		w := httptest.NewRecorder()
+		req := httptest.NewRequest(http.MethodGet, "/api/version", nil)
+		if key != "" {
+			req.Header.Set(APIKeyHeader, key)
+		}
+		r.ServeHTTP(w, req)
+		return w.Code
+	}
+
+	withKey := newOllamaEngine(registry, ":0", "test-version", "secret")
+	if code := getVersion(withKey, ""); code != http.StatusUnauthorized {
+		t.Fatalf("no key presented: got %d, want 401", code)
+	}
+	if code := getVersion(withKey, "secret"); code != http.StatusOK {
+		t.Fatalf("valid key presented: got %d, want 200", code)
+	}
+
+	withoutKey := newOllamaEngine(registry, ":0", "test-version", "")
+	if code := getVersion(withoutKey, ""); code != http.StatusOK {
+		t.Fatalf("no key configured: got %d, want 200", code)
+	}
+}
+
+func TestOllamaChat_ForwardsAPIKeyToChat(t *testing.T) {
+	gin.SetMode(gin.TestMode)
+
+	// Make the loopback /chat route with the middleware installed, the
+	// same as newOllamaEngine makes it when --api-key is set.
+	upstream := gin.New()
+	upstream.Use(APIKeyMiddleware("secret"))
+	upstream.POST("/chat", func(c *gin.Context) {
+		c.Writer.Header().Set("Content-Type", "text/event-stream")
+		fmt.Fprint(c.Writer, "data: {\"type\":\"content\",\"format\":\"markdown\",\"content\":\"hi\"}\n\n")
+	})
+	server := httptest.NewServer(upstream)
+	defer server.Close()
+
+	chatRequest := func(key string) int {
+		r := gin.New()
+		conv := APIConvert{addr: &server.URL, apiKey: key}
+		r.POST("/api/chat", conv.ollamaChat)
+
+		w := httptest.NewRecorder()
+		body := `{"model":"test:latest","messages":[{"role":"user","content":"hi"}]}`
+		req := httptest.NewRequest(http.MethodPost, "/api/chat", strings.NewReader(body))
+		req.Header.Set("Content-Type", "application/json")
+		r.ServeHTTP(w, req)
+		return w.Code
+	}
+
+	if code := chatRequest("secret"); code != http.StatusOK {
+		t.Fatalf("matching key: got %d, want 200", code)
+	}
+	if code := chatRequest("wrong"); code != http.StatusUnauthorized {
+		t.Fatalf("wrong key: got %d, want 401", code)
+	}
+}
+
+// The self-forward client must not use a proxy. A proxy gets the
+// configured API key, and the operator did not configure that host.
+// The redirect test below covers the no-redirect property.
+func TestFabricChatClient_NoProxy(t *testing.T) {
+	transport, ok := fabricChatClient.Transport.(*http.Transport)
+	if !ok {
+		t.Fatalf("transport is %T, want *http.Transport", fabricChatClient.Transport)
+	}
+	if transport.Proxy != nil {
+		t.Fatal("self-forward transport has a proxy configured")
+	}
+}
+
+// An upstream redirect must show as an upstream error. The client must
+// not go to the redirect target with the API key.
+func TestOllamaChat_DoesNotFollowUpstreamRedirect(t *testing.T) {
+	gin.SetMode(gin.TestMode)
+
+	redirectTargetHit := false
+	target := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
+		redirectTargetHit = true
+	}))
+	defer target.Close()
+
+	upstream := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		http.Redirect(w, r, target.URL+"/chat", http.StatusFound)
+	}))
+	defer upstream.Close()
+
+	r := gin.New()
+	conv := APIConvert{addr: &upstream.URL, apiKey: "secret"}
+	r.POST("/api/chat", conv.ollamaChat)
+
+	w := httptest.NewRecorder()
+	body := `{"model":"test:latest","messages":[{"role":"user","content":"hi"}]}`
+	req := httptest.NewRequest(http.MethodPost, "/api/chat", strings.NewReader(body))
+	req.Header.Set("Content-Type", "application/json")
+	r.ServeHTTP(w, req)
+
+	if redirectTargetHit {
+		t.Fatal("the redirect target was contacted")
+	}
+	if w.Code != http.StatusFound {
+		t.Fatalf("got %d, want the upstream 302 surfaced as an error", w.Code)
+	}
+}
+
+// Malformed client JSON is a client error. The answer is a 400 with a
+// stable generic message, not a 500.
+func TestOllamaChat_MalformedJSONIs400(t *testing.T) {
+	gin.SetMode(gin.TestMode)
+
+	addr := ":0"
+	r := gin.New()
+	conv := APIConvert{addr: &addr}
+	r.POST("/api/chat", conv.ollamaChat)
+
+	w := httptest.NewRecorder()
+	req := httptest.NewRequest(http.MethodPost, "/api/chat", strings.NewReader("{not json"))
+	req.Header.Set("Content-Type", "application/json")
+	r.ServeHTTP(w, req)
+	if w.Code != http.StatusBadRequest {
+		t.Fatalf("got %d, want 400", w.Code)
+	}
+}
+
+// An upstream that is not available is a 500. The body must not contain
+// the raw transport error, because that error shows the internal
+// upstream URL.
+func TestOllamaChat_UpstreamFailureHidesDetails(t *testing.T) {
+	gin.SetMode(gin.TestMode)
+
+	server := httptest.NewServer(http.NotFoundHandler())
+	url := server.URL
+	server.Close() // nothing listens on url anymore
+
+	r := gin.New()
+	conv := APIConvert{addr: &url}
+	r.POST("/api/chat", conv.ollamaChat)
+
+	w := httptest.NewRecorder()
+	body := `{"model":"test:latest","messages":[{"role":"user","content":"hi"}]}`
+	req := httptest.NewRequest(http.MethodPost, "/api/chat", strings.NewReader(body))
+	req.Header.Set("Content-Type", "application/json")
+	r.ServeHTTP(w, req)
+
+	if w.Code != http.StatusInternalServerError {
+		t.Fatalf("got %d, want 500", w.Code)
+	}
+	got := w.Body.String()
+	if strings.Contains(got, "dial tcp") || strings.Contains(got, strings.TrimPrefix(url, "http://")) {
+		t.Fatalf("500 body leaks transport details: %s", got)
+	}
+}
+
+// With no configured key, the forwarded request must not contain the header.
+func TestOllamaChat_NoKeyOmitsHeader(t *testing.T) {
+	gin.SetMode(gin.TestMode)
+
+	var gotHeader string
+	upstream := gin.New()
+	upstream.POST("/chat", func(c *gin.Context) {
+		gotHeader = c.GetHeader(APIKeyHeader)
+		c.Writer.Header().Set("Content-Type", "text/event-stream")
+		fmt.Fprint(c.Writer, "data: {\"type\":\"content\",\"format\":\"markdown\",\"content\":\"hi\"}\n\n")
+	})
+	server := httptest.NewServer(upstream)
+	defer server.Close()
+
+	r := gin.New()
+	conv := APIConvert{addr: &server.URL, apiKey: ""}
+	r.POST("/api/chat", conv.ollamaChat)
+
+	w := httptest.NewRecorder()
+	body := `{"model":"test:latest","messages":[{"role":"user","content":"hi"}]}`
+	req := httptest.NewRequest(http.MethodPost, "/api/chat", strings.NewReader(body))
+	req.Header.Set("Content-Type", "application/json")
+	r.ServeHTTP(w, req)
+
+	if w.Code != http.StatusOK {
+		t.Fatalf("got %d, want 200", w.Code)
+	}
+	if gotHeader != "" {
+		t.Fatalf("X-API-Key was forwarded with no key configured: %q", gotHeader)
 	}
 }

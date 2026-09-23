@@ -29,8 +29,8 @@ const maxResponseSize = 10 * 1024 * 1024 // 10MB
 
 // FetchModelsDirectly is used to fetch models directly from the API when the
 // standard OpenAI SDK method fails due to a nonstandard format. This is useful
-// for providers that return a direct array of models (e.g., GitHub Models) or
-// other OpenAI-compatible implementations.
+// for providers that return a direct array of models instead of the OpenAI
+// object format.
 // If httpClient is nil, a new client with default settings will be created.
 func FetchModelsDirectly(ctx context.Context, baseURL, apiKey, providerName string, httpClient *http.Client) ([]string, error) {
 	if ctx == nil {
@@ -46,8 +46,8 @@ func FetchModelsDirectly(ctx context.Context, baseURL, apiKey, providerName stri
 		return nil, fmt.Errorf(i18n.T("openai_failed_to_create_models_url"), err)
 	}
 
-	// Serve a fresh cached list when available to avoid re-hitting discovery
-	// endpoints that aggressively rate-limit (e.g. GitHub Models' catalog).
+	// Serve a fresh cached list when available so we do not hit discovery
+	// endpoints that rate-limit.
 	if models, ok := readModelsCache(providerName, fullURL, modelsCacheTTL); ok {
 		debuglog.Debug(debuglog.Detailed, "Using cached models list for %s (%d models)\n", providerName, len(models))
 		return models, nil
@@ -60,14 +60,6 @@ func FetchModelsDirectly(ctx context.Context, baseURL, apiKey, providerName stri
 
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", apiKey))
 	req.Header.Set("Accept", "application/json")
-
-	// GitHub Models' catalog endpoint sits behind GitHub's edge layer, which
-	// throttles requests that omit the documented API version header (returning
-	// HTTP 429 with an HTML body). Send it so the catalog fetch matches GitHub's
-	// API contract and avoids the edge-level rate limiter.
-	if strings.EqualFold(req.URL.Host, "models.github.ai") {
-		req.Header.Set("X-GitHub-Api-Version", "2022-11-28")
-	}
 
 	// Reuse provided HTTP client, or create a new one if not provided
 	client := httpClient

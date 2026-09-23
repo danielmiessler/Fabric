@@ -78,8 +78,8 @@ type Flags struct {
 	DryRun                          bool                 `long:"dry-run" description:"Show what would be sent to the model without actually sending it"`
 	Serve                           bool                 `long:"serve" description:"Serve the Fabric Rest API"`
 	ServeOllama                     bool                 `long:"serveOllama" description:"Serve the Fabric Rest API with ollama endpoints"`
-	ServeAddress                    string               `long:"address" description:"The address to bind the REST API" default:":8080"`
-	ServeAPIKey                     string               `long:"api-key" description:"API key used to secure server routes" default:""`
+	ServeAddress                    string               `long:"address" description:"The address to bind the REST API" default:"127.0.0.1:8080"`
+	ServeAPIKey                     string               `long:"api-key" env:"FABRIC_API_KEY" description:"API key used to secure server routes" default:""`
 	Config                          string               `long:"config" description:"Path to YAML config file"`
 	Version                         bool                 `long:"version" description:"Print current version"`
 	ListExtensions                  bool                 `long:"listextensions" description:"List all registered extensions"`

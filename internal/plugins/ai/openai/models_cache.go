@@ -12,9 +12,8 @@ import (
 )
 
 // modelsCacheTTL is how long a successfully fetched model list is considered
-// fresh. Model catalogs change rarely, so a long TTL avoids re-hitting
-// discovery endpoints that aggressively rate-limit (e.g. GitHub Models'
-// catalog, which returns HTTP 429 with a Retry-After header).
+// fresh. Model catalogs change rarely, so a long TTL keeps us from hitting
+// discovery endpoints that rate-limit with HTTP 429.
 const modelsCacheTTL = 24 * time.Hour
 
 // modelsCacheDir returns the directory used to cache provider model lists. It

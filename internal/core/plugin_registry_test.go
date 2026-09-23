@@ -3,6 +3,7 @@ package core
 import (
 	"bytes"
 	"context"
+	"errors"
 	"io"
 	"os"
 	"strings"
@@ -10,11 +11,14 @@ import (
 
 	"github.com/danielmiessler/fabric/internal/chat"
 	"github.com/danielmiessler/fabric/internal/domain"
+	"github.com/danielmiessler/fabric/internal/i18n"
 	debuglog "github.com/danielmiessler/fabric/internal/log"
 	"github.com/danielmiessler/fabric/internal/plugins"
 	"github.com/danielmiessler/fabric/internal/plugins/ai"
+	"github.com/danielmiessler/fabric/internal/plugins/ai/codex"
 	"github.com/danielmiessler/fabric/internal/plugins/db/fsdb"
 	"github.com/danielmiessler/fabric/internal/tools"
+	"github.com/joho/godotenv"
 )
 
 func TestSaveEnvFile(t *testing.T) {
@@ -32,14 +36,15 @@ func TestSaveEnvFile(t *testing.T) {
 
 // testVendor implements ai.Vendor for testing purposes
 type testVendor struct {
-	name   string
-	models []string
+	name         string
+	models       []string
+	configureErr error
 }
 
 func (m *testVendor) GetName() string                              { return m.name }
 func (m *testVendor) GetSetupDescription() string                  { return m.name }
 func (m *testVendor) IsConfigured() bool                           { return true }
-func (m *testVendor) Configure() error                             { return nil }
+func (m *testVendor) Configure() error                             { return m.configureErr }
 func (m *testVendor) Setup() error                                 { return nil }
 func (m *testVendor) SetupFillEnvFileContent(*bytes.Buffer)        {}
 func (m *testVendor) ListModels(context.Context) ([]string, error) { return m.models, nil }
@@ -208,5 +213,118 @@ func TestGetChatter_VendorPrefixIgnoredWhenNotAVendor(t *testing.T) {
 	}
 	if chatter.model != "notavendor/model" {
 		t.Fatalf("expected model 'notavendor/model', got %s", chatter.model)
+	}
+}
+
+func TestGetChatter_ReportsConfigureError(t *testing.T) {
+	if _, err := i18n.Init("en"); err != nil {
+		t.Fatalf("i18n.Init() error = %v", err)
+	}
+	for _, tt := range []struct {
+		name, model, vendor string
+	}{
+		{"empty model", "", ""},
+		{"model", "gpt-5.6-sol", ""},
+		{"named vendor", "gpt-5.6-sol", "Codex"},
+	} {
+		t.Run(tt.name, func(t *testing.T) {
+			configureErr := errors.New(i18n.T("codex_login_refresh_failed"))
+			registry := newInactiveVendorRegistry(t, "Codex", "gpt-5.6-sol", &testVendor{
+				name: "Codex", models: []string{"gpt-5.6-sol"}, configureErr: configureErr,
+			})
+			_, err := registry.GetChatter(tt.model, 0, tt.vendor, false, false)
+			if !errors.Is(err, configureErr) {
+				t.Fatalf("GetChatter() error = %v, want %v", err, configureErr)
+			}
+		})
+	}
+}
+
+func TestGetChatter_ActivatesInactiveVendor(t *testing.T) {
+	for _, tt := range []struct {
+		name, model, vendor string
+	}{
+		{"named", "gpt-5.6-sol", "Codex"},
+		{"default for model", "gpt-5.6-sol", ""},
+	} {
+		t.Run(tt.name, func(t *testing.T) {
+			codexVendor := &testVendor{name: "Codex", models: []string{"gpt-5.6-sol"}}
+			registry := newInactiveVendorRegistry(t, "Codex", "gpt-5.6-sol", codexVendor)
+			chatter, err := registry.GetChatter(tt.model, 0, tt.vendor, false, false)
+			if err != nil {
+				t.Fatalf("GetChatter() error = %v", err)
+			}
+			if chatter.vendor.GetName() != "Codex" {
+				t.Fatalf("vendor = %s, want Codex", chatter.vendor.GetName())
+			}
+			if chatter.model != "gpt-5.6-sol" {
+				t.Fatalf("model = %s, want gpt-5.6-sol", chatter.model)
+			}
+		})
+	}
+}
+
+func TestNewPluginRegistry_CodexTokenPersist(t *testing.T) {
+	dir := t.TempDir()
+	db := fsdb.NewDb(dir)
+	if err := db.SaveEnv("KEEP=old\n"); err != nil {
+		t.Fatalf("SaveEnv() error = %v", err)
+	}
+
+	registry, err := NewPluginRegistry(db)
+	if err != nil {
+		t.Fatalf("NewPluginRegistry() error = %v", err)
+	}
+
+	vendor := registry.VendorsAll.FindByName("Codex")
+	client, ok := vendor.(*codex.Client)
+	if !ok || client == nil {
+		t.Fatal("expected Codex client in VendorsAll")
+	}
+	if client.TokenPersist == nil {
+		t.Fatal("TokenPersist is nil")
+	}
+
+	client.AccessToken.Value = "access-live"
+	client.RefreshToken.Value = "refresh-live"
+	client.AccountID.Value = "acct-live"
+	if err := client.TokenPersist(); err != nil {
+		t.Fatalf("TokenPersist() error = %v", err)
+	}
+
+	parsed, err := godotenv.Read(db.EnvFilePath)
+	if err != nil {
+		t.Fatalf("godotenv.Read() error = %v", err)
+	}
+	if parsed["KEEP"] != "old" {
+		t.Fatalf("KEEP = %q, want old", parsed["KEEP"])
+	}
+	if parsed[client.AccessToken.EnvVariable] != "access-live" {
+		t.Fatalf("access = %q, want access-live", parsed[client.AccessToken.EnvVariable])
+	}
+	if parsed[client.RefreshToken.EnvVariable] != "refresh-live" {
+		t.Fatalf("refresh = %q, want refresh-live", parsed[client.RefreshToken.EnvVariable])
+	}
+	if parsed[client.AccountID.EnvVariable] != "acct-live" {
+		t.Fatalf("account = %q, want acct-live", parsed[client.AccountID.EnvVariable])
+	}
+}
+
+func newInactiveVendorRegistry(t *testing.T, defaultVendor, defaultModel string, vendor *testVendor) *PluginRegistry {
+	t.Helper()
+	db := fsdb.NewDb(t.TempDir())
+	all := ai.NewVendorsManager()
+	all.AddVendors(vendor)
+	defaults := &tools.Defaults{
+		PluginBase:         &plugins.PluginBase{},
+		Vendor:             &plugins.Setting{Value: defaultVendor},
+		Model:              &plugins.SetupQuestion{Setting: &plugins.Setting{Value: defaultModel}},
+		ModelContextLength: &plugins.SetupQuestion{Setting: &plugins.Setting{Value: "0"}},
+	}
+	return &PluginRegistry{
+		Db:            db,
+		VendorManager: ai.NewVendorsManager(),
+		VendorsAll:    all,
+		Defaults:      defaults,
 	}
 }

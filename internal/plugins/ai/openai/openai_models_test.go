@@ -2,10 +2,8 @@ package openai
 
 import (
 	"context"
-	"io"
 	"net/http"
 	"net/http/httptest"
-	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -59,36 +57,6 @@ func TestFetchModelsDirectly_NoGitHubHeaderForOtherHosts(t *testing.T) {
 
 	_, err := FetchModelsDirectly(context.Background(), srv.URL, "test-key", "TestProvider", nil)
 	assert.NoError(t, err)
-}
-
-// captureRoundTripper records the outgoing request and returns a canned response,
-// allowing assertions against requests sent to real hosts without networking.
-type captureRoundTripper struct {
-	req  *http.Request
-	body string
-}
-
-func (c *captureRoundTripper) RoundTrip(req *http.Request) (*http.Response, error) {
-	c.req = req
-	return &http.Response{
-		StatusCode: http.StatusOK,
-		Header:     http.Header{"Content-Type": []string{"application/json"}},
-		Body:       io.NopCloser(strings.NewReader(c.body)),
-		Request:    req,
-	}, nil
-}
-
-// Ensures the GitHub Models catalog host receives the documented API version
-// header so it is not throttled by GitHub's edge rate limiter.
-func TestFetchModelsDirectly_GitHubHostSendsAPIVersionHeader(t *testing.T) {
-	withTempModelsCache(t)
-	rt := &captureRoundTripper{body: `[{"id":"github-model"}]`}
-	client := &http.Client{Transport: rt}
-
-	models, err := FetchModelsDirectly(context.Background(), "https://models.github.ai/catalog", "test-key", "GitHub", client)
-	assert.NoError(t, err)
-	assert.Equal(t, []string{"github-model"}, models)
-	assert.Equal(t, "2022-11-28", rt.req.Header.Get("X-GitHub-Api-Version"))
 }
 
 // Ensures we handle empty model lists correctly

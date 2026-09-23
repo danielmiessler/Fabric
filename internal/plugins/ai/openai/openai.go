@@ -131,8 +131,8 @@ func (o *Client) ListModels(ctx context.Context) (ret []string, err error) {
 	}
 
 	// SDK returned an error - fall back to direct API fetch.
-	// Some providers (e.g., GitHub Models) return non-standard response formats
-	// that the SDK fails to parse.
+	// Some providers return non-standard response formats that the SDK
+	// fails to parse.
 	debuglog.Debug(debuglog.Basic, "SDK Models.List failed for %s: %v, falling back to direct API fetch\n", o.GetName(), err)
 	return FetchModelsDirectly(ctx, o.ApiBaseURL.Value, o.ApiKey.Value, o.GetName(), o.httpClient)
 }
@@ -223,6 +223,7 @@ func (o *Client) NeedsRawMode(modelName string) bool {
 	openaiModelsPrefixes := []string{
 		"glm",
 		"gpt-5",
+		"gpt-6",
 		"o1",
 		"o3",
 		"o4",

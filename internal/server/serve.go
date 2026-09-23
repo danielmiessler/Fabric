@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 
 	"github.com/danielmiessler/fabric/internal/core"
+	"github.com/danielmiessler/fabric/internal/i18n"
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -27,6 +28,10 @@ import (
 // @in header
 // @name X-API-Key
 func Serve(registry *core.PluginRegistry, address string, apiKey string) (err error) {
+	if err = requireAPIKeyForBind(address, apiKey); err != nil {
+		return err
+	}
+
 	r := gin.New()
 
 	// Middleware
@@ -36,7 +41,7 @@ func Serve(registry *core.PluginRegistry, address string, apiKey string) (err er
 	if apiKey != "" {
 		r.Use(APIKeyMiddleware(apiKey))
 	} else {
-		slog.Warn("Starting REST API server without API key authentication. This may pose security risks.")
+		slog.Warn(i18n.T("server_no_api_key_warning"))
 	}
 
 	// Swagger UI and documentation endpoint with custom YAML handler

@@ -77,7 +77,7 @@ func (c *Client) mapRequestError(err error) error {
 	case isUsageLimitMessage(message):
 		return &publicError{
 			message: i18n.T("codex_usage_limit_reached"),
-			cause:   fmt.Errorf("codex request failed: %w", err),
+			cause:   fmt.Errorf(i18n.T("codex_request_failed"), err),
 		}
 	default:
 		return err
@@ -91,7 +91,7 @@ func wrapPublicError(message string, statusCode int, providerMessage string) err
 
 	return &publicError{
 		message: message,
-		cause:   fmt.Errorf("codex provider error (status %d): %s", statusCode, providerMessage),
+		cause:   fmt.Errorf(i18n.T("codex_provider_error"), statusCode, providerMessage),
 	}
 }
 

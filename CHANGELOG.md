@@ -1,5 +1,86 @@
 # Changelog
 
+## v1.4.480 (2026-09-23)
+
+### PR [#2224](https://github.com/danielmiessler/Fabric/pull/2224) by [ksylvan](https://github.com/ksylvan): chore: remove GitHub Models provider integration and documentation
+
+- Removed the GitHub Models provider from the compatible provider registry, dropping the integration entirely.
+- Dropped GitHub API version headers from model discovery requests.
+- Replaced GitHub cache fixtures with generic test providers and removed GitHub header verification along with its supporting test utilities.
+- Deleted the GitHub Models setup documentation and the Copilot cross-reference.
+- Removed GitHub Models listings from both the English and Chinese READMEs.
+
+## v1.4.479 (2026-09-17)
+
+### PR [#2220](https://github.com/danielmiessler/Fabric/pull/2220) by [jiweiyeah](https://github.com/jiweiyeah): feat(providers): add Y-API as an OpenAI-compatible provider
+
+- Feat(providers): add Y-API as an OpenAI-compatible provider
+
+## v1.4.478 (2026-09-06)
+
+### PR [#2216](https://github.com/danielmiessler/Fabric/pull/2216) by [ctbaum](https://github.com/ctbaum): fix: enable raw mode for GPT-6 models
+
+- Fix: enable raw mode for GPT-6 models
+
+## v1.4.477 (2026-09-03)
+
+### PR [#2211](https://github.com/danielmiessler/Fabric/pull/2211) by [ksylvan](https://github.com/ksylvan): fix: prevent pattern loader temporary directory leaks
+
+- Prevent pattern loader leaks by lazily creating temporary directories during database population and cleaning them up after successful or failed downloads.
+- Add regression tests for lazy directory creation and cleanup.
+
+## v1.4.476 (2026-09-03)
+
+### PR [#2210](https://github.com/danielmiessler/Fabric/pull/2210) by [ksylvan](https://github.com/ksylvan): feat: add Pzero as an OpenAI-compatible AI provider
+
+- Added Pzero as an OpenAI-compatible AI provider.
+- Registered Pzero with its OpenAI-compatible API base URL.
+- Added Pzero to the README’s list of supported AI providers.
+
+## v1.4.475 (2026-09-03)
+
+### PR [#2209](https://github.com/danielmiessler/Fabric/pull/2209) by [kadiryildiz283](https://github.com/kadiryildiz283): feat(i18n): add Turkish (tr) translation
+
+- Feat(i18n): add Turkish (tr) translation
+
+## v1.4.474 (2026-09-02)
+
+### PR [#2206](https://github.com/danielmiessler/Fabric/pull/2206) by [ksylvan](https://github.com/ksylvan): fix: confine storage names and authenticate Ollama serve
+
+- Reject unsafe cross-platform storage names and directory traversal attempts.
+- Confine symlink targets to configured filesystem storage directories.
+- Require API keys for non-loopback server bindings and authenticate Ollama routes.
+- Validate chat pattern, context, and session names early while preventing internal filesystem details from leaking through client errors.
+- Default the REST server to loopback port 8080 and add regression coverage for traversal, symlink, and authentication security.
+
+## v1.4.473 (2026-08-29)
+
+### PR [#2203](https://github.com/danielmiessler/Fabric/pull/2203) by [pacocartones](https://github.com/pacocartones) and [ksylvan](https://github.com/ksylvan): fix(web): preserve multi-byte UTF-8 split across SSE chunks in chat stream
+
+- Fix: preserve split UTF-8 characters in streaming responses
+- Decode API response chunks with persistent streaming state
+- Reuse streaming decoder when inspecting chat backend events
+
+## v1.4.472 (2026-08-29)
+
+### PR [#2198](https://github.com/danielmiessler/Fabric/pull/2198) by [cuihuan](https://github.com/cuihuan): feat(providers): add Synthorai as an OpenAI-compatible provider
+
+- Feat(providers): add Synthorai as an OpenAI-compatible provider
+
+### Direct commits
+
+- Chore: delete generate_changelog noise in README.
+
+## v1.4.471 (2026-08-28)
+
+### PR [#2200](https://github.com/danielmiessler/Fabric/pull/2200) by [ksylvan](https://github.com/ksylvan): fix: persist Codex OAuth tokens after refresh
+
+- Persist refreshed Codex OAuth tokens securely across processes, writing rotated credentials atomically with cross-process locks.
+- Reload stored tokens before refresh and return valid in-memory tokens first, preventing stale disk values from overwriting fresh credentials.
+- Reuse valid refresh tokens before launching interactive authentication, requiring account identifiers and unexpired tokens for fast-path reuse.
+- Preserve existing environment values, save environment files atomically while holding locks, and enforce secret-only permissions.
+- Reactivate configured vendors and surface configuration and provider failures immediately, with localized Codex prompts and persistence errors.
+
 ## v1.4.470 (2026-08-04)
 
 ### PR [#2186](https://github.com/danielmiessler/Fabric/pull/2186) by [giodamelio](https://github.com/giodamelio): Update Nixpkgs version for newer Go version

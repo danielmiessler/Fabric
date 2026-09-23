@@ -145,6 +145,9 @@ export class ChatService {
 
 			return response;
 		};
+		// Persistent decoder: a multi-byte UTF-8 rune split across network chunks is
+		// otherwise decoded as two halves and corrupted into U+FFFD before it is buffered.
+		const decoder = new TextDecoder();
 		return new ReadableStream({
 			async start(controller) {
 				try {
@@ -152,7 +155,7 @@ export class ChatService {
 						const { done, value } = await reader.read();
 						if (done) break;
 
-						buffer += new TextDecoder().decode(value);
+						buffer += decoder.decode(value, { stream: true });
 						const segments = buffer.split("\n\n");
 						// Last segment may be incomplete; keep it as buffer
 						buffer = segments.pop() || "";

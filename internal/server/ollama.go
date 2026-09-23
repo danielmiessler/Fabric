@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"io"
 	"log"
+	"log/slog"
 	"math"
 	"net/http"
 	"net/url"
@@ -45,6 +46,7 @@ type APIConvert struct {
 	registry *core.PluginRegistry
 	r        *gin.Engine
 	addr     *string
+	apiKey   string
 }
 
 type OllamaRequestBody struct {
@@ -188,12 +190,49 @@ func parseOllamaNumCtx(options map[string]any) (int, error) {
 	return contextLength, nil
 }
 
-func ServeOllama(registry *core.PluginRegistry, address string, version string) (err error) {
+// fabricChatClient sends the /api/chat self-forward, which can contain
+// the configured API key. It does not use a proxy, because the default
+// transport obeys HTTP_PROXY and can send the key to the proxy. It does
+// not obey redirects, and cannot send the key again to a location that
+// the operator did not configure.
+var fabricChatClient = newFabricChatClient()
+
+func newFabricChatClient() *http.Client {
+	transport := http.DefaultTransport.(*http.Transport).Clone()
+	transport.Proxy = nil
+	return &http.Client{
+		Transport: transport,
+		CheckRedirect: func(*http.Request, []*http.Request) error {
+			return http.ErrUseLastResponse
+		},
+	}
+}
+
+// ServeOllama operates the Ollama-compatible API server on address. An
+// empty apiKey sets authentication to off. This is permitted only for
+// loopback binds.
+func ServeOllama(registry *core.PluginRegistry, address string, version string, apiKey string) error {
+	if err := requireAPIKeyForBind(address, apiKey); err != nil {
+		return err
+	}
+	return newOllamaEngine(registry, address, version, apiKey).Run(address)
+}
+
+// newOllamaEngine makes the engine but does not start it, which lets
+// tests operate the routes. The address parameter is the /api/chat
+// forward target, not the listen address that Run gets. In production
+// the two are the same value.
+func newOllamaEngine(registry *core.PluginRegistry, address string, version string, apiKey string) *gin.Engine {
 	r := gin.New()
 
 	// Middleware
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
+	if apiKey != "" {
+		r.Use(APIKeyMiddleware(apiKey))
+	} else {
+		slog.Warn("Starting Ollama-compatible API server without API key authentication. This may pose security risks.")
+	}
 
 	// Register routes
 	fabricDb := registry.Db
@@ -208,6 +247,7 @@ func ServeOllama(registry *core.PluginRegistry, address string, version string) 
 		registry: registry,
 		r:        r,
 		addr:     &address,
+		apiKey:   apiKey,
 	}
 	// Ollama Endpoints
 	r.GET("/api/tags", typeConversion.ollamaTags)
@@ -216,13 +256,7 @@ func ServeOllama(registry *core.PluginRegistry, address string, version string) 
 	})
 	r.POST("/api/chat", typeConversion.ollamaChat)
 
-	// Start server
-	err = r.Run(address)
-	if err != nil {
-		return err
-	}
-
-	return
+	return r
 }
 
 func (f APIConvert) ollamaTags(c *gin.Context) {
@@ -267,7 +301,7 @@ func (f APIConvert) ollamaChat(c *gin.Context) {
 	err = json.Unmarshal(body, &prompt)
 	if err != nil {
 		log.Printf(i18n.T("ollama_error_unmarshalling_body"), err)
-		c.JSON(http.StatusInternalServerError, gin.H{"error": i18n.T("ollama_error_endpoint")})
+		c.JSON(http.StatusBadRequest, gin.H{"error": i18n.T("ollama_invalid_request_body")})
 		return
 	}
 
@@ -335,14 +369,14 @@ func (f APIConvert) ollamaChat(c *gin.Context) {
 	fabricChatReq, err := json.Marshal(chat)
 	if err != nil {
 		log.Printf(i18n.T("ollama_error_marshalling_body"), err)
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": i18n.T("ollama_failed_create_request")})
 		return
 	}
 	var req *http.Request
 	baseURL, err := buildFabricChatURL(*f.addr)
 	if err != nil {
 		log.Printf(i18n.T("ollama_error_building_chat_url"), err)
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": i18n.T("ollama_failed_create_request")})
 		return
 	}
 	req, err = http.NewRequest("POST", fmt.Sprintf("%s/chat", baseURL), bytes.NewBuffer(fabricChatReq))
@@ -351,13 +385,16 @@ func (f APIConvert) ollamaChat(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": i18n.T("ollama_failed_create_request")})
 		return
 	}
+	if f.apiKey != "" {
+		req.Header.Set(APIKeyHeader, f.apiKey)
+	}
 
 	req = req.WithContext(c.Request.Context())
 
-	fabricRes, err := http.DefaultClient.Do(req)
+	fabricRes, err := fabricChatClient.Do(req)
 	if err != nil {
 		log.Printf(i18n.T("ollama_error_getting_chat_body"), err)
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": i18n.T("ollama_upstream_request_failed")})
 		return
 	}
 	defer fabricRes.Body.Close()

@@ -3,8 +3,10 @@ package fsdb
 import (
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 
+	"github.com/danielmiessler/fabric/internal/i18n"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -179,6 +181,88 @@ func TestPatternsEntity_Save(t *testing.T) {
 	assert.Equal(t, content, data)
 }
 
+// Save must reject a name that loadPattern uses as a filesystem path,
+// and that includes a traversal name. For such a name,
+// GetApplyVariables reads from the disk, not from the database.
+func TestPatternsEntity_SaveRejectsFilePathNames(t *testing.T) {
+	entity, cleanup := setupTestPatternsEntity(t)
+	defer cleanup()
+
+	for _, name := range []string{"..", ".foo", "..bar", "~bar", "/abs/path", `\win\path`} {
+		err := entity.Save(name, []byte("pwned"))
+		assert.Error(t, err, "expected error for file-path name: %q", name)
+		if strings.HasPrefix(name, "/") || strings.HasPrefix(name, `\`) {
+			// If Save accepts an absolute name, it does not write in
+			// entity.Dir, and the join below points to the incorrect
+			// location. For these two names, only the error assertion
+			// gives protection.
+			continue
+		}
+		// For ".." this path is the system.md of the parent directory,
+		// which Save makes if it accepts a traversal name.
+		_, statErr := os.Stat(filepath.Join(entity.Dir, name, entity.SystemPatternFile))
+		assert.True(t, os.IsNotExist(statErr), "wrote a pattern file for: %q", name)
+	}
+}
+
+// Rename must reject a file-path-like destination, the same as Save.
+// The inherited StorageEntity.Rename accepts such a destination.
+func TestPatternsEntity_RenameRejectsFilePathDestination(t *testing.T) {
+	entity, cleanup := setupTestPatternsEntity(t)
+	defer cleanup()
+
+	createTestPattern(t, entity, "good-name", "content")
+	for _, newName := range []string{".foo", "~bar"} {
+		err := entity.Rename("good-name", newName)
+		var invalidName *InvalidStorageNameError
+		require.ErrorAs(t, err, &invalidName, "expected rejection for destination: %q", newName)
+		_, statErr := os.Stat(filepath.Join(entity.Dir, newName))
+		assert.True(t, os.IsNotExist(statErr), "renamed to: %q", newName)
+	}
+
+	// A valid destination still works.
+	require.NoError(t, entity.Rename("good-name", "better-name"))
+	_, err := os.Stat(filepath.Join(entity.Dir, "better-name"))
+	require.NoError(t, err)
+}
+
+// Save must not write through a symlinked pattern directory or a
+// symlinked pattern file that points outside the storage tree.
+func TestPatternsEntity_SaveRejectsSymlinkEscape(t *testing.T) {
+	entity, cleanup := setupTestPatternsEntity(t)
+	defer cleanup()
+
+	outsideDir := t.TempDir()
+	mustSymlink(t, outsideDir, filepath.Join(entity.Dir, "linked-dir"))
+	err := entity.Save("linked-dir", []byte("pwned"))
+	var invalidName *InvalidStorageNameError
+	require.ErrorAs(t, err, &invalidName)
+	_, statErr := os.Stat(filepath.Join(outsideDir, entity.SystemPatternFile))
+	assert.True(t, os.IsNotExist(statErr), "wrote through the symlinked pattern dir")
+
+	outsideFile := filepath.Join(outsideDir, "target.md")
+	require.NoError(t, os.WriteFile(outsideFile, []byte("keep"), 0o644))
+	require.NoError(t, os.MkdirAll(filepath.Join(entity.Dir, "real-pattern"), 0o755))
+	mustSymlink(t, outsideFile, filepath.Join(entity.Dir, "real-pattern", entity.SystemPatternFile))
+	err = entity.Save("real-pattern", []byte("pwned"))
+	require.ErrorAs(t, err, &invalidName)
+	got, readErr := os.ReadFile(outsideFile)
+	require.NoError(t, readErr)
+	assert.Equal(t, "keep", string(got), "outside pattern file was overwritten")
+}
+
+func TestGetApplyVariables_FromFile(t *testing.T) {
+	entity, cleanup := setupTestPatternsEntity(t)
+	defer cleanup()
+
+	path := filepath.Join(t.TempDir(), "fromfile.md")
+	require.NoError(t, os.WriteFile(path, []byte("Hello {{input}}"), 0o644))
+
+	result, err := entity.GetApplyVariables(path, nil, "world")
+	require.NoError(t, err)
+	assert.Equal(t, "Hello world", result.Pattern)
+}
+
 func TestPatternsEntity_CustomPatterns(t *testing.T) {
 	// Create main patterns directory
 	mainDir, err := os.MkdirTemp("", "test-main-patterns-*")
@@ -333,20 +417,43 @@ func TestPrintPattern(t *testing.T) {
 }
 
 func TestGetFromDB_PathTraversal(t *testing.T) {
+	if _, err := i18n.Init("en"); err != nil {
+		t.Fatalf("i18n.Init() error = %v", err)
+	}
+
 	entity, cleanup := setupTestPatternsEntity(t)
 	defer cleanup()
 
-	traversalNames := []string{
-		"../etc/passwd",
-		"../../secret",
-		"foo/../bar",
-		"..",
-		"valid/../../../etc/shadow",
+	for _, name := range invalidStorageNames {
+		t.Run(name, func(t *testing.T) {
+			_, err := entity.GetRaw(name)
+			require.Error(t, err, "expected error for traversal name: %q", name)
+			assert.Contains(t, err.Error(), "invalid pattern name", "wrong error for: %q", name)
+			var invalidName *InvalidStorageNameError
+			assert.ErrorAs(t, err, &invalidName, "want typed rejection for: %q", name)
+		})
 	}
-	for _, name := range traversalNames {
-		_, err := entity.GetRaw(name)
-		assert.Error(t, err, "expected error for traversal name: %q", name)
-		assert.Contains(t, err.Error(), "invalid pattern name", "wrong error for: %q", name)
+}
+
+// A ".." in a name without separators is one safe path element.
+// ValidateStorageName accepts it, and getFromDB also accepts it.
+func TestGetFromDB_AllowsDotsWithinName(t *testing.T) {
+	entity, cleanup := setupTestPatternsEntity(t)
+	defer cleanup()
+
+	createTestPattern(t, entity, "foo..bar", "dotty {{input}}")
+
+	pattern, err := entity.GetRaw("foo..bar")
+	require.NoError(t, err)
+	assert.Equal(t, "dotty {{input}}", pattern.Pattern)
+}
+
+func TestLooksLikePatternFilePath(t *testing.T) {
+	for _, source := range []string{"/x", `~\x`, `\x`, `.\x`, "~", ".", ".."} {
+		assert.True(t, LooksLikePatternFilePath(source), "expected file-path detection for: %q", source)
+	}
+	for _, source := range []string{"", "pattern", "foo..bar", "a/b", "x~y", "x.y"} {
+		assert.False(t, LooksLikePatternFilePath(source), "unexpected file-path detection for: %q", source)
 	}
 }
 

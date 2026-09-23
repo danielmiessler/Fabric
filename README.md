@@ -363,6 +363,7 @@ Fabric supports a wide range of AI providers:
 - Abacus
 - AIML
 - Cerebras
+- Cheaper Inference
 - DeepSeek
 - DigitalOcean
 - GitHub Models

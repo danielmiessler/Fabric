@@ -704,6 +704,7 @@ Application Options:
   -g, --language=                   Specify the Language Code for the chat, e.g. -g=en -g=zh -g=pt-BR -g=pt-PT
   -u, --scrape_url=                 Scrape website URL to markdown using Jina AI
   -q, --scrape_question=            Search question using Jina AI
+      --serply_search=              Search Google using Serply and send the results to chat
   -e, --seed=                       Seed to be used for LMM generation
   -w, --wipecontext=                Wipe context
   -W, --wipesession=                Wipe session

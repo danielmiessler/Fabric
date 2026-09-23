@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.4.480 (2026-09-23)
+
+### PR [#2224](https://github.com/danielmiessler/Fabric/pull/2224) by [ksylvan](https://github.com/ksylvan): chore: remove GitHub Models provider integration and documentation
+
+- Removed the GitHub Models provider from the compatible provider registry, dropping the integration entirely.
+- Dropped GitHub API version headers from model discovery requests.
+- Replaced GitHub cache fixtures with generic test providers and removed GitHub header verification along with its supporting test utilities.
+- Deleted the GitHub Models setup documentation and the Copilot cross-reference.
+- Removed GitHub Models listings from both the English and Chinese READMEs.
+
 ## v1.4.479 (2026-09-17)
 
 ### PR [#2220](https://github.com/danielmiessler/Fabric/pull/2220) by [jiweiyeah](https://github.com/jiweiyeah): feat(providers): add Y-API as an OpenAI-compatible provider

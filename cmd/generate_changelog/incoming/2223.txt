@@ -1,0 +1,4 @@
+### PR [#2223](https://github.com/danielmiessler/Fabric/pull/2223) by [googio](https://github.com/googio): feat: add Serply web search via --serply_search flag
+
+- Add optional Serply plugin that searches Google and sends the results to chat via the new `--serply_search` flag
+- Add `--serply_search` to the README and the bash, zsh and fish completions

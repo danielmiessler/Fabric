@@ -1,12 +1,7 @@
 ### PR [#2224](https://github.com/danielmiessler/Fabric/pull/2224) by [ksylvan](https://github.com/ksylvan): chore: remove GitHub Models provider integration and documentation
 
-- Chore: remove GitHub Models provider integration and documentation
-
-- Remove GitHub Models from the compatible provider registry.
-- Drop GitHub API version headers from model discovery.
-
-- Replace GitHub cache fixtures with generic test providers.
-- Remove GitHub header tests and supporting test utilities.
-
-- Delete GitHub Models setup documentation and Copilot cross-reference.
-- Remove GitHub Models listings from English and Chinese READMEs.
+- Removed the GitHub Models provider from the compatible provider registry, dropping the integration entirely.
+- Dropped GitHub API version headers from model discovery requests.
+- Replaced GitHub cache fixtures with generic test providers and removed GitHub header verification along with its supporting test utilities.
+- Deleted the GitHub Models setup documentation and the Copilot cross-reference.
+- Removed GitHub Models listings from both the English and Chinese READMEs.

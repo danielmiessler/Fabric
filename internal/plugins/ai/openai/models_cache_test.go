@@ -45,7 +45,7 @@ func writeAgedCache(t *testing.T, dir, provider, fullURL string, models []string
 
 func TestModelsCache_WriteThenReadFresh(t *testing.T) {
 	withTempModelsCache(t)
-	const provider, fullURL = "GitHub", "https://models.github.ai/catalog/models"
+	const provider, fullURL = "TestProvider", "https://example.com/v1/models"
 
 	require.NoError(t, writeModelsCache(provider, fullURL, []string{"a", "b"}))
 
@@ -56,7 +56,7 @@ func TestModelsCache_WriteThenReadFresh(t *testing.T) {
 
 func TestModelsCache_EmptyListNotCached(t *testing.T) {
 	withTempModelsCache(t)
-	const provider, fullURL = "GitHub", "https://models.github.ai/catalog/models"
+	const provider, fullURL = "TestProvider", "https://example.com/v1/models"
 
 	require.NoError(t, writeModelsCache(provider, fullURL, nil))
 
@@ -66,7 +66,7 @@ func TestModelsCache_EmptyListNotCached(t *testing.T) {
 
 func TestModelsCache_ExpiredMissesWithTTLButHitsWithoutAgeLimit(t *testing.T) {
 	dir := withTempModelsCache(t)
-	const provider, fullURL = "GitHub", "https://models.github.ai/catalog/models"
+	const provider, fullURL = "TestProvider", "https://example.com/v1/models"
 	writeAgedCache(t, dir, provider, fullURL, []string{"old"}, 48*time.Hour)
 
 	_, ok := readModelsCache(provider, fullURL, modelsCacheTTL)
@@ -79,9 +79,9 @@ func TestModelsCache_ExpiredMissesWithTTLButHitsWithoutAgeLimit(t *testing.T) {
 
 func TestModelsCache_DifferentURLDoesNotCollide(t *testing.T) {
 	withTempModelsCache(t)
-	require.NoError(t, writeModelsCache("GitHub", "https://a/models", []string{"a"}))
+	require.NoError(t, writeModelsCache("TestProvider", "https://a/models", []string{"a"}))
 
-	_, ok := readModelsCache("GitHub", "https://b/models", 0)
+	_, ok := readModelsCache("TestProvider", "https://b/models", 0)
 	assert.False(t, ok)
 }
 
@@ -95,9 +95,9 @@ func TestFetchModelsDirectly_ServesFreshCacheWithoutRequest(t *testing.T) {
 	}))
 	defer srv.Close()
 
-	writeAgedCache(t, dir, "GitHub", modelsURLFor(t, srv.URL), []string{"cached-model"}, time.Minute)
+	writeAgedCache(t, dir, "TestProvider", modelsURLFor(t, srv.URL), []string{"cached-model"}, time.Minute)
 
-	models, err := FetchModelsDirectly(context.Background(), srv.URL, "key", "GitHub", nil)
+	models, err := FetchModelsDirectly(context.Background(), srv.URL, "key", "TestProvider", nil)
 	assert.NoError(t, err)
 	assert.Equal(t, []string{"cached-model"}, models)
 	assert.False(t, called, "fresh cache should prevent the network call")
@@ -114,9 +114,9 @@ func TestFetchModelsDirectly_429ServesStaleCache(t *testing.T) {
 	defer srv.Close()
 
 	// Stale so the TTL check misses and the request is actually made.
-	writeAgedCache(t, dir, "GitHub", modelsURLFor(t, srv.URL), []string{"stale-model"}, 48*time.Hour)
+	writeAgedCache(t, dir, "TestProvider", modelsURLFor(t, srv.URL), []string{"stale-model"}, 48*time.Hour)
 
-	models, err := FetchModelsDirectly(context.Background(), srv.URL, "key", "GitHub", nil)
+	models, err := FetchModelsDirectly(context.Background(), srv.URL, "key", "TestProvider", nil)
 	assert.NoError(t, err)
 	assert.Equal(t, []string{"stale-model"}, models)
 }
@@ -131,7 +131,7 @@ func TestFetchModelsDirectly_429NoCacheCleanError(t *testing.T) {
 	}))
 	defer srv.Close()
 
-	_, err := FetchModelsDirectly(context.Background(), srv.URL, "key", "GitHub", nil)
+	_, err := FetchModelsDirectly(context.Background(), srv.URL, "key", "TestProvider", nil)
 	require.Error(t, err)
 	assert.Contains(t, err.Error(), "rate limit")
 	assert.Contains(t, err.Error(), "60")
@@ -153,13 +153,13 @@ func TestFetchModelsDirectly_WritesCacheOnSuccess(t *testing.T) {
 	}))
 	defer srv.Close()
 
-	models, err := FetchModelsDirectly(context.Background(), srv.URL, "key", "GitHub", nil)
+	models, err := FetchModelsDirectly(context.Background(), srv.URL, "key", "TestProvider", nil)
 	require.NoError(t, err)
 	assert.Equal(t, []string{"m1"}, models)
 
 	// Cache is fresh now, so even with the server failing we get the cached list.
 	fail = true
-	models, err = FetchModelsDirectly(context.Background(), srv.URL, "key", "GitHub", nil)
+	models, err = FetchModelsDirectly(context.Background(), srv.URL, "key", "TestProvider", nil)
 	require.NoError(t, err)
 	assert.Equal(t, []string{"m1"}, models)
 }

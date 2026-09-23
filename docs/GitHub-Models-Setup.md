@@ -1,3 +1,12 @@
+> [!WARNING]
+> **GitHub Models has been retired**
+>
+> GitHub announced that **GitHub Models was fully retired on July 30, 2026**. The GitHub Models playground, model catalog, inference API, and BYOK endpoints are no longer available for any customers. 
+>
+> As a result, the setup instructions in this document are no longer supported and are preserved for historical reference only. For AI model access, consider using **Microsoft Foundry** or other supported model providers.
+>
+> For official details, see: https://github.blog/changelog/2026-07-01-github-models-is-being-fully-retired-on-july-30-2026/
+
 # GitHub Models Setup Guide for Fabric
 
 This guide will walk you through setting up and using GitHub Models with Fabric CLI. GitHub Models provides free access to multiple AI models from OpenAI, Meta, Microsoft, DeepSeek, xAI, and other providers using only your GitHub credentials.

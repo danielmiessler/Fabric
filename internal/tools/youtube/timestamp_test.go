@@ -59,3 +59,33 @@ func TestShouldIncludeRepeat(t *testing.T) {
 		}
 	}
 }
+
+func TestParseFFmpegFrameTimes(t *testing.T) {
+	logOutput := `
+[Parsed_showinfo_1 @ 0x1] n:   0 pts:      0 pts_time:0
+[Parsed_showinfo_1 @ 0x1] n:   1 pts:    500 pts_time:0.5
+[Parsed_showinfo_1 @ 0x1] n:   2 pts:   2500 pts_time:2.5
+`
+
+	frameTimes := parseFFmpegFrameTimes(logOutput)
+	if len(frameTimes) != 3 {
+		t.Fatalf("expected 3 frame times, got %d", len(frameTimes))
+	}
+	if frameTimes[0] != 0 || frameTimes[1] != 0.5 || frameTimes[2] != 2.5 {
+		t.Fatalf("unexpected frame times: %#v", frameTimes)
+	}
+}
+
+func TestVisualCueRange_UsesActualFrameTimes(t *testing.T) {
+	frameTimes := []float64{0, 0.5, 2.5}
+
+	start0, end0 := visualCueRange(frameTimes, 0)
+	if start0 != "00:00:00.000" || end0 != "00:00:00.499" {
+		t.Fatalf("unexpected first cue range: %s --> %s", start0, end0)
+	}
+
+	start1, end1 := visualCueRange(frameTimes, 1)
+	if start1 != "00:00:00.500" || end1 != "00:00:02.499" {
+		t.Fatalf("unexpected second cue range: %s --> %s", start1, end1)
+	}
+}

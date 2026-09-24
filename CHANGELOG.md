@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.4.481 (2026-09-24)
+
+### PR [#2226](https://github.com/danielmiessler/Fabric/pull/2226) by [ksylvan](https://github.com/ksylvan): feat: add Claude Code provider through the local CLI
+
+- Added a Claude Code CLI provider that authenticates through an existing local subscription login.
+- Added support for streaming responses, model selection, and configurable thinking effort.
+- Added handling for local images and base64 attachments via temporary files.
+- Stripped Anthropic environment variables to preserve subscription-based billing.
+- Added Claude Opus 5.5 with extended context support.
+
 ## v1.4.480 (2026-09-23)
 
 ### PR [#2224](https://github.com/danielmiessler/Fabric/pull/2224) by [ksylvan](https://github.com/ksylvan): chore: remove GitHub Models provider integration and documentation

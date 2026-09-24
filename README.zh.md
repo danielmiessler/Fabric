@@ -348,6 +348,7 @@ fabric --setup
 - OpenAI（包括 O1 和 O3 序列）
 - OpenAI Codex
 - Anthropic (Claude)
+- Claude Code（通过本地 `claude` CLI 使用 Claude 订阅）
 - Google Gemini
 - Ollama（本地模型）
 - Azure OpenAI

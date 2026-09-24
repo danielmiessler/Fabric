@@ -55,6 +55,7 @@ func NewClient() (ret *Client) {
 	ret.defaultRequiredUserMessage = "Hi"
 	ret.models = []string{
 		// The following are the current supported models
+		string(anthropic.ModelClaudeOpus5_5),
 		string(anthropic.ModelClaudeFable5),
 		string(anthropic.ModelClaudeSonnet5),
 		string(anthropic.ModelClaudeOpus5),
@@ -85,6 +86,7 @@ func NewClient() (ret *Client) {
 	const context1M = "context-1m-2025-08-07"
 	ret.modelBetas = map[string][]string{
 		// Claude 5 family
+		string(anthropic.ModelClaudeOpus5_5): {context1M},
 		string(anthropic.ModelClaudeFable5):  {context1M},
 		string(anthropic.ModelClaudeOpus5):   {context1M},
 		string(anthropic.ModelClaudeSonnet5): {context1M},

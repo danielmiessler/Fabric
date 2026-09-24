@@ -374,6 +374,7 @@ Fabric supports a wide range of AI providers:
 - Novita AI
 - OpenRouter
 - Pzero
+- Requesty
 - SiliconCloud
 - Synthorai
 - Together

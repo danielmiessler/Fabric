@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.4.482 (2026-09-25)
+
+### PR [#2228](https://github.com/danielmiessler/Fabric/pull/2228) by [ksylvan](https://github.com/ksylvan): refactor: simplify Ollama chat prompt building and error replies
+
+- Refactored Ollama prompt construction to unify message joining using `strings.Builder`.
+- Centralized error handling and responses while preserving streaming and JSON output formats.
+- Added tests covering streaming errors and multiple-message forwarding.
+
 ## v1.4.481 (2026-09-24)
 
 ### PR [#2226](https://github.com/danielmiessler/Fabric/pull/2226) by [ksylvan](https://github.com/ksylvan): feat: add Claude Code provider through the local CLI

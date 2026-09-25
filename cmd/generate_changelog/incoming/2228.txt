@@ -1,5 +1,0 @@
-### PR [#2228](https://github.com/danielmiessler/Fabric/pull/2228) by [ksylvan](https://github.com/ksylvan): refactor: simplify Ollama chat prompt building and error replies
-
-- Refactored Ollama prompt construction to unify message joining using `strings.Builder`.
-- Centralized error handling and responses while preserving streaming and JSON output formats.
-- Added tests covering streaming errors and multiple-message forwarding.

@@ -348,6 +348,7 @@ fabric --setup
 - OpenAI（包括 O1 和 O3 序列）
 - OpenAI Codex
 - Anthropic (Claude)
+- Claude Code（通过本地 `claude` CLI 使用 Claude 订阅）
 - Google Gemini
 - Ollama（本地模型）
 - Azure OpenAI
@@ -358,7 +359,7 @@ fabric --setup
 
 **OpenAI 兼容供应商：**
 
-- Abacus、AIML、Cerebras、DeepSeek、DigitalOcean、GitHub Models、GrokAI、Groq、Langdock、LiteLLM、MiniMax、Mistral、Novita AI、OpenCode Go、OpenCode Zen、OpenRouter、SiliconCloud、Synthorai、Together、Venice AI、Y-API、Z AI
+- Abacus、AIML、Cerebras、DeepSeek、DigitalOcean、GrokAI、Groq、Langdock、LiteLLM、MiniMax、Mistral、Novita AI、OpenRouter、SiliconCloud、Synthorai、Together、Venice AI、Y-API、Z AI
 
 运行 `fabric --setup` 配置首选供应商，或使用 `fabric --listvendors` 查看所有可用供应商。
 

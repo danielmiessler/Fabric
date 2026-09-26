@@ -354,6 +354,11 @@ func (c *Client) sendChatMessageStream(ctx context.Context, conversationID, mess
 // parseSSEStream parses the Server-Sent Events stream from Copilot.
 func (c *Client) parseSSEStream(reader io.Reader, channel chan domain.StreamUpdate) error {
 	scanner := bufio.NewScanner(reader)
+	// Copilot SSE frames carry the cumulative message-so-far on a single
+	// "data: {json}" line, so a long response can exceed the default 64 KiB
+	// token limit and abort the scan with bufio.ErrTooLong. Grow the buffer,
+	// mirroring internal/server/ollama.go.
+	scanner.Buffer(make([]byte, 0, 64*1024), 1024*1024)
 	var lastMessageText string
 
 	for scanner.Scan() {

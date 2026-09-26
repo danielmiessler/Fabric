@@ -1,6 +1,9 @@
 package restapi
 
-import "testing"
+import (
+	"errors"
+	"testing"
+)
 
 func TestBuildPromptChatRequest_PreservesStrategyAndUserInput(t *testing.T) {
 	prompt := PromptRequest{
@@ -41,5 +44,74 @@ func TestBuildPromptChatRequest_PreservesStrategyAndUserInput(t *testing.T) {
 	}
 	if got := request.PatternVariables["topic"]; got != "pipelines" {
 		t.Fatalf("expected variables to be preserved, got %q", got)
+	}
+}
+
+func TestUnreportedSendError(t *testing.T) {
+	patternErr := errors.New("could not get pattern write_essay: missing required variable: author_name")
+
+	tests := []struct {
+		name        string
+		sendErr     error
+		sawError    bool
+		wantReport  bool
+		wantContent string
+	}{
+		{
+			// A pattern that needs a variable the request does not give fails
+			// before Send starts to stream, so no error reached the client yet.
+			// This is the only chance to tell the client about it.
+			name:        "error before the stream reaches the client",
+			sendErr:     patternErr,
+			sawError:    false,
+			wantReport:  true,
+			wantContent: "Error: " + patternErr.Error(),
+		},
+		{
+			// Send gives a stream error to the update channel and also returns
+			// it. The client has it already, so a second report would show the
+			// same failure twice.
+			name:       "error during the stream is not sent again",
+			sendErr:    errors.New("vendor stream failed"),
+			sawError:   true,
+			wantReport: false,
+		},
+		{
+			name:       "no error and no report",
+			sendErr:    nil,
+			sawError:   false,
+			wantReport: false,
+		},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			sendErrChan := make(chan error, 1)
+			if test.sendErr != nil {
+				sendErrChan <- test.sendErr
+			}
+
+			response, ok := unreportedSendError(sendErrChan, test.sawError)
+
+			if ok != test.wantReport {
+				t.Fatalf("want report=%v, got %v", test.wantReport, ok)
+			}
+			if !test.wantReport {
+				return
+			}
+			if response.Type != "error" {
+				t.Errorf("want type %q, got %q", "error", response.Type)
+			}
+			if response.Content != test.wantContent {
+				t.Errorf("want content %q, got %q", test.wantContent, response.Content)
+			}
+		})
+	}
+}
+
+// An empty channel must not block the response, which the client waits for.
+func TestUnreportedSendErrorWithEmptyChannel(t *testing.T) {
+	if _, ok := unreportedSendError(make(chan error, 1), false); ok {
+		t.Error("want no report from an empty channel")
 	}
 }

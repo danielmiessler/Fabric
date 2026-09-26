@@ -116,10 +116,13 @@ export const POST: RequestHandler = async ({ request }) => {
       throw new Error('No response from fabric backend');
     }
 
-    // Create a TransformStream to inspect the data without modifying it
+    // Create a TransformStream to inspect the data without modifying it.
+    // The decoder is persistent and streaming: a multi-byte UTF-8 rune split
+    // across chunks is otherwise logged as two halves corrupted into U+FFFD.
+    const decoder = new TextDecoder();
     const transformStream = new TransformStream({
       transform(chunk, controller) {
-        const text = new TextDecoder().decode(chunk);
+        const text = decoder.decode(chunk, { stream: true });
         if (text.startsWith('data: ')) {
           try {
             const data = JSON.parse(text.slice(6));

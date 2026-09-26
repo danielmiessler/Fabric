@@ -1,9 +1,11 @@
 package restapi
 
 import (
+	"fmt"
 	"maps"
 	"net/http"
 
+	"github.com/danielmiessler/fabric/internal/i18n"
 	"github.com/danielmiessler/fabric/internal/plugins/db/fsdb"
 	"github.com/gin-gonic/gin"
 )
@@ -12,6 +14,22 @@ import (
 type PatternsHandler struct {
 	*StorageHandler[fsdb.Pattern]
 	patterns *fsdb.PatternsEntity
+}
+
+// rejectUnsafePatternName answers a 400 when name is a file-path-like
+// pattern name or does not obey storage-name validation. An empty name
+// passes, because the chat handler guards prompt.PatternName, which is
+// optional.
+func rejectUnsafePatternName(c *gin.Context, name string) bool {
+	if name == "" {
+		return false
+	}
+	if fsdb.LooksLikePatternFilePath(name) || fsdb.ValidateStorageName(name) != nil {
+		setHSTS(c)
+		c.JSON(http.StatusBadRequest, gin.H{"error": fmt.Sprintf(i18n.T("pattern_invalid_name"), name)})
+		return true
+	}
+	return false
 }
 
 // NewPatternsHandler creates a new PatternsHandler
@@ -40,15 +58,19 @@ func NewPatternsHandler(r *gin.Engine, patterns *fsdb.PatternsEntity) (ret *Patt
 // @Produce json
 // @Param name path string true "Pattern name"
 // @Success 200 {object} fsdb.Pattern
+// @Failure 400 {object} map[string]string
 // @Failure 500 {object} map[string]string
 // @Security ApiKeyAuth
 // @Router /patterns/{name} [get]
 func (h *PatternsHandler) Get(c *gin.Context) {
 	name := c.Param("name")
+	if rejectUnsafePatternName(c, name) {
+		return
+	}
 
 	pattern, err := h.patterns.GetRaw(name)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, err.Error())
+		storageError(c, err)
 		return
 	}
 	c.JSON(http.StatusOK, pattern)
@@ -75,6 +97,9 @@ type PatternApplyRequest struct {
 // @Router /patterns/{name}/apply [post]
 func (h *PatternsHandler) ApplyPattern(c *gin.Context) {
 	name := c.Param("name")
+	if rejectUnsafePatternName(c, name) {
+		return
+	}
 
 	var request PatternApplyRequest
 	if err := c.ShouldBindJSON(&request); err != nil {
@@ -93,7 +118,7 @@ func (h *PatternsHandler) ApplyPattern(c *gin.Context) {
 
 	pattern, err := h.patterns.GetApplyVariables(name, variables, request.Input)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, err.Error())
+		storageError(c, err)
 		return
 	}
 	c.JSON(http.StatusOK, pattern)

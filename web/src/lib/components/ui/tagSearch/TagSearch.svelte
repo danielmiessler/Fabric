@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { InputChip } from '@skeletonlabs/skeleton';
+  import TagsInputField from '$lib/components/ui/tagsInput/TagsInputField.svelte';
   import type { PostMetadata } from '$lib/types';
   import type { Post } from '$lib/interfaces/post-interface'
   import PostCard from '$lib/components/posts/PostCard.svelte';
@@ -47,7 +47,7 @@
 
 <div class="container py-12">
 	<div class="my-4">
-		<InputChip
+		<TagsInputField
 			name="tags"
 			placeholder="Filter by tags..."
 			validation={validateTag}

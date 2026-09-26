@@ -4,7 +4,7 @@
   import Card from '$lib/components/ui/cards/card.svelte';
   import { slide } from 'svelte/transition';
   import { elasticOut, quintOut } from 'svelte/easing';
-  import { InputChip } from '@skeletonlabs/skeleton';
+  import TagsInputField from '$lib/components/ui/tagsInput/TagsInputField.svelte';
 
   let cards = false;
   let searchQuery = '';
@@ -48,7 +48,7 @@ Could this be the new component for the search bar?
   	import { Youtube } from 'svelte-youtube-lite';
 	import { slide } from 'svelte/transition';
 	import { elasticOut, quintOut } from 'svelte/easing';
-	import { InputChip } from '@skeletonlabs/skeleton';
+  import TagsInputField from '$lib/components/ui/tagsInput/TagsInputField.svelte';
 
 	let cards = false;
 	let searchQuery = '';
@@ -158,12 +158,11 @@ Could this be the new component for the search bar?
 <div class="mb-6">
   <div class="flex flex-col gap-4">
     <div class="flex flex-col gap-2">
-      <InputChip
+      <TagsInputField
         bind:value={selectedTags}
         name="tags"
         placeholder="Search and press Enter to add tags..."
         validation={validateTag}
-        allowDuplicates={false}
         class="input"
       />
       <div class="tags-container overflow-x-auto pb-2">
@@ -193,7 +192,7 @@ Could this be the new component for the search bar?
 
 {#if filteredPosts.length === 0}
   {#if !visible}
-    <aside class="alert variant-ghost">
+    <aside class="alert preset-tonal">
       <div>(icon)</div>
       <slot:fragment href="./+error.svelte" />
       <div class="alert-actions">(buttons)</div>

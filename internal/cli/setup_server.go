@@ -5,6 +5,10 @@ import (
 	restapi "github.com/danielmiessler/fabric/internal/server"
 )
 
+// serveOllama is a seam for tests, because the real entry point blocks
+// on a listening socket.
+var serveOllama = restapi.ServeOllama
+
 // handleSetupAndServerCommands handles setup and server-related commands
 // Returns (handled, error) where handled indicates if a command was processed and should exit
 func handleSetupAndServerCommands(currentFlags *Flags, registry *core.PluginRegistry, version string) (handled bool, err error) {
@@ -22,7 +26,7 @@ func handleSetupAndServerCommands(currentFlags *Flags, registry *core.PluginRegi
 
 	if currentFlags.ServeOllama {
 		registry.ConfigureVendors()
-		err = restapi.ServeOllama(registry, currentFlags.ServeAddress, version)
+		err = serveOllama(registry, currentFlags.ServeAddress, version, currentFlags.ServeAPIKey)
 		return true, err
 	}
 

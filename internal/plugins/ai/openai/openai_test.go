@@ -12,6 +12,12 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func TestNeedsRawModeGPT6(t *testing.T) {
+	if !NewClient().NeedsRawMode("gpt-6-astra") {
+		t.Fatal("gpt-6 models should use raw mode")
+	}
+}
+
 func TestBuildResponseRequestWithMaxTokens(t *testing.T) {
 
 	var msgs []*chat.ChatCompletionMessage

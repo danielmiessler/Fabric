@@ -415,7 +415,6 @@ Copilot indexes data from Microsoft 365 services. There may be a delay between w
 
 - [Fabric README](../README.md)
 - [Contexts and Sessions Tutorial](./contexts-and-sessions-tutorial.md)
-- [Other Vendor Setup Guides](./GitHub-Models-Setup.md)
 
 ---
 

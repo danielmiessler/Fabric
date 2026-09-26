@@ -59,13 +59,6 @@ type PatternsLoader struct {
 
 func (o *PatternsLoader) configure() (err error) {
 	o.pathPatternsPrefix = fmt.Sprintf("%v/", o.DefaultFolder.Value)
-	// Use a consistent temp folder name regardless of the source path structure
-	tempDir, err := os.MkdirTemp("", "fabric-patterns-")
-	if err != nil {
-		return fmt.Errorf(i18n.T("patterns_failed_create_temp_folder"), err)
-	}
-	o.tempPatternsFolder = tempDir
-
 	return
 }
 
@@ -95,6 +88,15 @@ func (o *PatternsLoader) PopulateDB() (err error) {
 	fmt.Printf(i18n.T("patterns_downloading"), o.Patterns.Dir)
 	fmt.Println()
 	fmt.Println()
+
+	// Create the temp folder here, not in configure(), so invocations that
+	// do not download patterns do not leak an empty directory (issue #2190).
+	var tempDir string
+	if tempDir, err = os.MkdirTemp("", "fabric-patterns-"); err != nil {
+		return fmt.Errorf(i18n.T("patterns_failed_create_temp_folder"), err)
+	}
+	o.tempPatternsFolder = tempDir
+	defer os.RemoveAll(tempDir)
 
 	originalPath := o.DefaultFolder.Value
 	if err = o.gitCloneAndCopy(); err != nil {

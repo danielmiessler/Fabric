@@ -39,13 +39,17 @@ docker run --rm -it -v $PWD/.env:/root/.config/fabric/.env fabric -p your-patter
 
 ## Running the server
 
-Expose port 8080 to use Fabric's REST API:
+Expose port 8080 to use Fabric's REST API. In a container, bind all
+interfaces with `--address :8080` so the mapped port can reach the
+server, and set an API key, which is mandatory for non-loopback binds:
 
 ```bash
-docker run --rm -it -p 8080:8080 -v $HOME/.fabric-config:/root/.config/fabric fabric --serve
+docker run --rm -it -p 8080:8080 -v $HOME/.fabric-config:/root/.config/fabric \
+  -e FABRIC_API_KEY=your-secret-key fabric --serve --address :8080
 ```
 
-The API will be available at `http://localhost:8080`.
+The API will be available at `http://localhost:8080`. Requests must send
+the key in the `X-API-Key` header.
 
 ## Multi-arch builds and GHCR packages
 

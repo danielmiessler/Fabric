@@ -28,7 +28,12 @@ func (e *publicError) Unwrap() error {
 func (c *Client) errorFromHTTPResponse(statusCode int, body []byte) error {
 	message := extractErrorMessage(body)
 	if statusCode == http.StatusUnauthorized {
-		return errors.New(i18n.T("codex_login_invalid"))
+		err := wrapPublicError(i18n.T("codex_login_invalid"), statusCode, message)
+		// main.go prints only Error(), so show the provider cause after the login sentence.
+		if pe, ok := err.(*publicError); ok {
+			pe.message += " " + pe.cause.Error()
+		}
+		return err
 	}
 	if isUsageLimitMessage(message) {
 		return wrapPublicError(i18n.T("codex_usage_limit_reached"), statusCode, message)
@@ -57,8 +62,7 @@ func (c *Client) mapRequestError(err error) error {
 		return nil
 	}
 
-	var apiErr *openaiapi.Error
-	if errors.As(err, &apiErr) {
+	if apiErr, ok := errors.AsType[*openaiapi.Error](err); ok {
 		body := []byte(apiErr.RawJSON())
 		if len(body) == 0 {
 			body = readAPIErrorBody(apiErr)
@@ -74,11 +78,14 @@ func (c *Client) mapRequestError(err error) error {
 		strings.Contains(lower, "401 unauthorized"),
 		strings.Contains(lower, "refresh token"),
 		strings.Contains(lower, "chatgpt login"):
-		return errors.New(i18n.T("codex_login_invalid"))
+		return &publicError{
+			message: i18n.T("codex_login_invalid") + " " + message,
+			cause:   err,
+		}
 	case isUsageLimitMessage(message):
 		return &publicError{
 			message: i18n.T("codex_usage_limit_reached"),
-			cause:   fmt.Errorf("codex request failed: %w", err),
+			cause:   fmt.Errorf(i18n.T("codex_request_failed"), err),
 		}
 	default:
 		return err
@@ -92,7 +99,7 @@ func wrapPublicError(message string, statusCode int, providerMessage string) err
 
 	return &publicError{
 		message: message,
-		cause:   fmt.Errorf("codex provider error (status %d): %s", statusCode, providerMessage),
+		cause:   fmt.Errorf(i18n.T("codex_provider_error"), statusCode, providerMessage),
 	}
 }
 

@@ -1,8 +1,7 @@
 <script lang='ts'>
-  import { getToastStore } from '@skeletonlabs/skeleton';
+  import { toastStore } from '$lib/store/toast-store';
   import { Button } from "$lib/components/ui/button";
   import Input from '$lib/components/ui/input/Input.svelte';
-  import { Toast } from '@skeletonlabs/skeleton';
 
   let url = '';
   let transcript = '';
@@ -10,7 +9,6 @@
   let error = '';
   let title = '';
 
-  const toastStore = getToastStore();
 
   async function fetchTranscript() {
     function isValidYouTubeUrl(url: string) {
@@ -20,10 +18,7 @@
 
     if (!isValidYouTubeUrl(url)) {
       error = 'Please enter a valid YouTube URL';
-      toastStore.trigger({
-        message: error,
-        background: 'variant-filled-error'
-      });
+      toastStore.error(error);
       return;
     }
 
@@ -59,15 +54,9 @@
   async function copyToClipboard() {
     try {
       await navigator.clipboard.writeText(transcript);
-      toastStore.trigger({
-        message: 'Transcript copied to clipboard!',
-        background: 'variant-filled-success'
-      });
+      toastStore.success('Transcript copied to clipboard!');
     } catch (err) {
-      toastStore.trigger({
-        message: 'Failed to copy transcript',
-        background: 'variant-filled-error'
-      });
+      toastStore.error('Failed to copy transcript');
     }
   }
 </script>
@@ -98,7 +87,6 @@
 {/if}
 
 {#if transcript}
-  <Toast position="l" />
   <div class="space-y-4 border rounded-lg p-4 bg-muted/50 h-96">
     <div class="flex justify-between items-center">
       <h3 class="text-xs font-semibold">{title || 'Transcript'}</h3>

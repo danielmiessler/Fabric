@@ -46,12 +46,14 @@ export const api = {
     const reader = response.body?.getReader();
     if (!reader) throw new Error('Response body is null');
 
+    // Decode in streaming mode: a multi-byte UTF-8 rune split across network
+    // chunks is otherwise decoded as two halves and corrupted into U+FFFD.
     const decoder = new TextDecoder();
     while (true) {
       const { done, value } = await reader.read();
-      yield decoder.decode(value);
-
       if (done) break;
+
+      yield decoder.decode(value, { stream: true });
     }
   }
 };

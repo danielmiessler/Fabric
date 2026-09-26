@@ -24,6 +24,45 @@ type authTransport struct {
 }
 
 func (c *Client) ensureAccessToken(ctx context.Context, forceRefresh bool) (string, string, error) {
+	// Fast path: a valid in-memory token needs no refresh, so avoid the store
+	// lock and disk reload. This also keeps Setup's fresh OAuth tokens from
+	// being overwritten by the stale values still on disk before SaveEnvFile.
+	if !forceRefresh {
+		if access, account, ok := c.currentToken(); ok {
+			return access, account, nil
+		}
+	}
+	if c.WithStoreLock == nil {
+		return c.ensureAccessTokenLocked(ctx, forceRefresh)
+	}
+	var access, account string
+	err := c.WithStoreLock(func() error {
+		var inner error
+		access, account, inner = c.ensureAccessTokenLocked(ctx, forceRefresh)
+		return inner
+	})
+	if err != nil {
+		return "", "", err
+	}
+	return access, account, nil
+}
+
+// currentToken returns the in-memory token when it is present and unexpired.
+// A missing account ID falls through to the locked path, which parses it from
+// the JWT.
+func (c *Client) currentToken() (access string, account string, ok bool) {
+	c.tokenMu.Lock()
+	defer c.tokenMu.Unlock()
+
+	access = strings.TrimSpace(c.AccessToken.Value)
+	account = strings.TrimSpace(c.AccountID.Value)
+	if access == "" || account == "" || tokenNeedsRefresh(access, time.Now()) {
+		return "", "", false
+	}
+	return access, account, true
+}
+
+func (c *Client) ensureAccessTokenLocked(ctx context.Context, forceRefresh bool) (string, string, error) {
 	c.tokenMu.Lock()
 	defer c.tokenMu.Unlock()
 
@@ -61,7 +100,13 @@ func (c *Client) ensureAccessToken(ctx context.Context, forceRefresh bool) (stri
 		c.setSettingValue(c.RefreshToken, refreshed.RefreshToken)
 	}
 	c.setSettingValue(c.AccountID, refreshedAccountID)
-	debuglog.Debug(debuglog.Detailed, "Codex access token refreshed for account=%s\n", refreshedAccountID)
+	if c.TokenPersist != nil {
+		if err := c.TokenPersist(); err != nil {
+			debuglog.Log("Codex token persist failed: %v\n", err)
+			return "", "", fmt.Errorf(i18n.T("codex_token_persist_failed"), err)
+		}
+	}
+	debuglog.Debug(debuglog.Detailed, "Codex access token refreshed account_present=%t\n", refreshedAccountID != "")
 
 	return c.AccessToken.Value, c.AccountID.Value, nil
 }

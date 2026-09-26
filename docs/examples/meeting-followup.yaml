@@ -1,0 +1,9 @@
+# Turn a meeting transcript into a recap email.
+#
+#   cat transcript.txt | fabric --workflow docs/examples/meeting-followup.yaml --copy
+name: meeting-followup
+steps:
+  # Overview, decisions, action items, and owners.
+  - pattern: summarize_meeting
+  # A recap email that you can send, made from the summary.
+  - pattern: create_formal_email

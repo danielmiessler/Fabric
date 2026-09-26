@@ -1,0 +1,18 @@
+# Examine the claims in an article, then write a short summary.
+#
+#   fabric -u "https://example.com/article" | fabric --workflow docs/examples/fact-checked-brief.yaml
+#
+# Each step uses a different model. Change the model and vendor values to
+# models that are available to you. Use `fabric -L` to list them.
+name: fact-checked-brief
+steps:
+  # Examine each claim and give the evidence for and against it.
+  # This step needs a strong model.
+  - pattern: analyze_claims
+    vendor: Anthropic
+    model: claude-opus-5-5
+  # Make a five-sentence summary of the analysis.
+  # A small, fast model is sufficient for this step.
+  - pattern: create_5_sentence_summary
+    vendor: Anthropic
+    model: claude-haiku-4-5

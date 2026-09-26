@@ -1,0 +1,48 @@
+# pnpm 11 and later versions do not read the "pnpm" field in package.json.
+# Keep pnpm settings in this file. See https://pnpm.io/settings
+#
+# The "overrides" field in package.json stays there for npm, which reads it
+# from package.json and writes package-lock.json.
+
+# Each entry below corrects a vulnerable transitive dependency. Do not add
+# version pins for direct dependencies here. Set those in package.json, or the
+# two files can disagree.
+overrides:
+  'tunnel-agent@<0.6.0': '>=0.6.0'
+  'qs@<6.0.4': '>=6.0.4'
+  'qs@<1.0.0': '>=1.0.0'
+  'qs@<6.14.1': '>=6.14.1'
+  'hawk@<3.1.3': '>=3.1.3'
+  'http-signature@<0.10.0': '>=0.10.0'
+  'request@>=2.2.6 <2.47.0': '>=2.68.0'
+  'mime@<1.4.1': '>=1.4.1'
+  'hoek@<4.2.1': '>=4.2.1'
+  'hawk@<9.0.1': '>=9.0.1'
+  'qs@<6.2.4': '>=6.2.4'
+  # Keep the upper bound. Cookie 2.0.0 removed the `parse` and `serialize`
+  # exports, and SvelteKit needs them. Cookie 1.x corrects the vulnerability and
+  # keeps both names.
+  'cookie@<0.7.0': '>=0.7.0 <2.0.0'
+  'tough-cookie@<4.1.3': '>=4.1.3'
+  'nanoid@<3.3.8': '>=3.3.8'
+  'form-data@<2.5.4': '>=2.5.4'
+  'glob@>=10.2.0 <10.5.0': '>=10.5.0'
+  'esbuild@<=0.24.2': '>=0.25.0'
+  '@eslint/plugin-kit@<0.3.4': '>=0.3.4'
+
+peerDependencyRules:
+  allowedVersions:
+    # vite-plugin-tailwind-purgecss 0.3.5 is the most recent release, and its
+    # last change was December 2024. It declares support only through Vite 6,
+    # but it does its work correctly with Vite 8: the plugin decreases the CSS
+    # output from 208 KB to 72 KB. Accept the newer Vite to hide a warning that
+    # gives no information. Remove this rule if the plugin gets a new release,
+    # or when a move to Tailwind 4 makes the plugin unnecessary.
+    'vite-plugin-tailwind-purgecss>vite': '8'
+
+# "allowBuilds" replaces the "onlyBuiltDependencies" list. Each package that
+# runs install scripts needs an entry with the value true. pnpm blocks the
+# scripts of all other packages.
+allowBuilds:
+  esbuild: true
+  svelte-preprocess: true

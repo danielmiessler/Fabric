@@ -1,0 +1,5 @@
+### feat: add API Route as an OpenAI-compatible AI provider
+
+- Added API Route as an OpenAI-compatible AI provider.
+- Registered API Route with its OpenAI-compatible API base URL (https://global.api-route.com/v1).
+- Added API Route to the README list of supported AI providers.

@@ -19,7 +19,7 @@ func (o *Client) sendChatCompletions(ctx context.Context, msgs []*chat.ChatCompl
 	req := o.buildChatCompletionParams(msgs, opts)
 
 	var resp *openai.ChatCompletion
-	if resp, err = o.ApiClient.Chat.Completions.New(ctx, req); err != nil {
+	if resp, err = o.ApiClient.Chat.Completions.New(ctx, req, o.requestOptions(opts.SessionID)...); err != nil {
 		return
 	}
 	if len(resp.Choices) > 0 {
@@ -39,7 +39,7 @@ func (o *Client) sendStreamChatCompletions(
 	req.StreamOptions = openai.ChatCompletionStreamOptionsParam{
 		IncludeUsage: openai.Bool(true),
 	}
-	stream := o.ApiClient.Chat.Completions.NewStreaming(ctx, req)
+	stream := o.ApiClient.Chat.Completions.NewStreaming(ctx, req, o.requestOptions(opts.SessionID)...)
 	for stream.Next() {
 		chunk := stream.Current()
 		if len(chunk.Choices) > 0 && chunk.Choices[0].Delta.Content != "" {

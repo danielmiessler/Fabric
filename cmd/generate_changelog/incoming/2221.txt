@@ -1,0 +1,3 @@
+### PR [#2221](https://github.com/danielmiessler/Fabric/pull/2221) by [jamesf-coder](https://github.com/jamesf-coder): feat: add OpenCode Zen and Go vendors with session routing
+
+- Feat: add OpenCode Zen and Go vendors with session routing

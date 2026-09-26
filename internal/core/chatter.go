@@ -7,6 +7,8 @@ import (
 	"os"
 	"strings"
 
+	"github.com/google/uuid"
+
 	"github.com/danielmiessler/fabric/internal/chat"
 
 	"github.com/danielmiessler/fabric/internal/domain"
@@ -65,6 +67,19 @@ func (o *Chatter) Send(ctx context.Context, request *domain.ChatRequest, opts *d
 	}
 	if session, err = o.BuildSession(request, opts.Raw); err != nil {
 		return
+	}
+
+	// Establish a stable session identifier for the conversation so providers
+	// that support session-based routing can optimize request handling. Named
+	// sessions reuse their name; stateless requests get a fresh UUID. The
+	// guard keeps the value stable when one ChatOptions is reused across
+	// multiple sends (e.g. strategies or tool loops).
+	if opts.SessionID == "" {
+		if session.Name != "" {
+			opts.SessionID = session.Name
+		} else {
+			opts.SessionID = uuid.NewString()
+		}
 	}
 
 	vendorMessages := session.GetVendorMessages()

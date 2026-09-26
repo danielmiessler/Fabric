@@ -15,6 +15,7 @@ require (
 	github.com/go-git/go-git/v5 v5.19.2
 	github.com/go-shiori/go-readability v0.0.0-20251205110129-5db1dc9836f0
 	github.com/google/go-github/v66 v66.0.0
+	github.com/google/uuid v1.6.0
 	github.com/hasura/go-graphql-client v0.16.0
 	github.com/jessevdk/go-flags v1.6.1
 	github.com/joho/godotenv v1.5.1

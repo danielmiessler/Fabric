@@ -95,7 +95,14 @@ func handleChatProcessing(currentFlags *Flags, registry *core.PluginRegistry, me
 
 	result := session.GetLastMessage().Content
 
-	if !currentFlags.Stream || currentFlags.SuppressThink {
+	// Keep only the requested fenced code block; the session still stores the full response
+	if (currentFlags.Extract || currentFlags.ExtractLast) && !(isTTSModel && isAudioOutput) {
+		if code, found := domain.ExtractFencedCodeBlock(result, currentFlags.ExtractLast); found {
+			result = code
+		}
+	}
+
+	if !currentFlags.Stream || currentFlags.SuppressThink || chatOptions.BufferStream {
 		// For TTS models with audio output, show a user-friendly message instead of raw data
 		if isTTSModel && isAudioOutput && strings.HasPrefix(result, "FABRIC_AUDIO_DATA:") {
 			fmt.Printf(i18n.T("tts_audio_generated_successfully"), currentFlags.Output)

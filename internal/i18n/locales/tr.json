@@ -247,6 +247,8 @@
   "extension_type_required": "uzantı türü gerekli",
   "extension_version_label": "  Sürüm: %s\n",
   "extension_warning_load_registry": "Uyarı: uzantı kaydı yüklenemedi: %v\n",
+  "extract_first_code_block": "Yanıttaki yalnızca ilk çitlenmiş kod bloğunu yazdır (bulunamazsa yanıtın tamamı)",
+  "extract_last_code_block": "Yanıttaki yalnızca son çitlenmiş kod bloğunu yazdır (bulunamazsa yanıtın tamamı)",
   "fabric_command_complete": "Fabric Komutu Tamamlandı",
   "fabric_command_complete_with_pattern": "Fabric: %s Tamamlandı",
   "fetch_content_exceeds_limit": "getir: içerik çok büyük: %d baytı aşıyor",

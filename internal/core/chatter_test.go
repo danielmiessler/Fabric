@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"errors"
+	"io"
 	"os"
 	"path/filepath"
 	"testing"
@@ -437,6 +438,54 @@ func TestChatter_Send_StreamingSuccessfulAggregation(t *testing.T) {
 
 	if assistantMessage.Content != expectedMessage {
 		t.Errorf("Expected aggregated message %q, got %q", expectedMessage, assistantMessage.Content)
+	}
+}
+
+func TestChatter_Send_StreamingBufferStreamDoesNotPrint(t *testing.T) {
+	db := fsdb.NewDb(t.TempDir())
+
+	chunks := []domain.StreamUpdate{
+		{Type: domain.StreamTypeContent, Content: "Here:\n```go\n"},
+		{Type: domain.StreamTypeContent, Content: "x := 1\n```\n"},
+	}
+	chatter := &Chatter{
+		db:     db,
+		Stream: true,
+		vendor: &mockVendor{streamChunks: chunks},
+		model:  "test-model",
+	}
+	request := &domain.ChatRequest{
+		Message: &chat.ChatCompletionMessage{
+			Role:    chat.ChatMessageRoleUser,
+			Content: "test message",
+		},
+	}
+	opts := &domain.ChatOptions{
+		Model:        "test-model",
+		BufferStream: true,
+	}
+
+	oldStdout := os.Stdout
+	r, w, err := os.Pipe()
+	if err != nil {
+		t.Fatalf("failed to create pipe: %v", err)
+	}
+	os.Stdout = w
+
+	session, sendErr := chatter.Send(context.Background(), request, opts)
+
+	w.Close()
+	os.Stdout = oldStdout
+	printed, _ := io.ReadAll(r)
+
+	if sendErr != nil {
+		t.Fatalf("Expected no error, but got: %v", sendErr)
+	}
+	if len(printed) != 0 {
+		t.Errorf("Expected no stdout output while buffering, got %q", printed)
+	}
+	if got, want := session.GetLastMessage().Content, "Here:\n```go\nx := 1\n```\n"; got != want {
+		t.Errorf("Expected full buffered message %q, got %q", want, got)
 	}
 }
 

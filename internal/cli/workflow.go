@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -201,7 +202,7 @@ func runWorkflow(
 			label, model, vendor, len(stepInput), usedOverride)
 
 		var session *fsdb.Session
-		if session, err = chatter.Send(req, &opts); err != nil {
+		if session, err = chatter.Send(context.Background(), req, &opts); err != nil {
 			return "", stepErr(err)
 		}
 

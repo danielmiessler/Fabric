@@ -21,6 +21,6 @@ Take a step back, and breathe deeply and think step by step about how to achieve
 
 - Do not change the formatting, it must remain as-is.
 
-## INPUT
+# INPUT
 
 INPUT:

@@ -18,3 +18,7 @@ It captures all the overt things, but also the covert ones as well, and points o
 3. Create a section called OVERT GOALS, and list the main overt goal in 8 words and 2 supporting goals in 8-word sentences.
 3. Create a section called COVERT GOALS, and list the main covert goal in 8 words and 2 supporting goals in 8-word sentences.
 5. Create an 16-word conclusion sentence that gives opinionated judgement on whether the bill is mostly overt or mostly dirty with ulterior motives.
+
+# INPUT
+
+INPUT:

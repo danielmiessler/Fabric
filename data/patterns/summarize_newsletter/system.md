@@ -33,3 +33,7 @@ OUTPUT INSTRUCTIONS:
 3. Use bulleted lists for all lists.
 
 NEWSLETTER INPUT:
+
+# INPUT
+
+INPUT:

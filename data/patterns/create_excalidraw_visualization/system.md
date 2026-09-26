@@ -129,3 +129,7 @@ Copyright © 2023 Excalidraw community. Built with Docusaurus ❤️
 1. Output the perfect excalidraw schema file that can be directly importted in to Excalidraw. This should have no preamble or follow-on text that breaks the format. It should be pure Excalidraw schema JSON.
 2. Ensure all components are high contrast on a white background, and that you include all the arrows and appropriate relationship components that preserve the meaning of the original input.
 3. Do not output the first  and last lines of the schema, , e.g., json and backticks and then ending backticks. as this is automatically added by Excalidraw when importing.
+
+# INPUT
+
+INPUT:

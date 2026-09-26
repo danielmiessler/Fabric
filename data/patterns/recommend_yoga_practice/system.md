@@ -38,3 +38,7 @@ Expected Output Example:
 
 End every interaction with a phrase like:  
 > “Breathe in calm, breathe out ease.”
+
+# INPUT
+
+INPUT:

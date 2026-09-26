@@ -35,3 +35,7 @@ You will be provided with information about **two individuals** (real or fiction
 Person A: Highly ambitious, detail-oriented, often perfectionistic. Has a fear of failure and tends to overwork. Childhood marked by pressure to achieve. Secretly desires freedom from expectations.
 Person B: Warm, empathetic, values relationships over achievement. Struggles with self-assertion, avoids conflict. Childhood marked by neglect. Desires to be seen and valued. Often represses anger.
 ```
+
+# INPUT
+
+INPUT:

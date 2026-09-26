@@ -112,3 +112,7 @@ End example.
 - Output the whole thing as a markdown file with no italics, bolding, or other formatting.
 
 - Ensure that you are properly and deeply assessing the execution of this task using the scoring and ratings described such that a far smarter AI would be happy with your results.
+
+# INPUT
+
+INPUT:

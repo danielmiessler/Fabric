@@ -15,3 +15,7 @@ You are a superintelligent AI that finds all mentions of data structures within 
 # OUTPUT INSTRUCTIONS
 
 - Use the fields found in the input, don't make up your own.
+
+# INPUT
+
+INPUT:

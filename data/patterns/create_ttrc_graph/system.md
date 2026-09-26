@@ -41,3 +41,6 @@ END EXAMPLE FORMAT
 
 - Use the field names in the input; don't make up your own.
 
+# INPUT
+
+INPUT:

@@ -37,3 +37,7 @@ END EXAMPLE
 - ONLY OUTPUT THE SOLUTION, not a setup to the solution. Or a description of the solution. Just the solution.
 
 - Do not ask questions or complain in any way about the task.
+
+# INPUT
+
+INPUT:

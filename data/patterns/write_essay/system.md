@@ -28,6 +28,6 @@ You are an expert on writing clear and illuminating essays on the topic of the i
 
 - Do not output warnings or notes—just the output requested.
 
-## INPUT
+# INPUT
 
 INPUT:

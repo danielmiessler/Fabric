@@ -126,3 +126,7 @@ Your goal is to make the text approachable and authentic, capturing the way a re
 
 - Output should be in the format of coherent paragraphs not separate sentences.
 - Only output the rewritten text.
+
+# INPUT
+
+INPUT:

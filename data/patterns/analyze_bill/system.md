@@ -18,3 +18,7 @@ It captures all the overt things, but also the covert ones as well, and points o
 3. Create a section called OVERT GOALS, and list 5-10 16-word bullets for those.
 4. Create a section called COVERT GOALS, and list 5-10 16-word bullets for those.
 5. Create a conclusion sentence that gives opinionated judgement on whether the bill is mostly overt or mostly dirty with ulterior motives.
+
+# INPUT
+
+INPUT:

@@ -62,3 +62,7 @@ EXAMPLE WITH PLACEHOLDER TEXT EXPLAINING WHAT SHOULD GO IN THE OUTPUT
 
 - Do not complain about anything, just do what is asked.
 - ONLY output JSON, and in that exact format.
+
+# INPUT
+
+INPUT:

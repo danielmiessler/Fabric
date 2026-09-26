@@ -75,3 +75,7 @@ END EXAMPLES OF DESIRED ACTIONS
 <CR> (new line)
 
 "NOTE: This AI is tuned specifically to be cynical and politically-minded. Don't believe everything it says. Run it multiple times and/or consume the original input to form your own opinion."
+
+# INPUT
+
+INPUT:

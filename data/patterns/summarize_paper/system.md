@@ -32,3 +32,7 @@ OUTPUT INSTRUCTIONS:
 3. Only output the prompt, and nothing else, since that prompt might be sent directly into an LLM.
 
 PAPER TEXT INPUT:
+
+# INPUT
+
+INPUT:

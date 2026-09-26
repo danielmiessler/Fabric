@@ -12,11 +12,10 @@
   import { Textarea } from "$lib/components/ui/textarea";
   import { obsidianSettings } from "$lib/store/obsidian-store";
   import { featureFlags } from "$lib/config/features";
-  import { getDrawerStore } from '@skeletonlabs/skeleton';
+  import { drawerStore } from '$lib/store/drawer-store';
   import { systemPrompt, selectedPatternName } from "$lib/store/pattern-store";
   import { onMount } from "svelte";
 
-  const drawerStore = getDrawerStore();
   function openDrawer() {
     drawerStore.open({});
   }
@@ -156,7 +155,7 @@
   $: showObsidian = $featureFlags.enableObsidianIntegration;
 </script>
 
-<div class="chat-container flex gap-0 p-2 w-full h-screen">
+<div class="chat-container flex h-full min-h-0 w-full gap-0 p-2">
   <!-- Left Column -->
   <aside class="flex flex-col gap-2 pr-2 left-column" style="width: {leftColumnWidth}%">
     <!-- Dropdowns Group with Model Config -->

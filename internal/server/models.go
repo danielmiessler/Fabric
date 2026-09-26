@@ -34,15 +34,26 @@ func (h *ModelsHandler) GetModelNames(c *gin.Context) {
 	}
 
 	response := make(map[string]any)
-	vendors := make(map[string][]string)
+	response["models"] = h.getAllModelNames(vendorsModels)
+	response["vendors"] = buildVendorsMap(vendorsModels)
+	c.JSON(200, response)
+}
 
+// buildVendorsMap groups the model names by vendor name for the response.
+// A vendor with no models gets an empty slice, not a nil slice, because a nil
+// slice becomes null in JSON and a client that reads the list of a vendor then
+// gets null in place of an array. Ollama does this when it is in the
+// configuration but serves no models.
+func buildVendorsMap(vendorsModels *ai.VendorsModels) map[string][]string {
+	vendors := make(map[string][]string)
 	for _, groupItems := range vendorsModels.GroupsItems {
+		if groupItems.Items == nil {
+			vendors[groupItems.Group] = []string{}
+			continue
+		}
 		vendors[groupItems.Group] = groupItems.Items
 	}
-
-	response["models"] = h.getAllModelNames(vendorsModels)
-	response["vendors"] = vendors
-	c.JSON(200, response)
+	return vendors
 }
 
 func (h *ModelsHandler) getAllModelNames(vendorsModels *ai.VendorsModels) []string {

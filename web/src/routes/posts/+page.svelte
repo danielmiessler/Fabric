@@ -4,7 +4,7 @@
   import Card from '$lib/components/ui/cards/card.svelte';
   import { Youtube } from 'svelte-youtube-lite';
   import PostCard from '$lib/components/posts/PostCard.svelte';
-  import { InputChip } from '@skeletonlabs/skeleton';
+  import TagsInputField from '$lib/components/ui/tagsInput/TagsInputField.svelte';
   import Connections from '$lib/components/ui/connections/Connections.svelte';
   import Button from '$lib/components/ui/button/button.svelte';
 
@@ -148,7 +148,7 @@
     </div>
   </div>
   <br>
-  <div class="rounded-tl-container-token m-auto grid grid-cols-1 gap-4 mt-8">
+  <div class="rounded-tl-container m-auto grid grid-cols-1 gap-4 mt-8">
     <div class="mx-auto max-h-52 max-w-52"><img src="/fabric-logo.png" alt="fabric-logo"></div>
   </div>
   <br>
@@ -160,7 +160,7 @@
 </div>
 <div class="container py-12">
   <div class="my-4">
-    <InputChip
+    <TagsInputField
       name="tags"
       placeholder="Filter by tags..."
       validation={validateTag}

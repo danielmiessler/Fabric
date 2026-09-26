@@ -13,11 +13,10 @@ aliases:
 <script>
   import { Button } from '$lib/components/ui/button';
   import NoteDrawer from '$lib/components/ui/noteDrawer/NoteDrawer.svelte';
-  import { getDrawerStore } from '@skeletonlabs/skeleton';
+  import { drawerStore } from '$lib/store/drawer-store';
   import { page } from '$app/stores';
   import { beforeNavigate } from '$app/navigation';
   
-  const drawerStore = getDrawerStore();
   function openDrawer() {
     drawerStore.open({});
   }
@@ -35,7 +34,7 @@ This is the first post of your new blog, powered by [SvelteKit](/posts/getting-s
 <div class="flex text-inherit justify-start mt-2">
     <Button
         variant="primary"
-        class="btn border variant-filled-primary text-align-center"
+        class="btn border preset-filled-primary-500 text-align-center"
         on:click={openDrawer}
     >Open Drawer
     </Button>

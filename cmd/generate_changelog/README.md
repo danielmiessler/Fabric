@@ -191,7 +191,7 @@ Create a `.env` file next to the `generate_changelog` binary:
 
 ```bash
 GITHUB_TOKEN=your_github_token_here
-FABRIC_CHANGELOG_SUMMARIZE_MODEL=claude-sonnet-4-20250514
+FABRIC_CHANGELOG_SUMMARIZE_MODEL=gpt-5.6-sol
 ```
 
 The tool automatically loads `.env` files for convenient configuration management.
@@ -226,8 +226,8 @@ The tool can generate AI-powered summaries using Fabric for more polished, profe
 # Enable AI summarization
 generate_changelog --ai-summarize
 
-# Custom model (default: claude-sonnet-4-20250514)
-FABRIC_CHANGELOG_SUMMARIZE_MODEL=claude-opus-4 generate_changelog --ai-summarize
+# Custom model (default: claude-opus-5)
+FABRIC_CHANGELOG_SUMMARIZE_MODEL=gpt-5.6-sol generate_changelog --ai-summarize
 ```
 
 ### AI Summary Features

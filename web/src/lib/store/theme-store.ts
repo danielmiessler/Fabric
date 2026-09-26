@@ -1,11 +1,13 @@
 import { writable } from 'svelte/store';
 
+// Skeleton 5 renamed two of these themes: "skeleton" is now "legacy" and
+// "gold-nouveau" is now "nouveau". Each name needs an @import in app.css.
 const themes = [
   'my-custom-theme',
-  'skeleton',
+  'legacy',
   'modern',
   'crimson',
-  'gold-nouveau',
+  'nouveau',
   'hamlindigo',
   'vintage',
   'seafoam',
@@ -16,7 +18,7 @@ const themes = [
 type ThemeType = typeof themes[number];
 
 function createThemeStore() {
-  const { subscribe, set, update } = writable<ThemeType>('skeleton');
+  const { subscribe, set, update } = writable<ThemeType>('legacy');
 
   return {
     subscribe,

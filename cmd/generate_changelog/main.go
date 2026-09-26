@@ -45,6 +45,7 @@ func init() {
 	rootCmd.Flags().BoolVar(&cfg.Push, "push", false, "Enable automatic git push after creating an incoming entry")
 	rootCmd.Flags().BoolVar(&cfg.SyncDB, "sync-db", false, "Synchronize and validate database integrity with git history and GitHub PRs")
 	rootCmd.Flags().StringVar(&cfg.Release, "release", "", "Update GitHub release description with AI summary for version (e.g., v1.2.3)")
+	rootCmd.Flags().BoolVar(&cfg.ClosedOK, "closed-ok", false, "Allow processing a PR that is already closed/merged (skips open-state check)")
 }
 
 func run(cmd *cobra.Command, args []string) error {

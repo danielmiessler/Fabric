@@ -91,7 +91,7 @@ _fabric() {
     '(-U --updatepatterns)'{-U,--updatepatterns}'[Update patterns]' \
     '(-c --copy)'{-c,--copy}'[Copy to clipboard]' \
     '(-m --model)'{-m,--model}'[Choose model]:model:_fabric_models' \
-    '(-V --vendor)'{-V,--vendor}'[Specify vendor for chosen model (e.g., -V "LM Studio" -m openai/gpt-oss-20b)]:vendor:_fabric_vendors' \
+    '(-V --vendor)'{-V,--vendor}'[Specify vendor for the selected model (e.g., -V "LM Studio" -m openai/gpt-oss-20b)]:vendor:_fabric_vendors' \
     '(--modelContextLength)--modelContextLength[Model context length (only affects ollama)]:length:' \
     '(-o --output)'{-o,--output}'[Output to file]:file:_files' \
     '(--output-session)--output-session[Output the entire session to the output file]' \
@@ -126,7 +126,7 @@ _fabric() {
     '(--api-key)--api-key[API key used to secure server routes]:api-key:' \
     '(--config)--config[Path to YAML config file]:config file:_files -g "*.yaml *.yml"' \
     '(--version)--version[Print current version]' \
-    '(--search)--search[Enable web search tool for supported models (Anthropic, OpenAI, Gemini)]' \
+    '(--search)--search[Enable web search tool for supported models (Anthropic, OpenAI, Gemini, Grok)]' \
     '(--search-location)--search-location[Set location for web search results]:location:' \
     '(--image-file)--image-file[Save generated image to specified file path]:image file:_files -g "*.png *.webp *.jpeg *.jpg"' \
     '(--image-size)--image-size[Image dimensions]:size:(1024x1024 1536x1024 1024x1536 auto)' \
@@ -141,6 +141,7 @@ _fabric() {
     '(--listvendors)--listvendors[List all vendors]' \
     '(--voice)--voice[TTS voice name for supported models]:voice:_fabric_gemini_voices' \
     '(--list-gemini-voices)--list-gemini-voices[List all available Gemini TTS voices]' \
+    '(--list-transcription-models)--list-transcription-models[List all available transcription models]' \
     '(--shell-complete-list)--shell-complete-list[Output raw list without headers/formatting (for shell completion)]' \
     '(--suppress-think)--suppress-think[Suppress text enclosed in thinking tags]' \
     '(--think-start-tag)--think-start-tag[Start tag for thinking sections (default: <think>)]:start tag:' \
@@ -149,6 +150,7 @@ _fabric() {
     '(--transcribe-file)--transcribe-file[Audio or video file to transcribe]:audio file:_files -g "*.mp3 *.mp4 *.mpeg *.mpga *.m4a *.wav *.webm"' \
     '(--transcribe-model)--transcribe-model[Model to use for transcription (separate from chat model)]:transcribe model:_fabric_transcription_models' \
     '(--split-media-file)--split-media-file[Split audio/video files larger than 25MB using ffmpeg]' \
+    '(--show-metadata)--show-metadata[Print metadata (input/output tokens) to stderr]' \
     '(--debug)--debug[Set debug level (0=off, 1=basic, 2=detailed, 3=trace, 4=wire)]:debug level:(0 1 2 3 4)' \
     '(--notification)--notification[Send desktop notification when command completes]' \
     '(--notification-command)--notification-command[Custom command to run for notifications]:notification command:' \

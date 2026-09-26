@@ -381,11 +381,13 @@ func (g *Generator) validatePRState(prNumber int) error {
 		return fmt.Errorf("failed to fetch PR %d: %w", prNumber, err)
 	}
 
-	if details.State != "open" {
-		return fmt.Errorf("PR %d is not open (current state: %s)", prNumber, details.State)
+	if details.State != "open" && !g.cfg.ClosedOK {
+		return fmt.Errorf("PR %d is not open (current state: %s); use --closed-ok to process it anyway", prNumber, details.State)
 	}
 
-	if !details.Mergeable {
+	// Only check mergeability for open PRs; GitHub returns nil for closed/merged PRs
+	// which would incorrectly trigger this check even when using --closed-ok
+	if details.State == "open" && !details.Mergeable {
 		return fmt.Errorf("PR %d is not mergeable - please resolve conflicts first", prNumber)
 	}
 

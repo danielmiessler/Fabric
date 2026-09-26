@@ -2108,6 +2108,15 @@
         "EXTRACT",
         "BUSINESS"
       ]
+    },
+    {
+      "patternName": "generate_frontmatter",
+      "description": "Generate YAML frontmatter with tags, aliases and summary for PKM notes.",
+      "tags": [
+        "WRITING",
+        "EXTRACT",
+        "CONVERSION"
+      ]
     }
   ]
 }

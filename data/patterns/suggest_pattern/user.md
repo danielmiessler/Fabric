@@ -702,6 +702,10 @@ Create glossaries of advanced terms with definitions and analogies.
 
 Proofreads and corrects typos, spelling, grammar, and punctuation errors.
 
+### generate_frontmatter
+
+Generate YAML frontmatter with tags, aliases and summary for PKM notes.
+
 ### humanize
 
 Transform technical content into approachable language.

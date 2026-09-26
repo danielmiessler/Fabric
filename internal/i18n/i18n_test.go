@@ -20,6 +20,7 @@ func TestTranslation(t *testing.T) {
 		{"pt", "usa a entrada original, porque não é possível aplicar a legibilidade HTML"},
 		{"fa", "از ورودی اصلی استفاده کن، چون نمی‌توان خوانایی HTML را اعمال کرد"},
 		{"it", "usa l'input originale, perché non è possibile applicare la leggibilità HTML"},
+		{"tr", "html okunabilirliği uygulanamadığından orijinal girdiyi kullanın"},
 	}
 
 	for _, tc := range testCases {

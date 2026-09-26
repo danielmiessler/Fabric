@@ -7,6 +7,7 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"strings"
 	"time"
 
 	"github.com/danielmiessler/fabric/internal/i18n"
@@ -28,8 +29,8 @@ const maxResponseSize = 10 * 1024 * 1024 // 10MB
 
 // FetchModelsDirectly is used to fetch models directly from the API when the
 // standard OpenAI SDK method fails due to a nonstandard format. This is useful
-// for providers that return a direct array of models (e.g., GitHub Models) or
-// other OpenAI-compatible implementations.
+// for providers that return a direct array of models instead of the OpenAI
+// object format.
 // If httpClient is nil, a new client with default settings will be created.
 func FetchModelsDirectly(ctx context.Context, baseURL, apiKey, providerName string, httpClient *http.Client) ([]string, error) {
 	if ctx == nil {
@@ -43,6 +44,13 @@ func FetchModelsDirectly(ctx context.Context, baseURL, apiKey, providerName stri
 	fullURL, err := url.JoinPath(baseURL, "models")
 	if err != nil {
 		return nil, fmt.Errorf(i18n.T("openai_failed_to_create_models_url"), err)
+	}
+
+	// Serve a fresh cached list when available so we do not hit discovery
+	// endpoints that rate-limit.
+	if models, ok := readModelsCache(providerName, fullURL, modelsCacheTTL); ok {
+		debuglog.Debug(debuglog.Detailed, "Using cached models list for %s (%d models)\n", providerName, len(models))
+		return models, nil
 	}
 
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, fullURL, nil)
@@ -62,17 +70,40 @@ func FetchModelsDirectly(ctx context.Context, baseURL, apiKey, providerName stri
 	}
 	resp, err := client.Do(req)
 	if err != nil {
+		// On a network error, fall back to a stale cached list if we have one.
+		if models, ok := readModelsCache(providerName, fullURL, 0); ok {
+			debuglog.Debug(debuglog.Basic, "Fetch failed for %s (%v); serving stale cached models\n", providerName, err)
+			return models, nil
+		}
 		return nil, err
 	}
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
+		// A failing discovery call (commonly HTTP 429 rate limiting) should not
+		// hard-fail when we already have a list cached from a prior success.
+		if models, ok := readModelsCache(providerName, fullURL, 0); ok {
+			debuglog.Debug(debuglog.Basic, "Status %d from %s; serving stale cached models\n", resp.StatusCode, providerName)
+			return models, nil
+		}
+
 		// Read the response body for debugging, but limit the number of bytes read
 		bodyBytes, readErr := io.ReadAll(io.LimitReader(resp.Body, errorResponseLimit))
 		if readErr != nil {
 			return nil, fmt.Errorf(i18n.T("openai_unexpected_status_code_read_error"),
 				resp.StatusCode, providerName, readErr)
 		}
+
+		// Rate limiting often returns an HTML body; surface a concise, actionable
+		// message instead of dumping the raw page.
+		if resp.StatusCode == http.StatusTooManyRequests {
+			retryAfter := strings.TrimSpace(resp.Header.Get("Retry-After"))
+			if retryAfter == "" {
+				retryAfter = "60"
+			}
+			return nil, fmt.Errorf(i18n.T("openai_models_rate_limited"), providerName, retryAfter)
+		}
+
 		bodyString := string(bodyBytes)
 		return nil, fmt.Errorf(i18n.T("openai_unexpected_status_code_with_body"),
 			resp.StatusCode, providerName, bodyString)
@@ -97,12 +128,16 @@ func FetchModelsDirectly(ctx context.Context, baseURL, apiKey, providerName stri
 
 	if err := json.Unmarshal(bodyBytes, &openAIFormat); err == nil {
 		debuglog.Debug(debuglog.Detailed, "Successfully parsed models response from %s using OpenAI format (found %d models)\n", providerName, len(openAIFormat.Data))
-		return extractModelIDs(openAIFormat.Data), nil
+		ids := extractModelIDs(openAIFormat.Data)
+		_ = writeModelsCache(providerName, fullURL, ids)
+		return ids, nil
 	}
 
 	if err := json.Unmarshal(bodyBytes, &directArray); err == nil {
 		debuglog.Debug(debuglog.Detailed, "Successfully parsed models response from %s using direct array format (found %d models)\n", providerName, len(directArray))
-		return extractModelIDs(directArray), nil
+		ids := extractModelIDs(directArray)
+		_ = writeModelsCache(providerName, fullURL, ids)
+		return ids, nil
 	}
 
 	var truncatedBody string

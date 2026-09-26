@@ -2,7 +2,7 @@ import { writable } from 'svelte/store';
 
 export interface ToastMessage {
   message: string;
-  type: 'success' | 'error' | 'info';
+  type: 'success' | 'error' | 'warning' | 'info';
   id: number;
 }
 
@@ -17,6 +17,9 @@ function createToastStore() {
     },
     error: (message: string) => {
       update(toasts => [...toasts, { message, type: 'error', id: nextId++ }]);
+    },
+    warning: (message: string) => {
+      update(toasts => [...toasts, { message, type: 'warning', id: nextId++ }]);
     },
     info: (message: string) => {
       update(toasts => [...toasts, { message, type: 'info', id: nextId++ }]);

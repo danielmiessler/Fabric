@@ -99,6 +99,43 @@ func TestBuildMessageParams_WithoutSearch(t *testing.T) {
 	}
 }
 
+func TestBuildMessageParams_UsesConfiguredMaxTokensByDefault(t *testing.T) {
+	client := NewClient()
+	opts := &domain.ChatOptions{
+		Model:       "claude-3-5-sonnet-latest",
+		Temperature: domain.DefaultTemperature,
+		TopP:        domain.DefaultTopP,
+	}
+	messages := []anthropic.MessageParam{
+		anthropic.NewUserMessage(anthropic.NewTextBlock("Hello")),
+	}
+
+	params := client.buildMessageParams(messages, opts)
+
+	if params.MaxTokens != int64(client.maxTokens) {
+		t.Errorf("Expected default max_tokens %d, got %d", client.maxTokens, params.MaxTokens)
+	}
+}
+
+func TestBuildMessageParams_UsesChatOptionsMaxTokens(t *testing.T) {
+	client := NewClient()
+	opts := &domain.ChatOptions{
+		Model:       "claude-3-5-sonnet-latest",
+		Temperature: domain.DefaultTemperature,
+		TopP:        domain.DefaultTopP,
+		MaxTokens:   8192,
+	}
+	messages := []anthropic.MessageParam{
+		anthropic.NewUserMessage(anthropic.NewTextBlock("Hello")),
+	}
+
+	params := client.buildMessageParams(messages, opts)
+
+	if params.MaxTokens != int64(opts.MaxTokens) {
+		t.Errorf("Expected max_tokens %d, got %d", opts.MaxTokens, params.MaxTokens)
+	}
+}
+
 func TestBuildMessageParams_WithSearch(t *testing.T) {
 	client := NewClient()
 	opts := &domain.ChatOptions{
@@ -170,9 +207,32 @@ func TestBuildMessageParams_WithSearchAndLocation(t *testing.T) {
 	}
 }
 
+func TestBuildMessageParams_Opus47OmitsSamplingParams(t *testing.T) {
+	client := NewClient()
+	opts := &domain.ChatOptions{
+		Model:       string(anthropic.ModelClaudeOpus4_7),
+		Temperature: 0.8,
+		TopP:        0.8,
+		Search:      false,
+	}
+
+	messages := []anthropic.MessageParam{
+		anthropic.NewUserMessage(anthropic.NewTextBlock("Hello")),
+	}
+
+	params := client.buildMessageParams(messages, opts)
+
+	if params.Temperature.Value != 0 {
+		t.Errorf("expected temperature to be omitted for %s, got %f", opts.Model, params.Temperature.Value)
+	}
+	if params.TopP.Value != 0 {
+		t.Errorf("expected top_p to be omitted for %s, got %f", opts.Model, params.TopP.Value)
+	}
+}
+
 func TestModelBetasConfiguration(t *testing.T) {
 	client := NewClient()
-	model := string(anthropic.ModelClaudeSonnet4_20250514)
+	model := string(anthropic.ModelClaudeSonnet5)
 	betas, ok := client.modelBetas[model]
 	if !ok || len(betas) != 1 || betas[0] != "context-1m-2025-08-07" {
 		t.Errorf("expected beta mapping for %s", model)

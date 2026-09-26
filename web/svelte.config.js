@@ -19,7 +19,9 @@ const initializeHighlighter = async () => {
   try {
     return await getSingletonHighlighter({
       themes: ['dracula'],
-      langs: ['javascript', 'typescript', 'svelte', 'markdown', 'bash', 'go', 'text', 'python', 'rust', 'c', 'c++', 'shell', 'ruby', 'json', 'html', 'css', 'java', 'sql', 'toml', 'yaml']
+      // "powershell" is necessary for the code example in about/README.md.
+      // Shiki gives an error and shows plain text if a language is not here.
+      langs: ['javascript', 'typescript', 'svelte', 'markdown', 'bash', 'go', 'text', 'python', 'rust', 'c', 'c++', 'shell', 'ruby', 'json', 'html', 'css', 'java', 'sql', 'toml', 'yaml', 'powershell']
     });
   } catch (error) {
     console.error('Failed to initialize Shiki highlighter:', error);

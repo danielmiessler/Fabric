@@ -110,7 +110,11 @@ func Cli(version string) (err error) {
 	}
 
 	// Handle chat processing
-	err = handleChatProcessing(currentFlags, registry, messageTools)
+	if err = handleChatProcessing(currentFlags, registry, messageTools); err != nil {
+		if patternFromBinaryName(currentFlags.Pattern) {
+			err = fmt.Errorf("%w\n%s", err, fmt.Sprintf(i18n.T("pattern_from_binary_name_hint"), currentFlags.Pattern))
+		}
+	}
 	return
 }
 

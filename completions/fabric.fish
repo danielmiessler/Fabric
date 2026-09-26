@@ -108,6 +108,7 @@ function __fabric_register_completions
         complete -c $cmd -s g -l language -x -d "Specify the Language Code for the chat, e.g. -g=en -g=zh"
         complete -c $cmd -s u -l scrape_url -x -d "Scrape website URL to markdown using Jina AI"
         complete -c $cmd -s q -l scrape_question -x -d "Search question using Jina AI"
+        complete -c $cmd -l serply_search -x -d "Search Google using Serply and send the results to chat"
         complete -c $cmd -s e -l seed -x -d "Seed to be used for LMM generation"
         complete -c $cmd -l address -x -d "The address to bind the REST API (default: :8080)"
         complete -c $cmd -l api-key -x -d "API key used to secure server routes"

@@ -54,6 +54,7 @@ var flagDescriptionMap = map[string]string{
 	"language":                   "specify_language_code",
 	"scrape_url":                 "scrape_website_url",
 	"scrape_question":            "search_question_jina",
+	"serply_search":              "serply_search_help",
 	"seed":                       "seed_for_lmm_generation",
 	"wipecontext":                "wipe_context",
 	"wipesession":                "wipe_session",

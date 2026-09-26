@@ -88,6 +88,24 @@ func handleToolProcessing(currentFlags *Flags, registry *core.PluginRegistry) (m
 		}
 	}
 
+	if currentFlags.SerplySearch != "" {
+		if !registry.Serply.IsConfigured() {
+			err = errors.New(i18n.T("serply_not_configured"))
+			return
+		}
+
+		var results string
+		if results, err = registry.Serply.Search(currentFlags.SerplySearch); err != nil {
+			return
+		}
+		messageTools = AppendMessage(messageTools, results)
+
+		if !currentFlags.IsChatRequest() {
+			err = currentFlags.WriteOutput(messageTools)
+			return
+		}
+	}
+
 	// Handle Spotify podcast/episode metadata
 	if currentFlags.Spotify != "" {
 		if !registry.Spotify.IsConfigured() {

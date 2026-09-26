@@ -1,11 +1,8 @@
 package template
 
 import (
-	"crypto/sha256"
-	"encoding/hex"
 	"errors"
 	"fmt"
-	"io"
 	"os"
 	"path/filepath"
 	"strings"
@@ -199,44 +196,6 @@ func (r *ExtensionRegistry) Remove(name string) error {
 	return r.saveRegistry()
 }
 
-func (r *ExtensionRegistry) Verify(name string) error {
-	// Get the registry entry
-	entry, exists := r.registry.Extensions[name]
-	if !exists {
-		return fmt.Errorf("%s", fmt.Sprintf(i18n.T("extension_not_found"), name))
-	}
-
-	// Load and parse the config file
-	data, err := os.ReadFile(entry.ConfigPath)
-	if err != nil {
-		return fmt.Errorf(i18n.T("extension_failed_read_config"), err)
-	}
-
-	// Verify config hash
-	currentConfigHash := ComputeStringHash(string(data))
-	if currentConfigHash != entry.ConfigHash {
-		return fmt.Errorf("%s", fmt.Sprintf(i18n.T("extension_config_hash_mismatch"), name))
-	}
-
-	// Parse to get executable path
-	var ext ExtensionDefinition
-	if err := yaml.Unmarshal(data, &ext); err != nil {
-		return fmt.Errorf(i18n.T("extension_failed_parse_config"), err)
-	}
-
-	// Verify executable hash
-	currentExecutableHash, err := ComputeHash(ext.Executable)
-	if err != nil {
-		return fmt.Errorf(i18n.T("extension_failed_verify_executable"), err)
-	}
-
-	if currentExecutableHash != entry.ExecutableHash {
-		return fmt.Errorf("%s", fmt.Sprintf(i18n.T("extension_executable_hash_mismatch"), name))
-	}
-
-	return nil
-}
-
 func (r *ExtensionRegistry) GetExtension(name string) (*ExtensionDefinition, error) {
 	entry, exists := r.registry.Extensions[name]
 	if !exists {
@@ -272,38 +231,6 @@ func (r *ExtensionRegistry) GetExtension(name string) (*ExtensionDefinition, err
 	}
 
 	return &ext, nil
-}
-
-func (r *ExtensionRegistry) ListExtensions() ([]*ExtensionDefinition, error) {
-	var exts []*ExtensionDefinition
-
-	for name := range r.registry.Extensions {
-		ext, err := r.GetExtension(name)
-		if err != nil {
-			// Instead of failing, we'll return nil for this extension
-			// The manager will handle displaying the error
-			exts = append(exts, nil)
-			continue
-		}
-		exts = append(exts, ext)
-	}
-
-	return exts, nil
-}
-
-func (r *ExtensionRegistry) calculateFileHash(path string) (string, error) {
-	f, err := os.Open(path)
-	if err != nil {
-		return "", err
-	}
-	defer f.Close()
-
-	h := sha256.New()
-	if _, err := io.Copy(h, f); err != nil {
-		return "", err
-	}
-
-	return hex.EncodeToString(h.Sum(nil)), nil
 }
 
 func (r *ExtensionRegistry) saveRegistry() error {

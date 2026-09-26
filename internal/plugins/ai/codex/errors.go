@@ -28,7 +28,12 @@ func (e *publicError) Unwrap() error {
 func (c *Client) errorFromHTTPResponse(statusCode int, body []byte) error {
 	message := extractErrorMessage(body)
 	if statusCode == http.StatusUnauthorized {
-		return errors.New(i18n.T("codex_login_invalid"))
+		err := wrapPublicError(i18n.T("codex_login_invalid"), statusCode, message)
+		// main.go prints only Error(), so show the provider cause after the login sentence.
+		if pe, ok := err.(*publicError); ok {
+			pe.message += " " + pe.cause.Error()
+		}
+		return err
 	}
 	if isUsageLimitMessage(message) {
 		return wrapPublicError(i18n.T("codex_usage_limit_reached"), statusCode, message)
@@ -73,7 +78,10 @@ func (c *Client) mapRequestError(err error) error {
 		strings.Contains(lower, "401 unauthorized"),
 		strings.Contains(lower, "refresh token"),
 		strings.Contains(lower, "chatgpt login"):
-		return errors.New(i18n.T("codex_login_invalid"))
+		return &publicError{
+			message: i18n.T("codex_login_invalid") + " " + message,
+			cause:   err,
+		}
 	case isUsageLimitMessage(message):
 		return &publicError{
 			message: i18n.T("codex_usage_limit_reached"),

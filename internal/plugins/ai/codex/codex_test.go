@@ -235,6 +235,31 @@ func TestMapRequestErrorPreservesCodexAPIErrorMessage(t *testing.T) {
 	}
 }
 
+func TestMapRequestErrorPreservesCodex401ProviderMessage(t *testing.T) {
+	if _, err := i18n.Init("en"); err != nil {
+		t.Fatalf("i18n.Init() error = %v", err)
+	}
+
+	client := NewClient()
+	apiErr := &openaiapi.Error{StatusCode: http.StatusUnauthorized}
+	if err := apiErr.UnmarshalJSON([]byte(`{"message":"Incorrect API key provided for service account.","type":"invalid_request_error","code":"invalid_api_key"}`)); err != nil {
+		t.Fatalf("apiErr.UnmarshalJSON() error = %v", err)
+	}
+
+	err := client.mapRequestError(apiErr)
+	if err == nil {
+		t.Fatal("mapRequestError() returned nil")
+	}
+	const provider = "Incorrect API key provided for service account."
+	got := err.Error()
+	if !strings.HasPrefix(got, i18n.T("codex_login_invalid")) || !strings.Contains(got, provider) {
+		t.Fatalf("mapRequestError() = %q, want login sentence followed by provider detail", got)
+	}
+	if unwrapped := errors.Unwrap(err); unwrapped == nil || !strings.Contains(unwrapped.Error(), provider) {
+		t.Fatalf("wrapped error = %v, want provider detail", unwrapped)
+	}
+}
+
 func TestMapRequestErrorReadsAPIErrorResponseBodyWhenRawJSONMissing(t *testing.T) {
 	if _, err := i18n.Init("en"); err != nil {
 		t.Fatalf("i18n.Init() error = %v", err)

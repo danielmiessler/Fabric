@@ -70,6 +70,10 @@ Enhance AI prompts by refining clarity and specificity.
 
 Evaluate AI outputs for quality and accuracy.
 
+### judge_ultimate_law
+
+Derive Ultimate Law verdicts step by step through an executable rulebook of If/then rules and integrity constraints, with derivation chains and the facts that would flip each verdict.
+
 ### rate_ai_response
 
 Evaluate AI responses for quality and effectiveness.

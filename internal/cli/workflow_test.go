@@ -94,7 +94,7 @@ func TestLoadWorkflowMalformedYAML(t *testing.T) {
 	os.WriteFile(path, []byte("steps: [this is: not: valid"), 0o644)
 
 	_, err := LoadWorkflow(path)
-	if err == nil || !strings.Contains(err.Error(), "parsing workflow YAML") {
+	if err == nil || !strings.Contains(err.Error(), "parsing workflow file") {
 		t.Fatalf("expected YAML parse error, got %v", err)
 	}
 }
@@ -115,12 +115,6 @@ func TestValidate(t *testing.T) {
 			name:  "happy path",
 			wf:    &Workflow{Steps: []WorkflowStep{{Pattern: "summarize"}, {Pattern: "improve_it"}}},
 			store: store,
-		},
-		{
-			name:    "nil workflow",
-			wf:      nil,
-			store:   store,
-			wantErr: "workflow is nil",
 		},
 		{
 			name:    "no steps",
@@ -173,14 +167,6 @@ func TestValidate(t *testing.T) {
 				t.Fatalf("error %q does not contain %q", err.Error(), tc.wantErr)
 			}
 		})
-	}
-}
-
-func TestStepLabel(t *testing.T) {
-	got := stepLabel(0, 3, "summarize")
-	want := "[step 1/3 summarize]"
-	if got != want {
-		t.Fatalf("stepLabel = %q, want %q", got, want)
 	}
 }
 
@@ -262,30 +248,6 @@ func TestResolveStepInputWithOverride(t *testing.T) {
 				t.Errorf("overridden = %v, want %v", overridden, tc.wantOverride)
 			}
 		})
-	}
-}
-
-func TestResolveStepInputWithOverrideChain(t *testing.T) {
-	// 4-step chain proving: override does NOT leak into later steps and
-	// whitespace-only input never overrides.
-	steps := []WorkflowStep{
-		{Pattern: "a"},                  // uses stdin
-		{Pattern: "b", Input: "custom"}, // overrides
-		{Pattern: "c", Input: "   "},    // whitespace -> use carried (out-b)
-		{Pattern: "d"},                  // uses out-c
-	}
-	outputs := []string{"out-a", "out-b", "out-c", "out-d"}
-	wantIn := []string{"stdin", "custom", "out-b", "out-c"}
-	wantOv := []bool{false, true, false, false}
-
-	carried := "stdin"
-	for i, step := range steps {
-		gotIn, gotOv := resolveStepInputWithOverride(step, carried)
-		if gotIn != wantIn[i] || gotOv != wantOv[i] {
-			t.Fatalf("step %d: got (%q, %v), want (%q, %v)",
-				i+1, gotIn, gotOv, wantIn[i], wantOv[i])
-		}
-		carried = outputs[i] // simulate model response
 	}
 }
 

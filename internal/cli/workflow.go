@@ -2,10 +2,9 @@ package cli
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
+	"maps"
 	"os"
-	"path/filepath"
 	"strings"
 
 	"github.com/danielmiessler/fabric/internal/chat"
@@ -20,16 +19,16 @@ import (
 // Workflow describes a simple sequential pattern composition.
 // Each step's output becomes the next step's input.
 type Workflow struct {
-	Name  string         `yaml:"name,omitempty"  json:"name,omitempty"`
-	Steps []WorkflowStep `yaml:"steps"           json:"steps"`
+	Name  string         `yaml:"name,omitempty"`
+	Steps []WorkflowStep `yaml:"steps"`
 }
 
 type WorkflowStep struct {
-	Pattern   string            `yaml:"pattern"             json:"pattern"`
-	Input     string            `yaml:"input,omitempty"     json:"input,omitempty"`
-	Variables map[string]string `yaml:"variables,omitempty" json:"variables,omitempty"`
-	Model     string            `yaml:"model,omitempty"     json:"model,omitempty"`
-	Vendor    string            `yaml:"vendor,omitempty"    json:"vendor,omitempty"`
+	Pattern   string            `yaml:"pattern"`
+	Input     string            `yaml:"input,omitempty"`
+	Variables map[string]string `yaml:"variables,omitempty"`
+	Model     string            `yaml:"model,omitempty"`
+	Vendor    string            `yaml:"vendor,omitempty"`
 }
 
 // patternResolver is the minimal contract required to verify that a pattern
@@ -44,8 +43,8 @@ func stepLabel(idx, total int, pattern string) string {
 	return fmt.Sprintf("[step %d/%d %s]", idx+1, total, pattern)
 }
 
-// LoadWorkflow parses a workflow definition from a YAML or JSON file. It does
-// not validate the contents – call Validate before running.
+// LoadWorkflow parses a workflow definition from a YAML or JSON file (JSON is
+// valid YAML). It does not validate the contents – call Validate before running.
 func LoadWorkflow(path string) (wf *Workflow, err error) {
 	absPath, err := util.GetAbsolutePath(path)
 	if err != nil {
@@ -58,15 +57,8 @@ func LoadWorkflow(path string) (wf *Workflow, err error) {
 	}
 
 	wf = &Workflow{}
-	ext := strings.ToLower(filepath.Ext(absPath))
-	if ext == ".json" {
-		if err = json.Unmarshal(data, wf); err != nil {
-			return nil, fmt.Errorf("error parsing workflow JSON: %w", err)
-		}
-	} else {
-		if err = yaml.Unmarshal(data, wf); err != nil {
-			return nil, fmt.Errorf("error parsing workflow YAML: %w", err)
-		}
+	if err = yaml.Unmarshal(data, wf); err != nil {
+		return nil, fmt.Errorf("error parsing workflow file: %w", err)
 	}
 	return
 }
@@ -81,9 +73,6 @@ func LoadWorkflow(path string) (wf *Workflow, err error) {
 // Passing nil for patterns skips the existence check – useful for unit tests
 // that don't have a configured fsdb.
 func (wf *Workflow) Validate(patterns patternResolver) error {
-	if wf == nil {
-		return fmt.Errorf("workflow is nil")
-	}
 	if len(wf.Steps) == 0 {
 		return fmt.Errorf("workflow has no steps")
 	}
@@ -102,7 +91,7 @@ func (wf *Workflow) Validate(patterns patternResolver) error {
 		}
 		prev = name
 
-		if patterns != nil && !isFilePathPattern(name) {
+		if patterns != nil && !fsdb.LooksLikePatternFilePath(name) {
 			if _, err := patterns.GetRaw(name); err != nil {
 				return fmt.Errorf("%s pattern not found: %w", label, err)
 			}
@@ -111,20 +100,8 @@ func (wf *Workflow) Validate(patterns patternResolver) error {
 	return nil
 }
 
-// runWorkflow executes a validated Workflow sequentially.
-//
-// Contract
-//   - Input:  wf must have passed wf.Validate(); chatOptions comes from flags.
-//   - Piping: each step's assistant output becomes the carried input for the
-//     next step unless that step declares its own `input:` override.
-//   - Reuse:  every step goes through the standard registry.GetChatter → Send
-//     path, so --stream (last step only), --dry-run, -m/-V, -v vars, context,
-//     strategy and language all behave exactly as in a single-pattern run.
-//   - Errors: the run stops at the first failing step; the error is wrapped
-//     with the canonical stepLabel prefix so it reads
-//     "[step N/TOTAL pattern] failed: <cause>".
-//   - Output: returns the trimmed content of the final step's assistant
-//     message; printing / copy / file-output is left to the caller.
+// runWorkflow runs the validated steps in order and pipes each output into
+// the next step. It returns the final step output; the caller prints it.
 func runWorkflow(
 	registry *core.PluginRegistry,
 	wf *Workflow,
@@ -132,7 +109,6 @@ func runWorkflow(
 	flags *Flags,
 	chatOptions *domain.ChatOptions,
 ) (result string, err error) {
-	globalStream := flags.Stream
 	language := flags.Language
 	if language == "" {
 		language = registry.Language.DefaultLanguage.Value
@@ -168,7 +144,7 @@ func runWorkflow(
 		}
 
 		// Only stream the final step; intermediate output is captured whole.
-		stream := globalStream && isLast
+		stream := flags.Stream && isLast
 
 		var chatter *core.Chatter
 		if chatter, err = registry.GetChatter(model, flags.ModelContextLength,
@@ -290,26 +266,14 @@ func resolveStepInputWithOverride(step WorkflowStep, carriedInput string) (chose
 	return carriedInput, false
 }
 
-// isFilePathPattern mirrors the heuristic used by PatternsEntity.loadPattern:
-// patterns that look like file paths are loaded directly from disk rather
-// than from the patterns database, so we can't validate them up front.
-func isFilePathPattern(p string) bool {
-	return strings.HasPrefix(p, "/") ||
-		strings.HasPrefix(p, "~") ||
-		strings.HasPrefix(p, ".") ||
-		strings.HasPrefix(p, "\\")
-}
-
 func mergeVars(base, override map[string]string) map[string]string {
 	if len(base) == 0 && len(override) == 0 {
 		return nil
 	}
-	out := make(map[string]string, len(base)+len(override))
-	for k, v := range base {
-		out[k] = v
+	out := maps.Clone(base)
+	if out == nil {
+		out = make(map[string]string, len(override))
 	}
-	for k, v := range override {
-		out[k] = v
-	}
+	maps.Copy(out, override)
 	return out
 }

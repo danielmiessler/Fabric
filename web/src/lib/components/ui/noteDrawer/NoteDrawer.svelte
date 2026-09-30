@@ -1,20 +1,17 @@
 <script lang="ts">
-  import { Drawer, getDrawerStore, getToastStore } from '@skeletonlabs/skeleton';
-  import type { DrawerStore } from '@skeletonlabs/skeleton';
   import { onMount } from 'svelte';
+  import { fly } from 'svelte/transition';
   import { noteStore } from '$lib/store/note-store';
   import { afterNavigate, beforeNavigate } from '$app/navigation';
   import { clickOutside } from '$lib/actions/clickOutside';
-  
-  const drawerStore = getDrawerStore();
-  const toastStore = getToastStore();
-  
+  import { drawerStore } from '$lib/store/drawer-store';
+  import { toastStore } from '$lib/store/toast-store';
+
   let textareaEl: HTMLTextAreaElement;
   let saving = false;
 
   let content = '';
   
-  // Auto-resize textarea
   function adjustTextareaHeight() {
     if (textareaEl) {
       textareaEl.style.height = 'auto';
@@ -24,33 +21,23 @@
   
   async function saveContent() {
     if (!$noteStore.content.trim()) {
-      toastStore.trigger({
-        message: 'Cannot save empty note',
-        background: 'variant-filled-warning'
-      });
+      toastStore.warning('Cannot save empty note');
       return;
     }
 
     try {
       saving = true;
       await noteStore.save();
-      
-      toastStore.trigger({
-        message: `Note saved successfully!`,
-        background: 'variant-filled-success'
-      });
+
+      toastStore.success('Note saved successfully!');
     } catch (error) {
       console.error('Failed to save note:', error);
-      toastStore.trigger({
-        message: error instanceof Error ? error.message : 'Failed to save notes',
-        background: 'variant-filled-error'
-      });
+      toastStore.error(error instanceof Error ? error.message : 'Failed to save notes');
     } finally {
       saving = false;
     }
   }
   
-  // Prompt user if trying to close with unsaved changes
   $: if ($drawerStore.open === false && $noteStore.isDirty) {
     if (confirm('You have unsaved changes. Are you sure you want to close?')) {
       noteStore.reset();
@@ -59,7 +46,6 @@
     }
   }
   
-  // Load saved content when drawer opens
   $: if ($drawerStore.open) {
     const savedContent = localStorage.getItem('savedText');
     if (savedContent) {
@@ -68,7 +54,6 @@
     }
   }
   
-  // Keyboard shortcuts
   function handleKeydown(event: KeyboardEvent) {
     if ((event.ctrlKey || event.metaKey) && event.key === 's') {
       event.preventDefault();
@@ -81,9 +66,17 @@
   });
 </script>
 
-<Drawer width="w-[40%]" class="flex flex-col h-[calc(100vh-theme(spacing.32))] p-4 mt-16">
-  {#if $drawerStore.open}
-    <div 
+<!-- Skeleton 5 removed the Drawer utility. The backdrop and the panel below take
+  its place. The panel keeps the width, height, padding and margin that the
+  Drawer received through its props. The height was `calc(100vh-theme(spacing.32))`,
+  and spacing.32 is 8rem. -->
+{#if $drawerStore.open}
+  <div class="fixed inset-0 z-40 bg-surface-950/50" aria-hidden="true"></div>
+  <aside
+    class="fixed left-0 top-0 z-50 mt-16 flex h-[calc(100vh-8rem)] w-[40%] flex-col bg-surface-100-900 p-4 shadow-xl"
+    transition:fly={{ x: -320, duration: 200 }}
+  >
+    <div
       class="flex flex-col h-full"
       use:clickOutside={() => {
         if ($noteStore.isDirty) {
@@ -130,13 +123,13 @@
         </span>
         <div class="flex gap-2">
           <button
-            class="btn btn-sm variant-filled-surface"
+            class="btn btn-sm preset-filled-surface-500"
             on:click={noteStore.reset}
           >
             Reset
           </button>
           <button
-            class="btn btn-sm variant-filled-primary"
+            class="btn btn-sm preset-filled-primary-500"
             on:click={saveContent}
           >
             {#if saving}
@@ -148,5 +141,5 @@
         </div>
       </footer>
     </div>
-  {/if}
-</Drawer>
+  </aside>
+{/if}

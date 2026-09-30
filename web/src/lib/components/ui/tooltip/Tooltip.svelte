@@ -13,7 +13,6 @@
   // biome-ignore lint/correctness/noUnusedVariables: Used in template for aria-describedby and id
   const tooltipId = `tooltip-${Math.random().toString(36).substring(2, 9)}`;
 
-  // Reactive tooltip positioning - recalculates when position or element changes
   $: tooltipStyle = triggerElement && tooltipVisible
     ? formatPositionStyle(calculateTooltipPosition(triggerElement.getBoundingClientRect(), position))
     : '';
@@ -34,8 +33,6 @@
     tooltipVisible = false;
   }
 
-  // Handle window scroll and resize to keep tooltip positioned correctly
-  // Only runs in browser (not during SSR)
   onMount(() => {
     isBrowser = true;
     return () => {
@@ -46,7 +43,7 @@
     };
   });
 
-  // Add/remove event listeners reactively when tooltip visibility changes
+  // isBrowser stays false during SSR, where there is no window.
   $: if (isBrowser && tooltipVisible) {
     window.addEventListener('scroll', updatePosition, true);
     window.addEventListener('resize', updatePosition);

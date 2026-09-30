@@ -8,6 +8,5 @@ export const contextAPI = {
   }
 }
 
-// TODO: add context element somewhere in the UI
-// Should the file upload functionality be used as the context element? 
-// Or should there be another area to upload a context file?
+// TODO: add a context element to the UI. It could be the file upload
+// control or a separate area to upload a context.

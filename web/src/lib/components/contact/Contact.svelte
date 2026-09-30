@@ -2,7 +2,7 @@
   import { Contact } from 'lucide-svelte';
 </script>
 
-<div class="form-control w-full m-auto p-4 rounded-lg bg-gradient-to-br variant-gradient-success-warning shadow-lg text-current" title="contact form">
+<div class="form-control w-full m-auto p-4 rounded-lg bg-gradient-to-br from-success-500 to-warning-500 shadow-lg text-current" title="contact form">
   <h2 class="font-bold pl-2">We'd love to hear from you</h2>
   <p class="font-bold pl-2">Email</p>
   <div class="input-group input-group-divider grid-cols-[1fr_auto]">
@@ -21,6 +21,6 @@
     <span class="font-bold pl-2">Message</span>
     <textarea class="textarea" rows="4" placeholder="Enter your message ..."></textarea>
   </label>
-  <a href="/" title=""><button class="button variant-filled-secondary rounded-lg p-2"><Contact /></button></a>
+  <a href="/" title=""><button class="button preset-filled-secondary-500 rounded-lg p-2"><Contact /></button></a>
 
 </div>

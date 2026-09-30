@@ -12,43 +12,38 @@
   import { Textarea } from "$lib/components/ui/textarea";
   import { obsidianSettings } from "$lib/store/obsidian-store";
   import { featureFlags } from "$lib/config/features";
-  import { getDrawerStore } from '@skeletonlabs/skeleton';
+  import { drawerStore } from '$lib/store/drawer-store';
   import { systemPrompt, selectedPatternName } from "$lib/store/pattern-store";
   import { onMount } from "svelte";
 
-  const drawerStore = getDrawerStore();
   function openDrawer() {
     drawerStore.open({});
   }
 
-  // Column width state (percentage values)
+  // Column widths, in percent
   let leftColumnWidth = 50;
   let rightColumnWidth = 50;
   let isDragging = false;
   
-  // Message input height state (percentage values)
-  const DEFAULT_INPUT_HEIGHT = 30; // Default percentage of the left column
-  const MAX_INPUT_HEIGHT = DEFAULT_INPUT_HEIGHT * 2; // Maximum 200% of default height
-  const MIN_SYSTEM_INSTRUCTIONS_HEIGHT = 20; // Minimum percentage for system instructions
+  // Message input heights, in percent
+  const DEFAULT_INPUT_HEIGHT = 30; // Percent of the left column height
+  const MAX_INPUT_HEIGHT = DEFAULT_INPUT_HEIGHT * 2;
+  const MIN_SYSTEM_INSTRUCTIONS_HEIGHT = 20;
   let messageInputHeight = DEFAULT_INPUT_HEIGHT;
   let systemInstructionsHeight = 100 - DEFAULT_INPUT_HEIGHT;
   let isVerticalDragging = false;
-  let initialMouseY = 0; // Track initial mouse position
-  let initialInputHeight = 0; // Track initial input height
+  let initialMouseY = 0;
+  let initialInputHeight = 0;
   
-  // Handle horizontal resize functionality
   function startResize(e: MouseEvent | KeyboardEvent) {
     isDragging = true;
     e.preventDefault();
     
-    // Add event listeners for drag and release
     window.addEventListener('mousemove', handleResize);
     window.addEventListener('mouseup', stopResize);
   }
   
-  // Handle keyboard events for accessibility
   function handleKeyDown(e: KeyboardEvent) {
-    // Only respond to Enter or Space key
     if (e.key === 'Enter' || e.key === ' ') {
       startResize(e);
     }
@@ -57,39 +52,33 @@
   function handleResize(e: MouseEvent) {
     if (!isDragging) return;
     
-    // Get container dimensions
     const container = document.querySelector('.chat-container');
     if (!container) return;
     
     const containerRect = container.getBoundingClientRect();
     const containerWidth = containerRect.width;
     
-    // Calculate percentage based on mouse position
     const percentage = ((e.clientX - containerRect.left) / containerWidth) * 100;
     
-    // Apply constraints (left: 40-80%, right: 20-60%)
+    // Keep the left column at 40-80% and the right column at 20-60%
     leftColumnWidth = Math.min(Math.max(percentage, 40), 80);
     rightColumnWidth = 100 - leftColumnWidth;
   }
   
-  // Handle vertical resize functionality
   function startVerticalResize(e: MouseEvent | KeyboardEvent) {
     isVerticalDragging = true;
     e.preventDefault();
     
-    // Store initial mouse position and input height
     if (e instanceof MouseEvent) {
       initialMouseY = e.clientY;
       initialInputHeight = messageInputHeight;
     }
     
-    // Add event listeners for drag and release
     window.addEventListener('mousemove', handleVerticalResize);
     window.addEventListener('mouseup', stopVerticalResize);
   }
   
   function handleVerticalKeyDown(e: KeyboardEvent) {
-    // Only respond to Enter or Space key
     if (e.key === 'Enter' || e.key === ' ') {
       startVerticalResize(e);
     }
@@ -98,35 +87,30 @@
   function handleVerticalResize(e: MouseEvent) {
     if (!isVerticalDragging) return;
     
-    // Get container dimensions
     const leftColumn = document.querySelector('.left-column');
     if (!leftColumn) return;
     
-    // Get system instructions element to check its actual height
     const sysInstructions = leftColumn.querySelector('.system-instructions');
     if (!sysInstructions) return;
     
     const columnRect = leftColumn.getBoundingClientRect();
     const columnHeight = columnRect.height;
     
-    // Calculate height change based on mouse movement
     const mouseDelta = e.clientY - initialMouseY;
     const deltaPercentage = (mouseDelta / columnHeight) * 100;
     const newHeight = initialInputHeight + deltaPercentage;
     
-    // Apply constraints to ensure system instructions remain visible
-    const minHeight = DEFAULT_INPUT_HEIGHT * 0.25; // 25% of default
-    const maxHeight = Math.min(MAX_INPUT_HEIGHT, 100 - MIN_SYSTEM_INSTRUCTIONS_HEIGHT); // Max 200% of default or ensure system instructions are visible
+    // Limit the height so the system instructions stay visible
+    const minHeight = DEFAULT_INPUT_HEIGHT * 0.25;
+    const maxHeight = Math.min(MAX_INPUT_HEIGHT, 100 - MIN_SYSTEM_INSTRUCTIONS_HEIGHT);
     
-    // Calculate new heights
     const constrainedHeight = Math.min(Math.max(newHeight, minHeight), maxHeight);
     const newSysInstructionsHeight = 100 - constrainedHeight;
     
-    // Additional safety check - don't allow resize if it would make system instructions too small
+    // The system instructions have min-h-[100px]. Do not resize below that.
     const sysInstructionsPixelHeight = (columnHeight * newSysInstructionsHeight) / 100;
-    if (sysInstructionsPixelHeight < 100) return; // Don't resize if it would be less than 100px
+    if (sysInstructionsPixelHeight < 100) return;
     
-    // Apply the new heights
     messageInputHeight = constrainedHeight;
     systemInstructionsHeight = newSysInstructionsHeight;
   }
@@ -143,7 +127,6 @@
     window.removeEventListener('mouseup', stopResize);
   }
 
-  // Clean up event listeners when component is destroyed
   onMount(() => {
     return () => {
       window.removeEventListener('mousemove', handleResize);
@@ -156,22 +139,18 @@
   $: showObsidian = $featureFlags.enableObsidianIntegration;
 </script>
 
-<div class="chat-container flex gap-0 p-2 w-full h-screen">
-  <!-- Left Column -->
+<div class="chat-container flex h-full min-h-0 w-full gap-0 p-2">
   <aside class="flex flex-col gap-2 pr-2 left-column" style="width: {leftColumnWidth}%">
-    <!-- Dropdowns Group with Model Config -->
     <div class="bg-background/5 p-2 rounded-lg">
       <div class="rounded-lg bg-background/10">
         <DropdownGroup />
       </div>
     </div>
 
-    <!-- Message Input -->
     <div class="bg-background/5 rounded-lg overflow-hidden" style="height: {messageInputHeight}%; max-height: {MAX_INPUT_HEIGHT}%">
       <ChatInput />
     </div>
 
-    <!-- Vertical Resize Handle -->
     <button 
       class="vertical-resize-handle" 
       on:mousedown={startVerticalResize}
@@ -180,7 +159,6 @@
       aria-label="Resize message input and system instructions"
     ></button>
 
-    <!-- System Instructions -->
     <div class="flex-1 min-h-[100px] bg-background/5 p-2 rounded-lg system-instructions">
       <div class="h-full flex flex-col">
         <Textarea
@@ -193,7 +171,6 @@
     </div>
   </aside>
 
-  <!-- Resize Handle -->
   <button 
     class="resize-handle" 
     on:mousedown={startResize}
@@ -202,9 +179,7 @@
     aria-label="Resize chat panels"
   ></button>
 
-  <!-- Right Column -->
   <div class="flex flex-col gap-2" style="width: {rightColumnWidth}%">
-    <!-- Header with Obsidian Settings -->
     <div class="flex items-center justify-between px-2 py-1">
       <div class="flex items-center gap-2">
         {#if showObsidian}
@@ -235,12 +210,10 @@
       </Button>
     </div>
 
-    <!-- Chat Area -->
     <div class="flex-1 flex flex-col min-h-0">
-      <!-- Chat History -->
       <div class="flex-1 min-h-0 bg-background/5 rounded-lg overflow-y-scroll scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent hover:scrollbar-thumb-white/20">
         <ChatMessages />
-        <div class="h-32"></div> <!-- Spacer div to ensure scrolling works properly -->
+        <div class="h-32"></div> <!-- Spacer so the container can scroll past the last message -->
       </div>
     </div>
   </div>
@@ -249,7 +222,6 @@
 <NoteDrawer />
 
 <style>
-  /* Horizontal resize handle */
   .resize-handle {
     width: 6px;
     margin: 0 -3px;
@@ -287,7 +259,6 @@
     width: 4px;
   }
 
-  /* Vertical resize handle */
   .vertical-resize-handle {
     height: 6px;
     margin: -3px 0;

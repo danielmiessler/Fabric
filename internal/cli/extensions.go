@@ -4,8 +4,8 @@ import (
 	"github.com/danielmiessler/fabric/internal/core"
 )
 
-// handleExtensionCommands handles extension-related commands
-// Returns (handled, error) where handled indicates if a command was processed and should exit
+// handleExtensionCommands runs the extension list, add, and remove commands.
+// It returns handled = true when a command ran and the caller must exit.
 func handleExtensionCommands(currentFlags *Flags, registry *core.PluginRegistry) (handled bool, err error) {
 	if currentFlags.ListExtensions {
 		err = registry.TemplateExtensions.ListExtensions()

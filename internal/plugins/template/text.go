@@ -12,15 +12,13 @@ import (
 // TextPlugin provides string manipulation operations
 type TextPlugin struct{}
 
-// toTitle capitalizes a letter if it follows a non-letter, unless next char is space
+// toTitle lowercases s, then uppercases each rune that starts the string or follows a non-letter.
+// Such a rune stays lowercase when a space follows it.
 func toTitle(s string) string {
-	// First lowercase everything
 	lower := strings.ToLower(s)
 	runes := []rune(lower)
 
 	for i := range runes {
-		// Capitalize if previous char is non-letter AND
-		// (we're at the end OR next char is not space)
 		if i == 0 || !unicode.IsLetter(runes[i-1]) {
 			if i == len(runes)-1 || !unicode.IsSpace(runes[i+1]) {
 				runes[i] = unicode.ToUpper(runes[i])

@@ -8,18 +8,15 @@ import (
 
 // TestExtensionManager is the main test suite for ExtensionManager
 func TestExtensionManager(t *testing.T) {
-	// Create temporary directory for tests
 	tmpDir, err := os.MkdirTemp("", "fabric-ext-test-*")
 	if err != nil {
 		t.Fatalf("Failed to create temp directory: %v", err)
 	}
 	defer os.RemoveAll(tmpDir)
 
-	// Create test extension config
 	testConfig := filepath.Join(tmpDir, "test-extension.yaml")
 	testScript := filepath.Join(tmpDir, "test-script.sh")
 
-	// Create test script
 	scriptContent := `#!/bin/bash
 if [ "$1" = "echo" ]; then
     echo "Hello, $2!"
@@ -30,7 +27,6 @@ fi`
 		t.Fatalf("Failed to create test script: %v", err)
 	}
 
-	// Create test config
 	configContent := `name: test-extension
 executable: ` + testScript + `
 type: executable
@@ -47,10 +43,8 @@ operations:
 		t.Fatalf("Failed to create test config: %v", err)
 	}
 
-	// Initialize manager
 	manager := NewExtensionManager(tmpDir)
 
-	// Test cases
 	t.Run("RegisterExtension", func(t *testing.T) {
 		err := manager.RegisterExtension(testConfig)
 		if err != nil {
@@ -63,7 +57,7 @@ operations:
 		if err != nil {
 			t.Errorf("Failed to list extensions: %v", err)
 		}
-		// Note: Output validation would require capturing stdout
+		// ListExtensions prints to stdout, so this test does not check the output.
 	})
 
 	t.Run("ProcessExtension", func(t *testing.T) {
@@ -83,7 +77,6 @@ operations:
 			t.Errorf("Failed to remove extension: %v", err)
 		}
 
-		// Verify extension is removed by trying to process it
 		_, err = manager.ProcessExtension("test-extension", "echo", "World")
 		if err == nil {
 			t.Error("Expected error processing removed extension, got nil")
@@ -133,7 +126,6 @@ func TestExtensionManagerWithInvalidConfig(t *testing.T) {
 
 	invalidConfig := filepath.Join(tmpDir, "invalid-extension.yaml")
 
-	// Test cases with different invalid configurations
 	testCases := []struct {
 		name    string
 		config  string

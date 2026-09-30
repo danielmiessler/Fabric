@@ -1,6 +1,5 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  // import { fade } from 'svelte/transition';
   import { goto } from '$app/navigation';
 
   let mounted = false;
@@ -29,7 +28,6 @@
 - ls: List available pages`,
   };
 
-  // Simulate typing effect
   async function typeContent(content: string) {
     typing = true;
     terminalContent = '';
@@ -93,7 +91,6 @@
       showCursor = !showCursor;
     }, 500);
 
-    // Initial content
     typeContent(pages.home);
   });
 </script>
@@ -101,7 +98,6 @@
 <div class="pt-2 pb-8 px-4">
   <div class="container mx-auto max-w-4xl">
     <div class="terminal-window backdrop-blur-sm">
-      <!-- Terminal header -->
       <div class="terminal-header flex items-center gap-2 px-4 py-2 border-b border-gray-700/50">
         <div class="flex gap-2">
           <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
@@ -114,7 +110,6 @@
       <div class="p-6">
         <div class="mb-4 whitespace-pre-wrap terminal-text leading-relaxed">{terminalContent}</div>
 
-        <!-- Command input -->
         {#if mounted}
           <div class="flex items-center">
             <span class="mr-2 terminal-prompt font-bold">$</span>
@@ -135,7 +130,11 @@
   </div>
 </div>
 
-<style>
+<style lang="postcss">
+  /* Tailwind 4 processes the styles of each component on their own. The
+   * reference below gives @apply the theme without a second copy of the CSS. */
+  @reference '../../../app.css';
+
   .terminal-window {
     @apply rounded-lg border border-gray-700/50 bg-gray-900/95 shadow-2xl;
     box-shadow: 0 0 60px -15px rgba(0, 0, 0, 0.3);
@@ -165,15 +164,4 @@
     }
   }
 
-  /*::-webkit-scrollbar {*/
-  /*  @apply w-2;*/
-  /*}*/
-  /**/
-  /*::-webkit-scrollbar-track {*/
-  /*  @apply bg-gray-800/50 rounded-full;*/
-  /*}*/
-  /**/
-  /*::-webkit-scrollbar-thumb {*/
-  /*  @apply bg-gray-600/50 rounded-full hover:bg-gray-500/50 transition-colors;*/
-  /*}*/
 </style>

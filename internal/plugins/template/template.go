@@ -29,7 +29,7 @@ func init() {
 	}
 	configDir := filepath.Join(homedir, ".config/fabric")
 	extensionManager = NewExtensionManager(configDir)
-	// Extensions will work if registry exists, otherwise they'll just fail gracefully
+	// A missing registry file is not fatal. Extension calls then fail at lookup.
 }
 
 var pluginPattern = regexp.MustCompile(`\{\{plugin:([^:]+):([^:]+)(?::([^}]+))?\}\}`)
@@ -39,8 +39,8 @@ func debugf(format string, a ...any) {
 	debuglog.Debug(debuglog.Trace, format, a...)
 }
 
-// matchTriple extracts the first two required and optional third value from a token
-// pattern of the form {{type:part1:part2(:part3)?}} returning part1, part2, part3 (possibly empty)
+// matchTriple matches full against r, a pattern of the form {{type:part1:part2(:part3)?}},
+// and returns part1, part2, and part3. part3 is empty when absent.
 func matchTriple(r *regexp.Regexp, full string) (string, string, string, bool) {
 	parts := r.FindStringSubmatch(full)
 	if len(parts) >= 3 {
@@ -72,7 +72,6 @@ func ApplyTemplate(content string, variables map[string]string, input string) (s
 			full := m[0]
 			raw := m[1]
 
-			// Extension call
 			if strings.HasPrefix(raw, "ext:") {
 				if name, operation, value, ok := matchTriple(extensionPattern, full); ok {
 					if strings.Contains(value, InputSentinel) {
@@ -90,7 +89,6 @@ func ApplyTemplate(content string, variables map[string]string, input string) (s
 				}
 			}
 
-			// Plugin call
 			if strings.HasPrefix(raw, "plugin:") {
 				if namespace, operation, value, ok := matchTriple(pluginPattern, full); ok {
 					debugf("Plugin call: namespace=%s operation=%s value=%s\n", namespace, operation, value)
@@ -128,7 +126,6 @@ func ApplyTemplate(content string, variables map[string]string, input string) (s
 				}
 			}
 
-			// Variables / input / sentinel
 			switch raw {
 			case "input", InputSentinel:
 				content = strings.ReplaceAll(content, full, input)

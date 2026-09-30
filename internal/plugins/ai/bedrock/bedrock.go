@@ -1,10 +1,13 @@
 // Package bedrock provides a plugin to use Amazon Bedrock models.
-// Supported models are defined in the MODELS variable.
-// To add additional models, append them to the MODELS array. Models must support the Converse and ConverseStream operations
-// Authentication supports three modes:
-//  1. Bearer token: Provide a Bedrock API Key (ABSK token) for simple authentication
-//  2. Explicit credentials: Provide AWS Access Key ID and Secret Access Key directly via fabric --setup
-//  3. AWS credential provider chain (default fallback): Uses the standard chain similar to the AWS CLI and SDKs
+//
+// ListModels reads the model list from the Bedrock control plane. Models must
+// support the Converse and ConverseStream operations.
+//
+// Authentication has three modes, in priority order:
+//  1. Bearer token: a Bedrock API key (ABSK token).
+//  2. Explicit credentials: an AWS access key ID and secret access key from
+//     fabric --setup or the .env file.
+//  3. The AWS credential provider chain, the same chain that the AWS CLI and SDKs use:
 //     https://docs.aws.amazon.com/sdkref/latest/guide/standardized-credentials.html
 package bedrock
 
@@ -40,7 +43,6 @@ const (
 	userAgentValue = "fabric"
 )
 
-// Ensure BedrockClient implements the ai.Vendor interface
 var _ ai.Vendor = (*BedrockClient)(nil)
 
 // BedrockClient is a plugin to add support for Amazon Bedrock.
@@ -62,8 +64,8 @@ type BedrockClient struct {
 	bedrockAPIKey    *plugins.SetupQuestion
 }
 
-// bearerTokenTransport is an http.RoundTripper that injects an Authorization
-// Bearer header into every outgoing request. Used for ABSK key authentication.
+// bearerTokenTransport sets the Authorization header to the ABSK bearer token
+// on each request.
 type bearerTokenTransport struct {
 	token   string
 	wrapped http.RoundTripper
@@ -81,13 +83,9 @@ func (t *bearerTokenTransport) String() string {
 	return "bearerTokenTransport{token:REDACTED}"
 }
 
-// defaultBedrockModels is a minimal fallback used ONLY when the ListFoundationModels
-// and ListInferenceProfiles APIs are not accessible. The primary model listing is always
-// fetched programmatically via listModelsFromAPI() which calls the Bedrock control plane.
-//
-// This fallback is needed because bearer token (ABSK) auth may not have permissions for
-// the ListFoundationModels API. In practice, most users will never see this list — it's
-// only used when the API call fails AND the user has an API key configured.
+// defaultBedrockModels is the fallback that ListModels returns when
+// listModelsFromAPI fails and an API key is set. Bearer token (ABSK) auth can
+// lack permission for the ListFoundationModels API.
 var defaultBedrockModels = []string{
 	"us.anthropic.claude-sonnet-4-6",
 	"us.anthropic.claude-opus-4-6-v1",
@@ -96,26 +94,22 @@ var defaultBedrockModels = []string{
 	"us.meta.llama3-3-70b-instruct-v1:0",
 }
 
-// setupModelChoices is shown during interactive setup. Includes both unprefixed
-// model IDs (work in any region) and common region-prefixed inference profiles.
+// setupModelChoices is the model list that Setup shows. It has unprefixed
+// model IDs and us, eu, and ap cross-region inference profiles.
 var setupModelChoices = []string{
-	// Unprefixed (work in any region)
 	"anthropic.claude-sonnet-4-6",
 	"anthropic.claude-opus-4-6-v1",
 	"anthropic.claude-haiku-4-5-20251001-v1:0",
 	"amazon.nova-pro-v1:0",
-	// US cross-region inference profiles
 	"us.anthropic.claude-sonnet-4-6",
 	"us.anthropic.claude-opus-4-6-v1",
-	// EU cross-region inference profiles
 	"eu.anthropic.claude-sonnet-4-6",
 	"eu.anthropic.claude-opus-4-6-v1",
-	// AP cross-region inference profiles
 	"ap.anthropic.claude-sonnet-4-6",
 	"ap.anthropic.claude-opus-4-6-v1",
 }
 
-// fallbackRegions is used only when the dynamic fetch from botocore fails (e.g., no network).
+// fallbackRegions is the list that fetchBedrockRegions returns when the botocore fetch fails.
 var fallbackRegions = []string{
 	"us-east-1",
 	"us-west-2",
@@ -125,14 +119,14 @@ var fallbackRegions = []string{
 	"ap-northeast-1",
 }
 
-// botocoreEndpointsURL is the public (no-auth) source of truth for which AWS
-// regions support Bedrock, maintained by the AWS SDK team.
-// This is a var (not const) to allow test injection of a mock HTTP server URL.
+// botocoreEndpointsURL is the public endpoints.json file that lists the AWS
+// regions with a Bedrock endpoint. It is a var so that tests can point it at a
+// mock server.
 var botocoreEndpointsURL = "https://raw.githubusercontent.com/boto/botocore/develop/botocore/data/endpoints.json"
 
-// fetchBedrockRegions fetches the list of AWS regions where Bedrock is available
-// from the botocore endpoints.json file (public, no authentication required).
-// Falls back to the static fallbackRegions list on any error.
+// fetchBedrockRegions reads the Bedrock regions from the botocore endpoints.json
+// file, which needs no authentication. It returns fallbackRegions on any error
+// or when the file lists no Bedrock region.
 func fetchBedrockRegions() []string {
 	client := &http.Client{Timeout: 5 * time.Second}
 	resp, err := client.Get(botocoreEndpointsURL)
@@ -164,7 +158,7 @@ func fetchBedrockRegions() []string {
 	for _, partition := range data.Partitions {
 		if svc, ok := partition.Services["bedrock"]; ok {
 			for region := range svc.Endpoints {
-				// Skip FIPS and special endpoints (e.g., "bedrock-us-east-1")
+				// Skip FIPS endpoints and "bedrock-" entries, which are not region names.
 				if !strings.HasPrefix(region, "bedrock-") && !strings.Contains(region, "fips") {
 					regions = append(regions, region)
 				}
@@ -180,7 +174,8 @@ func fetchBedrockRegions() []string {
 	return regions
 }
 
-// maskSecret redacts a secret value for display, showing only the first 4 and last 4 chars.
+// maskSecret returns the first 4 and last 4 characters of a secret, or "****"
+// when the secret has 12 characters or fewer.
 func maskSecret(s string) string {
 	if len(s) <= 12 {
 		return "****"
@@ -197,7 +192,6 @@ func NewClient() (ret *BedrockClient) {
 
 	ret.PluginBase = plugins.NewVendorPluginBase(vendorName, ret.configure)
 
-	// Settings registered for .env persistence (all optional except region)
 	ret.bedrockRegion = ret.PluginBase.AddSetupQuestionWithEnvName(
 		"AWS Region", true, i18n.T("bedrock_aws_region_label"))
 	ret.bedrockAPIKey = ret.PluginBase.AddSetupQuestionWithEnvName(
@@ -229,14 +223,14 @@ func (c *BedrockClient) Setup() (err error) {
 		return
 	}
 
-	// Empty input means skip (user pressed enter without typing)
+	// Enter with no input skips the Bedrock setup.
 	if authChoice.Value == "" {
 		return nil
 	}
 
 	switch authChoice.Value {
 	case "1":
-		// Mask existing API key value before displaying the prompt
+		// Show a saved key masked.
 		savedKey := c.bedrockAPIKey.Value
 		if savedKey != "" {
 			c.bedrockAPIKey.Value = maskSecret(savedKey)
@@ -244,12 +238,11 @@ func (c *BedrockClient) Setup() (err error) {
 		if err = c.bedrockAPIKey.Ask("Bedrock"); err != nil {
 			return
 		}
-		// If user kept the masked value (pressed enter), restore the real key
+		// Enter keeps the masked value, so restore the saved key.
 		if c.bedrockAPIKey.Value == maskSecret(savedKey) {
 			c.bedrockAPIKey.Value = savedKey
 		}
 	case "2":
-		// Mask existing credentials before displaying
 		savedAccess := c.bedrockAccessKey.Value
 		if savedAccess != "" {
 			c.bedrockAccessKey.Value = maskSecret(savedAccess)
@@ -275,7 +268,6 @@ func (c *BedrockClient) Setup() (err error) {
 		return fmt.Errorf(i18n.T("bedrock_setup_invalid_auth_selection"), authChoice.Value)
 	}
 
-	// Region selection — fetched dynamically from botocore (public, no auth required)
 	regions := fetchBedrockRegions()
 	fmt.Println()
 	fmt.Println(i18n.T("bedrock_setup_choose_region"))
@@ -300,16 +292,15 @@ func (c *BedrockClient) Setup() (err error) {
 		}
 		c.bedrockRegion.Value = customRegion.Value
 	} else {
-		// They typed a region name directly
+		// A number outside the list. Keep the input as typed.
 		c.bedrockRegion.Value = regionChoice.Value
 	}
 
-	// Set the env var so it persists
+	// OnAnswer sets the env var, which a later Settings.Configure reads back.
 	if c.bedrockRegion.Value != "" {
 		_ = c.bedrockRegion.OnAnswer(c.bedrockRegion.Value)
 	}
 
-	// Model selection (shown after auth + region)
 	fmt.Println()
 	fmt.Println(i18n.T("bedrock_setup_choose_model"))
 	for i, m := range setupModelChoices {
@@ -342,59 +333,48 @@ func (c *BedrockClient) Setup() (err error) {
 		fmt.Printf(i18n.T("bedrock_setup_use_with")+"\n", selectedModel)
 	}
 
-	// Run configure to validate and initialize clients
+	// ConfigureCustom is configure. It validates the region and builds the clients.
 	if c.ConfigureCustom != nil {
 		err = c.ConfigureCustom()
 	}
 	return
 }
 
-// isValidAWSRegion validates AWS region format
+// isValidAWSRegion checks only the length of the region name, 5 to 30 characters.
 func isValidAWSRegion(region string) bool {
-	// Simple validation - AWS regions are typically 2-3 parts separated by hyphens
-	// Examples: us-east-1, eu-west-1, ap-southeast-2
 	if len(region) < 5 || len(region) > 30 {
 		return false
 	}
-	// Basic pattern check for AWS region format
 	return region != ""
 }
 
-// configure initializes the Bedrock clients with the appropriate credentials and region.
+// configure validates the region and builds the runtime and control plane clients.
 //
-// Authentication priority:
-//  1. If a Bearer token / API key (ABSK) is provided, use it directly via Authorization header.
-//     This skips SigV4 signing and is the simplest setup (like Claude Code's BEDROCK_API_KEY).
-//  2. If explicit Access Key ID + Secret Access Key are provided (via setup or env vars),
-//     use them as static credentials.
-//  3. Otherwise, fall back to the standard AWS credential provider chain
-//     (env vars like AWS_ACCESS_KEY_ID, AWS profiles, IAM roles, etc.)
+// Credential priority:
+//  1. API key (ABSK): dummy static credentials plus bearerTokenTransport, which
+//     replaces the SigV4 Authorization header with the bearer token.
+//  2. Access key ID and secret access key as static credentials.
+//  3. The default AWS credential provider chain.
 func (c *BedrockClient) configure() error {
 	if c.bedrockRegion.Value == "" {
 		return fmt.Errorf(i18n.T("bedrock_invalid_aws_region"), "(empty)")
 	}
 
-	// Validate region format
 	if !isValidAWSRegion(c.bedrockRegion.Value) {
 		return fmt.Errorf(i18n.T("bedrock_invalid_aws_region"), c.bedrockRegion.Value)
 	}
 
 	ctx := context.Background()
 
-	// Build config options
 	configOpts := []func(*config.LoadOptions) error{
 		config.WithRegion(c.bedrockRegion.Value),
 	}
 
-	// Priority 1: Bearer token / API key (ABSK key)
-	// We use dummy static credentials (not AnonymousCredentials) to satisfy the
-	// AWS SDK's SigV4 auth middleware. AnonymousCredentials causes the SDK to fall
-	// through to its bearer token auth path, which panics without a token provider.
-	// Our bearerTokenTransport overrides the Authorization header with the real token.
-	// When using explicit credentials (bearer token or static keys), bypass the
-	// AWS shared config/credentials files to prevent AWS_PROFILE env var from
-	// causing "failed to get shared config profile" errors. This is thread-safe
-	// (no process-global env mutation) and only affects this config load.
+	// An API key needs dummy static credentials, not AnonymousCredentials. With
+	// AnonymousCredentials the SDK selects its bearer token auth scheme, which
+	// panics without a token provider. The empty shared config and credentials
+	// file lists stop AWS_PROFILE from causing "failed to get shared config
+	// profile" errors.
 	if c.bedrockAPIKey.Value != "" {
 		configOpts = append(configOpts,
 			config.WithCredentialsProvider(
@@ -410,7 +390,6 @@ func (c *BedrockClient) configure() error {
 			config.WithSharedCredentialsFiles([]string{}),
 		)
 	} else if c.bedrockAccessKey.Value != "" && c.bedrockSecretKey.Value != "" {
-		// Priority 2: Explicit access key + secret key (static credentials)
 		configOpts = append(configOpts,
 			config.WithCredentialsProvider(
 				credentials.NewStaticCredentialsProvider(
@@ -423,8 +402,6 @@ func (c *BedrockClient) configure() error {
 			config.WithSharedCredentialsFiles([]string{}),
 		)
 	}
-	// Priority 3: No explicit credentials → AWS SDK uses the default credential chain
-	// (AWS_ACCESS_KEY_ID/AWS_SECRET_ACCESS_KEY env vars, ~/.aws/credentials, IAM roles, etc.)
 
 	cfg, err := config.LoadDefaultConfig(ctx, configOpts...)
 	if err != nil {
@@ -446,15 +423,14 @@ func (c *BedrockClient) configure() error {
 func (c *BedrockClient) ListModels(_ context.Context) ([]string, error) {
 	models, err := c.listModelsFromAPI()
 	if err != nil && c.bedrockAPIKey.Value != "" {
-		// Bearer token auth may lack ListFoundationModels permissions;
-		// return common models as fallback
 		debuglog.Log(i18n.T("bedrock_listmodels_fallback")+": %v\n", err)
 		return defaultBedrockModels, nil
 	}
 	return models, err
 }
 
-// listModelsFromAPI queries the Bedrock control plane for available models.
+// listModelsFromAPI returns the foundation model IDs and inference profile IDs
+// from the Bedrock control plane.
 func (c *BedrockClient) listModelsFromAPI() ([]string, error) {
 	if c.controlPlaneClient == nil {
 		return nil, errors.New(i18n.T("bedrock_client_not_initialized"))
@@ -489,7 +465,7 @@ func (c *BedrockClient) listModelsFromAPI() ([]string, error) {
 
 // SendStream sends the messages to the Bedrock ConverseStream API
 func (c *BedrockClient) SendStream(_ context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan domain.StreamUpdate) (err error) {
-	// Ensure channel is closed on all exit paths to prevent goroutine leaks
+	// Close the channel on every exit path, including a panic, so the reader does not block.
 	defer func() {
 		if r := recover(); r != nil {
 			err = fmt.Errorf(i18n.T("bedrock_panic_sendstream"), r)
@@ -503,8 +479,8 @@ func (c *BedrockClient) SendStream(_ context.Context, msgs []*chat.ChatCompletio
 
 	messages := c.toMessages(msgs)
 
-	// Some models (e.g., Claude on Bedrock) reject requests with both temperature
-	// and top_p set simultaneously. Only send temperature as it's the more common parameter.
+	// Some models, such as Claude, reject a request that sets both temperature
+	// and top_p. Send only temperature.
 	var converseInput = bedrockruntime.ConverseStreamInput{
 		ModelId:  aws.String(opts.Model),
 		Messages: messages,
@@ -519,8 +495,8 @@ func (c *BedrockClient) SendStream(_ context.Context, msgs []*chat.ChatCompletio
 	}
 
 	for event := range response.GetStream().Events() {
-		// Possible ConverseStream event types
-		// https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference-call.html#conversation-inference-call-response-converse-stream
+		// ConverseStream event types:
+		// https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference.html#conversation-inference-call-response-converse-stream
 		switch v := event.(type) {
 
 		case *types.ConverseStreamOutputMemberContentBlockDelta:
@@ -537,7 +513,7 @@ func (c *BedrockClient) SendStream(_ context.Context, msgs []*chat.ChatCompletio
 				Type:    domain.StreamTypeContent,
 				Content: "\n",
 			}
-			return nil // Let defer handle the close
+			return nil // The deferred func closes the channel.
 
 		case *types.ConverseStreamOutputMemberMetadata:
 			if v.Value.Usage != nil {
@@ -551,7 +527,7 @@ func (c *BedrockClient) SendStream(_ context.Context, msgs []*chat.ChatCompletio
 				}
 			}
 
-		// Unused Events
+		// Ignored events
 		case *types.ConverseStreamOutputMemberMessageStart,
 			*types.ConverseStreamOutputMemberContentBlockStart,
 			*types.ConverseStreamOutputMemberContentBlockStop:
@@ -599,10 +575,9 @@ func (c *BedrockClient) Send(ctx context.Context, msgs []*chat.ChatCompletionMes
 	return text.Value, nil
 }
 
-// toMessages converts the array of input messages from the ChatCompletionMessageType to the
-// Bedrock Converse Message type.
-// The system role messages are mapped to the user role as they contain a mix of system messages,
-// pattern content and user input.
+// toMessages converts chat messages to Bedrock Converse messages. System
+// messages get the user role, because they hold the pattern text and the user
+// input together. Messages with any other role are dropped.
 func (c *BedrockClient) toMessages(inputMessages []*chat.ChatCompletionMessage) (messages []types.Message) {
 	for _, msg := range inputMessages {
 		roles := map[string]types.ConversationRole{

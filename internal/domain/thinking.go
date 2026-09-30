@@ -10,13 +10,8 @@ const (
 	ThinkingHigh   ThinkingLevel = "high"
 )
 
-// ThinkingBudgets defines standardized token budgets for reasoning-enabled models.
-// The map assigns a maximum token count to each ThinkingLevel, representing the
-// amount of context or computation that can be used for reasoning at that level.
-// These values (e.g., 1024 for low, 2048 for medium, 4096 for high) are used to
-// Token budget constants for each ThinkingLevel.
-// These values are chosen to align with typical context window sizes for LLMs at different reasoning levels.
-// Adjust these if model capabilities change.
+// Token budgets for each ThinkingLevel. Providers send them as the thinking
+// budget of a request. Adjust them when model capabilities change.
 const (
 	// TokenBudgetLow is suitable for basic reasoning or smaller models (e.g., 1k context window).
 	TokenBudgetLow int64 = 1024

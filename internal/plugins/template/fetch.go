@@ -67,7 +67,7 @@ func (p *FetchPlugin) isTextContent(contentType string) bool {
 	return isText
 }
 
-// validateTextContent ensures content is valid UTF-8 without null bytes
+// validateTextContent returns an error if content is not valid UTF-8 or contains a null byte.
 func (p *FetchPlugin) validateTextContent(content []byte) error {
 	debugf("Fetch: validating content length=%d bytes", len(content))
 
@@ -83,7 +83,7 @@ func (p *FetchPlugin) validateTextContent(content []byte) error {
 	return nil
 }
 
-// fetch retrieves content from a URL with safety checks
+// fetch downloads urlStr and applies the size, content-type, and UTF-8 checks.
 func (p *FetchPlugin) fetch(urlStr string) (string, error) {
 	debugf("Fetch: requesting URL %q", urlStr)
 

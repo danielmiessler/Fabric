@@ -118,7 +118,6 @@ func TestFormatMetadataAsText_ShowMetadata(t *testing.T) {
 
 	result := s.FormatMetadataAsText(show)
 
-	// Verify key elements are present
 	if !strings.Contains(result, "# Spotify Podcast/Show") {
 		t.Error("FormatMetadataAsText missing header for show")
 	}
@@ -158,7 +157,6 @@ func TestFormatMetadataAsText_EpisodeMetadata(t *testing.T) {
 
 	result := s.FormatMetadataAsText(episode)
 
-	// Verify key elements are present
 	if !strings.Contains(result, "# Spotify Episode") {
 		t.Error("FormatMetadataAsText missing header for episode")
 	}
@@ -205,7 +203,6 @@ func TestFormatMetadataAsText_SearchResult(t *testing.T) {
 
 	result := s.FormatMetadataAsText(searchResult)
 
-	// Verify key elements are present
 	if !strings.Contains(result, "# Spotify Search Results") {
 		t.Error("FormatMetadataAsText missing header for search results")
 	}
@@ -226,19 +223,16 @@ func TestFormatMetadataAsText_SearchResult(t *testing.T) {
 func TestFormatMetadataAsText_NilAndUnknownTypes(t *testing.T) {
 	s := NewSpotify()
 
-	// Test with nil
 	result := s.FormatMetadataAsText(nil)
 	if result != "" {
 		t.Errorf("FormatMetadataAsText(nil) should return empty string, got %q", result)
 	}
 
-	// Test with unknown type
 	result = s.FormatMetadataAsText("unexpected string type")
 	if result != "" {
 		t.Errorf("FormatMetadataAsText(string) should return empty string, got %q", result)
 	}
 
-	// Test with another unknown type
 	result = s.FormatMetadataAsText(12345)
 	if result != "" {
 		t.Errorf("FormatMetadataAsText(int) should return empty string, got %q", result)
@@ -268,14 +262,11 @@ func TestNewSpotify(t *testing.T) {
 func TestSpotify_IsConfigured(t *testing.T) {
 	s := NewSpotify()
 
-	// Since ClientId and ClientSecret are optional (not required),
-	// IsConfigured() returns true even when empty
-	// This is by design - Spotify is an optional plugin
+	// ClientId and ClientSecret are optional, so IsConfigured returns true when they are empty.
 	if !s.IsConfigured() {
 		t.Error("NewSpotify() should be configured (optional settings are valid when empty)")
 	}
 
-	// Set credentials - should still be configured
 	s.ClientId.Value = "test_client_id"
 	s.ClientSecret.Value = "test_client_secret"
 
@@ -287,13 +278,10 @@ func TestSpotify_IsConfigured(t *testing.T) {
 func TestSpotify_HasCredentials(t *testing.T) {
 	s := NewSpotify()
 
-	// Without credentials, attempting to use the API should fail
-	// This tests the actual validation in refreshAccessToken
 	if s.ClientId.Value != "" || s.ClientSecret.Value != "" {
 		t.Error("NewSpotify() should have empty credentials initially")
 	}
 
-	// Set credentials
 	s.ClientId.Value = "test_client_id"
 	s.ClientSecret.Value = "test_client_secret"
 

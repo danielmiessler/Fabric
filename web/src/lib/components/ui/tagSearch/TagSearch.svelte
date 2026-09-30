@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { InputChip } from '@skeletonlabs/skeleton';
+  import TagsInputField from '$lib/components/ui/tagsInput/TagsInputField.svelte';
   import type { PostMetadata } from '$lib/types';
   import type { Post } from '$lib/interfaces/post-interface'
   import PostCard from '$lib/components/posts/PostCard.svelte';
@@ -11,7 +11,6 @@
   let data: PageData;
   let posts = data.posts || [];
 
-  // Extract all unique tags from posts
   $: {
     const tagSet = new Set<string>();
     posts?.forEach(post => {
@@ -20,7 +19,6 @@
     allTags = Array.from(tagSet);
   }
 
-  // Filter posts based on selected tags
   $: filteredPosts = posts?.filter(post => {
     if (selectedTags.length === 0) return true;
     return selectedTags.every(tag => 
@@ -28,7 +26,6 @@
     );
   }) || [];
 
-  // Filter posts based on search query
   $: searchResults = filteredPosts.filter(post => {
     if (!searchQuery) return true;
     const query = searchQuery.toLowerCase();
@@ -47,7 +44,7 @@
 
 <div class="container py-12">
 	<div class="my-4">
-		<InputChip
+		<TagsInputField
 			name="tags"
 			placeholder="Filter by tags..."
 			validation={validateTag}

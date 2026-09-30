@@ -238,6 +238,8 @@ You can set default yt-dlp arguments in your config file (`~/.config/fabric/conf
 ytDlpArgs: "--cookies-from-browser brave --write-info-json"
 ```
 
+The REST API server (`fabric --serve`) also uses this value for the `/youtube/transcript` endpoint.
+
 ### Environment Variables
 
 Set up your YouTube API key:

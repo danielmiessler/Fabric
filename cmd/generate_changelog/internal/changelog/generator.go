@@ -80,15 +80,13 @@ func (g *Generator) collectData() error {
 		}
 
 		if cachedTag != "" {
-			// Get the current latest tag from git
 			currentTag, err := g.gitWalker.GetLatestTag()
 			if err == nil {
-				// Load cached data - we can use it even if there are new tags
+				// Cached versions stay valid when git has newer tags. The new tags merge in below.
 				cachedVersions, err := g.cache.GetVersions()
 				if err == nil && len(cachedVersions) > 0 {
 					g.versions = cachedVersions
 
-					// Load cached PRs
 					for _, version := range g.versions {
 						for _, prNum := range version.PRNumbers {
 							if pr, err := g.cache.GetPR(prNum); err == nil && pr != nil {
@@ -97,20 +95,19 @@ func (g *Generator) collectData() error {
 						}
 					}
 
-					// If we have new tags since cache, process the new versions only
+					// Walk only the versions added after the cached tag.
 					if currentTag != cachedTag {
 						fmt.Fprintf(os.Stderr, "Processing new versions since %s...\n", cachedTag)
 						newVersions, err := g.gitWalker.WalkHistorySinceTag(cachedTag)
 						if err != nil {
 							fmt.Fprintf(os.Stderr, "Warning: Failed to walk history since tag %s: %v\n", cachedTag, err)
 						} else {
-							// Merge new versions into cached versions (only add if not already cached)
+							// Add new versions to the cached set. Keep cached versions, but fill in missing PR numbers.
 							for name, version := range newVersions {
-								if name != "Unreleased" { // Handle Unreleased separately
+								if name != "Unreleased" { // rebuilt below
 									if existingVersion, exists := g.versions[name]; !exists {
 										g.versions[name] = version
 									} else {
-										// Update existing version with new PR numbers if they're missing
 										if len(existingVersion.PRNumbers) == 0 && len(version.PRNumbers) > 0 {
 											existingVersion.PRNumbers = version.PRNumbers
 										}
@@ -120,23 +117,20 @@ func (g *Generator) collectData() error {
 						}
 					}
 
-					// Always update Unreleased section with latest commits
+					// Rebuild Unreleased from git on every run.
 					unreleasedVersion, err := g.gitWalker.WalkCommitsSinceTag(currentTag)
 					if err != nil {
 						fmt.Fprintf(os.Stderr, "Warning: Failed to walk commits since tag %s: %v\n", currentTag, err)
 					} else if unreleasedVersion != nil {
-						// Preserve existing AI summary if available
 						if existingUnreleased, exists := g.versions["Unreleased"]; exists {
 							unreleasedVersion.AISummary = existingUnreleased.AISummary
 						}
-						// Replace or add the unreleased version
 						g.versions["Unreleased"] = unreleasedVersion
 					}
 
-					// Save any new versions to cache (after potential AI processing)
+					// Save every version and its commits. Unreleased is never saved.
 					if currentTag != cachedTag {
 						for _, version := range g.versions {
-							// Skip versions that were already cached and Unreleased
 							if version.Name != "Unreleased" {
 								if err := g.cache.SaveVersion(version); err != nil {
 									fmt.Fprintf(os.Stderr, "Warning: Failed to save version to cache: %v\n", err)
@@ -150,7 +144,6 @@ func (g *Generator) collectData() error {
 							}
 						}
 
-						// Update the last processed tag
 						if err := g.cache.SetLastProcessedTag(currentTag); err != nil {
 							fmt.Fprintf(os.Stderr, "Warning: Failed to update last processed tag: %v\n", err)
 						}
@@ -182,7 +175,7 @@ func (g *Generator) collectData() error {
 			}
 		}
 
-		// Save the latest tag as our cache anchor point
+		// The latest tag is the anchor for later incremental walks.
 		if latestTag, err := g.gitWalker.GetLatestTag(); err == nil && latestTag != "" {
 			if err := g.cache.SetLastProcessedTag(latestTag); err != nil {
 				return fmt.Errorf("failed to save last processed tag: %w", err)
@@ -194,7 +187,6 @@ func (g *Generator) collectData() error {
 }
 
 func (g *Generator) fetchPRs(forcePRSync bool) error {
-	// First, load all cached PRs
 	if g.cache != nil {
 		cachedPRs, err := g.cache.GetAllPRs()
 		if err != nil {
@@ -204,13 +196,11 @@ func (g *Generator) fetchPRs(forcePRSync bool) error {
 		}
 	}
 
-	// Check if we need to fetch new PRs
 	var lastSync time.Time
 	if g.cache != nil {
 		lastSync, _ = g.cache.GetLastPRSync()
 	}
 
-	// Check if we need to sync for missing PRs
 	missingPRs := false
 	for _, version := range g.versions {
 		for _, prNum := range version.PRNumbers {
@@ -227,8 +217,6 @@ func (g *Generator) fetchPRs(forcePRSync bool) error {
 	if missingPRs {
 		fmt.Fprintf(os.Stderr, "Full sync triggered due to missing PRs in cache.\n")
 	}
-	// If we have never synced or it's been more than 24 hours, do a full sync
-	// Also sync if we have versions with PR numbers that aren't cached
 	needsSync := lastSync.IsZero() || time.Since(lastSync) > 24*time.Hour || forcePRSync || missingPRs
 
 	if !needsSync {
@@ -238,35 +226,29 @@ func (g *Generator) fetchPRs(forcePRSync bool) error {
 
 	fmt.Fprintf(os.Stderr, "Fetching merged PRs from GitHub using GraphQL...\n")
 
-	// Use GraphQL for ultimate performance - gets everything in ~5-10 calls
+	// GraphQL returns PRs with their commits in pages of 100. REST needs one call per PR.
 	prs, err := g.ghClient.FetchAllMergedPRsGraphQL(lastSync)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "GraphQL fetch failed, falling back to REST API: %v\n", err)
-		// Fall back to REST API
 		prs, err = g.ghClient.FetchAllMergedPRs(lastSync)
 		if err != nil {
 			return fmt.Errorf("both GraphQL and REST API failed: %w", err)
 		}
 	}
 
-	// Update our PR map with new data
 	for _, pr := range prs {
 		g.prs[pr.Number] = pr
 	}
 
-	// Save all PRs to cache in a batch transaction
 	if g.cache != nil && len(prs) > 0 {
-		// Save PRs
 		if err := g.cache.SavePRBatch(prs); err != nil {
 			fmt.Fprintf(os.Stderr, "Warning: Failed to cache PRs: %v\n", err)
 		}
 
-		// Save SHA→PR mappings for lightning-fast git operations
 		if err := g.cache.SaveCommitPRMappings(prs); err != nil {
 			fmt.Fprintf(os.Stderr, "Warning: Failed to cache commit mappings: %v\n", err)
 		}
 
-		// Update last sync timestamp
 		if err := g.cache.SetLastPRSync(time.Now()); err != nil {
 			fmt.Fprintf(os.Stderr, "Warning: Failed to update last sync timestamp: %v\n", err)
 		}
@@ -304,24 +286,20 @@ func (g *Generator) getSortedVersions() []*git.Version {
 	var versions []*git.Version
 	var releasedVersions []*git.Version
 
-	// Collect all released versions (non-"Unreleased")
 	for name, version := range g.versions {
 		if name != "Unreleased" {
 			releasedVersions = append(releasedVersions, version)
 		}
 	}
 
-	// Sort released versions by date (newest first)
 	sort.Slice(releasedVersions, func(i, j int) bool {
 		return releasedVersions[i].Date.After(releasedVersions[j].Date)
 	})
 
-	// Add "Unreleased" first if it exists and has commits
 	if unreleased, exists := g.versions["Unreleased"]; exists && len(unreleased.Commits) > 0 {
 		versions = append(versions, unreleased)
 	}
 
-	// Add sorted released versions
 	versions = append(versions, releasedVersions...)
 
 	if g.cfg.Limit > 0 && len(versions) > g.cfg.Limit {
@@ -334,7 +312,6 @@ func (g *Generator) getSortedVersions() []*git.Version {
 func (g *Generator) formatVersion(version *git.Version) string {
 	var sb strings.Builder
 
-	// Generate raw content
 	rawContent := g.generateRawVersionContent(version)
 	if rawContent == "" {
 		return ""
@@ -344,17 +321,13 @@ func (g *Generator) formatVersion(version *git.Version) string {
 	sb.WriteString(("\n"))
 	sb.WriteString(header)
 
-	// If AI summarization is enabled, enhance with AI
 	if g.cfg.EnableAISummary {
-		// For "Unreleased", check if content has changed since last AI summary
+		// Reuse the Unreleased summary when the raw content hash is unchanged.
 		if version.Name == "Unreleased" && version.AISummary != "" && g.cache != nil {
-			// Get cached content hash
 			cachedHash, err := g.cache.GetUnreleasedContentHash()
 			if err == nil {
-				// Calculate current content hash
 				currentHash := hashContent(rawContent)
 				if cachedHash == currentHash {
-					// Content unchanged, use cached summary
 					fmt.Fprintf(os.Stderr, "✅ %s content unchanged (skipping AI)\n", version.Name)
 					sb.WriteString(version.AISummary)
 					return fixMarkdown(sb.String())
@@ -362,7 +335,7 @@ func (g *Generator) formatVersion(version *git.Version) string {
 			}
 		}
 
-		// For released versions, if we have cached AI summary, use it!
+		// Released content does not change, so a cached summary is final.
 		if version.Name != "Unreleased" && version.AISummary != "" {
 			fmt.Fprintf(os.Stderr, "✅ %s already summarized (skipping)\n", version.Name)
 			sb.WriteString(version.AISummary)
@@ -388,13 +361,12 @@ func (g *Generator) formatVersion(version *git.Version) string {
 		fmt.Fprintf(os.Stderr, " Done!\n")
 		aiSummary = strings.TrimSpace(aiSummary)
 
-		// Cache the AI summary and content hash
 		version.AISummary = aiSummary
 		if g.cache != nil {
 			if err := g.cache.UpdateVersionAISummary(version.Name, aiSummary); err != nil {
 				fmt.Fprintf(os.Stderr, "Warning: Failed to cache AI summary: %v\n", err)
 			}
-			// Cache content hash for "Unreleased" to detect changes
+			// The hash lets the next run detect Unreleased content changes.
 			if version.Name == "Unreleased" {
 				if err := g.cache.SetUnreleasedContentHash(hashContent(rawContent)); err != nil {
 					fmt.Fprintf(os.Stderr, "Warning: Failed to cache content hash: %v\n", err)
@@ -411,7 +383,6 @@ func (g *Generator) formatVersion(version *git.Version) string {
 }
 
 func checkForAIError(summary string) bool {
-	// Check for common AI error patterns
 	errorPatterns := []string{
 		"I don't see any", "please provide",
 		"content you've provided appears to be incomplete",
@@ -426,7 +397,6 @@ func checkForAIError(summary string) bool {
 	return false
 }
 
-// formatVersionHeader formats just the version header (## ...)
 func (g *Generator) formatVersionHeader(version *git.Version) string {
 	if version.Name == "Unreleased" {
 		return "## Unreleased\n\n"
@@ -434,11 +404,10 @@ func (g *Generator) formatVersionHeader(version *git.Version) string {
 	return fmt.Sprintf("\n## %s (%s)\n\n", version.Name, version.Date.Format("2006-01-02"))
 }
 
-// generateRawVersionContent generates the raw content (PRs + commits) for a version
+// generateRawVersionContent renders the PRs and direct commits of a version as markdown.
 func (g *Generator) generateRawVersionContent(version *git.Version) string {
 	var sb strings.Builder
 
-	// Build a set of commit SHAs that are part of fetched PRs
 	prCommitSHAs := make(map[string]bool)
 	for _, prNum := range version.PRNumbers {
 		if pr, exists := g.prs[prNum]; exists {
@@ -452,12 +421,11 @@ func (g *Generator) generateRawVersionContent(version *git.Version) string {
 	directCommits := []*git.Commit{}
 
 	for _, commit := range version.Commits {
-		// Skip version bump commits from output
 		if commit.IsVersion {
 			continue
 		}
 
-		// If this commit is part of a fetched PR, don't include it in direct commits
+		// Commits of a fetched PR appear under that PR, not as direct commits.
 		if prCommitSHAs[commit.SHA] {
 			continue
 		}
@@ -469,8 +437,8 @@ func (g *Generator) generateRawVersionContent(version *git.Version) string {
 		}
 	}
 
-	// There are occasionally no PRs or direct commits other than version bumps, so we handle that gracefully
-	// However, don't return early if we have PRs to output from version.PRNumbers
+	// A version with only a version bump commit has no content.
+	// PRs listed in version.PRNumbers still count as content.
 	if len(prCommits) == 0 && len(directCommits) == 0 && len(version.PRNumbers) == 0 {
 		return ""
 	}
@@ -485,7 +453,6 @@ func (g *Generator) generateRawVersionContent(version *git.Version) string {
 	}
 
 	if len(directCommits) > 0 {
-		// Sort direct commits by date (newest first) for consistent ordering
 		sort.Slice(directCommits, func(i, j int) bool {
 			return directCommits[i].Date.After(directCommits[j].Date)
 		})
@@ -506,7 +473,7 @@ func (g *Generator) generateRawVersionContent(version *git.Version) string {
 
 func fixMarkdown(content string) string {
 
-	// Fix MD032/blank-around-lists: Lists should be surrounded by blank lines
+	// markdownlint MD032 (blanks-around-lists): insert a blank line before each list.
 	lines := strings.Split(content, "\n")
 	inList := false
 	preListNewline := false
@@ -515,7 +482,6 @@ func fixMarkdown(content string) string {
 		if strings.HasPrefix(line, "- ") || strings.HasPrefix(line, "* ") {
 			if !inList {
 				inList = true
-				// Ensure there's a blank line before the list starts
 				if !preListNewline && i > 0 && lines[i-1] != "" {
 					line = "\n" + line
 					preListNewline = true
@@ -604,7 +570,6 @@ func (g *Generator) formatCommitMessage(message string) string {
 	}
 
 	message = normalizeLineEndings(message)
-	// No hard tabs
 	message = strings.ReplaceAll(message, "\t", " ")
 
 	if len(message) > 0 {
@@ -623,56 +588,43 @@ func (g *Generator) formatCommitMessage(message string) string {
 }
 
 func fixFormatting(message string) string {
-	// Turn "*"" lists into "-" lists"
 	message = strings.ReplaceAll(message, "* ", "- ")
-	// Remove extra spaces around dashes
 	message = strings.ReplaceAll(message, "-   ", "- ")
 	message = strings.ReplaceAll(message, "-  ", "- ")
-	// turn bare URL into <URL>
 	if strings.Contains(message, "http://") || strings.Contains(message, "https://") {
-		// Use regex to wrap bare URLs with angle brackets
 		urlRegex := regexp.MustCompile(`\b(https?://[^\s<>]+)`)
 		message = urlRegex.ReplaceAllString(message, "<$1>")
 	}
 
-	// Replace "## LINKS\n" with "- "
 	message = strings.ReplaceAll(message, "## LINKS\n", "- ")
-	// Dependabot messages: "- [Commits]" should become "\n- [Commits]"
 	message = strings.TrimSpace(message)
-	// Turn multiple newlines into a single newline
 	message = strings.TrimSpace(strings.ReplaceAll(message, "\n\n", "\n"))
-	// Fix inline trailing spaces
 	message = strings.ReplaceAll(message, " \n", "\n")
-	// Fix weird indent before list,
 	message = strings.ReplaceAll(message, "\n - ", "\n- ")
 
-	// blanks-around-lists MD032 fix
-	// Use regex to ensure blank line before list items that don't already have one
+	// markdownlint MD032: add a blank line between a text line and the list item after it.
+	// A text line that ends in a colon is exempt.
 	listRegex := regexp.MustCompile(`(?m)([^\n-].*[^:\n])\n([-*] .*)`)
 	message = listRegex.ReplaceAllString(message, "$1\n\n$2")
 
-	// Change random first-level "#" to 4th level "####"
-	// This is a hack to fix spurious first-level headings that are not actual headings
-	// but rather just comments or notes in the commit message.
+	// Rewrite "# " headings as level 4. Commit messages use "#" for notes, not document headings.
 	message = strings.ReplaceAll(message, "# ", "\n#### ")
 	message = strings.ReplaceAll(message, "\n\n\n", "\n\n")
 
-	// Wrap any non-wrapped Emails with angle brackets
+	// Wrap emails and URLs in angle brackets. The "<<" cleanup below undoes double wrapping.
 	emailRegex := regexp.MustCompile(`([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})`)
 	message = emailRegex.ReplaceAllString(message, "<$1>")
 
-	// Wrap any non-wrapped URLs with angle brackets
 	urlRegex := regexp.MustCompile(`(https?://[^\s<]+)`)
 	message = urlRegex.ReplaceAllString(message, "<$1>")
 
 	message = strings.ReplaceAll(message, "<<", "<")
 	message = strings.ReplaceAll(message, ">>", ">")
 
-	// Fix some spurious Issue/PR links at the beginning of a commit message line
+	// A line that starts with "#123" trips markdownlint MD018. Join it to the line before.
 	prOrIssueLinkRegex := regexp.MustCompile("\n" + `(#\d+)`)
 	message = prOrIssueLinkRegex.ReplaceAllString(message, " $1")
 
-	// Remove leading/trailing whitespace
 	message = strings.TrimSpace(message)
 	return message
 }
@@ -693,7 +645,7 @@ func (g *Generator) isDuplicateMessage(message string, commits []*git.Commit) bo
 	return false
 }
 
-// hashContent generates a SHA256 hash of the content for change detection
+// hashContent returns the SHA-256 hex digest that detects Unreleased content changes.
 func hashContent(content string) string {
 	hash := sha256.Sum256([]byte(content))
 	return fmt.Sprintf("%x", hash)
@@ -707,19 +659,16 @@ func (g *Generator) SyncDatabase() error {
 
 	fmt.Fprintf(os.Stderr, "[SYNC] Starting database synchronization...\n")
 
-	// Step 1: Force PR sync (pass true explicitly)
 	fmt.Fprintf(os.Stderr, "[PR_SYNC] Forcing PR sync from GitHub...\n")
 	if err := g.fetchPRs(true); err != nil {
 		return fmt.Errorf("failed to sync PRs: %w", err)
 	}
 
-	// Step 2: Rebuild git history and verify versions/commits completeness
 	fmt.Fprintf(os.Stderr, "[VERIFY] Verifying git history and version completeness...\n")
 	if err := g.syncGitHistory(); err != nil {
 		return fmt.Errorf("failed to sync git history: %w", err)
 	}
 
-	// Step 3: Verify commit-PR mappings
 	fmt.Fprintf(os.Stderr, "[MAPPING] Verifying commit-PR mappings...\n")
 	if err := g.verifyCommitPRMappings(); err != nil {
 		return fmt.Errorf("failed to verify commit-PR mappings: %w", err)
@@ -729,18 +678,15 @@ func (g *Generator) SyncDatabase() error {
 	return nil
 }
 
-// syncGitHistory walks the complete git history and ensures all versions and commits are cached
+// syncGitHistory walks the full git history and caches the versions and commits that are missing.
 func (g *Generator) syncGitHistory() error {
-	// Walk complete git history (reuse existing logic)
 	versions, err := g.gitWalker.WalkHistory()
 	if err != nil {
 		return fmt.Errorf("failed to walk git history: %w", err)
 	}
 
-	// Save only new versions and commits (preserve existing data)
 	var newVersions, newCommits int
 	for _, version := range versions {
-		// Only save version if it doesn't exist
 		exists, err := g.cache.VersionExists(version.Name)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "Warning: Failed to check existence of version %s: %v. This may affect the completeness of the sync operation.\n", version.Name, err)
@@ -754,7 +700,6 @@ func (g *Generator) syncGitHistory() error {
 			}
 		}
 
-		// Only save commits that don't exist
 		for _, commit := range version.Commits {
 			exists, err := g.cache.CommitExists(commit.SHA)
 			if err != nil {
@@ -771,7 +716,6 @@ func (g *Generator) syncGitHistory() error {
 		}
 	}
 
-	// Update last processed tag
 	if latestTag, err := g.gitWalker.GetLatestTag(); err == nil && latestTag != "" {
 		if err := g.cache.SetLastProcessedTag(latestTag); err != nil {
 			fmt.Fprintf(os.Stderr, "Warning: Failed to update last processed tag: %v\n", err)
@@ -782,21 +726,18 @@ func (g *Generator) syncGitHistory() error {
 	return nil
 }
 
-// verifyCommitPRMappings ensures all PR commits have proper mappings
+// verifyCommitPRMappings rewrites the commit-to-PR mapping table from all cached PRs.
 func (g *Generator) verifyCommitPRMappings() error {
-	// Get all cached PRs
 	allPRs, err := g.cache.GetAllPRs()
 	if err != nil {
 		return fmt.Errorf("failed to get cached PRs: %w", err)
 	}
 
-	// Convert to slice for batch operations (reuse existing logic)
 	var prSlice []*github.PR
 	for _, pr := range allPRs {
 		prSlice = append(prSlice, pr)
 	}
 
-	// Save commit-PR mappings (reuse existing logic)
 	if err := g.cache.SaveCommitPRMappings(prSlice); err != nil {
 		return fmt.Errorf("failed to save commit-PR mappings: %w", err)
 	}

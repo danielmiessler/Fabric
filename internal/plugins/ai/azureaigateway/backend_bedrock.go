@@ -96,8 +96,8 @@ func (b *BedrockBackend) PrepareRequest(msgs []*chat.ChatCompletionMessage, opts
 	if len(systemParts) > 0 {
 		body["system"] = strings.Join(systemParts, "\n\n")
 	}
-	// Anthropic API: temperature and top_p are mutually exclusive
-	// Set only the non-default parameter to avoid API conflicts
+	// The Anthropic API accepts temperature or top_p, not both.
+	// Send top_p when it is not the default. Otherwise send temperature.
 	if opts.TopP != domain.DefaultTopP {
 		body["top_p"] = opts.TopP
 	} else {

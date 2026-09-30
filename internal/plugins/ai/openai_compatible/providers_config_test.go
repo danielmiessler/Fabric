@@ -41,6 +41,31 @@ func TestCreateClient(t *testing.T) {
 			exists:   true,
 		},
 		{
+			name:     "Existing provider - FuturMix",
+			provider: "FuturMix",
+			exists:   true,
+		},
+		{
+			name:     "New Chinese provider - Aliyun DashScope",
+			provider: "Aliyun DashScope",
+			exists:   true,
+		},
+		{
+			name:     "New Chinese provider - Zhipu AI",
+			provider: "Zhipu AI",
+			exists:   true,
+		},
+		{
+			name:     "New Chinese provider - ByteDance Ark",
+			provider: "ByteDance Ark",
+			exists:   true,
+		},
+		{
+			name:     "Existing provider - llmman",
+			provider: "llmman",
+			exists:   true,
+		},
+		{
 			name:     "Non-existent provider",
 			provider: "NonExistent",
 			exists:   false,

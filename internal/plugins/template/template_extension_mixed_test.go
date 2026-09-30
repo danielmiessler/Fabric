@@ -14,7 +14,6 @@ func TestExtensionValueMixedInputAndVariable(t *testing.T) {
 		"suffix": "SUF",
 	}
 
-	// Build temp extension environment
 	tmp := t.TempDir()
 	configDir := filepath.Join(tmp, ".config", "fabric")
 	extsDir := filepath.Join(configDir, "extensions")
@@ -28,7 +27,6 @@ func TestExtensionValueMixedInputAndVariable(t *testing.T) {
 	}
 
 	scriptPath := filepath.Join(binDir, "mix-echo.sh")
-	// Simple echo script; avoid percent formatting complexities
 	script := "#!/bin/sh\necho VAL=$1\n"
 	if err := os.WriteFile(scriptPath, []byte(script), 0o755); err != nil {
 		t.Fatalf("write script: %v", err)
@@ -48,22 +46,18 @@ func TestExtensionValueMixedInputAndVariable(t *testing.T) {
 		t.Fatalf("write config: %v", err)
 	}
 
-	// Use a fresh extension manager isolated from global one
 	mgr := NewExtensionManager(configDir)
 	if err := mgr.RegisterExtension(filepath.Join(configsDir, "mix-echo.yaml")); err != nil {
-		// Some environments may not support execution; skip instead of fail hard
 		if strings.Contains(err.Error(), "operation not permitted") {
 			t.Skipf("skipping due to exec restriction: %v", err)
 		}
 		t.Fatalf("register: %v", err)
 	}
 
-	// Temporarily swap global extensionManager for this test
 	prevMgr := extensionManager
 	extensionManager = mgr
 	defer func() { extensionManager = prevMgr }()
 
-	// Template uses input plus a variable inside extension value
 	tmpl := "{{ext:mix-echo:echo:pre-{{input}}-mid-{{suffix}}-post}}"
 
 	out, err := ApplyTemplate(tmpl, variables, input)

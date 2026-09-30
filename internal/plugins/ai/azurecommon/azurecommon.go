@@ -17,7 +17,7 @@ import (
 // DefaultAPIVersion is the default Azure OpenAI API version.
 const DefaultAPIVersion = "2025-04-01-preview"
 
-// deploymentRoutes defines the API paths that require deployment name injection.
+// deploymentRoutes holds the SDK paths that Azure serves under /openai/deployments/{name}.
 var deploymentRoutes = map[string]bool{
 	"/chat/completions":     true,
 	"/completions":          true,
@@ -55,7 +55,7 @@ func AzureDeploymentMiddleware(req *http.Request, next option.MiddlewareNext) (*
 
 	path := req.URL.Path
 
-	// Remove /openai prefix if present (SDK may add it via base URL)
+	// BuildEndpoint puts /openai in the base URL, so strip it before the route lookup.
 	trimmedPath := strings.TrimPrefix(path, "/openai")
 	if !strings.HasPrefix(trimmedPath, "/") {
 		trimmedPath = "/" + trimmedPath
@@ -69,7 +69,7 @@ func AzureDeploymentMiddleware(req *http.Request, next option.MiddlewareNext) (*
 
 		newPath := "/openai/deployments/" + url.PathEscape(deploymentName) + trimmedPath
 		req.URL.Path = newPath
-		req.URL.RawPath = "" // Clear RawPath to ensure Path is used
+		req.URL.RawPath = "" // Clear RawPath so that the request uses the new Path.
 	}
 
 	return next(req)
@@ -86,7 +86,6 @@ func ExtractDeploymentFromBody(req *http.Request) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	// Restore body for subsequent reads
 	req.Body = io.NopCloser(bytes.NewReader(bodyBytes))
 
 	var payload struct {

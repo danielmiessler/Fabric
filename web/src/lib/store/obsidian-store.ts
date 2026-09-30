@@ -6,19 +6,15 @@ export interface ObsidianSettings {
   noteName: string;
 }
 
-// Keep existing defaultSettings
 const defaultSettings: ObsidianSettings = {
   saveToObsidian: false,
   noteName: ''
 };
 
-// Keep existing store initialization
 export const obsidianSettings = writable<ObsidianSettings>(defaultSettings);
 
-// Add notification store
 export const saveNotification = writable<string>('');
 
-// Keep existing update function with notification enhancement
 export function updateObsidianSettings(settings: Partial<ObsidianSettings>) {
   const enabled = get(featureFlags).enableObsidianIntegration;
   console.log('Updating Obsidian settings:', settings, 'Integration enabled:', enabled);
@@ -34,7 +30,7 @@ export function updateObsidianSettings(settings: Partial<ObsidianSettings>) {
       ...settings
     };
     
-    // Add notification after successful save
+    // ChatInput sets saveToObsidian to false after a successful save.
     if (settings.saveToObsidian === false && current.noteName) {
       saveNotification.set('Note saved to Obsidian!');
       setTimeout(() => saveNotification.set(''), 3000);
@@ -45,7 +41,6 @@ export function updateObsidianSettings(settings: Partial<ObsidianSettings>) {
   });
 }
 
-// Reset settings to default
 export function resetObsidianSettings() {
   const enabled = get(featureFlags).enableObsidianIntegration;
   if (!enabled) return;
@@ -53,7 +48,6 @@ export function resetObsidianSettings() {
   obsidianSettings.set(defaultSettings);
 }
 
-// Helper to get file path
 export function getObsidianFilePath(noteName: string): string | undefined {
   const enabled = get(featureFlags).enableObsidianIntegration;
   if (!enabled || !noteName) return undefined;

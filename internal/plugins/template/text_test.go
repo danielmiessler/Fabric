@@ -14,7 +14,6 @@ func TestTextPlugin(t *testing.T) {
 		want      string
 		wantErr   bool
 	}{
-		// Upper tests
 		{
 			name:      "upper basic",
 			operation: "upper",
@@ -28,7 +27,6 @@ func TestTextPlugin(t *testing.T) {
 			want:      "HELLO",
 		},
 
-		// Lower tests
 		{
 			name:      "lower basic",
 			operation: "lower",
@@ -42,7 +40,6 @@ func TestTextPlugin(t *testing.T) {
 			want:      "hello",
 		},
 
-		// Title tests
 		{
 			name:      "title basic",
 			operation: "title",
@@ -56,7 +53,6 @@ func TestTextPlugin(t *testing.T) {
 			want:      "O'Reilly's Book",
 		},
 
-		// Trim tests
 		{
 			name:      "trim spaces",
 			operation: "trim",
@@ -70,7 +66,6 @@ func TestTextPlugin(t *testing.T) {
 			want:      "hello",
 		},
 
-		// Error cases
 		{
 			name:      "empty value",
 			operation: "upper",
@@ -89,13 +84,11 @@ func TestTextPlugin(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			got, err := plugin.Apply(tt.operation, tt.value)
 
-			// Check error cases
 			if (err != nil) != tt.wantErr {
 				t.Errorf("TextPlugin.Apply() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
 
-			// Check successful cases
 			if err == nil && got != tt.want {
 				t.Errorf("TextPlugin.Apply() = %q, want %q", got, tt.want)
 			}

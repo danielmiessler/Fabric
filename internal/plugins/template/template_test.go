@@ -15,7 +15,6 @@ func TestApplyTemplate(t *testing.T) {
 		wantErr     bool
 		errContains string
 	}{
-		// Basic variable substitution
 		{
 			name:     "simple variable",
 			template: "Hello {{name}}!",
@@ -38,7 +37,6 @@ func TestApplyTemplate(t *testing.T) {
 			want:     "Content: test content",
 		},
 
-		// Nested variable substitution
 		{
 			name:     "nested variables",
 			template: "{{outer{{inner}}}}",
@@ -49,7 +47,6 @@ func TestApplyTemplate(t *testing.T) {
 			want: "result",
 		},
 
-		// Plugin operations
 		{
 			name:     "simple text plugin",
 			template: "{{plugin:text:upper:hello}}",
@@ -68,7 +65,6 @@ func TestApplyTemplate(t *testing.T) {
 			want:     "HELLO",
 		},
 
-		// Multiple operations
 		{
 			name:     "multiple plugins",
 			template: "A:{{plugin:text:upper:hello}} B:{{plugin:text:lower:WORLD}}",
@@ -80,7 +76,6 @@ func TestApplyTemplate(t *testing.T) {
 			want:     "HELLO",
 		},
 
-		// Error cases
 		{
 			name:        "missing variable",
 			template:    "Hello {{name}}!",
@@ -106,7 +101,6 @@ func TestApplyTemplate(t *testing.T) {
 			errContains: "unknown plugin namespace",
 		},
 
-		// Edge cases
 		{
 			name:     "empty template",
 			template: "",
@@ -123,7 +117,6 @@ func TestApplyTemplate(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			got, err := ApplyTemplate(tt.template, tt.vars, tt.input)
 
-			// Check error cases
 			if (err != nil) != tt.wantErr {
 				t.Errorf("ApplyTemplate() error = %v, wantErr %v", err, tt.wantErr)
 				return
@@ -136,7 +129,6 @@ func TestApplyTemplate(t *testing.T) {
 				return
 			}
 
-			// Check result
 			if got != tt.want {
 				t.Errorf("ApplyTemplate() = %q, want %q", got, tt.want)
 			}

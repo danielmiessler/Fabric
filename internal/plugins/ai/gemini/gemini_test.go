@@ -234,7 +234,6 @@ func TestIsTTSModel(t *testing.T) {
 func TestGenerateWAVFile(t *testing.T) {
 	client := &Client{}
 
-	// Test with minimal PCM data
 	pcmData := []byte{0x00, 0x01, 0x02, 0x03}
 
 	result, err := client.generateWAVFile(pcmData)
@@ -242,12 +241,10 @@ func TestGenerateWAVFile(t *testing.T) {
 		t.Errorf("generateWAVFile failed: %v", err)
 	}
 
-	// Check that we got some data back
 	if len(result) == 0 {
 		t.Error("generateWAVFile returned empty data")
 	}
 
-	// Check that it starts with RIFF header
 	if len(result) >= 4 && string(result[0:4]) != "RIFF" {
 		t.Error("Generated WAV data doesn't start with RIFF header")
 	}

@@ -12,7 +12,6 @@ import (
 func TestSysPlugin(t *testing.T) {
 	plugin := &SysPlugin{}
 
-	// Set up test environment variable
 	const testEnvVar = "FABRIC_TEST_VAR"
 	const testEnvValue = "test_value"
 	os.Setenv(testEnvVar, testEnvValue)
@@ -99,7 +98,6 @@ func TestSysPlugin(t *testing.T) {
 				return nil
 			},
 		},
-		// Error cases
 		{
 			name:      "unknown operation",
 			operation: "invalid",

@@ -30,20 +30,17 @@ type FileChange struct {
 func ParseFileChanges(output string) (changeSummary string, changes []FileChange, err error) {
 	fileChangesStart := strings.Index(output, FileChangesMarker)
 	if fileChangesStart == -1 {
-		return output, nil, nil // No file changes section found
+		return output, nil, nil
 	}
-	changeSummary = output[:fileChangesStart] // Everything before the marker
+	changeSummary = output[:fileChangesStart]
 
-	// Extract the JSON part
 	jsonStart := fileChangesStart + len(FileChangesMarker)
-	// Find the first [ after the file changes marker
 	jsonArrayStart := strings.Index(output[jsonStart:], "[")
 	if jsonArrayStart == -1 {
 		return output, nil, fmt.Errorf(i18n.T("file_manager_invalid_format_no_json_array"), FileChangesMarker)
 	}
 	jsonStart += jsonArrayStart
 
-	// Find the matching closing bracket for the array with proper bracket counting
 	bracketCount := 0
 	jsonEnd := jsonStart
 	for i := jsonStart; i < len(output); i++ {
@@ -62,18 +59,13 @@ func ParseFileChanges(output string) (changeSummary string, changes []FileChange
 		return output, nil, fmt.Errorf(i18n.T("file_manager_invalid_format_unbalanced_brackets"), FileChangesMarker)
 	}
 
-	// Extract the JSON string and fix escape sequences
 	jsonStr := output[jsonStart:jsonEnd]
 
-	// Fix specific invalid escape sequences
-	// First try with the common \C issue
 	jsonStr = strings.Replace(jsonStr, `\C`, `\\C`, -1)
 
-	// Parse the JSON
 	var fileChanges []FileChange
 	err = json.Unmarshal([]byte(jsonStr), &fileChanges)
 	if err != nil {
-		// If still failing, try a more comprehensive fix
 		jsonStr = fixInvalidEscapes(jsonStr)
 		err = json.Unmarshal([]byte(jsonStr), &fileChanges)
 		if err != nil {
@@ -81,24 +73,19 @@ func ParseFileChanges(output string) (changeSummary string, changes []FileChange
 		}
 	}
 
-	// Validate file changes
 	for i, change := range fileChanges {
-		// Validate operation
 		if change.Operation != "create" && change.Operation != "update" {
 			return changeSummary, nil, fmt.Errorf(i18n.T("file_manager_invalid_operation"), i, change.Operation)
 		}
 
-		// Validate path
 		if change.Path == "" {
 			return changeSummary, nil, fmt.Errorf(i18n.T("file_manager_empty_path"), i)
 		}
 
-		// Check for suspicious paths (directory traversal)
 		if strings.Contains(change.Path, "..") {
 			return changeSummary, nil, fmt.Errorf(i18n.T("file_manager_suspicious_path"), i, change.Path)
 		}
 
-		// Check file size
 		if len(change.Content) > MaxFileSize {
 			return changeSummary, nil, fmt.Errorf(i18n.T("file_manager_file_content_too_large"), i, len(change.Content))
 		}
@@ -107,7 +94,8 @@ func ParseFileChanges(output string) (changeSummary string, changes []FileChange
 	return changeSummary, fileChanges, nil
 }
 
-// fixInvalidEscapes replaces invalid escape sequences in JSON strings
+// fixInvalidEscapes escapes raw control characters inside JSON strings and
+// doubles the backslash of an unknown escape sequence.
 func fixInvalidEscapes(jsonStr string) string {
 	validEscapes := []byte{'b', 'f', 'n', 'r', 't', '\\', '/', '"', 'u'}
 
@@ -118,14 +106,12 @@ func fixInvalidEscapes(jsonStr string) string {
 	for i < len(jsonStr) {
 		ch := jsonStr[i]
 
-		// Track whether we're inside a JSON string
 		if ch == '"' && (i == 0 || jsonStr[i-1] != '\\') {
 			inQuotes = !inQuotes
 		}
 
-		// Handle actual control characters inside string literals
 		if inQuotes {
-			// Convert literal control characters to proper JSON escape sequences
+			// JSON does not accept a raw control character in a string.
 			if ch == '\n' {
 				result.WriteString("\\n")
 				i++
@@ -139,20 +125,18 @@ func fixInvalidEscapes(jsonStr string) string {
 				i++
 				continue
 			} else if ch < 32 {
-				// Handle other control characters
 				fmt.Fprintf(&result, "\\u%04x", ch)
 				i++
 				continue
 			}
 		}
 
-		// Check for escape sequences only inside strings
 		if inQuotes && ch == '\\' && i+1 < len(jsonStr) {
 			nextChar := jsonStr[i+1]
 			isValid := slices.Contains(validEscapes, nextChar)
 
 			if !isValid {
-				// Invalid escape sequence - add an extra backslash
+				// Double the backslash so the sequence decodes as a literal backslash.
 				result.WriteByte('\\')
 				result.WriteByte('\\')
 				i++
@@ -170,16 +154,13 @@ func fixInvalidEscapes(jsonStr string) string {
 // ApplyFileChanges applies the parsed file changes to the file system
 func ApplyFileChanges(projectRoot string, changes []FileChange) error {
 	for i, change := range changes {
-		// Get the absolute path
 		absPath := filepath.Join(projectRoot, change.Path)
 
-		// Create directories if necessary
 		dir := filepath.Dir(absPath)
 		if err := os.MkdirAll(dir, 0755); err != nil {
 			return fmt.Errorf(i18n.T("file_manager_failed_create_directory"), dir, i, err)
 		}
 
-		// Write the file
 		if err := os.WriteFile(absPath, []byte(change.Content), 0644); err != nil {
 			return fmt.Errorf(i18n.T("file_manager_failed_write_file"), absPath, i, err)
 		}

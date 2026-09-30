@@ -112,14 +112,18 @@ For manual installation or troubleshooting, see the detailed instructions below.
 
 The completions provide intelligent suggestions for:
 
-- **Patterns**: Tab-complete available patterns with `-p` or `--pattern`
+- **Patterns**: Tab-complete available patterns with `-p`, `--pattern`, or `--readpattern`
 - **Models**: Tab-complete available models with `-m` or `--model`
+- **Vendors**: Tab-complete configured vendors with `-V` or `--vendor`
 - **Contexts**: Tab-complete contexts for context-related flags
 - **Sessions**: Tab-complete sessions for session-related flags
 - **Strategies**: Tab-complete available strategies
 - **Extensions**: Tab-complete registered extensions
 - **Gemini Voices**: Tab-complete TTS voices for `--voice`
-- **File paths**: Smart file completion for attachment, output, and config options
+- **Transcription models**: Tab-complete models for `--transcribe-model`
+- **Fixed value sets**: Tab-complete the accepted values of `--thinking`, `--debug`, `--image-size`,
+  `--image-quality`, and `--image-background`
+- **File paths**: Smart file completion for attachment, output, config, image, and transcription options
 - **Flag completion**: All available command-line flags and options
 
 ## Alternative Installation Method

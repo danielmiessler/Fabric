@@ -14,7 +14,6 @@
     if (trimmed) {
       setSession(trimmed);
     } else {
-      // Clear session when input is empty
       sessionInput = '';
       setSession(null);
     }
@@ -23,13 +22,12 @@
   let previousSessionInput = '';
 
   async function handleSessionSelect() {
-    // If the placeholder option (empty value) is selected, restore to previous value
+    // Selecting the placeholder option restores the previous value.
     if (!sessionInput) {
       sessionInput = previousSessionInput || $currentSession || '';
       return;
     }
 
-    // Skip if session hasn't changed
     if (sessionInput === $currentSession) {
       return;
     }
@@ -37,7 +35,7 @@
     previousSessionInput = sessionInput;
     setSession(sessionInput);
 
-    // Load the selected session's message history so the chat reflects prior context
+    // Load the session history so the chat shows the earlier messages.
     try {
       const messages = await sessionAPI.loadSessionMessages(sessionInput);
       messageStore.set(messages);

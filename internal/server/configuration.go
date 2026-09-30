@@ -13,13 +13,11 @@ import (
 // ConfigHandler defines the handler for configuration-related operations
 type ConfigHandler struct {
 	db *fsdb.Db
-	// configurations *fsdb.EnvFilePath("$HOME/.config/fabric/.env")
 }
 
 func NewConfigHandler(r *gin.Engine, db *fsdb.Db) *ConfigHandler {
 	handler := &ConfigHandler{
 		db: db,
-		// configurations: db.Configurations,
 	}
 
 	r.GET("/config", handler.GetConfig)
@@ -141,7 +139,6 @@ func (h *ConfigHandler) UpdateConfig(c *gin.Context) {
 		}
 	}
 
-	// Save configuration to file
 	if err := h.db.SaveEnv(envContent.String()); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return

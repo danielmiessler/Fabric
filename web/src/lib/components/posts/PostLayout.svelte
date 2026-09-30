@@ -6,7 +6,6 @@
   export let description
   export let author
   export let updated
-  //export let content
 </script>
 
 <article class="prose prose-slate dark:prose-invert max-w-5xl flex-1">
@@ -17,6 +16,9 @@
 </article>
 
 <style lang="postcss">
+/* Tailwind 4 processes the styles of each component on their own. The reference
+ * below gives @apply the theme without a second copy of the CSS. */
+@reference '../../../app.css';
 
 :global(h1) {
   @apply h1; 

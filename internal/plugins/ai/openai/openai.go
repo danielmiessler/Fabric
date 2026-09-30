@@ -66,14 +66,9 @@ type Client struct {
 	ApiClient           *openai.Client
 	ImplementsResponses bool // Whether this provider supports the Responses API
 	httpClient          *http.Client
-	// webSearchToolName, when non-empty, overrides the default
-	// "web_search_preview" tool name emitted on the Responses API.
-	// Used by OpenAI-compatible providers whose upstream API expects a
-	// different tool type string (xAI expects "web_search").
+	// webSearchToolName replaces "web_search_preview" when set. xAI needs "web_search".
 	webSearchToolName string
-	// enableXSearch, when true, appends an additional "x_search" tool
-	// entry alongside the web search tool when Search is enabled.
-	// This is an xAI-specific live search grounding tool.
+	// enableXSearch adds the xAI "x_search" tool next to the web search tool.
 	enableXSearch bool
 }
 
@@ -97,7 +92,6 @@ func (o *Client) SetEnableXSearch(enabled bool) {
 	o.enableXSearch = enabled
 }
 
-// checkImageGenerationCompatibility warns if the model doesn't support image generation
 func checkImageGenerationCompatibility(model string) {
 	if !supportsImageGeneration(model) {
 		fmt.Fprintf(os.Stderr, "%s", fmt.Sprintf(i18n.T("openai_warning_model_no_image_generation"),
@@ -113,7 +107,7 @@ func (o *Client) configure() (ret error) {
 	client := openai.NewClient(opts...)
 	o.ApiClient = &client
 
-	// Initialize HTTP client for direct API calls (reused across requests)
+	// httpClient serves the direct /models fetch, which bypasses the SDK.
 	o.httpClient = &http.Client{
 		Timeout: 10 * time.Second,
 	}
@@ -126,13 +120,10 @@ func (o *Client) ListModels(ctx context.Context) (ret []string, err error) {
 		for _, mod := range page.Data {
 			ret = append(ret, mod.ID)
 		}
-		// SDK succeeded - return the result even if empty
 		return ret, nil
 	}
 
-	// SDK returned an error - fall back to direct API fetch.
-	// Some providers (e.g., GitHub Models) return non-standard response formats
-	// that the SDK fails to parse.
+	// Some providers return a format that the SDK cannot parse. Fall back to a direct fetch.
 	debuglog.Debug(debuglog.Basic, "SDK Models.List failed for %s: %v, falling back to direct API fetch\n", o.GetName(), err)
 	return FetchModelsDirectly(ctx, o.ApiBaseURL.Value, o.ApiKey.Value, o.GetName(), o.httpClient)
 }
@@ -140,7 +131,6 @@ func (o *Client) ListModels(ctx context.Context) (ret []string, err error) {
 func (o *Client) SendStream(
 	ctx context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan domain.StreamUpdate,
 ) (err error) {
-	// Use Responses API for OpenAI, Chat Completions API for other providers
 	if o.supportsResponsesAPI() {
 		return o.sendStreamResponses(ctx, msgs, opts, channel)
 	}
@@ -163,10 +153,7 @@ func (o *Client) sendStreamResponses(
 				Content: event.AsResponseOutputTextDelta().Delta,
 			}
 		case string(constant.ResponseOutputTextDone("").Default()):
-			// The Responses API sends the full text again in the
-			// final "done" event. Since we've already streamed all
-			// delta chunks above, sending it would duplicate the
-			// output. Ignore it here to prevent doubled results.
+			// The done event repeats the text that the delta events already sent.
 			continue
 		}
 	}
@@ -180,7 +167,6 @@ func (o *Client) sendStreamResponses(
 }
 
 func (o *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions) (ret string, err error) {
-	// Use Responses API for OpenAI, Chat Completions API for other providers
 	if o.supportsResponsesAPI() {
 		return o.sendResponses(ctx, msgs, opts)
 	}
@@ -188,12 +174,10 @@ func (o *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, o
 }
 
 func (o *Client) sendResponses(ctx context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions) (ret string, err error) {
-	// Warn if model doesn't support image generation when image file is specified
 	if opts.ImageFile != "" {
 		checkImageGenerationCompatibility(opts.Model)
 	}
 
-	// Validate model supports image generation if image file is specified
 	if opts.ImageFile != "" && !supportsImageGeneration(opts.Model) {
 		return "", fmt.Errorf("%s", fmt.Sprintf(i18n.T("openai_model_no_image_generation"), opts.Model, strings.Join(ImageGenerationSupportedModels, ", ")))
 	}
@@ -205,7 +189,6 @@ func (o *Client) sendResponses(ctx context.Context, msgs []*chat.ChatCompletionM
 		return
 	}
 
-	// Extract and save images if requested
 	if err = o.extractAndSaveImages(resp, opts); err != nil {
 		return
 	}
@@ -214,7 +197,6 @@ func (o *Client) sendResponses(ctx context.Context, msgs []*chat.ChatCompletionM
 	return
 }
 
-// supportsResponsesAPI determines if the provider supports the new Responses API
 func (o *Client) supportsResponsesAPI() bool {
 	return o.ImplementsResponses
 }
@@ -223,6 +205,7 @@ func (o *Client) NeedsRawMode(modelName string) bool {
 	openaiModelsPrefixes := []string{
 		"glm",
 		"gpt-5",
+		"gpt-6",
 		"o1",
 		"o3",
 		"o4",
@@ -274,12 +257,8 @@ func (o *Client) buildResponseParams(
 		},
 	}
 
-	// Add tools if enabled
 	var tools []responses.ToolUnionParam
 
-	// Add web search tool if enabled. The default tool name is OpenAI's
-	// "web_search_preview", but providers may override it (for example,
-	// xAI's Responses API requires "web_search").
 	if opts.Search {
 		searchToolName := responses.WebSearchToolType("web_search_preview")
 		if o.webSearchToolName != "" {
@@ -287,8 +266,7 @@ func (o *Client) buildResponseParams(
 		}
 		webSearchTool := responses.ToolParamOfWebSearchPreview(searchToolName)
 
-		// Add user location if provided. Only attach when the caller
-		// asked for it; xAI rejects unexpected location payloads.
+		// Attach a location only on request. xAI rejects an unexpected location payload.
 		if opts.SearchLocation != "" {
 			webSearchTool.OfWebSearchPreview.UserLocation = responses.WebSearchToolUserLocationParam{
 				Type:     "approximate",
@@ -298,11 +276,8 @@ func (o *Client) buildResponseParams(
 
 		tools = append(tools, webSearchTool)
 
-		// Append xAI's live "x_search" tool when the provider opts in.
-		// The xAI Responses API accepts a bare {"type":"x_search"}
-		// entry with no other required fields. We reuse the SDK's
-		// WebSearchToolParam as a minimal container since every other
-		// field is omitzero and will be elided during JSON marshalling.
+		// xAI accepts a bare {"type":"x_search"} entry. WebSearchToolParam is the
+		// container for it. Its other fields are omitzero, so the JSON has only "type".
 		if o.enableXSearch {
 			xSearchTool := responses.ToolUnionParam{
 				OfWebSearchPreview: &responses.WebSearchToolParam{
@@ -313,7 +288,6 @@ func (o *Client) buildResponseParams(
 		}
 	}
 
-	// Add image generation tool if needed
 	tools = o.addImageGenerationTool(opts, tools)
 
 	if len(tools) > 0 {
@@ -333,7 +307,7 @@ func (o *Client) buildResponseParams(
 			ret.MaxOutputTokens = openai.Int(int64(opts.MaxTokens))
 		}
 
-		// Add parameters not officially supported by Responses API as extra fields
+		// The Responses API has no fields for these parameters. Send them as extra fields.
 		extraFields := make(map[string]any)
 		if opts.PresencePenalty != 0 {
 			extraFields["presence_penalty"] = opts.PresencePenalty
@@ -386,7 +360,7 @@ func convertMessage(msg chat.ChatCompletionMessage) responses.ResponseInputItemU
 func (o *Client) extractText(resp *responses.Response) (ret string) {
 	var textParts []string
 	var citations []string
-	citationMap := make(map[string]bool) // To avoid duplicate citations
+	citationMap := make(map[string]bool)
 
 	for _, item := range resp.Output {
 		if item.Type == "message" {
@@ -395,7 +369,6 @@ func (o *Client) extractText(resp *responses.Response) (ret string) {
 					outputText := c.AsOutputText()
 					textParts = append(textParts, outputText.Text)
 
-					// Extract citations from annotations
 					for _, annotation := range outputText.Annotations {
 						if annotation.Type == "url_citation" {
 							urlCitation := annotation.AsURLCitation()
@@ -415,7 +388,6 @@ func (o *Client) extractText(resp *responses.Response) (ret string) {
 
 	ret = strings.Join(textParts, "")
 
-	// Append citations if any were found
 	if len(citations) > 0 {
 		ret += "\n\n## Sources\n\n" + strings.Join(citations, "\n")
 	}

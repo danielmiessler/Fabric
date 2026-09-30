@@ -14,15 +14,13 @@
 </div>
 
 <style>
-  /* Container that enforces viewport bounds */
   .viewport-container {
-    width: 100vw;  /* Full viewport width */
-    overflow: hidden; /* Prevent scrolling */
-    position: fixed; /* Fix position to viewport */
+    width: 100vw;
+    overflow: hidden;
+    position: fixed;
     left: 0;
   }
 
-  /* Ensure the wrapper doesn't introduce scrolling */
   .page-wrapper :global(#page) {
     display: block;
     flex: none;
@@ -34,7 +32,6 @@
     overflow: hidden;
   }
 
-  /* Ensure any nested content doesn't cause scrolling */
   :global(.viewport-container *) {
     overflow: hidden;
   }

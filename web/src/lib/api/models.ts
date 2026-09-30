@@ -10,11 +10,17 @@ export const modelsApi = {
         throw new Error('Invalid response format: missing vendors data');
       }
       
+      // The server sends null for the model list of a vendor with no models.
+      // A nil slice in Go becomes null in JSON. Ollama does this when it is in
+      // the configuration but serves no models. Skip such a vendor so that it
+      // does not hide the models of the other vendors.
       return Object.entries(response.data.vendors).flatMap(([vendor, models]) =>
-        models.map(model => ({
-          name: model,
-          vendor
-        }))
+        Array.isArray(models)
+          ? models.map(model => ({
+              name: model,
+              vendor
+            }))
+          : []
       );
     } catch (error) {
       console.error("Failed to fetch models:", error);

@@ -92,13 +92,11 @@ func (o *VendorsManager) readModels() (err error) {
 		go o.fetchVendorModels(ctx, &wg, vendor, resultsChan)
 	}
 
-	// Wait for all goroutines to finish
 	go func() {
 		wg.Wait()
 		close(resultsChan)
 	}()
 
-	// Collect results
 	for result := range resultsChan {
 		if result.err != nil {
 			fmt.Println(result.vendorName, result.err)
@@ -120,10 +118,8 @@ func (o *VendorsManager) fetchVendorModels(
 	models, err := vendor.ListModels(ctx)
 	select {
 	case <-ctx.Done():
-		// Context canceled, don't send the result
 		return
 	case resultsChan <- modelResult{vendorName: vendor.GetName(), models: models, err: err}:
-		// Result sent
 	}
 }
 

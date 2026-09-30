@@ -26,9 +26,9 @@ type PRCommit struct {
 	SHA     string
 	Message string
 	Author  string
-	Email   string    // Author email from GitHub API, empty if not public
-	Date    time.Time // Timestamp field
-	Parents []string  // Parent commits (for merge detection)
+	Email   string // empty when fetched with GraphQL
+	Date    time.Time
+	Parents []string // parent SHAs, empty when fetched with GraphQL
 }
 
 // GraphQL query structures for hasura client

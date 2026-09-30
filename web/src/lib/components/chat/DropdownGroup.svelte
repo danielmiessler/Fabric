@@ -23,7 +23,6 @@
 
   let variablesJsonString = '';
 
-  // Parse JSON string and update variables store
   function updateVariables() {
     try {
       if (variablesJsonString.trim() === '') {
@@ -35,8 +34,7 @@
         }
       }
     } catch (e) {
-      // Don't update the store if JSON is invalid - just ignore the error
-      // This allows partial typing without breaking
+      // Ignore invalid JSON so the user can keep typing.
     }
   }
 
@@ -46,7 +44,6 @@
 </script>
 
 <div class="flex gap-4">
-  <!-- Left side - Dropdowns -->
   <div class="w-[35%] flex flex-col gap-3">
     <div>
       <Patterns />
@@ -89,7 +86,6 @@
     </div>
   </div>
 
-  <!-- Right side - Model Config -->
   <div class="w-[65%]">
     <ModelConfig />
   </div>

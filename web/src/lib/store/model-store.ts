@@ -15,27 +15,24 @@ export const modelConfig = writable<ModelConfig>({
 export const availableModels = writable<VendorModel[]>([]);
 export const selectedVendor = writable<string>('');
 
-// Sorted unique vendor names
 export const vendorNames = derived(availableModels, ($models) =>
   [...new Set($models.map(m => m.vendor))].sort((a, b) =>
     a.toLowerCase().localeCompare(b.toLowerCase())
   )
 );
 
-// Models filtered by selected vendor
 export const filteredModels = derived(
   [availableModels, selectedVendor],
   ([$models, $vendor]) =>
     $vendor ? $models.filter(m => m.vendor === $vendor) : $models
 );
 
-// Initialize available models
 export async function loadAvailableModels() {
   try {
     const models = await modelsApi.getAvailable();
     console.log('Load models:', models);
     const uniqueModels = [...new Map(models.map(model => [`${model.vendor}:${model.name}`, model])).values()];
-    // Sort like CLI: vendor name (case-insensitive), then model name (case-insensitive)
+    // Sort in the CLI order: vendor, then model name, both case-insensitive.
     uniqueModels.sort((a, b) => {
       const vendorCmp = a.vendor.toLowerCase().localeCompare(b.vendor.toLowerCase());
       if (vendorCmp !== 0) return vendorCmp;
@@ -48,7 +45,6 @@ export async function loadAvailableModels() {
   }
 }
 
-// Initialize config
 export async function initializeConfig() {
   try {
     const config = await configApi.get();

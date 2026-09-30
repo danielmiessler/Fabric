@@ -6,6 +6,7 @@ import (
 	neturl "net/url"
 	"os"
 	"path"
+	"slices"
 	"strconv"
 	"strings"
 
@@ -24,10 +25,54 @@ const webSearchToolName = "web_search"
 const webSearchToolType = "web_search_20250305"
 const sourcesHeader = "## Sources"
 
+// These models reject non-default sampling parameters.
+// Requests to them do not include temperature or top_p.
+var samplingParamsDisallowedPrefixes = []string{
+	"claude-opus-4-7",
+	"claude-opus-4-8",
+	"claude-opus-5",
+	"claude-sonnet-5",
+	"claude-fable-5",
+}
+
 func modelDisallowsSamplingParams(model string) bool {
-	// Anthropic's Opus 4.7 models reject non-default sampling parameters.
-	// Omit these params entirely for safest compatibility.
-	return strings.HasPrefix(model, "claude-opus-4-7")
+	return slices.ContainsFunc(samplingParamsDisallowedPrefixes, func(prefix string) bool {
+		return strings.HasPrefix(model, prefix)
+	})
+}
+
+// These models reject the legacy `thinking.type=enabled` and `budget_tokens`
+// shape. Requests to them use `thinking.type=adaptive` with
+// `output_config.effort`. For the legacy shape, the API returns this error:
+//
+//	"thinking.type.enabled" is not supported for this model.
+//	Use "thinking.type.adaptive" and "output_config.effort" to control
+//	thinking behavior.
+var adaptiveThinkingPrefixes = []string{
+	"claude-opus-5",
+	"claude-sonnet-5",
+	"claude-fable-5",
+}
+
+func modelUsesAdaptiveThinking(model string) bool {
+	return slices.ContainsFunc(adaptiveThinkingPrefixes, func(prefix string) bool {
+		return strings.HasPrefix(model, prefix)
+	})
+}
+
+// effortForBudget changes a numeric --thinking value into an effort level for
+// adaptive models, which have no budget_tokens. It returns the lowest level
+// with a budget equal to or more than tokens. Values above the high budget get
+// high. For example, `--thinking=2048` and `--thinking=medium` both give medium.
+func effortForBudget(tokens int64) anthropic.OutputConfigEffort {
+	switch {
+	case tokens <= domain.TokenBudgetLow:
+		return anthropic.OutputConfigEffortLow
+	case tokens <= domain.TokenBudgetMedium:
+		return anthropic.OutputConfigEffortMedium
+	default:
+		return anthropic.OutputConfigEffortHigh
+	}
 }
 
 func NewClient() (ret *Client) {
@@ -43,7 +88,11 @@ func NewClient() (ret *Client) {
 	ret.maxTokens = 4096
 	ret.defaultRequiredUserMessage = "Hi"
 	ret.models = []string{
-		// The following are the current supported models
+		string(anthropic.ModelClaudeOpus5_5),
+		string(anthropic.ModelClaudeFable5),
+		string(anthropic.ModelClaudeSonnet5),
+		string(anthropic.ModelClaudeOpus5),
+		string(anthropic.ModelClaudeOpus4_8),
 		string(anthropic.ModelClaudeOpus4_7),
 		string(anthropic.ModelClaudeSonnet4_6),
 		string(anthropic.ModelClaudeOpus4_6),
@@ -51,38 +100,32 @@ func NewClient() (ret *Client) {
 		string(anthropic.ModelClaudeOpus4_5),
 		string(anthropic.ModelClaudeHaiku4_5),
 		string(anthropic.ModelClaudeHaiku4_5_20251001),
-		string(anthropic.ModelClaudeSonnet4_20250514),
-		string(anthropic.ModelClaudeSonnet4_0),
 		string(anthropic.ModelClaudeSonnet4_5),
 		string(anthropic.ModelClaudeSonnet4_5_20250929),
-		string(anthropic.ModelClaudeOpus4_0),
-		string(anthropic.ModelClaudeOpus4_20250514),
-		string(anthropic.ModelClaudeOpus4_1_20250805),
 	}
 
+	// context1M is the beta header for the 1M-token context window. Models with
+	// a 1M window use it by default, so the header is not necessary. The code
+	// still sends the header as a precaution. If a request with the header gets
+	// an error, Send and SendStream send the request again without the header.
+	// Only models with a 1M window belong in this map.
+	//
+	// Window sizes by model:
+	// https://platform.claude.com/docs/en/build-with-claude/context-windows#context-window-sizes-by-model
+	// Sonnet 4.5, Opus 4.5, Opus 4.1, and Haiku 4.5 have a 200K window, so they
+	// are not in the map.
+	const context1M = "context-1m-2025-08-07"
 	ret.modelBetas = map[string][]string{
-		// See https://platform.claude.com/docs/en/build-with-claude/context-windows#1-m-token-context-window
-		// Claude Opus 4.7, Opus 4.6, Sonnet 4.6, Sonnet 4.5, and Sonnet 4 support a 1-million token context window.
+		string(anthropic.ModelClaudeOpus5_5): {context1M},
+		string(anthropic.ModelClaudeFable5):  {context1M},
+		string(anthropic.ModelClaudeOpus5):   {context1M},
+		string(anthropic.ModelClaudeSonnet5): {context1M},
 
-		// This list can change over time as Anthropic updates their models and beta features, so we maintain it separately from the main model list
-		// for easier updates.
+		string(anthropic.ModelClaudeOpus4_8): {context1M},
+		string(anthropic.ModelClaudeOpus4_7): {context1M},
+		string(anthropic.ModelClaudeOpus4_6): {context1M},
 
-		// Claude Sonnet 4 variants (1M context support)
-		string(anthropic.ModelClaudeSonnet4_20250514): {"context-1m-2025-08-07"},
-		string(anthropic.ModelClaudeSonnet4_0):        {"context-1m-2025-08-07"},
-
-		// Claude Sonnet 4.5 variants (1M context support)
-		string(anthropic.ModelClaudeSonnet4_5):          {"context-1m-2025-08-07"},
-		string(anthropic.ModelClaudeSonnet4_5_20250929): {"context-1m-2025-08-07"},
-
-		// Claude Sonnet 4.6 (1M context support)
-		string(anthropic.ModelClaudeSonnet4_6): {"context-1m-2025-08-07"},
-
-		// Claude Opus 4.5, 4.6, and 4.7 variants (1M context support)
-		string(anthropic.ModelClaudeOpus4_5):          {"context-1m-2025-08-07"},
-		string(anthropic.ModelClaudeOpus4_6):          {"context-1m-2025-08-07"},
-		string(anthropic.ModelClaudeOpus4_7):          {"context-1m-2025-08-07"},
-		string(anthropic.ModelClaudeOpus4_5_20251101): {"context-1m-2025-08-07"},
+		string(anthropic.ModelClaudeSonnet4_6): {context1M},
 	}
 
 	return
@@ -90,7 +133,6 @@ func NewClient() (ret *Client) {
 
 // IsConfigured returns true if the API key is configured
 func (an *Client) IsConfigured() bool {
-	// Check if API key is configured
 	if an.ApiKey.Value != "" {
 		return true
 	}
@@ -137,24 +179,36 @@ func (an *Client) ListModels(context.Context) (ret []string, err error) {
 	return an.models, nil
 }
 
-func parseThinking(level domain.ThinkingLevel) (anthropic.ThinkingConfigParamUnion, bool) {
+// parseThinking changes a thinking level into the thinking shape for model.
+// It returns a non-empty effort only for adaptive models. The caller must then
+// set params.OutputConfig.Effort, because an adaptive request has no budget
+// and gets its level from effort.
+func parseThinking(level domain.ThinkingLevel, model string) (
+	thinking anthropic.ThinkingConfigParamUnion, effort anthropic.OutputConfigEffort, ok bool) {
+
 	lower := strings.ToLower(string(level))
+	adaptive := modelUsesAdaptiveThinking(model)
+	adaptiveThinking := anthropic.ThinkingConfigParamUnion{OfAdaptive: &anthropic.ThinkingConfigAdaptiveParam{}}
+
 	switch domain.ThinkingLevel(lower) {
 	case domain.ThinkingOff:
 		disabled := anthropic.NewThinkingConfigDisabledParam()
-		return anthropic.ThinkingConfigParamUnion{OfDisabled: &disabled}, true
+		return anthropic.ThinkingConfigParamUnion{OfDisabled: &disabled}, "", true
 	case domain.ThinkingLow, domain.ThinkingMedium, domain.ThinkingHigh:
-		if budget, ok := domain.ThinkingBudgets[domain.ThinkingLevel(lower)]; ok {
-			return anthropic.ThinkingConfigParamOfEnabled(budget), true
+		if adaptive {
+			// The level names are also the effort names.
+			return adaptiveThinking, anthropic.OutputConfigEffort(lower), true
 		}
+		return anthropic.ThinkingConfigParamOfEnabled(domain.ThinkingBudgets[domain.ThinkingLevel(lower)]), "", true
 	default:
-		if tokens, err := strconv.ParseInt(lower, 10, 64); err == nil {
-			if tokens >= 1 && tokens <= 10000 {
-				return anthropic.ThinkingConfigParamOfEnabled(tokens), true
+		if tokens, err := strconv.ParseInt(lower, 10, 64); err == nil && tokens >= 1 && tokens <= 10000 {
+			if adaptive {
+				return adaptiveThinking, effortForBudget(tokens), true
 			}
+			return anthropic.ThinkingConfigParamOfEnabled(tokens), "", true
 		}
 	}
-	return anthropic.ThinkingConfigParamUnion{}, false
+	return anthropic.ThinkingConfigParamUnion{}, "", false
 }
 
 func (an *Client) SendStream(
@@ -163,7 +217,7 @@ func (an *Client) SendStream(
 	messages := an.toMessages(msgs)
 	if len(messages) == 0 {
 		close(channel)
-		// No messages to send after normalization, consider this a non-error condition for streaming.
+		// No messages remain after normalization. This is not an error.
 		return
 	}
 
@@ -182,7 +236,6 @@ func (an *Client) SendStream(
 	for stream.Next() {
 		event := stream.Current()
 
-		// Handle Content
 		if event.Delta.Text != "" {
 			channel <- domain.StreamUpdate{
 				Type:    domain.StreamTypeContent,
@@ -190,7 +243,6 @@ func (an *Client) SendStream(
 			}
 		}
 
-		// Handle Usage
 		if event.Message.Usage.InputTokens != 0 || event.Message.Usage.OutputTokens != 0 {
 			channel <- domain.StreamUpdate{
 				Type: domain.StreamTypeUsage,
@@ -222,25 +274,28 @@ func (an *Client) SendStream(
 func (an *Client) buildMessageParams(msgs []anthropic.MessageParam, opts *domain.ChatOptions) (
 	params anthropic.MessageNewParams) {
 
+	maxTokens := an.maxTokens
+	if opts.MaxTokens > 0 {
+		maxTokens = opts.MaxTokens
+	}
+
 	params = anthropic.MessageNewParams{
 		Model:     anthropic.Model(opts.Model),
-		MaxTokens: int64(an.maxTokens),
+		MaxTokens: int64(maxTokens),
 		Messages:  msgs,
 	}
 
-	// Claude Opus 4.7 disallows sampling params; omit both temperature and top_p.
 	if modelDisallowsSamplingParams(opts.Model) {
-		// Intentionally omit both fields.
+		// Send no sampling parameters to these models.
 	} else if opts.TopP != domain.DefaultTopP {
-		// User explicitly set TopP, so use that instead of temperature
 		params.TopP = anthropic.Opt(opts.TopP)
 	} else {
-		// Use temperature (always set to ensure Fabric's default of 0.7, not Anthropic's 1.0)
+		// Send temperature also at its default value. The Fabric default is 0.7,
+		// and the API default is 1.0.
 		params.Temperature = anthropic.Opt(opts.Temperature)
 	}
 
 	if opts.Search {
-		// Build the web-search tool definition:
 		webTool := anthropic.WebSearchTool20250305Param{
 			Name:         webSearchToolName,
 			Type:         webSearchToolType,
@@ -252,14 +307,14 @@ func (an *Client) buildMessageParams(msgs []anthropic.MessageParam, opts *domain
 			webTool.UserLocation.Timezone = anthropic.Opt(opts.SearchLocation)
 		}
 
-		// Wrap it in the union:
 		params.Tools = []anthropic.ToolUnionParam{
 			{OfWebSearchTool20250305: &webTool},
 		}
 	}
 
-	if t, ok := parseThinking(opts.Thinking); ok {
+	if t, effort, ok := parseThinking(opts.Thinking, opts.Model); ok {
 		params.Thinking = t
+		params.OutputConfig.Effort = effort
 	}
 
 	return
@@ -270,7 +325,7 @@ func (an *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, 
 
 	messages := an.toMessages(msgs)
 	if len(messages) == 0 {
-		// No messages to send after normalization, return empty string and no error.
+		// No messages remain after normalization. This is not an error.
 		return
 	}
 
@@ -294,13 +349,12 @@ func (an *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, 
 
 	var textParts []string
 	var citations []string
-	citationMap := make(map[string]bool) // To avoid duplicate citations
+	citationMap := make(map[string]bool) // To prevent duplicate citations
 
 	for _, block := range message.Content {
 		if block.Type == "text" && block.Text != "" {
 			textParts = append(textParts, block.Text)
 
-			// Extract citations from this text block
 			for _, citation := range block.Citations {
 				if citation.Type == "web_search_result_location" {
 					citationKey := citation.URL + "|" + citation.Title
@@ -320,7 +374,6 @@ func (an *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, 
 	var resultBuilder strings.Builder
 	resultBuilder.WriteString(strings.Join(textParts, ""))
 
-	// Append citations if any were found
 	if len(citations) > 0 {
 		resultBuilder.WriteString("\n\n")
 		resultBuilder.WriteString(sourcesHeader)
@@ -333,27 +386,25 @@ func (an *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, 
 }
 
 func (an *Client) toMessages(msgs []*chat.ChatCompletionMessage) (ret []anthropic.MessageParam) {
-	// Custom normalization for Anthropic:
-	// - System messages become the first part of the first user message.
-	// - Messages must alternate user/assistant.
-	// - Skip empty messages.
+	// Normalization rules:
+	// - The code puts system content at the start of the next user message.
+	//   It does this one time only and ignores later system messages.
+	// - Two messages in a row must not have the same role.
+	// - The code ignores empty messages.
 
 	var anthropicMessages []anthropic.MessageParam
 	var systemContent string
-
-	// Note: Claude Code spoofing is now handled in buildMessageParams
 
 	isFirstUserMessage := true
 	lastRoleWasUser := false
 
 	for _, msg := range msgs {
 		if strings.TrimSpace(msg.Content) == "" && len(msg.MultiContent) == 0 {
-			continue // Skip empty messages
+			continue
 		}
 
 		switch msg.Role {
 		case chat.ChatMessageRoleSystem:
-			// Accumulate system content. It will be prepended to the first user message.
 			systemText := messageTextFromParts(msg)
 			if systemText == "" {
 				continue
@@ -370,37 +421,34 @@ func (an *Client) toMessages(msgs []*chat.ChatCompletionMessage) (ret []anthropi
 			}
 			if isFirstUserMessage && systemContent != "" {
 				blocks = prependSystemContentToBlocks(systemContent, blocks)
-				isFirstUserMessage = false // System content now consumed
+				isFirstUserMessage = false
 			}
 			if lastRoleWasUser {
-				// Enforce alternation: add a minimal assistant message if two user messages are consecutive.
-				// This shouldn't happen with current chatter.go logic but is a safeguard.
+				// Add a short assistant message between two user messages.
+				// The chatter.go flow does not usually send this sequence.
 				anthropicMessages = append(anthropicMessages, anthropic.NewAssistantMessage(anthropic.NewTextBlock("Okay.")))
 			}
 			anthropicMessages = append(anthropicMessages, anthropic.NewUserMessage(blocks...))
 			lastRoleWasUser = true
 		case chat.ChatMessageRoleAssistant:
-			// If the first message is an assistant message, and we have system content,
-			// prepend a user message with the system content.
+			// The system content is not in a message yet. Put it in a new user
+			// message before this assistant message.
 			if isFirstUserMessage && systemContent != "" {
 				anthropicMessages = append(anthropicMessages, anthropic.NewUserMessage(anthropic.NewTextBlock(systemContent)))
 				lastRoleWasUser = true
-				isFirstUserMessage = false // System content now consumed
+				isFirstUserMessage = false
 			} else if !lastRoleWasUser && len(anthropicMessages) > 0 {
-				// Enforce alternation: add a minimal user message if two assistant messages are consecutive
-				// or if an assistant message is first without prior system prompt handling.
+				// Add a short user message between two assistant messages.
 				anthropicMessages = append(anthropicMessages, anthropic.NewUserMessage(anthropic.NewTextBlock(an.defaultRequiredUserMessage)))
 				lastRoleWasUser = true
 			}
 			anthropicMessages = append(anthropicMessages, anthropic.NewAssistantMessage(anthropic.NewTextBlock(msg.Content)))
 			lastRoleWasUser = false
 		default:
-			// Other roles (like 'meta') are ignored for Anthropic's message structure.
 			continue
 		}
 	}
 
-	// If only system content was provided, create a user message with it.
 	if len(anthropicMessages) == 0 && systemContent != "" {
 		anthropicMessages = append(anthropicMessages, anthropic.NewUserMessage(anthropic.NewTextBlock(systemContent)))
 	}
@@ -408,8 +456,8 @@ func (an *Client) toMessages(msgs []*chat.ChatCompletionMessage) (ret []anthropi
 	return anthropicMessages
 }
 
-// messageTextFromParts extracts and concatenates all text content from a message,
-// combining both the Content field and any text parts in MultiContent.
+// messageTextFromParts returns the text in Content and in the text parts of
+// MultiContent, with a newline between each.
 func messageTextFromParts(msg *chat.ChatCompletionMessage) string {
 	textParts := []string{}
 	if strings.TrimSpace(msg.Content) != "" {
@@ -423,8 +471,8 @@ func messageTextFromParts(msg *chat.ChatCompletionMessage) string {
 	return strings.Join(textParts, "\n")
 }
 
-// contentBlocksFromMessage converts a chat message into Anthropic content blocks,
-// handling text content, image URLs (both data URLs and remote URLs), and PDF attachments.
+// contentBlocksFromMessage makes Anthropic content blocks from the text, image,
+// and PDF content of a chat message. Images and PDFs can be data URLs or remote URLs.
 func contentBlocksFromMessage(msg *chat.ChatCompletionMessage) []anthropic.ContentBlockParamUnion {
 	var blocks []anthropic.ContentBlockParamUnion
 	if strings.TrimSpace(msg.Content) != "" {
@@ -448,8 +496,9 @@ func contentBlocksFromMessage(msg *chat.ChatCompletionMessage) []anthropic.Conte
 	return blocks
 }
 
-// prependSystemContentToBlocks prepends system content to content blocks. If the first
-// block is text, it merges the system content with it; otherwise, it prepends a new text block.
+// prependSystemContentToBlocks puts systemContent at the start of blocks. If the first
+// block is text, it adds systemContent and a blank line to the start of that text.
+// If not, it adds a new text block at the start.
 func prependSystemContentToBlocks(systemContent string, blocks []anthropic.ContentBlockParamUnion) []anthropic.ContentBlockParamUnion {
 	if len(blocks) == 0 {
 		return []anthropic.ContentBlockParamUnion{anthropic.NewTextBlock(systemContent)}
@@ -461,10 +510,11 @@ func prependSystemContentToBlocks(systemContent string, blocks []anthropic.Conte
 	return append([]anthropic.ContentBlockParamUnion{anthropic.NewTextBlock(systemContent)}, blocks...)
 }
 
-// contentBlockFromAttachmentURL converts an attachment URL into an Anthropic content block.
-// For data URLs, it parses the MIME type and base64 data to create image or PDF blocks.
-// For remote URLs, it creates URL-based image blocks, or PDF document blocks if the URL ends in .pdf.
-// Returns the content block and true on success, or an empty block and false if unsupported.
+// contentBlockFromAttachmentURL makes an Anthropic content block from an attachment URL.
+// A data URL gives an image block or a PDF block, from its MIME type and base64 data.
+// A remote URL gives a PDF document block if its path has a .pdf extension, and an
+// image block if not. It returns false for a data URL that it cannot parse or that
+// has an unsupported MIME type.
 func contentBlockFromAttachmentURL(url string) (anthropic.ContentBlockParamUnion, bool) {
 	if strings.HasPrefix(url, "data:") {
 		mimeType, data, ok := parseDataURL(url)
@@ -487,8 +537,8 @@ func contentBlockFromAttachmentURL(url string) (anthropic.ContentBlockParamUnion
 	return anthropic.NewImageBlock(anthropic.URLImageSourceParam{URL: url}), true
 }
 
-// parseDataURL parses an RFC 2397 data URL, extracting the MIME type and base64-encoded data.
-// Only base64-encoded data URLs are supported; URL-encoded data URLs will return ok=false.
+// parseDataURL returns the MIME type and the base64 data of an RFC 2397 data URL.
+// It returns ok=false for a data URL that is not base64-encoded.
 func parseDataURL(value string) (mimeType string, data string, ok bool) {
 	if !strings.HasPrefix(value, "data:") {
 		return "", "", false
@@ -522,9 +572,10 @@ func parseDataURL(value string) (mimeType string, data string, ok bool) {
 	return mimeType, data, true
 }
 
-// normalizeImageMimeType validates and normalizes image MIME types to those supported
-// by the Anthropic API. Supported formats: image/jpeg, image/png, image/gif, image/webp.
-// See: https://docs.anthropic.com/en/docs/build-with-claude/vision
+// normalizeImageMimeType returns the standard form of an image MIME type, or an empty
+// string if the Anthropic API does not accept the type. The API accepts image/jpeg,
+// image/png, image/gif, and image/webp.
+// See: https://platform.claude.com/docs/en/build-with-claude/vision
 func normalizeImageMimeType(mimeType string) string {
 	switch strings.ToLower(strings.TrimSpace(mimeType)) {
 	case "image/jpg", "image/jpeg":
@@ -540,11 +591,9 @@ func normalizeImageMimeType(mimeType string) string {
 	}
 }
 
-// isPDFURL checks if a URL appears to point to a PDF based on its path extension.
-// NOTE: This only checks the URL path extension (.pdf) and will not detect PDFs served
-// from extension-less endpoints (e.g., /documents/12345) or based on Content-Type headers.
-// This is an intentional limitation; callers should not assume this guarantees the
-// remote resource is actually a PDF.
+// isPDFURL returns true if the URL path has a .pdf extension. It does not send a
+// request to read the Content-Type header, so it does not find a PDF at a path
+// with no extension, such as /documents/12345.
 func isPDFURL(url string) bool {
 	parsedURL, err := neturl.Parse(url)
 	if err != nil {

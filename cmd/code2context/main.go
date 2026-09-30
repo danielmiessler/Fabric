@@ -9,14 +9,13 @@ import (
 )
 
 func main() {
-	// Command line flags
 	maxDepth := flag.Int("depth", 3, "Maximum directory depth to scan")
 	ignorePatterns := flag.String("ignore", ".git,node_modules,vendor", "Comma-separated patterns to ignore")
 	outputFile := flag.String("out", "", "Output file (default: stdout)")
 	flag.Usage = printUsage
 	flag.Parse()
 
-	// Check if stdin has data (is a pipe)
+	// hasStdin is true when stdin is not a terminal.
 	stdinInfo, _ := os.Stdin.Stat()
 	hasStdin := (stdinInfo.Mode() & os.ModeCharDevice) == 0
 
@@ -33,7 +32,6 @@ func main() {
 
 		instructions := flag.Arg(0)
 
-		// Read file paths from stdin
 		var files []string
 		scanner := bufio.NewScanner(os.Stdin)
 		for scanner.Scan() {
@@ -63,13 +61,11 @@ func main() {
 		directory := flag.Arg(0)
 		instructions := flag.Arg(1)
 
-		// Validate directory
 		if info, err := os.Stat(directory); err != nil || !info.IsDir() {
 			fmt.Fprintf(os.Stderr, "Error: Directory '%s' does not exist or is not a directory\n", directory)
 			os.Exit(1)
 		}
 
-		// Parse ignore patterns and scan directory
 		jsonData, err = ScanDirectory(directory, *maxDepth, instructions, strings.Split(*ignorePatterns, ","))
 	}
 
@@ -78,7 +74,6 @@ func main() {
 		os.Exit(1)
 	}
 
-	// Output result
 	if *outputFile != "" {
 		if err := os.WriteFile(*outputFile, jsonData, 0644); err != nil {
 			fmt.Fprintf(os.Stderr, "Error writing file: %v\n", err)

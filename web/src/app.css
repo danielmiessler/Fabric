@@ -1,134 +1,111 @@
-/* @tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Tailwind 4 reads its configuration from CSS. The settings in this file come
+ * from the tailwind.config.ts file that it replaces.
+ *
+ * Every @import must come before the other rules. Tailwind needs to read its
+ * own theme before it reads the Skeleton CSS, because Skeleton uses the
+ * Tailwind breakpoint variants. */
+@import 'tailwindcss';
 
-:root {
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
-    Cantarell, 'Go Mono', 'Fira Sans', 'Helvetica Neue', sans-serif;
+/* Skeleton 5 supplies CSS only. The Svelte components are in a separate
+ * package. */
+@import '@skeletonlabs/skeleton';
+
+/* Each theme that theme-store.ts can select needs an import. The v2 names
+ * "skeleton" and "gold-nouveau" are now "legacy" and "nouveau". */
+@import '@skeletonlabs/skeleton/themes/legacy';
+@import '@skeletonlabs/skeleton/themes/modern';
+@import '@skeletonlabs/skeleton/themes/crimson';
+@import '@skeletonlabs/skeleton/themes/nouveau';
+@import '@skeletonlabs/skeleton/themes/hamlindigo';
+@import '@skeletonlabs/skeleton/themes/vintage';
+@import '@skeletonlabs/skeleton/themes/seafoam';
+@import '@skeletonlabs/skeleton/themes/sahara';
+@import '@skeletonlabs/skeleton/themes/rocket';
+@import './themes/my-custom-theme.css';
+
+@plugin '@tailwindcss/forms';
+@plugin '@tailwindcss/typography';
+
+/* Tailwind must scan the Skeleton component package to keep the classes that
+ * those components use. */
+@source '../node_modules/@skeletonlabs/skeleton-svelte/dist';
+
+/* The v3 config set darkMode to "class". Tailwind 4 needs this variant to read
+ * the "dark" class that app.html puts on the html element. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
   --font-mono: 'Fira Code', monospace;
-  --column-width: 42rem;
-  --column-margin-top: 4rem;
-} */
 
-/* Light theme variables */
-/* :root {
-  --background: hsl(249, 81%, 85%);
-  --foreground: hsl(229, 65%, 29%);
-  --card: 0 0% 100%;
-  --card-foreground: 224 71.4% 4.1%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 224 71.4% 4.1%;
-  --primary: hsl(262.1 83.3% 57.8%);
-  --primary-foreground: hsl(274, 100%, 90%);
-  --secondary: hsl(173, 74%, 68%);
-  --secondary-foreground: hsl(195, 100%, 90%);
-  --muted: 220 14.3% 95.9%;
-  --muted-foreground: 220 8.9% 46.1%;
-  --accent: hsl(220, 37%, 49%);
-  --accent-foreground: 220.9 39.3% 11%;
-  --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 210 20% 98%;
-  --border: 220 13% 91%;
-  --input: 220 13% 91%;
-  --ring: 262.1 83.3% 57.8%;
-  --radius: 0.5rem;
-} */
+  /* These colors read CSS variables that no file defines, because the block
+   * that declared them in app.css is commented out. Tailwind 3 behaved the
+   * same way, so the declarations stay as they are to hold the appearance
+   * steady. Define the variables in this file to make the colors work. */
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
 
-/* Dark theme variables */
-/* .dark {
-  --background: 224 71.4% 4.1%;
-  --foreground: 210 20% 98%;
-  --card: 224 71.4% 4.1%;
-  --card-foreground: 210 20% 98%;
-  --popover: 224 71.4% 4.1%;
-  --popover-foreground: 210 20% 98%;
-  --primary: 263.4 70% 50.4%;
-  --primary-foreground: 210 20% 98%;
-  --secondary: 215 27.9% 16.9%;
-  --secondary-foreground: 210 20% 98%;
-  --muted: 215 27.9% 16.9%;
-  --muted-foreground: 217.9 10.6% 64.9%;
-  --accent: 215 27.9% 16.9%;
-  --accent-foreground: 210 20% 98%;
-  --destructive: 0 62.8% 30.6%;
-  --destructive-foreground: 210 20% 98%;
-  --border: 215 27.9% 16.9%;
-  --input: 215 27.9% 16.9%;
-  --ring: 263.4 70% 50.4%;
+  --animate-blink: blink 1s step-end infinite;
 }
 
-@layer base {
-  * {
-    @apply border-border;
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
   }
-  body {
-    @apply bg-background text-foreground;
-    font-feature-settings: "rlig" 1, "calt" 1;
-  } */
-  
-  /* Enhanced Typography */
-/*   h1, h2, h3, h4, h5, h6 {
-    @apply font-semibold tracking-tight;
+  50% {
+    opacity: 0;
   }
-  
-  h1 {
-    @apply text-4xl lg:text-5xl;
-  }
-  
-  h2 {
-    @apply text-3xl lg:text-4xl;
-  }
-  
-  h3 {
-    @apply text-2xl lg:text-3xl;
-  }
-  
-  p {
-    @apply leading-7;
-  }
-   */
-  /* Links */
-/*   a {
-    @apply text-primary hover:text-primary/80 transition-colors;
-  } */
-  
-  /* Code blocks */
-/*   pre {
-    @apply p-4 rounded-lg bg-muted/50 font-mono text-sm;
-  }
-  
-  code {
-    @apply font-mono text-sm;
-  }
-   */
-  /* Terminal specific styles */
-/*   .terminal-window {
-    @apply rounded-lg border bg-card shadow-lg overflow-hidden;
-  }
-  
-  .terminal-text {
-    @apply font-mono text-sm;
-  }
-   */
-  /* Form elements */
-/*   input, textarea, select {
-    @apply rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
-  }
-  
-  button {
-    @apply inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
-  }
-} */
-
-/* Custom scrollbar */
-/* ::-webkit-scrollbar {
-  @apply w-2;
 }
 
-::-webkit-scrollbar-track {
-  @apply bg-muted;
+/* Tailwind 4 no longer takes container settings from a configuration file. */
+@utility container {
+  margin-inline: auto;
+  padding-inline: 2rem;
+  max-width: 1400px;
 }
 
-::-webkit-scrollbar-thumb {
-  @apply bg-muted-foreground/30 rounded-full hover:bg-muted-foreground/50 transition-colors;
-} */
+html,
+body {
+  @apply h-full overflow-hidden;
+}
+
+.terminal-output {
+  @apply font-mono text-sm;
+}
+
+.terminal-input {
+  @apply font-mono text-sm;
+}
+
+/* The typography plugin puts quotation marks around inline code. Remove them. */
+.prose :where(code):not(:where([class~='not-prose'] *))::before,
+.prose :where(code):not(:where([class~='not-prose'] *))::after {
+  content: '';
+}
+
+/* Theme overrides. The v2 "skeleton" theme is now "legacy". */
+:root [data-theme='legacy'] {
+  --typo-base--font-family:
+    system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+    'Open Sans', 'Helvetica Neue', sans-serif;
+  --typo-heading--font-family:
+    system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+    'Open Sans', 'Helvetica Neue', sans-serif;
+}

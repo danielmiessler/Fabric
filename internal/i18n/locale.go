@@ -7,16 +7,9 @@ import (
 	"golang.org/x/text/language"
 )
 
-// detectSystemLocale detects the system locale using standard Unix environment variables.
-// Follows the POSIX priority order for locale environment variables:
-// 1. LC_ALL (highest priority - overrides all others)
-// 2. LC_MESSAGES (for messages specifically)
-// 3. LANG (general locale setting)
-// 4. Returns empty string if none are set or valid
-//
-// This implementation follows POSIX standards and Unix best practices for locale detection.
+// detectSystemLocale checks LC_ALL, LC_MESSAGES, and LANG in POSIX priority order.
+// It returns the first valid locale, or "" when none is valid.
 func detectSystemLocale() string {
-	// Check environment variables in priority order
 	envVars := []string{"LC_ALL", "LC_MESSAGES", "LANG"}
 
 	for _, envVar := range envVars {
@@ -31,64 +24,50 @@ func detectSystemLocale() string {
 	return ""
 }
 
-// normalizeLocale converts various locale formats to BCP 47 language tags.
+// normalizeLocale converts a POSIX locale string to a BCP 47 language-REGION tag.
+// It drops the encoding and modifier suffixes and returns "" for "C" and "POSIX".
 // Examples:
 //   - "en_US.UTF-8" -> "en-US"
 //   - "fr_FR@euro" -> "fr-FR"
 //   - "zh_CN.GB2312" -> "zh-CN"
-//   - "C" or "POSIX" -> "" (invalid, falls back to default)
 func normalizeLocale(locale string) string {
-	// Handle special cases
 	if locale == "C" || locale == "POSIX" || locale == "" {
 		return ""
 	}
 
-	// Remove encoding and modifiers
-	// Examples: en_US.UTF-8@euro -> en_US
-	locale = strings.Split(locale, ".")[0] // Remove encoding (.UTF-8)
-	locale = strings.Split(locale, "@")[0] // Remove modifiers (@euro)
+	locale = strings.Split(locale, ".")[0]
+	locale = strings.Split(locale, "@")[0]
 
-	// Convert underscore to hyphen for BCP 47 compliance
-	// en_US -> en-US
 	locale = strings.ReplaceAll(locale, "_", "-")
 
-	// Ensure proper BCP 47 casing: language-REGION
 	parts := strings.Split(locale, "-")
 	if len(parts) >= 2 {
-		// Lowercase language, uppercase region
 		parts[0] = strings.ToLower(parts[0])
 		parts[1] = strings.ToUpper(parts[1])
-		locale = strings.Join(parts[:2], "-") // Only keep language-REGION
+		locale = strings.Join(parts[:2], "-")
 	} else if len(parts) == 1 {
-		// Language only, lowercase it
 		locale = strings.ToLower(parts[0])
 	}
 
 	return locale
 }
 
-// isValidLocale checks if a locale string can be parsed as a valid language tag.
+// isValidLocale reports whether language.Parse accepts locale.
 func isValidLocale(locale string) bool {
 	if locale == "" {
 		return false
 	}
 
-	// Use golang.org/x/text/language to validate
 	_, err := language.Parse(locale)
 	return err == nil
 }
 
-// getPreferredLocale returns the best locale to use based on user preferences.
-// Priority order:
-// 1. Explicit language flag (if provided)
-// 2. System environment variables (LC_ALL, LC_MESSAGES, LANG)
-// 3. Default fallback (empty string, which triggers "en" in Init)
+// getPreferredLocale returns explicitLang when it is not empty.
+// Otherwise it returns the result of detectSystemLocale.
 func getPreferredLocale(explicitLang string) string {
-	// If explicitly set via flag, use that
 	if explicitLang != "" {
 		return explicitLang
 	}
 
-	// Otherwise try to detect from system environment
 	return detectSystemLocale()
 }

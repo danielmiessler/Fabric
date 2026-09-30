@@ -9,31 +9,25 @@ import { ChatError, ChatService } from "$lib/services/ChatService";
 import { languageStore } from "$lib/store/language-store";
 import { selectedPatternName } from "$lib/store/pattern-store";
 
-// Initialize chat service
 const chatService = new ChatService();
 
-// Local storage key for persisting messages
 const MESSAGES_STORAGE_KEY = "chat_messages";
 
-// Load initial messages from local storage (only in browser)
 const initialMessages = browser
 	? JSON.parse(localStorage.getItem(MESSAGES_STORAGE_KEY) || "[]")
 	: [];
 
-// Separate stores for different concerns
 export const messageStore = writable<Message[]>(initialMessages);
 export const streamingStore = writable<boolean>(false);
 export const errorStore = writable<string | null>(null);
 export const currentSession = writable<string | null>(null);
 
-// Subscribe to messageStore changes to persist messages (only in browser)
 if (browser) {
 	messageStore.subscribe(($messages) => {
 		localStorage.setItem(MESSAGES_STORAGE_KEY, JSON.stringify($messages));
 	});
 }
 
-// Derived store for chat state
 export const chatState = derived(
 	[messageStore, streamingStore],
 	([$messages, $streaming]) => ({
@@ -42,7 +36,6 @@ export const chatState = derived(
 	}),
 );
 
-// Error handling utility
 function handleError(error: Error | string) {
 	const errorMessage =
 		error instanceof ChatError
@@ -100,7 +93,6 @@ export async function sendMessage(
 		streamingStore.set(true);
 		errorStore.set(null);
 
-		// Add message
 		messageStore.update((messages) => [
 			...messages,
 			{
@@ -166,5 +158,4 @@ export async function sendMessage(
 	}
 }
 
-// Re-export types for convenience
 export type { ChatState, Message };

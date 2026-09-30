@@ -26,7 +26,6 @@ func NewNotificationManager() *NotificationManager {
 
 	switch runtime.GOOS {
 	case "darwin":
-		// Try terminal-notifier first, then fall back to osascript
 		provider = &TerminalNotifierProvider{}
 		if !provider.IsAvailable() {
 			provider = &OSAScriptProvider{}
@@ -72,11 +71,11 @@ func (t *TerminalNotifierProvider) IsAvailable() bool {
 type OSAScriptProvider struct{}
 
 func (o *OSAScriptProvider) Send(title, message string) error {
-	// SECURITY: Use separate arguments instead of string interpolation to prevent AppleScript injection
+	// The script reads the title and message from environment variables.
+	// Text interpolated into the script could inject AppleScript.
 	script := `display notification (system attribute "FABRIC_MESSAGE") with title (system attribute "FABRIC_TITLE") sound name "Glass"`
 	cmd := exec.Command("osascript", "-e", script)
 
-	// Set environment variables for the AppleScript to read safely
 	cmd.Env = append(os.Environ(), "FABRIC_TITLE="+title, "FABRIC_MESSAGE="+message)
 	return cmd.Run()
 }
@@ -103,11 +102,11 @@ func (n *NotifySendProvider) IsAvailable() bool {
 type PowerShellProvider struct{}
 
 func (p *PowerShellProvider) Send(title, message string) error {
-	// SECURITY: Use environment variables to avoid PowerShell injection attacks
+	// The script reads the title and message from environment variables.
+	// Text interpolated into the script could inject PowerShell.
 	script := `Add-Type -AssemblyName System.Windows.Forms; [System.Windows.Forms.MessageBox]::Show($env:FABRIC_MESSAGE, $env:FABRIC_TITLE)`
 	cmd := exec.Command("powershell", "-Command", script)
 
-	// Set environment variables for PowerShell to read safely
 	cmd.Env = append(os.Environ(), "FABRIC_TITLE="+title, "FABRIC_MESSAGE="+message)
 	return cmd.Run()
 }
@@ -121,7 +120,6 @@ func (p *PowerShellProvider) IsAvailable() bool {
 type NoopProvider struct{}
 
 func (n *NoopProvider) Send(title, message string) error {
-	// Silent no-op for unsupported platforms
 	return nil
 }
 

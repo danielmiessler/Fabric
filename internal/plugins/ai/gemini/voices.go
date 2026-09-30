@@ -20,69 +20,36 @@ type GeminiVoice struct {
 // https://ai.google.dev/gemini-api/docs/speech-generation
 func GetGeminiVoices() []GeminiVoice {
 	return []GeminiVoice{
-		// Firm voices
 		{Name: "Kore", Description: "Firm and confident", Characteristics: []string{"firm", "confident", "default"}},
 		{Name: "Orus", Description: "Firm and decisive", Characteristics: []string{"firm", "decisive"}},
 		{Name: "Alnilam", Description: "Firm and strong", Characteristics: []string{"firm", "strong"}},
-
-		// Upbeat voices
 		{Name: "Puck", Description: "Upbeat and energetic", Characteristics: []string{"upbeat", "energetic"}},
 		{Name: "Laomedeia", Description: "Upbeat and lively", Characteristics: []string{"upbeat", "lively"}},
-
-		// Bright voices
 		{Name: "Zephyr", Description: "Bright and cheerful", Characteristics: []string{"bright", "cheerful"}},
 		{Name: "Autonoe", Description: "Bright and optimistic", Characteristics: []string{"bright", "optimistic"}},
-
-		// Informative voices
 		{Name: "Charon", Description: "Informative and clear", Characteristics: []string{"informative", "clear"}},
 		{Name: "Rasalgethi", Description: "Informative and professional", Characteristics: []string{"informative", "professional"}},
-
-		// Natural voices
 		{Name: "Aoede", Description: "Breezy and natural", Characteristics: []string{"breezy", "natural"}},
 		{Name: "Leda", Description: "Youthful and energetic", Characteristics: []string{"youthful", "energetic"}},
-
-		// Gentle voices
 		{Name: "Vindemiatrix", Description: "Gentle and kind", Characteristics: []string{"gentle", "kind"}},
 		{Name: "Achernar", Description: "Soft and gentle", Characteristics: []string{"soft", "gentle"}},
 		{Name: "Enceladus", Description: "Breathy and soft", Characteristics: []string{"breathy", "soft"}},
-
-		// Warm voices
 		{Name: "Sulafat", Description: "Warm and welcoming", Characteristics: []string{"warm", "welcoming"}},
 		{Name: "Capella", Description: "Warm and approachable", Characteristics: []string{"warm", "approachable"}},
-
-		// Clear voices
 		{Name: "Iapetus", Description: "Clear and articulate", Characteristics: []string{"clear", "articulate"}},
 		{Name: "Erinome", Description: "Clear and precise", Characteristics: []string{"clear", "precise"}},
-
-		// Pleasant voices
 		{Name: "Algieba", Description: "Smooth and pleasant", Characteristics: []string{"smooth", "pleasant"}},
 		{Name: "Vega", Description: "Smooth and flowing", Characteristics: []string{"smooth", "flowing"}},
-
-		// Textured voices
 		{Name: "Algenib", Description: "Gravelly texture", Characteristics: []string{"gravelly", "textured"}},
-
-		// Relaxed voices
 		{Name: "Callirrhoe", Description: "Easy-going and relaxed", Characteristics: []string{"relaxed", "easy-going"}},
 		{Name: "Despina", Description: "Calm and serene", Characteristics: []string{"calm", "serene"}},
-
-		// Mature voices
 		{Name: "Gacrux", Description: "Mature and experienced", Characteristics: []string{"mature", "experienced"}},
-
-		// Expressive voices
 		{Name: "Pulcherrima", Description: "Forward and expressive", Characteristics: []string{"forward", "expressive"}},
 		{Name: "Lyra", Description: "Melodic and expressive", Characteristics: []string{"melodic", "expressive"}},
-
-		// Dynamic voices
 		{Name: "Fenrir", Description: "Excitable and dynamic", Characteristics: []string{"excitable", "dynamic"}},
 		{Name: "Sadachbia", Description: "Lively and animated", Characteristics: []string{"lively", "animated"}},
-
-		// Friendly voices
 		{Name: "Achird", Description: "Friendly and approachable", Characteristics: []string{"friendly", "approachable"}},
-
-		// Casual voices
 		{Name: "Zubenelgenubi", Description: "Casual and conversational", Characteristics: []string{"casual", "conversational"}},
-
-		// Additional voices from latest API
 		{Name: "Sadaltager", Description: "Experimental voice with a calm and neutral tone", Characteristics: []string{"experimental", "calm", "neutral"}},
 		{Name: "Schedar", Description: "Experimental voice with a warm and engaging tone", Characteristics: []string{"experimental", "warm", "engaging"}},
 		{Name: "Umbriel", Description: "Experimental voice with a deep and resonant tone", Characteristics: []string{"experimental", "deep", "resonant"}},
@@ -103,7 +70,7 @@ func GetGeminiVoiceNames() []string {
 // IsValidGeminiVoice checks if a voice name is valid
 func IsValidGeminiVoice(voiceName string) bool {
 	if voiceName == "" {
-		return true // Empty voice is valid (will use default)
+		return true // empty selects the default voice
 	}
 
 	for _, voice := range GetGeminiVoices() {
@@ -127,7 +94,6 @@ func GetGeminiVoiceByName(name string) (*GeminiVoice, error) {
 // ListGeminiVoices formats the voice list for display
 func ListGeminiVoices(shellCompleteMode bool) string {
 	if shellCompleteMode {
-		// For shell completion, just return voice names
 		names := GetGeminiVoiceNames()
 		var result strings.Builder
 		for _, name := range names {
@@ -136,12 +102,10 @@ func ListGeminiVoices(shellCompleteMode bool) string {
 		return result.String()
 	}
 
-	// For human-readable output
 	voices := GetGeminiVoices()
 	var result strings.Builder
 	result.WriteString("Available Gemini Text-to-Speech voices:\n\n")
 
-	// Group by characteristics for better readability
 	groups := map[string][]GeminiVoice{
 		"Firm & Confident":     {},
 		"Bright & Cheerful":    {},
@@ -187,7 +151,6 @@ func ListGeminiVoices(shellCompleteMode bool) string {
 		}
 	}
 
-	// Output grouped voices
 	for groupName, groupVoices := range groups {
 		if len(groupVoices) > 0 {
 			result.WriteString(fmt.Sprintf("%s:\n", groupName))
@@ -207,16 +170,3 @@ func ListGeminiVoices(shellCompleteMode bool) string {
 
 	return result.String()
 }
-
-// NOTE: This implementation maintains a curated list based on official Google documentation.
-// In the future, if Google provides a dynamic voice discovery API, this can be updated
-// to make API calls for real-time voice discovery.
-//
-// The current approach ensures:
-// 1. Fast response times (no API calls needed)
-// 2. Reliable voice information with descriptions
-// 3. Easy maintenance when new voices are added
-// 4. Offline functionality
-//
-// To update voices: Monitor Google's Gemini TTS documentation at:
-// https://ai.google.dev/gemini-api/docs/speech-generation

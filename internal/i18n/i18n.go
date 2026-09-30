@@ -15,8 +15,6 @@ import (
 	"golang.org/x/text/language"
 )
 
-// embedded default locales
-//
 //go:embed locales/*.json
 var localeFS embed.FS
 
@@ -25,20 +23,10 @@ var (
 	initOnce   sync.Once
 )
 
-// defaultLanguageVariants maps language codes without regions to their default regional variants.
-// This is used when a language without a base file is requested.
+// defaultLanguageVariants maps a base language to its fallback regional variant.
+// getLocaleCandidates tries it after the requested locale and the base language.
 var defaultLanguageVariants = map[string]string{
-	"pt": "pt-BR", // Portuguese defaults to Brazilian Portuguese for backward compatibility
-	// Note: We currently have base files for these languages, but if we add regional variants
-	// in the future, these defaults will be used:
-	// "de": "de-DE", // German would default to Germany German
-	// "en": "en-US", // English would default to US English
-	// "es": "es-ES", // Spanish would default to Spain Spanish
-	// "fa": "fa-IR", // Persian would default to Iran Persian
-	// "fr": "fr-FR", // French would default to France French
-	// "it": "it-IT", // Italian would default to Italy Italian
-	// "ja": "ja-JP", // Japanese would default to Japan Japanese
-	// "zh": "zh-CN", // Chinese would default to Simplified Chinese
+	"pt": "pt-BR", // "pt" meant Brazilian Portuguese before pt-PT.json existed
 }
 
 // Init initializes the i18n bundle and localizer. It loads the specified locale
@@ -49,9 +37,7 @@ var defaultLanguageVariants = map[string]string{
 // If locale is empty, it will attempt to detect the system locale from
 // environment variables (LC_ALL, LC_MESSAGES, LANG) following POSIX standards.
 func Init(locale string) (*i18n.Localizer, error) {
-	// Use preferred locale detection if no explicit locale provided
 	locale = getPreferredLocale(locale)
-	// Normalize the locale to BCP 47 format (with hyphens)
 	locale = normalizeToBCP47(locale)
 	if locale == "" {
 		locale = "en"
@@ -60,32 +46,28 @@ func Init(locale string) (*i18n.Localizer, error) {
 	bundle := i18n.NewBundle(language.English)
 	bundle.RegisterUnmarshalFunc("json", json.Unmarshal)
 
-	// Build a list of locale candidates to try
 	locales := getLocaleCandidates(locale)
 
-	// Try to load embedded translations for each candidate
 	embedded := false
 	for _, candidate := range locales {
 		if data, err := localeFS.ReadFile("locales/" + candidate + ".json"); err == nil {
 			_, _ = bundle.ParseMessageFileBytes(data, candidate+".json")
 			embedded = true
-			locale = candidate // Update locale to what was actually loaded
+			locale = candidate // the disk path and the localizer use the loaded candidate
 			break
 		}
 	}
 
-	// Fall back to English if nothing was loaded
 	if !embedded {
 		if data, err := localeFS.ReadFile("locales/en.json"); err == nil {
 			_, _ = bundle.ParseMessageFileBytes(data, "en.json")
 		}
 	}
 
-	// load locale from disk or download when not embedded
 	path := filepath.Join(userLocaleDir(), locale+".json")
 	if _, err := os.Stat(path); os.IsNotExist(err) && !embedded {
 		if err := downloadLocale(path, locale); err != nil {
-			// if download fails, still continue with embedded translations
+			// a failed download leaves the English fallback in place
 			fmt.Fprintf(os.Stderr, "%s\n", fmt.Sprintf(getErrorMessage("i18n_download_failed", "Failed to download translation for language '%s': %v"), locale, err))
 		}
 	}
@@ -105,7 +87,7 @@ func Init(locale string) (*i18n.Localizer, error) {
 func T(messageID string) string {
 	initOnce.Do(func() {
 		if translator == nil {
-			Init("") // Empty string triggers system locale detection
+			Init("")
 		}
 	})
 	return translator.MustLocalize(&i18n.LocalizeConfig{MessageID: messageID})
@@ -140,33 +122,28 @@ func downloadLocale(path, locale string) error {
 	return err
 }
 
-// getErrorMessage tries to get a translated error message, falling back to system locale
-// and then to the provided fallback message. This is used during initialization when
-// the translator may not be fully ready.
+// getErrorMessage reads messageID from the embedded file for the system locale,
+// then from en.json, then returns fallback. Init uses it before translator exists.
 func getErrorMessage(messageID, fallback string) string {
-	// Try to get system locale for error messages
 	systemLocale := getPreferredLocale("")
 	if systemLocale == "" {
 		systemLocale = "en"
 	}
 
-	// First try the system locale
 	if msg := tryGetMessage(systemLocale, messageID); msg != "" {
 		return msg
 	}
 
-	// Fall back to English
 	if systemLocale != "en" {
 		if msg := tryGetMessage("en", messageID); msg != "" {
 			return msg
 		}
 	}
 
-	// Final fallback to hardcoded message
 	return fallback
 }
 
-// tryGetMessage attempts to get a message from embedded locale files
+// tryGetMessage returns messageID from the embedded file for locale, or "" when absent.
 func tryGetMessage(locale, messageID string) string {
 	if data, err := localeFS.ReadFile("locales/" + locale + ".json"); err == nil {
 		var messages map[string]string
@@ -179,34 +156,30 @@ func tryGetMessage(locale, messageID string) string {
 	return ""
 }
 
-// normalizeToBCP47 normalizes a locale string to BCP 47 format.
-// Converts underscores to hyphens and ensures proper casing (language-REGION).
+// normalizeToBCP47 replaces underscores with hyphens, lowercases the language,
+// uppercases the region, and drops any subtag after the region.
 func normalizeToBCP47(locale string) string {
 	if locale == "" {
 		return ""
 	}
 
-	// Replace underscores with hyphens
 	locale = strings.ReplaceAll(locale, "_", "-")
 
-	// Split into parts
 	parts := strings.Split(locale, "-")
 	if len(parts) == 1 {
-		// Language only, lowercase it
 		return strings.ToLower(parts[0])
 	} else if len(parts) >= 2 {
-		// Language and region (and possibly more)
-		// Lowercase language, uppercase region
 		parts[0] = strings.ToLower(parts[0])
 		parts[1] = strings.ToUpper(parts[1])
-		return strings.Join(parts[:2], "-") // Return only language-REGION
+		return strings.Join(parts[:2], "-")
 	}
 
 	return locale
 }
 
-// getLocaleCandidates returns a list of locale candidates to try, in order of preference.
-// For example, for "pt-PT" it returns ["pt-PT", "pt", "pt-BR"] (where pt-BR is the default for pt).
+// getLocaleCandidates returns the requested locale, then its base language, then
+// the default variant for that language, without duplicates.
+// For "pt-PT" it returns ["pt-PT", "pt", "pt-BR"].
 func getLocaleCandidates(locale string) []string {
 	candidates := []string{}
 
@@ -214,23 +187,17 @@ func getLocaleCandidates(locale string) []string {
 		return candidates
 	}
 
-	// First candidate is always the requested locale
 	candidates = append(candidates, locale)
 
-	// If it's a regional variant, add the base language as a candidate
-	if strings.Contains(locale, "-") {
-		baseLang := strings.Split(locale, "-")[0]
+	if baseLang, _, found := strings.Cut(locale, "-"); found {
 		candidates = append(candidates, baseLang)
 
-		// Also check if the base language has a default variant
 		if defaultVariant, exists := defaultLanguageVariants[baseLang]; exists {
-			// Only add if it's different from what we already have
 			if defaultVariant != locale {
 				candidates = append(candidates, defaultVariant)
 			}
 		}
 	} else {
-		// If this is a base language without a region, check for default variant
 		if defaultVariant, exists := defaultLanguageVariants[locale]; exists {
 			candidates = append(candidates, defaultVariant)
 		}

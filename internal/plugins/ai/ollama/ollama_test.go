@@ -3,13 +3,19 @@ package ollama
 import (
 	"context"
 	"encoding/base64"
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"net/http/httptest"
+	"net/url"
 	"strings"
 	"testing"
+	"time"
 
+	"github.com/danielmiessler/fabric/internal/chat"
+	"github.com/danielmiessler/fabric/internal/domain"
 	"github.com/danielmiessler/fabric/internal/i18n"
+	ollamaapi "github.com/ollama/ollama/api"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -59,4 +65,74 @@ func TestLoadImageBytes_DataURLSuccess(t *testing.T) {
 	got, err := client.loadImageBytes(context.Background(), dataURL)
 	require.NoError(t, err)
 	assert.Equal(t, expected, got)
+}
+
+// TestSendStreamHonorsContextCancellation verifies that cancelling the caller's
+// context aborts an in-flight Ollama generation, instead of running the stream to
+// server completion. Regression test for issue #2196.
+func TestSendStreamHonorsContextCancellation(t *testing.T) {
+	const totalChunks = 20
+
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		enc := json.NewEncoder(w)
+		for i := range totalChunks {
+			if r.Context().Err() != nil {
+				return
+			}
+			_ = enc.Encode(ollamaapi.ChatResponse{Message: ollamaapi.Message{Content: "chunk "}, Done: i == totalChunks-1})
+			w.(http.Flusher).Flush()
+			time.Sleep(25 * time.Millisecond)
+		}
+	}))
+	t.Cleanup(server.Close)
+
+	baseURL, err := url.Parse(server.URL)
+	require.NoError(t, err)
+
+	client := &Client{client: ollamaapi.NewClient(baseURL, server.Client())}
+	channel := make(chan domain.StreamUpdate)
+
+	ctx, cancel := context.WithCancel(context.Background())
+	t.Cleanup(cancel)
+
+	errCh := make(chan error, 1)
+	go func() {
+		errCh <- client.SendStream(ctx, []*chat.ChatCompletionMessage{{Role: chat.ChatMessageRoleUser, Content: "hello"}}, &domain.ChatOptions{Model: "test-model"}, channel)
+	}()
+
+	// Consume the first chunk, then cancel mid-stream.
+	_, ok := <-channel
+	require.True(t, ok, "expected at least one stream update before cancellation")
+	cancel()
+
+	// Drain any remaining updates so SendStream can return.
+	for range channel {
+	}
+
+	require.ErrorIs(t, <-errCh, context.Canceled)
+}
+
+func TestSendStreamClosesChannelOnChatError(t *testing.T) {
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
+		w.WriteHeader(http.StatusInternalServerError)
+		_, _ = w.Write([]byte(`{"error":"ollama failed"}` + "\n"))
+	}))
+	t.Cleanup(server.Close)
+
+	baseURL, err := url.Parse(server.URL)
+	require.NoError(t, err)
+
+	client := &Client{client: ollamaapi.NewClient(baseURL, server.Client())}
+	channel := make(chan domain.StreamUpdate)
+
+	err = client.SendStream(
+		context.Background(),
+		[]*chat.ChatCompletionMessage{{Role: chat.ChatMessageRoleUser, Content: "hello"}},
+		&domain.ChatOptions{Model: "missing-model"},
+		channel,
+	)
+
+	require.Error(t, err)
+	_, ok := <-channel
+	assert.False(t, ok, "stream channel should be closed when Ollama chat returns an error")
 }

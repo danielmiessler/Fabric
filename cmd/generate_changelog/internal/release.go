@@ -20,7 +20,6 @@ type ReleaseManager struct {
 	repo        string
 }
 
-// getGitHubInfo extracts owner and repo from git remote origin URL
 func getGitHubInfo() (owner, repo string, err error) {
 	cmd := exec.Command("git", "remote", "get-url", "origin")
 	output, err := cmd.Output()
@@ -30,7 +29,6 @@ func getGitHubInfo() (owner, repo string, err error) {
 
 	url := strings.TrimSpace(string(output))
 
-	// Handle both SSH and HTTPS URLs
 	// SSH: git@github.com:owner/repo.git
 	// HTTPS: https://github.com/owner/repo.git
 	var re *regexp.Regexp
@@ -101,13 +99,11 @@ func (rm *ReleaseManager) UpdateReleaseDescription(version string) error {
 		client = github.NewClient(nil)
 	}
 
-	// Check if current repository is a fork by getting repo details
 	repo, _, err := client.Repositories.Get(ctx, rm.owner, rm.repo)
 	if err != nil {
 		return fmt.Errorf("failed to get repository info: %w", err)
 	}
 
-	// If repository is a fork, try updating the upstream (parent) repository first
 	if repo.Parent != nil {
 		parentOwner := repo.Parent.Owner.GetLogin()
 		parentRepo := repo.Parent.GetName()
@@ -123,7 +119,6 @@ func (rm *ReleaseManager) UpdateReleaseDescription(version string) error {
 		fmt.Printf("Failed to update upstream repository: %v\nFalling back to current repository...\n", err)
 	}
 
-	// Update current repository (either not a fork or upstream update failed)
 	err = rm.updateReleaseForRepo(ctx, client, rm.owner, rm.repo, version, releaseBody)
 	if err != nil {
 		return fmt.Errorf("failed to update release description for version %s in repository %s/%s: %w", version, rm.owner, rm.repo, err)

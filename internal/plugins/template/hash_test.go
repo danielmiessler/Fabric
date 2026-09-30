@@ -1,4 +1,3 @@
-// template/hash_test.go
 package template
 
 import (
@@ -8,7 +7,6 @@ import (
 )
 
 func TestComputeHash(t *testing.T) {
-	// Create a temporary test file
 	content := []byte("test content for hashing")
 	tmpfile, err := os.CreateTemp("", "hashtest")
 	if err != nil {
@@ -26,13 +24,13 @@ func TestComputeHash(t *testing.T) {
 	tests := []struct {
 		name    string
 		path    string
-		want    string // known hash for test content
+		want    string
 		wantErr bool
 	}{
 		{
 			name:    "valid file",
 			path:    tmpfile.Name(),
-			want:    "e25dd806d495b413931f4eea50b677a7a5c02d00460924661283f211a37f7e7f", // pre-computed hash of "test content for hashing"
+			want:    "e25dd806d495b413931f4eea50b677a7a5c02d00460924661283f211a37f7e7f", // sha256 of "test content for hashing"
 			wantErr: false,
 		},
 		{
@@ -93,7 +91,6 @@ func TestComputeStringHash(t *testing.T) {
 func TestHashConsistency(t *testing.T) {
 	content := "test content for consistency check"
 
-	// Create a file with the test content
 	tmpfile, err := os.CreateTemp("", "hashconsistency")
 	if err != nil {
 		t.Fatalf("failed to create temp file: %v", err)
@@ -104,7 +101,6 @@ func TestHashConsistency(t *testing.T) {
 		t.Fatalf("failed to write to temp file: %v", err)
 	}
 
-	// Get hashes using both methods
 	fileHash, err := ComputeHash(tmpfile.Name())
 	if err != nil {
 		t.Fatalf("ComputeHash failed: %v", err)
@@ -112,7 +108,6 @@ func TestHashConsistency(t *testing.T) {
 
 	stringHash := ComputeStringHash(content)
 
-	// Compare results
 	if fileHash != stringHash {
 		t.Errorf("Hash inconsistency: file hash %v != string hash %v", fileHash, stringHash)
 	}

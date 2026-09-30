@@ -8,7 +8,6 @@ export const POST: RequestHandler = async ({ request }) => {
     console.log('\n=== Request Analysis ===');
     console.log('1. Raw request body:', JSON.stringify(body, null, 2));
 
-    // Handle YouTube URL request
     if (body.url) {
       console.log('2. Processing YouTube URL:', {
         url: body.url,
@@ -16,7 +15,6 @@ export const POST: RequestHandler = async ({ request }) => {
         hasLanguageParam: true
       });
 
-      // Extract video ID
       const match = body.url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
       const videoId = match ? match[1] : null;
 
@@ -34,7 +32,6 @@ export const POST: RequestHandler = async ({ request }) => {
         .map(item => item.text)
         .join('\n');
 
-      // Create response with transcript and language
       const response = {
         transcript,
         title: videoId,
@@ -61,26 +58,16 @@ export const POST: RequestHandler = async ({ request }) => {
       language: body.language
     });
 
-    // Removed redundant language instruction logic; Go backend handles this
-    // if (body.prompts?.[0] && body.language && body.language !== 'en') {
-    //   const languageInstruction = `. Please use the language '${body.language}' for the output.`;
-    //   if (!body.prompts[0].userInput?.includes(languageInstruction)) {
-    //     body.prompts[0].userInput = (body.prompts[0].userInput || '') + languageInstruction;
-    //   }
-    // }
-
     console.log('2. Language analysis:', {
-      input: body.prompts?.[0]?.userInput?.substring(0, 100), // Note: This input no longer has the instruction appended here
+      input: body.prompts?.[0]?.userInput?.substring(0, 100),
       hasLanguageInstruction: body.prompts?.[0]?.userInput?.includes('language'),
       containsFr: body.prompts?.[0]?.userInput?.includes('fr'),
       containsEn: body.prompts?.[0]?.userInput?.includes('en'),
       requestLanguage: body.language
     });
 
-    // Log full request for debugging
     console.log('3. Full request:', JSON.stringify(body, null, 2));
 
-    // Log important fields
     console.log('4. Key fields:', {
       patternName: body.prompts?.[0]?.patternName,
       inputLength: body.prompts?.[0]?.userInput?.length,
@@ -116,10 +103,13 @@ export const POST: RequestHandler = async ({ request }) => {
       throw new Error('No response from fabric backend');
     }
 
-    // Create a TransformStream to inspect the data without modifying it
+    // The transform stream only logs the chunks and passes them on unchanged.
+    // Keep one decoder in streaming mode. If not, a multi-byte UTF-8 rune
+    // divided between two network chunks is logged as U+FFFD.
+    const decoder = new TextDecoder();
     const transformStream = new TransformStream({
       transform(chunk, controller) {
-        const text = new TextDecoder().decode(chunk);
+        const text = decoder.decode(chunk, { stream: true });
         if (text.startsWith('data: ')) {
           try {
             const data = JSON.parse(text.slice(6));
@@ -136,10 +126,8 @@ export const POST: RequestHandler = async ({ request }) => {
       }
     });
 
-    // Pipe through the transform stream
     const transformedStream = stream.pipeThrough(transformStream);
 
-    // Return the transformed stream
     const response = new Response(transformedStream, {
       headers: {
         'Content-Type': 'text/event-stream',

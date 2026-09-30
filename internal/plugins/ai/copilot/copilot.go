@@ -35,19 +35,15 @@ import (
 const (
 	vendorName = "Copilot"
 
-	// Microsoft Graph API endpoints
 	defaultBaseURL    = "https://graph.microsoft.com/beta/copilot"
 	conversationsPath = "/conversations"
 
-	// OAuth2 endpoints for Microsoft identity platform
 	microsoftAuthURL  = "https://login.microsoftonline.com/%s/oauth2/v2.0/authorize"
 	microsoftTokenURL = "https://login.microsoftonline.com/%s/oauth2/v2.0/token"
 
-	// Default scopes required for Copilot Chat API
-	// These are the minimum required permissions
+	// The Chat API requires all of these delegated scopes. offline_access requests a refresh token.
 	defaultScopes = "Sites.Read.All Mail.Read People.Read.All OnlineMeetingTranscript.Read.All Chat.Read ChannelMessage.Read.All ExternalItem.Read.All offline_access"
 
-	// Model name exposed by Copilot (single model)
 	copilotModelName = "microsoft-365-copilot"
 )
 
@@ -61,7 +57,6 @@ func NewClient() *Client {
 		ConfigureCustom: c.configure,
 	}
 
-	// Setup questions for configuration
 	c.TenantID = c.AddSetupQuestion("Tenant ID", true)
 	c.TenantID.Question = "Enter your Azure AD Tenant ID (e.g., contoso.onmicrosoft.com or GUID)"
 
@@ -91,7 +86,6 @@ func NewClient() *Client {
 type Client struct {
 	*plugins.PluginBase
 
-	// Configuration
 	TenantID     *plugins.SetupQuestion
 	ClientID     *plugins.SetupQuestion
 	ClientSecret *plugins.SetupQuestion
@@ -100,7 +94,6 @@ type Client struct {
 	ApiBaseURL   *plugins.SetupQuestion
 	TimeZone     *plugins.SetupQuestion
 
-	// Runtime state
 	httpClient   *http.Client
 	oauth2Config *oauth2.Config
 	token        *oauth2.Token
@@ -112,7 +105,6 @@ func (c *Client) configure() error {
 		return errors.New(i18n.T("copilot_tenant_client_id_required"))
 	}
 
-	// Build OAuth2 configuration
 	c.oauth2Config = &oauth2.Config{
 		ClientID:     c.ClientID.Value,
 		ClientSecret: c.ClientSecret.Value,
@@ -123,25 +115,23 @@ func (c *Client) configure() error {
 		Scopes: strings.Split(defaultScopes, " "),
 	}
 
-	// If we have pre-configured tokens, use them
 	if c.AccessToken.Value != "" {
 		c.token = &oauth2.Token{
 			AccessToken:  c.AccessToken.Value,
 			RefreshToken: c.RefreshToken.Value,
 			TokenType:    "Bearer",
 		}
-		// If we have a refresh token, set expiry in the past to trigger refresh
+		// An expiry in the past makes the token source refresh on the first request.
 		if c.RefreshToken.Value != "" && c.ClientSecret.Value != "" {
 			c.token.Expiry = time.Now().Add(-time.Hour)
 		}
 	}
 
-	// Create HTTP client with OAuth2 token source
 	if c.token != nil {
 		tokenSource := c.oauth2Config.TokenSource(context.Background(), c.token)
 		c.httpClient = oauth2.NewClient(context.Background(), tokenSource)
 	} else {
-		// No tokens available - will need device code flow or manual token
+		// Without a token, requests from this client carry no Authorization header.
 		c.httpClient = &http.Client{Timeout: 120 * time.Second}
 	}
 
@@ -150,34 +140,27 @@ func (c *Client) configure() error {
 
 // IsConfigured returns true if the client has valid configuration.
 func (c *Client) IsConfigured() bool {
-	// Minimum requirement: tenant ID and client ID
 	if c.TenantID.Value == "" || c.ClientID.Value == "" {
 		return false
 	}
-	// Must have either an access token or ability to get one
 	return c.AccessToken.Value != "" || (c.RefreshToken.Value != "" && c.ClientSecret.Value != "")
 }
 
 // ListModels returns the available models.
 // Microsoft 365 Copilot exposes a single model - the Copilot service itself.
 func (c *Client) ListModels(_ context.Context) ([]string, error) {
-	// Copilot doesn't expose multiple models - it's a unified service
-	// We expose it as a single "model" for consistency with Fabric's architecture
 	return []string{copilotModelName}, nil
 }
 
 // Send sends a message to Copilot and returns the response.
 func (c *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions) (string, error) {
-	// Create a conversation
 	conversationID, err := c.createConversation(ctx)
 	if err != nil {
 		return "", fmt.Errorf(i18n.T("copilot_failed_create_conversation"), err)
 	}
 
-	// Build the message content from chat messages
 	messageText := c.buildMessageText(msgs)
 
-	// Send the chat message
 	response, err := c.sendChatMessage(ctx, conversationID, messageText)
 	if err != nil {
 		return "", fmt.Errorf(i18n.T("copilot_failed_send_message"), err)
@@ -192,16 +175,13 @@ func (c *Client) SendStream(_ context.Context, msgs []*chat.ChatCompletionMessag
 
 	ctx := context.Background()
 
-	// Create a conversation
 	conversationID, err := c.createConversation(ctx)
 	if err != nil {
 		return fmt.Errorf(i18n.T("copilot_failed_create_conversation"), err)
 	}
 
-	// Build the message content from chat messages
 	messageText := c.buildMessageText(msgs)
 
-	// Send the streaming chat message
 	if err := c.sendChatMessageStream(ctx, conversationID, messageText, channel); err != nil {
 		return fmt.Errorf(i18n.T("copilot_failed_stream_message"), err)
 	}
@@ -221,7 +201,6 @@ func (c *Client) buildMessageText(msgs []*chat.ChatCompletionMessage) string {
 
 		switch msg.Role {
 		case chat.ChatMessageRoleSystem:
-			// Prepend system messages as context
 			parts = append([]string{content}, parts...)
 		case chat.ChatMessageRoleUser, chat.ChatMessageRoleAssistant:
 			parts = append(parts, content)
@@ -305,7 +284,6 @@ func (c *Client) sendChatMessage(ctx context.Context, conversationID, messageTex
 		return "", err
 	}
 
-	// Extract the assistant's response from messages
 	return c.extractResponseText(result.Messages), nil
 }
 
@@ -347,7 +325,6 @@ func (c *Client) sendChatMessageStream(ctx context.Context, conversationID, mess
 		return fmt.Errorf(i18n.T("copilot_error_stream_request"), resp.Status, string(body))
 	}
 
-	// Parse SSE stream
 	return c.parseSSEStream(resp.Body, channel)
 }
 
@@ -359,7 +336,6 @@ func (c *Client) parseSSEStream(reader io.Reader, channel chan domain.StreamUpda
 	for scanner.Scan() {
 		line := scanner.Text()
 
-		// SSE format: "data: {...json...}"
 		if !strings.HasPrefix(line, "data: ") {
 			continue
 		}
@@ -375,16 +351,14 @@ func (c *Client) parseSSEStream(reader io.Reader, channel chan domain.StreamUpda
 			continue
 		}
 
-		// Extract new text from the response
 		newText := c.extractResponseText(event.Messages)
 		if newText != "" && newText != lastMessageText {
-			// Send only the delta (new content)
+			// Each event repeats the text so far. Send only the new suffix.
 			if delta, ok := strings.CutPrefix(newText, lastMessageText); ok {
 				if delta != "" {
 					channel <- domain.StreamUpdate{Type: domain.StreamTypeContent, Content: delta}
 				}
 			} else {
-				// Complete message replacement
 				channel <- domain.StreamUpdate{Type: domain.StreamTypeContent, Content: newText}
 			}
 			lastMessageText = newText
@@ -401,7 +375,6 @@ func (c *Client) parseSSEStream(reader io.Reader, channel chan domain.StreamUpda
 
 // extractResponseText extracts the assistant's response from messages.
 func (c *Client) extractResponseText(messages []responseMessage) string {
-	// Find the last assistant message (Copilot's response)
 	for _, msg := range slices.Backward(messages) {
 		if msg.ODataType == "#microsoft.graph.copilotConversationResponseMessage" {
 			if msg.Text != "" {
@@ -420,8 +393,6 @@ func (c *Client) addAuthHeader(req *http.Request) {
 		req.Header.Set("Authorization", "Bearer "+c.AccessToken.Value)
 	}
 }
-
-// API request/response types
 
 type chatRequest struct {
 	Message             messageParam         `json:"message"`

@@ -60,7 +60,6 @@ func TestParseSeconds(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			got, err := parseSeconds(tt.input)
 
-			// Check error condition
 			if tt.wantErr {
 				if err == nil {
 					t.Errorf("parseSeconds(%q) expected error but got none", tt.input)
@@ -68,7 +67,6 @@ func TestParseSeconds(t *testing.T) {
 				return
 			}
 
-			// Check success condition
 			if err != nil {
 				t.Fatalf("parseSeconds(%q) unexpected error: %v", tt.input, err)
 			}
@@ -148,7 +146,6 @@ func TestExtractAndValidateVideoId(t *testing.T) {
 				if tt.errorMsg != "" && !strings.Contains(err.Error(), tt.errorMsg) {
 					t.Errorf("extractAndValidateVideoId(%q) error = %v, want error containing %q", tt.url, err, tt.errorMsg)
 				}
-				// Verify empty videoId is returned on error
 				if got != "" {
 					t.Errorf("extractAndValidateVideoId(%q) returned videoId %q on error, want empty string", tt.url, got)
 				}

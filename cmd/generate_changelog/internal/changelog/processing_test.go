@@ -34,7 +34,6 @@ func TestDetectVersion(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			// Create version.nix file
 			versionNixPath := filepath.Join(tempDir, "version.nix")
 			if err := os.WriteFile(versionNixPath, []byte(tt.versionNixContent), 0644); err != nil {
 				t.Fatalf("Failed to create version.nix: %v", err)
@@ -57,7 +56,6 @@ func TestDetectVersion(t *testing.T) {
 				t.Errorf("Expected version '%s', got '%s'", tt.expectedVersion, version)
 			}
 
-			// Clean up
 			os.Remove(versionNixPath)
 		})
 	}
@@ -107,22 +105,19 @@ func TestInsertVersionAtTop_ImprovedRobustness(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			// Write existing content (or create empty file)
 			if tt.existingContent != "" {
 				if err := os.WriteFile(changelogPath, []byte(tt.existingContent), 0644); err != nil {
 					t.Fatalf("Failed to write existing content: %v", err)
 				}
 			} else {
-				// Remove file if it exists to test new file creation
+				// The new file case needs the file absent.
 				os.Remove(changelogPath)
 			}
 
-			// Insert new version
 			if err := g.insertVersionAtTop(tt.entry); err != nil {
 				t.Fatalf("insertVersionAtTop failed: %v", err)
 			}
 
-			// Read result
 			result, err := os.ReadFile(changelogPath)
 			if err != nil {
 				t.Fatalf("Failed to read result: %v", err)
@@ -139,12 +134,10 @@ func TestProcessIncomingPRs_FileAggregation(t *testing.T) {
 	tempDir := t.TempDir()
 	incomingDir := filepath.Join(tempDir, "incoming")
 
-	// Create incoming directory and files
 	if err := os.MkdirAll(incomingDir, 0755); err != nil {
 		t.Fatalf("Failed to create incoming dir: %v", err)
 	}
 
-	// Create test incoming files
 	file1Content := "## PR #1\n- Feature A"
 	file2Content := "## PR #2\n- Feature B"
 
@@ -155,7 +148,6 @@ func TestProcessIncomingPRs_FileAggregation(t *testing.T) {
 		t.Fatalf("Failed to create test file: %v", err)
 	}
 
-	// Test file aggregation logic by calling the internal functions
 	files, err := filepath.Glob(filepath.Join(incomingDir, "*.txt"))
 	if err != nil {
 		t.Fatalf("Failed to glob files: %v", err)
@@ -165,7 +157,6 @@ func TestProcessIncomingPRs_FileAggregation(t *testing.T) {
 		t.Fatalf("Expected 2 files, got %d", len(files))
 	}
 
-	// Test content aggregation
 	var content strings.Builder
 	var processingErrors []string
 	for _, file := range files {
@@ -195,24 +186,21 @@ func TestFileProcessing_ErrorHandling(t *testing.T) {
 	tempDir := t.TempDir()
 	incomingDir := filepath.Join(tempDir, "incoming")
 
-	// Create incoming directory with one good file and one unreadable file
 	if err := os.MkdirAll(incomingDir, 0755); err != nil {
 		t.Fatalf("Failed to create incoming dir: %v", err)
 	}
 
-	// Create a good file
 	if err := os.WriteFile(filepath.Join(incomingDir, "1.txt"), []byte("content"), 0644); err != nil {
 		t.Fatalf("Failed to create test file: %v", err)
 	}
 
-	// Create an unreadable file (simulate permission error)
+	// Mode 0000 makes the file unreadable.
 	unreadableFile := filepath.Join(incomingDir, "2.txt")
 	if err := os.WriteFile(unreadableFile, []byte("content"), 0000); err != nil {
 		t.Fatalf("Failed to create unreadable file: %v", err)
 	}
-	defer os.Chmod(unreadableFile, 0644) // Clean up
+	defer os.Chmod(unreadableFile, 0644) // restore permissions for cleanup
 
-	// Test error aggregation logic
 	files, err := filepath.Glob(filepath.Join(incomingDir, "*.txt"))
 	if err != nil {
 		t.Fatalf("Failed to glob files: %v", err)
@@ -234,7 +222,6 @@ func TestFileProcessing_ErrorHandling(t *testing.T) {
 		t.Errorf("Expected processing errors due to unreadable file")
 	}
 
-	// Verify error message format
 	errorMsg := strings.Join(processingErrors, "; ")
 	if !strings.Contains(errorMsg, "2.txt") {
 		t.Errorf("Error message should mention the problematic file")

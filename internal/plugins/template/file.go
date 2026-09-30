@@ -25,16 +25,15 @@ const MaxFileSize = 1 * 1024 * 1024
 // - Path sanitization
 type FilePlugin struct{}
 
-// safePath validates and normalizes file paths
+// safePath rejects paths that contain "..", expands a leading "~/", and cleans the result.
 func (p *FilePlugin) safePath(path string) (string, error) {
 	debugf(i18n.T("template_file_log_validating_path"), path)
 
-	// Basic security check - no path traversal
+	// Reject ".." anywhere in the path to block traversal.
 	if strings.Contains(path, "..") {
 		return "", errors.New(i18n.T("template_file_error_path_contains_parent_ref"))
 	}
 
-	// Expand home directory if needed
 	if strings.HasPrefix(path, "~/") {
 		home, err := os.UserHomeDir()
 		if err != nil {
@@ -43,7 +42,6 @@ func (p *FilePlugin) safePath(path string) (string, error) {
 		path = filepath.Join(home, path[2:])
 	}
 
-	// Clean the path
 	cleaned := filepath.Clean(path)
 	debugf(i18n.T("template_file_log_cleaned_path"), cleaned)
 	return cleaned, nil

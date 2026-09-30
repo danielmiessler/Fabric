@@ -43,22 +43,18 @@ function toggleFavoritesFilter() {
 showOnlyFavorites = !showOnlyFavorites;
 }
 
-// Apply filtering based on search query, favorites filter, and tag selection
 $: filteredPatterns = $patterns
 .filter(p => {
-  // Apply favorites filter if enabled
   if (showOnlyFavorites && !$favorites.includes(p.Name)) {
     return false;
   }
   
-  // Apply tag filter if any tags are selected
   if (selectedTags.length > 0) {
     if (!p.tags || !selectedTags.every(tag => p.tags.includes(tag))) {
       return false;
     }
   }
   
-  // Apply search filter if query exists
   if (searchQuery.trim()) {
     return (
       p.Name.toLowerCase().includes(searchQuery.toLowerCase()) || 
@@ -93,7 +89,6 @@ $: filteredPatterns = $patterns
           />
         </div>
         
-        <!-- Favorites button similar to PatternTilesModal -->
         <button
           on:click={toggleFavoritesFilter}
           class={cn(
@@ -109,7 +104,6 @@ $: filteredPatterns = $patterns
       </div>
     </div>
 
-    <!-- Selected tags display -->
     <div class="px-4 pb-2">
       <div class="text-sm text-white/70 bg-primary-700/30 rounded-md p-2 flex justify-between items-center">
         <div class="flex flex-wrap gap-1 items-center">
@@ -194,7 +188,6 @@ $: filteredPatterns = $patterns
 </div>
 
 <style>
-/* Custom scrollbar styling */
 .custom-scrollbar::-webkit-scrollbar {
   width: 4px;
 }
@@ -212,12 +205,6 @@ $: filteredPatterns = $patterns
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: rgba(156, 163, 175, 0.5);
 }
-
-/* h3.pattern-name {
-  word-break: break-all;
-  hyphens: auto;
-  overflow-wrap: break-word;
-} */
 
 .custom-scrollbar {
   scrollbar-width: thin;

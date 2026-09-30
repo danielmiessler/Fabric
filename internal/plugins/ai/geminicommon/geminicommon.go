@@ -1,5 +1,4 @@
-// Package geminicommon provides shared utilities for Gemini API integrations.
-// Used by both the standalone Gemini provider (API key auth) and VertexAI provider (ADC auth).
+// Package geminicommon holds helpers shared by the gemini and vertexai vendors.
 package geminicommon
 
 import (
@@ -31,8 +30,6 @@ func ConvertMessages(msgs []*chat.ChatCompletionMessage) []*genai.Content {
 		case chat.ChatMessageRoleUser:
 			content.Role = "user"
 		case chat.ChatMessageRoleSystem, chat.ChatMessageRoleDeveloper, chat.ChatMessageRoleFunction, chat.ChatMessageRoleTool:
-			// Gemini's API only accepts "user" and "model" roles.
-			// Map all other roles to "user" to preserve instruction context.
 			content.Role = "user"
 		default:
 			content.Role = "user"
@@ -42,14 +39,12 @@ func ConvertMessages(msgs []*chat.ChatCompletionMessage) []*genai.Content {
 			content.Parts = append(content.Parts, &genai.Part{Text: msg.Content})
 		}
 
-		// Handle multi-content messages (images, etc.)
 		for _, part := range msg.MultiContent {
 			switch part.Type {
 			case chat.ChatMessagePartTypeText:
 				content.Parts = append(content.Parts, &genai.Part{Text: part.Text})
 			case chat.ChatMessagePartTypeImageURL:
-				// TODO: Handle image URLs if needed
-				// This would require downloading and converting to inline data
+				// TODO: image parts are dropped. Gemini needs an inline data part built from the URL.
 			}
 		}
 

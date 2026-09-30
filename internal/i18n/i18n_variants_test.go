@@ -11,28 +11,27 @@ func TestNormalizeToBCP47(t *testing.T) {
 		input    string
 		expected string
 	}{
-		// Basic cases
+		// Already normalized
 		{"pt", "pt"},
 		{"pt-BR", "pt-BR"},
 		{"pt-PT", "pt-PT"},
 
-		// Underscore normalization
+		// Underscore to hyphen
 		{"pt_BR", "pt-BR"},
 		{"pt_PT", "pt-PT"},
 		{"en_US", "en-US"},
 
-		// Mixed case normalization
+		// Mixed case
 		{"pt-br", "pt-BR"},
 		{"PT-BR", "pt-BR"},
 		{"Pt-Br", "pt-BR"},
 		{"pT-bR", "pt-BR"},
 
-		// Language only cases
+		// Language only
 		{"EN", "en"},
 		{"Pt", "pt"},
 		{"ZH", "zh"},
 
-		// Empty string
 		{"", ""},
 	}
 
@@ -52,9 +51,9 @@ func TestGetLocaleCandidates(t *testing.T) {
 		expected []string
 	}{
 		// Portuguese variants
-		{"pt-PT", []string{"pt-PT", "pt", "pt-BR"}}, // pt-BR is default for pt
-		{"pt-BR", []string{"pt-BR", "pt"}},          // pt-BR doesn't need default since it IS the default
-		{"pt", []string{"pt", "pt-BR"}},             // pt defaults to pt-BR
+		{"pt-PT", []string{"pt-PT", "pt", "pt-BR"}}, // pt-BR is the default for pt
+		{"pt-BR", []string{"pt-BR", "pt"}},          // the request is already the default
+		{"pt", []string{"pt", "pt-BR"}},
 
 		// Other languages without default variants
 		{"en-US", []string{"en-US", "en"}},
@@ -62,7 +61,6 @@ func TestGetLocaleCandidates(t *testing.T) {
 		{"fr-FR", []string{"fr-FR", "fr"}},
 		{"zh-CN", []string{"zh-CN", "zh"}},
 
-		// Empty
 		{"", []string{}},
 	}
 
@@ -87,7 +85,6 @@ func TestGetLocaleCandidates(t *testing.T) {
 }
 
 func TestPortugueseVariantLoading(t *testing.T) {
-	// Test that both Portuguese variants can be loaded
 	testCases := []struct {
 		locale string
 		desc   string
@@ -110,7 +107,6 @@ func TestPortugueseVariantLoading(t *testing.T) {
 				t.Errorf("Init(%q) returned nil localizer", tc.locale)
 			}
 
-			// Try to get a message to verify it loaded correctly
 			msg := localizer.MustLocalize(&goi18n.LocalizeConfig{MessageID: "help_message"})
 			if msg == "" {
 				t.Errorf("Failed to localize message for locale %q", tc.locale)
@@ -120,7 +116,6 @@ func TestPortugueseVariantLoading(t *testing.T) {
 }
 
 func TestPortugueseVariantDistinction(t *testing.T) {
-	// Test that pt-BR and pt-PT return different translations
 	localizerBR, err := Init("pt-BR")
 	if err != nil {
 		t.Fatalf("Failed to init pt-BR: %v", err)
@@ -131,8 +126,6 @@ func TestPortugueseVariantDistinction(t *testing.T) {
 		t.Fatalf("Failed to init pt-PT: %v", err)
 	}
 
-	// Check a key that should differ between variants
-	// "output_to_file" should be "Exportar para arquivo" in pt-BR and "Saída para ficheiro" in pt-PT
 	msgBR := localizerBR.MustLocalize(&goi18n.LocalizeConfig{MessageID: "output_to_file"})
 	msgPT := localizerPT.MustLocalize(&goi18n.LocalizeConfig{MessageID: "output_to_file"})
 
@@ -140,7 +133,6 @@ func TestPortugueseVariantDistinction(t *testing.T) {
 		t.Errorf("pt-BR and pt-PT returned the same translation for 'output_to_file': %q", msgBR)
 	}
 
-	// Verify specific expected values
 	if msgBR != "Exportar para arquivo" {
 		t.Errorf("pt-BR 'output_to_file' = %q; want 'Exportar para arquivo'", msgBR)
 	}
@@ -150,7 +142,6 @@ func TestPortugueseVariantDistinction(t *testing.T) {
 }
 
 func TestBackwardCompatibility(t *testing.T) {
-	// Test that requesting "pt" still works and defaults to pt-BR
 	localizerPT, err := Init("pt")
 	if err != nil {
 		t.Fatalf("Failed to init 'pt': %v", err)
@@ -161,7 +152,6 @@ func TestBackwardCompatibility(t *testing.T) {
 		t.Fatalf("Failed to init 'pt-BR': %v", err)
 	}
 
-	// Both should return the same Brazilian Portuguese translation
 	msgPT := localizerPT.MustLocalize(&goi18n.LocalizeConfig{MessageID: "output_to_file"})
 	msgBR := localizerBR.MustLocalize(&goi18n.LocalizeConfig{MessageID: "output_to_file"})
 

@@ -7,8 +7,8 @@ import (
 	"strings"
 )
 
-const DefaultSummarizeModel = "claude-sonnet-4-5"
-const MinContentLength = 256 // Minimum content length to consider for summarization
+const DefaultSummarizeModel = "claude-opus-5"
+const MinContentLength = 256 // shorter content is returned unchanged
 
 const prompt = `# ROLE
 You are an expert Technical Writer specializing in creating clear, concise,
@@ -42,7 +42,7 @@ Follow these steps in order:
 5. If the content is too brief or you do not see any PR headers, return the content as is.
 `
 
-// getSummarizeModel returns the model to use for AI summarization
+// getSummarizeModel returns FABRIC_CHANGELOG_SUMMARIZE_MODEL, or DefaultSummarizeModel when it is unset.
 func getSummarizeModel() string {
 	if model := os.Getenv("FABRIC_CHANGELOG_SUMMARIZE_MODEL"); model != "" {
 		return model
@@ -56,7 +56,6 @@ func SummarizeVersionContent(content string) (string, error) {
 		return "", fmt.Errorf("no content to summarize")
 	}
 	if len(content) < MinContentLength {
-		// If content is too brief, return it as is
 		return content, nil
 	}
 

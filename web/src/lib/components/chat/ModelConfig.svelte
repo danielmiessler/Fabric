@@ -9,7 +9,6 @@
   import { clickOutside } from '$lib/actions/clickOutside';
   import Tooltip from "$lib/components/ui/tooltip/Tooltip.svelte";
 
-  // Load expanded state from localStorage
   const STORAGE_KEY = 'modelConfigExpanded';
   let isExpanded = false;
   if (browser) {
@@ -17,7 +16,6 @@
     isExpanded = stored ? JSON.parse(stored) : false;
   }
 
-  // Save expanded state
   function toggleExpanded() {
     isExpanded = !isExpanded;
     saveState();

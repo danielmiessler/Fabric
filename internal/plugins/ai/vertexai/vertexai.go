@@ -53,7 +53,7 @@ func (c *Client) configure() error {
 	projectID := c.ProjectID.Value
 	region := c.Region.Value
 
-	// Initialize Anthropic client for Claude models via Vertex AI using Google ADC
+	// The Anthropic client authenticates with Application Default Credentials.
 	vertexOpt := vertex.WithGoogleAuth(ctx, region, projectID, cloudPlatformScope)
 	client := anthropic.NewClient(vertexOpt)
 	c.client = &client
@@ -64,23 +64,20 @@ func (c *Client) configure() error {
 func (c *Client) ListModels(_ context.Context) ([]string, error) {
 	ctx := context.Background()
 
-	// Get ADC credentials for API authentication
 	creds, err := google.FindDefaultCredentials(ctx, cloudPlatformScope)
 	if err != nil {
 		return nil, fmt.Errorf(i18n.T("vertexai_failed_google_credentials"), err)
 	}
 	httpClient := oauth2.NewClient(ctx, creds.TokenSource)
 
-	// Query all publishers in parallel for better performance
 	type result struct {
 		models    []string
 		err       error
 		publisher string
 	}
-	// +1 for known Gemini models (no API to list them)
+	// One extra slot for the static Gemini list.
 	results := make(chan result, len(publishers)+1)
 
-	// Query Model Garden API for third-party models
 	for _, pub := range publishers {
 		go func(publisher string) {
 			models, err := listPublisherModels(ctx, httpClient, c.Region.Value, c.ProjectID.Value, publisher)
@@ -88,17 +85,15 @@ func (c *Client) ListModels(_ context.Context) ([]string, error) {
 		}(pub)
 	}
 
-	// Add known Gemini models (Vertex AI doesn't have a list API for Gemini)
 	go func() {
 		results <- result{models: getKnownGeminiModels(), err: nil, publisher: "gemini"}
 	}()
 
-	// Collect results from all sources
 	var allModels []string
 	for range len(publishers) + 1 {
 		r := <-results
 		if r.err != nil {
-			// Log warning but continue - some sources may not be available
+			// One failed source does not stop the listing.
 			debuglog.Debug(debuglog.Basic, "Failed to list %s models: %v\n", r.publisher, r.err)
 			continue
 		}
@@ -109,7 +104,6 @@ func (c *Client) ListModels(_ context.Context) ([]string, error) {
 		return nil, errors.New(i18n.T("vertexai_no_models_found"))
 	}
 
-	// Filter to only conversational models and sort
 	filtered := filterConversationalModels(allModels)
 	if len(filtered) == 0 {
 		return nil, errors.New(i18n.T("vertexai_no_conversational_models"))
@@ -125,7 +119,6 @@ func (c *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, o
 	return c.sendClaude(ctx, msgs, opts)
 }
 
-// getMaxTokens returns the max output tokens to use for a request
 func getMaxTokens(opts *domain.ChatOptions) int64 {
 	if opts.MaxTokens > 0 {
 		return int64(opts.MaxTokens)
@@ -138,21 +131,18 @@ func (c *Client) sendClaude(ctx context.Context, msgs []*chat.ChatCompletionMess
 		return "", errors.New(i18n.T("vertexai_client_not_initialized"))
 	}
 
-	// Convert chat messages to Anthropic format
 	anthropicMessages := c.toMessages(msgs)
 	if len(anthropicMessages) == 0 {
 		return "", errors.New(i18n.T("vertexai_no_valid_messages"))
 	}
 
-	// Build request params
 	params := anthropic.MessageNewParams{
 		Model:     anthropic.Model(opts.Model),
 		MaxTokens: getMaxTokens(opts),
 		Messages:  anthropicMessages,
 	}
 
-	// Only set one of Temperature or TopP as some models don't allow both
-	// (following anthropic.go pattern)
+	// Some Claude models reject a request that sets both Temperature and TopP.
 	if opts.TopP != domain.DefaultTopP {
 		params.TopP = anthropic.Opt(opts.TopP)
 	} else {
@@ -164,7 +154,6 @@ func (c *Client) sendClaude(ctx context.Context, msgs []*chat.ChatCompletionMess
 		return "", err
 	}
 
-	// Extract text from response
 	var textParts []string
 	for _, block := range response.Content {
 		if block.Type == "text" && block.Text != "" {
@@ -195,34 +184,29 @@ func (c *Client) sendStreamClaude(msgs []*chat.ChatCompletionMessage, opts *doma
 	defer close(channel)
 	ctx := context.Background()
 
-	// Convert chat messages to Anthropic format
 	anthropicMessages := c.toMessages(msgs)
 	if len(anthropicMessages) == 0 {
 		return errors.New(i18n.T("vertexai_no_valid_messages"))
 	}
 
-	// Build request params
 	params := anthropic.MessageNewParams{
 		Model:     anthropic.Model(opts.Model),
 		MaxTokens: getMaxTokens(opts),
 		Messages:  anthropicMessages,
 	}
 
-	// Only set one of Temperature or TopP as some models don't allow both
+	// Some Claude models reject a request that sets both Temperature and TopP.
 	if opts.TopP != domain.DefaultTopP {
 		params.TopP = anthropic.Opt(opts.TopP)
 	} else {
 		params.Temperature = anthropic.Opt(opts.Temperature)
 	}
 
-	// Create streaming request
 	stream := c.client.Messages.NewStreaming(ctx, params)
 
-	// Process stream
 	for stream.Next() {
 		event := stream.Current()
 
-		// Handle Content
 		if event.Delta.Text != "" {
 			channel <- domain.StreamUpdate{
 				Type:    domain.StreamTypeContent,
@@ -230,7 +214,7 @@ func (c *Client) sendStreamClaude(msgs []*chat.ChatCompletionMessage, opts *doma
 			}
 		}
 
-		// Handle Usage
+		// message_start carries usage in Message.Usage. message_delta carries it in Usage.
 		if event.Message.Usage.InputTokens != 0 || event.Message.Usage.OutputTokens != 0 {
 			channel <- domain.StreamUpdate{
 				Type: domain.StreamTypeUsage,
@@ -255,10 +239,8 @@ func (c *Client) sendStreamClaude(msgs []*chat.ChatCompletionMessage, opts *doma
 	return stream.Err()
 }
 
-// Gemini methods using genai SDK with Vertex AI backend
-
-// getGeminiRegion returns the appropriate region for a Gemini model.
-// Preview models are often only available on the global endpoint.
+// getGeminiRegion returns "global" for preview models. Vertex AI serves some
+// preview models only on the global endpoint.
 func (c *Client) getGeminiRegion(model string) string {
 	if strings.Contains(strings.ToLower(model), "preview") {
 		return "global"
@@ -291,8 +273,6 @@ func (c *Client) sendGemini(ctx context.Context, msgs []*chat.ChatCompletionMess
 	return geminicommon.ExtractTextWithCitations(response), nil
 }
 
-// buildGeminiConfig creates the generation config for Gemini models
-// following the gemini.go pattern for feature parity
 func (c *Client) buildGeminiConfig(opts *domain.ChatOptions) *genai.GenerateContentConfig {
 	temperature := float32(opts.Temperature)
 	topP := float32(opts.TopP)
@@ -302,12 +282,10 @@ func (c *Client) buildGeminiConfig(opts *domain.ChatOptions) *genai.GenerateCont
 		MaxOutputTokens: int32(getMaxTokens(opts)),
 	}
 
-	// Add web search support
 	if opts.Search {
 		config.Tools = []*genai.Tool{{GoogleSearch: &genai.GoogleSearch{}}}
 	}
 
-	// Add thinking support
 	if tc := parseGeminiThinking(opts.Thinking); tc != nil {
 		config.ThinkingConfig = tc
 	}
@@ -315,7 +293,6 @@ func (c *Client) buildGeminiConfig(opts *domain.ChatOptions) *genai.GenerateCont
 	return config
 }
 
-// parseGeminiThinking converts thinking level to Gemini thinking config
 func parseGeminiThinking(level domain.ThinkingLevel) *genai.ThinkingConfig {
 	lower := strings.ToLower(strings.TrimSpace(string(level)))
 	switch domain.ThinkingLevel(lower) {
@@ -327,7 +304,6 @@ func parseGeminiThinking(level domain.ThinkingLevel) *genai.ThinkingConfig {
 			return &genai.ThinkingConfig{IncludeThoughts: true, ThinkingBudget: &b}
 		}
 	default:
-		// Try parsing as integer token count
 		var tokens int
 		if _, err := fmt.Sscanf(lower, "%d", &tokens); err == nil && tokens > 0 {
 			t := int32(tokens)
@@ -391,13 +367,9 @@ func (c *Client) sendStreamGemini(msgs []*chat.ChatCompletionMessage, opts *doma
 	return nil
 }
 
-// Claude message conversion
-
 func (c *Client) toMessages(msgs []*chat.ChatCompletionMessage) []anthropic.MessageParam {
-	// Convert messages to Anthropic format with proper role handling
-	// - System messages become part of the first user message
-	// - Messages must alternate user/assistant
-	// - Skip empty messages
+	// System content goes into the first user message. The code adds filler
+	// messages to keep user and assistant roles alternating.
 
 	var anthropicMessages []anthropic.MessageParam
 	var systemContent string
@@ -407,12 +379,11 @@ func (c *Client) toMessages(msgs []*chat.ChatCompletionMessage) []anthropic.Mess
 
 	for _, msg := range msgs {
 		if strings.TrimSpace(msg.Content) == "" {
-			continue // Skip empty messages
+			continue
 		}
 
 		switch msg.Role {
 		case chat.ChatMessageRoleSystem:
-			// Accumulate system content to prepend to first user message
 			if systemContent != "" {
 				systemContent += "\\n" + msg.Content
 			} else {
@@ -425,31 +396,26 @@ func (c *Client) toMessages(msgs []*chat.ChatCompletionMessage) []anthropic.Mess
 				isFirstUserMessage = false
 			}
 			if lastRoleWasUser {
-				// Enforce alternation: add a minimal assistant message
 				anthropicMessages = append(anthropicMessages, anthropic.NewAssistantMessage(anthropic.NewTextBlock("Okay.")))
 			}
 			anthropicMessages = append(anthropicMessages, anthropic.NewUserMessage(anthropic.NewTextBlock(userContent)))
 			lastRoleWasUser = true
 		case chat.ChatMessageRoleAssistant:
-			// If first message is assistant and we have system content, prepend user message
 			if isFirstUserMessage && systemContent != "" {
 				anthropicMessages = append(anthropicMessages, anthropic.NewUserMessage(anthropic.NewTextBlock(systemContent)))
 				lastRoleWasUser = true
 				isFirstUserMessage = false
 			} else if !lastRoleWasUser && len(anthropicMessages) > 0 {
-				// Enforce alternation: add a minimal user message
 				anthropicMessages = append(anthropicMessages, anthropic.NewUserMessage(anthropic.NewTextBlock("Hi")))
 				lastRoleWasUser = true
 			}
 			anthropicMessages = append(anthropicMessages, anthropic.NewAssistantMessage(anthropic.NewTextBlock(msg.Content)))
 			lastRoleWasUser = false
 		default:
-			// Other roles are ignored for Anthropic's message structure
 			continue
 		}
 	}
 
-	// If only system content was provided, create a user message with it
 	if len(anthropicMessages) == 0 && systemContent != "" {
 		anthropicMessages = append(anthropicMessages, anthropic.NewUserMessage(anthropic.NewTextBlock(systemContent)))
 	}

@@ -1,6 +1,6 @@
 package jina
 
-// see https://jina.ai for more information
+// See https://jina.ai for the API documentation.
 
 import (
 	"fmt"
@@ -49,7 +49,6 @@ func (jc *Client) request(requestURL string) (ret string, err error) {
 		return
 	}
 
-	// if api keys exist, set the header
 	if jc.ApiKey.Value != "" {
 		req.Header.Set("Authorization", "Bearer "+jc.ApiKey.Value)
 	}

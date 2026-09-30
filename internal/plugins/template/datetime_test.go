@@ -101,7 +101,6 @@ func TestDateTimePlugin(t *testing.T) {
 				return nil
 			},
 		},
-		// Error cases
 		{
 			name:      "invalid operation",
 			operation: "invalid",

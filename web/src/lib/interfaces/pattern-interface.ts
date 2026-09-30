@@ -1,16 +1,16 @@
 import type { StorageEntity } from './storage-interface';
 
-// Interface matching the JSON structure from pattern_descriptions.json
+// One entry of the patterns array in pattern_descriptions.json.
 export interface PatternDescription {
   patternName: string;
   description: string;
-  tags?: string[]; // Optional tags property for PatternDescription
+  tags?: string[];
 }
 
-// Interface for storage compatibility - must use uppercase for StorageEntity
+// StorageEntity requires the uppercase Name field.
 export interface Pattern extends StorageEntity {
-  Name: string;        // maps to patternName from JSON
-  Description: string; // maps to description from JSON
-  Pattern: string;     // pattern content from API
-  tags: string[];      // array of tag strings
+  Name: string;        // patternName in the JSON
+  Description: string; // description in the JSON
+  Pattern: string;     // pattern content from the API
+  tags: string[];
 }

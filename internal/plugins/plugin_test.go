@@ -41,6 +41,13 @@ func TestNewVendorPluginBase_EnvPrefixWithSpaces(t *testing.T) {
 	assert.Equal(t, "LM_STUDIO_", plugin.EnvNamePrefix)
 }
 
+func TestNewVendorPluginBase_EnvPrefixWithDots(t *testing.T) {
+	plugin := NewVendorPluginBase("llama.cpp", nil)
+
+	assert.Equal(t, "llama.cpp", plugin.Name)
+	assert.Equal(t, "LLAMA_CPP_", plugin.EnvNamePrefix)
+}
+
 func TestConfigurable_AddSetting(t *testing.T) {
 	conf := &PluginBase{
 		Settings:      Settings{},

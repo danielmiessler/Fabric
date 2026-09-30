@@ -342,5 +342,6 @@ func BuildEnvVariable(name string) string {
 	name = strings.ToUpper(name)
 	name = strings.ReplaceAll(name, " ", "_")
 	name = strings.ReplaceAll(name, "-", "_")
+	name = strings.ReplaceAll(name, ".", "_")
 	return name
 }

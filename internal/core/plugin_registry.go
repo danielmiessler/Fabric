@@ -102,7 +102,6 @@ func NewPluginRegistry(db *fsdb.Db) (ret *PluginRegistry, err error) {
 		anthropic.NewClient(),
 		vertexai.NewClient(),
 		lmstudio.NewClient(),
-		lmstudio.NewClientCompatible("llama.cpp", "http://localhost:8080/v1", nil), // llama.cpp server. Same HTTP API as LM Studio, API key optional.
 		exolab.NewClient(),
 		perplexity.NewClient(),
 		codexClient,

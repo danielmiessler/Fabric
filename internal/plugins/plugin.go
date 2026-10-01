@@ -1,10 +1,12 @@
 package plugins
 
 import (
+	"bufio"
 	"bytes"
 	"fmt"
 	"os"
 	"strings"
+	"sync"
 
 	"github.com/danielmiessler/fabric/internal/i18n"
 )
@@ -223,7 +225,7 @@ func (o *SetupQuestion) Ask(label string) (err error) {
 		fmt.Printf(i18n.T("plugin_question_optional"), prefix, o.Question)
 	}
 	var answer string
-	fmt.Scanln(&answer)
+	answer, _ = readLine()
 	answer = strings.TrimRight(answer, "\n")
 	isReset := strings.ToLower(answer) == AnswerReset
 	if answer == "" {
@@ -344,4 +346,52 @@ func BuildEnvVariable(name string) string {
 	name = strings.ReplaceAll(name, "-", "_")
 	name = strings.ReplaceAll(name, ".", "_")
 	return name
+}
+
+// stdinReader is shared between prompts. A bufio.Reader reads ahead, so a
+// reader created for every question would drop the rest of the buffered input,
+// which breaks scripted answers such as `printf 'a\nb\n' | fabric --setup`.
+// The reader is rebuilt when os.Stdin changes, which keeps redirected input
+// working for callers that swap the file.
+var (
+	stdinMu     sync.Mutex
+	stdinReader *bufio.Reader
+	stdinSource *os.File
+)
+
+func stdinLineReader() *bufio.Reader {
+	stdinMu.Lock()
+	defer stdinMu.Unlock()
+	if stdinReader == nil || stdinSource != os.Stdin {
+		stdinReader = bufio.NewReader(os.Stdin)
+		stdinSource = os.Stdin
+	}
+	return stdinReader
+}
+
+// readLine reads a single line from stdin and accepts either \n or \r as the
+// line ending. Terminals such as kitty on macOS send a bare \r when Enter is
+// pressed, and fmt.Scanln waited for a \n that never arrived.
+func readLine() (string, error) {
+	reader := stdinLineReader()
+
+	var line []rune
+	for {
+		ch, _, err := reader.ReadRune()
+		if err != nil {
+			return string(line), err
+		}
+		switch ch {
+		case '\n':
+			return string(line), nil
+		case '\r':
+			// Drop the \n of a \r\n ending so it is not read as an empty
+			// answer at the next prompt.
+			if next, _, err := reader.ReadRune(); err == nil && next != '\n' {
+				_ = reader.UnreadRune()
+			}
+			return string(line), nil
+		}
+		line = append(line, ch)
+	}
 }

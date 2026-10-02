@@ -1,0 +1,5 @@
+### PR [#2242](https://github.com/danielmiessler/Fabric/pull/2242) by [taljeon](https://github.com/taljeon): fix(core): unblock canceled stream consumers
+
+- Make core stream-update forwarding honor request cancellation when its downstream consumer stops receiving.
+- Preserve the first stream error and drain remaining provider updates before waiting for the provider goroutine to exit.
+- Add regressions for a completed provider and for pending upstream updates after the downstream consumer exits.

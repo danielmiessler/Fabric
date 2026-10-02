@@ -568,7 +568,11 @@ func (o *PluginRegistry) GetChatter(model string, modelContextLength int, vendor
 		}
 
 		// Use the vendor's spelling of the model name. It becomes ret.model.
-		actualModelName := models.FindModelNameCaseInsensitive(model)
+		modelCatalog := models
+		if vendorName != "" {
+			modelCatalog = models.FilterByVendor(vendorName)
+		}
+		actualModelName := modelCatalog.FindModelNameCaseInsensitive(model)
 		if actualModelName != "" {
 			model = actualModelName
 		}
@@ -596,7 +600,7 @@ func (o *PluginRegistry) GetChatter(model string, modelContextLength int, vendor
 					if v := vendorManager.FindByName(prefix); v != nil {
 						vendorName = prefix
 						model = model[idx+1:]
-						if normalized := models.FindModelNameCaseInsensitive(model); normalized != "" {
+						if normalized := models.FilterByVendor(prefix).FindModelNameCaseInsensitive(model); normalized != "" {
 							model = normalized
 						}
 						ret.vendor = v

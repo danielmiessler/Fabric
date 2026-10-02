@@ -5,7 +5,7 @@ import (
 	"os"
 	"strconv"
 
-	openai "github.com/openai/openai-go"
+	openai "github.com/openai/openai-go/v3"
 
 	"github.com/danielmiessler/fabric/internal/core"
 	"github.com/danielmiessler/fabric/internal/i18n"

@@ -11,7 +11,7 @@ import (
 	"strings"
 
 	"github.com/danielmiessler/fabric/internal/i18n"
-	"github.com/openai/openai-go/option"
+	"github.com/openai/openai-go/v3/option"
 )
 
 // DefaultAPIVersion is the default Azure OpenAI API version.

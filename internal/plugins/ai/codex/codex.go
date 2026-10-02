@@ -19,10 +19,10 @@ import (
 	debuglog "github.com/danielmiessler/fabric/internal/log"
 	plugins "github.com/danielmiessler/fabric/internal/plugins"
 	openaivendor "github.com/danielmiessler/fabric/internal/plugins/ai/openai"
-	openaiapi "github.com/openai/openai-go"
-	"github.com/openai/openai-go/option"
-	"github.com/openai/openai-go/responses"
-	"github.com/openai/openai-go/shared/constant"
+	openaiapi "github.com/openai/openai-go/v3"
+	"github.com/openai/openai-go/v3/option"
+	"github.com/openai/openai-go/v3/responses"
+	"github.com/openai/openai-go/v3/shared/constant"
 )
 
 const (

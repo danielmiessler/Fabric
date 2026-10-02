@@ -14,12 +14,12 @@ import (
 	"github.com/danielmiessler/fabric/internal/i18n"
 	debuglog "github.com/danielmiessler/fabric/internal/log"
 	"github.com/danielmiessler/fabric/internal/plugins"
-	openai "github.com/openai/openai-go"
-	"github.com/openai/openai-go/option"
-	"github.com/openai/openai-go/packages/pagination"
-	"github.com/openai/openai-go/responses"
-	"github.com/openai/openai-go/shared"
-	"github.com/openai/openai-go/shared/constant"
+	openai "github.com/openai/openai-go/v3"
+	"github.com/openai/openai-go/v3/option"
+	"github.com/openai/openai-go/v3/packages/pagination"
+	"github.com/openai/openai-go/v3/responses"
+	"github.com/openai/openai-go/v3/shared"
+	"github.com/openai/openai-go/v3/shared/constant"
 )
 
 func NewClient() (ret *Client) {
@@ -291,31 +291,28 @@ func (o *Client) buildResponseParams(
 	var tools []responses.ToolUnionParam
 
 	if opts.Search {
-		searchToolName := responses.WebSearchToolType("web_search_preview")
-		if o.webSearchToolName != "" {
-			searchToolName = responses.WebSearchToolType(o.webSearchToolName)
-		}
-		webSearchTool := responses.ToolParamOfWebSearchPreview(searchToolName)
-
-		// Attach a location only on request. xAI rejects an unexpected location payload.
-		if opts.SearchLocation != "" {
-			webSearchTool.OfWebSearchPreview.UserLocation = responses.WebSearchToolUserLocationParam{
-				Type:     "approximate",
-				Timezone: openai.String(opts.SearchLocation),
+		var webSearchTool responses.ToolUnionParam
+		if o.webSearchToolName == "" {
+			webSearchTool = responses.ToolParamOfWebSearchPreview(responses.WebSearchPreviewToolTypeWebSearchPreview)
+			if opts.SearchLocation != "" {
+				webSearchTool.OfWebSearchPreview.UserLocation = responses.WebSearchPreviewToolUserLocationParam{
+					Type:     "approximate",
+					Timezone: openai.String(opts.SearchLocation),
+				}
+			}
+		} else {
+			webSearchTool = responses.ToolParamOfWebSearch(responses.WebSearchToolType(o.webSearchToolName))
+			if opts.SearchLocation != "" {
+				webSearchTool.OfWebSearch.UserLocation = responses.WebSearchToolUserLocationParam{
+					Type:     "approximate",
+					Timezone: openai.String(opts.SearchLocation),
+				}
 			}
 		}
-
 		tools = append(tools, webSearchTool)
 
-		// xAI accepts a bare {"type":"x_search"} entry. WebSearchToolParam is the
-		// container for it. Its other fields are omitzero, so the JSON has only "type".
 		if o.enableXSearch {
-			xSearchTool := responses.ToolUnionParam{
-				OfWebSearchPreview: &responses.WebSearchToolParam{
-					Type: responses.WebSearchToolType("x_search"),
-				},
-			}
-			tools = append(tools, xSearchTool)
+			tools = append(tools, responses.ToolParamOfWebSearch(responses.WebSearchToolType("x_search")))
 		}
 	}
 

@@ -20,8 +20,8 @@ import (
 	"github.com/danielmiessler/fabric/internal/chat"
 	"github.com/danielmiessler/fabric/internal/domain"
 	"github.com/danielmiessler/fabric/internal/i18n"
-	openaiapi "github.com/openai/openai-go"
-	"github.com/openai/openai-go/shared/constant"
+	openaiapi "github.com/openai/openai-go/v3"
+	"github.com/openai/openai-go/v3/shared/constant"
 )
 
 func TestBuildAuthorizeURLIncludesPKCE(t *testing.T) {
@@ -330,6 +330,9 @@ func TestSendRefreshesAfterUnauthorized(t *testing.T) {
 		if !ok {
 			t.Fatalf("response writer does not implement http.Flusher")
 		}
+		// Codex may interleave SSE comments, which are not JSON events.
+		fmt.Fprint(w, ": keep-alive\n\n")
+		flusher.Flush()
 		fmt.Fprintf(w, "data: %s\n\n", marshalJSON(t, map[string]any{
 			"type":  string(constant.ResponseOutputTextDelta("").Default()),
 			"delta": "hello from codex",
@@ -543,6 +546,8 @@ func TestSendStreamReadsCodexSSE(t *testing.T) {
 			t.Fatalf("response writer does not implement http.Flusher")
 		}
 
+		fmt.Fprint(w, ": keep-alive\n\n")
+		flusher.Flush()
 		fmt.Fprintf(w, "data: %s\n\n", marshalJSON(t, map[string]any{
 			"type":  string(constant.ResponseOutputTextDelta("").Default()),
 			"delta": "hello",

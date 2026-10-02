@@ -22,7 +22,7 @@ require (
 	github.com/mattn/go-sqlite3 v1.14.52
 	github.com/nicksnyder/go-i18n/v2 v2.6.1
 	github.com/ollama/ollama v0.34.4
-	github.com/openai/openai-go v1.12.0
+	github.com/openai/openai-go/v3 v3.71.1
 	github.com/otiai10/copy v1.14.1
 	github.com/pkg/errors v0.9.1
 	github.com/samber/lo v1.53.0
@@ -109,7 +109,6 @@ require (
 	github.com/cloudwego/base64x v0.1.7 // indirect
 	github.com/coder/websocket v1.8.15 // indirect
 	github.com/cyphar/filepath-securejoin v0.7.0 // indirect
-	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
 	github.com/emirpasic/gods v1.18.1 // indirect
 	github.com/felixge/httpsnoop v1.1.0 // indirect
 	github.com/gin-contrib/sse v1.1.2 // indirect
@@ -141,7 +140,6 @@ require (
 	github.com/otiai10/mint v1.6.3 // indirect
 	github.com/pelletier/go-toml/v2 v2.4.3 // indirect
 	github.com/pjbgf/sha1cd v0.6.0 // indirect
-	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/sergi/go-diff v1.4.0 // indirect
 	github.com/skeema/knownhosts v1.3.3 // indirect
 	github.com/spf13/pflag v1.0.10 // indirect

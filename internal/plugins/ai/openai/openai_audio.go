@@ -16,7 +16,7 @@ import (
 	"github.com/danielmiessler/fabric/internal/i18n"
 	debuglog "github.com/danielmiessler/fabric/internal/log"
 
-	openai "github.com/openai/openai-go"
+	openai "github.com/openai/openai-go/v3"
 )
 
 type transcriptionResult struct {

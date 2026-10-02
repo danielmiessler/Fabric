@@ -6,9 +6,9 @@ import (
 
 	"github.com/danielmiessler/fabric/internal/chat"
 	"github.com/danielmiessler/fabric/internal/domain"
-	openai "github.com/openai/openai-go"
-	"github.com/openai/openai-go/responses"
-	"github.com/openai/openai-go/shared"
+	openai "github.com/openai/openai-go/v3"
+	"github.com/openai/openai-go/v3/responses"
+	"github.com/openai/openai-go/v3/shared"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -107,7 +107,7 @@ func TestBuildResponseParams_WithSearch(t *testing.T) {
 
 	tool := params.Tools[0]
 	assert.NotNil(t, tool.OfWebSearchPreview, "Expected web search tool")
-	assert.Equal(t, responses.WebSearchToolType("web_search_preview"), tool.OfWebSearchPreview.Type)
+	assert.Equal(t, responses.WebSearchPreviewToolType("web_search_preview"), tool.OfWebSearchPreview.Type)
 }
 
 func TestBuildResponseParams_WithSearchAndLocation(t *testing.T) {
@@ -159,12 +159,12 @@ func TestBuildResponseParams_GrokAI_WithSearch(t *testing.T) {
 	assert.Len(t, params.Tools, 2, "Expected web_search plus x_search tools")
 
 	webSearchTool := params.Tools[0]
-	assert.NotNil(t, webSearchTool.OfWebSearchPreview, "Expected web search tool slot")
-	assert.Equal(t, responses.WebSearchToolType("web_search"), webSearchTool.OfWebSearchPreview.Type)
+	assert.NotNil(t, webSearchTool.OfWebSearch, "Expected web search tool slot")
+	assert.Equal(t, responses.WebSearchToolType("web_search"), webSearchTool.OfWebSearch.Type)
 
 	xSearchTool := params.Tools[1]
-	assert.NotNil(t, xSearchTool.OfWebSearchPreview, "Expected x_search tool slot")
-	assert.Equal(t, responses.WebSearchToolType("x_search"), xSearchTool.OfWebSearchPreview.Type)
+	assert.NotNil(t, xSearchTool.OfWebSearch, "Expected x_search tool slot")
+	assert.Equal(t, responses.WebSearchToolType("x_search"), xSearchTool.OfWebSearch.Type)
 }
 
 // TestBuildResponseParams_DefaultProvider_Unchanged guards backwards
@@ -190,7 +190,7 @@ func TestBuildResponseParams_DefaultProvider_Unchanged(t *testing.T) {
 
 	tool := params.Tools[0]
 	assert.NotNil(t, tool.OfWebSearchPreview, "Expected web search tool slot")
-	assert.Equal(t, responses.WebSearchToolType("web_search_preview"), tool.OfWebSearchPreview.Type)
+	assert.Equal(t, responses.WebSearchPreviewToolType("web_search_preview"), tool.OfWebSearchPreview.Type)
 }
 
 // TestBuildResponseParams_GrokAI_WithoutSearch confirms that a GrokAI

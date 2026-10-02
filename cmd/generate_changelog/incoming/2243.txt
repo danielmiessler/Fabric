@@ -1,0 +1,5 @@
+### PR [#2243](https://github.com/danielmiessler/Fabric/pull/2243) by [taljeon](https://github.com/taljeon): fix(ai): refresh model catalogs after vendor membership changes
+
+- Refresh model catalogs when vendors are registered or cleared, including lazy activation after cache warmup.
+- Publish only completed, current-generation catalogs and release readers from obsolete discovery without blocking provider callbacks.
+- Add regression coverage for concurrent readers, membership changes, replacement discovery, and provider-owned model slices.

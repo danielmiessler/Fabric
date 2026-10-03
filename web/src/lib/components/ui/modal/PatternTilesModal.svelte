@@ -47,22 +47,18 @@ function toggleFavoritesFilter() {
   showOnlyFavorites = !showOnlyFavorites;
 }
 
-// Apply filtering based on search query, favorites filter, and tag selection
 $: filteredPatterns = $patterns
   .filter(p => {
-    // Apply favorites filter if enabled
     if (showOnlyFavorites && !$favorites.includes(p.Name)) {
       return false;
     }
     
-    // Apply tag filter if any tags are selected
     if (selectedTags.length > 0) {
       if (!p.tags || !selectedTags.every(tag => p.tags.includes(tag))) {
         return false;
       }
     }
     
-    // Apply search filter if query exists
     if (searchQuery.trim()) {
       return (
         p.Name.toLowerCase().includes(searchQuery.toLowerCase()) || 
@@ -75,21 +71,16 @@ $: filteredPatterns = $patterns
   });
 </script>
 
-<!-- Main container with flexible layout -->
 <div class="flex h-[85vh]">
-  <!-- Modal container with responsive positioning -->
   <div class={cn(
       "flex flex-col bg-primary-800 rounded-lg shadow-xl transition-all duration-300",
       isTagPanelOpen
         ? "w-[75vw]" 
         : "w-full max-w-[95vw] mx-auto"
     )}>
-    <!-- Header with grid layout -->
     <div class="grid grid-cols-[auto_auto_1fr_auto] items-center p-4 border-b border-primary-700/30 sticky top-0 bg-primary-800 z-10">
-      <!-- Left column: Title -->
       <h2 class="text-xl font-semibold text-primary-200 mr-4">Pattern Library</h2>
           
-      <!-- Second column: Search -->
       <div class="mr-4">
         <Input 
           bind:value={searchQuery}
@@ -98,7 +89,6 @@ $: filteredPatterns = $patterns
         />
       </div>
       
-      <!-- Third column: Favorites button -->
       <div class="flex items-center">
         <button
           on:click={toggleFavoritesFilter}
@@ -114,9 +104,7 @@ $: filteredPatterns = $patterns
         </button>
       </div>
         
-      <!-- Fourth column: Other controls -->
       <div class="flex items-center gap-3 justify-end">
-        <!-- Single tag panel toggle button -->
         <button
           on:click={toggleTagPanel}
           class={cn(
@@ -129,7 +117,6 @@ $: filteredPatterns = $patterns
           {isTagPanelOpen ? "Close Filter Tags ◀" : "Open Filter Tags ▶"}
         </button>
 
-        <!-- Close modal button -->
         <button
           on:click={closeModal}
           class="px-2 py-2 rounded-full bg-primary-700/40 text-primary-200 hover:bg-primary-700/60 hover:text-primary-100"
@@ -140,7 +127,6 @@ $: filteredPatterns = $patterns
       </div>
     </div>
 
-    <!-- Selected tags display -->
     {#if selectedTags.length > 0}
       <div class="px-4 pb-2 pt-2 border-b border-primary-700/30">
         <div class="text-sm text-white/70 bg-primary-700/30 rounded-md p-2 flex justify-between items-center">
@@ -175,7 +161,6 @@ $: filteredPatterns = $patterns
       </div>
     {/if}
       
-    <!-- Pattern tiles grid with scrolling -->
     <div class="flex-1 overflow-y-auto p-4 pattern-grid-container">
       {#if filteredPatterns.length === 0}
         <div class="flex justify-center items-center h-full">
@@ -215,12 +200,10 @@ $: filteredPatterns = $patterns
                 </button>
               </div>
               
-              <!-- Pattern description with scrolling if needed -->
               <div class="flex-grow overflow-y-auto mb-1 pr-1 custom-scrollbar">
                 <p class="text-sm text-primary-300/90 leading-relaxed">{pattern.Description}</p>
               </div>
               
-              <!-- Tags section -->
               {#if pattern.tags && pattern.tags.length > 0}
                 <div class="flex flex-wrap gap-1 mt-2">
                   {#each pattern.tags as tag}
@@ -237,7 +220,6 @@ $: filteredPatterns = $patterns
     </div>
   </div>
 
-  <!-- Tag filter panel - positioned on the right when open -->
   {#if isTagPanelOpen}
     <div class="tag-panel-container">
       <div class="tag-panel-header">
@@ -259,7 +241,6 @@ $: filteredPatterns = $patterns
 </div>
 
 <style>
-  /* Custom scrollbar styling remains the same */
   .custom-scrollbar::-webkit-scrollbar {
     width: 4px;
   }
@@ -278,11 +259,10 @@ $: filteredPatterns = $patterns
     background: rgba(156, 163, 175, 0.5);
   }
   
-  /* Add this to your <style> section */
   h3.pattern-name {
-    word-break: break-all;      /* Force breaks anywhere if needed */
-    hyphens: auto;              /* Enable hyphenation */
-    overflow-wrap: break-word;  /* Fallback */
+    word-break: break-all;
+    hyphens: auto;
+    overflow-wrap: break-word;
   }
  
   .custom-scrollbar {
@@ -296,11 +276,10 @@ $: filteredPatterns = $patterns
     scrollbar-color: rgba(156, 163, 175, 0.3) rgba(31, 41, 55, 0.2);
   }
 
-  /* Tag panel styling */
   .tag-panel-container {
     width: 20vw;
     height: 100%;
-    background-color: #1e293b; /* Use a solid color instead of var */
+    background-color: #1e293b;
     border-left: 1px solid rgba(255, 255, 255, 0.1);
     z-index: 20;
     box-shadow: -2px 0 10px rgba(0, 0, 0, 0.3);

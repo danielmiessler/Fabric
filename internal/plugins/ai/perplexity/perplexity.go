@@ -37,10 +37,7 @@ func NewClient() *Client {
 }
 
 func (c *Client) Configure() error {
-	// The PluginBase.Configure() is called by the framework if needed.
-	// We only need to handle specific logic for this plugin.
 	if c.APIKey.Value == "" {
-		// Attempt to get from environment variable if not set by user during setup
 		envKey := c.EnvNamePrefix + "API_KEY"
 		apiKeyFromEnv := os.Getenv(envKey)
 		if apiKeyFromEnv != "" {
@@ -54,8 +51,7 @@ func (c *Client) Configure() error {
 }
 
 func (c *Client) ListModels(_ context.Context) ([]string, error) {
-	// Perplexity API does not have a ListModels endpoint.
-	// We return a predefined list.
+	// The Perplexity API has no models endpoint, so the list is static.
 	return models, nil
 }
 
@@ -81,25 +77,22 @@ func (c *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, o
 	if opts.MaxTokens > 0 {
 		requestOptions = append(requestOptions, perplexity.WithMaxTokens(opts.MaxTokens))
 	}
-	if opts.Temperature > 0 { // Perplexity default is 1.0, only set if user specifies
+	if opts.Temperature > 0 {
 		requestOptions = append(requestOptions, perplexity.WithTemperature(opts.Temperature))
 	}
-	if opts.TopP > 0 { // Perplexity default is not specified, typically 1.0
+	if opts.TopP > 0 {
 		requestOptions = append(requestOptions, perplexity.WithTopP(opts.TopP))
 	}
 	if opts.PresencePenalty != 0 {
-		// Corrected: Pass float64 directly
 		requestOptions = append(requestOptions, perplexity.WithPresencePenalty(opts.PresencePenalty))
 	}
 	if opts.FrequencyPenalty != 0 {
-		// Corrected: Pass float64 directly
 		requestOptions = append(requestOptions, perplexity.WithFrequencyPenalty(opts.FrequencyPenalty))
 	}
 
 	request := perplexity.NewCompletionRequest(requestOptions...)
 
-	// Corrected: Use SendCompletionRequest method from perplexity-go library
-	resp, err := c.client.SendCompletionRequest(request) // Pass request directly
+	resp, err := c.client.SendCompletionRequest(request)
 	if err != nil {
 		return "", fmt.Errorf(i18n.T("perplexity_api_request_failed"), err)
 	}
@@ -107,7 +100,6 @@ func (c *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, o
 	var content strings.Builder
 	content.WriteString(resp.GetLastContent())
 
-	// Append citations if available
 	citations := resp.GetCitations()
 	if len(citations) > 0 {
 		content.WriteString(i18n.T("perplexity_citations_header"))
@@ -122,7 +114,7 @@ func (c *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, o
 func (c *Client) SendStream(_ context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan domain.StreamUpdate) error {
 	if c.client == nil {
 		if err := c.Configure(); err != nil {
-			close(channel) // Ensure channel is closed on error
+			close(channel)
 			return fmt.Errorf(i18n.T("perplexity_failed_configure"), err)
 		}
 	}
@@ -138,7 +130,7 @@ func (c *Client) SendStream(_ context.Context, msgs []*chat.ChatCompletionMessag
 	requestOptions := []perplexity.CompletionRequestOption{
 		perplexity.WithModel(opts.Model),
 		perplexity.WithMessages(perplexityMessages),
-		perplexity.WithStream(true), // Enable streaming
+		perplexity.WithStream(true),
 	}
 
 	if opts.MaxTokens > 0 {
@@ -151,41 +143,33 @@ func (c *Client) SendStream(_ context.Context, msgs []*chat.ChatCompletionMessag
 		requestOptions = append(requestOptions, perplexity.WithTopP(opts.TopP))
 	}
 	if opts.PresencePenalty != 0 {
-		// Corrected: Pass float64 directly
 		requestOptions = append(requestOptions, perplexity.WithPresencePenalty(opts.PresencePenalty))
 	}
 	if opts.FrequencyPenalty != 0 {
-		// Corrected: Pass float64 directly
 		requestOptions = append(requestOptions, perplexity.WithFrequencyPenalty(opts.FrequencyPenalty))
 	}
 
 	request := perplexity.NewCompletionRequest(requestOptions...)
 
 	responseChan := make(chan perplexity.CompletionResponse)
-	var wg sync.WaitGroup // Use sync.WaitGroup
+	var wg sync.WaitGroup
 	wg.Add(1)
 
 	go func() {
 		err := c.client.SendSSEHTTPRequest(&wg, request, responseChan)
 		if err != nil {
-			// Log error, can't send to string channel directly.
-			// Consider a mechanism to propagate this error if needed.
+			// The library closes responseChan on error, so the receiver goroutine closes channel.
 			debuglog.Log(i18n.T("perplexity_streaming_error"), err)
-			// If the error occurs during stream setup, the channel might not have been closed by the receiver loop.
-			// However, closing it here might cause a panic if the receiver loop also tries to close it.
-			// close(channel) // Caution: Uncommenting this may cause panic, as channel is closed in the receiver goroutine.
 		}
 	}()
 
 	go func() {
-		defer close(channel) // Ensure the output channel is closed when this goroutine finishes
+		defer close(channel)
 		var lastResponse *perplexity.CompletionResponse
 		for resp := range responseChan {
 			lastResponse = &resp
 			if len(resp.Choices) > 0 {
 				content := ""
-				// Corrected: Check Delta.Content and Message.Content directly for non-emptiness
-				// as Delta and Message are structs, not pointers, in perplexity.Choice
 				if resp.Choices[0].Delta.Content != "" {
 					content = resp.Choices[0].Delta.Content
 				} else if resp.Choices[0].Message.Content != "" {
@@ -211,7 +195,6 @@ func (c *Client) SendStream(_ context.Context, msgs []*chat.ChatCompletionMessag
 			}
 		}
 
-		// Send citations at the end if available
 		if lastResponse != nil {
 			citations := lastResponse.GetCitations()
 			if len(citations) > 0 {

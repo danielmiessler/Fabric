@@ -1,9 +1,8 @@
 /**
- * Environment configuration for the Fabric web app
- * Centralizes all environment variable handling
+ * Environment configuration for the Fabric web app.
+ * All environment variable reads are in this file.
  */
 
-// Default values
 const DEFAULT_FABRIC_BASE_URL = 'http://localhost:8080';
 
 /**
@@ -11,17 +10,15 @@ const DEFAULT_FABRIC_BASE_URL = 'http://localhost:8080';
  * This function works in both server and client contexts
  */
 export function getFabricBaseUrl(): string {
-  // In server context (Node.js), use process.env
   if (typeof process !== 'undefined' && process.env) {
     return process.env.FABRIC_BASE_URL || DEFAULT_FABRIC_BASE_URL;
   }
 
-  // In client context, check if the environment was injected via Vite
+  // vite.config.ts defines __FABRIC_CONFIG__ for the client build.
   if (typeof window !== 'undefined' && (window as any).__FABRIC_CONFIG__) {
     return (window as any).__FABRIC_CONFIG__.FABRIC_BASE_URL || DEFAULT_FABRIC_BASE_URL;
   }
 
-  // Fallback to default
   return DEFAULT_FABRIC_BASE_URL;
 }
 
@@ -31,10 +28,8 @@ export function getFabricBaseUrl(): string {
 export function getFabricApiUrl(): string {
   const baseUrl = getFabricBaseUrl();
 
-  // Remove trailing slash if present
   const cleanBaseUrl = baseUrl.replace(/\/$/, '');
 
-  // Check if it already ends with /api
   if (cleanBaseUrl.endsWith('/api')) {
     return cleanBaseUrl;
   }
@@ -50,7 +45,6 @@ export const config = {
   fabricApiUrl: getFabricApiUrl(),
 } as const;
 
-// Type definitions
 export interface FabricConfig {
   FABRIC_BASE_URL: string;
 }

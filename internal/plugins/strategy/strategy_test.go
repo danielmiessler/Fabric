@@ -102,7 +102,6 @@ func TestLoadStrategy_WithoutExtension(t *testing.T) {
 		t.Fatalf("failed to create strategy dir: %v", err)
 	}
 
-	// Create a strategy file WITHOUT .json extension
 	strategyPath := filepath.Join(strategyDir, "bare-strategy")
 	if err := os.WriteFile(strategyPath, []byte(`{"name":"bare","description":"no ext","prompt":"BARE PROMPT"}`), 0o644); err != nil {
 		t.Fatalf("failed to write strategy: %v", err)

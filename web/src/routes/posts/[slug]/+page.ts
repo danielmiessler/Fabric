@@ -22,7 +22,6 @@ export const load: PageLoad = async ({ params }) => {
         content: post[1].default,
         metadata: {
             ...post[1].metadata,
-            // Only keep the date portion YYYY-MM-DD
             date: formatDateOnly(post[1].metadata.date),
             updated: post[1].metadata.updated 
                 ? formatDateOnly(post[1].metadata.updated)

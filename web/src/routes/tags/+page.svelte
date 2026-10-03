@@ -1,6 +1,5 @@
 <script lang="ts">
   import type { PageData } from './$types';
-  // import TagList from '$components/ui/tag-list/TagList.svelte';
 
   export let data: PageData;
 
@@ -19,8 +18,6 @@
 			>
 				<span class="text-lg font-semibold">{tag}</span>
 				<span class="text-sm text-muted-foreground">{posts.length} posts</span>
-				<!-- WIP -->
-				<!-- <TagList tags={posts.map((post) => post.meta.tags).flat()} /> -->
 			</a>
 		{/each}
 	</div>

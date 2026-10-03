@@ -9,7 +9,6 @@
   export let className: string = '';
 
   function parseDate(dateStr: string): Date {
-      // Handle both ISO strings and YYYY-MM-DD formats
       return new Date(dateStr);
   }
 </script>
@@ -24,7 +23,6 @@
   </a>
   <div class="flex flex-col justify-between space-y-4">
     <div class="space-y-2">
-      <!-- <img src={post.metadata?.images?.[0]} alt="Posts Cards" class="rounded-lg" /> -->
       <h2 class="text-xl font-semibold tracking-tight">{post.metadata?.title}</h2>
       <p class="text-muted-foreground">{post.metadata?.description}</p>
     </div>

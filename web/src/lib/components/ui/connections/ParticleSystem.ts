@@ -29,20 +29,18 @@ export class ParticleSystem {
   private initParticles(): void {
     this.particles = [];
     for (let i = 0; i < this.count; i++) {
-      // Distribute particles across the entire width
       const x = Math.random() * this.width;
-      // Distribute particles vertically around the middle with some variation
       const yOffset = (Math.random() - 0.5) * 100;
       
       this.particles.push({
         x,
         y: this.height / 2 + yOffset,
         baseY: this.height / 2 + yOffset,
-        speed: (Math.random() - 0.5) * this.speed * 0.5, // Reduced base speed
+        speed: (Math.random() - 0.5) * this.speed * 0.5,
         angle: Math.random() * Math.PI * 2,
         size: this.baseSize * (0.8 + Math.random() * 0.4),
         color: generateGradientColor(this.height / 2 + yOffset, this.height),
-        velocityX: (Math.random() - 0.5) * this.speed // Reduced initial velocity
+        velocityX: (Math.random() - 0.5) * this.speed
       });
     }
   }
@@ -63,28 +61,22 @@ export class ParticleSystem {
   }
 
   public update(): void {
-    // Smooth mouse movement
-    this.mouseX += (this.targetMouseX - this.mouseX) * 0.05; // Slower mouse tracking
+    this.mouseX += (this.targetMouseX - this.mouseX) * 0.05;
     this.mouseY += (this.targetMouseY - this.mouseY) * 0.05;
 
     this.particles.forEach(particle => {
-      // Update horizontal position with constant motion
       particle.x += particle.velocityX;
       
-      // Wave motion
       particle.angle += particle.speed;
-      const waveAmplitude = 30 * (this.mouseY / this.height); // Reduced amplitude
+      const waveAmplitude = 30 * (this.mouseY / this.height);
       const frequencyFactor = (this.mouseX / this.width);
       
-      // Calculate vertical position with wave effect
       particle.y = particle.baseY + 
-        Math.sin(particle.angle * frequencyFactor + particle.x * 0.01) * // Slower wave
+        Math.sin(particle.angle * frequencyFactor + particle.x * 0.01) *
         waveAmplitude;
       
-      // Update particle color based on position
       particle.color = generateGradientColor(particle.y, this.height);
       
-      // Screen wrapping with position preservation
       if (particle.x < 0) {
         particle.x = this.width;
         particle.baseY = this.height / 2 + (Math.random() - 0.5) * 100;
@@ -94,12 +86,11 @@ export class ParticleSystem {
         particle.baseY = this.height / 2 + (Math.random() - 0.5) * 100;
       }
 
-      // Very subtle velocity adjustment to maintain spread
+      // Push a slow particle so that the damping below does not stop it.
       if (Math.abs(particle.velocityX) < 0.1) {
         particle.velocityX += (Math.random() - 0.5) * 0.02;
       }
       
-      // Gentle velocity dampening
       particle.velocityX *= 0.99;
     });
   }

@@ -38,7 +38,6 @@ func TestHtmlReadability(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 			result, err := HtmlReadability(tc.html)
 
-			// 验证结果
 			assert.NoError(t, err)
 			assert.Equal(t, tc.expected, result)
 		})

@@ -11,7 +11,6 @@ import (
 func TestFilePlugin(t *testing.T) {
 	plugin := &FilePlugin{}
 
-	// Create temp test files
 	tmpDir := t.TempDir()
 
 	testFile := filepath.Join(tmpDir, "test.txt")
@@ -75,7 +74,6 @@ func TestFilePlugin(t *testing.T) {
 				return err == nil
 			},
 		},
-		// Error cases
 		{
 			name:        "read non-existent",
 			operation:   "read",
@@ -124,7 +122,6 @@ func TestFilePlugin(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			got, err := plugin.Apply(tt.operation, tt.value)
 
-			// Check error cases
 			if (err != nil) != tt.wantErr {
 				t.Errorf("FilePlugin.Apply() error = %v, wantErr %v", err, tt.wantErr)
 				return
@@ -137,7 +134,6 @@ func TestFilePlugin(t *testing.T) {
 				return
 			}
 
-			// Check success cases
 			if err == nil {
 				if tt.validate != nil {
 					if !tt.validate(got) {

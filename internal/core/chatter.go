@@ -1,7 +1,9 @@
 package core
 
 import (
+	"cmp"
 	"context"
+	"crypto/rand"
 	"errors"
 	"fmt"
 	"os"
@@ -29,7 +31,7 @@ type Chatter struct {
 	vendor             ai.Vendor
 }
 
-// recordFirstStreamError sends err to errChan if the channel is empty; subsequent errors are discarded.
+// recordFirstStreamError sends err to errChan when the channel has space. It discards later errors.
 func recordFirstStreamError(errChan chan error, err error) {
 	if err == nil {
 		return
@@ -38,7 +40,6 @@ func recordFirstStreamError(errChan chan error, err error) {
 	select {
 	case errChan <- err:
 	default:
-		// Second+ error discarded; log for observability
 		debuglog.Debug(debuglog.Wire, "additional stream error discarded: %v\n", err)
 	}
 }
@@ -58,13 +59,17 @@ func joinPromptSections(parts ...string) string {
 
 // Send processes a chat request and applies file changes for create_coding_feature pattern
 func (o *Chatter) Send(ctx context.Context, request *domain.ChatRequest, opts *domain.ChatOptions) (session *fsdb.Session, err error) {
-	// Use o.model (normalized) for NeedsRawMode check instead of opts.Model
-	// This ensures case-insensitive model names work correctly (e.g., "GPT-5" → "gpt-5")
+	// Test o.model, not opts.Model. GetChatter set o.model to the vendor's spelling of the name.
 	if o.vendor.NeedsRawMode(o.model) {
 		opts.Raw = true
 	}
 	if session, err = o.BuildSession(request, opts.Raw); err != nil {
 		return
+	}
+
+	// Set one stable session ID for each conversation. Providers that route by session send it as a header.
+	if opts.SessionID = cmp.Or(opts.SessionID, session.Name); opts.SessionID == "" {
+		opts.SessionID = rand.Text()
 	}
 
 	vendorMessages := session.GetVendorMessages()
@@ -89,8 +94,7 @@ func (o *Chatter) Send(ctx context.Context, request *domain.ChatRequest, opts *d
 		return
 	}
 
-	// Always use the normalized model name from the Chatter
-	// This handles cases where user provides "GPT-5" but we've normalized it to "gpt-5"
+	// Send the vendor's spelling of the model name, not the one the user typed.
 	opts.Model = o.model
 
 	if opts.ModelContextLength == 0 {
@@ -125,7 +129,7 @@ func (o *Chatter) Send(ctx context.Context, request *domain.ChatRequest, opts *d
 			switch update.Type {
 			case domain.StreamTypeContent:
 				message += update.Content
-				if !opts.SuppressThink && !opts.Quiet {
+				if !opts.SuppressThink && !opts.BufferStream && !opts.Quiet {
 					fmt.Print(update.Content)
 					printedStream = true
 				}
@@ -154,10 +158,8 @@ func (o *Chatter) Send(ctx context.Context, request *domain.ChatRequest, opts *d
 			fmt.Println()
 		}
 
-		// Wait for goroutine to finish
 		<-done
 
-		// Check for errors in errChan
 		select {
 		case streamErr := <-errChan:
 			if streamErr != nil {
@@ -165,7 +167,6 @@ func (o *Chatter) Send(ctx context.Context, request *domain.ChatRequest, opts *d
 				return
 			}
 		default:
-			// No errors, continue
 		}
 	} else {
 		if message, err = o.vendor.Send(ctx, session.GetVendorMessages(), opts); err != nil {
@@ -186,7 +187,6 @@ func (o *Chatter) Send(ctx context.Context, request *domain.ChatRequest, opts *d
 		return
 	}
 
-	// Process file changes for create_coding_feature pattern
 	if request.PatternName == "create_coding_feature" {
 		summary, fileChanges, parseErr := domain.ParseFileChanges(message)
 		if parseErr != nil {
@@ -231,7 +231,6 @@ func (o *Chatter) BuildSession(request *domain.ChatRequest, raw bool) (session *
 		session.Append(&chat.ChatCompletionMessage{Role: domain.ChatMessageRoleMeta, Content: request.Meta})
 	}
 
-	// if a context name is provided, retrieve it from the database
 	var contextContent string
 	if request.ContextName != "" {
 		var ctx *fsdb.Context
@@ -242,9 +241,6 @@ func (o *Chatter) BuildSession(request *domain.ChatRequest, raw bool) (session *
 		contextContent = ctx.Content
 	}
 
-	// Process template variables in message content
-	// Double curly braces {{variable}} indicate template substitution
-	// Ensure we have a message before processing
 	if request.Message == nil {
 		request.Message = &chat.ChatCompletionMessage{
 			Role:    chat.ChatMessageRoleUser,
@@ -252,7 +248,6 @@ func (o *Chatter) BuildSession(request *domain.ChatRequest, raw bool) (session *
 		}
 	}
 
-	// Now we know request.Message is not nil, process template variables
 	if request.InputHasVars && !request.NoVariableReplacement {
 		request.Message.Content, err = template.ApplyTemplate(request.Message.Content, request.PatternVariables, "")
 		if err != nil {
@@ -274,7 +269,7 @@ func (o *Chatter) BuildSession(request *domain.ChatRequest, raw bool) (session *
 			return nil, fmt.Errorf(i18n.T("chatter_error_get_pattern"), request.PatternName, err)
 		}
 		patternContent = pattern.Pattern
-		inputUsed = true
+		inputUsed = pattern.InputUsed
 	}
 
 	systemMessage := joinPromptSections(contextContent, patternContent)
@@ -289,60 +284,38 @@ func (o *Chatter) BuildSession(request *domain.ChatRequest, raw bool) (session *
 		}
 	}
 
-	// Apply refined language instruction if specified
 	if request.Language != "" && request.Language != "en" {
-		// Refined instruction: Execute pattern using user input, then translate the entire response.
+		// The prompt tells the model to run the instructions first, then write the full response in request.Language.
 		systemMessage = fmt.Sprintf(i18n.T("chatter_prompt_enforce_response_language"), systemMessage, request.Language)
 	}
 
-	if raw {
-		var finalContent string
-		if systemMessage != "" {
-			if request.PatternName != "" {
-				finalContent = systemMessage
-			} else {
-				finalContent = fmt.Sprintf("%s\n\n%s", systemMessage, request.Message.Content)
-			}
-
-			// Handle MultiContent properly in raw mode
-			if len(request.Message.MultiContent) > 0 {
-				// When we have attachments, add the text as a text part in MultiContent
-				newMultiContent := []chat.ChatMessagePart{
-					{
-						Type: chat.ChatMessagePartTypeText,
-						Text: finalContent,
-					},
-				}
-				// Add existing non-text parts (like images)
-				for _, part := range request.Message.MultiContent {
-					if part.Type != chat.ChatMessagePartTypeText {
-						newMultiContent = append(newMultiContent, part)
-					}
-				}
-				request.Message = &chat.ChatCompletionMessage{
-					Role:         chat.ChatMessageRoleUser,
-					MultiContent: newMultiContent,
-				}
-			} else {
-				// No attachments, use regular Content field
-				request.Message = &chat.ChatCompletionMessage{
-					Role:    chat.ChatMessageRoleUser,
-					Content: finalContent,
-				}
-			}
-		}
-		if request.Message != nil {
-			session.Append(request.Message)
-		}
-	} else {
+	// The request must end with a user message: some backends reject a
+	// request with system messages only. The input goes to the model one time.
+	msg := request.Message
+	hasInput := msg.Content != "" || len(msg.MultiContent) > 0
+	if !raw && !inputUsed && hasInput {
+		// The usual shape: instructions in the system message, input in the user message.
 		if systemMessage != "" {
 			session.Append(&chat.ChatCompletionMessage{Role: chat.ChatMessageRoleSystem, Content: systemMessage})
 		}
-		// If multi-part content, it is in the user message, and should be added.
-		// Otherwise, we should only add it if we have not already used it in the systemMessage.
-		if len(request.Message.MultiContent) > 0 || (request.Message != nil && !inputUsed) {
-			session.Append(request.Message)
+		session.Append(msg)
+	} else {
+		// Raw mode, a pattern that contains the input, or no input:
+		// send all of the text in one user message.
+		text := systemMessage
+		if !inputUsed {
+			text = joinPromptSections(systemMessage, msg.Content)
 		}
+		merged := &chat.ChatCompletionMessage{Role: chat.ChatMessageRoleUser, Content: text}
+		if len(msg.MultiContent) > 0 {
+			// Attachments: the text goes first, then the parts from the request.
+			merged.Content = ""
+			if text != "" {
+				merged.MultiContent = []chat.ChatMessagePart{{Type: chat.ChatMessagePartTypeText, Text: text}}
+			}
+			merged.MultiContent = append(merged.MultiContent, msg.MultiContent...)
+		}
+		session.Append(merged)
 	}
 
 	if session.IsEmpty() {

@@ -48,3 +48,7 @@ Give a 1-10 score for each dimension where 5 is meh, 7 is decent, 8 is good, 9 i
 - In a section called SALES CALL PERFORMANCE RATINGS, give the 1-10 scores for SALES FUNDAMENTALS and PITCH ALIGNMENT.
 
 - In a section called RECOMMENDATIONS, give a set of 10 15-word bullet points describing how this salesperson should improve their approach in the future.
+
+# INPUT
+
+INPUT:

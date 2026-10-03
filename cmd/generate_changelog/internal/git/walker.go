@@ -17,7 +17,7 @@ import (
 )
 
 var (
-	// The versionPattern matches version commit messages with or without the optional "chore(release): " prefix.
+	// versionPattern matches version commit messages, with or without the "chore(release): " prefix.
 	// Examples of matching commit messages:
 	//   - "chore(release): Update version to v1.2.3"
 	//   - "Update version to v1.2.3"
@@ -66,7 +66,7 @@ func (w *Walker) GetLatestTag() (string, error) {
 
 		if latestTagCommit == nil {
 			latestTagCommit = commit
-			latestTagName = tagRef.Name().Short() // Get short name like "v1.4.245"
+			latestTagName = tagRef.Name().Short()
 		}
 
 		if commit.Committer.When.After(latestTagCommit.Committer.When) {
@@ -85,25 +85,21 @@ func (w *Walker) GetLatestTag() (string, error) {
 
 // WalkCommitsSinceTag walks commits from the specified tag to HEAD and returns only "Unreleased" version
 func (w *Walker) WalkCommitsSinceTag(tagName string) (*Version, error) {
-	// Get the tag reference
 	tagRef, err := w.repo.Tag(tagName)
 	if err != nil {
 		return nil, fmt.Errorf("failed to find tag %s: %w", tagName, err)
 	}
 
-	// Get the commit that the tag points to
 	tagCommit, err := w.repo.CommitObject(tagRef.Hash())
 	if err != nil {
 		return nil, fmt.Errorf("failed to get tag commit: %w", err)
 	}
 
-	// Get HEAD
 	headRef, err := w.repo.Head()
 	if err != nil {
 		return nil, fmt.Errorf("failed to get HEAD: %w", err)
 	}
 
-	// Walk from HEAD back to the tag commit (exclusive)
 	commitIter, err := w.repo.Log(&git.LogOptions{
 		From:  headRef.Hash(),
 		Order: git.LogOrderCommitterTime,
@@ -120,9 +116,8 @@ func (w *Walker) WalkCommitsSinceTag(tagName string) (*Version, error) {
 	prNumbers := []int{}
 
 	err = commitIter.ForEach(func(c *object.Commit) error {
-		// Stop when we reach the tag commit (don't include it)
 		if c.Hash == tagCommit.Hash {
-			return fmt.Errorf("reached tag commit") // Use error to break out of iteration
+			return fmt.Errorf("reached tag commit") // sentinel that stops the iteration
 		}
 
 		commit := &Commit{
@@ -131,12 +126,10 @@ func (w *Walker) WalkCommitsSinceTag(tagName string) (*Version, error) {
 			Date:    c.Committer.When,
 		}
 
-		// Check for version patterns
 		if versionMatch := versionPattern.FindStringSubmatch(commit.Message); versionMatch != nil {
 			commit.IsVersion = true
 		}
 
-		// Check for PR merge patterns
 		if prMatch := prPattern.FindStringSubmatch(commit.Message); prMatch != nil {
 			if prNumber, err := strconv.Atoi(prMatch[1]); err == nil {
 				commit.PRNumber = prNumber
@@ -148,12 +141,11 @@ func (w *Walker) WalkCommitsSinceTag(tagName string) (*Version, error) {
 		return nil
 	})
 
-	// Ignore the "reached tag commit" error - it's expected
+	// The sentinel error is not a failure.
 	if err != nil && !strings.Contains(err.Error(), "reached tag commit") {
 		return nil, fmt.Errorf("failed to walk commits: %w", err)
 	}
 
-	// Remove duplicates from prNumbers and set them
 	prNumbersMap := make(map[int]bool)
 	for _, prNum := range prNumbers {
 		prNumbersMap[prNum] = true
@@ -191,7 +183,6 @@ func (w *Walker) WalkHistory() (map[string]*Version, error) {
 	prNumbers := make(map[string][]int)
 
 	err = commitIter.ForEach(func(c *object.Commit) error {
-		// c.Message = Summarize(c.Message)
 		commit := &Commit{
 			SHA:     c.Hash.String(),
 			Message: strings.TrimSpace(c.Message),
@@ -247,7 +238,7 @@ func (w *Walker) GetRepoInfo() (owner string, name string, err error) {
 		return "", "", fmt.Errorf("failed to get remotes: %w", err)
 	}
 
-	// First try upstream (preferred for forks)
+	// Prefer upstream so a fork reports its parent repository.
 	for _, remote := range remotes {
 		if remote.Config().Name == "upstream" {
 			urls := remote.Config().URLs
@@ -260,7 +251,6 @@ func (w *Walker) GetRepoInfo() (owner string, name string, err error) {
 		}
 	}
 
-	// Then try origin
 	for _, remote := range remotes {
 		if remote.Config().Name == "origin" {
 			urls := remote.Config().URLs
@@ -296,7 +286,6 @@ func parseGitHubURL(url string) (owner, repo string) {
 // WalkHistorySinceTag walks git history from HEAD down to (but not including) the specified tag
 // and returns any version commits found along the way
 func (w *Walker) WalkHistorySinceTag(sinceTag string) (map[string]*Version, error) {
-	// Get the commit SHA for the sinceTag
 	tagRef, err := w.repo.Tag(sinceTag)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get tag %s: %w", sinceTag, err)
@@ -307,13 +296,11 @@ func (w *Walker) WalkHistorySinceTag(sinceTag string) (map[string]*Version, erro
 		return nil, fmt.Errorf("failed to get commit for tag %s: %w", sinceTag, err)
 	}
 
-	// Get HEAD reference
 	ref, err := w.repo.Head()
 	if err != nil {
 		return nil, fmt.Errorf("failed to get HEAD: %w", err)
 	}
 
-	// Walk from HEAD down to the tag commit (excluding it)
 	commitIter, err := w.repo.Log(&git.LogOptions{
 		From:  ref.Hash(),
 		Order: git.LogOrderCommitterTime,
@@ -328,7 +315,6 @@ func (w *Walker) WalkHistorySinceTag(sinceTag string) (map[string]*Version, erro
 	prNumbers := make(map[string][]int)
 
 	err = commitIter.ForEach(func(c *object.Commit) error {
-		// Stop iteration when the hash of the current commit matches the hash of the specified sinceTag commit
 		if c.Hash == tagCommit.Hash {
 			return storer.ErrStop
 		}
@@ -342,7 +328,6 @@ func (w *Walker) WalkHistorySinceTag(sinceTag string) (map[string]*Version, erro
 			IsMerge: len(c.ParentHashes) > 1,
 		}
 
-		// Check for version pattern
 		if matches := versionPattern.FindStringSubmatch(commit.Message); len(matches) > 1 {
 			commit.IsVersion = true
 			commit.Version = matches[1]
@@ -359,11 +344,9 @@ func (w *Walker) WalkHistorySinceTag(sinceTag string) (map[string]*Version, erro
 			return nil
 		}
 
-		// Check for PR merge pattern
 		if matches := prPattern.FindStringSubmatch(commit.Message); len(matches) > 1 {
 			prNumber, err := strconv.Atoi(matches[1])
 			if err != nil {
-				// Handle parsing error (e.g., log it or skip processing)
 				return fmt.Errorf("failed to parse PR number: %v", err)
 			}
 			commit.PRNumber = prNumber
@@ -371,11 +354,10 @@ func (w *Walker) WalkHistorySinceTag(sinceTag string) (map[string]*Version, erro
 			prNumbers[currentVersion] = append(prNumbers[currentVersion], prNumber)
 		}
 
-		// Add commit to current version
 		if _, exists := versions[currentVersion]; !exists {
 			versions[currentVersion] = &Version{
 				Name:      currentVersion,
-				Date:      time.Time{}, // Zero value, will be set by version commit
+				Date:      time.Time{},
 				CommitSHA: "",
 				Commits:   []*Commit{},
 			}
@@ -385,12 +367,11 @@ func (w *Walker) WalkHistorySinceTag(sinceTag string) (map[string]*Version, erro
 		return nil
 	})
 
-	// Handle the stop condition - storer.ErrStop is expected
+	// storer.ErrStop is not a failure.
 	if err == storer.ErrStop {
 		err = nil
 	}
 
-	// Assign collected PR numbers to each version
 	for version, prs := range prNumbers {
 		versions[version].PRNumbers = dedupInts(prs)
 	}
@@ -432,8 +413,6 @@ func (w *Walker) IsWorkingDirectoryClean() (bool, error) {
 
 	worktreePath := worktree.Filesystem.Root()
 
-	// Use native git status --porcelain to avoid go-git worktree issues
-	// go-git's status API has known bugs with linked worktrees
 	cmd := exec.Command("git", "status", "--porcelain")
 	cmd.Dir = worktreePath
 
@@ -442,7 +421,6 @@ func (w *Walker) IsWorkingDirectoryClean() (bool, error) {
 		return false, fmt.Errorf("failed to get git status: %w", err)
 	}
 
-	// If output is empty, working directory is clean
 	return len(strings.TrimSpace(string(output))) == 0, nil
 }
 
@@ -456,7 +434,6 @@ func (w *Walker) GetStatusDetails() (string, error) {
 
 	worktreePath := worktree.Filesystem.Root()
 
-	// Use native git status --porcelain to avoid go-git worktree issues
 	cmd := exec.Command("git", "status", "--porcelain")
 	cmd.Dir = worktreePath
 
@@ -478,7 +455,6 @@ func (w *Walker) AddFile(filename string) error {
 
 	worktreePath := worktree.Filesystem.Root()
 
-	// Use native git add command to avoid go-git worktree issues
 	cmd := exec.Command("git", "add", filename)
 	cmd.Dir = worktreePath
 
@@ -500,7 +476,6 @@ func (w *Walker) CommitChanges(message string) (plumbing.Hash, error) {
 
 	worktreePath := worktree.Filesystem.Root()
 
-	// Use native git commit command to avoid go-git worktree issues
 	cmd := exec.Command("git", "commit", "-m", message)
 	cmd.Dir = worktreePath
 
@@ -509,7 +484,6 @@ func (w *Walker) CommitChanges(message string) (plumbing.Hash, error) {
 		return plumbing.ZeroHash, fmt.Errorf("failed to commit: %w (output: %s)", err, string(output))
 	}
 
-	// Get the commit hash from HEAD using native git to avoid go-git worktree issues
 	hashCmd := exec.Command("git", "rev-parse", "HEAD")
 	hashCmd.Dir = worktreePath
 
@@ -527,12 +501,9 @@ func (w *Walker) CommitChanges(message string) (plumbing.Hash, error) {
 func (w *Walker) PushToRemote() error {
 	pushOptions := &git.PushOptions{}
 
-	// Check if we have a GitHub token for authentication
 	if githubToken := util.GetTokenFromEnv(""); githubToken != "" {
-		// Get remote URL to check if it's a GitHub repository
 		remotes, err := w.repo.Remotes()
 		if err == nil && len(remotes) > 0 {
-			// Get the origin remote (or first remote if origin doesn't exist)
 			var remote *git.Remote
 			for _, r := range remotes {
 				if r.Config().Name == "origin" {
@@ -544,14 +515,12 @@ func (w *Walker) PushToRemote() error {
 				remote = remotes[0]
 			}
 
-			// Check if this is a GitHub repository
 			urls := remote.Config().URLs
 			if len(urls) > 0 {
 				url := urls[0]
 				if strings.Contains(url, "github.com") {
-					// Use token authentication for GitHub repositories
 					pushOptions.Auth = &http.BasicAuth{
-						Username: "token", // GitHub expects "token" as username
+						Username: "token", // any non-empty username works
 						Password: githubToken,
 					}
 				}

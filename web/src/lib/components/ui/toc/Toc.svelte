@@ -4,7 +4,6 @@
   let toc = [];
 
   onMount(() => {
-    // Get all headings from the content
     const article = document.querySelector('article');
     if (article) {
       const headings = article.querySelectorAll('h1, h2, h3, h4, h5, h6');

@@ -54,12 +54,10 @@ func TestVendorsManagerSetupVendorToCaseInsensitive(t *testing.T) {
 	configured := map[string]Vendor{}
 	manager.setupVendorTo(vendor, configured)
 
-	// Verify vendor is stored with lowercase key
 	if _, ok := configured["openai"]; !ok {
 		t.Fatalf("setupVendorTo should store vendor using lowercase key")
 	}
 
-	// Verify original case key is not used
 	if _, ok := configured["OpenAI"]; ok {
 		t.Fatalf("setupVendorTo should not store vendor using original case key")
 	}

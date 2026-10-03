@@ -63,7 +63,6 @@ func (o *Defaults) Setup() (err error) {
 		o.Vendor.Value = vendorsModels.FindGroupsByItemFirst(o.Model.Value)
 	}
 
-	//verify
 	vendorNames := vendorsModels.FindGroupsByItem(o.Model.Value)
 	if len(vendorNames) == 0 {
 		err = errors.Errorf("You need to chose an available default model.")

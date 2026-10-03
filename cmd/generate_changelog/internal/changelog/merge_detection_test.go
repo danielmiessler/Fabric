@@ -42,7 +42,7 @@ func TestIsMergeCommit(t *testing.T) {
 				Message: "Merge pull request #123 from user/feature-branch",
 				Author:  "GitHub",
 				Date:    time.Now(),
-				Parents: []string{}, // Empty parents - fallback to message detection
+				Parents: []string{}, // no parents, so the message decides
 			},
 			expected: true,
 		},

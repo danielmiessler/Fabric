@@ -15,7 +15,6 @@ export const sessionAPI = {
       const response = await fetch(`/api/sessions/names`);
       const sessionNames: string[] = await response.json();
 
-      // Add null check and default to empty array
       if (!sessionNames) {
         sessions.set([]);
         return [];

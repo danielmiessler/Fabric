@@ -26,7 +26,6 @@ import (
 
 const gatewayTimeout = 300 * time.Second
 
-// Ensure Client implements the ai.Vendor interface
 var _ ai.Vendor = (*Client)(nil)
 
 // Backend defines the interface that all Azure AI Gateway backends must implement.
@@ -87,7 +86,7 @@ func NewClient() *Client {
 	return client
 }
 
-// configure initializes the HTTP client and instantiates the appropriate backend
+// configure validates the gateway URL and key, then builds the HTTP client and the backend.
 func (c *Client) configure() error {
 	if c.GatewayURL.Value == "" {
 		return errors.New(i18n.T("azureaigateway_gateway_url_required"))
@@ -103,7 +102,7 @@ func (c *Client) configure() error {
 		return errors.New(i18n.T("azureaigateway_subscription_key_required"))
 	}
 
-	// Normalize backend type; default to bedrock for backward compatibility
+	// IsConfigured does not check the backend type, so an empty value falls back to bedrock.
 	backendType := strings.ToLower(strings.TrimSpace(c.BackendType.Value))
 	if backendType == "" {
 		backendType = "bedrock"
@@ -169,7 +168,7 @@ func (c *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, o
 	}
 	defer resp.Body.Close()
 
-	// Read up to 10MB+1 byte to detect truncation
+	// Read one byte past the limit to detect a response that is too large.
 	const maxResponseSize = 10 * 1024 * 1024
 	limitedBody := io.LimitReader(resp.Body, maxResponseSize+1)
 	respBody, err := io.ReadAll(limitedBody)

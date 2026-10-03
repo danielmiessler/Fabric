@@ -24,7 +24,6 @@ export async function fetchStrategies() {
       return;
     }
     const data = await response.json();
-    // Expecting an array of { name, description }
     strategies.set(data);
   } catch (error) {
     console.error('Error fetching strategies:', error);

@@ -74,9 +74,7 @@ func TestSendNotification_SecurityEscaping(t *testing.T) {
 				Notification:        true,
 			}
 
-			// This test mainly verifies that the function doesn't panic
-			// and properly escapes dangerous content. The actual command
-			// execution is tested separately in integration tests.
+			// The command runs, but the test does not read its output. It only checks for no error.
 			err := sendNotification(options, "test_pattern", tt.message)
 
 			if tt.expectError && err == nil {
@@ -120,11 +118,8 @@ func TestSendNotification_TitleGeneration(t *testing.T) {
 				Notification:        true,
 			}
 
-			// We're testing the title generation logic
-			// The actual notification command would echo the title
 			err := sendNotification(options, tt.patternName, "test message")
 
-			// The function should not error for valid inputs
 			if err != nil {
 				t.Errorf("Unexpected error: %v", err)
 			}
@@ -133,7 +128,7 @@ func TestSendNotification_TitleGeneration(t *testing.T) {
 }
 
 func TestSendNotification_MessageTruncation(t *testing.T) {
-	longMessage := strings.Repeat("A", 150) // 150 characters
+	longMessage := strings.Repeat("A", 150)
 	shortMessage := "Short message"
 
 	tests := []struct {
@@ -167,7 +162,6 @@ func TestSendNotification_MessageTruncation(t *testing.T) {
 }
 
 func TestImageGenerationCompatibilityWarning(t *testing.T) {
-	// Save original stderr to restore later
 	originalStderr := os.Stderr
 	defer func() {
 		os.Stderr = originalStderr
@@ -222,54 +216,28 @@ func TestImageGenerationCompatibilityWarning(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			// Note: In a real integration test, we would capture stderr like this:
-			// stderrCapture := &bytes.Buffer{}
-			// os.Stderr = stderrCapture
-			// But since we can't test the actual openai plugin from here due to import cycles,
-			// we'll simulate the integration behavior
-
-			// Create test options (for structure validation)
 			_ = &domain.ChatOptions{
 				Model:     tt.model,
 				ImageFile: tt.imageFile,
 			}
 
-			// We'll test the warning function that was added to openai.go
-			// but we need to simulate the same behavior in our test
-			// Since we can't directly access the openai package here due to import cycles,
-			// we'll create a minimal test that verifies the integration would work
-
-			// For integration testing purposes, we'll verify that the warning conditions
-			// are correctly identified and the process continues as expected
 			hasImage := tt.imageFile != ""
 			shouldWarn := hasImage && tt.expectWarning
 
-			// Check if the expected warning condition matches our test case
 			if shouldWarn && tt.expectWarning {
-				// Verify warning substr is provided for warning cases
 				if tt.warningSubstr == "" {
 					t.Errorf("Expected warning substring for warning case")
 				}
 			}
 
-			// The actual warning would be printed by the openai plugin
-			// Here we verify the integration logic is sound
-			// In a real integration test, we would check stderr output
-
 			if tt.expectWarning {
-				// This is expected since we're not calling the actual openai plugin
-				// In a real integration test, the warning would appear in stderr
 				t.Logf("Note: Warning would be printed by openai plugin for model '%s'", tt.model)
 			}
-
-			// In a real test with stderr capture, we would check for unexpected warnings
-			// Since we're not calling the actual plugin, we just validate the logic structure
 		})
 	}
 }
 
 func TestImageGenerationIntegrationScenarios(t *testing.T) {
-	// Test various real-world scenarios that users might encounter
 	scenarios := []struct {
 		name          string
 		cliArgs       []string
@@ -312,10 +280,6 @@ func TestImageGenerationIntegrationScenarios(t *testing.T) {
 
 	for _, scenario := range scenarios {
 		t.Run(scenario.name, func(t *testing.T) {
-			// This test validates the CLI argument parsing would work correctly
-			// The actual warning functionality is tested in the openai package
-
-			// Verify CLI arguments are properly structured
 			hasImage := false
 			model := ""
 
@@ -328,19 +292,12 @@ func TestImageGenerationIntegrationScenarios(t *testing.T) {
 				}
 			}
 
-			// Validate the scenario setup
 			if scenario.expectWarning && scenario.warningModel == "" {
 				t.Errorf("Expected warning scenario must specify warning model")
 			}
 
-			// Log the scenario for debugging
 			t.Logf("Scenario: %s", scenario.description)
 			t.Logf("Model: %s, Has Image: %v, Expect Warning: %v", model, hasImage, scenario.expectWarning)
-
-			// In actual integration, the warning would appear when:
-			// 1. hasImage is true
-			// 2. model is in the incompatible list
-			// The openai package tests cover the actual warning functionality
 		})
 	}
 }

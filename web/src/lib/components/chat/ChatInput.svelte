@@ -1,19 +1,19 @@
 <script lang="ts">
   import { Button } from "$lib/components/ui/button";
   import { Textarea } from "$lib/components/ui/textarea";
-  import { sendMessage, messageStore } from '$lib/store/chat-store';
+  import { messageStore } from '$lib/store/chat-store';
   import { systemPrompt, selectedPatternName } from '$lib/store/pattern-store';
-  import { getToastStore } from '@skeletonlabs/skeleton';
-  import { FileButton } from '@skeletonlabs/skeleton';
+  import { toastStore } from '$lib/store/toast-store';
   import { Paperclip, Send, FileCheck } from 'lucide-svelte';
   import { onMount } from 'svelte';
   import { get } from 'svelte/store';
   import { getTranscript } from '$lib/services/transcriptService';
   import { ChatService } from '$lib/services/ChatService';
-  // import { obsidianSettings } from '$lib/store/obsidian-store';
   import { languageStore } from '$lib/store/language-store';
   import { obsidianSettings, updateObsidianSettings } from '$lib/store/obsidian-store';
   import { PdfConversionService } from '$lib/services/PdfConversionService';
+  import { formatErrorMessage } from '$lib/utils/error-message';
+  import { readFileContent } from './read-file-content';
   
   const pdfService = new PdfConversionService();
   
@@ -23,13 +23,12 @@
   const chatService = new ChatService();
   let userInput = "";
   let isYouTubeURL = false;
-  const toastStore = getToastStore();
   let files: FileList | undefined = undefined;
   let uploadedFiles: string[] = [];
   let fileContents: string[] = [];
   let isProcessingFiles = false;
-  let isFileIndicatorVisible = false; // Add new variable
-  let fileButtonKey = false; // Add new key variable for FileButton
+  let isFileIndicatorVisible = false;
+  let fileButtonKey = false;
   function detectYouTubeURL(input: string): boolean {
     const youtubePattern = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com|youtu\.be)/i;
     const isYoutube = youtubePattern.test(input);
@@ -83,20 +82,17 @@
   }
 
   async function handleFileUpload(e: Event) {
-  uploadedFiles = []; // Clear uploadedFiles at the beginning
+  uploadedFiles = [];
+  isFileIndicatorVisible = false;
   if (!files || files.length === 0) return;
 
   if (uploadedFiles.length >= 5 || (uploadedFiles.length + files.length) > 5) {
-    toastStore.trigger({
-      message: 'Maximum 5 files allowed',
-      background: 'variant-filled-error'
-    });
+    toastStore.error('Maximum 5 files allowed');
     return;
   }
 
   isProcessingFiles = true;
   try {
-    // Add processing indicator to message store
     messageStore.update(messages => [...messages, {
       role: 'system',
       content: 'Processing files...',
@@ -105,11 +101,11 @@
 
     for (let i = 0; i < files.length && uploadedFiles.length < 5; i++) {
       const file = files[i];
-      const content = await readFileContent(file);
+      const content = await readFileContent(file, pdfService, toastStore.warning);
       fileContents.push(content);
       uploadedFiles = [...uploadedFiles, file.name];
+      isFileIndicatorVisible = true;
       
-      // Update processing status per file
       messageStore.update(messages => {
         const newMessages = [...messages];
         const lastMessage = newMessages[newMessages.length - 1];
@@ -120,18 +116,13 @@
       });
     }
 
-    // Remove processing message on completion
     messageStore.update(messages => 
       messages.filter(m => m.format !== 'loading')
     );
 
   } catch (error) {
-    toastStore.trigger({
-      message: 'Error processing files: ' + (error as Error).message,
-      background: 'variant-filled-error'
-    });
+    toastStore.error('Error processing files: ' + (error as Error).message);
     
-    // Clean up processing message on error
     messageStore.update(messages => 
       messages.filter(m => m.format !== 'loading')
     );
@@ -141,104 +132,6 @@
 }
 
 
-  
-
-
-
-
-async function readFileContent(file: File): Promise<string> {
-  // Log initial file metadata
-  console.log('Reading file:', {
-    name: file.name,
-    type: file.type,
-    size: file.size,
-    lastModified: new Date(file.lastModified).toISOString()
-  });
-
-  // Handle PDF files
-  if (file.type === 'application/pdf') {
-    try {
-      // Start PDF processing
-      console.log('Starting PDF conversion process');
-      const markdown = await pdfService.convertToMarkdown(file);
-      
-      // Validate conversion result
-      console.log('PDF conversion completed:', {
-        resultLength: markdown.length,
-        preview: markdown.substring(0, 100)
-      });
-
-      // Ensure we have valid content
-      if (!markdown || markdown.trim().length === 0) {
-        throw new Error('PDF conversion returned empty content');
-      }
-
-
-      
-      // Add to fileContents for pattern processing
-      fileContents.push(markdown);
-
-      // Prepare enhanced prompt with system instructions
-      const enhancedPrompt = `${$systemPrompt}\nAnalyze and process the provided content according to these instructions.`;
-      
-      // Format final content with proper labeling
-      const finalContent = `${userInput}\n\nFile Contents (PDF):\n${markdown}`;
-      
-      // Process through pattern system
-      await sendMessage(finalContent, enhancedPrompt);
-
-      return markdown;
-
-    } catch (error) {
-  console.error('PDF Conversion error:', {
-    error,
-    fileName: file.name,
-    fileSize: file.size
-  });
-  
-  const errorMessage = error instanceof Error 
-    ? error.message
-    : 'Unknown error during PDF conversion';
-    
-  throw new Error(`Failed to convert PDF ${file.name}: ${errorMessage}`);
-}
-  }
-
-  // Handle text files
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    
-    reader.onload = async (e) => {
-      const content = e.target?.result as string;
-      console.log('Text file processed:', {
-        fileName: file.name,
-        contentLength: content.length,
-        preview: content.substring(0, 100)
-      });
-      // resolve(content);
-      const enhancedPrompt = `${$systemPrompt}\nAnalyze and process the provided content according to these instructions.`;
-      const finalContent = `${userInput}\n\nFile Contents (Text):\n${content}`;
-      await sendMessage(finalContent, enhancedPrompt);
-      resolve(content);
-    };
-    
-    reader.onerror = (e) => {
-      console.error('FileReader error:', {
-        error: reader.error,
-        fileName: file.name
-      });
-      reject(new Error(`Failed to read ${file.name}: ${reader.error?.message}`));
-    };
-
-    // Start reading the file
-    reader.readAsText(file);
-  });
-}
-
-
-
-
-
   async function saveToObsidian(content: string) {
     if (!$obsidianSettings.saveToObsidian) {
       console.log('Obsidian saving is disabled');
@@ -246,26 +139,17 @@ async function readFileContent(file: File): Promise<string> {
     }
     
     if (!$obsidianSettings.noteName) {
-      toastStore.trigger({
-        message: 'Please enter a note name in Obsidian settings',
-        background: 'variant-filled-error'
-      });
+      toastStore.error('Please enter a note name in Obsidian settings');
       return;
     }
 
     if (!$selectedPatternName) {
-      toastStore.trigger({
-        message: 'No pattern selected',
-        background: 'variant-filled-error'
-      });
+      toastStore.error('No pattern selected');
       return;
     }
 
     if (!content) {
-      toastStore.trigger({
-        message: 'No content to save',
-        background: 'variant-filled-error'
-      });
+      toastStore.error('No content to save');
       return;
     }
 
@@ -287,25 +171,18 @@ async function readFileContent(file: File): Promise<string> {
       if (!response.ok) {
         throw new Error(responseData.error || 'Failed to save to Obsidian');
       }
-      // Add this after successful save
       updateObsidianSettings({ 
-      saveToObsidian: false,  // Reset the save flag
-      noteName: ''           // Clear the note name
+      saveToObsidian: false,
+      noteName: ''
       });
-      toastStore.trigger({
-        message: responseData.message || `Saved to Obsidian: ${responseData.fileName}`,
-        background: 'variant-filled-success'
-      });
+      toastStore.success(responseData.message || `Saved to Obsidian: ${responseData.fileName}`);
     } catch (error) {
       console.error('Failed to save to Obsidian:', error);
-      toastStore.trigger({
-        message: error instanceof Error ? error.message : 'Failed to save to Obsidian',
-        background: 'variant-filled-error'
-      });
+      toastStore.error(error instanceof Error ? error.message : 'Failed to save to Obsidian');
     }
   }
 
-  // Centralized language instruction logic in ChatService.ts; YouTube flow now passes plain transcript and system prompt
+  // ChatService adds the language instruction. The YouTube flow passes the plain transcript.
   function extractYouTubeURLs(input: string): string[] {
       const youtubePattern = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=[\w-]+(?:&[^\s]*)?|youtu\.be\/[\w-]+(?:\?[^\s]*)?)/gi;
       return input.match(youtubePattern) || [];
@@ -329,24 +206,20 @@ async function readFileContent(file: File): Promise<string> {
   try {
     console.log('\n=== Submit Handler Start ===');
 
-    // Store the user input before any processing
     const inputText = userInput.trim();
     console.log('Captured user input:', inputText);
 
-    // Add the user message to the UI first
     messageStore.update(messages => [...messages, {
       role: 'user',
       content: inputText
     }]);
 
-    // Add loading indicator
     messageStore.update(messages => [...messages, {
       role: 'system',
       content: isYouTubeURL ? 'Processing YouTube video...' : 'Processing...',
       format: 'loading'
     }]);
 
-    // Clear input fields
     userInput = "";
     const hadYouTubeURL = isYouTubeURL;
     isYouTubeURL = false;
@@ -354,21 +227,19 @@ async function readFileContent(file: File): Promise<string> {
     const contentsForProcessing = [...fileContents];
     uploadedFiles = [];
     fileContents = [];
+    isFileIndicatorVisible = false;
     fileButtonKey = !fileButtonKey;
 
-    // If the message contains YouTube URLs, replace them with transcripts
     let processedText = inputText;
     if (hadYouTubeURL) {
       console.log('Replacing YouTube URLs with transcripts');
       processedText = await replaceYouTubeURLsWithTranscripts(inputText);
     }
 
-    // Prepare content with file attachments if any
     const contentWithFiles = contentsForProcessing.length > 0
       ? `${processedText}\n\nFile Contents (${filesForProcessing.map(f => f.endsWith('.pdf') ? 'PDF' : 'Text').join(', ')}):\n${contentsForProcessing.join('\n\n---\n\n')}`
       : processedText;
 
-    // Get the enhanced prompt
     const enhancedPrompt = contentsForProcessing.length > 0
       ? `${$systemPrompt}\nAnalyze and process the provided content according to these instructions.`
       : $systemPrompt;
@@ -380,16 +251,13 @@ async function readFileContent(file: File): Promise<string> {
     });
     
     try {
-      // Get the chat stream
       const stream = await chatService.streamChat(contentWithFiles, enhancedPrompt);
       
-      // Process the stream
       await chatService.processStream(
         stream,
         (content, response) => {
           messageStore.update(messages => {
             const newMessages = [...messages];
-            // Remove the loading message
             const loadingIndex = newMessages.findIndex(m => m.format === 'loading');
             if (loadingIndex !== -1) {
               newMessages.splice(loadingIndex, 1);
@@ -411,96 +279,52 @@ async function readFileContent(file: File): Promise<string> {
         },
 
         (error) => {
-          // Make sure to remove loading message on error
-          messageStore.update(messages => 
+          messageStore.update(messages =>
             messages.filter(m => m.format !== 'loading')
           );
           console.error('Stream processing error:', error);
-          
-          // Show error message using a valid format type
+
+          const message = formatErrorMessage(error);
+
+          // Show the error in the chat, where it stays on screen.
           messageStore.update(messages => [...messages, {
             role: 'system',
-            content: `Error: ${error instanceof Error ? error.message : String(error)}`,
+            content: message,
             format: 'plain'
           }]);
+          // Also show a toast, so the failure is visible when the chat is scrolled up.
+          toastStore.error(message);
         }
       );
     } catch (error) {
-      // Make sure to remove loading message on error
       messageStore.update(messages => 
         messages.filter(m => m.format !== 'loading')
       );
-      throw error; // Re-throw to be caught by the outer try/catch
+      throw error;
     }
   } catch (error) {
     console.error('Chat submission error:', error);
     
-    // Make sure to remove loading message on error (redundant but safe)
     messageStore.update(messages => 
       messages.filter(m => m.format !== 'loading')
     );
     
-    // Show error message using a valid format type
+    const message = formatErrorMessage(error);
+
+    // Show the error in the chat and as a toast, as the stream handler does.
     messageStore.update(messages => [...messages, {
       role: 'system',
-      content: `Error: ${error instanceof Error ? error.message : String(error)}`,
+      content: message,
       format: 'plain'
     }]);
+    toastStore.error(message);
   } finally {
-    // As a final safety measure, ensure loading message is removed
+    // The error handlers above also remove the loading message. This is a last safeguard.
     messageStore.update(messages => 
       messages.filter(m => m.format !== 'loading')
     );
   }
 }
-
-  
-/* async function handleSubmit() {
-  if (!userInput.trim()) return;
-
-  try {
-    console.log('\n=== Submit Handler Start ===');
-    
-    if (isYouTubeURL) {
-      console.log('2a. Starting YouTube flow');
-      await processYouTubeURL(userInput);
-      return;
-    }
-    
-    const enhancedPrompt = fileContents.length > 0 
-      ? `${$systemPrompt}\nAnalyze and process the provided content according to these instructions.`
-      : $systemPrompt;
-    
-    // Hide raw content from display but keep it for processing
-    messageStore.update(messages => [...messages, {
-      role: 'system',
-      content: 'Processing content...',
-      format: 'loading'
-    }]);
-    
-    // Store the user input before clearing it
-    const inputText = userInput;
-    
-    // Construct finalContent BEFORE clearing userInput
-    const finalContent = fileContents.length > 0 
-      ? `${inputText}\n\nFile Contents (${uploadedFiles.map(f => f.endsWith('.pdf') ? 'PDF' : 'Text').join(', ')}):\n${fileContents.join('\n\n---\n\n')}`
-      : inputText;
-    
-    // Now clear the input fields
-    userInput = ""; 
-    uploadedFiles = []; 
-    fileContents = []; 
-    fileButtonKey = !fileButtonKey; 
-     
-    await sendMessage(finalContent, enhancedPrompt);
-    
-  } catch (error) {
-    console.error('Chat submission error:', error);
-  }
-} */
-
- 
-
 
   function handleKeydown(event: KeyboardEvent) {
     if (event.key === 'Enter' && !event.shiftKey) {
@@ -531,17 +355,23 @@ async function readFileContent(file: File): Promise<string> {
           </span>
         {/if}
       {#key fileButtonKey}
-        <FileButton
-          name="file-upload"
-          button="btn-icon variant-ghost"
-          bind:files
-          on:change={handleFileUpload}
-          disabled={isProcessingFiles || uploadedFiles.length >= 5}
-          class="h-10 w-10 bg-primary-800/30 hover:bg-primary-800/50 rounded-full transition-colors"
+        <!-- Skeleton 5 replaced FileButton with FileUpload, which draws a drop zone.
+          A label with a hidden file input keeps the old button look and change handler. -->
+        <label
+          class="btn-icon preset-tonal inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-primary-800/30 transition-colors hover:bg-primary-800/50"
+          class:pointer-events-none={isProcessingFiles || uploadedFiles.length >= 5}
+          class:opacity-50={isProcessingFiles || uploadedFiles.length >= 5}
         >
-        <Paperclip class="w-5 h-5" /> 
-       
-        </FileButton>
+          <input
+            type="file"
+            name="file-upload"
+            class="hidden"
+            bind:files
+            on:change={handleFileUpload}
+            disabled={isProcessingFiles || uploadedFiles.length >= 5}
+          />
+          <Paperclip class="w-5 h-5" />
+        </label>
       {/key}
         <Button
           type="button"

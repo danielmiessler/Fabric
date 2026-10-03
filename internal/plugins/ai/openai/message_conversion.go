@@ -10,7 +10,6 @@ type MessageConversionResult struct {
 	HasMultiContent bool
 }
 
-// convertMessageCommon extracts common conversion logic
 func convertMessageCommon(msg chat.ChatCompletionMessage) MessageConversionResult {
 	return MessageConversionResult{
 		Role:            msg.Role,

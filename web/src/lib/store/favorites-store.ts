@@ -1,7 +1,6 @@
 import { writable } from 'svelte/store';
 import { browser } from '$app/environment';
 
-// Load favorites from localStorage if available
 const storedFavorites = browser
   ? JSON.parse(localStorage.getItem('favoritePatterns') || '[]')
   : [];
@@ -17,7 +16,6 @@ const createFavoritesStore = () => {
           ? favorites.filter(name => name !== patternName)
           : [...favorites, patternName];
         
-        // Save to localStorage
         if (browser) {
           localStorage.setItem('favoritePatterns', JSON.stringify(newFavorites));
         }

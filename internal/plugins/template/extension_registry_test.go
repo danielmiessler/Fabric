@@ -13,7 +13,6 @@ func TestRegistryPersistence(t *testing.T) {
 	}
 	defer os.RemoveAll(tmpDir)
 
-	// Create test executable
 	execPath := filepath.Join(tmpDir, "test-exec.sh")
 	execContent := []byte("#!/bin/bash\necho \"test\"")
 	err = os.WriteFile(execPath, execContent, 0755)
@@ -21,7 +20,6 @@ func TestRegistryPersistence(t *testing.T) {
 		t.Fatalf("Failed to create test executable: %v", err)
 	}
 
-	// Create valid config
 	configContent := `name: test-extension
 executable: ` + execPath + `
 type: executable
@@ -36,16 +34,13 @@ operations:
 		t.Fatalf("Failed to create test config: %v", err)
 	}
 
-	// Test registry persistence
 	t.Run("SaveAndReload", func(t *testing.T) {
-		// Create and populate first registry
 		registry1 := NewExtensionRegistry(tmpDir)
 		err := registry1.Register(configPath)
 		if err != nil {
 			t.Fatalf("Failed to register extension: %v", err)
 		}
 
-		// Create new registry instance and verify it loads the saved state
 		registry2 := NewExtensionRegistry(tmpDir)
 		ext, err := registry2.GetExtension("test-extension")
 		if err != nil {
@@ -56,11 +51,10 @@ operations:
 		}
 	})
 
-	// Test hash verification
 	t.Run("HashVerification", func(t *testing.T) {
 		registry := NewExtensionRegistry(tmpDir)
 
-		// Modify executable after registration
+		// Change the executable that SaveAndReload registered so its hash no longer matches.
 		modifiedExecContent := []byte("#!/bin/bash\necho \"modified\"")
 		err := os.WriteFile(execPath, modifiedExecContent, 0755)
 		if err != nil {

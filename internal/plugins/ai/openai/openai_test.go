@@ -12,6 +12,12 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func TestNeedsRawModeGPT6(t *testing.T) {
+	if !NewClient().NeedsRawMode("gpt-6-astra") {
+		t.Fatal("gpt-6 models should use raw mode")
+	}
+}
+
 func TestBuildResponseRequestWithMaxTokens(t *testing.T) {
 
 	var msgs []*chat.ChatCompletionMessage
@@ -212,15 +218,12 @@ func TestBuildResponseParams_GrokAI_WithoutSearch(t *testing.T) {
 }
 
 func TestCitationFormatting(t *testing.T) {
-	// Test the citation formatting logic by simulating the citation extraction
 	var textParts []string
 	var citations []string
 	citationMap := make(map[string]bool)
 
-	// Simulate text content
 	textParts = append(textParts, "Based on recent research, artificial intelligence is advancing rapidly.")
 
-	// Simulate citations (as they would be extracted from OpenAI response)
 	mockCitations := []struct {
 		URL   string
 		Title string
@@ -244,16 +247,13 @@ func TestCitationFormatting(t *testing.T) {
 		result += "\n\n## Sources\n\n" + strings.Join(citations, "\n")
 	}
 
-	// Verify the result contains the expected text
 	expectedText := "Based on recent research, artificial intelligence is advancing rapidly."
 	assert.Contains(t, result, expectedText, "Expected result to contain original text")
 
-	// Verify citations are included
 	assert.Contains(t, result, "## Sources", "Expected result to contain Sources section")
 	assert.Contains(t, result, "[AI Research Advances 2025](https://example.com/ai-research)", "Expected result to contain first citation")
 	assert.Contains(t, result, "[Technology News Today](https://another-source.com/tech-news)", "Expected result to contain second citation")
 
-	// Verify deduplication - should only have 2 unique citations, not 3
 	citationCount := strings.Count(result, "- [")
 	assert.Equal(t, 2, citationCount, "Expected 2 unique citations")
 }

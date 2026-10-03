@@ -108,9 +108,8 @@ func (c *Client) GetPRValidationDetails(prNumber int) (*PRDetails, error) {
 		return nil, fmt.Errorf("failed to get PR %d: %w", prNumber, err)
 	}
 
-	// Only return validation data, no commits fetched
 	details := &PRDetails{
-		PR:        nil, // Will be populated later if needed
+		PR:        nil,
 		State:     getString(ghPR.State),
 		Mergeable: ghPR.Mergeable != nil && *ghPR.Mergeable,
 	}
@@ -138,7 +137,6 @@ func (c *Client) GetPRDetails(prNumber int) (*PRDetails, error) {
 		return nil, fmt.Errorf("failed to get PR %d: %w", prNumber, err)
 	}
 
-	// Reuse the existing logic to build the base PR object
 	pr, err := c.buildPRWithCommits(ctx, ghPR)
 	if err != nil {
 		return nil, fmt.Errorf("failed to build PR details for %d: %w", prNumber, err)
@@ -153,7 +151,6 @@ func (c *Client) GetPRDetails(prNumber int) (*PRDetails, error) {
 	return details, nil
 }
 
-// buildPRWithCommits fetches commits and constructs a PR object from a GitHub API response
 func (c *Client) buildPRWithCommits(ctx context.Context, ghPR *github.PullRequest) (*PR, error) {
 	commits, _, err := c.client.PullRequests.ListCommits(ctx, c.owner, c.repo, *ghPR.Number, nil)
 	if err != nil {
@@ -163,7 +160,6 @@ func (c *Client) buildPRWithCommits(ctx context.Context, ghPR *github.PullReques
 	return c.convertGitHubPR(ghPR, commits), nil
 }
 
-// convertGitHubPR transforms GitHub API data into our internal PR struct (pure function)
 func (c *Client) convertGitHubPR(ghPR *github.PullRequest, commits []*github.RepositoryCommit) *PR {
 
 	result := &PR{
@@ -207,13 +203,12 @@ func (c *Client) convertGitHubPR(ghPR *github.PullRequest, commits []*github.Rep
 			}
 			if commit.Commit.Author != nil {
 				prCommit.Author = getString(commit.Commit.Author.Name)
-				prCommit.Email = getString(commit.Commit.Author.Email) // Extract author email from GitHub API response
-				// Capture actual commit timestamp from GitHub API
+				prCommit.Email = getString(commit.Commit.Author.Email)
 				if commit.Commit.Author.Date != nil {
 					prCommit.Date = commit.Commit.Author.Date.Time
 				}
 			}
-			// Capture parent commit SHAs for merge detection
+			// The changelog package uses the parent list to detect merge commits.
 			if commit.Parents != nil {
 				for _, parent := range commit.Parents {
 					if parent.SHA != nil {
@@ -250,7 +245,6 @@ func (c *Client) FetchAllMergedPRs(since time.Time) ([]*PR, error) {
 	ctx := context.Background()
 	var allPRs []*PR
 
-	// Build search query for merged PRs
 	query := fmt.Sprintf("repo:%s/%s is:pr is:merged", c.owner, c.repo)
 	if !since.IsZero() {
 		query += fmt.Sprintf(" merged:>=%s", since.Format("2006-01-02"))
@@ -260,7 +254,7 @@ func (c *Client) FetchAllMergedPRs(since time.Time) ([]*PR, error) {
 		Sort:  "created",
 		Order: "desc",
 		ListOptions: github.ListOptions{
-			PerPage: 100, // Maximum allowed
+			PerPage: 100, // GitHub maximum
 		},
 	}
 
@@ -270,11 +264,10 @@ func (c *Client) FetchAllMergedPRs(since time.Time) ([]*PR, error) {
 			return allPRs, fmt.Errorf("failed to search PRs: %w", err)
 		}
 
-		// Process PRs in parallel
 		prsChan := make(chan *PR, len(result.Issues))
 		errChan := make(chan error, len(result.Issues))
 		var wg sync.WaitGroup
-		semaphore := make(chan struct{}, 10) // Limit concurrent requests
+		semaphore := make(chan struct{}, 10)
 
 		for _, issue := range result.Issues {
 			if issue.PullRequestLinks == nil {
@@ -303,14 +296,11 @@ func (c *Client) FetchAllMergedPRs(since time.Time) ([]*PR, error) {
 			close(errChan)
 		}()
 
-		// Collect results
 		for pr := range prsChan {
 			allPRs = append(allPRs, pr)
 		}
 
-		// Check for errors
 		for err := range errChan {
-			// Log error but continue processing
 			fmt.Fprintf(os.Stderr, "Warning: %v\n", err)
 		}
 
@@ -332,14 +322,12 @@ func (c *Client) FetchAllMergedPRsGraphQL(since time.Time) ([]*PR, error) {
 	totalFetched := 0
 
 	for {
-		// Prepare variables
 		variables := map[string]any{
 			"owner": graphql.String(c.owner),
 			"repo":  graphql.String(c.repo),
 			"after": (*graphql.String)(after),
 		}
 
-		// Execute GraphQL query
 		var query PullRequestsQuery
 		err := c.graphqlClient.Query(ctx, &query, variables)
 		if err != nil {
@@ -349,9 +337,7 @@ func (c *Client) FetchAllMergedPRsGraphQL(since time.Time) ([]*PR, error) {
 		prs := query.Repository.PullRequests.Nodes
 		fmt.Fprintf(os.Stderr, "Fetched %d PRs via GraphQL (page %d)\n", len(prs), (totalFetched/100)+1)
 
-		// Convert GraphQL PRs to our PR struct
 		for _, gqlPR := range prs {
-			// If we have a since filter, stop when we reach older PRs
 			if !since.IsZero() && gqlPR.MergedAt.Before(since) {
 				fmt.Fprintf(os.Stderr, "Reached PRs older than %s, stopping\n", since.Format("2006-01-02"))
 				return allPRs, nil
@@ -366,7 +352,6 @@ func (c *Client) FetchAllMergedPRsGraphQL(since time.Time) ([]*PR, error) {
 				Commits:  make([]PRCommit, 0, len(gqlPR.Commits.Nodes)),
 			}
 
-			// Handle author - check if it's nil first
 			if gqlPR.Author != nil {
 				pr.Author = gqlPR.Author.Login
 				pr.AuthorURL = gqlPR.Author.URL
@@ -379,36 +364,33 @@ func (c *Client) FetchAllMergedPRsGraphQL(since time.Time) ([]*PR, error) {
 				case "User":
 					pr.AuthorType = "user"
 				default:
-					pr.AuthorType = "user" // fallback
+					pr.AuthorType = "user"
 					if gqlPR.Author.Typename != "" {
 						fmt.Fprintf(os.Stderr, "PR #%d: Unknown author typename '%s'\n", gqlPR.Number, gqlPR.Author.Typename)
 					}
 				}
 			} else {
-				// Author is nil - try to fetch from REST API as fallback
+				// GraphQL returns a nil author for a deleted account. REST still returns a login.
 				fmt.Fprintf(os.Stderr, "PR #%d: Author is nil in GraphQL response, fetching from REST API\n", gqlPR.Number)
 
-				// Fetch this specific PR from REST API
 				restPR, err := c.fetchSinglePR(ctx, gqlPR.Number)
 				if err == nil && restPR != nil && restPR.Author != "" {
 					pr.Author = restPR.Author
 					pr.AuthorURL = restPR.AuthorURL
 					pr.AuthorType = restPR.AuthorType
 				} else {
-					// Fallback if REST API also fails
 					pr.Author = "[unknown]"
 					pr.AuthorURL = ""
 					pr.AuthorType = "user"
 				}
 			}
 
-			// Convert commits
 			for _, commitNode := range gqlPR.Commits.Nodes {
 				commit := PRCommit{
 					SHA:     commitNode.Commit.OID,
 					Message: strings.TrimSpace(commitNode.Commit.Message),
 					Author:  commitNode.Commit.Author.Name,
-					Date:    commitNode.Commit.AuthoredDate, // Use actual commit timestamp
+					Date:    commitNode.Commit.AuthoredDate,
 				}
 				pr.Commits = append(pr.Commits, commit)
 			}
@@ -418,7 +400,6 @@ func (c *Client) FetchAllMergedPRsGraphQL(since time.Time) ([]*PR, error) {
 
 		totalFetched += len(prs)
 
-		// Check if we need to fetch more pages
 		if !query.Repository.PullRequests.PageInfo.HasNextPage {
 			break
 		}

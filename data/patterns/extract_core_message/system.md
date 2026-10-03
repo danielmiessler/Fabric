@@ -37,3 +37,7 @@ END EXAMPLE
 - ONLY OUTPUT THE CORE MESSAGE, not a setup to it, commentary on it, or anything else.
 
 - Do not ask questions or complain in any way about the task.
+
+# INPUT
+
+INPUT:

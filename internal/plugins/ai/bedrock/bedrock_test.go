@@ -23,13 +23,11 @@ func TestNewClient_CreatesAllSetupQuestions(t *testing.T) {
 	require.NotNil(t, client.PluginBase)
 	assert.Equal(t, "Bedrock", client.GetName())
 
-	// Verify all 4 setup questions exist
 	require.NotNil(t, client.bedrockRegion, "bedrockRegion setup question should exist")
 	require.NotNil(t, client.bedrockAPIKey, "bedrockAPIKey setup question should exist")
 	require.NotNil(t, client.bedrockAccessKey, "bedrockAccessKey setup question should exist")
 	require.NotNil(t, client.bedrockSecretKey, "bedrockSecretKey setup question should exist")
 
-	// Region is required, others are optional
 	assert.True(t, client.bedrockRegion.Required, "region should be required")
 	assert.False(t, client.bedrockAPIKey.Required, "API key should be optional")
 	assert.False(t, client.bedrockAccessKey.Required, "access key should be optional")
@@ -39,8 +37,7 @@ func TestNewClient_CreatesAllSetupQuestions(t *testing.T) {
 func TestNewClient_SetupQuestionOrder(t *testing.T) {
 	client := NewClient()
 
-	// Verify question order: Region → API Key → Access Key → Secret Key
-	// (API Key should come before Access/Secret for best UX since it's simplest)
+	// The API key comes before the access keys because it is the simplest auth method.
 	require.Len(t, client.SetupQuestions, 4)
 	assert.Contains(t, client.SetupQuestions[0].EnvVariable, "AWS_REGION")
 	assert.Contains(t, client.SetupQuestions[1].EnvVariable, "API_KEY")
@@ -51,7 +48,6 @@ func TestNewClient_SetupQuestionOrder(t *testing.T) {
 func TestNewClient_DeferredInit(t *testing.T) {
 	client := NewClient()
 
-	// Clients should be nil before configure() — deferred initialization
 	assert.Nil(t, client.runtimeClient, "runtimeClient should be nil before configure()")
 	assert.Nil(t, client.controlPlaneClient, "controlPlaneClient should be nil before configure()")
 }
@@ -81,7 +77,6 @@ func TestConfigure_ValidRegion_BearerToken(t *testing.T) {
 	err := client.configure()
 	assert.NoError(t, err, "configure() should succeed with valid region + API key")
 
-	// Clients should be initialized after configure()
 	assert.NotNil(t, client.runtimeClient, "runtimeClient should be initialized")
 	assert.NotNil(t, client.controlPlaneClient, "controlPlaneClient should be initialized")
 }
@@ -104,7 +99,6 @@ func TestConfigure_ValidRegion_DefaultChain(t *testing.T) {
 	t.Setenv("AWS_PROFILE", "")
 	client := NewClient()
 	client.bedrockRegion.Value = "eu-west-1"
-	// No API key, no access key — should fall back to default credential chain
 
 	err := client.configure()
 	assert.NoError(t, err, "configure() should succeed with valid region and default credential chain")
@@ -115,7 +109,6 @@ func TestConfigure_ValidRegion_DefaultChain(t *testing.T) {
 
 func TestConfigure_BearerTokenPriority(t *testing.T) {
 	t.Setenv("AWS_PROFILE", "")
-	// If both API key and access key are provided, API key (bearer) should win
 	client := NewClient()
 	client.bedrockRegion.Value = "us-east-1"
 	client.bedrockAPIKey.Value = "test-absk-token"
@@ -125,8 +118,8 @@ func TestConfigure_BearerTokenPriority(t *testing.T) {
 	err := client.configure()
 	assert.NoError(t, err, "configure() should succeed when both auth methods are provided")
 
-	// We can't easily inspect which credential provider was used, but at least
-	// verify it initialized successfully (bearer token takes priority)
+	// The test cannot see which credential provider the config uses. It only
+	// checks that configure succeeded.
 	assert.NotNil(t, client.runtimeClient)
 }
 
@@ -155,7 +148,6 @@ func TestIsValidAWSRegion(t *testing.T) {
 func TestBearerTokenTransport_InjectsHeader(t *testing.T) {
 	token := "test-absk-token-12345"
 
-	// Create a transport that records the request
 	var capturedReq *http.Request
 	mockTransport := roundTripFunc(func(req *http.Request) (*http.Response, error) {
 		capturedReq = req
@@ -174,13 +166,10 @@ func TestBearerTokenTransport_InjectsHeader(t *testing.T) {
 	require.NoError(t, err)
 	require.NotNil(t, capturedReq)
 
-	// Verify Authorization header is set
 	assert.Equal(t, "Bearer "+token, capturedReq.Header.Get("Authorization"))
 
-	// Verify original request is NOT modified (clone is used)
 	assert.Empty(t, req.Header.Get("Authorization"), "original request should not be modified")
 
-	// Verify other headers are preserved in clone
 	assert.Equal(t, "preserved", capturedReq.Header.Get("X-Original"))
 }
 
@@ -205,7 +194,6 @@ func TestDefaultBedrockModels_NotEmpty(t *testing.T) {
 func TestListModels_NilClient_WithApiKey_ReturnsFallback(t *testing.T) {
 	client := NewClient()
 	client.bedrockAPIKey.Value = "test-absk-token"
-	// Don't call configure() — clients are nil
 
 	models, err := client.ListModels(context.Background())
 	assert.NoError(t, err, "ListModels should not error when falling back to static list")
@@ -214,7 +202,6 @@ func TestListModels_NilClient_WithApiKey_ReturnsFallback(t *testing.T) {
 
 func TestListModels_NilClient_NoApiKey_ReturnsError(t *testing.T) {
 	client := NewClient()
-	// Don't call configure() and no API key — should propagate error
 
 	_, err := client.ListModels(context.Background())
 	assert.Error(t, err, "ListModels should error when client is nil and no API key for fallback")
@@ -222,7 +209,6 @@ func TestListModels_NilClient_NoApiKey_ReturnsError(t *testing.T) {
 
 func TestSendStream_NilClient_ReturnsError(t *testing.T) {
 	client := NewClient()
-	// Don't call configure() — runtimeClient is nil
 
 	ch := make(chan domain.StreamUpdate, 10)
 	opts := &domain.ChatOptions{Model: "test-model", Temperature: 0.7, TopP: 0.9}
@@ -234,7 +220,6 @@ func TestSendStream_NilClient_ReturnsError(t *testing.T) {
 
 func TestSend_NilClient_ReturnsError(t *testing.T) {
 	client := NewClient()
-	// Don't call configure() — runtimeClient is nil
 
 	opts := &domain.ChatOptions{Model: "test-model"}
 	_, err := client.Send(context.Background(), nil, opts)
@@ -268,7 +253,6 @@ func TestMaskSecret(t *testing.T) {
 func TestSetupModelChoices_NotEmpty(t *testing.T) {
 	assert.NotEmpty(t, setupModelChoices, "setup model choices should not be empty")
 
-	// Should contain both unprefixed and region-prefixed models
 	hasUnprefixed := false
 	hasUS := false
 	hasEU := false
@@ -305,7 +289,7 @@ func TestToMessages(t *testing.T) {
 	result := client.toMessages(msgs)
 	require.Len(t, result, 3)
 
-	// System maps to User in Bedrock
+	// System messages map to the user role.
 	assert.Equal(t, types.ConversationRoleUser, result[0].Role)
 	assert.Equal(t, types.ConversationRoleUser, result[1].Role)
 	assert.Equal(t, types.ConversationRoleAssistant, result[2].Role)
@@ -330,10 +314,8 @@ func TestToMessages_Empty(t *testing.T) {
 	assert.Empty(t, result)
 }
 
-// --- fetchBedrockRegions mock HTTP tests ---
-
-// withMockEndpointsURL temporarily overrides the botocore endpoints URL for testing.
-// NOTE: Not safe with t.Parallel() — tests using this helper must run sequentially.
+// withMockEndpointsURL points botocoreEndpointsURL at url while fn runs. It
+// writes a package variable, so tests that use it must not call t.Parallel().
 func withMockEndpointsURL(url string, fn func()) {
 	orig := botocoreEndpointsURL
 	botocoreEndpointsURL = url
@@ -352,7 +334,6 @@ func TestFetchBedrockRegions_ValidJSON(t *testing.T) {
 		assert.Contains(t, regions, "us-east-1")
 		assert.Contains(t, regions, "eu-west-1")
 		assert.Contains(t, regions, "ap-southeast-1")
-		// bedrock- prefixed should be filtered
 		for _, r := range regions {
 			assert.False(t, len(r) > 8 && r[:8] == "bedrock-", "should filter bedrock- prefix: %s", r)
 		}
@@ -436,7 +417,7 @@ func TestFallbackRegions_NotEmpty(t *testing.T) {
 	}
 }
 
-// roundTripFunc is a helper to create http.RoundTripper from a function
+// roundTripFunc adapts a function to http.RoundTripper.
 type roundTripFunc func(req *http.Request) (*http.Response, error)
 
 func (f roundTripFunc) RoundTrip(req *http.Request) (*http.Response, error) {

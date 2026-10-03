@@ -9,7 +9,6 @@ import (
 )
 
 func TestNewVendorPluginBase(t *testing.T) {
-	// Test with configure function
 	configureCalled := false
 	configureFunc := func() error {
 		configureCalled = true
@@ -22,14 +21,12 @@ func TestNewVendorPluginBase(t *testing.T) {
 	assert.Equal(t, "TESTVENDOR_", plugin.EnvNamePrefix)
 	assert.NotNil(t, plugin.ConfigureCustom)
 
-	// Test that configure function is properly stored
 	err := plugin.ConfigureCustom()
 	assert.NoError(t, err)
 	assert.True(t, configureCalled)
 }
 
 func TestNewVendorPluginBase_NilConfigure(t *testing.T) {
-	// Test with nil configure function
 	plugin := NewVendorPluginBase("TestVendor", nil)
 
 	assert.Equal(t, "TestVendor", plugin.Name)
@@ -38,11 +35,17 @@ func TestNewVendorPluginBase_NilConfigure(t *testing.T) {
 }
 
 func TestNewVendorPluginBase_EnvPrefixWithSpaces(t *testing.T) {
-	// Test that spaces are converted to underscores
 	plugin := NewVendorPluginBase("LM Studio", nil)
 
 	assert.Equal(t, "LM Studio", plugin.Name)
 	assert.Equal(t, "LM_STUDIO_", plugin.EnvNamePrefix)
+}
+
+func TestNewVendorPluginBase_EnvPrefixWithDots(t *testing.T) {
+	plugin := NewVendorPluginBase("llama.cpp", nil)
+
+	assert.Equal(t, "llama.cpp", plugin.Name)
+	assert.Equal(t, "LLAMA_CPP_", plugin.EnvNamePrefix)
 }
 
 func TestConfigurable_AddSetting(t *testing.T) {
@@ -154,7 +157,7 @@ func TestSetupQuestion_Ask(t *testing.T) {
 }
 
 func TestSetupQuestion_Ask_Reset(t *testing.T) {
-	// Test that resetting a required field doesn't produce an error
+	// Reset a required field without error.
 	setting := &Setting{
 		EnvVariable: "TEST_RESET_SETTING",
 		Value:       "existing_value",
@@ -168,9 +171,7 @@ func TestSetupQuestion_Ask_Reset(t *testing.T) {
 	fmtInput := captureInput(input)
 	defer fmtInput()
 	err := question.Ask("TestConfigurable")
-	// Should NOT return an error even though the field is required
 	assert.NoError(t, err)
-	// Value should be cleared
 	assert.Equal(t, "", setting.Value)
 }
 
@@ -272,7 +273,6 @@ func TestSettings_FillEnvFileContent(t *testing.T) {
 	assert.Equal(t, expected, buffer.String())
 }
 
-// captureOutput captures the output of a function call
 func captureOutput(f func()) string {
 	var buf bytes.Buffer
 	stdout := os.Stdout
@@ -285,7 +285,6 @@ func captureOutput(f func()) string {
 	return buf.String()
 }
 
-// captureInput captures the input for a function call
 func captureInput(input string) func() {
 	r, w, _ := os.Pipe()
 	_, _ = w.WriteString(input)

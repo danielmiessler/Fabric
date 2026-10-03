@@ -117,14 +117,11 @@ Some text after.`,
 }
 
 func TestApplyFileChanges(t *testing.T) {
-	// Create a temporary directory for testing
-	// Create a temporary directory for testing
 	tempDir, err := os.MkdirTemp("", "file-manager-test")
 	if err != nil {
 		t.Fatalf("Failed to create temp dir: %v", err)
 	}
 	defer os.RemoveAll(tempDir)
-	// Test file changes
 	changes := []FileChange{
 		{
 			Operation: "create",
@@ -138,12 +135,10 @@ func TestApplyFileChanges(t *testing.T) {
 		},
 	}
 
-	// Apply the changes
 	if err := ApplyFileChanges(tempDir, changes); err != nil {
 		t.Fatalf("ApplyFileChanges() error = %v", err)
 	}
 
-	// Verify the first file was created correctly
 	content, err := os.ReadFile(filepath.Join(tempDir, "test.txt"))
 	if err != nil {
 		t.Fatalf("Failed to read created file: %v", err)
@@ -152,7 +147,6 @@ func TestApplyFileChanges(t *testing.T) {
 		t.Errorf("File content = %q, want %q", string(content), "Hello, World!")
 	}
 
-	// Verify the nested file was created correctly
 	content, err = os.ReadFile(filepath.Join(tempDir, "subdir/nested.txt"))
 	if err != nil {
 		t.Fatalf("Failed to read created nested file: %v", err)
@@ -161,7 +155,6 @@ func TestApplyFileChanges(t *testing.T) {
 		t.Errorf("Nested file content = %q, want %q", string(content), "Nested content")
 	}
 
-	// Test updating a file
 	updateChanges := []FileChange{
 		{
 			Operation: "update",
@@ -170,11 +163,9 @@ func TestApplyFileChanges(t *testing.T) {
 		},
 	}
 
-	// Apply the update
 	if err := ApplyFileChanges(tempDir, updateChanges); err != nil {
 		t.Fatalf("ApplyFileChanges() error = %v", err)
 	}
-	// Verify the file was updated correctly
 	content, err = os.ReadFile(filepath.Join(tempDir, "test.txt"))
 	if err != nil {
 		t.Fatalf("Failed to read updated file: %v", err)

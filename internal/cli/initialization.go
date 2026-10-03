@@ -13,7 +13,6 @@ import (
 const ConfigDirPerms os.FileMode = 0755
 const EnvFilePerms os.FileMode = 0644
 
-// initializeFabric initializes the fabric database and plugin registry
 func initializeFabric() (registry *core.PluginRegistry, err error) {
 	var homedir string
 	if homedir, err = os.UserHomeDir(); err != nil {
@@ -32,8 +31,7 @@ func initializeFabric() (registry *core.PluginRegistry, err error) {
 	return
 }
 
-// ensureEnvFile checks for the default ~/.config/fabric/.env file and creates it
-// along with the parent directory if it does not exist.
+// ensureEnvFile creates ~/.config/fabric/.env and its parent directory when the file does not exist.
 func ensureEnvFile() (err error) {
 	var homedir string
 	if homedir, err = os.UserHomeDir(); err != nil {

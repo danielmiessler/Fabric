@@ -24,6 +24,43 @@ type authTransport struct {
 }
 
 func (c *Client) ensureAccessToken(ctx context.Context, forceRefresh bool) (string, string, error) {
+	// A valid in-memory token needs no refresh, so skip the store lock and the disk reload.
+	// The reload would replace the fresh tokens from Setup with stale values from disk until SaveEnvFile runs.
+	if !forceRefresh {
+		if access, account, ok := c.currentToken(); ok {
+			return access, account, nil
+		}
+	}
+	if c.WithStoreLock == nil {
+		return c.ensureAccessTokenLocked(ctx, forceRefresh)
+	}
+	var access, account string
+	err := c.WithStoreLock(func() error {
+		var inner error
+		access, account, inner = c.ensureAccessTokenLocked(ctx, forceRefresh)
+		return inner
+	})
+	if err != nil {
+		return "", "", err
+	}
+	return access, account, nil
+}
+
+// currentToken returns the in-memory token when it is present and not expired.
+// When the account ID is missing, the locked path parses it from the JWT.
+func (c *Client) currentToken() (access string, account string, ok bool) {
+	c.tokenMu.Lock()
+	defer c.tokenMu.Unlock()
+
+	access = strings.TrimSpace(c.AccessToken.Value)
+	account = strings.TrimSpace(c.AccountID.Value)
+	if access == "" || account == "" || tokenNeedsRefresh(access, time.Now()) {
+		return "", "", false
+	}
+	return access, account, true
+}
+
+func (c *Client) ensureAccessTokenLocked(ctx context.Context, forceRefresh bool) (string, string, error) {
 	c.tokenMu.Lock()
 	defer c.tokenMu.Unlock()
 
@@ -61,7 +98,13 @@ func (c *Client) ensureAccessToken(ctx context.Context, forceRefresh bool) (stri
 		c.setSettingValue(c.RefreshToken, refreshed.RefreshToken)
 	}
 	c.setSettingValue(c.AccountID, refreshedAccountID)
-	debuglog.Debug(debuglog.Detailed, "Codex access token refreshed for account=%s\n", refreshedAccountID)
+	if c.TokenPersist != nil {
+		if err := c.TokenPersist(); err != nil {
+			debuglog.Log("Codex token persist failed: %v\n", err)
+			return "", "", fmt.Errorf(i18n.T("codex_token_persist_failed"), err)
+		}
+	}
+	debuglog.Debug(debuglog.Detailed, "Codex access token refreshed account_present=%t\n", refreshedAccountID != "")
 
 	return c.AccessToken.Value, c.AccountID.Value, nil
 }
@@ -181,7 +224,7 @@ func cloneRequest(req *http.Request) (*http.Request, error) {
 	if req.Body == nil || req.Body == http.NoBody {
 		return clone, nil
 	}
-	// Codex retry logic assumes GetBody is available so the request can be replayed after refresh.
+	// The 401 retry replays the request, so it needs GetBody.
 	if req.GetBody == nil {
 		return nil, errReplayBodyUnavailable
 	}

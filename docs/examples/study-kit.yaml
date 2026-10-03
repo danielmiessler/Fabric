@@ -1,0 +1,10 @@
+# Turn a lecture or talk into flash cards.
+#
+#   fabric -y "https://youtu.be/<id>" | fabric --workflow docs/examples/study-kit.yaml -o cards.md
+name: study-kit
+steps:
+  # Structured notes with the key concepts.
+  - pattern: summarize_lecture
+  # Question and answer cards from the notes.
+  # For a quiz, use create_quiz instead.
+  - pattern: create_flash_cards

@@ -125,7 +125,6 @@ func TestNeedsRawModeInheritsFromParent(t *testing.T) {
 }
 
 func TestMiddlewareResponsesRoute(t *testing.T) {
-	// Verify /responses is in the deployment routes by testing the middleware
 	body := `{"model": "gpt-5"}`
 	req, err := http.NewRequest("POST", "https://example.com/openai/responses", io.NopCloser(bytes.NewReader([]byte(body))))
 	if err != nil {

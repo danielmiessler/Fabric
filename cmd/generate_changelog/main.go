@@ -24,7 +24,7 @@ var rootCmd = &cobra.Command{
 collects version information and pull requests, and generates a
 comprehensive changelog in markdown format.`,
 	RunE:         run,
-	SilenceUsage: true, // Don't show usage on runtime errors, only on flag errors
+	SilenceUsage: true, // show usage only for flag errors
 }
 
 func init() {
@@ -45,6 +45,7 @@ func init() {
 	rootCmd.Flags().BoolVar(&cfg.Push, "push", false, "Enable automatic git push after creating an incoming entry")
 	rootCmd.Flags().BoolVar(&cfg.SyncDB, "sync-db", false, "Synchronize and validate database integrity with git history and GitHub PRs")
 	rootCmd.Flags().StringVar(&cfg.Release, "release", "", "Update GitHub release description with AI summary for version (e.g., v1.2.3)")
+	rootCmd.Flags().BoolVar(&cfg.ClosedOK, "closed-ok", false, "Allow processing a PR that is already closed/merged (skips open-state check)")
 }
 
 func run(cmd *cobra.Command, args []string) error {
@@ -102,11 +103,10 @@ func run(cmd *cobra.Command, args []string) error {
 }
 
 func main() {
-	// Load .env file from the same directory as the binary
+	// Load the .env file next to the binary.
 	if exePath, err := os.Executable(); err == nil {
 		envPath := filepath.Join(filepath.Dir(exePath), ".env")
 		if _, err := os.Stat(envPath); err == nil {
-			// .env file exists, load it
 			if err := godotenv.Load(envPath); err != nil {
 				fmt.Fprintf(os.Stderr, "Warning: Failed to load .env file: %v\n", err)
 			}

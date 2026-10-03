@@ -3952,5 +3952,3 @@ NOTE: Those were just to show you how all my custom stuff is actually implemente
 - Ensure YOU HAVE NOT CHANGED THE INPUT CONTENT—only the formatting. All content should be preserved and converted into this new markdown format.
  
 # INPUT
-
-{{input}}

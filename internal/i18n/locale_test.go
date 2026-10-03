@@ -6,12 +6,10 @@ import (
 )
 
 func TestDetectSystemLocale(t *testing.T) {
-	// Save original environment
 	originalLC_ALL := os.Getenv("LC_ALL")
 	originalLC_MESSAGES := os.Getenv("LC_MESSAGES")
 	originalLANG := os.Getenv("LANG")
 
-	// Clean up after test
 	defer func() {
 		os.Setenv("LC_ALL", originalLC_ALL)
 		os.Setenv("LC_MESSAGES", originalLC_MESSAGES)
@@ -94,7 +92,6 @@ func TestDetectSystemLocale(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			// Set test environment
 			os.Setenv("LC_ALL", tt.LC_ALL)
 			os.Setenv("LC_MESSAGES", tt.LC_MESSAGES)
 			os.Setenv("LANG", tt.LANG)
@@ -112,7 +109,7 @@ func TestNormalizeLocale(t *testing.T) {
 		input    string
 		expected string
 	}{
-		// Standard Unix locale formats
+		// POSIX locale strings
 		{"en_US.UTF-8", "en-US"},
 		{"fr_FR.ISO8859-1", "fr-FR"},
 		{"de_DE@euro", "de-DE"},
@@ -128,12 +125,12 @@ func TestNormalizeLocale(t *testing.T) {
 		{"fr", "fr"},
 		{"zh", "zh"},
 
-		// Special cases
+		// C and POSIX mean no locale
 		{"C", ""},
 		{"POSIX", ""},
 		{"", ""},
 
-		// Complex cases
+		// Modifiers with values and scripts
 		{"pt_BR.UTF-8@currency=BRL", "pt-BR"},
 		{"sr_RS.UTF-8@latin", "sr-RS"},
 		{"uz_UZ.UTF-8@cyrillic", "uz-UZ"},
@@ -154,7 +151,6 @@ func TestIsValidLocale(t *testing.T) {
 		input    string
 		expected bool
 	}{
-		// Valid locales
 		{"en", true},
 		{"en-US", true},
 		{"fr-FR", true},
@@ -163,15 +159,12 @@ func TestIsValidLocale(t *testing.T) {
 		{"pt-BR", true},
 		{"es-MX", true},
 
-		// Invalid locales
 		{"", false},
 		{"invalid", false},
-		{"123", false}, // Numbers
+		{"123", false},
 
-		// Note: golang.org/x/text/language is quite lenient and accepts:
-		// - "en-ZZ" (unknown country codes are allowed)
-		// - "en_US" (underscores are normalized to hyphens)
-		// These are actually valid according to the language package
+		// language.Parse also accepts "en-ZZ" (unknown region) and "en_US" (underscore),
+		// so those are not invalid cases.
 	}
 
 	for _, tt := range tests {
@@ -185,12 +178,10 @@ func TestIsValidLocale(t *testing.T) {
 }
 
 func TestGetPreferredLocale(t *testing.T) {
-	// Save original environment
 	originalLC_ALL := os.Getenv("LC_ALL")
 	originalLC_MESSAGES := os.Getenv("LC_MESSAGES")
 	originalLANG := os.Getenv("LANG")
 
-	// Clean up after test
 	defer func() {
 		os.Setenv("LC_ALL", originalLC_ALL)
 		os.Setenv("LC_MESSAGES", originalLC_MESSAGES)
@@ -237,7 +228,6 @@ func TestGetPreferredLocale(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			// Set test environment
 			os.Setenv("LC_ALL", tt.LC_ALL)
 			os.Setenv("LC_MESSAGES", tt.LC_MESSAGES)
 			os.Setenv("LANG", tt.LANG)
@@ -251,18 +241,15 @@ func TestGetPreferredLocale(t *testing.T) {
 }
 
 func TestIntegrationWithInit(t *testing.T) {
-	// Save original environment
 	originalLC_ALL := os.Getenv("LC_ALL")
 	originalLANG := os.Getenv("LANG")
 
-	// Clean up after test
 	defer func() {
 		os.Setenv("LC_ALL", originalLC_ALL)
 		os.Setenv("LANG", originalLANG)
-		translator = nil // Reset global state
+		translator = nil
 	}()
 
-	// Test that Init uses environment variables when no explicit locale provided
 	os.Setenv("LC_ALL", "es_ES.UTF-8")
 	os.Setenv("LANG", "fr_FR.UTF-8")
 
@@ -275,12 +262,11 @@ func TestIntegrationWithInit(t *testing.T) {
 		t.Error("Expected non-nil localizer")
 	}
 
-	// Reset translator to test T() function auto-initialization
+	// T must run Init itself when translator is nil.
 	translator = nil
 	os.Setenv("LC_ALL", "")
 	os.Setenv("LANG", "es_ES.UTF-8")
 
-	// This should trigger auto-initialization with environment detection
 	result := T("html_readability_error")
 	if result == "" {
 		t.Error("Expected non-empty translation result")

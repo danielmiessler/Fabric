@@ -139,6 +139,15 @@ const docTemplate = `{
                             "$ref": "#/definitions/fsdb.Pattern"
                         }
                     },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
@@ -346,7 +355,6 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "language": {
-                    "description": "Add Language field to bind from request",
                     "type": "string"
                 },
                 "maxTokens": {
@@ -411,9 +419,6 @@ const docTemplate = `{
                 "topP": {
                     "type": "number",
                     "format": "float64"
-                },
-                "updateChan": {
-                    "type": "object"
                 },
                 "voice": {
                     "type": "string"

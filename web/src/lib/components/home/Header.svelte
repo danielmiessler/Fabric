@@ -1,7 +1,6 @@
 <script lang="ts">
   import { page } from '$app/stores';
   import { Sun, Moon, Menu, X, Github, FileText } from 'lucide-svelte';
-  import { Avatar } from '@skeletonlabs/skeleton';
   import { fade } from 'svelte/transition';
   import { theme, cycleTheme, initTheme } from '$lib/store/theme-store';
   import { onMount } from 'svelte';
@@ -30,9 +29,7 @@
   const navItems = [
     { href: '/', label: 'Home' },
     { href: '/posts', label: 'Posts' },
-    // { href: '/tags', label: 'Tags' },
     { href: '/chat', label: 'Chat' },
-    //{ href: '/obsidian', label: 'Obsidian' },
     { href: '/contact', label: 'Contact' },
     { href: '/about', label: 'About' },
   ];
@@ -45,18 +42,18 @@
 <header class="fixed top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
   <div class="container flex h-16 items-center justify-between px-4">
     <div class="flex items-center gap-4">
-      <Avatar 
-        src="/fabric-logo.png" 
-        width="w-10" 
-        rounded="rounded-full" 
-        class="border-2 border-primary/20"
+      <!-- The Skeleton 5 Avatar is a compound component for a picture with a
+        fallback. A plain image gives the same result for a fixed logo. -->
+      <img
+        src="/fabric-logo.png"
+        alt="Fabric logo"
+        class="aspect-square w-10 rounded-full border-2 border-primary/20 object-cover"
       />
       <a href="/" class="flex items-center">
         <span class="text-lg font-semibold">fabric</span>
       </a>
     </div>
 
-    <!-- Desktop Navigation -->
     <nav class="hidden flex-1 px-8 md:flex">
       <ul class="flex items-center space-x-8">
         {#each navItems as { href, label }}
@@ -73,9 +70,7 @@
     </nav>
 
     <div class="flex items-center gap-4">
-      <!-- Pattern Buttons Group -->
       <div class="flex items-center gap-3 mr-4">
-        <!-- Pattern Tiles Button -->
         <button name="pattern-tiles"
           on:click={() => showPatternTilesModal = true}
           class="inline-flex h-10 items-center justify-center rounded-full border bg-background px-4 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground gap-2"
@@ -85,10 +80,8 @@
           <span>Pattern Tiles</span>
         </button>
         
-        <!-- Or text -->
         <span class="text-sm text-foreground/60 mx-1">or</span>
         
-        <!-- Pattern List Button -->
         <button name="pattern-list"
           on:click={() => showPatternModal = true}
           class="inline-flex h-10 items-center justify-center rounded-full border bg-background px-4 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground gap-2"
@@ -131,7 +124,6 @@
         <span class="sr-only">Help</span>
       </button>
 
-      <!-- Mobile Menu Button -->
       <button name="toggle-menu"
         class="inline-flex h-9 w-9 items-center justify-center rounded-lg border bg-background text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground md:hidden"
         on:click={toggleMenu}
@@ -147,7 +139,6 @@
     </div>
   </div>
 
-  <!-- Mobile Navigation -->
   {#if isMenuOpen}
     <div class="container md:hidden" transition:fade={{ duration: 200 }}>
       <nav class="flex flex-col space-y-4 p-4">

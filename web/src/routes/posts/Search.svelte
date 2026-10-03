@@ -4,7 +4,7 @@
   import Card from '$lib/components/ui/cards/card.svelte';
   import { slide } from 'svelte/transition';
   import { elasticOut, quintOut } from 'svelte/easing';
-  import { InputChip } from '@skeletonlabs/skeleton';
+  import TagsInputField from '$lib/components/ui/tagsInput/TagsInputField.svelte';
 
   let cards = false;
   let searchQuery = '';
@@ -14,7 +14,6 @@
   export let data: PageData;
   $: posts = data.posts;
 
-  // Extract all unique tags from Posts
   $: {
     const tagSet = new Set<string>();
     posts.forEach(post => {
@@ -23,7 +22,6 @@
     allTags = Array.from(tagSet);
   }
 
-  // Filter posts based on selected tags-container
   $: filteredPosts = posts.filter(post => {
     if (selectedTags.length === 0) return true;
     return selectedTags.every(tag =>
@@ -38,132 +36,16 @@
   let visible: boolean = true;
 </script>
 
-<!-- This file can be deleted, It think it has better search functionality but it needs work to ...work
-Could this be the new component for the search bar?
+<!-- No file imports this component. -->
 
-<script lang="ts">
-	import { formatDistance } from 'date-fns';
-	import type { PageData } from './$types';
-	import Card from '$lib/components/ui/cards/card.svelte';
-  	import { Youtube } from 'svelte-youtube-lite';
-	import { slide } from 'svelte/transition';
-	import { elasticOut, quintOut } from 'svelte/easing';
-	import { InputChip } from '@skeletonlabs/skeleton';
-
-	let cards = false;
-	let searchQuery = '';
-	let selectedTags: string[] = [];
-	let allTags: string[] = [];
-
-	export let data: PageData;
-	$: posts = data.posts;
-	
-	// Extract all unique tags from posts
-	$: {
-		const tagSet = new Set<string>();
-		posts.forEach(post => {
-			post.meta.tags.forEach(tag => tagSet.add(tag));
-		});
-		allTags = Array.from(tagSet);
-	}
-
-	// Filter posts based on selected tags
-	$: filteredPosts = posts.filter(post => {
-		if (selectedTags.length === 0) return true;
-		return selectedTags.every(tag => 
-			post.meta.tags.some(postTag => postTag.toLowerCase() === tag.toLowerCase())
-		);
-	});
-
-	function validateTag(value: string): boolean {
-		return allTags.some(tag => tag.toLowerCase() === value.toLowerCase());
-	}
-
-	let visible: boolean = true;
-</script>
-
-<div class="container py-12">
-	<h1 class="mb-4 text-3xl font-bold">Blog Posts</h1>
-	<p class="text-sm mb-4 font-small">This blog is maintained in an Obsidian Vault</p>
-
-	<div >
-	  <div class="container mx-auto ml-auto grid grid-cols-1 md:grid-cols-2 gap-4 justify-end">
-	    <div class="container mx-auto justify-left">
-	      	<img src="https://img.shields.io/github/languages/top/danielmiessler/fabric" alt="Github top language">
-	      	<img src="https://img.shields.io/github/last-commit/danielmiessler/fabric" alt="GitHub last commit">
-	      	<img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License">
-	      	<br>
-	      	<hr class="!border-t-4" />
-	      	<br>
-	      	<h4 class="h4"><b>Leverage Proven Patterns</b></h4>
-	      	<br>
-	      	<Youtube id="UbDyjIIGaxQ" title="Network Chuck Explains fabric" />
-			<p>Post your favorite videos.</p>
-	      	<br>
-
-	    </div>
-		<div>
-		<h4 class="h4"><b>Share Your Most Important Thoughts and Ideas</b></h4>
-		<br>
-	    <Card
-	        header="Let Your Voice Be Heard"
-	        imageUrl="/brain.png"
-	        imageAlt="Blog post header image"
-	        title="Blogging, Podcasting, Videos, and More."
-	        content="What will you create?"
-	        authorName="Your Name Here"
-	        authorAvatarUrl=""
-	        link="/"
-	    />
-		</div>
-	  </div>
-
-	  <div class="container mx-auto ml-auto grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
-	    <Card
-	        header="Curate Your Content"
-	        imageUrl="/electric.png"
-	        imageAlt="Blog post header image"
-	        title="Enter a new title here"
-	        content="What will you share"
-	        authorName="Your Name Here"
-	        authorAvatarUrl=""
-	        link="/"
-	    />
-	    <div class="container mx-auto justify-right">
-	      <blockquote class="blockquote">There are countless use cases for AI. What will you use if for?</blockquote>
-	    </div>
-	  </div>
-	  <div class="container mx-auto ml-auto grid grid-cols-1 md:grid-cols-2 gap-4 justify-end mt-8 pb-8">
-	    <div class="container mx-auto justify-left">
-	      <hr class="!border-t-4" />
-	      <br>
-	      <h4 class="h4">Showcase your interests. Tell people what you've been working on. Create your community.</h4>
-	    </div>
-
-	    <Card
-	        header="Explore the Possibilities"
-	        imageUrl=""
-	        imageAlt="Blog post header image"
-	        title="Enter a new title here"
-	        content="What will you share?"
-	        authorName="Your Name Here"
-	        authorAvatarUrl=""
-	        link="/"
-	    />
-	  </div>
-	</div>
--->
-
-	<!-- Tag search and filter section -->
 <div class="mb-6">
   <div class="flex flex-col gap-4">
     <div class="flex flex-col gap-2">
-      <InputChip
+      <TagsInputField
         bind:value={selectedTags}
         name="tags"
         placeholder="Search and press Enter to add tags..."
         validation={validateTag}
-        allowDuplicates={false}
         class="input"
       />
       <div class="tags-container overflow-x-auto pb-2">
@@ -193,7 +75,7 @@ Could this be the new component for the search bar?
 
 {#if filteredPosts.length === 0}
   {#if !visible}
-    <aside class="alert variant-ghost">
+    <aside class="alert preset-tonal">
       <div>(icon)</div>
       <slot:fragment href="./+error.svelte" />
       <div class="alert-actions">(buttons)</div>
@@ -233,7 +115,6 @@ Could this be the new component for the search bar?
 
       </article>
     {/each}
-    <!-- 	<Paginator records={posts} limit={6} buttonClass="btn" /> -->
   </div>
 {/if}
 

@@ -4,14 +4,14 @@ import (
 	"github.com/danielmiessler/fabric/internal/core"
 )
 
-// handleConfigurationCommands handles configuration-related commands
-// Returns (handled, error) where handled indicates if a command was processed and should exit
+// handleConfigurationCommands runs the pattern update and default model commands.
+// It returns handled = true when a command ran and the caller must exit.
 func handleConfigurationCommands(currentFlags *Flags, registry *core.PluginRegistry) (handled bool, err error) {
 	if currentFlags.UpdatePatterns {
 		if err = registry.PatternsLoader.PopulateDB(); err != nil {
 			return true, err
 		}
-		// Save configuration in case any paths were migrated during pattern loading
+		// PopulateDB can change the patterns folder path. Save the env file so the new path persists.
 		err = registry.SaveEnvFile()
 		return true, err
 	}

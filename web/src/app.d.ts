@@ -1,9 +1,4 @@
-// See https://kit.svelte.dev/docs/types#app
-// for information about these interfaces
-// and what to do when importing types
+// See https://svelte.dev/docs/kit/types#app.d.ts for the App interfaces
+// and for how to import types into this file.
 declare namespace App {
-	// interface Locals {}
-	// interface PageData {}
-	// interface Error {}
-	// interface Platform {}
 }

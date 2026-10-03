@@ -63,7 +63,7 @@ func TestSortModels(t *testing.T) {
 
 	result := sortModels(input)
 
-	// Verify order: Gemini first, then Claude, then others (alphabetically within each group)
+	// Gemini, then Claude, then others. Alphabetical within a group.
 	expected := []string{
 		"gemini-2.0-flash",
 		"gemini-pro",
@@ -96,7 +96,6 @@ func TestModelPriority(t *testing.T) {
 }
 
 func TestListPublisherModels_Success(t *testing.T) {
-	// Create mock server
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		assert.Equal(t, http.MethodGet, r.Method)
 		assert.Contains(t, r.URL.Path, "/v1/publishers/google/models")
@@ -112,8 +111,7 @@ func TestListPublisherModels_Success(t *testing.T) {
 	}))
 	defer server.Close()
 
-	// Note: This test would need to mock the actual API endpoint
-	// For now, we just verify the mock server works
+	// This test does not call listPublisherModels. It only checks the mock server.
 	resp, err := http.Get(server.URL + "/v1/publishers/google/models")
 	require.NoError(t, err)
 	defer resp.Body.Close()
@@ -154,7 +152,6 @@ func TestListPublisherModels_Pagination(t *testing.T) {
 	}))
 	defer server.Close()
 
-	// Verify the server handles pagination correctly
 	resp, err := http.Get(server.URL + "/page1")
 	require.NoError(t, err)
 	resp.Body.Close()
@@ -191,7 +188,6 @@ func TestNewClient(t *testing.T) {
 }
 
 func TestPublishersListComplete(t *testing.T) {
-	// Verify supported publishers are in the list
 	expectedPublishers := []string{"google", "anthropic"}
 
 	assert.Equal(t, expectedPublishers, publishers)
@@ -202,7 +198,6 @@ func TestIsConversationalModel(t *testing.T) {
 		model    string
 		expected bool
 	}{
-		// Conversational models (should return true)
 		{"gemini-2.0-flash", true},
 		{"gemini-2.5-pro", true},
 		{"claude-sonnet-4-5", true},
@@ -211,7 +206,6 @@ func TestIsConversationalModel(t *testing.T) {
 		{"llama-3.1-405b", true},
 		{"mistral-large", true},
 
-		// Non-conversational models (should return false)
 		{"imagen-3.0-capability-002", false},
 		{"imagen-4.0-fast-generate-001", false},
 		{"imagegeneration", false},

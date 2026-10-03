@@ -43,12 +43,12 @@ func CreateOutputFile(message string, fileName string) (err error) {
 
 // CreateAudioOutputFile creates a binary file for audio data
 func CreateAudioOutputFile(audioData []byte, fileName string) (err error) {
-	// If no extension is provided, default to .wav
 	if filepath.Ext(fileName) == "" {
 		fileName += ".wav"
 	}
 
-	// File existence check is now done in the CLI layer before TTS generation
+	// Unlike CreateOutputFile, this function overwrites and prints nothing.
+	// handleChatProcessing checks for an existing file before the TTS call and prints the success message.
 	var file *os.File
 	if file, err = os.Create(fileName); err != nil {
 		err = fmt.Errorf(i18n.T("error_creating_audio_file"), err)
@@ -59,7 +59,6 @@ func CreateAudioOutputFile(audioData []byte, fileName string) (err error) {
 	if _, err = file.Write(audioData); err != nil {
 		err = fmt.Errorf(i18n.T("error_writing_audio_data"), err)
 	}
-	// No redundant output message here - the CLI layer handles success messaging
 	return
 }
 

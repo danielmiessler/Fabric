@@ -1,12 +1,8 @@
 //go:build integration
 
-// Integration tests for Spotify API.
-// These tests require valid Spotify API credentials to run.
-// Run with: go test -tags=integration ./internal/tools/spotify/...
-//
-// Required environment variables:
-// - SPOTIFY_CLIENT_ID: Your Spotify Developer Client ID
-// - SPOTIFY_CLIENT_SECRET: Your Spotify Developer Client Secret
+// Integration tests for the Spotify API. They need real credentials in
+// SPOTIFY_CLIENT_ID and SPOTIFY_CLIENT_SECRET and run only with
+// go test -tags=integration ./internal/tools/spotify/...
 
 package spotify
 
@@ -15,17 +11,11 @@ import (
 	"testing"
 )
 
-// Known public Spotify shows/episodes for testing.
-// NOTE: These IDs are for The Joe Rogan Experience, one of the most popular
-// podcasts on Spotify. If these become unavailable, update with another
-// well-known, long-running podcast.
+// The Joe Rogan Experience show and one of its episodes.
 const (
-	// The Joe Rogan Experience - one of the most popular podcasts on Spotify
 	// cspell:disable-next-line
 	testShowID = "4rOoJ6Egrf8K2IrywzwOMk"
-	// A valid episode URL (episode of JRE)
-	// NOTE: If this specific episode is removed, the test will fail.
-	// Replace with any valid episode ID from the show.
+	// If Spotify removes this episode, use the ID of any other episode of the show.
 	testEpisodeID = "512ojhOuo1ktJprKbVcKyQ"
 )
 
@@ -190,7 +180,6 @@ func TestIntegration_FormatMetadataAsText(t *testing.T) {
 		t.Error("FormatMetadataAsText returned empty string")
 	}
 
-	// Just log the output for manual inspection
 	t.Logf("Formatted metadata:\n%s", text)
 }
 
@@ -217,19 +206,16 @@ func TestIntegration_GetEpisodeMetadata_InvalidID(t *testing.T) {
 func TestIntegration_SearchShows_NoResults(t *testing.T) {
 	s := setupIntegrationClient(t)
 
-	// Search for something extremely unlikely to exist
 	// cspell:disable-next-line
 	result, err := s.SearchShows("xyzzy_nonexistent_podcast_12345_zyxwv", 5)
 	if err != nil {
 		t.Fatalf("SearchShows failed: %v", err)
 	}
 
-	// Should return empty results, not an error
 	if result == nil {
 		t.Fatal("SearchShows returned nil result")
 	}
 
-	// Log warning if we somehow got results for this nonsense query
 	if len(result.Shows) > 0 {
 		t.Logf("WARNING: Unexpectedly found %d results for nonsense query (test may need updating)", len(result.Shows))
 	} else {

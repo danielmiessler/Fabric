@@ -4,7 +4,7 @@ import "github.com/danielmiessler/fabric/internal/chat"
 
 const ChatMessageRoleMeta = "meta"
 
-// Default values for chat options (must match cli/flags.go defaults)
+// Default chat options. They must match the defaults in internal/cli/flags.go.
 const (
 	DefaultTemperature      = 0.7
 	DefaultTopP             = 0.9
@@ -53,20 +53,25 @@ type ChatOptions struct {
 	NotificationCommand string
 	ShowMetadata        bool
 	Quiet               bool
-	UpdateChan          chan StreamUpdate `json:"-"`
+	// SessionID is a stable identifier for the current conversation. Providers
+	// that support session-based routing (e.g. OpenCode) forward it as a header.
+	// It is derived internally and must not be part of the REST API surface.
+	SessionID    string            `json:"-"`
+	BufferStream bool              // collect streamed content without printing it
+	UpdateChan   chan StreamUpdate `json:"-"`
 }
 
 // NormalizeMessages remove empty messages and ensure messages order user-assist-user
 func NormalizeMessages(msgs []*chat.ChatCompletionMessage, defaultUserMessage string) (ret []*chat.ChatCompletionMessage) {
-	// Iterate over messages to enforce the odd position rule for user messages
 	fullMessageIndex := 0
 	for _, message := range msgs {
 		if message.Content == "" {
-			// Skip empty messages as the anthropic API doesn't accept them
+			// The Anthropic API rejects empty messages.
 			continue
 		}
 
-		// Ensure, that each odd position shall be a user message
+		// The message at each even index must come from the user.
+		// Insert a default user message when it does not.
 		if fullMessageIndex%2 == 0 && message.Role != chat.ChatMessageRoleUser {
 			ret = append(ret, &chat.ChatCompletionMessage{Role: chat.ChatMessageRoleUser, Content: defaultUserMessage})
 			fullMessageIndex++

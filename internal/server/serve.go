@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 
 	"github.com/danielmiessler/fabric/internal/core"
+	"github.com/danielmiessler/fabric/internal/i18n"
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -27,9 +28,12 @@ import (
 // @in header
 // @name X-API-Key
 func Serve(registry *core.PluginRegistry, address string, apiKey string) (err error) {
+	if err = requireAPIKeyForBind(address, apiKey); err != nil {
+		return err
+	}
+
 	r := gin.New()
 
-	// Middleware
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
 
@@ -49,17 +53,14 @@ func Serve(registry *core.PluginRegistry, address string, apiKey string) (err er
 	if apiKey != "" {
 		r.Use(APIKeyMiddleware(apiKey))
 	} else {
-		slog.Warn("Starting REST API server without API key authentication. This may pose security risks.")
+		slog.Warn(i18n.T("server_no_api_key_warning"))
 	}
 
 	// Swagger UI and documentation endpoint with custom YAML handler
 	r.GET("/swagger/*any", func(c *gin.Context) {
-		// Check if request is for swagger.yaml
 		if c.Param("any") == "/swagger.yaml" {
-			// Try to find swagger.yaml relative to current directory or executable
 			yamlPath := "docs/swagger.yaml"
 			if _, err := os.Stat(yamlPath); os.IsNotExist(err) {
-				// Try relative to executable
 				if exePath, err := os.Executable(); err == nil {
 					yamlPath = filepath.Join(filepath.Dir(exePath), "docs", "swagger.yaml")
 				}
@@ -78,7 +79,6 @@ func Serve(registry *core.PluginRegistry, address string, apiKey string) (err er
 		ginSwagger.WrapHandler(swaggerFiles.Handler)(c)
 	})
 
-	// Register routes
 	fabricDb := registry.Db
 	NewPatternsHandler(r, fabricDb.Patterns)
 	NewContextsHandler(r, fabricDb.Contexts)
@@ -89,7 +89,6 @@ func Serve(registry *core.PluginRegistry, address string, apiKey string) (err er
 	NewModelsHandler(r, registry.VendorManager)
 	NewStrategiesHandler(r)
 
-	// Start server
 	err = r.Run(address)
 	if err != nil {
 		return err

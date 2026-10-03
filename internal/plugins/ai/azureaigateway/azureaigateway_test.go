@@ -26,12 +26,10 @@ func TestMain(m *testing.M) {
 	os.Exit(m.Run())
 }
 
-// --- Bedrock Backend Tests ---
-
 func TestBedrockBuildEndpoint(t *testing.T) {
 	b := NewBedrockBackend("key")
 	got := b.BuildEndpoint("https://gw.example.com", "us.anthropic.claude-3-haiku-20240307-v1:0")
-	// url.PathEscape preserves colons since they're valid in path segments
+	// url.PathEscape keeps the colon, which is valid in a path segment.
 	want := "https://gw.example.com/model/us.anthropic.claude-3-haiku-20240307-v1:0/invoke"
 	if got != want {
 		t.Errorf("BuildEndpoint() = %q, want %q", got, want)
@@ -90,7 +88,6 @@ func TestBedrockPrepareRequestSystemMessages(t *testing.T) {
 		t.Fatalf("failed to unmarshal body: %v", err)
 	}
 
-	// System messages should be in top-level "system" field, not in messages array
 	systemField, ok := body["system"]
 	if !ok {
 		t.Fatal("expected 'system' field in request body")
@@ -228,10 +225,7 @@ func TestBedrockParseResponseInvalid(t *testing.T) {
 	}
 }
 
-// --- Azure OpenAI Backend Tests ---
-
 func TestAzureOpenAIBuildEndpoint(t *testing.T) {
-	// ISC-C10: Azure OpenAI uses 2025-04-01-preview API version
 	b := NewAzureOpenAIBackend("key", "")
 	got := b.BuildEndpoint("https://gw.example.com", "gpt-4o")
 	want := "https://gw.example.com/openai/deployments/gpt-4o/chat/completions?api-version=2025-04-01-preview"
@@ -281,7 +275,6 @@ func TestAzureOpenAIPrepareRequest(t *testing.T) {
 	var body map[string]any
 	json.Unmarshal(bodyBytes, &body)
 
-	// Azure OpenAI passes system messages through directly (OpenAI format supports it)
 	messages := body["messages"].([]any)
 	if len(messages) != 2 {
 		t.Fatalf("expected 2 messages, got %d", len(messages))
@@ -311,8 +304,6 @@ func TestAzureOpenAIParseResponseNoChoices(t *testing.T) {
 		t.Error("ParseResponse() expected error for empty choices")
 	}
 }
-
-// --- Vertex AI Backend Tests ---
 
 func TestVertexAIBuildEndpoint(t *testing.T) {
 	b := NewVertexAIBackend("key")
@@ -366,7 +357,6 @@ func TestVertexAIPrepareRequestSystemMessages(t *testing.T) {
 		t.Fatalf("failed to unmarshal body: %v", err)
 	}
 
-	// System messages should be in "systemInstruction" field
 	si, ok := body["systemInstruction"]
 	if !ok {
 		t.Fatal("expected 'systemInstruction' field in request body")
@@ -378,7 +368,6 @@ func TestVertexAIPrepareRequestSystemMessages(t *testing.T) {
 		t.Errorf("systemInstruction text = %q, want %q", firstPart["text"], "You are a helpful assistant.")
 	}
 
-	// Only user message should be in contents
 	contents := body["contents"].([]any)
 	if len(contents) != 1 {
 		t.Fatalf("expected 1 content entry, got %d", len(contents))
@@ -437,8 +426,6 @@ func TestVertexAIParseResponseNoCandidates(t *testing.T) {
 		t.Error("ParseResponse() expected error for empty candidates")
 	}
 }
-
-// --- Client Tests ---
 
 func TestNewClient(t *testing.T) {
 	c := NewClient()
@@ -579,11 +566,8 @@ func TestNeedsRawMode(t *testing.T) {
 	}
 }
 
-// --- Integration Test: Send with mock HTTP server ---
-
 func TestSendBedrockIntegration(t *testing.T) {
 	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		// Verify request
 		if r.Header.Get("Authorization") != "Bearer test-key" {
 			t.Errorf("wrong auth header: %s", r.Header.Get("Authorization"))
 		}
@@ -595,12 +579,10 @@ func TestSendBedrockIntegration(t *testing.T) {
 		var req map[string]any
 		json.Unmarshal(body, &req)
 
-		// Verify system field is present
 		if _, ok := req["system"]; !ok {
 			t.Error("expected 'system' field in request")
 		}
 
-		// Return Anthropic response
 		w.WriteHeader(http.StatusOK)
 		json.NewEncoder(w).Encode(map[string]any{
 			"content": []map[string]any{
@@ -637,7 +619,6 @@ func TestSendBedrockIntegration(t *testing.T) {
 }
 
 func TestSendErrorTruncation(t *testing.T) {
-	// ISC-C13: Error responses truncated to 500 characters maximum
 	longBody := strings.Repeat("x", 600)
 	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
@@ -665,22 +646,16 @@ func TestSendErrorTruncation(t *testing.T) {
 	if err == nil {
 		t.Fatal("Send() expected error for 500 response")
 	}
-	// Error message should be truncated to ~500 chars (body) + prefix text
-	// The error format is: "AzureAIGateway: HTTP 500: <body>"
-	// So max should be around 530 chars (500 body + 30 for prefix/formatting)
+	// The error holds a 26-byte prefix, 500 body bytes, and "...". The 600 limit leaves margin.
 	if len(err.Error()) > 600 {
 		t.Errorf("error message too long (%d chars), should be truncated", len(err.Error()))
 	}
-	// Should contain only 500 'x' chars from body, not all 600
 	if strings.Count(err.Error(), "x") > 500 {
 		t.Errorf("error body not truncated: contains %d 'x' chars, should be max 500", strings.Count(err.Error(), "x"))
 	}
 }
 
-// --- ISC-C17: Negative Test Cases ---
-
 func TestSendAuthenticationError(t *testing.T) {
-	// ISC-C17: Test invalid subscription key → authentication error
 	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusUnauthorized)
 		w.Write([]byte(`{"error": "Invalid subscription key"}`))
@@ -713,7 +688,6 @@ func TestSendAuthenticationError(t *testing.T) {
 }
 
 func TestSendModelNotFoundError(t *testing.T) {
-	// ISC-C17: Test non-existent model → model error
 	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusNotFound)
 		w.Write([]byte(`{"error": "Model not found"}`))
@@ -745,7 +719,7 @@ func TestSendModelNotFoundError(t *testing.T) {
 	}
 }
 
-// failingRoundTripper always returns an error, simulating a network failure.
+// failingRoundTripper returns an error on every request to simulate a network failure.
 type failingRoundTripper struct{}
 
 func (f *failingRoundTripper) RoundTrip(*http.Request) (*http.Response, error) {
@@ -753,7 +727,6 @@ func (f *failingRoundTripper) RoundTrip(*http.Request) (*http.Response, error) {
 }
 
 func TestSendNetworkError(t *testing.T) {
-	// ISC-C17: Test network failure → connection error (deterministic, no real DNS)
 	c := NewClient()
 	c.GatewayURL.Value = "https://gateway.example.com"
 	c.SubscriptionKey.Value = "test-key"
@@ -780,7 +753,6 @@ func TestSendNetworkError(t *testing.T) {
 }
 
 func TestSendMalformedResponseJSON(t *testing.T) {
-	// ISC-C17: Test malformed response body → parsing error
 	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 		w.Write([]byte(`{invalid json`))
@@ -810,11 +782,9 @@ func TestSendMalformedResponseJSON(t *testing.T) {
 }
 
 func TestSendWithoutBackendInit(t *testing.T) {
-	// ISC-C17: Test Send without backend initialization
 	c := NewClient()
 	c.GatewayURL.Value = "https://gw.example.com"
 	c.SubscriptionKey.Value = "test-key"
-	// Note: not calling configure(), so backend is nil
 
 	msgs := []*chat.ChatCompletionMessage{
 		{Role: chat.ChatMessageRoleUser, Content: "Hello"},
@@ -835,7 +805,6 @@ func TestSendWithoutBackendInit(t *testing.T) {
 }
 
 func TestSendStreamWithoutBackendInit(t *testing.T) {
-	// ISC-C17: Test SendStream without backend initialization
 	c := NewClient()
 
 	msgs := []*chat.ChatCompletionMessage{
@@ -858,7 +827,6 @@ func TestSendStreamWithoutBackendInit(t *testing.T) {
 }
 
 func TestConfigureInvalidURL(t *testing.T) {
-	// ISC-C17: Test malformed URL → error
 	c := NewClient()
 	c.GatewayURL.Value = "://invalid-url"
 	c.SubscriptionKey.Value = "test-key"
@@ -873,7 +841,6 @@ func TestConfigureInvalidURL(t *testing.T) {
 }
 
 func TestSendStreamFallback(t *testing.T) {
-	// Test SendStream falls back to non-streaming Send
 	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 		json.NewEncoder(w).Encode(map[string]any{
@@ -906,7 +873,7 @@ func TestSendStreamFallback(t *testing.T) {
 		t.Fatalf("SendStream() error = %v", err)
 	}
 
-	// Channel should be closed after SendStream completes
+	// The range ends only when SendStream closes the channel.
 	updates := []domain.StreamUpdate{}
 	for update := range channel {
 		updates = append(updates, update)
@@ -920,31 +887,23 @@ func TestSendStreamFallback(t *testing.T) {
 	}
 }
 
-// --- ISC-C18: API Version Compatibility Test ---
-
 func TestAzureOpenAIAPIVersionCompatibility(t *testing.T) {
-	// ISC-C18: Azure OpenAI API version compatibility with Azure APIM Gateway
-	// Reference: https://learn.microsoft.com/en-us/azure/ai-services/openai/api-version-deprecation
-	// This test verifies that the default API version in the endpoint (currently 2025-04-01-preview)
-	// is explicitly set and is compatible with Azure APIM Gateway. When changing the default API
-	// version in the backend, ensure that APIM gateways are updated to support the new version.
+	// Reference: https://learn.microsoft.com/en-us/azure/foundry/openai/api-version-lifecycle
+	// If you change the default API version, make sure that the APIM gateways accept the new version.
 
 	b := NewAzureOpenAIBackend("key", "")
 	endpoint := b.BuildEndpoint("https://gw.example.com", "gpt-4")
 
-	// Verify API version is present in endpoint
 	if !strings.Contains(endpoint, "api-version=") {
 		t.Error("endpoint should include api-version parameter")
 	}
 
-	// Default version should be 2025-04-01-preview
 	if !strings.Contains(endpoint, "2025-04-01-preview") {
 		t.Errorf("Default API version should be 2025-04-01-preview. Got: %s", endpoint)
 	}
 }
 
 func TestAzureOpenAICustomAPIVersion(t *testing.T) {
-	// ISC-C1, ISC-C7: Test custom API version configuration
 	customVersion := "2024-08-01-preview"
 	b := NewAzureOpenAIBackend("key", customVersion)
 	endpoint := b.BuildEndpoint("https://gw.example.com", "gpt-4")
@@ -955,8 +914,6 @@ func TestAzureOpenAICustomAPIVersion(t *testing.T) {
 }
 
 func TestAzureOpenAIBackwardCompatibility(t *testing.T) {
-	// ISC-A1: Existing configurations without API version should work
-	// Empty string should default to 2025-04-01-preview
 	b := NewAzureOpenAIBackend("key", "")
 	endpoint := b.BuildEndpoint("https://gw.example.com", "gpt-4")
 
@@ -966,19 +923,14 @@ func TestAzureOpenAIBackwardCompatibility(t *testing.T) {
 }
 
 func TestBedrockTemperatureTopPMutualExclusivity(t *testing.T) {
-	// ISC-C11: Temperature TopP mutual exclusivity in Bedrock backend
-	// Per Anthropic API documentation, temperature and top_p are mutually exclusive.
-	// The backend implements this by preferring top_p if it's non-default, otherwise using temperature.
-
 	b := NewBedrockBackend("key")
 	msgs := []*chat.ChatCompletionMessage{
 		{Role: chat.ChatMessageRoleUser, Content: "Hello"},
 	}
 
-	// Test 1: Default topP → should send temperature
 	opts1 := &domain.ChatOptions{
 		Temperature: 0.8,
-		TopP:        domain.DefaultTopP, // default
+		TopP:        domain.DefaultTopP,
 	}
 	bodyBytes1, err := b.PrepareRequest(msgs, opts1)
 	if err != nil {
@@ -994,10 +946,9 @@ func TestBedrockTemperatureTopPMutualExclusivity(t *testing.T) {
 		t.Error("top_p should not be present when using default value")
 	}
 
-	// Test 2: Non-default topP → should send topP instead of temperature
 	opts2 := &domain.ChatOptions{
 		Temperature: 0.8,
-		TopP:        0.95, // non-default (default is 0.9)
+		TopP:        0.95, // not the default 0.9
 	}
 	bodyBytes2, err := b.PrepareRequest(msgs, opts2)
 	if err != nil {

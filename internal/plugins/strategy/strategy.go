@@ -22,7 +22,7 @@ func NewStrategiesManager() (sm *StrategiesManager) {
 	label := "Prompt Strategies"
 	strategies, err := LoadAllFiles()
 	if err != nil {
-		strategies = make(map[string]Strategy) // empty map
+		strategies = make(map[string]Strategy)
 	}
 	sm = &StrategiesManager{
 		Strategies: strategies,
@@ -105,7 +105,7 @@ func (sm *StrategiesManager) Setup() (err error) {
 	if err = sm.PopulateDB(); err != nil {
 		return
 	}
-	// Reload strategies after downloading so IsConfigured() reflects the new state
+	// Reload strategies after download. IsConfigured() uses this new list.
 	sm.Strategies, _ = LoadAllFiles()
 	return
 }
@@ -119,6 +119,7 @@ func (sm *StrategiesManager) PopulateDB() (err error) {
 	if err = sm.gitCloneAndCopy(); err != nil {
 		return
 	}
+
 	fmt.Printf(i18n.T("strategies_download_success"), strategyDir)
 	return
 }
@@ -131,14 +132,12 @@ func (sm *StrategiesManager) gitCloneAndCopy() (err error) {
 	}
 	strategyDir := filepath.Join(homeDir, ".config", "fabric", "strategies")
 
-	// Create the directory if it doesn't exist
 	if err = os.MkdirAll(strategyDir, os.ModePerm); err != nil {
 		return fmt.Errorf(i18n.T("strategies_failed_create_directory"), err)
 	}
 
 	fmt.Printf(i18n.T("strategies_cloning_repository"), sm.DefaultGitRepoUrl.Value, sm.DefaultFolder.Value)
 
-	// Use the helper to fetch files
 	err = githelper.FetchFilesFromRepo(githelper.FetchOptions{
 		RepoURL:         sm.DefaultGitRepoUrl.Value,
 		PathPrefix:      sm.DefaultFolder.Value,
@@ -149,7 +148,6 @@ func (sm *StrategiesManager) gitCloneAndCopy() (err error) {
 		return fmt.Errorf(i18n.T("strategies_failed_download"), err)
 	}
 
-	// Count downloaded strategies
 	entries, readErr := os.ReadDir(strategyDir)
 	if readErr == nil {
 		strategyCount := 0
@@ -193,17 +191,15 @@ func LoadStrategy(filename string) (*Strategy, error) {
 		return nil, err
 	}
 
-	// First try with .json extension
 	strategyPath := filepath.Join(strategyDir, filename+".json")
 	if _, err := os.Stat(strategyPath); os.IsNotExist(err) {
-		// Try without extension
 		strategyPath = filepath.Join(strategyDir, filename)
 		if _, err := os.Stat(strategyPath); os.IsNotExist(err) {
 			return nil, fmt.Errorf(i18n.T("strategy_not_found"), filename)
 		}
 	}
 
-	// Validate the resolved path stays within strategyDir to prevent path traversal
+	// Prevent path traversal: validate that the resolved path stays within strategyDir.
 	cleanedPath := filepath.Clean(strategyPath)
 	cleanedDir := filepath.Clean(strategyDir) + string(os.PathSeparator)
 	if !strings.HasPrefix(cleanedPath, cleanedDir) {
@@ -232,16 +228,13 @@ func (sm *StrategiesManager) ListStrategies(shellCompleteList bool) error {
 	if !shellCompleteList {
 		fmt.Print(i18n.T("strategies_available_header"), "\n\n")
 	}
-	// Get all strategy names for sorting
 	names := []string{}
 	for name := range sm.Strategies {
 		names = append(names, name)
 	}
 
-	// Sort the strategy names alphabetically
 	sort.Strings(names)
 
-	// Find the longest name to align descriptions
 	maxNameLength := 0
 	for _, name := range names {
 		if len(name) > maxNameLength {
@@ -249,7 +242,6 @@ func (sm *StrategiesManager) ListStrategies(shellCompleteList bool) error {
 		}
 	}
 
-	// Print each strategy with its description aligned
 	formatString := "%-" + fmt.Sprintf("%d", maxNameLength+2) + "s %s\n"
 	for _, name := range names {
 		strategy := sm.Strategies[name]

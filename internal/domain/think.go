@@ -5,14 +5,14 @@ import (
 	"sync"
 )
 
-// StripThinkBlocks removes any content between the provided start and end tags
-// from the input string. Whitespace following the end tag is also removed so
-// output resumes at the next non-empty line.
 var (
 	regexCache = make(map[string]*regexp.Regexp)
 	cacheMutex sync.Mutex
 )
 
+// StripThinkBlocks removes each start tag, end tag, and the text between them
+// from input. It also removes the whitespace after the end tag, so the output
+// continues at the next non-blank text.
 func StripThinkBlocks(input, startTag, endTag string) string {
 	if startTag == "" || endTag == "" {
 		return input

@@ -10,6 +10,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"sync"
 
 	"github.com/danielmiessler/fabric/internal/i18n"
 	debuglog "github.com/danielmiessler/fabric/internal/log"
@@ -18,6 +19,7 @@ import (
 	"github.com/danielmiessler/fabric/internal/plugins/ai/azure_entra"
 	"github.com/danielmiessler/fabric/internal/plugins/ai/azureaigateway"
 	"github.com/danielmiessler/fabric/internal/plugins/ai/bedrock"
+	"github.com/danielmiessler/fabric/internal/plugins/ai/claudecode"
 	"github.com/danielmiessler/fabric/internal/plugins/ai/codex"
 	"github.com/danielmiessler/fabric/internal/plugins/ai/copilot"
 	"github.com/danielmiessler/fabric/internal/plugins/ai/digitalocean"
@@ -69,10 +71,26 @@ func NewPluginRegistry(db *fsdb.Db) (ret *PluginRegistry, err error) {
 
 	ret.Defaults = tools.NeeDefaults(ret.GetModels)
 
-	// Create a vendors slice to hold all vendors (order doesn't matter initially)
 	vendors := []ai.Vendor{}
 
-	// Add non-OpenAI compatible clients
+	codexClient := codex.NewClient()
+	codexClient.WithStoreLock = func(fn func() error) error {
+		return db.WithEnvLock(func() error {
+			env, err := db.ReadEnvFile()
+			if err != nil {
+				return err
+			}
+			codexClient.LoadEnvSettings(env)
+			return fn()
+		})
+	}
+	codexClient.TokenPersist = func() error {
+		return db.ApplyEnvUpdates(map[string]string{
+			codexClient.AccessToken.EnvVariable:  strings.TrimSpace(codexClient.AccessToken.Value),
+			codexClient.RefreshToken.EnvVariable: strings.TrimSpace(codexClient.RefreshToken.Value),
+			codexClient.AccountID.EnvVariable:    strings.TrimSpace(codexClient.AccountID.Value),
+		})
+	}
 	vendors = append(vendors,
 		openai.NewClient(),
 		digitalocean.NewClient(),
@@ -84,25 +102,24 @@ func NewPluginRegistry(db *fsdb.Db) (ret *PluginRegistry, err error) {
 		anthropic.NewClient(),
 		vertexai.NewClient(),
 		lmstudio.NewClient(),
+		lmstudio.NewClientCompatible("llama.cpp", "http://localhost:8080/v1", nil), // llama.cpp server. Same HTTP API as LM Studio, API key optional.
 		exolab.NewClient(),
 		perplexity.NewClient(),
-		codex.NewClient(),
-		copilot.NewClient(), // Microsoft 365 Copilot
-		bedrock.NewClient(), // AWS Bedrock - credentials configured via setup or AWS credential chain
+		codexClient,
+		copilot.NewClient(),    // Microsoft 365 Copilot
+		bedrock.NewClient(),    // AWS Bedrock. Credentials come from setup or the AWS credential chain.
+		claudecode.NewClient(), // Claude Code CLI. It uses the local Claude subscription login.
 	)
 
-	// Add all OpenAI-compatible providers
 	for providerName := range openai_compatible.ProviderMap {
 		provider, _ := openai_compatible.GetProviderByName(providerName)
 		vendors = append(vendors, openai_compatible.NewClient(provider))
 	}
 
-	// Sort vendors by name for consistent ordering (case-insensitive)
 	sort.Slice(vendors, func(i, j int) bool {
 		return strings.ToLower(vendors[i].GetName()) < strings.ToLower(vendors[j].GetName())
 	})
 
-	// Add all sorted vendors to VendorsAll
 	ret.VendorsAll.AddVendors(vendors...)
 	_ = ret.Configure()
 
@@ -123,6 +140,8 @@ func (o *PluginRegistry) ListVendors(out io.Writer) error {
 type PluginRegistry struct {
 	Db *fsdb.Db
 
+	vendorMu sync.Mutex
+
 	VendorManager      *ai.VendorsManager
 	VendorsAll         *ai.VendorsManager
 	Defaults           *tools.Defaults
@@ -137,7 +156,6 @@ type PluginRegistry struct {
 }
 
 func (o *PluginRegistry) SaveEnvFile() (err error) {
-	// Now create the .env with all configured VendorsController info
 	var envFileContent bytes.Buffer
 
 	o.Defaults.Settings.FillEnvFileContent(&envFileContent)
@@ -159,7 +177,6 @@ func (o *PluginRegistry) SaveEnvFile() (err error) {
 }
 
 func (o *PluginRegistry) Setup() (err error) {
-	// Check if this is a first-time setup
 	isFirstRun := o.isFirstTimeSetup()
 
 	if isFirstRun {
@@ -172,15 +189,12 @@ func (o *PluginRegistry) Setup() (err error) {
 		return
 	}
 
-	// Validate setup after completion
 	o.validateSetup()
 
 	return
 }
 
-// isFirstTimeSetup checks if this is a first-time setup
 func (o *PluginRegistry) isFirstTimeSetup() bool {
-	// Check if patterns and strategies are not configured
 	patternsConfigured := o.PatternsLoader.IsConfigured()
 	strategiesConfigured := o.Strategies.IsConfigured()
 	hasVendor := len(o.VendorManager.Vendors) > 0
@@ -188,13 +202,12 @@ func (o *PluginRegistry) isFirstTimeSetup() bool {
 	return !patternsConfigured || !strategiesConfigured || !hasVendor
 }
 
-// runFirstTimeSetup handles first-time setup with automatic pattern/strategy download
+// runFirstTimeSetup downloads patterns and strategies without a prompt, then asks for a vendor and the defaults.
 func (o *PluginRegistry) runFirstTimeSetup() (err error) {
 	fmt.Println("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
 	fmt.Println(i18n.T("setup_welcome_header"))
 	fmt.Println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
 
-	// Step 1: Download patterns (required, automatic)
 	if !o.PatternsLoader.IsConfigured() {
 		fmt.Printf("\n%s\n", i18n.T("setup_step_downloading_patterns"))
 		if err = o.PatternsLoader.Setup(); err != nil {
@@ -205,7 +218,6 @@ func (o *PluginRegistry) runFirstTimeSetup() (err error) {
 		}
 	}
 
-	// Step 2: Download strategies (required, automatic)
 	if !o.Strategies.IsConfigured() {
 		fmt.Printf("\n%s\n", i18n.T("setup_step_downloading_strategies"))
 		if err = o.Strategies.Setup(); err != nil {
@@ -216,7 +228,6 @@ func (o *PluginRegistry) runFirstTimeSetup() (err error) {
 		}
 	}
 
-	// Step 3: Configure AI vendor (interactive)
 	if len(o.VendorManager.Vendors) == 0 {
 		fmt.Printf("\n%s\n", i18n.T("setup_step_configure_ai_provider"))
 		fmt.Printf("   %s\n", i18n.T("setup_ai_provider_required"))
@@ -228,7 +239,6 @@ func (o *PluginRegistry) runFirstTimeSetup() (err error) {
 		}
 	}
 
-	// Step 4: Set default vendor and model
 	if !o.Defaults.IsConfigured() {
 		fmt.Printf("\n%s\n", i18n.T("setup_step_setting_defaults"))
 		if err = o.Defaults.Setup(); err != nil {
@@ -251,7 +261,7 @@ func (o *PluginRegistry) runFirstTimeSetup() (err error) {
 	return
 }
 
-// runVendorSetup helps user select and configure their first AI vendor
+// runVendorSetup asks the user to select and configure one AI vendor.
 func (o *PluginRegistry) runVendorSetup() (err error) {
 	setupQuestion := plugins.NewSetupQuestion("Enter the number of the AI provider to configure")
 	groupsPlugins := util.NewGroupsItemsSelector(i18n.T("setup_available_ai_providers"),
@@ -288,20 +298,15 @@ func (o *PluginRegistry) runVendorSetup() (err error) {
 		return pluginSetupErr
 	}
 
+	o.registerVendor(plugin)
+
 	if err = o.SaveEnvFile(); err != nil {
 		return
-	}
-
-	if o.VendorManager.FindByName(plugin.GetName()) == nil {
-		if vendor, ok := plugin.(ai.Vendor); ok {
-			o.VendorManager.AddVendors(vendor)
-		}
 	}
 
 	return
 }
 
-// runInteractiveSetup runs the standard interactive setup menu
 func (o *PluginRegistry) runInteractiveSetup() (err error) {
 	setupQuestion := plugins.NewSetupQuestion(i18n.T("setup_plugin_prompt"))
 	groupsPlugins := util.NewGroupsItemsSelector(i18n.T("setup_available_plugins"),
@@ -315,16 +320,13 @@ func (o *PluginRegistry) runInteractiveSetup() (err error) {
 			return fmt.Sprintf("%v%v", plugin.GetSetupDescription(), configuredLabel)
 		})
 
-	// Add vendors first under REQUIRED section
 	groupsPlugins.AddGroupItems(i18n.T("setup_required_configuration_header"), lo.Map(o.VendorsAll.Vendors,
 		func(vendor ai.Vendor, _ int) plugins.Plugin {
 			return vendor
 		})...)
 
-	// Add required tools
 	groupsPlugins.AddGroupItems(i18n.T("setup_required_tools"), o.Defaults, o.PatternsLoader, o.Strategies)
 
-	// Add optional tools
 	groupsPlugins.AddGroupItems(i18n.T("setup_optional_configuration_header"), o.CustomPatterns, o.Jina, o.Language, o.Spotify, o.YouTube)
 
 	for {
@@ -349,14 +351,9 @@ func (o *PluginRegistry) runInteractiveSetup() (err error) {
 			if pluginSetupErr := plugin.Setup(); pluginSetupErr != nil {
 				println(pluginSetupErr.Error())
 			} else {
+				o.registerVendor(plugin)
 				if err = o.SaveEnvFile(); err != nil {
 					break
-				}
-			}
-
-			if o.VendorManager.FindByName(plugin.GetName()) == nil {
-				if vendor, ok := plugin.(ai.Vendor); ok {
-					o.VendorManager.AddVendors(vendor)
 				}
 			}
 		} else {
@@ -369,7 +366,7 @@ func (o *PluginRegistry) runInteractiveSetup() (err error) {
 	return
 }
 
-// validateSetup checks if required components are configured and warns user
+// validateSetup prints the status of each required component and a warning when one is missing.
 func (o *PluginRegistry) validateSetup() {
 	fmt.Println("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
 	fmt.Println(i18n.T("setup_validation_header"))
@@ -377,7 +374,6 @@ func (o *PluginRegistry) validateSetup() {
 
 	missingRequired := false
 
-	// Check AI vendor
 	if len(o.VendorManager.Vendors) > 0 {
 		fmt.Printf("  %s\n", i18n.T("setup_validation_ai_provider_configured"))
 	} else {
@@ -385,7 +381,6 @@ func (o *PluginRegistry) validateSetup() {
 		missingRequired = true
 	}
 
-	// Check default model
 	if o.Defaults.IsConfigured() {
 		fmt.Printf("  %s\n", fmt.Sprintf(i18n.T("setup_validation_defaults_configured"), o.Defaults.Vendor.Value, o.Defaults.Model.Value))
 	} else {
@@ -393,7 +388,6 @@ func (o *PluginRegistry) validateSetup() {
 		missingRequired = true
 	}
 
-	// Check patterns
 	if o.PatternsLoader.IsConfigured() {
 		fmt.Printf("  %s\n", i18n.T("setup_validation_patterns_configured"))
 	} else {
@@ -401,7 +395,6 @@ func (o *PluginRegistry) validateSetup() {
 		missingRequired = true
 	}
 
-	// Check strategies
 	if o.Strategies.IsConfigured() {
 		fmt.Printf("  %s\n", i18n.T("setup_validation_strategies_configured"))
 	} else {
@@ -425,17 +418,66 @@ func (o *PluginRegistry) SetupVendor(vendorName string) (err error) {
 	if err = o.VendorsAll.SetupVendor(vendorName, o.VendorManager.VendorsByName); err != nil {
 		return
 	}
+	if vendor := o.VendorsAll.FindByName(vendorName); vendor != nil {
+		o.registerVendor(vendor)
+	}
 	err = o.SaveEnvFile()
 	return
 }
 
+func (o *PluginRegistry) registerVendor(plugin plugins.Plugin) {
+	vendor, ok := plugin.(ai.Vendor)
+	if !ok {
+		return
+	}
+	o.vendorMu.Lock()
+	defer o.vendorMu.Unlock()
+	name := vendor.GetName()
+	for _, existing := range o.VendorManager.Vendors {
+		if strings.EqualFold(existing.GetName(), name) {
+			return
+		}
+	}
+	o.VendorManager.AddVendors(vendor)
+}
+
 func (o *PluginRegistry) ConfigureVendors() {
+	o.vendorMu.Lock()
+	defer o.vendorMu.Unlock()
 	o.VendorManager.Clear()
 	for _, vendor := range o.VendorsAll.Vendors {
 		if vendorErr := vendor.Configure(); vendorErr == nil && vendor.IsConfigured() {
 			o.VendorManager.AddVendors(vendor)
 		}
 	}
+}
+
+func (o *PluginRegistry) activateVendor(name string) (ai.Vendor, error) {
+	if strings.TrimSpace(name) == "" {
+		return nil, nil
+	}
+
+	o.vendorMu.Lock()
+	defer o.vendorMu.Unlock()
+
+	if v := o.VendorManager.FindByName(name); v != nil {
+		return v, nil
+	}
+	if o.VendorsAll == nil {
+		return nil, nil
+	}
+	v := o.VendorsAll.FindByName(name)
+	if v == nil {
+		return nil, nil
+	}
+	if err := v.Configure(); err != nil {
+		return nil, err
+	}
+	if !v.IsConfigured() {
+		return nil, nil
+	}
+	o.VendorManager.AddVendors(v)
+	return v, nil
 }
 
 func (o *PluginRegistry) GetModels() (ret *ai.VendorsModels, err error) {
@@ -453,10 +495,8 @@ func (o *PluginRegistry) Configure() (err error) {
 	}
 	_ = o.PatternsLoader.Configure()
 
-	// Refresh the database custom patterns directory after custom patterns plugin is configured
 	customPatternsDir := os.Getenv("CUSTOM_PATTERNS_DIRECTORY")
 	if customPatternsDir != "" {
-		// Expand home directory if needed
 		if strings.HasPrefix(customPatternsDir, "~/") {
 			if homeDir, err := os.UserHomeDir(); err == nil {
 				customPatternsDir = filepath.Join(homeDir, customPatternsDir[2:])
@@ -466,7 +506,7 @@ func (o *PluginRegistry) Configure() (err error) {
 		o.PatternsLoader.Patterns.CustomPatternsDir = customPatternsDir
 	}
 
-	//YouTube, Jina, Spotify are not mandatory, so ignore not configured error
+	// These plugins are optional. Ignore their configuration errors.
 	_ = o.YouTube.Configure()
 	_ = o.Jina.Configure()
 	_ = o.Spotify.Configure()
@@ -503,34 +543,44 @@ func (o *PluginRegistry) GetChatter(model string, modelContextLength int, vendor
 			ret.model = defaultModel
 		}
 	} else if model == "" {
-		if vendorName != "" {
-			ret.vendor = vendorManager.FindByName(vendorName)
-		} else {
-			ret.vendor = vendorManager.FindByName(defaultVendor)
+		name := vendorName
+		if name == "" {
+			name = defaultVendor
+		}
+		if ret.vendor, err = o.activateVendor(name); err != nil {
+			return
 		}
 		ret.model = defaultModel
 	} else {
+		if vendorName != "" {
+			if ret.vendor, err = o.activateVendor(vendorName); err != nil {
+				return
+			}
+		} else if !vendorManager.HasVendors() {
+			if _, err = o.activateVendor(defaultVendor); err != nil {
+				return
+			}
+		}
+
 		var models *ai.VendorsModels
 		if models, err = vendorManager.GetModels(); err != nil {
 			return
 		}
 
-		// Normalize model name to match actual available model (case-insensitive)
-		// This must be done BEFORE checking vendor availability
+		// Use the vendor's spelling of the model name. It becomes ret.model.
 		actualModelName := models.FindModelNameCaseInsensitive(model)
 		if actualModelName != "" {
-			model = actualModelName // Use normalized name for all subsequent checks
+			model = actualModelName
 		}
 
 		if vendorName != "" {
-			// ensure vendor exists and provides model
 			ret.vendor = vendorManager.FindByName(vendorName)
 			availableVendors := models.FindGroupsByItem(model)
 			vendorAvailable := lo.ContainsBy(availableVendors, func(name string) bool {
 				return strings.EqualFold(name, vendorName)
 			})
-			// Codex intentionally hides some subscription-backed models from model
-			// listings while still allowing explicit manual selection via -V Codex -m ...
+			// The Codex models endpoint omits some subscription models.
+			// A user can still select one with -V Codex -m <model>.
 			allowCodexPassthrough := ret.vendor != nil &&
 				strings.EqualFold(ret.vendor.GetName(), "Codex") &&
 				len(availableVendors) == 0
@@ -539,8 +589,7 @@ func (o *PluginRegistry) GetChatter(model string, modelContextLength int, vendor
 				return
 			}
 		} else {
-			// If the model wasn't found and contains a '/', try parsing the first
-			// segment as a vendor name (e.g. "ollama/llama3" -> vendor "ollama", model "llama3").
+			// An unknown model with a "/" can be "vendor/model", for example "ollama/llama3".
 			if actualModelName == "" {
 				if idx := strings.Index(model, "/"); idx > 0 {
 					prefix := model[:idx]
@@ -565,6 +614,16 @@ func (o *PluginRegistry) GetChatter(model string, modelContextLength int, vendor
 		}
 
 		ret.model = model
+	}
+
+	if ret.vendor == nil {
+		name := vendorName
+		if name == "" {
+			name = defaultVendor
+		}
+		if ret.vendor, err = o.activateVendor(name); err != nil {
+			return
+		}
 	}
 
 	if ret.vendor == nil {

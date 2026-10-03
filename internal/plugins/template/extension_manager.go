@@ -37,7 +37,6 @@ func (em *ExtensionManager) ListExtensions() error {
 	for name, entry := range em.registry.registry.Extensions {
 		fmt.Printf(i18n.T("extension_name_label"), name)
 
-		// Try to load extension details
 		ext, err := em.registry.GetExtension(name)
 		if err != nil {
 			fmt.Printf(i18n.T("extension_status_disabled"), err)
@@ -45,7 +44,6 @@ func (em *ExtensionManager) ListExtensions() error {
 			continue
 		}
 
-		// Print extension details if verification succeeded
 		fmt.Printf("%s", i18n.T("extension_status_enabled"))
 		fmt.Printf(i18n.T("extension_executable_label"), ext.Executable)
 		fmt.Printf(i18n.T("extension_type_label"), ext.Type)
@@ -78,7 +76,7 @@ func (em *ExtensionManager) RegisterExtension(configPath string) error {
 		return fmt.Errorf(i18n.T("extension_invalid_config_path"), err)
 	}
 
-	// Get extension name before registration for status message
+	// Parse the config a second time to get the fields for the status message.
 	data, err := os.ReadFile(absPath)
 	if err != nil {
 		return fmt.Errorf(i18n.T("extension_failed_read_config"), err)
@@ -97,7 +95,6 @@ func (em *ExtensionManager) RegisterExtension(configPath string) error {
 		return fmt.Errorf(i18n.T("extension_invalid_timeout"), ext.Timeout, err)
 	}
 
-	// Print success message with extension details
 	fmt.Printf("%s", i18n.T("extension_registered_success"))
 	fmt.Printf(i18n.T("extension_name_detail_label"), ext.Name)
 	fmt.Printf(i18n.T("extension_executable_label"), ext.Executable)

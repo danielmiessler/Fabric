@@ -33,18 +33,15 @@ type FetchOptions struct {
 // FetchFilesFromRepo clones a git repo and extracts files from a specific folder.
 // It tries go-git first, and falls back to the git CLI if available.
 func FetchFilesFromRepo(opts FetchOptions) error {
-	// Ensure path prefix ends with slash
 	if !strings.HasSuffix(opts.PathPrefix, "/") {
 		opts.PathPrefix = opts.PathPrefix + "/"
 	}
 
-	// Try go-git first (in-memory clone)
 	goGitErr := fetchFilesViaGoGit(opts)
 	if goGitErr == nil {
 		return nil
 	}
 
-	// go-git failed; try git CLI fallback if available
 	if _, lookErr := exec.LookPath("git"); lookErr != nil {
 		return goGitErr
 	}
@@ -122,8 +119,8 @@ func fetchFilesViaGoGit(opts FetchOptions) error {
 	})
 }
 
-// fetchFilesViaGitCLI clones a repo using the git CLI binary and extracts files.
-// This serves as a fallback when go-git fails (e.g., DNS resolution issues on Termux).
+// fetchFilesViaGitCLI clones a repo with the git binary and extracts files.
+// It is the fallback when go-git fails, for example from DNS errors on Termux.
 func fetchFilesViaGitCLI(opts FetchOptions) error {
 	tmpDir, err := os.MkdirTemp("", "fabric-git-clone-*")
 	if err != nil {
@@ -136,7 +133,6 @@ func fetchFilesViaGitCLI(opts FetchOptions) error {
 		return fmt.Errorf(i18n.T("githelper_failed_git_cli_clone"), err, string(output))
 	}
 
-	// Source directory within the clone (trim trailing slash for filepath.Join)
 	srcDir := filepath.Join(tmpDir, strings.TrimSuffix(opts.PathPrefix, "/"))
 
 	if err := os.MkdirAll(opts.DestDir, 0755); err != nil {

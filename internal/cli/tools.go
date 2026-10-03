@@ -9,7 +9,8 @@ import (
 	"github.com/danielmiessler/fabric/internal/tools/youtube"
 )
 
-// handleToolProcessing handles YouTube and web scraping tool processing
+// handleToolProcessing runs the YouTube, web scrape, and Spotify tools and collects their output.
+// When the run is not a chat request, it also prints the output.
 func handleToolProcessing(currentFlags *Flags, registry *core.PluginRegistry) (messageTools string, err error) {
 	if currentFlags.YouTube != "" {
 		if !registry.YouTube.IsConfigured() {
@@ -63,7 +64,6 @@ func handleToolProcessing(currentFlags *Flags, registry *core.PluginRegistry) (m
 			err = errors.New(i18n.T("scraping_not_configured"))
 			return
 		}
-		// Check if the scrape_url flag is set and call ScrapeURL
 		if currentFlags.ScrapeURL != "" {
 			var website string
 			if website, err = registry.Jina.ScrapeURL(currentFlags.ScrapeURL); err != nil {
@@ -72,7 +72,6 @@ func handleToolProcessing(currentFlags *Flags, registry *core.PluginRegistry) (m
 			messageTools = AppendMessage(messageTools, website)
 		}
 
-		// Check if the scrape_question flag is set and call ScrapeQuestion
 		if currentFlags.ScrapeQuestion != "" {
 			var website string
 			if website, err = registry.Jina.ScrapeQuestion(currentFlags.ScrapeQuestion); err != nil {
@@ -88,7 +87,6 @@ func handleToolProcessing(currentFlags *Flags, registry *core.PluginRegistry) (m
 		}
 	}
 
-	// Handle Spotify podcast/episode metadata
 	if currentFlags.Spotify != "" {
 		if !registry.Spotify.IsConfigured() {
 			err = errors.New(i18n.T("spotify_not_configured"))

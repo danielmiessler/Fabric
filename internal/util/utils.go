@@ -17,12 +17,11 @@ func GetAbsolutePath(path string) (string, error) {
 		return "", errors.New(i18n.T("util_error_path_is_empty"))
 	}
 
-	// Handle UNC paths on Windows
+	// Return Windows UNC paths unchanged.
 	if runtime.GOOS == "windows" && strings.HasPrefix(path, `\\`) {
 		return path, nil
 	}
 
-	// Handle ~ for home directory expansion
 	if strings.HasPrefix(path, "~") {
 		home, err := os.UserHomeDir()
 		if err != nil {
@@ -31,19 +30,17 @@ func GetAbsolutePath(path string) (string, error) {
 		path = filepath.Join(home, path[1:])
 	}
 
-	// Convert to absolute path
 	absPath, err := filepath.Abs(path)
 	if err != nil {
 		return "", errors.New(i18n.T("util_error_get_absolute_path"))
 	}
 
-	// Resolve symlinks, but allow non-existent paths
+	// Resolve symlinks. A path that does not exist yet is not an error.
 	resolvedPath, err := filepath.EvalSymlinks(absPath)
 	if err == nil {
 		return resolvedPath, nil
 	}
 	if os.IsNotExist(err) {
-		// Return the absolute path for non-existent paths
 		return absPath, nil
 	}
 
@@ -71,7 +68,7 @@ func IsSymlinkToDir(path string) bool {
 		return fileInfo.IsDir()
 	}
 
-	return false // Regular directories should not be treated as symlinks
+	return false
 }
 
 // GetDefaultConfigPath returns the default path for the configuration file
@@ -85,7 +82,7 @@ func GetDefaultConfigPath() (string, error) {
 	defaultConfigPath := filepath.Join(homeDir, ".config", "fabric", "config.yaml")
 	if _, err := os.Stat(defaultConfigPath); err != nil {
 		if os.IsNotExist(err) {
-			return "", nil // Return no error for non-existent config path
+			return "", nil
 		}
 		return "", fmt.Errorf(i18n.T("util_error_accessing_config_path"), err)
 	}

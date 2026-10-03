@@ -12,7 +12,6 @@ import (
 func withTestExtension(t *testing.T, name string, scriptContent string, testFunc func(*ExtensionManager, string)) {
 	t.Helper()
 
-	// Create a temporary directory for test extension
 	tmpDir := t.TempDir()
 	configDir := filepath.Join(tmpDir, ".config", "fabric")
 	extensionsDir := filepath.Join(configDir, "extensions")
@@ -28,14 +27,12 @@ func withTestExtension(t *testing.T, name string, scriptContent string, testFunc
 		t.Fatalf("Failed to create configs directory: %v", err)
 	}
 
-	// Create a test script
 	scriptPath := filepath.Join(binDir, name+".sh")
 	err = os.WriteFile(scriptPath, []byte(scriptContent), 0755)
 	if err != nil {
 		t.Fatalf("Failed to create test script: %v", err)
 	}
 
-	// Create extension config
 	configPath := filepath.Join(configsDir, name+".yaml")
 	configContent := fmt.Sprintf(`name: %s
 executable: %s
@@ -57,16 +54,13 @@ config:
 		t.Fatalf("Failed to create extension config: %v", err)
 	}
 
-	// Initialize extension manager with test config directory
 	mgr := NewExtensionManager(configDir)
 
-	// Register the test extension
 	err = mgr.RegisterExtension(configPath)
 	if err != nil {
 		t.Fatalf("Failed to register extension: %v", err)
 	}
 
-	// Run the test
 	testFunc(mgr, name)
 }
 
@@ -79,7 +73,6 @@ echo "RECEIVED: $@"
 `
 
 	withTestExtension(t, "echo-test", scriptContent, func(mgr *ExtensionManager, name string) {
-		// Save and restore global extension manager
 		oldManager := extensionManager
 		defer func() { extensionManager = oldManager }()
 		extensionManager = mgr
@@ -129,12 +122,10 @@ echo "RECEIVED: $@"
 					return
 				}
 
-				// Check that result contains expected string
 				if !strings.Contains(got, tt.wantContain) {
 					t.Errorf("ApplyTemplate() = %q, should contain %q", got, tt.wantContain)
 				}
 
-				// Check that result does NOT contain unwanted string
 				if strings.Contains(got, tt.wantNotContain) {
 					t.Errorf("ApplyTemplate() = %q, should NOT contain %q", got, tt.wantNotContain)
 				}
@@ -202,12 +193,10 @@ done
 `
 
 	withTestExtension(t, "arg-test", scriptContent, func(mgr *ExtensionManager, name string) {
-		// Save and restore global extension manager
 		oldManager := extensionManager
 		defer func() { extensionManager = oldManager }()
 		extensionManager = mgr
 
-		// Test that sentinel token in extension value gets replaced
 		template := "{{ext:arg-test:echo:prefix-__FABRIC_INPUT_SENTINEL_TOKEN__-suffix}}"
 		input := "MYINPUT"
 
@@ -216,13 +205,11 @@ done
 			t.Fatalf("ApplyTemplate() error = %v", err)
 		}
 
-		// The sentinel should be replaced with actual input
 		expectedContain := "ARG: prefix-MYINPUT-suffix"
 		if !strings.Contains(got, expectedContain) {
 			t.Errorf("ApplyTemplate() = %q, should contain %q", got, expectedContain)
 		}
 
-		// The sentinel token should NOT appear in output
 		if strings.Contains(got, "__FABRIC_INPUT_SENTINEL_TOKEN__") {
 			t.Errorf("ApplyTemplate() = %q, should NOT contain sentinel token", got)
 		}
@@ -237,17 +224,11 @@ echo "NESTED_TEST: $*"
 `
 
 	withTestExtension(t, "nested-test", scriptContent, func(mgr *ExtensionManager, name string) {
-		// Save and restore global extension manager
 		oldManager := extensionManager
 		defer func() { extensionManager = oldManager }()
 		extensionManager = mgr
 
-		// This is the bug case: {{input}} nested inside extension call
-		// The template processing should:
-		// 1. Replace {{input}} with sentinel during variable protection
-		// 2. Process the extension, replacing sentinel with actual input
-		// 3. Execute extension with actual input, not sentinel
-
+		// The inner {{input}} resolves first. The extension then runs with the expanded value.
 		template := "{{ext:nested-test:echo:{{input}}}}"
 		input := "What is Artificial Intelligence"
 
@@ -256,18 +237,15 @@ echo "NESTED_TEST: $*"
 			t.Fatalf("ApplyTemplate() error = %v", err)
 		}
 
-		// Verify the actual input was passed, not the sentinel
 		expectedContain := "NESTED_TEST: What is Artificial Intelligence"
 		if !strings.Contains(got, expectedContain) {
 			t.Errorf("ApplyTemplate() = %q, should contain %q", got, expectedContain)
 		}
 
-		// Verify sentinel token does NOT appear
 		if strings.Contains(got, "__FABRIC_INPUT_SENTINEL_TOKEN__") {
 			t.Errorf("ApplyTemplate() output contains sentinel token (BUG NOT FIXED): %q", got)
 		}
 
-		// Verify {{input}} template tag does NOT appear
 		if strings.Contains(got, "{{input}}") {
 			t.Errorf("ApplyTemplate() output contains unresolved {{input}}: %q", got)
 		}

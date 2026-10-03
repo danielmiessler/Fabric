@@ -19,7 +19,6 @@ import (
 	openai "github.com/openai/openai-go"
 )
 
-// transcriptionResult holds the result of a single chunk transcription.
 type transcriptionResult struct {
 	index int
 	text  string
@@ -36,7 +35,6 @@ var AllowedTranscriptionModels = []string{
 	string(openai.AudioModelGPT4oTranscribe),
 }
 
-// allowedAudioExtensions defines the supported input file extensions.
 var allowedAudioExtensions = map[string]struct{}{
 	".mp3":  {},
 	".mp4":  {},
@@ -138,8 +136,7 @@ func (o *Client) TranscribeFile(ctx context.Context, filePath, model string, spl
 	return builder.String(), nil
 }
 
-// splitAudioFile splits the source file into chunks smaller than maxSize using ffmpeg.
-// It returns the list of chunk file paths and a cleanup function.
+// splitAudioFile halves the ffmpeg segment time until no chunk is larger than maxSize.
 func splitAudioFile(src, ext string, maxSize int64) (files []string, cleanup func(), err error) {
 	if _, err = exec.LookPath("ffmpeg"); err != nil {
 		return nil, nil, errors.New(i18n.T("openai_audio_ffmpeg_not_found_install"))
@@ -151,7 +148,7 @@ func splitAudioFile(src, ext string, maxSize int64) (files []string, cleanup fun
 	}
 	cleanup = func() { os.RemoveAll(dir) }
 
-	segmentTime := 600 // start with 10 minutes
+	segmentTime := 600 // seconds
 	for {
 		pattern := filepath.Join(dir, "chunk-%03d"+ext)
 		debuglog.Log("%s\n", fmt.Sprintf(i18n.T("openai_audio_running_ffmpeg_split_chunks"), segmentTime))

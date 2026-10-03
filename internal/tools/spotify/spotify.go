@@ -28,12 +28,10 @@ import (
 )
 
 const (
-	// Spotify API endpoints
 	tokenURL   = "https://accounts.spotify.com/api/token"
 	apiBaseURL = "https://api.spotify.com/v1"
 )
 
-// URL pattern regexes for parsing Spotify URLs
 var (
 	showPatternRegex    = regexp.MustCompile(`spotify\.com/show/([a-zA-Z0-9]+)`)
 	episodePatternRegex = regexp.MustCompile(`spotify\.com/episode/([a-zA-Z0-9]+)`)
@@ -63,20 +61,18 @@ type Spotify struct {
 	ClientId     *plugins.SetupQuestion
 	ClientSecret *plugins.SetupQuestion
 
-	// OAuth2 token management
 	accessToken string
 	tokenExpiry time.Time
 	tokenMutex  sync.RWMutex
 	httpClient  *http.Client
 }
 
-// initClient ensures the HTTP client and access token are initialized.
+// initClient creates the HTTP client on first use and refreshes the token when it is missing or expired.
 func (s *Spotify) initClient() error {
 	if s.httpClient == nil {
 		s.httpClient = &http.Client{Timeout: 30 * time.Second}
 	}
 
-	// Check if we need to refresh the token
 	s.tokenMutex.RLock()
 	needsRefresh := s.accessToken == "" || time.Now().After(s.tokenExpiry)
 	s.tokenMutex.RUnlock()
@@ -93,7 +89,6 @@ func (s *Spotify) refreshAccessToken() error {
 		return errors.New(i18n.T("spotify_not_configured"))
 	}
 
-	// Prepare the token request
 	data := url.Values{}
 	data.Set("grant_type", "client_credentials")
 
@@ -102,7 +97,6 @@ func (s *Spotify) refreshAccessToken() error {
 		return fmt.Errorf(i18n.T("spotify_failed_create_token_request"), err)
 	}
 
-	// Set Basic Auth header with Client ID and Secret
 	auth := base64.StdEncoding.EncodeToString([]byte(s.ClientId.Value + ":" + s.ClientSecret.Value))
 	req.Header.Set("Authorization", "Basic "+auth)
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
@@ -130,7 +124,7 @@ func (s *Spotify) refreshAccessToken() error {
 
 	s.tokenMutex.Lock()
 	s.accessToken = tokenResp.AccessToken
-	// Set expiry slightly before actual expiry to avoid edge cases
+	// Expire the token 60 seconds early so a request does not race the real expiry.
 	s.tokenExpiry = time.Now().Add(time.Duration(tokenResp.ExpiresIn-60) * time.Second)
 	s.tokenMutex.Unlock()
 
@@ -173,13 +167,11 @@ func (s *Spotify) doRequest(method, endpoint string) ([]byte, error) {
 
 // GetShowOrEpisodeId extracts show or episode ID from a Spotify URL.
 func (s *Spotify) GetShowOrEpisodeId(urlStr string) (showId string, episodeId string, err error) {
-	// Extract show ID
 	showMatch := showPatternRegex.FindStringSubmatch(urlStr)
 	if len(showMatch) > 1 {
 		showId = showMatch[1]
 	}
 
-	// Extract episode ID
 	episodeMatch := episodePatternRegex.FindStringSubmatch(urlStr)
 	if len(episodeMatch) > 1 {
 		episodeId = episodeMatch[1]
@@ -336,7 +328,7 @@ func (s *Spotify) GetEpisodeMetadata(episodeId string) (*EpisodeMetadata, error)
 // SearchShows searches for podcasts/shows matching the query.
 func (s *Spotify) SearchShows(query string, limit int) (*SearchResult, error) {
 	if limit <= 0 || limit > 50 {
-		limit = 20 // Default limit
+		limit = 20
 	}
 
 	endpoint := fmt.Sprintf("/search?q=%s&type=show&limit=%d", url.QueryEscape(query), limit)
@@ -396,7 +388,7 @@ func (s *Spotify) SearchShows(query string, limit int) (*SearchResult, error) {
 // GetShowEpisodes retrieves episodes for a given show.
 func (s *Spotify) GetShowEpisodes(showId string, limit int) ([]EpisodeMetadata, error) {
 	if limit <= 0 || limit > 50 {
-		limit = 20 // Default limit
+		limit = 20
 	}
 
 	endpoint := fmt.Sprintf("/shows/%s/episodes?limit=%d", showId, limit)
@@ -512,7 +504,6 @@ func (s *Spotify) FormatMetadataAsText(metadata any) string {
 			sb.WriteString(fmt.Sprintf(i18n.T("spotify_search_publisher_label")+"\n", show.Publisher))
 			sb.WriteString(fmt.Sprintf(i18n.T("spotify_search_episodes_label")+"\n", show.TotalEpisodes))
 			sb.WriteString(fmt.Sprintf(i18n.T("spotify_search_url_label")+"\n", show.ExternalURL))
-			// Truncate description for search results
 			desc := show.Description
 			if len(desc) > 200 {
 				desc = desc[:200] + "..."

@@ -1,4 +1,4 @@
-// For notesDrawer component
+// Saves a note from NoteDrawer.svelte. See note-store.ts.
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { writeFile } from 'fs/promises';
@@ -14,12 +14,11 @@ export const POST: RequestHandler = async ({ request }) => {
       return json({ error: 'Filename and content are required' }, { status: 400 });
     }
 
-    // Get the absolute path to the inbox directory
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = dirname(__filename);
     const inboxDir = resolve(__dirname, '..', '..', '..', 'myfiles', 'inbox');
 
-    // Security: use only the basename to strip any path traversal sequences (CWE-22)
+    // basename strips path traversal sequences (CWE-22).
     const safeFilename = basename(filename);
     if (!safeFilename) {
       return json({ error: 'Invalid filename' }, { status: 400 });
@@ -27,7 +26,7 @@ export const POST: RequestHandler = async ({ request }) => {
 
     const inboxPath = join(inboxDir, safeFilename);
 
-    // Double-check the resolved path is still within the inbox directory
+    // Defense in depth: the resolved path must stay inside inboxDir (CWE-22).
     if (!inboxPath.startsWith(inboxDir + '/') && inboxPath !== inboxDir) {
       return json({ error: 'Invalid filename' }, { status: 400 });
     }

@@ -95,7 +95,7 @@ func (c *Client) SendStream(_ context.Context, msgs []*chat.ChatCompletionMessag
 	payload := map[string]any{
 		"messages": msgs,
 		"model":    opts.Model,
-		"stream":   true, // Enable streaming
+		"stream":   true,
 		"stream_options": map[string]any{
 			"include_usage": true,
 		},
@@ -159,7 +159,6 @@ func (c *Client) SendStream(_ context.Context, msgs []*chat.ChatCompletionMessag
 			continue
 		}
 
-		// Handle Usage
 		if usage, ok := result["usage"].(map[string]any); ok {
 			var metadata domain.UsageMetadata
 			if val, ok := usage["prompt_tokens"].(float64); ok {
@@ -206,7 +205,6 @@ func (c *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, o
 	payload := map[string]any{
 		"messages": msgs,
 		"model":    opts.Model,
-		// Add other options from opts if supported by LM Studio
 	}
 
 	var jsonPayload []byte
@@ -269,7 +267,6 @@ func (c *Client) Complete(ctx context.Context, prompt string, opts *domain.ChatO
 	payload := map[string]any{
 		"prompt": prompt,
 		"model":  opts.Model,
-		// Add other options from opts if supported by LM Studio
 	}
 
 	var jsonPayload []byte
@@ -326,7 +323,6 @@ func (c *Client) GetEmbeddings(ctx context.Context, input string, opts *domain.C
 	payload := map[string]any{
 		"input": input,
 		"model": opts.Model,
-		// Add other options from opts if supported by LM Studio
 	}
 
 	var jsonPayload []byte

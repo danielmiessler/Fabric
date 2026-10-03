@@ -26,7 +26,6 @@ func (p *DateTimePlugin) Apply(operation string, value string) (string, error) {
 	debugf("DateTime: reference time=%v", now)
 
 	switch operation {
-	// Time operations
 	case "now":
 		result := now.Format(time.RFC3339)
 		debugf("DateTime: now=%q", result)
@@ -52,7 +51,6 @@ func (p *DateTimePlugin) Apply(operation string, value string) (string, error) {
 		debugf("DateTime: endofhour=%q", result)
 		return result, nil
 
-	// Date operations
 	case "today":
 		result := now.Format("2006-01-02")
 		debugf("DateTime: today=%q", result)
@@ -108,14 +106,13 @@ func (p *DateTimePlugin) handleRelative(now time.Time, value string) (string, er
 		return "", errors.New(i18n.T("template_datetime_error_relative_requires_value"))
 	}
 
-	// Try standard duration first (hours, minutes)
+	// time.ParseDuration runs first, so "m" means minutes here, not months.
 	if duration, err := time.ParseDuration(value); err == nil {
 		result := now.Add(duration).Format(time.RFC3339)
 		debugf("DateTime: relative duration=%q result=%q", duration, result)
 		return result, nil
 	}
 
-	// Handle date units
 	if len(value) < 2 {
 		return "", errors.New(i18n.T("template_datetime_error_invalid_relative_format"))
 	}

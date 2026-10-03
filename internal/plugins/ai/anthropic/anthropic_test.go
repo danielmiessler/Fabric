@@ -74,8 +74,8 @@ func TestBuildMessageParams_WithoutSearch(t *testing.T) {
 	client := NewClient()
 	opts := &domain.ChatOptions{
 		Model:       "claude-3-5-sonnet-latest",
-		Temperature: 0.8,                // Use non-default value to ensure it gets set
-		TopP:        domain.DefaultTopP, // Use default TopP so temperature takes precedence
+		Temperature: 0.8,                // Not the default, so the value must come from opts
+		TopP:        domain.DefaultTopP, // The default, so the code sends temperature
 		Search:      false,
 	}
 
@@ -93,9 +93,45 @@ func TestBuildMessageParams_WithoutSearch(t *testing.T) {
 		t.Errorf("Expected model %s, got %s", opts.Model, params.Model)
 	}
 
-	// When using non-default temperature, it should be set in params
 	if params.Temperature.Value != opts.Temperature {
 		t.Errorf("Expected temperature %f, got %f", opts.Temperature, params.Temperature.Value)
+	}
+}
+
+func TestBuildMessageParams_UsesConfiguredMaxTokensByDefault(t *testing.T) {
+	client := NewClient()
+	opts := &domain.ChatOptions{
+		Model:       "claude-3-5-sonnet-latest",
+		Temperature: domain.DefaultTemperature,
+		TopP:        domain.DefaultTopP,
+	}
+	messages := []anthropic.MessageParam{
+		anthropic.NewUserMessage(anthropic.NewTextBlock("Hello")),
+	}
+
+	params := client.buildMessageParams(messages, opts)
+
+	if params.MaxTokens != int64(client.maxTokens) {
+		t.Errorf("Expected default max_tokens %d, got %d", client.maxTokens, params.MaxTokens)
+	}
+}
+
+func TestBuildMessageParams_UsesChatOptionsMaxTokens(t *testing.T) {
+	client := NewClient()
+	opts := &domain.ChatOptions{
+		Model:       "claude-3-5-sonnet-latest",
+		Temperature: domain.DefaultTemperature,
+		TopP:        domain.DefaultTopP,
+		MaxTokens:   8192,
+	}
+	messages := []anthropic.MessageParam{
+		anthropic.NewUserMessage(anthropic.NewTextBlock("Hello")),
+	}
+
+	params := client.buildMessageParams(messages, opts)
+
+	if params.MaxTokens != int64(opts.MaxTokens) {
+		t.Errorf("Expected max_tokens %d, got %d", opts.MaxTokens, params.MaxTokens)
 	}
 }
 
@@ -103,8 +139,8 @@ func TestBuildMessageParams_WithSearch(t *testing.T) {
 	client := NewClient()
 	opts := &domain.ChatOptions{
 		Model:       "claude-3-5-sonnet-latest",
-		Temperature: 0.8,                // Use non-default value
-		TopP:        domain.DefaultTopP, // Use default TopP so temperature takes precedence
+		Temperature: 0.8,
+		TopP:        domain.DefaultTopP,
 		Search:      true,
 	}
 
@@ -140,8 +176,8 @@ func TestBuildMessageParams_WithSearchAndLocation(t *testing.T) {
 	client := NewClient()
 	opts := &domain.ChatOptions{
 		Model:          "claude-3-5-sonnet-latest",
-		Temperature:    0.8,                // Use non-default value
-		TopP:           domain.DefaultTopP, // Use default TopP so temperature takes precedence
+		Temperature:    0.8,
+		TopP:           domain.DefaultTopP,
 		Search:         true,
 		SearchLocation: "America/Los_Angeles",
 	}
@@ -195,7 +231,7 @@ func TestBuildMessageParams_Opus47OmitsSamplingParams(t *testing.T) {
 
 func TestModelBetasConfiguration(t *testing.T) {
 	client := NewClient()
-	model := string(anthropic.ModelClaudeSonnet4_20250514)
+	model := string(anthropic.ModelClaudeSonnet5)
 	betas, ok := client.modelBetas[model]
 	if !ok || len(betas) != 1 || betas[0] != "context-1m-2025-08-07" {
 		t.Errorf("expected beta mapping for %s", model)
@@ -203,7 +239,6 @@ func TestModelBetasConfiguration(t *testing.T) {
 }
 
 func TestCitationFormatting(t *testing.T) {
-	// Test the citation formatting logic by creating a mock message with citations
 	message := &anthropic.Message{
 		Content: []anthropic.ContentBlockUnion{
 			{
@@ -230,7 +265,7 @@ func TestCitationFormatting(t *testing.T) {
 				Citations: []anthropic.TextCitationUnion{
 					{
 						Type:      "web_search_result_location",
-						URL:       "https://example.com/ai-research", // Duplicate URL should be deduplicated
+						URL:       "https://example.com/ai-research", // Same URL and title as the first citation
 						Title:     "AI Research Advances 2025",
 						CitedText: "machine learning models",
 					},
@@ -239,7 +274,7 @@ func TestCitationFormatting(t *testing.T) {
 		},
 	}
 
-	// Extract text and citations using the same logic as the Send method
+	// This is a copy of the citation code in Send. The test does not call Send.
 	var textParts []string
 	var citations []string
 	citationMap := make(map[string]bool)
@@ -269,13 +304,11 @@ func TestCitationFormatting(t *testing.T) {
 		result += "\n\n## Sources\n\n" + strings.Join(citations, "\n")
 	}
 
-	// Verify the result contains the expected text
 	expectedText := "Based on recent research, artificial intelligence is advancing rapidly. Machine learning models are becoming more sophisticated."
 	if !strings.Contains(result, expectedText) {
 		t.Errorf("Expected result to contain text: %s", expectedText)
 	}
 
-	// Verify citations are included
 	if !strings.Contains(result, "## Sources") {
 		t.Error("Expected result to contain Sources section")
 	}
@@ -288,7 +321,6 @@ func TestCitationFormatting(t *testing.T) {
 		t.Error("Expected result to contain second citation")
 	}
 
-	// Verify deduplication - should only have 2 unique citations, not 3
 	citationCount := strings.Count(result, "- [")
 	if citationCount != 2 {
 		t.Errorf("Expected 2 unique citations, got %d", citationCount)
@@ -298,11 +330,10 @@ func TestCitationFormatting(t *testing.T) {
 func TestBuildMessageParams_DefaultValues(t *testing.T) {
 	client := NewClient()
 
-	// Test with default temperature - should always set temperature unless TopP is explicitly set
 	opts := &domain.ChatOptions{
 		Model:       "claude-3-5-sonnet-latest",
-		Temperature: domain.DefaultTemperature, // 0.7 - should be set to override Anthropic's 1.0 default
-		TopP:        domain.DefaultTopP,        // 0.9 - default, so temperature takes precedence
+		Temperature: domain.DefaultTemperature, // 0.7, sent because the API default is 1.0
+		TopP:        domain.DefaultTopP,        // 0.9, the default, so the code sends temperature
 		Search:      false,
 	}
 
@@ -312,12 +343,10 @@ func TestBuildMessageParams_DefaultValues(t *testing.T) {
 
 	params := client.buildMessageParams(messages, opts)
 
-	// Temperature should be set when using default value to override Anthropic's 1.0 default
 	if params.Temperature.Value != opts.Temperature {
 		t.Errorf("Expected temperature %f, got %f", opts.Temperature, params.Temperature.Value)
 	}
 
-	// TopP should not be set when using default value (temperature takes precedence)
 	if params.TopP.Value != 0 {
 		t.Errorf("Expected TopP to not be set (0), but got %f", params.TopP.Value)
 	}
@@ -326,11 +355,10 @@ func TestBuildMessageParams_DefaultValues(t *testing.T) {
 func TestBuildMessageParams_ExplicitTopP(t *testing.T) {
 	client := NewClient()
 
-	// Test with explicit TopP - should set TopP instead of temperature
 	opts := &domain.ChatOptions{
 		Model:       "claude-3-5-sonnet-latest",
-		Temperature: domain.DefaultTemperature, // 0.7 - ignored when TopP is explicitly set
-		TopP:        0.5,                       // Non-default - should be set
+		Temperature: domain.DefaultTemperature, // 0.7, not sent because TopP is set
+		TopP:        0.5,                       // Not the default, so the code sends it
 		Search:      false,
 	}
 
@@ -340,12 +368,10 @@ func TestBuildMessageParams_ExplicitTopP(t *testing.T) {
 
 	params := client.buildMessageParams(messages, opts)
 
-	// Temperature should not be set when TopP is explicitly set
 	if params.Temperature.Value != 0 {
 		t.Errorf("Expected temperature to not be set (0), but got %f", params.Temperature.Value)
 	}
 
-	// TopP should be set when using non-default value
 	if params.TopP.Value != opts.TopP {
 		t.Errorf("Expected TopP %f, got %f", opts.TopP, params.TopP.Value)
 	}
@@ -385,5 +411,112 @@ func TestToMessages_MultiContentPDFAttachment(t *testing.T) {
 	}
 	if document.Source.OfBase64.Data != "SGVsbG8=" {
 		t.Fatalf("Expected document data to match base64 payload, got %s", document.Source.OfBase64.Data)
+	}
+}
+
+func TestParseThinking_AdaptiveModelUsesAdaptivePlusEffort(t *testing.T) {
+	for _, tc := range []struct {
+		level  domain.ThinkingLevel
+		effort anthropic.OutputConfigEffort
+	}{
+		{domain.ThinkingLow, anthropic.OutputConfigEffortLow},
+		{domain.ThinkingMedium, anthropic.OutputConfigEffortMedium},
+		{domain.ThinkingHigh, anthropic.OutputConfigEffortHigh},
+	} {
+		thinking, effort, ok := parseThinking(tc.level, string(anthropic.ModelClaudeSonnet5))
+		if !ok {
+			t.Fatalf("parseThinking(%q) returned ok=false", tc.level)
+		}
+		if thinking.OfAdaptive == nil {
+			t.Errorf("level %q: expected OfAdaptive to be set on an adaptive model", tc.level)
+		}
+		if thinking.OfEnabled != nil {
+			t.Errorf("level %q: OfEnabled must NOT be set on an adaptive model; the API rejects it", tc.level)
+		}
+		if effort != tc.effort {
+			t.Errorf("level %q: expected effort %q, got %q", tc.level, tc.effort, effort)
+		}
+	}
+}
+
+func TestParseThinking_LegacyModelKeepsBudgetTokens(t *testing.T) {
+	thinking, effort, ok := parseThinking(domain.ThinkingMedium, string(anthropic.ModelClaudeOpus4_7))
+	if !ok {
+		t.Fatal("parseThinking returned ok=false")
+	}
+	if thinking.OfEnabled == nil {
+		t.Fatal("expected OfEnabled (budget_tokens) to be set on a non-adaptive model")
+	}
+	if thinking.OfEnabled.BudgetTokens != domain.TokenBudgetMedium {
+		t.Errorf("expected budget %d, got %d", domain.TokenBudgetMedium, thinking.OfEnabled.BudgetTokens)
+	}
+	if effort != "" {
+		t.Errorf("effort must be empty for a non-adaptive model, got %q", effort)
+	}
+}
+
+func TestParseThinking_OffIsDisabledOnBothGenerations(t *testing.T) {
+	for _, model := range []string{
+		string(anthropic.ModelClaudeSonnet5),
+		string(anthropic.ModelClaudeOpus4_7),
+	} {
+		thinking, effort, ok := parseThinking(domain.ThinkingOff, model)
+		if !ok {
+			t.Fatalf("model %s: parseThinking returned ok=false", model)
+		}
+		if thinking.OfDisabled == nil {
+			t.Errorf("model %s: expected OfDisabled to be set", model)
+		}
+		if effort != "" {
+			t.Errorf("model %s: effort must be empty when thinking is off, got %q", model, effort)
+		}
+	}
+}
+
+func TestParseThinking_NumericBudgetBucketsToEffortOnAdaptiveModel(t *testing.T) {
+	for _, tc := range []struct {
+		tokens string
+		effort anthropic.OutputConfigEffort
+	}{
+		{"512", anthropic.OutputConfigEffortLow},
+		{"1024", anthropic.OutputConfigEffortLow},
+		{"2048", anthropic.OutputConfigEffortMedium},
+		{"9000", anthropic.OutputConfigEffortHigh},
+	} {
+		thinking, effort, ok := parseThinking(domain.ThinkingLevel(tc.tokens), string(anthropic.ModelClaudeSonnet5))
+		if !ok {
+			t.Fatalf("tokens %s: parseThinking returned ok=false", tc.tokens)
+		}
+		if thinking.OfAdaptive == nil {
+			t.Errorf("tokens %s: expected OfAdaptive on an adaptive model", tc.tokens)
+		}
+		if effort != tc.effort {
+			t.Errorf("tokens %s: expected effort %q, got %q", tc.tokens, tc.effort, effort)
+		}
+	}
+}
+
+func TestBuildMessageParams_ThinkingShapeFollowsModel(t *testing.T) {
+	for _, tc := range []struct {
+		model        anthropic.Model
+		wantAdaptive bool
+		wantEffort   anthropic.OutputConfigEffort
+	}{
+		{anthropic.ModelClaudeSonnet5, true, anthropic.OutputConfigEffortMedium},
+		{anthropic.ModelClaudeOpus4_7, false, ""},
+	} {
+		params := NewClient().buildMessageParams(
+			[]anthropic.MessageParam{anthropic.NewUserMessage(anthropic.NewTextBlock("Hello"))},
+			&domain.ChatOptions{Model: string(tc.model), Thinking: domain.ThinkingMedium},
+		)
+		if got := params.Thinking.OfAdaptive != nil; got != tc.wantAdaptive {
+			t.Errorf("model %s: adaptive=%v, want %v", tc.model, got, tc.wantAdaptive)
+		}
+		if got := params.Thinking.OfEnabled != nil; got == tc.wantAdaptive {
+			t.Errorf("model %s: budget_tokens set=%v, want %v", tc.model, got, !tc.wantAdaptive)
+		}
+		if params.OutputConfig.Effort != tc.wantEffort {
+			t.Errorf("model %s: effort=%q, want %q", tc.model, params.OutputConfig.Effort, tc.wantEffort)
+		}
 	}
 }

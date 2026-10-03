@@ -1,10 +1,9 @@
 <script lang="ts">
-  //import Search from './Search.svelte';
   import type { PageData } from './$types';
   import Card from '$lib/components/ui/cards/card.svelte';
   import { Youtube } from 'svelte-youtube-lite';
   import PostCard from '$lib/components/posts/PostCard.svelte';
-  import { InputChip } from '@skeletonlabs/skeleton';
+  import TagsInputField from '$lib/components/ui/tagsInput/TagsInputField.svelte';
   import Connections from '$lib/components/ui/connections/Connections.svelte';
   import Button from '$lib/components/ui/button/button.svelte';
 
@@ -15,7 +14,6 @@
   export let data: PageData;
   $: posts = data.posts || [];
 
-  // Extract all unique tags from posts
   $: {
     const tagSet = new Set<string>();
     posts?.forEach(post => {
@@ -24,7 +22,6 @@
     allTags = Array.from(tagSet);
   }
 
-  // Filter posts based on selected tags
   $: filteredPosts = posts?.filter(post => {
     if (selectedTags.length === 0) return true;
     return selectedTags.every(tag => 
@@ -32,7 +29,6 @@
     );
   }) || [];
 
-  // Filter posts based on search query
   $: searchResults = filteredPosts.filter(post => {
     if (!searchQuery) return true;
     const query = searchQuery.toLowerCase();
@@ -47,8 +43,6 @@
     return allTags.some(tag => tag.toLowerCase() === value.toLowerCase());
   }
 </script>
-
-<!-- <Search /> -->
 
 <div class="absolute inset-0 -z-10 overflow-hidden h-96">
   <Connections  particleCount={100} particleSize={3} particleSpeed={0.1} connectionDistance={100}/>
@@ -128,7 +122,7 @@
     </div>
     <div class="container mx-auto ml-auto grid grid-cols-1 md:grid-cols-2 gap-4 justify-end max-h-36 mt-8 pb-8">
       <div class="md:col-start-1">
-        <!-- This card should be replaced with explainer graphic or text -->
+        <!-- TODO: replace this card with an explainer graphic or text -->
         <Card
           header="Backed by Obsidian"
           imageUrl="/obsidian-logo.png"
@@ -148,7 +142,7 @@
     </div>
   </div>
   <br>
-  <div class="rounded-tl-container-token m-auto grid grid-cols-1 gap-4 mt-8">
+  <div class="rounded-tl-container m-auto grid grid-cols-1 gap-4 mt-8">
     <div class="mx-auto max-h-52 max-w-52"><img src="/fabric-logo.png" alt="fabric-logo"></div>
   </div>
   <br>
@@ -160,7 +154,7 @@
 </div>
 <div class="container py-12">
   <div class="my-4">
-    <InputChip
+    <TagsInputField
       name="tags"
       placeholder="Filter by tags..."
       validation={validateTag}

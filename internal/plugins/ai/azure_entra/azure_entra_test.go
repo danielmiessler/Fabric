@@ -33,9 +33,9 @@ func TestPluginName(t *testing.T) {
 
 func TestEnvPrefix(t *testing.T) {
 	client := NewClient()
-	// Setup questions should use the AZUREENTRA_ prefix.
-	// The base URL question key is "API Base URL" under vendor "AzureEntra",
-	// which results in env var AZUREENTRA_API_BASE_URL.
+	// The vendor name AzureEntra gives the prefix AZUREENTRA_, so the base URL
+	// question maps to AZUREENTRA_API_BASE_URL. The test only checks that the
+	// questions exist.
 	if client.ApiBaseURL == nil {
 		t.Fatal("ApiBaseURL setup question is nil")
 	}

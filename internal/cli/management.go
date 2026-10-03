@@ -4,8 +4,8 @@ import (
 	"github.com/danielmiessler/fabric/internal/plugins/db/fsdb"
 )
 
-// handleManagementCommands handles management-related commands (delete, print, etc.)
-// Returns (handled, error) where handled indicates if a command was processed and should exit
+// handleManagementCommands runs the context and session wipe and print commands.
+// It returns handled = true when a command ran and the caller must exit.
 func handleManagementCommands(currentFlags *Flags, fabricDb *fsdb.Db) (handled bool, err error) {
 	if currentFlags.WipeContext != "" {
 		err = fabricDb.Contexts.Delete(currentFlags.WipeContext)

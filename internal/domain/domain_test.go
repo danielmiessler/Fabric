@@ -1,6 +1,7 @@
 package domain
 
 import (
+	"encoding/json"
 	"testing"
 
 	"github.com/danielmiessler/fabric/internal/chat"
@@ -24,4 +25,14 @@ func TestNormalizeMessages(t *testing.T) {
 
 	actual := NormalizeMessages(msgs, "default")
 	assert.Equal(t, expected, actual)
+}
+
+// SessionID is derived internally and must not leak into the REST API surface
+// (ChatOptions is embedded in the server's JSON-bound request DTO).
+func TestChatOptions_SessionIDExcludedFromJSON(t *testing.T) {
+	opts := ChatOptions{Model: "glm-5.1", SessionID: "session-123"}
+	data, err := json.Marshal(opts)
+	assert.NoError(t, err)
+	assert.NotContains(t, string(data), "SessionID")
+	assert.NotContains(t, string(data), "session-123")
 }

@@ -31,7 +31,7 @@ export async function getTranscript(url: string): Promise<TranscriptResponse> {
       },
       body: JSON.stringify({
         url,
-        language: originalLanguage // Pass original language to server
+        language: originalLanguage
       })
     });
 
@@ -53,10 +53,9 @@ export async function getTranscript(url: string): Promise<TranscriptResponse> {
       throw new Error(data.error);
     }
 
-    // Decode HTML entities in transcript
     data.transcript = decodeHtmlEntities(data.transcript);
 
-    // Ensure language is preserved
+    // Put the language back if the fetch changed it.
     if (get(languageStore) !== originalLanguage) {
       console.log('3a. Restoring original language:', originalLanguage);
       languageStore.set(originalLanguage);

@@ -7,7 +7,7 @@
     }>();
 
     export let patterns: Pattern[];
-    export let hideToggleButton = false; // New prop to hide the toggle button when used in modal
+    export let hideToggleButton = false;
     let selectedTags: string[] = [];
     let isExpanded = false;
 
@@ -61,17 +61,15 @@
     </div>
 </div>
 <style>
-   /* Default positioning for standalone mode */
    .tag-panel {
-    position: fixed;  /* Change to fixed positioning */
-    left: calc(50% + 300px); /* Position starts after modal's right edge */
+    position: fixed;
+    left: calc(50% + 300px); /* 300px is half the width of the centered PatternList modal */
     top: 50%;
     transform: translateY(-50%);
     width: 300px;
     transition: left 0.3s ease;
 }
 
-/* When embedded in another component, use relative positioning */
 .tag-panel.embedded {
     position: relative;
     left: auto;
@@ -82,7 +80,7 @@
 }
 
 .tag-panel.expanded {
-    left: calc(50% + 360px); /* Final position just to the right of modal */
+    left: calc(50% + 360px); /* 60px right of the modal edge when open */
 }
 
 .panel-content {
@@ -94,12 +92,10 @@
     overflow-y: auto;
 }
 
-/* Adjust max-height when embedded */
 .embedded .panel-content {
     max-height: 100%;
 }
 
-/* When used in modal, always show content */
 .panel-content.always-visible {
     display: flex;
 }
@@ -157,13 +153,11 @@
     text-align: left;
 }
 
-/* Position for 'Open Filter Tags' */
 .tag-panel:not(.expanded) .close-btn {
-    top: -290px;  /* Moves up to search bar level */
+    top: -290px; /* Aligns the button with the search bar */
     margin-left: 10px;
 }
 
-/* Position for 'Close Filter Tags' */
 .expanded .close-btn {
     position: relative;
     top: 0;

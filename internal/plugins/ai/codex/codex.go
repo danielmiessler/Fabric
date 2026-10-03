@@ -58,6 +58,10 @@ type Client struct {
 	apiHTTPClient  *http.Client
 
 	tokenMu sync.Mutex
+	// TokenPersist writes current tokens after refresh. Nil skips. Error fails the refresh.
+	TokenPersist func() error
+	// WithStoreLock, when set, wraps refresh+persist (reload tokens inside the lock).
+	WithStoreLock func(func() error) error
 }
 
 type modelInfo struct {
@@ -81,11 +85,11 @@ func NewClient() *Client {
 	client.AccountID = client.AddSetting("Account ID", true)
 
 	client.ApiBaseURL = client.AddSetupQuestionWithEnvName("Base URL", false,
-		"Enter your Codex API base URL")
+		i18n.T("codex_api_base_url_question"))
 	client.ApiBaseURL.Value = defaultBaseURL
 
 	client.AuthBaseURL = client.AddSetupQuestionWithEnvName("Auth Base URL", false,
-		"Enter your Codex OAuth base URL")
+		i18n.T("codex_auth_base_url_question"))
 	client.AuthBaseURL.Value = defaultAuthBaseURL
 
 	client.authHTTPClient = &http.Client{Timeout: modelsRequestTimeout}
@@ -99,6 +103,14 @@ func (c *Client) Setup() error {
 	}
 	if err := c.AuthBaseURL.Ask(vendorName); err != nil {
 		return err
+	}
+
+	if strings.TrimSpace(c.RefreshToken.Value) != "" {
+		if err := c.configure(); err == nil {
+			return nil
+		} else {
+			debuglog.Log("Codex configure failed; starting browser login: %v\n", err)
+		}
 	}
 
 	ctx, cancel := context.WithTimeout(context.Background(), oauthTimeout)
@@ -153,9 +165,24 @@ func (c *Client) configure() error {
 		option.WithHTTPClient(c.apiHTTPClient),
 	)
 	c.ApiClient = &apiClient
-	debuglog.Debug(debuglog.Detailed, "Codex configure: authenticated account=%s base_url=%s\n", c.AccountID.Value, c.ApiBaseURL.Value)
+	debuglog.Debug(debuglog.Detailed, "Codex configure: authenticated account_present=%t base_url=%s\n", strings.TrimSpace(c.AccountID.Value) != "", c.ApiBaseURL.Value)
 
 	return nil
+}
+
+// LoadEnvSettings copies non-empty Codex token values from env.
+func (c *Client) LoadEnvSettings(env map[string]string) {
+	apply := func(setting *plugins.Setting) {
+		if setting == nil || setting.EnvVariable == "" {
+			return
+		}
+		if value := strings.TrimSpace(env[setting.EnvVariable]); value != "" {
+			c.setSettingValue(setting, value)
+		}
+	}
+	apply(c.AccessToken)
+	apply(c.RefreshToken)
+	apply(c.AccountID)
 }
 
 // ListModels returns the Codex models available to the configured account.

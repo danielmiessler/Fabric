@@ -1,13 +1,15 @@
 package azure
 
 import (
-	"bytes"
 	"context"
-	"io"
+	"fmt"
 	"net/http"
+	"net/http/httptest"
 	"testing"
 
 	"github.com/danielmiessler/fabric/internal/plugins/ai/azurecommon"
+	openaiapi "github.com/openai/openai-go/v3"
+	"github.com/openai/openai-go/v3/option"
 )
 
 // Test generated using Keploy
@@ -124,50 +126,38 @@ func TestNeedsRawModeInheritsFromParent(t *testing.T) {
 	}
 }
 
-func TestMiddlewareResponsesRoute(t *testing.T) {
-	body := `{"model": "gpt-5"}`
-	req, err := http.NewRequest("POST", "https://example.com/openai/responses", io.NopCloser(bytes.NewReader([]byte(body))))
+func TestConfigureRoutesChatToDeployment(t *testing.T) {
+	var path, apiVersion, apiKey string
+	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		path, apiVersion, apiKey = r.URL.Path, r.URL.Query().Get("api-version"), r.Header.Get("Api-Key")
+		w.Header().Set("Content-Type", "application/json")
+		fmt.Fprint(w, `{"choices":[]}`)
+	}))
+	defer server.Close()
+
+	client := NewClient()
+	client.ApiDeployments.Value = "gpt-4o"
+	client.ApiKey.Value = "test-api-key"
+	client.ApiBaseURL.Value = server.URL
+	if err := client.configure(); err != nil {
+		t.Fatalf("configure() error = %v", err)
+	}
+
+	// openai-go v3 sends Azure credentials only over HTTPS. server.Client accepts the test certificate.
+	_, err := client.ApiClient.Chat.Completions.New(context.Background(), openaiapi.ChatCompletionNewParams{
+		Model:    "gpt-4o",
+		Messages: []openaiapi.ChatCompletionMessageParamUnion{openaiapi.UserMessage("Hello")},
+	}, option.WithHTTPClient(server.Client()))
 	if err != nil {
-		t.Fatalf("Failed to create request: %v", err)
+		t.Fatalf("Chat.Completions.New() error = %v", err)
 	}
-
-	var capturedPath string
-	mockNext := func(req *http.Request) (*http.Response, error) {
-		capturedPath = req.URL.Path
-		return &http.Response{StatusCode: 200}, nil
+	if path != "/openai/deployments/gpt-4o/chat/completions" {
+		t.Errorf("request path = %q, want /openai/deployments/gpt-4o/chat/completions", path)
 	}
-
-	_, err = azurecommon.AzureDeploymentMiddleware(req, mockNext)
-	if err != nil {
-		t.Fatalf("Middleware returned error: %v", err)
+	if apiVersion != azurecommon.DefaultAPIVersion {
+		t.Errorf("api-version = %q, want %q", apiVersion, azurecommon.DefaultAPIVersion)
 	}
-
-	expected := "/openai/deployments/gpt-5/responses"
-	if capturedPath != expected {
-		t.Errorf("Expected path %q, got %q", expected, capturedPath)
-	}
-}
-
-func TestMiddlewareChatCompletionsRoute(t *testing.T) {
-	body := `{"model": "gpt-4o"}`
-	req, err := http.NewRequest("POST", "https://example.com/openai/chat/completions", io.NopCloser(bytes.NewReader([]byte(body))))
-	if err != nil {
-		t.Fatalf("Failed to create request: %v", err)
-	}
-
-	var capturedPath string
-	mockNext := func(req *http.Request) (*http.Response, error) {
-		capturedPath = req.URL.Path
-		return &http.Response{StatusCode: 200}, nil
-	}
-
-	_, err = azurecommon.AzureDeploymentMiddleware(req, mockNext)
-	if err != nil {
-		t.Fatalf("Middleware returned error: %v", err)
-	}
-
-	expected := "/openai/deployments/gpt-4o/chat/completions"
-	if capturedPath != expected {
-		t.Errorf("Expected path %q, got %q", expected, capturedPath)
+	if apiKey != "test-api-key" {
+		t.Errorf("Api-Key header = %q, want test-api-key", apiKey)
 	}
 }

@@ -10,7 +10,7 @@ import (
 
 	"github.com/danielmiessler/fabric/internal/chat"
 	"github.com/danielmiessler/fabric/internal/domain"
-	"github.com/openai/openai-go/responses"
+	"github.com/openai/openai-go/v3/responses"
 	"github.com/stretchr/testify/assert"
 )
 

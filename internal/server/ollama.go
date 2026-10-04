@@ -391,6 +391,10 @@ func (f APIConvert) ollamaChat(c *gin.Context) {
 	}
 	defer fabricRes.Body.Close()
 
+	if prompt.Stream {
+		c.Header("Content-Type", "application/x-ndjson")
+	}
+
 	if fabricRes.StatusCode < http.StatusOK || fabricRes.StatusCode >= http.StatusMultipleChoices {
 		bodyBytes, readErr := io.ReadAll(fabricRes.Body)
 		if readErr != nil {
@@ -401,10 +405,6 @@ func (f APIConvert) ollamaChat(c *gin.Context) {
 
 		replyOllamaError(c, prompt, fabricRes.StatusCode, fmt.Sprintf(i18n.T("ollama_upstream_returned_status"), fabricRes.StatusCode))
 		return
-	}
-
-	if prompt.Stream {
-		c.Header("Content-Type", "application/x-ndjson")
 	}
 
 	var contentBuilder strings.Builder

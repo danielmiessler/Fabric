@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.4.510 (2026-10-04)
+
+### PR [#2255](https://github.com/danielmiessler/Fabric/pull/2255) by [ksylvan](https://github.com/ksylvan): fix: SSE streaming fixes (supersedes #2102, #2128, #2213, #2242, #2247)
+
+- Fixed SSE streaming behavior by correcting chat SSE headers and suppressing completion events after errors.
+- Prevented canceled chat requests from blocking stream update delivery.
+- Upgraded the OpenAI SDK to v3.71.1 and refreshed dependency manifests.
+- Restored Azure deployment routing through native SDK endpoint configuration. Chat Completions use deployment-scoped paths; Responses use `/openai/responses` with the deployment name in the `model` field. Azure endpoints must use HTTPS, and credentials do not follow cross-origin redirects.
+- Improved error handling by preserving provider error details, surfacing Claude scanner failures, and keeping streaming Ollama error responses labeled with NDJSON headers.
+
 ## v1.4.509 (2026-10-04)
 
 ### PR [#2201](https://github.com/danielmiessler/Fabric/pull/2201) by [ghrom](https://github.com/ghrom): feat: refresh Ultimate Law patterns to current doctrine, add judge_ultimate_law

@@ -1,10 +1,16 @@
 package claudecode
 
 import (
+	"bufio"
 	"context"
+	"errors"
+	"os"
+	"path/filepath"
+	"runtime"
 	"slices"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/danielmiessler/fabric/internal/chat"
 	"github.com/danielmiessler/fabric/internal/domain"
@@ -55,6 +61,47 @@ func TestCommand(t *testing.T) {
 	cmd, _ = command(context.Background(), multi, &domain.ChatOptions{})
 	if !slices.Contains(cmd.Args, "--add-dir") || !slices.Contains(cmd.Args, "/path/to") {
 		t.Errorf("expected --add-dir /path/to for local file image: %v", cmd.Args)
+	}
+}
+
+func TestScanStreamJSONReturnsScanError(t *testing.T) {
+	oversizedLine := strings.Repeat("a", 5<<20) // past the 4 MiB buffer
+	channel := make(chan domain.StreamUpdate)
+	err := scanStreamJSON(strings.NewReader(oversizedLine+"\n"), channel)
+	if err == nil {
+		t.Fatal("expected an error for a line over the scanner buffer, got nil")
+	}
+}
+
+func TestSendStreamStopsChildOnScanError(t *testing.T) {
+	if runtime.GOOS == "windows" {
+		t.Skip("uses a shell script as the fake claude binary")
+	}
+	// The fake claude writes a line past the 4 MiB buffer and then writes forever.
+	dir := t.TempDir()
+	script := "#!/bin/sh\nprintf '%5242880s\\n' x\nwhile :; do echo x; done\n"
+	if err := os.WriteFile(filepath.Join(dir, binary), []byte(script), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	t.Setenv("PATH", dir)
+
+	channel := make(chan domain.StreamUpdate)
+	done := make(chan error, 1)
+	go func() {
+		done <- NewClient().SendStream(context.Background(),
+			[]*chat.ChatCompletionMessage{{Role: chat.ChatMessageRoleUser, Content: "hi"}}, &domain.ChatOptions{}, channel)
+	}()
+	go func() {
+		for range channel {
+		}
+	}()
+	select {
+	case err := <-done:
+		if !errors.Is(err, bufio.ErrTooLong) {
+			t.Errorf("err = %v, want bufio.ErrTooLong", err)
+		}
+	case <-time.After(10 * time.Second):
+		t.Fatal("SendStream did not return after the scan error")
 	}
 }
 

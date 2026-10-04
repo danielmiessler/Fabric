@@ -18,62 +18,28 @@ POST "https://{resource}.cognitiveservices.azure.com/openai/chat/completions?api
 
 ### Root Cause
 
-Azure OpenAI requires deployment names in the URL path:
+Azure OpenAI requires the deployment name in the URL path for Chat Completions:
 
 ```
 ✅ Correct:  /openai/deployments/{deployment-name}/chat/completions
 ❌ Incorrect: /openai/chat/completions
 ```
 
-The OpenAI Go SDK's `azure.WithEndpoint()` middleware has a bug in its URL transformation logic:
-
-1. The SDK's `jsonRoutes` map expects paths like `/openai/chat/completions`
-2. But the SDK actually sends paths like `/chat/completions` (without the `/openai/` prefix)
-3. The `/openai/` prefix is included in the base URL, not the request path
-4. This causes the route matching to **always fail**, so deployment names are never injected into the URL
-
-### Technical Details
-
-In the SDK's `azure/azure.go`:
-
-```go
-// SDK checks for these routes:
-var jsonRoutes = map[string]bool{
-    "/openai/chat/completions": true,  // Expects /openai/ prefix
-    // ...
-}
-
-// But actual request path is:
-path := "chat/completions"  // No /openai/ prefix!
-```
-
-The mismatch means `jsonRoutes[req.URL.Path]` never matches, and the deployment name transformation never happens.
+Older versions of the OpenAI Go SDK did not add the deployment name to the path. Fabric used custom middleware to change the path.
 
 ## Fix
 
-The fix in `internal/plugins/ai/azure/azure.go` adds custom middleware that:
+Fabric now uses OpenAI Go SDK v3. The SDK `azure.WithEndpoint()` option does the routing, and Fabric does not use custom middleware:
 
-1. Intercepts outgoing requests
-2. Extracts the deployment name from the request body's `model` field
-3. Transforms the URL path to include `/deployments/{name}/`
+- **Chat Completions** and other deployment-scoped calls go to `/openai/deployments/{deployment-name}/...`. The SDK reads the deployment name from the `model` field.
+- **Responses** calls go to the resource-scoped path `/openai/responses`. The deployment name stays in the `model` field of the request body.
 
-```go
-// Transform: /chat/completions -> /openai/deployments/{name}/chat/completions
-func azureDeploymentMiddleware(req *http.Request, next option.MiddlewareNext) (*http.Response, error) {
-    // Routes that need deployment name injection
-    deploymentRoutes := map[string]bool{
-        "/chat/completions":     true,
-        "/completions":          true,
-        "/embeddings":           true,
-        "/audio/speech":         true,
-        "/audio/transcriptions": true,
-        "/audio/translations":   true,
-        "/images/generations":   true,
-    }
+### Endpoint Requirements
 
-    // Extract deployment from body and transform URL...
-}
-```
+The SDK v3 has these transport rules for Azure credentials:
+
+- Use an HTTPS endpoint. The SDK does not send Azure credentials over plain HTTP.
+- The SDK does not follow a redirect to a different origin with Azure credentials. If you use a gateway or a proxy, set `AZURE_API_BASE_URL` to the final trusted origin. Do not set it to a URL that redirects to a different host.
 
 ## Additional Fix: StreamOptions Error
 
@@ -101,9 +67,9 @@ Ensure your Azure OpenAI configuration is correct:
 ```bash
 # In ~/.config/fabric/.env
 AZURE_API_KEY=your-api-key
-AZURE_API_BASE_URL=https://{your-resource}.cognitiveservices.azure.com/
+AZURE_API_BASE_URL=https://{your-resource}.cognitiveservices.azure.com/  # Must use HTTPS
 AZURE_DEPLOYMENTS=your-deployment-1,your-deployment-2  # Comma-separated deployment names
-AZURE_API_VERSION=2024-12-01-preview  # Optional, defaults to 2024-05-01-preview
+AZURE_API_VERSION=2025-04-01-preview  # Optional, defaults to 2025-04-01-preview
 ```
 
 **Note:** The deployment name is what you specified when deploying a model in Azure AI Foundry (formerly Azure OpenAI Studio), not the model name itself (e.g., `my-gpt4-deployment` rather than `gpt-4`).

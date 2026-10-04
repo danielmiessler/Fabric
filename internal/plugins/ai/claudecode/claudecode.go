@@ -9,6 +9,7 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
+	"io"
 	"os"
 	"os/exec"
 	"os/user"
@@ -74,6 +75,22 @@ func (c *Client) SendStream(ctx context.Context, msgs []*chat.ChatCompletionMess
 	if err := cmd.Start(); err != nil {
 		return err
 	}
+	if scanErr := scanStreamJSON(stdout, channel); scanErr != nil {
+		// Stop the child first. It can block on a full stdout pipe and Wait would not return.
+		_ = cmd.Process.Kill()
+		_ = cmd.Wait()
+		return fmt.Errorf("claude: reading stream output: %w", scanErr)
+	}
+	if err := cmd.Wait(); err != nil {
+		return fail(err, &stderr)
+	}
+	return nil
+}
+
+// scanStreamJSON reads one stream-json event per line and forwards text deltas
+// to channel. It returns scanner.Err() so a truncated line or a broken pipe
+// surfaces as an error instead of a silently short answer.
+func scanStreamJSON(stdout io.Reader, channel chan domain.StreamUpdate) error {
 	scanner := bufio.NewScanner(stdout)
 	scanner.Buffer(nil, 4<<20) // the final result line holds the full answer
 	for scanner.Scan() {
@@ -81,10 +98,7 @@ func (c *Client) SendStream(ctx context.Context, msgs []*chat.ChatCompletionMess
 			channel <- domain.StreamUpdate{Type: domain.StreamTypeContent, Content: text}
 		}
 	}
-	if err := cmd.Wait(); err != nil {
-		return fail(err, &stderr)
-	}
-	return nil
+	return scanner.Err()
 }
 
 // command builds the claude invocation. System messages go to --system-prompt.

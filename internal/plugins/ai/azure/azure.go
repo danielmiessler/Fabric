@@ -9,9 +9,8 @@ import (
 	"github.com/danielmiessler/fabric/internal/plugins"
 	"github.com/danielmiessler/fabric/internal/plugins/ai/azurecommon"
 	"github.com/danielmiessler/fabric/internal/plugins/ai/openai"
-	openaiapi "github.com/openai/openai-go"
-	"github.com/openai/openai-go/azure"
-	"github.com/openai/openai-go/option"
+	openaiapi "github.com/openai/openai-go/v3"
+	"github.com/openai/openai-go/v3/azure"
 )
 
 func NewClient() (ret *Client) {
@@ -55,13 +54,11 @@ func (oi *Client) configure() error {
 		oi.ApiVersion.Value = apiVersion
 	}
 
-	endpoint := azurecommon.BuildEndpoint(baseURL)
-
+	// openai-go v3 rejects Azure credentials without azure.WithEndpoint.
+	// WithEndpoint also adds the deployment name to the request path.
 	client := openaiapi.NewClient(
+		azure.WithEndpoint(baseURL, apiVersion),
 		azure.WithAPIKey(apiKey),
-		option.WithBaseURL(endpoint),
-		option.WithQueryAdd("api-version", apiVersion),
-		option.WithMiddleware(azurecommon.AzureDeploymentMiddleware),
 	)
 	oi.ApiClient = &client
 	return nil

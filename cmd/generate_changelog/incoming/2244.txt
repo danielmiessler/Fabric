@@ -1,0 +1,4 @@
+### PR [#2244](https://github.com/danielmiessler/Fabric/pull/2244) by [taljeon](https://github.com/taljeon): fix(core): preserve the selected vendor model spelling
+
+- Preserve the selected vendor's canonical model spelling for explicit vendor and vendor/model-prefix requests.
+- Add regression tests for case-insensitively equal IDs with different vendor spellings and catalog order.

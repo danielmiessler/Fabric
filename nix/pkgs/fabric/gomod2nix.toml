@@ -304,9 +304,9 @@ schema = 3
   [mod."github.com/ollama/ollama"]
     version = "v0.34.4"
     hash = "sha256-2fBlYoEfjCSKMMRpwrfPQLv8ujgmntTmsaapblPmcxQ="
-  [mod."github.com/openai/openai-go"]
-    version = "v1.12.0"
-    hash = "sha256-JHLlKvDwERPf728GUXBsKU58ODgCxcxEe9TKJTGAG1w="
+  [mod."github.com/openai/openai-go/v3"]
+    version = "v3.71.1"
+    hash = "sha256-xmh5wx/ezIIENcrNOYuNmATK9GSGYMXh/IfE2RefBfg="
   [mod."github.com/otiai10/copy"]
     version = "v1.14.1"
     hash = "sha256-8RR7u17SbYg9AeBXVHIv5ZMU+kHmOcx0rLUKyz6YtU0="

@@ -6,8 +6,8 @@ import (
 
 	"github.com/danielmiessler/fabric/internal/plugins"
 	"github.com/danielmiessler/fabric/internal/plugins/ai/openai"
-	openaiapi "github.com/openai/openai-go"
-	"github.com/openai/openai-go/option"
+	openaiapi "github.com/openai/openai-go/v3"
+	"github.com/openai/openai-go/v3/option"
 )
 
 func NewClient() (ret *Client) {

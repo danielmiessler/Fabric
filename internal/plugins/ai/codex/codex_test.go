@@ -20,8 +20,9 @@ import (
 	"github.com/danielmiessler/fabric/internal/chat"
 	"github.com/danielmiessler/fabric/internal/domain"
 	"github.com/danielmiessler/fabric/internal/i18n"
-	openaiapi "github.com/openai/openai-go"
-	"github.com/openai/openai-go/shared/constant"
+	openaiapi "github.com/openai/openai-go/v3"
+	"github.com/openai/openai-go/v3/option"
+	"github.com/openai/openai-go/v3/shared/constant"
 )
 
 func TestBuildAuthorizeURLIncludesPKCE(t *testing.T) {
@@ -65,10 +66,12 @@ func TestRunOAuthFlowCompletesWithCallback(t *testing.T) {
 			return
 		}
 		if err := r.ParseForm(); err != nil {
-			t.Fatalf("ParseForm() error = %v", err)
+			t.Errorf("ParseForm() error = %v", err)
+			return
 		}
 		if got := r.Form.Get("grant_type"); got != "authorization_code" {
-			t.Fatalf("grant_type = %q, want authorization_code", got)
+			t.Errorf("grant_type = %q, want authorization_code", got)
+			return
 		}
 
 		_ = json.NewEncoder(w).Encode(oauthTokens{
@@ -157,13 +160,16 @@ func TestBuildCodexResponseParamsMovesSystemPromptToInstructions(t *testing.T) {
 func TestListModelsFiltersSupportedVisibleModels(t *testing.T) {
 	modelsServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if got := r.Header.Get("Authorization"); got == "" {
-			t.Fatalf("Authorization header missing")
+			t.Errorf("Authorization header missing")
+			return
 		}
 		if got := r.Header.Get("ChatGPT-Account-ID"); got != "acct_models" {
-			t.Fatalf("ChatGPT-Account-ID = %q, want %q", got, "acct_models")
+			t.Errorf("ChatGPT-Account-ID = %q, want %q", got, "acct_models")
+			return
 		}
 		if got := r.URL.Query().Get("client_version"); got == "" {
-			t.Fatalf("client_version query parameter missing")
+			t.Errorf("client_version query parameter missing")
+			return
 		}
 
 		_ = json.NewEncoder(w).Encode(modelsResponse{
@@ -240,17 +246,33 @@ func TestMapRequestErrorPreservesCodex401ProviderMessage(t *testing.T) {
 		t.Fatalf("i18n.Init() error = %v", err)
 	}
 
+	const provider = "Incorrect API key provided for service account."
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path != "/responses" {
+			t.Errorf("request path = %q, want /responses", r.URL.Path)
+			http.NotFound(w, r)
+			return
+		}
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusUnauthorized)
+		fmt.Fprintf(w, `{"error":{"message":%q,"type":"invalid_request_error","code":"invalid_api_key"}}`, provider)
+	}))
+	defer server.Close()
+
+	apiClient := openaiapi.NewClient(option.WithBaseURL(server.URL), option.WithAPIKey("test-key"))
 	client := NewClient()
-	apiErr := &openaiapi.Error{StatusCode: http.StatusUnauthorized}
-	if err := apiErr.UnmarshalJSON([]byte(`{"message":"Incorrect API key provided for service account.","type":"invalid_request_error","code":"invalid_api_key"}`)); err != nil {
-		t.Fatalf("apiErr.UnmarshalJSON() error = %v", err)
+	_, requestErr := apiClient.Responses.New(context.Background(), client.buildCodexResponseParams(
+		[]*chat.ChatCompletionMessage{{Role: chat.ChatMessageRoleUser, Content: "Hello"}},
+		&domain.ChatOptions{Model: "gpt-5.4"},
+	))
+	if requestErr == nil {
+		t.Fatal("Responses.New() error = nil, want 401")
 	}
 
-	err := client.mapRequestError(apiErr)
+	err := client.mapRequestError(requestErr)
 	if err == nil {
 		t.Fatal("mapRequestError() returned nil")
 	}
-	const provider = "Incorrect API key provided for service account."
 	got := err.Error()
 	if !strings.HasPrefix(got, i18n.T("codex_login_invalid")) || !strings.Contains(got, provider) {
 		t.Fatalf("mapRequestError() = %q, want login sentence followed by provider detail", got)
@@ -313,7 +335,8 @@ func TestSendRefreshesAfterUnauthorized(t *testing.T) {
 		}
 		body, err := io.ReadAll(r.Body)
 		if err != nil {
-			t.Fatalf("ReadAll(r.Body) error = %v", err)
+			t.Errorf("ReadAll(r.Body) error = %v", err)
+			return
 		}
 		captureMu.Lock()
 		seenAuthHeaders = append(seenAuthHeaders, r.Header.Get("Authorization"))
@@ -326,16 +349,15 @@ func TestSendRefreshesAfterUnauthorized(t *testing.T) {
 		}
 
 		w.Header().Set("Content-Type", "text/event-stream")
-		flusher, ok := w.(http.Flusher)
-		if !ok {
-			t.Fatalf("response writer does not implement http.Flusher")
+		if _, ok := w.(http.Flusher); !ok {
+			t.Errorf("response writer does not implement http.Flusher")
+			return
 		}
-		fmt.Fprintf(w, "data: %s\n\n", marshalJSON(t, map[string]any{
+		writeSSE(w, "data: "+marshalJSON(t, map[string]any{
 			"type":  string(constant.ResponseOutputTextDelta("").Default()),
 			"delta": "hello from codex",
 		}))
-		flusher.Flush()
-		fmt.Fprintf(w, "data: %s\n\n", marshalJSON(t, map[string]any{
+		writeSSE(w, "data: "+marshalJSON(t, map[string]any{
 			"type": "response.completed",
 			"response": map[string]any{
 				"output": []any{
@@ -352,8 +374,7 @@ func TestSendRefreshesAfterUnauthorized(t *testing.T) {
 				},
 			},
 		}))
-		flusher.Flush()
-		fmt.Fprint(w, "data: [DONE]\n\n")
+		writeSSE(w, "data: [DONE]")
 	}))
 	defer apiServer.Close()
 
@@ -409,11 +430,11 @@ func TestSendIncludesSourcesFromAnnotatedResponse(t *testing.T) {
 		}
 
 		w.Header().Set("Content-Type", "text/event-stream")
-		flusher, ok := w.(http.Flusher)
-		if !ok {
-			t.Fatalf("response writer does not implement http.Flusher")
+		if _, ok := w.(http.Flusher); !ok {
+			t.Errorf("response writer does not implement http.Flusher")
+			return
 		}
-		fmt.Fprintf(w, "data: %s\n\n", marshalJSON(t, map[string]any{
+		writeSSE(w, "data: "+marshalJSON(t, map[string]any{
 			"type": "response.completed",
 			"response": map[string]any{
 				"output": []any{
@@ -436,8 +457,7 @@ func TestSendIncludesSourcesFromAnnotatedResponse(t *testing.T) {
 				},
 			},
 		}))
-		flusher.Flush()
-		fmt.Fprint(w, "data: [DONE]\n\n")
+		writeSSE(w, "data: [DONE]")
 	}))
 	defer apiServer.Close()
 
@@ -473,16 +493,17 @@ func TestSendFallsBackToDeltaWhenCompletedResponseHasNoText(t *testing.T) {
 		}
 
 		w.Header().Set("Content-Type", "text/event-stream")
-		flusher, ok := w.(http.Flusher)
-		if !ok {
-			t.Fatalf("response writer does not implement http.Flusher")
+		if _, ok := w.(http.Flusher); !ok {
+			t.Errorf("response writer does not implement http.Flusher")
+			return
 		}
-		fmt.Fprintf(w, "data: %s\n\n", marshalJSON(t, map[string]any{
+		writeSSE(w, "data: "+marshalJSON(t, map[string]any{
 			"type":  string(constant.ResponseOutputTextDelta("").Default()),
 			"delta": "hello from delta",
 		}))
-		flusher.Flush()
-		fmt.Fprintf(w, "data: %s\n\n", marshalJSON(t, map[string]any{
+		writeSSE(w, ": keep-alive")
+		writeSSE(w, "event: ping")
+		writeSSE(w, "data: "+marshalJSON(t, map[string]any{
 			"type": "response.completed",
 			"response": map[string]any{
 				"output": []any{
@@ -498,8 +519,7 @@ func TestSendFallsBackToDeltaWhenCompletedResponseHasNoText(t *testing.T) {
 				},
 			},
 		}))
-		flusher.Flush()
-		fmt.Fprint(w, "data: [DONE]\n\n")
+		writeSSE(w, "data: [DONE]")
 	}))
 	defer apiServer.Close()
 
@@ -528,61 +548,64 @@ func TestSendStreamReadsCodexSSE(t *testing.T) {
 		}
 		body, err := io.ReadAll(r.Body)
 		if err != nil {
-			t.Fatalf("ReadAll(r.Body) error = %v", err)
+			t.Errorf("ReadAll(r.Body) error = %v", err)
+			return
 		}
 		if !strings.Contains(string(body), `"instructions":"Follow the system prompt"`) {
-			t.Fatalf("request body missing system instructions: %s", string(body))
+			t.Errorf("request body missing system instructions: %s", string(body))
+			return
 		}
 		if strings.Contains(string(body), `"role":"system"`) {
-			t.Fatalf("request body should not keep system messages in input: %s", string(body))
+			t.Errorf("request body should not keep system messages in input: %s", string(body))
+			return
 		}
 
 		w.Header().Set("Content-Type", "text/event-stream")
-		flusher, ok := w.(http.Flusher)
-		if !ok {
-			t.Fatalf("response writer does not implement http.Flusher")
+		if _, ok := w.(http.Flusher); !ok {
+			t.Errorf("response writer does not implement http.Flusher")
+			return
 		}
 
-		fmt.Fprintf(w, "data: %s\n\n", marshalJSON(t, map[string]any{
+		writeSSE(w, "data: "+marshalJSON(t, map[string]any{
 			"type":  string(constant.ResponseOutputTextDelta("").Default()),
 			"delta": "hello",
 		}))
-		flusher.Flush()
-
-		fmt.Fprintf(w, "data: %s\n\n", marshalJSON(t, map[string]any{
+		writeSSE(w, ": keep-alive")
+		writeSSE(w, "data: "+marshalJSON(t, map[string]any{
 			"type":  string(constant.ResponseOutputTextDelta("").Default()),
 			"delta": " world",
 		}))
-		flusher.Flush()
-
-		fmt.Fprintf(w, "data: %s\n\n", marshalJSON(t, map[string]any{
+		writeSSE(w, "event: ping")
+		writeSSE(w, "data: "+marshalJSON(t, map[string]any{
 			"type": string(constant.ResponseOutputTextDone("").Default()),
 			"text": "hello world",
 		}))
-		flusher.Flush()
-		fmt.Fprint(w, "data: [DONE]\n\n")
+		writeSSE(w, "data: [DONE]")
 	}))
 	defer apiServer.Close()
 
 	client := newConfiguredTestClient(t, apiServer.URL, "acct_stream", testJWT("acct_stream", time.Now().Add(time.Hour)))
 
-	updates := make(chan domain.StreamUpdate, 8)
-	err := client.SendStream(context.Background(), []*chat.ChatCompletionMessage{
-		{Role: chat.ChatMessageRoleSystem, Content: "Follow the system prompt"},
-		{Role: "user", Content: "Hello"},
-	}, &domain.ChatOptions{
-		Model:       "gpt-5.4",
-		Temperature: 0.7,
-	}, updates)
-	if err != nil {
-		t.Fatalf("SendStream() error = %v", err)
-	}
+	updates := make(chan domain.StreamUpdate)
+	errCh := make(chan error, 1)
+	go func() {
+		errCh <- client.SendStream(context.Background(), []*chat.ChatCompletionMessage{
+			{Role: chat.ChatMessageRoleSystem, Content: "Follow the system prompt"},
+			{Role: "user", Content: "Hello"},
+		}, &domain.ChatOptions{
+			Model:       "gpt-5.4",
+			Temperature: 0.7,
+		}, updates)
+	}()
 
 	var builder strings.Builder
 	for update := range updates {
 		if update.Type == domain.StreamTypeContent {
 			builder.WriteString(update.Content)
 		}
+	}
+	if err := <-errCh; err != nil {
+		t.Fatalf("SendStream() error = %v", err)
 	}
 
 	if builder.String() != "hello world\n" {
@@ -809,7 +832,13 @@ func marshalJSON(t *testing.T, value any) string {
 	t.Helper()
 	encoded, err := json.Marshal(value)
 	if err != nil {
-		t.Fatalf("json.Marshal() error = %v", err)
+		t.Errorf("json.Marshal() error = %v", err)
+		return "{}"
 	}
 	return string(encoded)
+}
+
+func writeSSE(w http.ResponseWriter, frame string) {
+	fmt.Fprintf(w, "%s\n\n", frame)
+	w.(http.Flusher).Flush()
 }

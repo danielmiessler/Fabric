@@ -331,6 +331,9 @@ func (c *Client) sendChatMessageStream(ctx context.Context, conversationID, mess
 // parseSSEStream parses the Server-Sent Events stream from Copilot.
 func (c *Client) parseSSEStream(reader io.Reader, channel chan domain.StreamUpdate) error {
 	scanner := bufio.NewScanner(reader)
+	// Each frame holds all the text so far on one line. A long response can
+	// be larger than the 64 KiB default limit, so let a line be up to 1 MiB.
+	scanner.Buffer(make([]byte, 0, 64*1024), 1024*1024)
 	var lastMessageText string
 
 	for scanner.Scan() {

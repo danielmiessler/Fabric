@@ -2,6 +2,7 @@ package openai
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"os"
@@ -14,12 +15,12 @@ import (
 	"github.com/danielmiessler/fabric/internal/i18n"
 	debuglog "github.com/danielmiessler/fabric/internal/log"
 	"github.com/danielmiessler/fabric/internal/plugins"
-	openai "github.com/openai/openai-go"
-	"github.com/openai/openai-go/option"
-	"github.com/openai/openai-go/packages/pagination"
-	"github.com/openai/openai-go/responses"
-	"github.com/openai/openai-go/shared"
-	"github.com/openai/openai-go/shared/constant"
+	openai "github.com/openai/openai-go/v3"
+	"github.com/openai/openai-go/v3/option"
+	"github.com/openai/openai-go/v3/packages/pagination"
+	"github.com/openai/openai-go/v3/responses"
+	"github.com/openai/openai-go/v3/shared"
+	"github.com/openai/openai-go/v3/shared/constant"
 )
 
 func NewClient() (ret *Client) {
@@ -82,10 +83,10 @@ func (o *Client) SetResponsesAPIEnabled(enabled bool) {
 	o.ImplementsResponses = enabled
 }
 
-// SetWebSearchToolName overrides the default "web_search_preview" tool
-// name emitted on the Responses API when Search is enabled. Pass an empty
-// string to keep the OpenAI default. Non-OpenAI providers (for example,
-// xAI) may require "web_search" instead.
+// SetWebSearchToolName replaces the "web_search_preview" tool type that the
+// Responses API request has when Search is true. A name that is not empty
+// also selects the web_search tool param (OfWebSearch). An empty name keeps
+// the OpenAI default. xAI uses "web_search".
 func (o *Client) SetWebSearchToolName(name string) {
 	o.webSearchToolName = name
 }
@@ -163,9 +164,11 @@ func (o *Client) SendStream(
 	ctx context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan domain.StreamUpdate,
 ) (err error) {
 	if o.supportsResponsesAPI() {
-		return o.sendStreamResponses(ctx, msgs, opts, channel)
+		err = o.sendStreamResponses(ctx, msgs, opts, channel)
+	} else {
+		err = o.sendStreamChatCompletions(ctx, msgs, opts, channel)
 	}
-	return o.sendStreamChatCompletions(ctx, msgs, opts, channel)
+	return withProviderErrorMessage(err)
 }
 
 func (o *Client) sendStreamResponses(
@@ -199,9 +202,24 @@ func (o *Client) sendStreamResponses(
 
 func (o *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions) (ret string, err error) {
 	if o.supportsResponsesAPI() {
-		return o.sendResponses(ctx, msgs, opts)
+		ret, err = o.sendResponses(ctx, msgs, opts)
+	} else {
+		ret, err = o.sendChatCompletions(ctx, msgs, opts)
 	}
-	return o.sendChatCompletions(ctx, msgs, opts)
+	return ret, withProviderErrorMessage(err)
+}
+
+// withProviderErrorMessage adds the provider message and code to an API error.
+// In v3, the SDK error text has only the HTTP status.
+func withProviderErrorMessage(err error) error {
+	var apiErr *openai.Error
+	if !errors.As(err, &apiErr) || apiErr.Message == "" {
+		return err
+	}
+	if apiErr.Code != "" {
+		return fmt.Errorf("%w: %s (%s)", err, apiErr.Message, apiErr.Code)
+	}
+	return fmt.Errorf("%w: %s", err, apiErr.Message)
 }
 
 func (o *Client) sendResponses(ctx context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions) (ret string, err error) {
@@ -291,31 +309,31 @@ func (o *Client) buildResponseParams(
 	var tools []responses.ToolUnionParam
 
 	if opts.Search {
-		searchToolName := responses.WebSearchToolType("web_search_preview")
-		if o.webSearchToolName != "" {
-			searchToolName = responses.WebSearchToolType(o.webSearchToolName)
-		}
-		webSearchTool := responses.ToolParamOfWebSearchPreview(searchToolName)
-
+		var webSearchTool responses.ToolUnionParam
 		// Attach a location only on request. xAI rejects an unexpected location payload.
-		if opts.SearchLocation != "" {
-			webSearchTool.OfWebSearchPreview.UserLocation = responses.WebSearchToolUserLocationParam{
-				Type:     "approximate",
-				Timezone: openai.String(opts.SearchLocation),
+		if o.webSearchToolName == "" {
+			webSearchTool = responses.ToolParamOfWebSearchPreview(responses.WebSearchPreviewToolTypeWebSearchPreview)
+			if opts.SearchLocation != "" {
+				webSearchTool.OfWebSearchPreview.UserLocation = responses.WebSearchPreviewToolUserLocationParam{
+					Type:     "approximate",
+					Timezone: openai.String(opts.SearchLocation),
+				}
+			}
+		} else {
+			webSearchTool = responses.ToolParamOfWebSearch(responses.WebSearchToolType(o.webSearchToolName))
+			if opts.SearchLocation != "" {
+				webSearchTool.OfWebSearch.UserLocation = responses.WebSearchToolUserLocationParam{
+					Type:     "approximate",
+					Timezone: openai.String(opts.SearchLocation),
+				}
 			}
 		}
-
 		tools = append(tools, webSearchTool)
 
-		// xAI accepts a bare {"type":"x_search"} entry. WebSearchToolParam is the
+		// xAI accepts a bare {"type":"x_search"} entry. OfWebSearch is the
 		// container for it. Its other fields are omitzero, so the JSON has only "type".
 		if o.enableXSearch {
-			xSearchTool := responses.ToolUnionParam{
-				OfWebSearchPreview: &responses.WebSearchToolParam{
-					Type: responses.WebSearchToolType("x_search"),
-				},
-			}
-			tools = append(tools, xSearchTool)
+			tools = append(tools, responses.ToolParamOfWebSearch(responses.WebSearchToolType("x_search")))
 		}
 	}
 

@@ -590,6 +590,34 @@ func TestOllamaChat_StreamUpstreamErrorEvent(t *testing.T) {
 	}
 }
 
+// A non-2xx upstream status in stream mode must still set the NDJSON
+// Content-Type, so the client parses the error chunk as NDJSON and not
+// as whatever Go's content sniffer guesses for a JSON-shaped body.
+func TestOllamaChat_StreamUpstreamNon2xxSetsNDJSONContentType(t *testing.T) {
+	gin.SetMode(gin.TestMode)
+
+	upstream := gin.New()
+	upstream.POST("/chat", func(c *gin.Context) {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "boom"})
+	})
+	server := httptest.NewServer(upstream)
+	defer server.Close()
+
+	r := gin.New()
+	conv := APIConvert{addr: &server.URL}
+	r.POST("/api/chat", conv.ollamaChat)
+
+	w := httptest.NewRecorder()
+	body := `{"model":"test:latest","stream":true,"messages":[{"role":"user","content":"hi"}]}`
+	req := httptest.NewRequest(http.MethodPost, "/api/chat", strings.NewReader(body))
+	req.Header.Set("Content-Type", "application/json")
+	r.ServeHTTP(w, req)
+
+	if got := w.Header().Get("Content-Type"); got != "application/x-ndjson" {
+		t.Fatalf("Content-Type = %q, want application/x-ndjson", got)
+	}
+}
+
 // With more than one message, the forwarded prompt must join all
 // messages as "role:content\n" lines.
 func TestOllamaChat_JoinsManyMessages(t *testing.T) {

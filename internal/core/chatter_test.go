@@ -590,3 +590,35 @@ func TestChatter_Send_StreamingMetadataPropagation(t *testing.T) {
 		t.Error("Expected to receive a usage metadata update, but didn't")
 	}
 }
+
+func TestChatter_Send_CancelWithNoUpdateReaderReturns(t *testing.T) {
+	chunk := domain.StreamUpdate{Type: domain.StreamTypeContent, Content: "chunk"}
+	chatter := &Chatter{
+		db:     fsdb.NewDb(t.TempDir()),
+		Stream: true,
+		vendor: &mockVendor{streamChunks: []domain.StreamUpdate{chunk, chunk, chunk}},
+		model:  "test-model",
+	}
+	request := &domain.ChatRequest{
+		Message: &chat.ChatCompletionMessage{Role: chat.ChatMessageRoleUser, Content: "test message"},
+	}
+	// Nothing reads UpdateChan. This is a client that disconnected.
+	opts := &domain.ChatOptions{Model: "test-model", UpdateChan: make(chan domain.StreamUpdate), Quiet: true}
+
+	ctx, cancel := context.WithCancel(context.Background())
+	done := make(chan error, 1)
+	go func() {
+		_, err := chatter.Send(ctx, request, opts)
+		done <- err
+	}()
+	cancel()
+
+	select {
+	case err := <-done:
+		if !errors.Is(err, context.Canceled) {
+			t.Errorf("expected context.Canceled, got %v", err)
+		}
+	case <-time.After(2 * time.Second):
+		t.Fatal("Send did not return after cancel")
+	}
+}

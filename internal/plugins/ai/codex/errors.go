@@ -9,7 +9,7 @@ import (
 	"strings"
 
 	"github.com/danielmiessler/fabric/internal/i18n"
-	openaiapi "github.com/openai/openai-go"
+	openaiapi "github.com/openai/openai-go/v3"
 )
 
 type publicError struct {

@@ -1,33 +1,11 @@
 package azurecommon
 
 import (
-	"bytes"
-	"encoding/json"
-	"errors"
-	"fmt"
-	"io"
-	"net/http"
-	"net/url"
 	"strings"
-
-	"github.com/danielmiessler/fabric/internal/i18n"
-	"github.com/openai/openai-go/option"
 )
 
 // DefaultAPIVersion is the default Azure OpenAI API version.
 const DefaultAPIVersion = "2025-04-01-preview"
-
-// deploymentRoutes holds the SDK paths that Azure serves under /openai/deployments/{name}.
-var deploymentRoutes = map[string]bool{
-	"/chat/completions":     true,
-	"/completions":          true,
-	"/embeddings":           true,
-	"/audio/speech":         true,
-	"/audio/transcriptions": true,
-	"/audio/translations":   true,
-	"/images/generations":   true,
-	"/responses":            true,
-}
 
 // ParseDeployments splits a comma-separated deployment string into a slice,
 // trimming whitespace and discarding empty entries.
@@ -40,64 +18,4 @@ func ParseDeployments(value string) []string {
 		}
 	}
 	return deployments
-}
-
-// BuildEndpoint appends the /openai/ suffix to the given base URL.
-func BuildEndpoint(baseURL string) string {
-	return strings.TrimSuffix(baseURL, "/") + "/openai/"
-}
-
-// AzureDeploymentMiddleware transforms Azure OpenAI API paths to include
-// the deployment name. Azure requires URLs like:
-// /openai/deployments/{deployment-name}/chat/completions
-// but the SDK sends paths like /chat/completions
-func AzureDeploymentMiddleware(req *http.Request, next option.MiddlewareNext) (*http.Response, error) {
-
-	path := req.URL.Path
-
-	// BuildEndpoint puts /openai in the base URL, so strip it before the route lookup.
-	trimmedPath := strings.TrimPrefix(path, "/openai")
-	if !strings.HasPrefix(trimmedPath, "/") {
-		trimmedPath = "/" + trimmedPath
-	}
-
-	if deploymentRoutes[trimmedPath] {
-		deploymentName, err := ExtractDeploymentFromBody(req)
-		if err != nil {
-			return nil, fmt.Errorf("%s: %w", i18n.T("azure_failed_extract_deployment"), err)
-		}
-
-		newPath := "/openai/deployments/" + url.PathEscape(deploymentName) + trimmedPath
-		req.URL.Path = newPath
-		req.URL.RawPath = "" // Clear RawPath so that the request uses the new Path.
-	}
-
-	return next(req)
-}
-
-// ExtractDeploymentFromBody reads the model field from the JSON request body
-// and restores the body for subsequent use.
-func ExtractDeploymentFromBody(req *http.Request) (string, error) {
-	if req.Body == nil {
-		return "", errors.New(i18n.T("azure_request_body_nil"))
-	}
-
-	bodyBytes, err := io.ReadAll(req.Body)
-	if err != nil {
-		return "", err
-	}
-	req.Body = io.NopCloser(bytes.NewReader(bodyBytes))
-
-	var payload struct {
-		Model string `json:"model"`
-	}
-	if err := json.Unmarshal(bodyBytes, &payload); err != nil {
-		return "", err
-	}
-
-	if payload.Model == "" {
-		return "", errors.New(i18n.T("azure_model_field_empty"))
-	}
-
-	return payload.Model, nil
 }

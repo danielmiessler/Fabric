@@ -16,7 +16,7 @@ import (
 	"github.com/danielmiessler/fabric/internal/i18n"
 	debuglog "github.com/danielmiessler/fabric/internal/log"
 
-	openai "github.com/openai/openai-go"
+	openai "github.com/openai/openai-go/v3"
 )
 
 type transcriptionResult struct {
@@ -103,7 +103,7 @@ func (o *Client) TranscribeFile(ctx context.Context, filePath, model string, spl
 			}
 			resp, transcribeErr := o.ApiClient.Audio.Transcriptions.New(ctx, params)
 			if transcribeErr != nil {
-				resultsChan <- transcriptionResult{index: index, err: transcribeErr}
+				resultsChan <- transcriptionResult{index: index, err: withProviderErrorMessage(transcribeErr)}
 				return
 			}
 			resultsChan <- transcriptionResult{index: index, text: resp.Text}

@@ -1,3 +1,6 @@
 ### PR [#2247](https://github.com/danielmiessler/Fabric/pull/2247) by [ctbaum](https://github.com/ctbaum): fix: ignore data-less Codex SSE events
 
-- Fix: ignore data-less Codex SSE events
+- Fix intermittent Codex streaming failures on data-less SSE events.
+- Upgrade openai-go SDK from v1.12.0 to v3.71.1.
+- Release note: `OPENAI_CUSTOM_HEADERS` is now applied by the SDK to OpenAI and every OpenAI-compatible vendor, including Groq and xAI.
+- Release note: Azure OpenAI credentials are no longer sent to plain HTTP endpoints; use HTTPS.

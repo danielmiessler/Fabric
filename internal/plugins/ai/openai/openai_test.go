@@ -1,15 +1,20 @@
 package openai
 
 import (
+	"context"
+	"encoding/json"
+	"fmt"
+	"net/http"
+	"net/http/httptest"
 	"strings"
 	"testing"
 
 	"github.com/danielmiessler/fabric/internal/chat"
 	"github.com/danielmiessler/fabric/internal/domain"
 	openai "github.com/openai/openai-go/v3"
-	"github.com/openai/openai-go/v3/responses"
 	"github.com/openai/openai-go/v3/shared"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestNeedsRawModeGPT6(t *testing.T) {
@@ -88,109 +93,61 @@ func TestBuildResponseParams_WithoutSearch(t *testing.T) {
 	assert.Equal(t, openai.Float(opts.Temperature), params.Temperature)
 }
 
-func TestBuildResponseParams_WithSearch(t *testing.T) {
-	client := NewClient()
-	opts := &domain.ChatOptions{
-		Model:       "gpt-4o",
-		Temperature: 0.7,
-		Search:      true,
+func TestBuildResponseParams_SearchToolsJSON(t *testing.T) {
+	msgs := []*chat.ChatCompletionMessage{{Role: "user", Content: "What's the news?"}}
+	tests := []struct {
+		name      string
+		toolName  string
+		xSearch   bool
+		location  string
+		wantTools int
+		wantJSON  string
+	}{
+		{
+			name:      "OpenAI default",
+			wantTools: 1,
+			wantJSON:  `[{"type":"web_search_preview"}]`,
+		},
+		{
+			name:      "OpenAI with location",
+			location:  "America/Los_Angeles",
+			wantTools: 1,
+			wantJSON:  `[{"type":"web_search_preview","user_location":{"type":"approximate","timezone":"America/Los_Angeles"}}]`,
+		},
+		{
+			name:      "xAI",
+			toolName:  "web_search",
+			xSearch:   true,
+			wantTools: 2,
+			wantJSON:  `[{"type":"web_search"},{"type":"x_search"}]`,
+		},
+		{
+			name:      "xAI with location",
+			toolName:  "web_search",
+			xSearch:   true,
+			location:  "America/Los_Angeles",
+			wantTools: 2,
+			wantJSON:  `[{"type":"web_search","user_location":{"type":"approximate","timezone":"America/Los_Angeles"}},{"type":"x_search"}]`,
+		},
 	}
 
-	msgs := []*chat.ChatCompletionMessage{
-		{Role: "user", Content: "What's the weather today?"},
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			client := NewClient()
+			client.SetWebSearchToolName(tc.toolName)
+			client.SetEnableXSearch(tc.xSearch)
+			params := client.buildResponseParams(msgs, &domain.ChatOptions{
+				Model:          "gpt-4o",
+				Search:         true,
+				SearchLocation: tc.location,
+			})
+
+			require.Len(t, params.Tools, tc.wantTools)
+			encoded, err := json.Marshal(params.Tools)
+			require.NoError(t, err)
+			assert.JSONEq(t, tc.wantJSON, string(encoded))
+		})
 	}
-
-	params := client.buildResponseParams(msgs, opts)
-
-	assert.NotNil(t, params.Tools, "Expected tools when search is enabled")
-	assert.Len(t, params.Tools, 1, "Expected exactly one tool")
-
-	tool := params.Tools[0]
-	assert.NotNil(t, tool.OfWebSearchPreview, "Expected web search tool")
-	assert.Equal(t, responses.WebSearchPreviewToolType("web_search_preview"), tool.OfWebSearchPreview.Type)
-}
-
-func TestBuildResponseParams_WithSearchAndLocation(t *testing.T) {
-	client := NewClient()
-	opts := &domain.ChatOptions{
-		Model:          "gpt-4o",
-		Temperature:    0.7,
-		Search:         true,
-		SearchLocation: "America/Los_Angeles",
-	}
-
-	msgs := []*chat.ChatCompletionMessage{
-		{Role: "user", Content: "What's the weather in San Francisco?"},
-	}
-
-	params := client.buildResponseParams(msgs, opts)
-
-	assert.NotNil(t, params.Tools, "Expected tools when search is enabled")
-	tool := params.Tools[0]
-	assert.NotNil(t, tool.OfWebSearchPreview, "Expected web search tool")
-
-	userLocation := tool.OfWebSearchPreview.UserLocation
-	assert.Equal(t, "approximate", string(userLocation.Type))
-	assert.True(t, userLocation.Timezone.Valid(), "Expected timezone to be set")
-	assert.Equal(t, opts.SearchLocation, userLocation.Timezone.Value)
-}
-
-// TestBuildResponseParams_GrokAI_WithSearch verifies that a client
-// configured with a custom web search tool name and x_search enabled
-// emits both tool entries with the xAI-expected type strings.
-func TestBuildResponseParams_GrokAI_WithSearch(t *testing.T) {
-	client := NewClient()
-	client.SetWebSearchToolName("web_search")
-	client.SetEnableXSearch(true)
-
-	opts := &domain.ChatOptions{
-		Model:       "grok-4-fast-reasoning",
-		Temperature: 0.7,
-		Search:      true,
-	}
-
-	msgs := []*chat.ChatCompletionMessage{
-		{Role: "user", Content: "What happened in the news today?"},
-	}
-
-	params := client.buildResponseParams(msgs, opts)
-
-	assert.NotNil(t, params.Tools, "Expected tools when search is enabled")
-	assert.Len(t, params.Tools, 2, "Expected web_search plus x_search tools")
-
-	webSearchTool := params.Tools[0]
-	assert.NotNil(t, webSearchTool.OfWebSearch, "Expected web search tool slot")
-	assert.Equal(t, responses.WebSearchToolType("web_search"), webSearchTool.OfWebSearch.Type)
-
-	xSearchTool := params.Tools[1]
-	assert.NotNil(t, xSearchTool.OfWebSearch, "Expected x_search tool slot")
-	assert.Equal(t, responses.WebSearchToolType("x_search"), xSearchTool.OfWebSearch.Type)
-}
-
-// TestBuildResponseParams_DefaultProvider_Unchanged guards backwards
-// compatibility. A client that does not set the new override fields
-// must continue emitting a single web_search_preview tool entry.
-func TestBuildResponseParams_DefaultProvider_Unchanged(t *testing.T) {
-	client := NewClient()
-
-	opts := &domain.ChatOptions{
-		Model:       "gpt-4o",
-		Temperature: 0.7,
-		Search:      true,
-	}
-
-	msgs := []*chat.ChatCompletionMessage{
-		{Role: "user", Content: "What is the capital of France?"},
-	}
-
-	params := client.buildResponseParams(msgs, opts)
-
-	assert.NotNil(t, params.Tools, "Expected tools when search is enabled")
-	assert.Len(t, params.Tools, 1, "Expected exactly one tool for default provider")
-
-	tool := params.Tools[0]
-	assert.NotNil(t, tool.OfWebSearchPreview, "Expected web search tool slot")
-	assert.Equal(t, responses.WebSearchPreviewToolType("web_search_preview"), tool.OfWebSearchPreview.Type)
 }
 
 // TestBuildResponseParams_GrokAI_WithoutSearch confirms that a GrokAI
@@ -215,6 +172,114 @@ func TestBuildResponseParams_GrokAI_WithoutSearch(t *testing.T) {
 	params := client.buildResponseParams(msgs, opts)
 
 	assert.Nil(t, params.Tools, "Expected no tools when search is disabled")
+}
+
+func TestSendAndSendStreamPreserveProviderErrorMessage(t *testing.T) {
+	const providerMessage = "The model 'gpt-nope' does not exist."
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusNotFound)
+		fmt.Fprintf(w, `{"error":{"message":%q,"type":"invalid_request_error","param":"model","code":"model_not_found"}}`, providerMessage)
+	}))
+	defer server.Close()
+
+	client := newConfiguredOpenAITestClient(t, server.URL, true)
+	msgs := []*chat.ChatCompletionMessage{{Role: chat.ChatMessageRoleUser, Content: "Hello"}}
+	opts := &domain.ChatOptions{Model: "gpt-nope"}
+
+	t.Run("Send", func(t *testing.T) {
+		_, err := client.Send(context.Background(), msgs, opts)
+		require.Error(t, err)
+		assert.Contains(t, err.Error(), providerMessage)
+		var apiErr *openai.Error
+		require.ErrorAs(t, err, &apiErr)
+	})
+
+	t.Run("SendStream", func(t *testing.T) {
+		err := client.SendStream(context.Background(), msgs, opts, make(chan domain.StreamUpdate, 1))
+		require.Error(t, err)
+		assert.Contains(t, err.Error(), providerMessage)
+		var apiErr *openai.Error
+		require.ErrorAs(t, err, &apiErr)
+	})
+}
+
+func TestSendStreamIgnoresDataLessSSEEvents(t *testing.T) {
+	tests := []struct {
+		name                string
+		path                string
+		implementsResponses bool
+		firstDelta          string
+		secondDelta         string
+	}{
+		{
+			name:                "Responses",
+			path:                "/responses",
+			implementsResponses: true,
+			firstDelta:          `data: {"type":"response.output_text.delta","delta":"hello"}`,
+			secondDelta:         `data: {"type":"response.output_text.delta","delta":" world"}`,
+		},
+		{
+			name:        "Chat Completions",
+			path:        "/chat/completions",
+			firstDelta:  `data: {"id":"chatcmpl-test","object":"chat.completion.chunk","created":0,"model":"gpt-test","choices":[{"index":0,"delta":{"content":"hello"}}]}`,
+			secondDelta: `data: {"id":"chatcmpl-test","object":"chat.completion.chunk","created":0,"model":"gpt-test","choices":[{"index":0,"delta":{"content":" world"}}]}`,
+		},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+				if r.URL.Path != tc.path {
+					t.Errorf("request path = %q, want %q", r.URL.Path, tc.path)
+					http.NotFound(w, r)
+					return
+				}
+				w.Header().Set("Content-Type", "text/event-stream")
+				if _, ok := w.(http.Flusher); !ok {
+					t.Errorf("response writer does not implement http.Flusher")
+					return
+				}
+				writeTestSSEFrame(w, tc.firstDelta)
+				writeTestSSEFrame(w, ": keep-alive")
+				writeTestSSEFrame(w, "event: ping")
+				writeTestSSEFrame(w, tc.secondDelta)
+				writeTestSSEFrame(w, "data: [DONE]")
+			}))
+			defer server.Close()
+
+			client := newConfiguredOpenAITestClient(t, server.URL, tc.implementsResponses)
+			updates := make(chan domain.StreamUpdate)
+			errCh := make(chan error, 1)
+			go func() {
+				errCh <- client.SendStream(context.Background(), []*chat.ChatCompletionMessage{
+					{Role: chat.ChatMessageRoleUser, Content: "Hello"},
+				}, &domain.ChatOptions{Model: "gpt-test"}, updates)
+			}()
+
+			var text strings.Builder
+			for update := range updates {
+				if update.Type == domain.StreamTypeContent {
+					text.WriteString(update.Content)
+				}
+			}
+			require.NoError(t, <-errCh)
+			assert.Equal(t, "hello world\n", text.String())
+		})
+	}
+}
+
+func newConfiguredOpenAITestClient(t *testing.T, baseURL string, implementsResponses bool) *Client {
+	t.Helper()
+	client := NewClientCompatibleWithResponses("Test", baseURL, implementsResponses, nil)
+	client.ApiKey.Value = "test-key"
+	require.NoError(t, client.configure())
+	return client
+}
+
+func writeTestSSEFrame(w http.ResponseWriter, frame string) {
+	fmt.Fprintf(w, "%s\n\n", frame)
+	w.(http.Flusher).Flush()
 }
 
 func TestCitationFormatting(t *testing.T) {

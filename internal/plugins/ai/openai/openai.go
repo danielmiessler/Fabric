@@ -2,6 +2,7 @@ package openai
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"os"
@@ -82,10 +83,9 @@ func (o *Client) SetResponsesAPIEnabled(enabled bool) {
 	o.ImplementsResponses = enabled
 }
 
-// SetWebSearchToolName overrides the default "web_search_preview" tool
-// name emitted on the Responses API when Search is enabled. Pass an empty
-// string to keep the OpenAI default. Non-OpenAI providers (for example,
-// xAI) may require "web_search" instead.
+// SetWebSearchToolName selects the Responses API web_search tool param when
+// non-empty. Pass an empty string to use OpenAI's default web_search_preview
+// param. xAI requires "web_search".
 func (o *Client) SetWebSearchToolName(name string) {
 	o.webSearchToolName = name
 }
@@ -163,9 +163,11 @@ func (o *Client) SendStream(
 	ctx context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan domain.StreamUpdate,
 ) (err error) {
 	if o.supportsResponsesAPI() {
-		return o.sendStreamResponses(ctx, msgs, opts, channel)
+		err = o.sendStreamResponses(ctx, msgs, opts, channel)
+	} else {
+		err = o.sendStreamChatCompletions(ctx, msgs, opts, channel)
 	}
-	return o.sendStreamChatCompletions(ctx, msgs, opts, channel)
+	return withProviderErrorMessage(err)
 }
 
 func (o *Client) sendStreamResponses(
@@ -199,9 +201,19 @@ func (o *Client) sendStreamResponses(
 
 func (o *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions) (ret string, err error) {
 	if o.supportsResponsesAPI() {
-		return o.sendResponses(ctx, msgs, opts)
+		ret, err = o.sendResponses(ctx, msgs, opts)
+	} else {
+		ret, err = o.sendChatCompletions(ctx, msgs, opts)
 	}
-	return o.sendChatCompletions(ctx, msgs, opts)
+	return ret, withProviderErrorMessage(err)
+}
+
+func withProviderErrorMessage(err error) error {
+	var apiErr *openai.Error
+	if errors.As(err, &apiErr) && apiErr.Message != "" {
+		return fmt.Errorf("%w: %s", err, apiErr.Message)
+	}
+	return err
 }
 
 func (o *Client) sendResponses(ctx context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions) (ret string, err error) {
@@ -292,6 +304,7 @@ func (o *Client) buildResponseParams(
 
 	if opts.Search {
 		var webSearchTool responses.ToolUnionParam
+		// Attach a location only on request. xAI rejects an unexpected location payload.
 		if o.webSearchToolName == "" {
 			webSearchTool = responses.ToolParamOfWebSearchPreview(responses.WebSearchPreviewToolTypeWebSearchPreview)
 			if opts.SearchLocation != "" {
@@ -311,6 +324,7 @@ func (o *Client) buildResponseParams(
 		}
 		tools = append(tools, webSearchTool)
 
+		// xAI accepts a bare {"type":"x_search"} entry. OfWebSearch is the container.
 		if o.enableXSearch {
 			tools = append(tools, responses.ToolParamOfWebSearch(responses.WebSearchToolType("x_search")))
 		}

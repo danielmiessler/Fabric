@@ -124,7 +124,14 @@ func (o *Chatter) Send(ctx context.Context, request *domain.ChatRequest, opts *d
 				}
 			}
 			if opts.UpdateChan != nil {
-				opts.UpdateChan <- update
+				select {
+				case opts.UpdateChan <- update:
+				case <-ctx.Done():
+					recordFirstStreamError(errChan, ctx.Err())
+					// Keep draining until the vendor closes responseChan, so a
+					// pending upstream send cannot strand the vendor goroutine.
+					continue
+				}
 			}
 			switch update.Type {
 			case domain.StreamTypeContent:

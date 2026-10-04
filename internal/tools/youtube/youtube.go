@@ -24,6 +24,7 @@ import (
 	"path/filepath"
 	"regexp"
 	"runtime"
+	"slices"
 	"strconv"
 	"strings"
 	"sync"
@@ -201,20 +202,22 @@ func detectError(ytOutput io.Reader) error {
 	return nil
 }
 
-func noLangs(args []string) []string {
-	var (
-		i int
-		v string
-	)
-	for i, v = range args {
-		if strings.Contains(v, "--sub-langs") {
-			break
-		}
+// ytDlpLangArgs returns the built-in --sub-langs flag for language. yt-dlp
+// does not replace a repeated --sub-langs flag. It adds the values together.
+// So the function returns nil when the user arguments set the languages.
+func ytDlpLangArgs(language string, userArgs []string) []string {
+	userSetsLangs := slices.ContainsFunc(userArgs, func(a string) bool {
+		return strings.HasPrefix(a, "--sub-lang")
+	})
+	if language == "" || userSetsLangs {
+		return nil
 	}
-	if i == 0 || i == len(args)-1 {
-		return args
+	langMatch := language[:2]
+	langOpts := language + "," + langMatch + ".*"
+	if langMatch != language {
+		langOpts += "," + langMatch
 	}
-	return append(args[0:i], args[i+2:]...)
+	return []string{"--sub-langs", langOpts}
 }
 
 // tryMethodYtDlpInternal downloads the subtitles for videoId with yt-dlp, then
@@ -242,30 +245,17 @@ func (o *YouTube) tryMethodYtDlpInternal(videoId string, language string, additi
 		"-o", outputPath,
 	}
 
-	args := append([]string{}, baseArgs...)
-
-	if language != "" {
-		langMatch := language[:2]
-		langOpts := language + "," + langMatch + ".*"
-		if langMatch != language {
-			langOpts += "," + langMatch
-		}
-		args = append(args, "--sub-langs", langOpts)
-	}
-
-	// User arguments come after the language options so they take precedence.
+	var userArgs []string
 	if additionalArgs != "" {
-		additionalArgsList, err := shellquote.Split(additionalArgs)
-		if err != nil {
+		if userArgs, err = shellquote.Split(additionalArgs); err != nil {
 			return "", fmt.Errorf("%s", fmt.Sprintf(i18n.T("youtube_invalid_ytdlp_arguments"), err))
 		}
-		args = append(args, additionalArgsList...)
 	}
-
-	args = append(args, videoURL)
+	langArgs := ytDlpLangArgs(language, userArgs)
 
 	for retry := 1; retry >= 0; retry-- {
 		var ytOutput []byte
+		args := slices.Concat(baseArgs, langArgs, userArgs, []string{videoURL})
 		cmd := exec.Command("yt-dlp", args...)
 		debuglog.Debug(debuglog.Trace, "yt-dlp %+v\n", cmd.Args)
 		ytOutput, err = cmd.CombinedOutput()
@@ -273,7 +263,8 @@ func (o *YouTube) tryMethodYtDlpInternal(videoId string, language string, additi
 		if err = detectError(ytReader); err == nil {
 			break
 		}
-		args = noLangs(args)
+		// Retry without the built-in language filter.
+		langArgs = nil
 	}
 	if err != nil {
 		return

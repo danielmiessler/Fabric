@@ -1191,6 +1191,14 @@
       ]
     },
     {
+      "patternName": "judge_ultimate_law",
+      "description": "Derive Ultimate Law verdicts step by step through an executable rulebook of If/then rules and integrity constraints, with derivation chains and the facts that would flip each verdict.",
+      "tags": [
+        "ANALYSIS",
+        "CR THINKING"
+      ]
+    },
+    {
       "patternName": "label_and_rate",
       "description": "Categorize/evaluate content by assigning labels and ratings.",
       "tags": [
@@ -2116,6 +2124,75 @@
         "WRITING",
         "EXTRACT",
         "CONVERSION"
+      ]
+    },
+    {
+      "patternName": "chinese_article_summary",
+      "description": "Summarize long Chinese articles into concise, objective Chinese summaries.",
+      "tags": [
+        "SUMMARIZE",
+        "WRITING"
+      ]
+    },
+    {
+      "patternName": "chinese_code_review",
+      "description": "Review code for correctness, security and performance, with feedback in Chinese.",
+      "tags": [
+        "DEVELOPMENT",
+        "REVIEW",
+        "SECURITY"
+      ]
+    },
+    {
+      "patternName": "chinese_contract_review",
+      "description": "Review Chinese contracts under PRC Civil Code for legal risks and missing clauses.",
+      "tags": [
+        "ANALYSIS",
+        "REVIEW",
+        "BUSINESS"
+      ]
+    },
+    {
+      "patternName": "chinese_news_translate",
+      "description": "Translate English news articles into natural, journalistic Chinese.",
+      "tags": [
+        "CONVERSION",
+        "WRITING"
+      ]
+    },
+    {
+      "patternName": "chinese_poetry_analysis",
+      "description": "Analyze classical Chinese poetry for imagery, meter, allusions and literary context.",
+      "tags": [
+        "ANALYSIS",
+        "LEARNING",
+        "WRITING"
+      ]
+    },
+    {
+      "patternName": "lens_deconstructive",
+      "description": "Read texts deconstructively to expose binaries, absences and self-contradictions.",
+      "tags": [
+        "ANALYSIS",
+        "CR THINKING"
+      ]
+    },
+    {
+      "patternName": "lens_rhetorical",
+      "description": "Analyze how texts persuade through ethos, pathos, logos and kairos.",
+      "tags": [
+        "ANALYSIS",
+        "CR THINKING",
+        "WRITING"
+      ]
+    },
+    {
+      "patternName": "lens_stoic",
+      "description": "Read texts philosophically to trace intellectual lineage, tensions and unasked questions.",
+      "tags": [
+        "ANALYSIS",
+        "CR THINKING",
+        "WISDOM"
       ]
     }
   ]

@@ -424,6 +424,7 @@ yt() {
     if [ "$#" -eq 0 ] || [ "$#" -gt 2 ]; then
         echo "Usage: yt [-t | --timestamps] youtube-link"
         echo "Use the '-t' flag to get the transcript with timestamps."
+        echo "Pipe to a pattern: yt URL | fabric -p extract_wisdom"
         return 1
     fi
 
@@ -433,6 +434,8 @@ yt() {
         shift
     fi
     local video_link="$1"
+    # Outputs the raw transcript to stdout so it can be piped to a pattern:
+    #   yt URL | fabric -p extract_wisdom
     fabric -y "$video_link" $transcript_flag
 }
 ```
@@ -511,20 +514,28 @@ function yt {
     process {
         if (-not $videoLink) {
             Write-Error "Usage: yt [-t | --timestamps] youtube-link"
+            Write-Host "Pipe to a pattern: yt URL | fabric -p extract_wisdom"
             return
         }
     }
 
     end {
         if ($videoLink) {
-            # Execute and allow output to flow through the pipeline
+            # Outputs the raw transcript to stdout so it can be piped to a pattern:
+            #   yt URL | fabric -p extract_wisdom
             fabric -y $videoLink $transcriptFlag
         }
     }
 }
 ```
 
-This also creates a `yt` alias that allows you to use `yt https://www.youtube.com/watch?v=4b0iet22VIk` to get transcripts, comments, and metadata.
+This also creates a `yt` helper that outputs a YouTube transcript to stdout. Pipe it to a pattern to process it with fabric:
+
+```shell
+yt https://www.youtube.com/watch?v=4b0iet22VIk | fabric -p extract_wisdom
+```
+
+Use `yt` without a pipe to review the raw transcript first.
 
 #### Save your files in markdown using aliases
 
@@ -716,6 +727,7 @@ Application Options:
   -g, --language=                   Specify the Language Code for the chat, e.g. -g=en -g=zh -g=pt-BR -g=pt-PT
   -u, --scrape_url=                 Scrape website URL to markdown using Jina AI
   -q, --scrape_question=            Search question using Jina AI
+      --serply_search=              Search Google using Serply and send the results to chat
   -e, --seed=                       Seed to be used for LMM generation
   -w, --wipecontext=                Wipe context
   -W, --wipesession=                Wipe session
@@ -729,6 +741,7 @@ Application Options:
       --serveOllama                 Serve the Fabric Rest API with ollama endpoints
       --address=                    The address to bind the REST API (default: :8080)
       --api-key=                    API key used to secure server routes
+      --cors-origins=               Browser origins that can call the server (repeatable; * for all)
       --config=                     Path to YAML config file
       --version                     Print current version
       --listextensions              List all registered extensions

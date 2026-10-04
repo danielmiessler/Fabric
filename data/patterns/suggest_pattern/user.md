@@ -70,6 +70,10 @@ Enhance AI prompts by refining clarity and specificity.
 
 Evaluate AI outputs for quality and accuracy.
 
+### judge_ultimate_law
+
+Derive Ultimate Law verdicts step by step through an executable rulebook of If/then rules and integrity constraints, with derivation chains and the facts that would flip each verdict.
+
 ### rate_ai_response
 
 Evaluate AI responses for quality and effectiveness.
@@ -216,6 +220,14 @@ Review contract to identify stipulations, issues, and changes for negotiation.
 
 Evaluate whether claims, definitions, and arguments are falsifiable and can be proven wrong.
 
+### chinese_contract_review
+
+Review Chinese contracts under PRC Civil Code for legal risks and missing clauses.
+
+### chinese_poetry_analysis
+
+Analyze classical Chinese poetry for imagery, meter, allusions and literary context.
+
 ### compare_and_contrast
 
 Create comparisons table, highlighting key differences and similarities.
@@ -343,6 +355,18 @@ Extract/analyze user job stories to understand motivations.
 ### label_and_rate
 
 Categorize/evaluate content by assigning labels and ratings.
+
+### lens_deconstructive
+
+Read texts deconstructively to expose binaries, absences and self-contradictions.
+
+### lens_rhetorical
+
+Analyze how texts persuade through ethos, pathos, logos and kairos.
+
+### lens_stoic
+
+Read texts philosophically to trace intellectual lineage, tensions and unasked questions.
 
 ### model_as_sherlock_freud
 
@@ -584,6 +608,10 @@ Extract panel topics to create engaging discussions.
 
 Extract key concepts, background, and ideas from notable thinkers' work.
 
+### chinese_article_summary
+
+Summarize long Chinese articles into concise, objective Chinese summaries.
+
 ### create_5_sentence_summary
 
 Generate concise summaries of content in five levels, five words to one.
@@ -771,6 +799,10 @@ Generate appropriate responses to technical interview questions.
 ### ask_uncle_duke
 
 Expert software dev. guidance focusing on Java, Spring, frontend, and best practices.
+
+### chinese_code_review
+
+Review code for correctness, security and performance, with feedback in Chinese.
 
 ### create_bd_issue
 
@@ -1069,6 +1101,10 @@ Transform concepts to ASCII art with explanations of relationships.
 Visualize missions and goals to clarify relationships.
 
 ## CONVERSION PATTERNS
+
+### chinese_news_translate
+
+Translate English news articles into natural, journalistic Chinese.
 
 ### convert_to_markdown
 

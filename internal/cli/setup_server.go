@@ -1,6 +1,9 @@
 package cli
 
 import (
+	"os"
+	"strings"
+
 	"github.com/danielmiessler/fabric/internal/core"
 	restapi "github.com/danielmiessler/fabric/internal/server"
 )
@@ -20,15 +23,25 @@ func handleSetupAndServerCommands(currentFlags *Flags, registry *core.PluginRegi
 	// arguments on the plugin so the /youtube/transcript endpoint uses them.
 	registry.YouTube.YtDlpArgs = currentFlags.YtDlpArgs
 
+	// The flags are parsed before initializeFabric loads
+	// ~/.config/fabric/.env. Read the server variables again, so that
+	// file can set them. A flag or a shell variable is already set and wins.
+	if currentFlags.ServeAPIKey == "" {
+		currentFlags.ServeAPIKey = os.Getenv("FABRIC_API_KEY")
+	}
+	if v := os.Getenv("FABRIC_CORS_ORIGINS"); len(currentFlags.ServeCORSOrigins) == 0 && v != "" {
+		currentFlags.ServeCORSOrigins = strings.Split(v, ",")
+	}
+
 	if currentFlags.Serve {
 		registry.ConfigureVendors()
-		err = restapi.Serve(registry, currentFlags.ServeAddress, currentFlags.ServeAPIKey)
+		err = restapi.Serve(registry, currentFlags.ServeAddress, currentFlags.ServeAPIKey, currentFlags.ServeCORSOrigins)
 		return true, err
 	}
 
 	if currentFlags.ServeOllama {
 		registry.ConfigureVendors()
-		err = serveOllama(registry, currentFlags.ServeAddress, version, currentFlags.ServeAPIKey)
+		err = serveOllama(registry, currentFlags.ServeAddress, version, currentFlags.ServeAPIKey, currentFlags.ServeCORSOrigins)
 		return true, err
 	}
 

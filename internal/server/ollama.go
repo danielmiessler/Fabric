@@ -211,22 +211,31 @@ func newFabricChatClient() *http.Client {
 // ServeOllama operates the Ollama-compatible API server on address. An
 // empty apiKey sets authentication to off. This is permitted only for
 // loopback binds.
-func ServeOllama(registry *core.PluginRegistry, address string, version string, apiKey string) error {
+func ServeOllama(registry *core.PluginRegistry, address string, version string, apiKey string, corsOrigins []string) error {
 	if err := requireAPIKeyForBind(address, apiKey); err != nil {
 		return err
 	}
-	return newOllamaEngine(registry, address, version, apiKey).Run(address)
+	corsOrigins, err := cleanCORSOrigins(corsOrigins, apiKey)
+	if err != nil {
+		return err
+	}
+	return newOllamaEngine(registry, address, version, apiKey, corsOrigins).Run(address)
 }
 
 // newOllamaEngine makes the engine but does not start it, which lets
 // tests operate the routes. The address parameter is the /api/chat
 // forward target, not the listen address that Run gets. In production
 // the two are the same value.
-func newOllamaEngine(registry *core.PluginRegistry, address string, version string, apiKey string) *gin.Engine {
+func newOllamaEngine(registry *core.PluginRegistry, address string, version string, apiKey string, corsOrigins []string) *gin.Engine {
 	r := gin.New()
 
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
+
+	if len(corsOrigins) > 0 {
+		r.Use(CORSMiddleware(corsOrigins))
+	}
+
 	if apiKey != "" {
 		r.Use(APIKeyMiddleware(apiKey))
 	} else {

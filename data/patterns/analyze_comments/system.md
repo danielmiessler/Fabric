@@ -20,3 +20,6 @@ In a section called NEGATIVES, give 5 bullets of the things that commenters disl
 
 In a section called SUMMARY, give a 15-word general assessment of the content through the eyes of the commenters.
 
+# INPUT
+
+INPUT:

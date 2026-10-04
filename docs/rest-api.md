@@ -42,6 +42,7 @@ The Swagger UI lets you:
 | `--serve` | Start the REST API server | - |
 | `--address` | Server address and port | `:8080` |
 | `--api-key` | Enable API key authentication | (none) |
+| `--cors-origins` | Browser origins that can call the server. Repeat the flag for each origin. `*` opens it to all. | (none) |
 
 Example with custom configuration:
 
@@ -64,6 +65,20 @@ curl -H "X-API-Key: my_secret_key" http://localhost:8080/patterns/names
 ```
 
 Without an API key, the server accepts all requests and logs a warning.
+
+## CORS
+
+By default, the server sends no CORS headers. A browser or WebView client on a different origin cannot call it. To let a client call the server, list its origin:
+
+```bash
+fabric --serve --cors-origins http://localhost:1420 --cors-origins tauri://localhost
+```
+
+You can also set `FABRIC_CORS_ORIGINS` to a comma-separated list, in the shell or in `~/.config/fabric/.env`. The flag applies to `--serve` and `--serveOllama`.
+
+The server answers `OPTIONS` preflight requests before the API key check. It accepts the request headers `Content-Type` and `X-API-Key`.
+
+`--cors-origins '*'` lets all origins call the server. The server logs a warning at startup. The server does not start when you set `*` without `--api-key`. The server never allows the origin `null`.
 
 ## Endpoints
 
@@ -479,13 +494,3 @@ Error responses include JSON with details:
 ## Rate Limiting
 
 The server does not implement rate limiting. When deploying publicly, use a reverse proxy (nginx, Caddy) with rate limiting enabled.
-
-## CORS
-
-The server sets CORS headers for local development:
-
-```http
-Access-Control-Allow-Origin: http://localhost:5173
-```
-
-For production, configure CORS through a reverse proxy.

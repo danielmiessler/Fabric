@@ -71,6 +71,7 @@ type Flags struct {
 	Language                        string               `short:"g" long:"language" description:"Specify the Language Code for the chat, e.g. -g=en -g=zh" default:""`
 	ScrapeURL                       string               `short:"u" long:"scrape_url" description:"Scrape website URL to markdown using Jina AI"`
 	ScrapeQuestion                  string               `short:"q" long:"scrape_question" description:"Search question using Jina AI"`
+	SerplySearch                    string               `long:"serply_search" description:"Search Google using Serply and send the results to chat"`
 	Seed                            int                  `short:"e" long:"seed" yaml:"seed" description:"Seed to be used for LMM generation"`
 	WipeContext                     string               `short:"w" long:"wipecontext" description:"Wipe context"`
 	WipeSession                     string               `short:"W" long:"wipesession" description:"Wipe session"`
@@ -84,6 +85,7 @@ type Flags struct {
 	ServeOllama                     bool                 `long:"serveOllama" description:"Serve the Fabric Rest API with ollama endpoints"`
 	ServeAddress                    string               `long:"address" description:"The address to bind the REST API" default:"127.0.0.1:8080"`
 	ServeAPIKey                     string               `long:"api-key" env:"FABRIC_API_KEY" description:"API key used to secure server routes" default:""`
+	ServeCORSOrigins                []string             `long:"cors-origins" env:"FABRIC_CORS_ORIGINS" env-delim:"," description:"Browser origins that can call the server (repeatable; * for all)"`
 	Config                          string               `long:"config" description:"Path to YAML config file"`
 	Version                         bool                 `long:"version" description:"Print current version"`
 	ListExtensions                  bool                 `long:"listextensions" description:"List all registered extensions"`
@@ -115,7 +117,12 @@ type Flags struct {
 	Thinking                        domain.ThinkingLevel `long:"thinking" yaml:"thinking" description:"Set reasoning/thinking level (e.g., off, low, medium, high, or numeric tokens for Anthropic or Google Gemini)"`
 	ShowMetadata                    bool                 `long:"show-metadata" description:"Print metadata (input/output tokens) to stderr"`
 	Debug                           int                  `long:"debug" description:"Set debug level (0=off, 1=basic, 2=detailed, 3=trace, 4=wire)" default:"0"`
+	patternFromBinary               bool                 // Init sets this when the pattern name comes from the binary name.
 }
+
+// These binary names do not select a pattern. "main" is argv[0] for
+// "go run cmd/fabric/main.go". "cmd" is argv[0] in the tests.
+var execNamesWithoutPattern = []string{"", "fabric", "fabric-ai", "main", "cmd"}
 
 // Init Initialize flags. returns a Flags struct and an error
 func Init() (ret *Flags, err error) {
@@ -168,8 +175,9 @@ func Init() (ret *Flags, err error) {
 	if ret.Pattern == "" {
 		execName := filepath.Base(os.Args[0])
 		execName = strings.TrimSuffix(execName, filepath.Ext(execName))
-		if execName != "fabric" && execName != "main" && execName != "cmd" && execName != "" {
+		if !slices.Contains(execNamesWithoutPattern, execName) {
 			ret.Pattern = execName
+			ret.patternFromBinary = true
 			usedFlags["pattern"] = true
 		}
 	}

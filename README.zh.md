@@ -344,10 +344,12 @@ fabric --setup
 
 ### 支持的 AI 供应商
 
+Fabric 支持广泛的 AI 供应商：
+
 **原生集成：**
 
-- OpenAI（包括 O1 和 O3 序列）
-- OpenAI Codex
+- OpenAI
+- OpenAI Codex（通过私有后端提供 ChatGPT/Codex 订阅 OAuth 认证）
 - Anthropic (Claude)
 - Claude Code（通过本地 `claude` CLI 使用 Claude 订阅）
 - Google Gemini
@@ -360,7 +362,34 @@ fabric --setup
 
 **OpenAI 兼容供应商：**
 
-- Abacus、AIML、Cerebras、Cheaper Inference、DeepSeek、DigitalOcean、GrokAI、Groq、Langdock、LiteLLM、MiniMax、Mistral、Novita AI、OpenRouter、Requesty、SiliconCloud、Synthorai、Together、Venice AI、Y-API、Z AI
+- Abacus
+- AIML
+- API Route
+- Apple Foundation Models（本地，macOS 27 或更高版本：运行一次 `sudo fm license`，然后运行 `fm serve --port 1976`；无需 API 密钥；在 `fabric -S` 中选择一次即可启用）
+- Cerebras
+- Cheaper Inference
+- DeepSeek
+- DigitalOcean
+- Eden AI
+- GrokAI
+- Groq
+- Langdock
+- LiteLLM
+- MiniMax
+- Mistral
+- Novita AI
+- OpenCode Go
+- OpenCode Zen
+- OpenRouter
+- OrcaRouter
+- Pzero
+- Requesty
+- SiliconCloud
+- Synthorai
+- Together
+- Venice AI
+- Y-API
+- Z AI
 
 运行 `fabric --setup` 配置首选供应商，或使用 `fabric --listvendors` 查看所有可用供应商。
 
@@ -495,6 +524,10 @@ Application Options:
       --modelContextLength=         Model context length (only affects ollama)
   -o, --output=                     Output to file
       --output-session              Output the entire session (also a temporary one) to the output file
+      --extract                     Output only the first fenced code block from the response (full response if
+                                    none is found)
+      --extract-last                Output only the last fenced code block from the response (full response if
+                                    none is found)
   -n, --latest=                     Number of latest patterns to list
   -d, --changeDefaultModel          Change default model
   -y, --youtube=                    YouTube video or play list "URL" to grab transcript, comments from it and
@@ -878,4 +911,4 @@ MIT
 *本文档由 [@JasonYeYuhe](https://github.com/JasonYeYuhe) 翻译并维护。如果您发现任何翻译问题或需要增加新特性说明，欢迎提交 Issue 或与我联系。*
 ---
 
-> 💡 **文档维护说明**：本中文文档由社区志愿者（@JasonYeYuhe）翻译维护，最后同步更新于 2026年8月31日。如发现内容与官方英文原版存在差异或新特性滞后，欢迎提交 PR 共同完善！
+> 💡 **文档维护说明**：本中文文档由社区志愿者（@JasonYeYuhe）翻译维护，最后同步更新于 2026年10月2日。如发现内容与官方英文原版存在差异或新特性滞后，欢迎提交 PR 共同完善！

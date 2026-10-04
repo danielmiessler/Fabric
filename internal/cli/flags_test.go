@@ -24,6 +24,19 @@ func TestInit(t *testing.T) {
 	assert.Equal(t, expectedFlags.Copy, flags.Copy)
 }
 
+func TestInitPatternFromBinaryName(t *testing.T) {
+	oldArgs := os.Args
+	defer func() { os.Args = oldArgs }()
+
+	for argv0, want := range map[string]string{"fabric-ai": "", "summarize.exe": "summarize"} {
+		os.Args = []string{argv0}
+		flags, err := Init()
+		assert.NoError(t, err)
+		assert.Equal(t, want, flags.Pattern, argv0)
+		assert.Equal(t, want != "", flags.patternFromBinary, argv0)
+	}
+}
+
 func TestReadStdin(t *testing.T) {
 	input := "test input"
 	stdin := io.NopCloser(strings.NewReader(input))

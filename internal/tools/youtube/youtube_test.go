@@ -163,3 +163,25 @@ func TestExtractAndValidateVideoId(t *testing.T) {
 		})
 	}
 }
+
+func TestYtDlpLangArgs(t *testing.T) {
+	tests := []struct {
+		name     string
+		language string
+		userArgs []string
+		want     []string
+	}{
+		{"no user flag", "en", nil, []string{"--sub-langs", "en,en.*"}},
+		{"user --sub-lang", "en", []string{"--sub-lang", "en-orig"}, nil},
+		{"user --sub-langs=", "en", []string{"--sub-langs=en-orig"}, nil},
+		{"no language", "", nil, nil},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := ytDlpLangArgs(tt.language, tt.userArgs)
+			if strings.Join(got, " ") != strings.Join(tt.want, " ") {
+				t.Errorf("ytDlpLangArgs(%q, %v) = %v, want %v", tt.language, tt.userArgs, got, tt.want)
+			}
+		})
+	}
+}

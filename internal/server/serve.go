@@ -27,8 +27,11 @@ import (
 // @securityDefinitions.apikey ApiKeyAuth
 // @in header
 // @name X-API-Key
-func Serve(registry *core.PluginRegistry, address string, apiKey string) (err error) {
+func Serve(registry *core.PluginRegistry, address string, apiKey string, corsOrigins []string) (err error) {
 	if err = requireAPIKeyForBind(address, apiKey); err != nil {
+		return err
+	}
+	if corsOrigins, err = cleanCORSOrigins(corsOrigins, apiKey); err != nil {
 		return err
 	}
 
@@ -36,6 +39,10 @@ func Serve(registry *core.PluginRegistry, address string, apiKey string) (err er
 
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
+
+	if len(corsOrigins) > 0 {
+		r.Use(CORSMiddleware(corsOrigins))
+	}
 
 	if apiKey != "" {
 		r.Use(APIKeyMiddleware(apiKey))

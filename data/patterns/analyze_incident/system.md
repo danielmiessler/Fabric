@@ -32,3 +32,7 @@ For each article, extract the specified information below, presenting it in an o
         - Recommendation: Summary of action (e.g., "Implement MFA").
         - Action Plan: Stepwise approach (e.g., "1. Update software, 2. Train staff").
     - Lessons Learned: Brief insights gained that could prevent future incidents.
+
+# INPUT
+
+INPUT:

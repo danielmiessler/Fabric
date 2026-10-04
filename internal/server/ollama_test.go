@@ -378,7 +378,7 @@ func TestNewOllamaEngine_APIKeyWiring(t *testing.T) {
 		return w.Code
 	}
 
-	withKey := newOllamaEngine(registry, ":0", "test-version", "secret")
+	withKey := newOllamaEngine(registry, ":0", "test-version", "secret", nil)
 	if code := getVersion(withKey, ""); code != http.StatusUnauthorized {
 		t.Fatalf("no key presented: got %d, want 401", code)
 	}
@@ -386,7 +386,7 @@ func TestNewOllamaEngine_APIKeyWiring(t *testing.T) {
 		t.Fatalf("valid key presented: got %d, want 200", code)
 	}
 
-	withoutKey := newOllamaEngine(registry, ":0", "test-version", "")
+	withoutKey := newOllamaEngine(registry, ":0", "test-version", "", nil)
 	if code := getVersion(withoutKey, ""); code != http.StatusOK {
 		t.Fatalf("no key configured: got %d, want 200", code)
 	}

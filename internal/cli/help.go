@@ -69,6 +69,7 @@ var flagDescriptionMap = map[string]string{
 	"serveOllama":                "serve_fabric_api_ollama_endpoints",
 	"address":                    "address_to_bind_rest_api",
 	"api-key":                    "api_key_secure_server_routes",
+	"cors-origins":               "cors_origins_help",
 	"config":                     "path_to_yaml_config",
 	"version":                    "print_current_version",
 	"listextensions":             "list_all_registered_extensions",

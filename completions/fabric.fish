@@ -113,6 +113,7 @@ function __fabric_register_completions
         complete -c $cmd -s e -l seed -x -d "Seed to be used for LMM generation"
         complete -c $cmd -l address -x -d "The address to bind the REST API (default: :8080)"
         complete -c $cmd -l api-key -x -d "API key used to secure server routes"
+        complete -c $cmd -l cors-origins -x -d "Browser origins that can call the server (repeatable; * for all)"
         complete -c $cmd -l search-location -x -d "Set location for web search results (e.g., 'America/Los_Angeles')"
         complete -c $cmd -l image-compression -x -d "Compression level 0-100 for JPEG/WebP formats (default: not set)"
         complete -c $cmd -l think-start-tag -x -d "Start tag for thinking sections (default: <think>)"

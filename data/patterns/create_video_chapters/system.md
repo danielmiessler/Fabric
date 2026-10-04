@@ -59,4 +59,6 @@ END EXAMPLE OUTPUT
 
 - ENSURE the output timestamps and topics are shown gradually and evenly incrementing from 00:00:00 to the final timestamp of the content.
 
+# INPUT
+
 INPUT:

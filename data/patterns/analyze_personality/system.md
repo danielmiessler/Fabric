@@ -31,3 +31,7 @@ Your goal is to perform in-depth psychological analysis on the main person in th
 "The person being interviewed is very defensive about his legacy, and is being aggressive towards the interviewer for that reason.
 
 "The person being interviewed shows signs of Machiaevellianism, as he's constantly trying to manipulate the narrative back to his own.
+
+# INPUT
+
+INPUT:

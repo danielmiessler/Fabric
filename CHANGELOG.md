@@ -1,5 +1,44 @@
 # Changelog
 
+## v1.4.508 (2026-10-04)
+
+### PR [#2252](https://github.com/danielmiessler/Fabric/pull/2252) by [ksylvan](https://github.com/ksylvan): feat: add configurable CORS support to REST and Ollama servers
+
+- Added configurable CORS support to the REST and Ollama servers, with origins set through repeatable flags and environment variables.
+- Applied shared CORS middleware across both the REST and Ollama servers.
+- Required API keys for wildcard origins and excluded null origins for tighter security.
+- Handled preflight requests before authentication and removed hardcoded chat origins.
+- Loaded server settings from `.env` while preserving explicit overrides.
+
+### Direct commits
+
+- Merge branch 'main' into pr/pattern-input-normalization
+- Merge branch 'main' into fix/readme-yt-helper
+
+## v1.4.507 (2026-10-03)
+
+### PR [#2173](https://github.com/danielmiessler/Fabric/pull/2173) by [OdinKral](https://github.com/OdinKral) and [ksylvan](https://github.com/ksylvan): fix: clearer error when binary name used as pattern fallback
+
+- Added a clearer error hint when a pattern is derived from the binary name, explaining that the executable name was used as a fallback and how to specify a pattern explicitly with `-p`.
+- Introduced a `patternFromBinaryName()` helper and explicit tracking of binary-derived pattern names during flag initialization, so fallback hints appear only when a pattern truly came from the binary name.
+- Prevented `fabric-ai` from automatically selecting a pattern by binary name by centralizing the list of executable names that do not trigger pattern selection.
+- Added the `pattern_from_binary_name_hint` key with localized text across all ten non-English locale files for a consistent i18n bundle.
+- Simplified error wrapping, removed obsolete detection tests, and added coverage for default executable exclusion and extension-stripped pattern selection.
+
+### Direct commits
+
+- Merge branch 'main' into docs/sync-chinese-readme
+
+## v1.4.506 (2026-10-03)
+
+OpenAI Get "https://api.openai.com/v1/models": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+### PR [#2249](https://github.com/danielmiessler/Fabric/pull/2249) by [ksylvan](https://github.com/ksylvan): fix: respect user subtitle language arguments in yt-dlp
+
+- Fixed yt-dlp handling so user-specified subtitle language arguments are respected.
+- Skipped built-in language filters whenever users supply their own subtitle languages.
+- Preserved user arguments when retrying downloads without the built-in language filters.
+- Added tests covering language defaults, user overrides, and empty language selections.
+
 ## v1.4.505 (2026-10-01)
 
 ### PR [#2225](https://github.com/danielmiessler/Fabric/pull/2225) by [aiapienthusiast](https://github.com/aiapienthusiast): feat(providers): add Cheaper Inference as an OpenAI-compatible provider

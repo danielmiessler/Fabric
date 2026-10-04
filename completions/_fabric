@@ -128,6 +128,7 @@ _fabric() {
     '(--serveOllama)--serveOllama[Serve the Fabric Rest API with ollama endpoints]' \
     '(--address)--address[The address to bind the REST API (default: :8080)]:address:' \
     '(--api-key)--api-key[API key used to secure server routes]:api-key:' \
+    '*--cors-origins[Browser origins that can call the server (repeatable; * for all)]:origin:' \
     '(--config)--config[Path to YAML config file]:config file:_files -g "*.yaml *.yml"' \
     '(--version)--version[Print current version]' \
     '(--search)--search[Enable web search tool for supported models (Anthropic, OpenAI, Gemini, Grok)]' \

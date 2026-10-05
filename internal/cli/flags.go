@@ -72,6 +72,7 @@ type Flags struct {
 	ScrapeURL                       string               `short:"u" long:"scrape_url" description:"Scrape website URL to markdown using Jina AI"`
 	ScrapeQuestion                  string               `short:"q" long:"scrape_question" description:"Search question using Jina AI"`
 	SerplySearch                    string               `long:"serply_search" description:"Search Google using Serply and send the results to chat"`
+	FirecrawlSearch                 string               `long:"firecrawl_search" description:"Search the web using Firecrawl and send the top pages to chat as Markdown"`
 	Seed                            int                  `short:"e" long:"seed" yaml:"seed" description:"Seed to be used for LMM generation"`
 	WipeContext                     string               `short:"w" long:"wipecontext" description:"Wipe context"`
 	WipeSession                     string               `short:"W" long:"wipesession" description:"Wipe session"`

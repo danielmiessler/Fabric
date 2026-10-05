@@ -173,4 +173,10 @@ func TestApplyFileChanges(t *testing.T) {
 	if string(content) != "Updated content" {
 		t.Errorf("Updated file content = %q, want %q", string(content), "Updated content")
 	}
+
+	for _, bad := range []string{"../escape.txt", "/etc/escape.txt", "subdir/../../escape.txt"} {
+		if err := ApplyFileChanges(tempDir, []FileChange{{Operation: "create", Path: bad, Content: "x"}}); err == nil {
+			t.Errorf("ApplyFileChanges(%q) = nil, want error", bad)
+		}
+	}
 }

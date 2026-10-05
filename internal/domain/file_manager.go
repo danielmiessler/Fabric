@@ -82,7 +82,7 @@ func ParseFileChanges(output string) (changeSummary string, changes []FileChange
 			return changeSummary, nil, fmt.Errorf(i18n.T("file_manager_empty_path"), i)
 		}
 
-		if strings.Contains(change.Path, "..") {
+		if !filepath.IsLocal(change.Path) {
 			return changeSummary, nil, fmt.Errorf(i18n.T("file_manager_suspicious_path"), i, change.Path)
 		}
 
@@ -154,6 +154,10 @@ func fixInvalidEscapes(jsonStr string) string {
 // ApplyFileChanges applies the parsed file changes to the file system
 func ApplyFileChanges(projectRoot string, changes []FileChange) error {
 	for i, change := range changes {
+		if !filepath.IsLocal(change.Path) {
+			return fmt.Errorf(i18n.T("file_manager_suspicious_path"), i, change.Path)
+		}
+
 		absPath := filepath.Join(projectRoot, change.Path)
 
 		dir := filepath.Dir(absPath)

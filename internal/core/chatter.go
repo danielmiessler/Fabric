@@ -194,7 +194,9 @@ func (o *Chatter) Send(ctx context.Context, request *domain.ChatRequest, opts *d
 		return
 	}
 
-	if request.PatternName == "create_coding_feature" {
+	// Apply file changes only in CLI mode, where UpdateChan is nil.
+	// API mode streams responses and must not write files without supervision.
+	if request.PatternName == "create_coding_feature" && opts.UpdateChan == nil {
 		summary, fileChanges, parseErr := domain.ParseFileChanges(message)
 		if parseErr != nil {
 			fmt.Printf("%s\n", fmt.Sprintf(i18n.T("chatter_warning_parse_file_changes_failed"), parseErr))

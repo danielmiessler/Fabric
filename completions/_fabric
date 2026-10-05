@@ -115,6 +115,7 @@ _fabric() {
     '(-u --scrape_url)'{-u,--scrape_url}'[Scrape website URL to markdown using Jina AI]:url:' \
     '(-q --scrape_question)'{-q,--scrape_question}'[Search question using Jina AI]:question:' \
     '(--serply_search)--serply_search[Search Google using Serply]:query:' \
+    '(--firecrawl_search)--firecrawl_search[Search the web using Firecrawl]:query:' \
     '(-e --seed)'{-e,--seed}'[Seed to be used for LMM generation]:seed:' \
     '(--thinking)--thinking[Set reasoning/thinking level]:level:(off low medium high)' \
     '(-w --wipecontext)'{-w,--wipecontext}'[Wipe context]:context:_fabric_contexts' \

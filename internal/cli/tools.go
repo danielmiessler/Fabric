@@ -105,6 +105,24 @@ func handleToolProcessing(currentFlags *Flags, registry *core.PluginRegistry) (m
 		}
 	}
 
+	if currentFlags.FirecrawlSearch != "" {
+		if !registry.Firecrawl.IsConfigured() {
+			err = errors.New(i18n.T("firecrawl_not_configured"))
+			return
+		}
+
+		var results string
+		if results, err = registry.Firecrawl.Search(currentFlags.FirecrawlSearch); err != nil {
+			return
+		}
+		messageTools = AppendMessage(messageTools, results)
+
+		if !currentFlags.IsChatRequest() {
+			err = currentFlags.WriteOutput(messageTools)
+			return
+		}
+	}
+
 	if currentFlags.Spotify != "" {
 		if !registry.Spotify.IsConfigured() {
 			err = errors.New(i18n.T("spotify_not_configured"))

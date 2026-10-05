@@ -368,6 +368,7 @@ Fabric supports a wide range of AI providers:
 - Cerebras
 - Cheaper Inference
 - DeepSeek
+- DemonRoute
 - DigitalOcean
 - Eden AI
 - GrokAI
@@ -728,6 +729,7 @@ Application Options:
   -u, --scrape_url=                 Scrape website URL to markdown using Jina AI
   -q, --scrape_question=            Search question using Jina AI
       --serply_search=              Search Google using Serply and send the results to chat
+      --firecrawl_search=           Search the web using Firecrawl and send the top pages to chat as Markdown
   -e, --seed=                       Seed to be used for LMM generation
   -w, --wipecontext=                Wipe context
   -W, --wipesession=                Wipe session

@@ -1016,6 +1016,10 @@ Analyze Discord server structures for organizational issues, permissions, and op
 
 Create compelling business offers using Alex Hormozi's methodology.
 
+### eisenhower_matrix
+
+Sort tasks into Eisenhower quadrants by urgency and importance, then make a weekly focus plan.
+
 ### extract_business_ideas
 
 Identify business opportunities and insights

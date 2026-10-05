@@ -2194,6 +2194,15 @@
         "CR THINKING",
         "WISDOM"
       ]
+    },
+    {
+      "patternName": "eisenhower_matrix",
+      "description": "Sort tasks into Eisenhower quadrants by urgency and importance, then make a weekly focus plan.",
+      "tags": [
+        "BUSINESS",
+        "SELF",
+        "STRATEGY"
+      ]
     }
   ]
 }

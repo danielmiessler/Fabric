@@ -1,5 +1,37 @@
 # Changelog
 
+## v1.4.513 (2026-10-05)
+
+### PR [#2258](https://github.com/danielmiessler/Fabric/pull/2258) by [JuampiHernandez](https://github.com/JuampiHernandez): feat: add Firecrawl web search via --firecrawl_search flag
+
+- Feat: add Firecrawl web search via --firecrawl_search flag
+
+## v1.4.512 (2026-10-05)
+
+### PR [#2257](https://github.com/danielmiessler/Fabric/pull/2257) by [ksylvan](https://github.com/ksylvan): feat: add DemonRoute as an OpenAI-compatible AI provider
+
+- Added DemonRoute as an OpenAI-compatible AI provider.
+- Registered DemonRoute with its OpenAI-compatible API base URL.
+- Added DemonRoute to the README’s list of supported AI providers.
+
+## v1.4.511 (2026-10-04)
+
+### PR [#2107](https://github.com/danielmiessler/Fabric/pull/2107) by [johnpippett](https://github.com/johnpippett): Security: fix remote file write and shell injection in template extensions
+
+- Fixed a remote arbitrary file write vulnerability by disabling automatic application of file changes when running in API mode, preventing unsupervised writes triggered through the REST API's `PatternName` input.
+- Replaced the weak `strings.Contains(path, "..")` check in the file manager with proper path containment validation that rejects absolute paths and confirms resolved paths stay within the project root.
+- Hardened the path containment check in `ApplyFileChanges` by using `filepath.Rel`, correctly handling edge cases such as a project root of `/`.
+- Consolidated path validation in `ParseFileChanges` and `ApplyFileChanges` to a single `filepath.IsLocal` call, which rejects absolute paths, empty paths, directory traversal, and Windows reserved names.
+- Added a regression test that fails if the path containment guard is removed.
+
+### PR [#2187](https://github.com/danielmiessler/Fabric/pull/2187) by [moritzschmitz-oviva](https://github.com/moritzschmitz-oviva): feat: add Eisenhower Matrix prioritization pattern
+
+- Added a new Eisenhower Matrix prioritization pattern for task triage and decision-making.
+- Renamed the pattern from `eisenhower` to `eisenhower_matrix` and removed the old pattern directory.
+- Relocated the Eisenhower Matrix pattern into `data/patterns`.
+- Registered the pattern's description and metadata with the BUSINESS, SELF, and STRATEGY tags.
+- Added task classification and a weekly planning extract to the pattern.
+
 ## v1.4.510 (2026-10-04)
 
 ### PR [#2255](https://github.com/danielmiessler/Fabric/pull/2255) by [ksylvan](https://github.com/ksylvan): fix: SSE streaming fixes (supersedes #2102, #2128, #2213, #2242, #2247)

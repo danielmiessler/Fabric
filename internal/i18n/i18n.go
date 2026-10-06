@@ -27,6 +27,7 @@ var (
 // getLocaleCandidates tries it after the requested locale and the base language.
 var defaultLanguageVariants = map[string]string{
 	"pt": "pt-BR", // "pt" meant Brazilian Portuguese before pt-PT.json existed
+	"ar": "ar-BH", // "ar" defaults to Bahrain Arabic
 }
 
 // Init initializes the i18n bundle and localizer. It loads the specified locale

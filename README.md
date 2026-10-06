@@ -31,6 +31,7 @@
 
 <p align="center">
   <strong>English</strong> ·
+  <a href="README.ar.md">العربية</a> ·
   <a href="README.zh.md">中文</a>
 </p>
 
@@ -596,13 +597,17 @@ fabric --setup
 
 Then [set your environmental variables](#environment-variables) as shown above.
 
-### Upgrading
+### Upgrading/Replacing
 
-The great thing about Go is that it's super easy to upgrade. Just run the same command you used to install it in the first place and you'll always get the latest version.
+The great thing about Go is that it's super easy to upgrade or replace an existing installation. Just run the same command you used to install it in the first place and you'll always get the latest version, automatically replacing the old one.
 
 ```bash
 go install github.com/danielmiessler/fabric/cmd/fabric@latest
 ```
+
+If you're replacing an existing installation, simply run the above command and Go will automatically replace the old version with the new one.
+
+**Important note**: If you run `fabric --setup` after upgrading, you may need to reconfigure some settings or keys if there are configuration changes between versions.
 
 ### Shell Completions
 

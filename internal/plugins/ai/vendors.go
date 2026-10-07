@@ -52,6 +52,7 @@ func (o *VendorsManager) invalidateModels() {
 
 // AddVendors registers one or more vendors with the manager.
 // Vendors are stored with lowercase keys to enable case-insensitive lookup.
+// Membership changes invalidate the model catalog under the manager lock.
 func (o *VendorsManager) AddVendors(vendors ...Vendor) {
 	if len(vendors) == 0 {
 		return

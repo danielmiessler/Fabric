@@ -7,6 +7,7 @@ import (
 	"bufio"
 	"errors"
 	"fmt"
+	"io"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -19,32 +20,60 @@ import (
 // MaxFileSize defines the maximum file size that can be read (1MB)
 const MaxFileSize = 1 * 1024 * 1024
 
+// fileReadRoot is the folder that the file plugin can read. The default is
+// the working folder of the process. Tests change it.
+var fileReadRoot = "."
+
 // FilePlugin provides filesystem operations with safety constraints:
-// - No directory traversal
+// - Each path must be a relative path in fileReadRoot
+// - A symbolic link must stay in fileReadRoot
 // - Size limits
-// - Path sanitization
 type FilePlugin struct{}
 
-// safePath rejects paths that contain "..", expands a leading "~/", and cleans the result.
+// safePath rejects a path that contains "..", starts with "~" or is
+// absolute. It gives the cleaned path, which is relative to fileReadRoot.
 func (p *FilePlugin) safePath(path string) (string, error) {
 	debugf(i18n.T("template_file_log_validating_path"), path)
 
-	// Reject ".." anywhere in the path to block traversal.
 	if strings.Contains(path, "..") {
 		return "", errors.New(i18n.T("template_file_error_path_contains_parent_ref"))
 	}
-
-	if strings.HasPrefix(path, "~/") {
-		home, err := os.UserHomeDir()
-		if err != nil {
-			return "", fmt.Errorf(i18n.T("template_file_error_expand_home_dir"), err)
-		}
-		path = filepath.Join(home, path[2:])
+	if strings.HasPrefix(path, "~") || filepath.IsAbs(path) {
+		return "", errors.New(i18n.T("template_file_error_path_not_confined"))
 	}
 
 	cleaned := filepath.Clean(path)
+	if cleaned == "." {
+		return "", errors.New(i18n.T("template_file_error_path_not_confined"))
+	}
 	debugf(i18n.T("template_file_log_cleaned_path"), cleaned)
 	return cleaned, nil
+}
+
+// inRoot checks path with safePath and opens fileReadRoot. All operations
+// get to the file through this root. os.Root rejects a path or a symbolic
+// link that goes out of the root, and it rejects an absolute symbolic link.
+// The caller must close the root.
+func (p *FilePlugin) inRoot(path string) (*os.Root, string, error) {
+	rel, err := p.safePath(path)
+	if err != nil {
+		return nil, "", err
+	}
+	root, err := os.OpenRoot(fileReadRoot)
+	if err != nil {
+		return nil, "", fmt.Errorf(i18n.T("template_file_error_open_file"), err)
+	}
+	return root, rel, nil
+}
+
+// statInRoot gives the file information for path through inRoot.
+func (p *FilePlugin) statInRoot(path string) (os.FileInfo, error) {
+	root, rel, err := p.inRoot(path)
+	if err != nil {
+		return nil, err
+	}
+	defer root.Close()
+	return root.Stat(rel)
 }
 
 // Apply executes file operations:
@@ -63,10 +92,11 @@ func (p *FilePlugin) Apply(operation string, value string) (string, error) {
 			return "", errors.New(i18n.T("template_file_error_tail_requires_path_lines"))
 		}
 
-		path, err := p.safePath(parts[0])
+		root, rel, err := p.inRoot(parts[0])
 		if err != nil {
 			return "", err
 		}
+		defer root.Close()
 
 		n, err := strconv.Atoi(parts[1])
 		if err != nil {
@@ -77,7 +107,7 @@ func (p *FilePlugin) Apply(operation string, value string) (string, error) {
 			return "", errors.New(i18n.T("template_file_error_line_count_positive"))
 		}
 
-		lines, err := p.lastNLines(path, n)
+		lines, err := p.lastNLines(root, rel, n)
 		if err != nil {
 			return "", err
 		}
@@ -87,12 +117,13 @@ func (p *FilePlugin) Apply(operation string, value string) (string, error) {
 		return result, nil
 
 	case "read":
-		path, err := p.safePath(value)
+		root, rel, err := p.inRoot(value)
 		if err != nil {
 			return "", err
 		}
+		defer root.Close()
 
-		info, err := os.Stat(path)
+		info, err := root.Stat(rel)
 		if err != nil {
 			return "", fmt.Errorf(i18n.T("template_file_error_stat_file"), err)
 		}
@@ -102,53 +133,58 @@ func (p *FilePlugin) Apply(operation string, value string) (string, error) {
 				info.Size(), MaxFileSize)
 		}
 
-		content, err := os.ReadFile(path)
+		f, err := root.Open(rel)
 		if err != nil {
 			return "", fmt.Errorf(i18n.T("template_file_error_read_file"), err)
+		}
+		defer f.Close()
+
+		// Stat does not give the correct size for all files. For example,
+		// /dev/zero has the size 0. Thus read one byte more than the limit,
+		// and reject the file if that byte is there.
+		content, err := io.ReadAll(io.LimitReader(f, MaxFileSize+1))
+		if err != nil {
+			return "", fmt.Errorf(i18n.T("template_file_error_read_file"), err)
+		}
+
+		if len(content) > MaxFileSize {
+			return "", fmt.Errorf(i18n.T("template_file_error_size_exceeds_limit"),
+				len(content), MaxFileSize)
 		}
 
 		debugf(i18n.T("template_file_log_read_bytes"), len(content))
 		return string(content), nil
 
 	case "exists":
-		path, err := p.safePath(value)
+		root, rel, err := p.inRoot(value)
 		if err != nil {
 			return "", err
 		}
+		defer root.Close()
 
-		_, err = os.Stat(path)
+		_, err = root.Stat(rel)
 		exists := err == nil
-		debugf(i18n.T("template_file_log_exists_for_path"), exists, path)
+		debugf(i18n.T("template_file_log_exists_for_path"), exists, value)
 		return fmt.Sprintf("%t", exists), nil
 
 	case "size":
-		path, err := p.safePath(value)
-		if err != nil {
-			return "", err
-		}
-
-		info, err := os.Stat(path)
+		info, err := p.statInRoot(value)
 		if err != nil {
 			return "", fmt.Errorf(i18n.T("template_file_error_stat_file"), err)
 		}
 
 		size := info.Size()
-		debugf(i18n.T("template_file_log_size_for_path"), size, path)
+		debugf(i18n.T("template_file_log_size_for_path"), size, value)
 		return fmt.Sprintf("%d", size), nil
 
 	case "modified":
-		path, err := p.safePath(value)
-		if err != nil {
-			return "", err
-		}
-
-		info, err := os.Stat(path)
+		info, err := p.statInRoot(value)
 		if err != nil {
 			return "", fmt.Errorf(i18n.T("template_file_error_stat_file"), err)
 		}
 
 		mtime := info.ModTime().Format(time.RFC3339)
-		debugf(i18n.T("template_file_log_modified_for_path"), mtime, path)
+		debugf(i18n.T("template_file_log_modified_for_path"), mtime, value)
 		return mtime, nil
 
 	default:
@@ -157,11 +193,11 @@ func (p *FilePlugin) Apply(operation string, value string) (string, error) {
 	}
 }
 
-// lastNLines returns the last n lines from a file
-func (p *FilePlugin) lastNLines(path string, n int) ([]string, error) {
-	debugf(i18n.T("template_file_log_reading_last_lines"), n, path)
+// lastNLines returns the last n lines from the file rel in root.
+func (p *FilePlugin) lastNLines(root *os.Root, rel string, n int) ([]string, error) {
+	debugf(i18n.T("template_file_log_reading_last_lines"), n, rel)
 
-	file, err := os.Open(path)
+	file, err := root.Open(rel)
 	if err != nil {
 		return nil, fmt.Errorf(i18n.T("template_file_error_open_file"), err)
 	}
@@ -177,8 +213,14 @@ func (p *FilePlugin) lastNLines(path string, n int) ([]string, error) {
 			info.Size(), MaxFileSize)
 	}
 
-	lines := make([]string, 0, n)
-	scanner := bufio.NewScanner(file)
+	// n comes from the template. Use it only as a capacity hint up to a
+	// small cap, because a large n must not cause a large allocation.
+	lines := make([]string, 0, min(n, 4096))
+	// Stat does not give the correct size for all files (see read). Thus
+	// read one byte more than the limit, and reject the file if that byte
+	// is there.
+	limited := &io.LimitedReader{R: file, N: MaxFileSize + 1}
+	scanner := bufio.NewScanner(limited)
 
 	lineCount := 0
 	for scanner.Scan() {
@@ -191,6 +233,10 @@ func (p *FilePlugin) lastNLines(path string, n int) ([]string, error) {
 
 	if err := scanner.Err(); err != nil {
 		return nil, fmt.Errorf(i18n.T("template_file_error_scanner_read"), err)
+	}
+	if limited.N == 0 {
+		return nil, fmt.Errorf(i18n.T("template_file_error_size_exceeds_limit"),
+			MaxFileSize+1, MaxFileSize)
 	}
 
 	debugf(i18n.T("template_file_log_read_total_return_last"), lineCount, len(lines))

@@ -381,6 +381,7 @@ Fabric 支持广泛的 AI 供应商：
 - OpenCode Go
 - OpenCode Zen
 - OpenRouter
+- Opper
 - OrcaRouter
 - Pzero
 - Requesty

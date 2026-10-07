@@ -126,6 +126,7 @@ _fabric() {
     '(--input-has-vars)--input-has-vars[Apply variables to user input]' \
     '(--no-variable-replacement)--no-variable-replacement[Disable pattern variable replacement]' \
     '(--dry-run)--dry-run[Show what would be sent to the model without actually sending it]' \
+    '(--print-prompt)--print-prompt[Print the rendered prompt without sending it to a model]' \
     '(--serve)--serve[Serve the Fabric Rest API]' \
     '(--serveOllama)--serveOllama[Serve the Fabric Rest API with ollama endpoints]' \
     '(--address)--address[The address to bind the REST API (default: :8080)]:address:' \

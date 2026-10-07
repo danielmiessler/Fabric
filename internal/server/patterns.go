@@ -46,7 +46,7 @@ func NewPatternsHandler(r *gin.Engine, patterns *fsdb.PatternsEntity) (ret *Patt
 	r.PUT("/patterns/rename/:oldName/:newName", ret.Rename) // From StorageHandler
 	r.POST("/patterns/:name", ret.Save)                     // From StorageHandler
 	// Add POST route for patterns with variables in request body
-	r.POST("/patterns/:name/apply", ret.ApplyPattern)
+	r.POST("/patterns/:name/apply", requireJSON, ret.ApplyPattern)
 	return
 }
 

@@ -17,49 +17,63 @@ _fabric() {
    fi
 
   # Define all possible options/flags
-  local opts="--pattern -p --workflow --variable -v --context -C --session --attachment -a --setup -S --temperature -t --topp -T --stream -s --presencepenalty -P --raw -r --frequencypenalty -F --listpatterns -l --readpattern --listmodels -L --listcontexts -x --listsessions -X --updatepatterns -U --copy -c --model -m --vendor -V --modelContextLength --maxTokens --output -o --output-session --extract --extract-last --latest -n --changeDefaultModel -d --youtube -y --playlist --transcript --transcript-with-timestamps --visual --visual-sensitivity --visual-fps --comments --metadata --yt-dlp-args --spotify --language -g --scrape_url -u --scrape_question -q --serply_search --firecrawl_search --seed -e --thinking --wipecontext -w --wipesession -W --printcontext --printsession --readability --input-has-vars --no-variable-replacement --dry-run --serve --serveOllama --address --api-key --cors-origins --config --search --search-location --image-file --image-size --image-quality --image-compression --image-background --suppress-think --think-start-tag --think-end-tag --disable-responses-api --transcribe-file --transcribe-model --split-media-file --voice --list-gemini-voices --list-transcription-models --notification --notification-command --show-metadata --debug --version --listextensions --addextension --rmextension --strategy --liststrategies --listvendors --shell-complete-list --help -h"
+  local opts="--pattern -p --workflow --variable -v --context -C --session --attachment -a --setup -S --temperature -t --topp -T --stream -s --presencepenalty -P --raw -r --frequencypenalty -F --listpatterns -l --readpattern --listmodels -L --listcontexts -x --listsessions -X --updatepatterns -U --copy -c --model -m --vendor -V --modelContextLength --maxTokens --output -o --output-session --extract --extract-last --latest -n --changeDefaultModel -d --youtube -y --playlist --transcript --transcript-with-timestamps --visual --visual-sensitivity --visual-fps --comments --metadata --yt-dlp-args --spotify --language -g --scrape_url -u --scrape_question -q --serply_search --firecrawl_search --seed -e --thinking --wipecontext -w --wipesession -W --printcontext --printsession --readability --input-has-vars --no-variable-replacement --dry-run --print-prompt --serve --serveOllama --address --api-key --cors-origins --config --search --search-location --image-file --image-size --image-quality --image-compression --image-background --suppress-think --think-start-tag --think-end-tag --disable-responses-api --transcribe-file --transcribe-model --split-media-file --voice --list-gemini-voices --list-transcription-models --notification --notification-command --show-metadata --debug --version --listextensions --addextension --rmextension --strategy --liststrategies --listvendors --shell-complete-list --help -h"
 
   # Helper function for dynamic completions
   _fabric_get_list() {
     "${COMP_WORDS[0]}" "$1" --shell-complete-list 2>/dev/null
   }
 
+  # Set COMPREPLY to the names from a dynamic list that start with $cur.
+  #
+  # SECURITY: do not give these names to `compgen -W "<list>"`. compgen expands
+  # the word list, with command substitution, so a name that contains `$(...)`
+  # runs as a command when the user pushes Tab. Read each name as a plain line
+  # and compare it as literal text. Use `while read`, not mapfile, for bash 3.2.
+  _fabric_complete_dynamic() {
+    local _line
+    COMPREPLY=()
+    while IFS= read -r _line; do
+      [[ -n ${_line} && ${_line} == "${cur}"* ]] && COMPREPLY+=("${_line}")
+    done < <(_fabric_get_list "$1")
+  }
+
   # Handle completions based on the previous word
   case "${prev}" in
   -p | --pattern | --readpattern)
-    COMPREPLY=($(compgen -W "$(_fabric_get_list --listpatterns)" -- "${cur}"))
+    _fabric_complete_dynamic --listpatterns
     return 0
     ;;
   -C | --context)
-    COMPREPLY=($(compgen -W "$(_fabric_get_list --listcontexts)" -- "${cur}"))
+    _fabric_complete_dynamic --listcontexts
     return 0
     ;;
   --session)
-    COMPREPLY=($(compgen -W "$(_fabric_get_list --listsessions)" -- "${cur}"))
+    _fabric_complete_dynamic --listsessions
     return 0
     ;;
   -m | --model)
-    COMPREPLY=($(compgen -W "$(_fabric_get_list --listmodels)" -- "${cur}"))
+    _fabric_complete_dynamic --listmodels
     return 0
     ;;
   -V | --vendor)
-    COMPREPLY=($(compgen -W "$(_fabric_get_list --listvendors)" -- "${cur}"))
+    _fabric_complete_dynamic --listvendors
     return 0
     ;;
   -w | --wipecontext)
-    COMPREPLY=($(compgen -W "$(_fabric_get_list --listcontexts)" -- "${cur}"))
+    _fabric_complete_dynamic --listcontexts
     return 0
     ;;
   -W | --wipesession)
-    COMPREPLY=($(compgen -W "$(_fabric_get_list --listsessions)" -- "${cur}"))
+    _fabric_complete_dynamic --listsessions
     return 0
     ;;
   --printcontext)
-    COMPREPLY=($(compgen -W "$(_fabric_get_list --listcontexts)" -- "${cur}"))
+    _fabric_complete_dynamic --listcontexts
     return 0
     ;;
   --printsession)
-    COMPREPLY=($(compgen -W "$(_fabric_get_list --listsessions)" -- "${cur}"))
+    _fabric_complete_dynamic --listsessions
     return 0
     ;;
   --thinking)
@@ -67,19 +81,19 @@ _fabric() {
     return 0
     ;;
   --rmextension)
-    COMPREPLY=($(compgen -W "$(_fabric_get_list --listextensions)" -- "${cur}"))
+    _fabric_complete_dynamic --listextensions
     return 0
     ;;
   --strategy)
-    COMPREPLY=($(compgen -W "$(_fabric_get_list --liststrategies)" -- "${cur}"))
+    _fabric_complete_dynamic --liststrategies
     return 0
     ;;
   --voice)
-    COMPREPLY=($(compgen -W "$(_fabric_get_list --list-gemini-voices)" -- "${cur}"))
+    _fabric_complete_dynamic --list-gemini-voices
     return 0
     ;;
   --transcribe-model)
-    COMPREPLY=($(compgen -W "$(_fabric_get_list --list-transcription-models)" -- "${cur}"))
+    _fabric_complete_dynamic --list-transcription-models
     return 0
     ;;
   --debug)

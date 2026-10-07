@@ -55,3 +55,18 @@ func TestSendStream_SendsMessages(t *testing.T) {
 		t.Errorf("Expected to receive messages, but got none")
 	}
 }
+
+func TestConstructRequest_ExactOutput(t *testing.T) {
+	msgs := []*chat.ChatCompletionMessage{
+		{Role: chat.ChatMessageRoleSystem, Content: "SYSTEM"},
+		{Role: chat.ChatMessageRoleUser, Content: "hello"},
+	}
+	got := NewClient().constructRequest(msgs, &domain.ChatOptions{Model: "m"})
+	want := "Dry run: Would send the following request:\n\n" +
+		"System:\nSYSTEM\n\nUser:\nhello\n\n" +
+		"Options:\nModel: m\nTemperature: 0.000000\nTopP: 0.000000\n" +
+		"PresencePenalty: 0.000000\nFrequencyPenalty: 0.000000\n"
+	if got != want {
+		t.Errorf("constructRequest() = %q, want %q", got, want)
+	}
+}

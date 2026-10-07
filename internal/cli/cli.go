@@ -72,6 +72,13 @@ func Cli(version string) (err error) {
 		return
 	}
 
+	// Validate prompt-export-only combinations before any expensive preprocessing.
+	if currentFlags.PrintPrompt {
+		if err = validatePromptExportFlags(currentFlags); err != nil {
+			return
+		}
+	}
+
 	if currentFlags.TranscribeFile != "" {
 		var transcriptionMessage string
 		if transcriptionMessage, err = handleTranscription(currentFlags, registry); err != nil {
@@ -96,6 +103,10 @@ func Cli(version string) (err error) {
 	// handleToolProcessing already printed the tool output.
 	if messageTools != "" && !currentFlags.IsChatRequest() {
 		return nil
+	}
+
+	if handled, err = handlePromptExport(currentFlags, registry, messageTools); err != nil || handled {
+		return
 	}
 
 	if currentFlags.Workflow != "" {

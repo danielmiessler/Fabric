@@ -373,6 +373,11 @@ var ProviderMap = map[string]ProviderConfig{
 		BaseURL:             "https://openrouter.ai/api/v1",
 		ImplementsResponses: false,
 	},
+	"Opper": {
+		Name:                "Opper",
+		BaseURL:             "https://api.opper.ai/v3/compat",
+		ImplementsResponses: false,
+	},
 	"OrcaRouter": {
 		Name:                "OrcaRouter",
 		BaseURL:             "https://api.orcarouter.ai/v1",

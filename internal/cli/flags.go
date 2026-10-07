@@ -78,6 +78,7 @@ type Flags struct {
 	WipeSession                     string               `short:"W" long:"wipesession" description:"Wipe session"`
 	PrintContext                    string               `long:"printcontext" description:"Print context"`
 	PrintSession                    string               `long:"printsession" description:"Print session"`
+	PrintPrompt                     bool                 `long:"print-prompt" description:"Print the rendered prompt without sending it to a model"`
 	HtmlReadability                 bool                 `long:"readability" description:"Convert HTML input into a clean, readable view"`
 	InputHasVars                    bool                 `long:"input-has-vars" description:"Apply variables to user input"`
 	NoVariableReplacement           bool                 `long:"no-variable-replacement" description:"Disable pattern variable replacement"`
@@ -542,7 +543,7 @@ func (o *Flags) AppendMessage(message string) {
 }
 
 func (o *Flags) IsChatRequest() (ret bool) {
-	ret = o.Message != "" || len(o.Attachments) > 0 || o.Context != "" || o.Session != "" || o.Pattern != "" || o.Workflow != ""
+	ret = o.Message != "" || len(o.Attachments) > 0 || o.Context != "" || o.Session != "" || o.Pattern != "" || o.Workflow != "" || o.PrintPrompt
 	return
 }
 

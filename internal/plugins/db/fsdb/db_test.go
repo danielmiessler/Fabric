@@ -204,3 +204,24 @@ func assertEnvMode(t *testing.T, path string) {
 		t.Fatalf("%s mode = %o, want 0600", filepath.Base(path), perm)
 	}
 }
+
+// writeFileAtomic gives the error of a failed create or rename, and it
+// removes its temporary file.
+func TestWriteFileAtomic_Errors(t *testing.T) {
+	dir := t.TempDir()
+	if err := writeFileAtomic(filepath.Join(dir, "missing", "f"), []byte("x"), 0600); err == nil {
+		t.Error("create in a missing directory: no error")
+	}
+
+	// A rename onto a directory that is not empty fails.
+	target := filepath.Join(dir, "target")
+	if err := os.MkdirAll(filepath.Join(target, "child"), 0755); err != nil {
+		t.Fatal(err)
+	}
+	if err := writeFileAtomic(target, []byte("x"), 0600); err == nil {
+		t.Error("rename onto a directory: no error")
+	}
+	if tmps, _ := filepath.Glob(filepath.Join(dir, ".tmp-*")); len(tmps) != 0 {
+		t.Errorf("temporary files stay: %v", tmps)
+	}
+}

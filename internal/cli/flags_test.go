@@ -86,6 +86,11 @@ func TestBuildChatOptions(t *testing.T) {
 	assert.Equal(t, expectedOptions, options)
 }
 
+func TestIsChatRequestWithPrintPrompt(t *testing.T) {
+	flags := &Flags{PrintPrompt: true}
+	assert.True(t, flags.IsChatRequest())
+}
+
 func TestBuildChatOptionsDefaultSeed(t *testing.T) {
 	flags := &Flags{
 		Temperature:      0.8,

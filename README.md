@@ -381,6 +381,7 @@ Fabric supports a wide range of AI providers:
 - OpenCode Go
 - OpenCode Zen
 - OpenRouter
+- Opper
 - OrcaRouter
 - Pzero
 - Requesty
@@ -735,6 +736,7 @@ Application Options:
   -W, --wipesession=                Wipe session
       --printcontext=               Print context
       --printsession=               Print session
+      --print-prompt                Print the rendered prompt without sending it to a model
       --readability                 Convert HTML input into a clean, readable view
       --input-has-vars              Apply variables to user input
       --no-variable-replacement     Disable pattern variable replacement
@@ -801,6 +803,18 @@ echo "test input" | fabric --dry-run -p summarize
 ```
 
 This is useful for debugging patterns, checking prompt construction, and verifying input formatting before using API credits.
+
+### Prompt Export
+
+Use `--print-prompt` to render Fabric's composed prompt and exit before any model call:
+
+```bash
+echo "test input" | fabric --print-prompt -p summarize
+```
+
+This is useful when you want to reuse Fabric's prompt library with other CLI LLM tools or inspect the exact system and user message structure Fabric would compose.
+
+Some models need raw mode, which merges the system message into the user message. To show the structure for such a model, give the model with `-m` (or `FABRIC_MODEL_<PATTERN>`). Fabric then finds the vendor, which can send a model-list request. Without a model, the export shows the system and user messages separately, unless you set `--raw`.
 
 ### Extensions
 

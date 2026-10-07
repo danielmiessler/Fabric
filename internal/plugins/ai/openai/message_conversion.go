@@ -11,10 +11,18 @@ type MessageConversionResult struct {
 }
 
 func convertMessageCommon(msg chat.ChatCompletionMessage) MessageConversionResult {
+	// A session file can have an image part with no image_url. Skip it,
+	// because the converters read ImageURL.URL.
+	var parts []chat.ChatMessagePart
+	for _, p := range msg.MultiContent {
+		if p.Type != chat.ChatMessagePartTypeImageURL || p.ImageURL != nil {
+			parts = append(parts, p)
+		}
+	}
 	return MessageConversionResult{
 		Role:            msg.Role,
 		Content:         msg.Content,
-		MultiContent:    msg.MultiContent,
-		HasMultiContent: len(msg.MultiContent) > 0,
+		MultiContent:    parts,
+		HasMultiContent: len(parts) > 0,
 	}
 }

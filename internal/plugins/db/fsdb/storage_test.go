@@ -3,6 +3,7 @@ package fsdb
 import (
 	"os"
 	"path/filepath"
+	"runtime"
 	"testing"
 
 	"github.com/danielmiessler/fabric/internal/i18n"
@@ -23,6 +24,44 @@ func TestStorage_SaveAndLoad(t *testing.T) {
 	if string(loadedContent) != string(content) {
 		t.Errorf("expected %v, got %v", string(content), string(loadedContent))
 	}
+}
+
+// Save keeps the mode of an existing file. A new file gets the same mode as
+// os.WriteFile with 0600 gives it, thus the umask applies.
+func TestStorage_SaveKeepsFileMode(t *testing.T) {
+	dir := t.TempDir()
+	storage := &StorageEntity{Dir: dir, FileExtension: ".json"}
+
+	private := filepath.Join(dir, "private.json")
+	if err := os.WriteFile(private, []byte("[]"), 0o600); err != nil {
+		t.Fatal(err)
+	}
+	if err := storage.Save("private", []byte("[1]")); err != nil {
+		t.Fatal(err)
+	}
+	if got := filePerm(t, private); got != 0o600 {
+		t.Errorf("existing file: got %v, want 0600", got)
+	}
+
+	ref := filepath.Join(dir, "ref")
+	if err := os.WriteFile(ref, nil, 0o600); err != nil {
+		t.Fatal(err)
+	}
+	if err := storage.Save("new", []byte("[]")); err != nil {
+		t.Fatal(err)
+	}
+	if got, want := filePerm(t, filepath.Join(dir, "new.json")), filePerm(t, ref); got != want {
+		t.Errorf("new file: got %v, want %v", got, want)
+	}
+}
+
+func filePerm(t *testing.T, path string) os.FileMode {
+	t.Helper()
+	info, err := os.Stat(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return info.Mode().Perm()
 }
 
 func TestStorage_Exists(t *testing.T) {
@@ -246,5 +285,30 @@ func TestStorage_AllowsInternalAndDirSymlinks(t *testing.T) {
 	}
 	if err := linked.Save("new", []byte("x")); err != nil {
 		t.Fatalf("Save via a symlinked storage dir: %v", err)
+	}
+
+	if err := storage.Save("alias", []byte("changed")); err != nil {
+		t.Fatal(err)
+	}
+	if got, err := storage.Load("target"); err != nil || string(got) != "changed" {
+		t.Fatalf("Save through an internal symlink: target has %q, err %v", got, err)
+	}
+	if info, err := os.Lstat(filepath.Join(realDir, "alias")); err != nil || info.Mode()&os.ModeSymlink == 0 {
+		t.Fatalf("Save through an internal symlink: alias is not a symlink, err %v", err)
+	}
+}
+
+// TestStorageNewFolderIsPrivate checks that Configure makes a folder that
+// only the user can open.
+func TestStorageNewFolderIsPrivate(t *testing.T) {
+	if runtime.GOOS == "windows" {
+		t.Skip("Windows has no Unix file modes")
+	}
+	o := &StorageEntity{Dir: filepath.Join(t.TempDir(), "sessions")}
+	if err := o.Configure(); err != nil {
+		t.Fatal(err)
+	}
+	if got := filePerm(t, o.Dir); got != 0o700 {
+		t.Errorf("folder mode: got %v, want 0700", got)
 	}
 }

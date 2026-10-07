@@ -31,6 +31,12 @@ type Chatter struct {
 	vendor             ai.Vendor
 }
 
+// NewChatter returns a Chatter without a vendor, for BuildSession only.
+// Use GetChatter to get a Chatter that can Send.
+func NewChatter(db *fsdb.Db) *Chatter {
+	return &Chatter{db: db}
+}
+
 // recordFirstStreamError sends err to errChan when the channel has space. It discards later errors.
 func recordFirstStreamError(errChan chan error, err error) {
 	if err == nil {
@@ -57,13 +63,31 @@ func joinPromptSections(parts ...string) string {
 	return strings.Join(sections, "\n")
 }
 
+// NeedsRawMode tells if the vendor needs raw mode for the model.
+// It tests o.model, not opts.Model. GetChatter sets o.model to the vendor's spelling of the name.
+func (o *Chatter) NeedsRawMode() bool {
+	return o.vendor != nil && o.vendor.NeedsRawMode(o.model)
+}
+
 // Send processes a chat request and applies file changes for create_coding_feature pattern
 func (o *Chatter) Send(ctx context.Context, request *domain.ChatRequest, opts *domain.ChatOptions) (session *fsdb.Session, err error) {
-	// Test o.model, not opts.Model. GetChatter set o.model to the vendor's spelling of the name.
-	if o.vendor.NeedsRawMode(o.model) {
+	if o.NeedsRawMode() {
 		opts.Raw = true
 	}
-	if session, err = o.BuildSession(request, opts.Raw); err != nil {
+
+	// Hold one lock for each session name from the read in BuildSession
+	// until SaveSession. Two requests on the same session then cannot
+	// lose the messages of the other request.
+	if request.SessionName != "" {
+		// Validate the name before Lock. Lock keeps a mutex for each name.
+		if err = fsdb.ValidateStorageName(request.SessionName); err != nil {
+			return
+		}
+		unlock := o.db.Sessions.Lock(request.SessionName)
+		defer unlock()
+	}
+
+	if session, err = o.BuildSession(request, opts.Raw, true); err != nil {
 		return
 	}
 
@@ -108,6 +132,9 @@ func (o *Chatter) Send(ctx context.Context, request *domain.ChatRequest, opts *d
 		errChan := make(chan error, 1)
 		done := make(chan struct{})
 		printedStream := false
+		// held is the end of the displayed stream that SplitOpenEscape keeps
+		// for the next chunk.
+		held := ""
 
 		go func() {
 			defer close(done)
@@ -137,7 +164,10 @@ func (o *Chatter) Send(ctx context.Context, request *domain.ChatRequest, opts *d
 			case domain.StreamTypeContent:
 				message += update.Content
 				if !opts.SuppressThink && !opts.BufferStream && !opts.Quiet {
-					fmt.Print(update.Content)
+					// Remove terminal control sequences from the displayed copy only.
+					var done string
+					done, held = domain.SplitOpenEscape(held + update.Content)
+					fmt.Print(domain.SanitizeTerminalOutput(done))
 					printedStream = true
 				}
 			case domain.StreamTypeUsage:
@@ -161,6 +191,7 @@ func (o *Chatter) Send(ctx context.Context, request *domain.ChatRequest, opts *d
 			}
 		}
 
+		fmt.Print(domain.SanitizeTerminalOutput(held))
 		if printedStream && !opts.SuppressThink && !strings.HasSuffix(message, "\n") && !opts.Quiet {
 			fmt.Println()
 		}
@@ -199,7 +230,8 @@ func (o *Chatter) Send(ctx context.Context, request *domain.ChatRequest, opts *d
 	if request.PatternName == "create_coding_feature" && opts.UpdateChan == nil {
 		summary, fileChanges, parseErr := domain.ParseFileChanges(message)
 		if parseErr != nil {
-			fmt.Printf("%s\n", fmt.Sprintf(i18n.T("chatter_warning_parse_file_changes_failed"), parseErr))
+			// The error can contain a path or an operation from the model.
+			fmt.Printf("%s\n", domain.SanitizeTerminalOutput(fmt.Sprintf(i18n.T("chatter_warning_parse_file_changes_failed"), parseErr)))
 		} else if len(fileChanges) > 0 {
 			projectRoot, err := os.Getwd()
 			if err != nil {
@@ -224,10 +256,12 @@ func (o *Chatter) Send(ctx context.Context, request *domain.ChatRequest, opts *d
 	return
 }
 
-func (o *Chatter) BuildSession(request *domain.ChatRequest, raw bool) (session *fsdb.Session, err error) {
+// BuildSession prints a notice for a new named session when announceNewSession is true.
+func (o *Chatter) BuildSession(
+	request *domain.ChatRequest, raw bool, announceNewSession bool) (session *fsdb.Session, err error) {
 	if request.SessionName != "" {
 		var sess *fsdb.Session
-		if sess, err = o.db.Sessions.Get(request.SessionName); err != nil {
+		if sess, err = o.db.Sessions.GetWithNotice(request.SessionName, announceNewSession); err != nil {
 			err = fmt.Errorf(i18n.T("chatter_error_find_session"), request.SessionName, err)
 			return
 		}
@@ -258,7 +292,7 @@ func (o *Chatter) BuildSession(request *domain.ChatRequest, raw bool) (session *
 	}
 
 	if request.InputHasVars && !request.NoVariableReplacement {
-		request.Message.Content, err = template.ApplyTemplate(request.Message.Content, request.PatternVariables, "")
+		request.Message.Content, err = template.ApplyTemplateInput(request.Message.Content, request.PatternVariables)
 		if err != nil {
 			return nil, err
 		}

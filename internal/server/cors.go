@@ -11,13 +11,14 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// cleanCORSOrigins trims each origin and removes empty entries. It
+// cleanCORSOrigins trims each origin, removes a trailing "/" and removes
+// empty entries. A browser sends the Origin header with no "/". It
 // refuses "*" when apiKey is empty, because then each web page that
 // the user opens can call the server.
 func cleanCORSOrigins(origins []string, apiKey string) ([]string, error) {
 	var ret []string
 	for _, o := range origins {
-		if o = strings.TrimSpace(o); o != "" {
+		if o = strings.TrimSuffix(strings.TrimSpace(o), "/"); o != "" {
 			ret = append(ret, o)
 		}
 	}

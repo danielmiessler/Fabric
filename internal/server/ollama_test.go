@@ -6,8 +6,11 @@ import (
 	"math"
 	"net/http"
 	"net/http/httptest"
+	"os"
+	"path/filepath"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/danielmiessler/fabric/internal/core"
 	"github.com/danielmiessler/fabric/internal/plugins/db/fsdb"
@@ -368,9 +371,10 @@ func TestNewOllamaEngine_APIKeyWiring(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 	registry := &core.PluginRegistry{Db: fsdb.NewDb(t.TempDir())}
 
-	getVersion := func(r *gin.Engine, key string) int {
+	getVersion := func(r *gin.Engine, host, key string) int {
 		w := httptest.NewRecorder()
 		req := httptest.NewRequest(http.MethodGet, "/api/version", nil)
+		req.Host = host
 		if key != "" {
 			req.Header.Set(APIKeyHeader, key)
 		}
@@ -378,28 +382,33 @@ func TestNewOllamaEngine_APIKeyWiring(t *testing.T) {
 		return w.Code
 	}
 
+	// The engine with a key does not examine the Host.
 	withKey := newOllamaEngine(registry, ":0", "test-version", "secret", nil)
-	if code := getVersion(withKey, ""); code != http.StatusUnauthorized {
+	if code := getVersion(withKey, "fabric.example", ""); code != http.StatusUnauthorized {
 		t.Fatalf("no key presented: got %d, want 401", code)
 	}
-	if code := getVersion(withKey, "secret"); code != http.StatusOK {
+	if code := getVersion(withKey, "fabric.example", "secret"); code != http.StatusOK {
 		t.Fatalf("valid key presented: got %d, want 200", code)
 	}
 
+	// The engine with no key accepts only a loopback Host.
 	withoutKey := newOllamaEngine(registry, ":0", "test-version", "", nil)
-	if code := getVersion(withoutKey, ""); code != http.StatusOK {
+	if code := getVersion(withoutKey, "localhost", ""); code != http.StatusOK {
 		t.Fatalf("no key configured: got %d, want 200", code)
+	}
+	if code := getVersion(withoutKey, "fabric.example", ""); code != http.StatusForbidden {
+		t.Fatalf("no key configured, other Host: got %d, want 403", code)
 	}
 }
 
 func TestOllamaChat_ForwardsAPIKeyToChat(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
-	// Make the loopback /chat route with the middleware installed, the
-	// same as newOllamaEngine makes it when --api-key is set.
-	upstream := gin.New()
-	upstream.Use(APIKeyMiddleware("secret"))
-	upstream.POST("/chat", func(c *gin.Context) {
+	// Make the loopback /chat route with the middleware that Serve installs
+	// when --api-key is set. requireJSON makes sure that the forward sends
+	// the JSON Content-Type.
+	upstream := newSecuredEngine(&core.PluginRegistry{Db: fsdb.NewDb(t.TempDir())}, "secret", nil, "")
+	upstream.POST("/chat", requireJSON, func(c *gin.Context) {
 		c.Writer.Header().Set("Content-Type", "text/event-stream")
 		fmt.Fprint(c.Writer, "data: {\"type\":\"content\",\"format\":\"markdown\",\"content\":\"hi\"}\n\n")
 	})
@@ -653,5 +662,88 @@ func TestOllamaChat_JoinsManyMessages(t *testing.T) {
 	}
 	if p := got.Prompts[0]; p.UserInput != "user:a\nassistant:b\n" || p.PatternName != "summarize" {
 		t.Fatalf("got UserInput=%q PatternName=%q", p.UserInput, p.PatternName)
+	}
+}
+
+func TestOllamaTags_ModifiedAtIsRFC3339(t *testing.T) {
+	gin.SetMode(gin.TestMode)
+	dir := t.TempDir()
+	if err := os.MkdirAll(filepath.Join(dir, "patterns", "summarize"), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	registry := &core.PluginRegistry{Db: fsdb.NewDb(dir)}
+	r := newOllamaEngine(registry, ":0", "test-version", "secret", nil)
+
+	w := httptest.NewRecorder()
+	req := httptest.NewRequest(http.MethodGet, "/api/tags", nil)
+	req.Header.Set(APIKeyHeader, "secret")
+	r.ServeHTTP(w, req)
+	if w.Code != http.StatusOK {
+		t.Fatalf("got %d, want 200: %s", w.Code, w.Body)
+	}
+	var resp OllamaModel
+	if err := json.Unmarshal(w.Body.Bytes(), &resp); err != nil {
+		t.Fatal(err)
+	}
+	if len(resp.Models) != 1 {
+		t.Fatalf("got %d models, want 1", len(resp.Models))
+	}
+	if _, err := time.Parse(time.RFC3339Nano, resp.Models[0].ModifiedAt); err != nil {
+		t.Errorf("modified_at %q is not RFC 3339: %v", resp.Models[0].ModifiedAt, err)
+	}
+}
+
+// TestOllamaChat_Responses checks the stream and non-stream replies for
+// good, empty and bad upstream SSE bodies, and a bad num_ctx.
+func TestOllamaChat_Responses(t *testing.T) {
+	gin.SetMode(gin.TestMode)
+	const hello = "data: {\"type\":\"content\",\"content\":\"hel\"}\n\ndata: {\"type\":\"content\",\"content\":\"lo\"}\n\n"
+
+	for _, tc := range []struct {
+		name     string
+		sse      string
+		body     string
+		wantCode int
+		wantText string
+	}{
+		{"non-stream content", hello, `{"model":"p:latest","messages":[{"role":"user","content":"hi"}]}`, http.StatusOK, `"content":"hello"`},
+		{"stream content", hello, `{"model":"p:latest","stream":true,"messages":[{"role":"user","content":"hi"}]}`, http.StatusOK, `"content":"lo"`},
+		{"non-stream no content", "", `{"model":"p:latest","messages":[{"role":"user","content":"hi"}]}`, http.StatusBadGateway, "error"},
+		{"non-stream bad upstream JSON", "data: {bad\n\n", `{"model":"p:latest","messages":[{"role":"user","content":"hi"}]}`, http.StatusInternalServerError, "error"},
+		{"bad num_ctx", hello, `{"model":"p:latest","options":{"num_ctx":-1},"messages":[{"role":"user","content":"hi"}]}`, http.StatusBadRequest, "error"},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			upstream := gin.New()
+			upstream.POST("/chat", func(c *gin.Context) {
+				c.Writer.Header().Set("Content-Type", "text/event-stream")
+				fmt.Fprint(c.Writer, tc.sse)
+			})
+			server := httptest.NewServer(upstream)
+			defer server.Close()
+
+			r := gin.New()
+			conv := APIConvert{addr: &server.URL}
+			r.POST("/api/chat", conv.ollamaChat)
+
+			w := httptest.NewRecorder()
+			req := httptest.NewRequest(http.MethodPost, "/api/chat", strings.NewReader(tc.body))
+			req.Header.Set("Content-Type", "application/json")
+			r.ServeHTTP(w, req)
+
+			if w.Code != tc.wantCode {
+				t.Fatalf("got %d, want %d: %s", w.Code, tc.wantCode, w.Body)
+			}
+			if !strings.Contains(w.Body.String(), tc.wantText) {
+				t.Errorf("body %s does not contain %s", w.Body, tc.wantText)
+			}
+			if !strings.Contains(tc.body, `"stream":true`) || tc.wantCode != http.StatusOK {
+				return
+			}
+			lines := strings.Split(strings.TrimSpace(w.Body.String()), "\n")
+			var last OllamaResponse
+			if err := json.Unmarshal([]byte(lines[len(lines)-1]), &last); err != nil || !last.Done {
+				t.Fatalf("last chunk is not a done chunk: %v: %q", err, lines[len(lines)-1])
+			}
+		})
 	}
 }

@@ -17,6 +17,12 @@ type PatternsEntity struct {
 	SystemPatternFile      string
 	UniquePatternsFilePath string
 	CustomPatternsDir      string
+
+	// NoSystemPlugins makes GetApplyVariables run only the text and
+	// datetime plugins. The REST server sets it, because a client can save
+	// a pattern. Then the pattern cannot read the server environment or
+	// files, fetch a URL, or run an extension.
+	NoSystemPlugins bool
 }
 
 // Pattern represents a single pattern with its metadata
@@ -101,8 +107,12 @@ func (o *PatternsEntity) applyVariables(
 
 	// Pass input so that an extension call can use {{input}} in its
 	// value parameter.
+	apply := template.ApplyTemplate
+	if o.NoSystemPlugins {
+		apply = template.ApplyTemplateNoSystemPlugins
+	}
 	var processed string
-	if processed, err = template.ApplyTemplate(withSentinel, variables, input); err != nil {
+	if processed, err = apply(withSentinel, variables, input); err != nil {
 		return
 	}
 

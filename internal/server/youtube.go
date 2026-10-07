@@ -29,7 +29,7 @@ type YouTubeResponse struct {
 
 func NewYouTubeHandler(r *gin.Engine, registry *core.PluginRegistry) *YouTubeHandler {
 	handler := &YouTubeHandler{yt: registry.YouTube}
-	r.POST("/youtube/transcript", handler.Transcript)
+	r.POST("/youtube/transcript", requireJSON, handler.Transcript)
 	return handler
 }
 

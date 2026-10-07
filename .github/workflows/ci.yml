@@ -30,6 +30,9 @@ jobs:
       - name: Run tests
         run: go test -v ./...
 
+      - name: Run race tests
+        run: go test -race ./internal/plugins/... ./internal/server/... ./internal/core/...
+
       - name: Check for modernization opportunities
         run: |
           go run golang.org/x/tools/go/analysis/passes/modernize/cmd/modernize@latest ./...

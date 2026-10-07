@@ -52,7 +52,7 @@ func NewChatHandler(r *gin.Engine, registry *core.PluginRegistry, db *fsdb.Db) *
 		db:       db,
 	}
 
-	r.POST("/chat", handler.HandleChat)
+	r.POST("/chat", requireJSON, handler.HandleChat)
 
 	return handler
 }
@@ -106,7 +106,7 @@ func (h *ChatHandler) HandleChat(c *gin.Context) {
 			log.Printf("Client disconnected")
 			return
 		default:
-			log.Printf("Processing prompt %d: Model=%s Pattern=%s Context=%s",
+			log.Printf("Processing prompt %d: Model=%q Pattern=%q Context=%q",
 				i+1, prompt.Model, prompt.PatternName, prompt.ContextName)
 
 			streamChan := make(chan domain.StreamUpdate)

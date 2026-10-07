@@ -212,7 +212,10 @@ func ytDlpLangArgs(language string, userArgs []string) []string {
 	if language == "" || userSetsLangs {
 		return nil
 	}
-	langMatch := language[:2]
+	langMatch := language
+	if len(language) > 2 {
+		langMatch = language[:2]
+	}
 	langOpts := language + "," + langMatch + ".*"
 	if langMatch != language {
 		langOpts += "," + langMatch
@@ -228,8 +231,10 @@ func (o *YouTube) tryMethodYtDlpInternal(videoId string, language string, additi
 		return
 	}
 
-	tempDir := filepath.Join(os.TempDir(), "fabric-youtube-"+videoId)
-	if err = os.MkdirAll(tempDir, 0755); err != nil {
+	// Make a new temporary folder with a random name and mode 0700. Another
+	// local user cannot know the name, so cannot put a file in it first.
+	tempDir, err := os.MkdirTemp("", "fabric-youtube-")
+	if err != nil {
 		err = fmt.Errorf("%s", fmt.Sprintf(i18n.T("youtube_failed_create_temp_dir"), err))
 		return
 	}
@@ -685,7 +690,9 @@ func (o *YouTube) findVTTFilesWithFallback(dir, requestedLanguage string) ([]str
 			return err
 		}
 
-		if !info.IsDir() && strings.HasSuffix(strings.ToLower(path), ".vtt") {
+		// Use only regular files. Do not follow a .vtt symlink, because it can
+		// point to a file outside the folder.
+		if info.Mode().IsRegular() && strings.HasSuffix(strings.ToLower(path), ".vtt") {
 			vttFiles = append(vttFiles, path)
 		}
 		return nil

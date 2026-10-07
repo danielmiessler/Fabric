@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"slices"
 	"strings"
+	"unicode"
 
 	"github.com/danielmiessler/fabric/internal/i18n"
 )
@@ -82,7 +83,9 @@ func ParseFileChanges(output string) (changeSummary string, changes []FileChange
 			return changeSummary, nil, fmt.Errorf(i18n.T("file_manager_empty_path"), i)
 		}
 
-		if !filepath.IsLocal(change.Path) {
+		// A control character in a path makes a bad file name, and it can
+		// change the terminal when Fabric shows the path.
+		if !filepath.IsLocal(change.Path) || strings.ContainsFunc(change.Path, unicode.IsControl) {
 			return changeSummary, nil, fmt.Errorf(i18n.T("file_manager_suspicious_path"), i, change.Path)
 		}
 
@@ -151,26 +154,57 @@ func fixInvalidEscapes(jsonStr string) string {
 	return result.String()
 }
 
-// ApplyFileChanges applies the parsed file changes to the file system
+// ApplyFileChanges applies the parsed file changes to the file system.
+//
+// The change list comes from model output. Thus all writes go through os.Root,
+// which refuses a path that goes out of projectRoot through a symlink.
+// filepath.IsLocal only examines the path text and cannot find this.
+// ApplyFileChanges also refuses a path through a symlink and a path into .git,
+// so that a change cannot write a git hook.
 func ApplyFileChanges(projectRoot string, changes []FileChange) error {
+	root, err := os.OpenRoot(projectRoot)
+	if err != nil {
+		return fmt.Errorf(i18n.T("file_manager_failed_open_root"), projectRoot, err)
+	}
+	defer root.Close()
+
+	// Examine all paths before the first write, so that a bad path does not
+	// leave a part of the change set on disk.
 	for i, change := range changes {
-		if !filepath.IsLocal(change.Path) {
+		if !filepath.IsLocal(change.Path) || unsafePath(root, filepath.Clean(change.Path)) {
 			return fmt.Errorf(i18n.T("file_manager_suspicious_path"), i, change.Path)
 		}
+	}
 
-		absPath := filepath.Join(projectRoot, change.Path)
-
-		dir := filepath.Dir(absPath)
-		if err := os.MkdirAll(dir, 0755); err != nil {
-			return fmt.Errorf(i18n.T("file_manager_failed_create_directory"), dir, i, err)
+	for i, change := range changes {
+		clean := filepath.Clean(change.Path)
+		if dir := filepath.Dir(clean); dir != "." {
+			if err := root.MkdirAll(dir, 0755); err != nil {
+				return fmt.Errorf(i18n.T("file_manager_failed_create_directory"), dir, i, err)
+			}
 		}
 
-		if err := os.WriteFile(absPath, []byte(change.Content), 0644); err != nil {
-			return fmt.Errorf(i18n.T("file_manager_failed_write_file"), absPath, i, err)
+		if err := root.WriteFile(clean, []byte(change.Content), 0644); err != nil {
+			return fmt.Errorf(i18n.T("file_manager_failed_write_file"), clean, i, err)
 		}
 
 		fmt.Printf(i18n.T("file_manager_applied_operation")+"\n", change.Operation, change.Path)
 	}
 
 	return nil
+}
+
+// unsafePath reports whether a component of the clean, relative path is .git
+// (any case) or a symlink that is in the root.
+func unsafePath(root *os.Root, clean string) bool {
+	parts := strings.Split(clean, string(filepath.Separator))
+	for i, part := range parts {
+		if strings.EqualFold(part, ".git") {
+			return true
+		}
+		if info, err := root.Lstat(filepath.Join(parts[:i+1]...)); err == nil && info.Mode()&os.ModeSymlink != 0 {
+			return true
+		}
+	}
+	return false
 }

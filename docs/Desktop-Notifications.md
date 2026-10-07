@@ -67,7 +67,7 @@ The `--notification-command` flag allows you to use custom notification scripts 
 **macOS with custom sound:**
 
 ```bash
-fabric --pattern analyze_claims --notification-command 'osascript -e "display notification \"$2\" with title \"$1\" sound name \"Ping\""' < document.txt
+fabric --pattern analyze_claims --notification-command 'osascript -e '\''on run {t, m}'\'' -e '\''display notification m with title t sound name "Ping"'\'' -e '\''end run'\''' < document.txt
 ```
 
 **Linux with urgency levels:**

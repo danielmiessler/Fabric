@@ -17,6 +17,7 @@ import (
 	"github.com/danielmiessler/fabric/internal/i18n"
 	debuglog "github.com/danielmiessler/fabric/internal/log"
 	"github.com/danielmiessler/fabric/internal/plugins"
+	"github.com/danielmiessler/fabric/internal/util"
 	ollamaapi "github.com/ollama/ollama/api"
 )
 
@@ -61,6 +62,18 @@ func (t *transport_sec) RoundTrip(req *http.Request) (*http.Response, error) {
 	}
 	return t.underlyingTransport.RoundTrip(req)
 }
+
+// imageFetchTimeout is the time limit for one image fetch. It includes
+// the dial and the redirects.
+const imageFetchTimeout = 30 * time.Second
+
+// maxImageSize is the maximum size of an image that loadImageBytes reads.
+const maxImageSize = 20 << 20
+
+// imageDialControl checks the IP address of each connection that
+// loadImageBytes makes. A test replaces it to connect to an httptest
+// server.
+var imageDialControl = util.DenyNonPublicAddress
 
 // IsConfigured returns true only if OLLAMA_API_URL environment variable is explicitly set
 func (o *Client) IsConfigured() bool {
@@ -251,8 +264,11 @@ func (o *Client) loadImageBytes(ctx context.Context, imageURL string) (ret []byt
 		return
 	}
 
+	// The image URL comes from the session content. Thus use a client that
+	// connects only to public addresses. This client does not use
+	// transport_sec, thus the Ollama API key does not go to the image host.
 	var resp *http.Response
-	if resp, err = o.httpClient.Do(req); err != nil {
+	if resp, err = util.NewPublicHTTPClient(imageFetchTimeout, imageDialControl).Do(req); err != nil {
 		return
 	}
 	defer resp.Body.Close()
@@ -262,7 +278,13 @@ func (o *Client) loadImageBytes(ctx context.Context, imageURL string) (ret []byt
 		return
 	}
 
-	ret, err = io.ReadAll(resp.Body)
+	if ret, err = io.ReadAll(io.LimitReader(resp.Body, maxImageSize+1)); err != nil {
+		return
+	}
+	if len(ret) > maxImageSize {
+		ret = nil
+		err = fmt.Errorf(i18n.T("ollama_image_too_large"), imageURL, maxImageSize)
+	}
 	return
 }
 

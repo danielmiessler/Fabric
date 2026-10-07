@@ -11,7 +11,9 @@ import (
 	"strings"
 
 	"github.com/danielmiessler/fabric/internal/i18n"
+	debuglog "github.com/danielmiessler/fabric/internal/log"
 	"github.com/danielmiessler/fabric/internal/plugins"
+	"github.com/danielmiessler/fabric/internal/plugins/db/fsdb"
 	"github.com/danielmiessler/fabric/internal/tools/githelper"
 )
 
@@ -77,8 +79,15 @@ func LoadAllFiles() (strategies map[string]Strategy, err error) {
 		if filepath.Ext(path) == ".json" {
 			strategyName := strings.TrimSuffix(filepath.Base(path), ".json")
 			strategy, err := LoadStrategy(strategyName)
+			// Skip a file that does not load, for example a file that is not
+			// JSON or a name that LoadStrategy refuses. Then the other
+			// strategies still load.
 			if err != nil {
-				return err
+				debuglog.Log("strategy skipped: %s: %v\n", path, err)
+				return nil
+			}
+			if strategy == nil {
+				return nil
 			}
 			strategies[strategy.Name] = *strategy
 		}
@@ -183,6 +192,14 @@ func getStrategyDir() (ret string, err error) {
 func LoadStrategy(filename string) (*Strategy, error) {
 	if filename == "" {
 		return nil, nil
+	}
+
+	// Validate the name before a file system call. The name can come from a
+	// request (the REST /chat StrategyName). If os.Stat runs first, the error
+	// shows whether a file outside the strategy folder exists.
+	// ValidateStorageName accepts only one path element with no separator.
+	if err := fsdb.ValidateStorageName(filename); err != nil {
+		return nil, err
 	}
 
 	// Get the strategy directory path

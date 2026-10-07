@@ -3,6 +3,7 @@
   import { afterUpdate, onMount } from 'svelte';
   import { toastStore } from '$lib/store/toast-store';
   import { marked } from 'marked';
+  import { renderMarkdown } from '$lib/utils/sanitize-html';
   import SessionManager from './SessionManager.svelte';
   import { fade, slide } from 'svelte/transition';
   import { ArrowDown } from 'lucide-svelte';
@@ -82,12 +83,7 @@ function renderContent(message: Message): string {
     }
 
     if (shouldRenderAsMarkdown(message)) {
-        try {
-            return marked.parse(content, { async: false }) as string;
-        } catch (error) {
-            console.error('Error rendering markdown:', error);
-            return content;
-        }
+        return renderMarkdown(content);
     }
     return content;
 }
@@ -157,9 +153,16 @@ function renderContent(message: Message): string {
               {message.content}
             </div>
           {:else if message.role === 'assistant'}
-            <div class="{shouldRenderAsMarkdown(message) ? 'prose prose-slate dark:prose-invert text-inherit prose-headings:text-inherit prose-pre:bg-primary/10 prose-pre:text-inherit' : 'whitespace-pre-wrap'} text-sm max-w-none">
-              {@html renderContent(message)}
-            </div>
+            {#if shouldRenderAsMarkdown(message)}
+              <div class="prose prose-slate dark:prose-invert text-inherit prose-headings:text-inherit prose-pre:bg-primary/10 prose-pre:text-inherit text-sm max-w-none">
+                {@html renderContent(message)}
+              </div>
+            {:else}
+              <!-- Plain and mermaid replies show as text. Svelte escapes the text. -->
+              <div class="whitespace-pre-wrap text-sm max-w-none">
+                {renderContent(message)}
+              </div>
+            {/if}
           {:else}
             <div class="whitespace-pre-wrap text-sm">
               {message.content}

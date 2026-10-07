@@ -9,12 +9,14 @@ import (
 	"net/http/httptest"
 	"net/url"
 	"strings"
+	"syscall"
 	"testing"
 	"time"
 
 	"github.com/danielmiessler/fabric/internal/chat"
 	"github.com/danielmiessler/fabric/internal/domain"
 	"github.com/danielmiessler/fabric/internal/i18n"
+	"github.com/danielmiessler/fabric/internal/util"
 	ollamaapi "github.com/ollama/ollama/api"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -35,6 +37,19 @@ func TestLoadImageBytes_DataURLValidationErrorsAreLocalized(t *testing.T) {
 	assert.True(t, strings.HasPrefix(err.Error(), strings.Split(i18n.T("ollama_failed_decode_data_url"), "%v")[0]))
 }
 
+// allowTestServer lets loadImageBytes connect to the loopback address of
+// server. The check stays on for all other addresses.
+func allowTestServer(t *testing.T, server *httptest.Server) {
+	old := imageDialControl
+	imageDialControl = func(network, address string, c syscall.RawConn) error {
+		if address == server.Listener.Addr().String() {
+			return nil
+		}
+		return util.DenyNonPublicAddress(network, address, c)
+	}
+	t.Cleanup(func() { imageDialControl = old })
+}
+
 func TestLoadImageBytes_HTTPFetchErrorIsLocalized(t *testing.T) {
 	_, err := i18n.Init("en")
 	require.NoError(t, err)
@@ -43,6 +58,7 @@ func TestLoadImageBytes_HTTPFetchErrorIsLocalized(t *testing.T) {
 		w.WriteHeader(http.StatusInternalServerError)
 	}))
 	t.Cleanup(server.Close)
+	allowTestServer(t, server)
 
 	client := &Client{httpClient: server.Client()}
 
@@ -52,6 +68,73 @@ func TestLoadImageBytes_HTTPFetchErrorIsLocalized(t *testing.T) {
 		fmt.Sprintf(i18n.T("ollama_failed_fetch_image"), server.URL+"/image.png", "500 Internal Server Error"),
 		err.Error(),
 	)
+}
+
+func TestLoadImageBytes_RefusesLoopbackAddress(t *testing.T) {
+	_, err := i18n.Init("en")
+	require.NoError(t, err)
+
+	var called bool
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
+		called = true
+		_, _ = w.Write([]byte("img"))
+	}))
+	t.Cleanup(server.Close)
+
+	client := &Client{}
+	_, err = client.loadImageBytes(context.Background(), server.URL+"/image.png")
+	require.Error(t, err)
+	assert.Contains(t, err.Error(), i18n.T("util_error_non_public_address"))
+	assert.False(t, called)
+}
+
+func TestLoadImageBytes_RefusesOtherSchemes(t *testing.T) {
+	_, err := i18n.Init("en")
+	require.NoError(t, err)
+	client := &Client{}
+	for _, u := range []string{"file:///etc/hosts", "gopher://127.0.0.1"} {
+		_, err := client.loadImageBytes(context.Background(), u)
+		assert.ErrorContains(t, err, "unsupported protocol scheme", u)
+	}
+}
+
+func TestLoadImageBytes_SendsNoAPIKey(t *testing.T) {
+	_, err := i18n.Init("en")
+	require.NoError(t, err)
+
+	gotAuth := "not called"
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		gotAuth = r.Header.Get("Authorization")
+		_, _ = w.Write([]byte("img"))
+	}))
+	t.Cleanup(server.Close)
+	allowTestServer(t, server)
+
+	// configure gives the Ollama API client a transport that adds the key.
+	client := NewClient()
+	client.ApiUrl.Value = server.URL
+	client.ApiKey.Value = "test-key"
+	require.NoError(t, client.configure())
+
+	img, err := client.loadImageBytes(context.Background(), server.URL+"/image.png")
+	require.NoError(t, err)
+	assert.Equal(t, []byte("img"), img)
+	assert.Empty(t, gotAuth)
+}
+
+func TestLoadImageBytes_RefusesLargeImage(t *testing.T) {
+	_, err := i18n.Init("en")
+	require.NoError(t, err)
+
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
+		_, _ = w.Write(make([]byte, maxImageSize+1))
+	}))
+	t.Cleanup(server.Close)
+	allowTestServer(t, server)
+
+	img, err := (&Client{}).loadImageBytes(context.Background(), server.URL+"/image.png")
+	assert.Nil(t, img)
+	assert.EqualError(t, err, fmt.Sprintf(i18n.T("ollama_image_too_large"), server.URL+"/image.png", maxImageSize))
 }
 
 func TestLoadImageBytes_DataURLSuccess(t *testing.T) {

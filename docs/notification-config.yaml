@@ -6,8 +6,9 @@ notification: true
 
 # Optional: Use a custom notification command
 # Examples:
-# macOS with custom sound:
-# notificationCommand: 'osascript -e "display notification \"$2\" with title \"$1\" sound name \"Ping\""'
+# macOS with custom sound (osascript gets the title and message as arguments,
+# not as AppleScript source):
+# notificationCommand: 'osascript -e ''on run {t, m}'' -e ''display notification m with title t sound name "Ping"'' -e ''end run'''
 #
 # Linux with custom urgency:
 # notificationCommand: 'notify-send --urgency=normal "$1" "$2"'

@@ -5,6 +5,7 @@ import streamlit as st
 from subprocess import run, CalledProcessError
 from dotenv import load_dotenv
 import re
+import secrets
 import time
 import logging
 from typing import Dict, List, Optional, Tuple
@@ -1373,6 +1374,32 @@ def set_clipboard_content(content: str) -> Tuple[bool, str]:
         return False, f"Unexpected error copying to clipboard: {str(e)}"
 
 
+def _require_access_token():
+    """Ask for a shared token before the UI shows.
+
+    If FABRIC_UI_TOKEN is set, the user must type the same token before the
+    app shows. If it is not set, there is no token check, and only the
+    loopback bind in .streamlit/config.toml limits access. The compare
+    time does not change with the token value.
+    """
+    token = os.environ.get("FABRIC_UI_TOKEN", "")
+    if not token:
+        return
+    if st.session_state.get("_authed"):
+        return
+    if len(token) < 16:
+        logger.warning("FABRIC_UI_TOKEN is short: use a random token of 16 or more characters")
+    st.title("🔒 Fabric Pattern Studio")
+    entered = st.text_input("Access token", type="password")
+    # Compare bytes. compare_digest refuses a str with non-ASCII characters.
+    if entered and secrets.compare_digest(entered.encode(), token.encode()):
+        st.session_state["_authed"] = True
+        st.rerun()
+    if entered:
+        st.error("Invalid access token")
+    st.stop()
+
+
 def main():
     """Main function to run the Streamlit app."""
     logger.info("Starting Fabric Pattern Studio")
@@ -1384,6 +1411,9 @@ def main():
             layout="wide",
             initial_sidebar_state="expanded",
         )
+
+        # Ask for the token if FABRIC_UI_TOKEN is set.
+        _require_access_token()
 
         # Add title with gradient styling and footer signature
         st.markdown(

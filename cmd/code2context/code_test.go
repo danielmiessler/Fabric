@@ -89,3 +89,23 @@ func TestScanDirectory(t *testing.T) {
 	instr := result[2].(map[string]any)
 	assert.Equal(t, "Test instructions", instr["details"])
 }
+
+// TestScanDirectory_SkipsSymlinks checks that ScanDirectory does not follow a
+// symlink to a file outside the project.
+func TestScanDirectory_SkipsSymlinks(t *testing.T) {
+	project := t.TempDir()
+	require.NoError(t, os.WriteFile(filepath.Join(project, "main.go"), []byte("package main"), 0o600))
+
+	outsideDir := t.TempDir()
+	target := filepath.Join(outsideDir, "target.txt")
+	require.NoError(t, os.WriteFile(target, []byte("OUTSIDE-FILE-TEXT"), 0o600))
+
+	if err := os.Symlink(target, filepath.Join(project, "link.txt")); err != nil {
+		t.Skipf("symlink unsupported: %v", err)
+	}
+
+	out, err := ScanDirectory(project, 10, "", nil)
+	require.NoError(t, err)
+	assert.NotContains(t, string(out), "OUTSIDE-FILE-TEXT", "symlink target is in the output")
+	assert.Contains(t, string(out), "package main")
+}

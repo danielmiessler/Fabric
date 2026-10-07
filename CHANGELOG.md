@@ -1,5 +1,28 @@
 # Changelog
 
+## v1.4.516 (2026-10-07)
+
+### PR [#2261](https://github.com/danielmiessler/Fabric/pull/2261) by [ksylvan](https://github.com/ksylvan): fix: harden REST server, template engine and plugins
+
+- Reworked the template engine to resolve each token exactly once in a single linear scan, preventing variable values from being re-expanded into plugin or extension calls and eliminating quadratic processing time on long brace runs.
+- Added loopback security middleware and JSON content-type enforcement to the REST and Ollama-compatible servers, so that, when no API key is set, these servers accept only loopback or configured CORS hosts and origins.
+- Confined the file plugin to a root directory with `os.Root`, rejecting absolute, `~`, `..`, and escaping symlink paths, and enforcing read size limits on special files such as `/dev/zero`.
+- Restricted the fetch plugin and the Ollama image loader to public network addresses through a shared HTTP client with DNS-level address checks, a 30-second timeout, a 5-redirect limit, and no API key sent to image hosts.
+- Added per-session locking with atomic writes, request body size limits (50 MiB), merged `.env` updates, and DOMPurify sanitization plus a Content-Security-Policy in the web UI to prevent data loss, memory exhaustion, and unsafe HTML in rendered output.
+- Breaking: With no API key, the server gives 403 to a request whose Host is not loopback. To use a LAN address or another host name, add its origin with `--cors-origins`.
+- Breaking: JSON endpoints need `Content-Type: application/json`. Other requests get 415. This includes the Ollama-compatible `/api/chat`: add `-H 'Content-Type: application/json'` to a `curl -d` call.
+- Breaking: The file plugin reads only relative paths.
+- Breaking: The template engine does not expand a variable value again. With `x = "{{name}}"`, `{{x}}` gives `{{name}}`.
+- Breaking: The fetch plugin and the Ollama image loader ignore `HTTP_PROXY`, and they refuse loopback, private and other non-public addresses. This also applies to the CLI. An Ollama image URL on a LAN host now gives an error.
+- Breaking: Fabric removes terminal control sequences (other than colors) from the CLI output. `GET /config` shows a fixed mask in place of each API key. After the upgrade, get the configuration again before you send it to `POST /config/update`. The server keeps an old mask, such as `****abcd`, as a new key value.
+- Breaking: The Streamlit UI binds to `127.0.0.1`. To open it from a different computer, start it with `--server.address 0.0.0.0` and set `FABRIC_UI_TOKEN`.
+- Breaking: In a workflow, `--input-has-vars` applies only to the first input and to each input from the workflow file. The output of a step goes to the next step as literal text.
+- `code2context` and the pattern update (`-U`) skip symbolic links.
+- New session and context files get mode `0600`, and new storage folders get mode `0700`. Existing files and folders keep their mode.
+- `--notification-command` gets the title and the message with no `"`, no `'` and no `\`. `POST /config/update` merges into `.env` and answers 400 for CR, LF or NUL. A strategy name must obey the storage name rules, which refuse Windows device names such as `con` and `aux` on all platforms.
+- Breaking: The REST server runs only the `text` and `datetime` template plugins in a pattern. A `sys`, `file` or `fetch` plugin token or an extension token in a pattern gives an error on `/patterns/:name/apply` and `/chat`. The CLI runs all plugins.
+- Breaking: With no API key, the server accepts a `POST`, `PUT`, `DELETE` or `PATCH` request with an `Origin` header only from the same origin (host and port), a `--cors-origins` entry or a JSON request from the web UI on port 5173 or 4173 (`vite preview`). Before, it accepted each loopback origin on any port.
+
 ## v1.4.515 (2026-10-05)
 
 ### PR [#2260](https://github.com/danielmiessler/Fabric/pull/2260) by [Felixkw12](https://github.com/Felixkw12): feat: add Opper as an OpenAI-compatible provider

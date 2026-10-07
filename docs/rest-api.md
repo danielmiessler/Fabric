@@ -64,7 +64,18 @@ Example:
 curl -H "X-API-Key: my_secret_key" http://localhost:8080/patterns/names
 ```
 
-Without an API key, the server accepts all requests and logs a warning.
+Use a random key of 16 or more characters. The server warns at startup when the key is shorter. The server has no limit on wrong keys.
+
+The API key is an admin key. A client with the key can read and change patterns, contexts and sessions, and can change the configuration, for example the Ollama URL. Do not give the key to a user that must not see the prompts of other users.
+
+The server uses plain HTTP. On a non-loopback address, the key and the prompts go over the network as clear text. Put a reverse proxy with TLS in front of the server.
+
+Without an API key, the server logs a warning and examines the request headers:
+
+- The `Host` header must be `localhost`, a loopback IP address or the host of a `--cors-origins` entry. If you open the server through a LAN address or another host name, add that origin with `--cors-origins`.
+- A `POST`, `PUT`, `DELETE` or `PATCH` request with an `Origin` header must come from the same origin (host and port), a `--cors-origins` entry or the web UI dev or preview server (`localhost` or `127.0.0.1` on port `5173` or `4173`) with `Content-Type: application/json`. A page on a different loopback port is a different origin, and the server rejects it. A client that sends no `Origin` header, such as `curl`, can send these requests.
+
+The server rejects other requests with `403 Forbidden`. With an API key, the server does not do these checks.
 
 ## CORS
 
@@ -79,6 +90,12 @@ You can also set `FABRIC_CORS_ORIGINS` to a comma-separated list, in the shell o
 The server answers `OPTIONS` preflight requests before the API key check. It accepts the request headers `Content-Type` and `X-API-Key`.
 
 `--cors-origins '*'` lets all origins call the server. The server logs a warning at startup. The server does not start when you set `*` without `--api-key`. The server never allows the origin `null`.
+
+## Content Type
+
+The endpoints that read a JSON body need the header `Content-Type: application/json`. These endpoints are `POST /chat`, `POST /patterns/:name/apply`, `POST /config/update`, `POST /youtube/transcript` and `POST /api/chat`. The server rejects other content types with `415 Unsupported Media Type`.
+
+The save endpoints (`POST /patterns/:name`, `POST /contexts/:name` and `POST /sessions/:name`) take the raw body with any content type.
 
 ## Endpoints
 
@@ -185,6 +202,8 @@ Manage reusable AI prompts.
 | `DELETE` | `/patterns/:name` | Delete pattern |
 | `PUT` | `/patterns/rename/:oldName/:newName` | Rename pattern |
 | `POST` | `/patterns/:name/apply` | Apply pattern with variables |
+
+The server runs only the `text` and `datetime` template plugins in a pattern. A pattern with a `sys`, `file` or `fetch` plugin token or an `{{ext:...}}` token gives an error. A client can save a pattern, so this stops a client from reading the server environment or files, fetching a URL through the server, or running an extension. The `/chat` endpoint applies patterns in the same way. The CLI runs all plugins.
 
 **Example - Get pattern:**
 
@@ -473,6 +492,10 @@ This mode provides:
 - `GET /api/version` - Server version
 - `POST /api/chat` - Ollama-compatible chat endpoint
 
+`POST /api/chat` needs the header `Content-Type: application/json`. The Ollama client libraries send it. Add `-H "Content-Type: application/json"` to a `curl` example from the Ollama documentation.
+
+This mode also serves the `/patterns`, `/contexts`, `/sessions`, `/chat`, `/config` and `/models` endpoints. Patterns have the same plugin limit as in the REST API: the server runs only the `text` and `datetime` template plugins.
+
 ## Error Handling
 
 All endpoints return standard HTTP status codes:
@@ -480,7 +503,10 @@ All endpoints return standard HTTP status codes:
 - `200 OK` - Success
 - `400 Bad Request` - Invalid input
 - `401 Unauthorized` - Missing or invalid API key
+- `403 Forbidden` - The server has no API key, and it does not accept the `Host` or `Origin` header
 - `404 Not Found` - Resource not found
+- `413 Content Too Large` - The request body is more than 50 MiB
+- `415 Unsupported Media Type` - A JSON endpoint got a body that is not `application/json`
 - `500 Internal Server Error` - Server error
 
 Error responses include JSON with details:

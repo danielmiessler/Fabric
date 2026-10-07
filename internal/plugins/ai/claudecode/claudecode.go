@@ -49,7 +49,7 @@ func (c *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, o
 	if err != nil {
 		return "", err
 	}
-	defer cleanupTmpDir()
+	defer os.RemoveAll(cmd.Dir)
 	var stderr bytes.Buffer
 	cmd.Stderr = &stderr
 	out, err := cmd.Output()
@@ -61,11 +61,11 @@ func (c *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, o
 
 func (c *Client) SendStream(ctx context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan domain.StreamUpdate) error {
 	defer close(channel)
-	defer cleanupTmpDir()
 	cmd, err := command(ctx, msgs, opts, "--verbose", "--output-format", "stream-json", "--include-partial-messages")
 	if err != nil {
 		return err
 	}
+	defer os.RemoveAll(cmd.Dir)
 	var stderr bytes.Buffer
 	cmd.Stderr = &stderr
 	stdout, err := cmd.StdoutPipe()
@@ -133,25 +133,33 @@ func command(ctx context.Context, msgs []*chat.ChatCompletionMessage, opts *doma
 	case domain.ThinkingLow, domain.ThinkingMedium, domain.ThinkingHigh:
 		args = append(args, "--effort", string(opts.Thinking))
 	}
+	// Run the CLI in a new private folder, not in the working folder of
+	// Fabric. The CLI read tools can open files in their working folder,
+	// for example a .env file. If the folder cannot be made, stop. The
+	// caller removes cmd.Dir after the command. Remove the folder before an
+	// error return after MkdirTemp, because then the caller does not.
+	tmpDir, err := os.MkdirTemp("", "claudecode-*")
+	if err != nil {
+		return nil, fmt.Errorf("claudecode: cannot make a working folder: %w", err)
+	}
 	dirs := make(map[string]bool)
-	tmpDir := filepath.Join(os.TempDir(), "claudecode")
 	for _, m := range msgs {
 		for _, p := range m.MultiContent {
 			if p.Type == chat.ChatMessagePartTypeImageURL && p.ImageURL != nil && p.ImageURL.URL != "" {
 				url := p.ImageURL.URL
 				// The -a flag sends a local image as a data: URL. Write it to a temp file.
+				// Use only a data: URL. Do not use a bare local path from a
+				// message as an --add-dir folder, because a REST client can
+				// write message content. The -a flag sends a local image as a
+				// data: URL, and only the CLI sets opts.ImageFile.
 				if strings.HasPrefix(url, "data:") {
 					tmpFile, err := decodeDataURL(url, tmpDir)
-					if err == nil {
-						dirs[tmpDir] = true
-						prompt = append(prompt, "Please analyze the file at: "+filepath.Base(tmpFile))
+					if err != nil {
+						os.RemoveAll(tmpDir)
+						return nil, fmt.Errorf("claudecode: image not sent: %w", err)
 					}
-				} else if !strings.HasPrefix(url, "http://") && !strings.HasPrefix(url, "https://") {
-					dir := filepath.Dir(url)
-					if dir != "" && dir != "." {
-						dirs[dir] = true
-					}
-					prompt = append(prompt, "Please analyze the file at: "+filepath.Base(url))
+					dirs[tmpDir] = true
+					prompt = append(prompt, "Please analyze the file at: "+filepath.Base(tmpFile))
 				}
 			}
 		}
@@ -171,6 +179,7 @@ func command(ctx context.Context, msgs []*chat.ChatCompletionMessage, opts *doma
 	}
 	cmd := exec.CommandContext(ctx, binary, append(args, extra...)...)
 	cmd.Stdin = strings.NewReader(strings.Join(prompt, "\n\n"))
+	cmd.Dir = tmpDir
 	// Drop ANTHROPIC_* so the CLI bills the subscription, not an API key from Fabric's .env.
 	cmd.Env = slices.DeleteFunc(os.Environ(), func(kv string) bool { return strings.HasPrefix(kv, "ANTHROPIC_") })
 	return cmd, nil
@@ -185,12 +194,6 @@ func text(m *chat.ChatCompletionMessage) (string, error) {
 		}
 	}
 	return strings.TrimSpace(strings.Join(parts, "\n")), nil
-}
-
-// cleanupTmpDir removes the temp directory used for decoded images.
-func cleanupTmpDir() {
-	tmpDir := filepath.Join(os.TempDir(), "claudecode")
-	_ = os.RemoveAll(tmpDir)
 }
 
 // decodeDataURL writes a base64 data: URL to a temp file and returns its path.
@@ -216,16 +219,15 @@ func decodeDataURL(dataURL string, tmpDir string) (string, error) {
 		return "", err
 	}
 
-	if err := os.MkdirAll(tmpDir, 0700); err != nil {
+	f, err := os.CreateTemp(tmpDir, "image_*"+ext)
+	if err != nil {
 		return "", err
 	}
-
-	tmpFile := filepath.Join(tmpDir, fmt.Sprintf("image_%d%s", os.Getpid(), ext))
-	if err := os.WriteFile(tmpFile, data, 0600); err != nil {
+	if _, err := f.Write(data); err != nil {
+		f.Close()
 		return "", err
 	}
-
-	return tmpFile, nil
+	return f.Name(), f.Close()
 }
 
 // textDelta extracts the text from one stream-json line, if it carries any.

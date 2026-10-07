@@ -1,12 +1,15 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { YoutubeTranscript } from 'youtube-transcript';
+import { youtubeVideoId } from '$lib/utils/validators';
+import { getFabricBaseUrl } from '$lib/config/environment';
 
 export const POST: RequestHandler = async ({ request }) => {
   try {
     const body = await request.json();
+    // Do not log the request body or the user input. They can contain
+    // personal data or secrets.
     console.log('\n=== Request Analysis ===');
-    console.log('1. Raw request body:', JSON.stringify(body, null, 2));
 
     if (body.url) {
       console.log('2. Processing YouTube URL:', {
@@ -15,8 +18,7 @@ export const POST: RequestHandler = async ({ request }) => {
         hasLanguageParam: true
       });
 
-      const match = body.url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
-      const videoId = match ? match[1] : null;
+      const videoId = youtubeVideoId(body.url);
 
       if (!videoId) {
         return json({ error: 'Invalid YouTube URL' }, { status: 400 });
@@ -41,7 +43,6 @@ export const POST: RequestHandler = async ({ request }) => {
       console.log('4. Transcript processed:', {
         length: transcript.length,
         language: body.language,
-        firstChars: transcript.substring(0, 50),
         responseSize: JSON.stringify(response).length
       });
 
@@ -58,25 +59,15 @@ export const POST: RequestHandler = async ({ request }) => {
       language: body.language
     });
 
-    console.log('2. Language analysis:', {
-      input: body.prompts?.[0]?.userInput?.substring(0, 100),
-      hasLanguageInstruction: body.prompts?.[0]?.userInput?.includes('language'),
-      containsFr: body.prompts?.[0]?.userInput?.includes('fr'),
-      containsEn: body.prompts?.[0]?.userInput?.includes('en'),
-      requestLanguage: body.language
-    });
-
-    console.log('3. Full request:', JSON.stringify(body, null, 2));
-
-    console.log('4. Key fields:', {
+    console.log('2. Key fields:', {
       patternName: body.prompts?.[0]?.patternName,
       inputLength: body.prompts?.[0]?.userInput?.length,
       systemPromptLength: body.prompts?.[0]?.systemPrompt?.length,
       messageCount: body.messages?.length
     });
 
-    console.log('5. Sending to Fabric backend...');
-    const fabricResponse = await fetch('http://localhost:8080/api/chat', {
+    console.log('3. Sending to Fabric backend...');
+    const fabricResponse = await fetch(`${getFabricBaseUrl()}/api/chat`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -84,7 +75,7 @@ export const POST: RequestHandler = async ({ request }) => {
       body: JSON.stringify(body)
     });
 
-    console.log('6. Fabric response:', {
+    console.log('4. Fabric response:', {
       status: fabricResponse.status,
       ok: fabricResponse.ok,
       statusText: fabricResponse.statusText
@@ -119,7 +110,7 @@ export const POST: RequestHandler = async ({ request }) => {
               contentLength: data.content?.length
             });
           } catch (e) {
-            console.log('Failed to parse stream chunk:', text);
+            console.log('Failed to parse stream chunk');
           }
         }
         controller.enqueue(chunk);
@@ -144,7 +135,7 @@ export const POST: RequestHandler = async ({ request }) => {
     console.error('Message:', error instanceof Error ? error.message : String(error));
     console.error('Stack:', error instanceof Error ? error.stack : 'No stack trace');
     return json(
-      { error: error instanceof Error ? error.message : 'Failed to process request' },
+      { error: 'Failed to process request' },
       { status: 500 }
     );
   }

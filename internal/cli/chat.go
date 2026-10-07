@@ -93,7 +93,8 @@ func handleChatProcessing(currentFlags *Flags, registry *core.PluginRegistry, me
 		if isTTSModel && isAudioOutput && strings.HasPrefix(result, "FABRIC_AUDIO_DATA:") {
 			fmt.Printf(i18n.T("tts_audio_generated_successfully"), currentFlags.Output)
 		} else {
-			fmt.Println(result)
+			// Remove terminal control sequences from the displayed copy only.
+			fmt.Println(domain.SanitizeTerminalOutput(result))
 		}
 	}
 
@@ -174,6 +175,10 @@ func sendNotification(options *domain.ChatOptions, patternName, result string) e
 	if options.NotificationCommand != "" {
 		// SECURITY: pass title and message as the positional arguments $1 and $2, never inside the command string.
 		// docs/Desktop-Notifications.md documents this interface.
+		// A command can put $2 into a quoted string of a different language, for example osascript -e "...\"$2\"...".
+		// Remove quotes and backslashes, so that model output cannot end that string.
+		title = sanitizeNotificationText(title)
+		message = sanitizeNotificationText(message)
 		cmd := exec.Command("sh", "-c", options.NotificationCommand+" \"$1\" \"$2\"", "--", title, message)
 
 		// Show the command output on the terminal.
@@ -189,6 +194,14 @@ func sendNotification(options *domain.ChatOptions, patternName, result string) e
 	}
 
 	return notificationManager.Send(title, message)
+}
+
+// sanitizeNotificationText removes double quotes, single quotes and
+// backslashes. Thus the text cannot close a quoted string in a custom
+// notification command. The text is a short preview, so the notification
+// keeps its meaning.
+func sanitizeNotificationText(s string) string {
+	return strings.NewReplacer("\"", "", "'", "", "\\", "").Replace(s)
 }
 
 // isTTSModel matches model names that contain "tts" or "text-to-speech".

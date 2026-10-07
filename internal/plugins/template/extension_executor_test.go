@@ -2,6 +2,7 @@ package template
 
 import (
 	"os"
+	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -385,4 +386,33 @@ config:
 			t.Error("Expected error from missing output_file, got nil")
 		}
 	})
+}
+
+// TestShellEscape gives each value to "sh -c", as Execute does, and makes
+// sure that the shell prints the value and does not run it.
+func TestShellEscape(t *testing.T) {
+	for _, value := range []string{
+		"'; touch pwned; '",
+		"$(touch pwned)",
+		"`touch pwned`",
+		"a\" ; touch pwned; \"",
+		"x && touch pwned",
+		"line1\nline2; touch pwned",
+		"''",
+		"",
+	} {
+		dir := t.TempDir()
+		cmd := exec.Command("sh", "-c", "printf %s "+shellEscape(value))
+		cmd.Dir = dir
+		out, err := cmd.Output()
+		if err != nil {
+			t.Fatalf("value %q: %v", value, err)
+		}
+		if string(out) != value {
+			t.Errorf("value %q: shell printed %q", value, out)
+		}
+		if _, err := os.Stat(filepath.Join(dir, "pwned")); err == nil {
+			t.Errorf("value %q: shell ran the injected command", value)
+		}
+	}
 }

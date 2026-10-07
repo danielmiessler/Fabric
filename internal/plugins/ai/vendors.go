@@ -25,10 +25,13 @@ type VendorsManager struct {
 	Vendors       []Vendor
 	VendorsByName map[string]Vendor
 	Models        *VendorsModels
+	modelsMu      sync.Mutex
 }
 
 // AddVendors registers one or more vendors with the manager.
 // Vendors are stored with lowercase keys to enable case-insensitive lookup.
+// AddVendors does not lock. Call it only at startup, before other
+// goroutines use the manager.
 func (o *VendorsManager) AddVendors(vendors ...Vendor) {
 	for _, vendor := range vendors {
 		name := strings.ToLower(vendor.GetName())
@@ -38,6 +41,8 @@ func (o *VendorsManager) AddVendors(vendors ...Vendor) {
 }
 
 func (o *VendorsManager) Clear() {
+	o.modelsMu.Lock()
+	defer o.modelsMu.Unlock()
 	o.VendorsByName = map[string]Vendor{}
 	o.Vendors = []Vendor{}
 	o.Models = nil
@@ -50,6 +55,10 @@ func (o *VendorsManager) SetupFillEnvFileContent(envFileContent *bytes.Buffer) {
 }
 
 func (o *VendorsManager) GetModels() (ret *VendorsModels, err error) {
+	// Many goroutines can call GetModels, for example from the REST server.
+	// The lock makes sure that only one call reads the models.
+	o.modelsMu.Lock()
+	defer o.modelsMu.Unlock()
 	if o.Models == nil {
 		err = o.readModels()
 	}

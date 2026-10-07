@@ -4,10 +4,12 @@ import (
 	"bytes"
 	"context"
 	"errors"
+	"fmt"
 	"io"
 	"os"
 	"path/filepath"
 	"strings"
+	"sync"
 	"testing"
 	"time"
 
@@ -327,6 +329,29 @@ func TestChatter_BuildSession_EndsWithUserMessage(t *testing.T) {
 	}
 }
 
+// TestChatter_BuildSession_InputHasVarsKeepsPluginTokens checks that with
+// InputHasVars, BuildSession replaces the variables in the user input, but a
+// plugin token in the input stays as literal text.
+func TestChatter_BuildSession_InputHasVarsKeepsPluginTokens(t *testing.T) {
+	t.Setenv("FABRIC_TEST_VALUE", "ENV_VALUE_FROM_PLUGIN")
+	request := &domain.ChatRequest{
+		InputHasVars:     true,
+		PatternVariables: map[string]string{"name": "world"},
+		Message: &chat.ChatCompletionMessage{
+			Role:    chat.ChatMessageRoleUser,
+			Content: "{{name}} {{plugin:sys:env:FABRIC_TEST_VALUE}}",
+		},
+	}
+	session, err := (&Chatter{db: fsdb.NewDb(t.TempDir())}).BuildSession(request, false, true)
+	if err != nil {
+		t.Fatal(err)
+	}
+	want := "world {{plugin:sys:env:FABRIC_TEST_VALUE}}"
+	if got := session.GetLastMessage().Content; got != want {
+		t.Errorf("user message = %q, want %q", got, want)
+	}
+}
+
 func TestChatter_Send_StreamingErrorPropagation(t *testing.T) {
 	tempDir := t.TempDir()
 	db := fsdb.NewDb(tempDir)
@@ -634,5 +659,83 @@ func TestChatter_Send_CancelWithNoUpdateReaderReturns(t *testing.T) {
 		}
 	case <-time.After(2 * time.Second):
 		t.Fatal("Send did not return after cancel")
+	}
+}
+
+// TestChatter_Send_ConcurrentSameSessionKeepsAllMessages sends many requests
+// on one session name at the same time. Each request adds a user message and
+// a reply, so the saved session must have two messages for each request.
+func TestChatter_Send_ConcurrentSameSessionKeepsAllMessages(t *testing.T) {
+	db := fsdb.NewDb(t.TempDir())
+	if err := db.Sessions.Configure(); err != nil {
+		t.Fatalf("configure: %v", err)
+	}
+	chatter := &Chatter{
+		db:    db,
+		model: "test-model",
+		vendor: &mockVendor{sendFunc: func(context.Context, []*chat.ChatCompletionMessage, *domain.ChatOptions) (string, error) {
+			time.Sleep(5 * time.Millisecond) // Keep the read and the save apart.
+			return "reply", nil
+		}},
+	}
+
+	const workers = 20
+	var wg sync.WaitGroup
+	for i := range workers {
+		wg.Go(func() {
+			request := &domain.ChatRequest{
+				SessionName: "shared",
+				Message:     &chat.ChatCompletionMessage{Role: chat.ChatMessageRoleUser, Content: fmt.Sprintf("msg-%d", i)},
+			}
+			if _, err := chatter.Send(context.Background(), request, &domain.ChatOptions{Model: "test-model"}); err != nil {
+				t.Errorf("Send: %v", err)
+			}
+		})
+	}
+	wg.Wait()
+
+	session, err := db.Sessions.Get("shared")
+	if err != nil {
+		t.Fatalf("Get: %v", err)
+	}
+	if got := len(session.Messages); got != 2*workers {
+		t.Fatalf("got %d messages, want %d", got, 2*workers)
+	}
+}
+
+// A streamed reply goes to the terminal with no OSC 52 sequence, and the
+// session keeps the full text.
+func TestChatter_Send_StreamingSanitizesTerminalOutput(t *testing.T) {
+	const raw = "a\x1b]52;c;ZXZpbA==\x07b\x1b[31mred\x1b[0m"
+	chatter := &Chatter{
+		db:     fsdb.NewDb(t.TempDir()),
+		Stream: true,
+		vendor: &mockVendor{streamChunks: []domain.StreamUpdate{{Type: domain.StreamTypeContent, Content: raw}}},
+		model:  "test-model",
+	}
+	request := &domain.ChatRequest{
+		Message: &chat.ChatCompletionMessage{Role: chat.ChatMessageRoleUser, Content: "test message"},
+	}
+
+	oldStdout := os.Stdout
+	t.Cleanup(func() { os.Stdout = oldStdout })
+	r, w, err := os.Pipe()
+	if err != nil {
+		t.Fatalf("failed to create pipe: %v", err)
+	}
+	os.Stdout = w
+	session, sendErr := chatter.Send(context.Background(), request, &domain.ChatOptions{Model: "test-model"})
+	w.Close()
+	os.Stdout = oldStdout
+	printed, _ := io.ReadAll(r)
+
+	if sendErr != nil {
+		t.Fatalf("Expected no error, but got: %v", sendErr)
+	}
+	if got, want := string(printed), "ab\x1b[31mred\x1b[0m"; !strings.HasPrefix(got, want) {
+		t.Errorf("printed %q, want prefix %q", got, want)
+	}
+	if got := session.GetLastMessage().Content; got != raw {
+		t.Errorf("session content %q, want %q", got, raw)
 	}
 }

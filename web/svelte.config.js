@@ -79,6 +79,35 @@ const config = {
       precompress: false,
       strict: true
     }),
+    // The Content Security Policy is a second barrier for the chat view,
+    // which shows model output through {@html}. In 'auto' mode, SvelteKit
+    // adds a nonce or a hash for its own inline scripts. Inline styles stay
+    // permitted, because Tailwind and Shiki use them. The app has no form,
+    // thus 'form-action' is 'none'.
+    csp: {
+      mode: 'auto',
+      directives: {
+        'script-src': ['self'],
+        'object-src': ['none'],
+        'base-uri': ['self'],
+        'form-action': ['none'],
+        'frame-ancestors': ['self'],
+        // A remote image in a model reply can send chat data to its host.
+        // Only the badge and screenshot hosts on the About and Posts pages
+        // can serve images. The shields.io paths do not include /endpoint,
+        // which fetches a URL from the request.
+        'img-src': [
+          'self',
+          'data:',
+          'https://img.shields.io/badge/',
+          'https://img.shields.io/github/',
+          'https://img.shields.io/twitter/',
+          'https://github.com',
+          'https://*.githubusercontent.com'
+        ],
+        'connect-src': ['self']
+      }
+    },
     prerender: {
       handleHttpError: ({ path, referrer, message }) => {
         // Log the error for debugging

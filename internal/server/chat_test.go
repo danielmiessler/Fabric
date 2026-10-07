@@ -6,6 +6,8 @@ import (
 	"errors"
 	"net/http"
 	"net/http/httptest"
+	"os"
+	"path/filepath"
 	"strings"
 	"testing"
 
@@ -207,5 +209,68 @@ func TestHandleChat_InvalidStrategyEmitsErrorAndSkipsComplete(t *testing.T) {
 	}
 	if strings.Contains(responseBody, `"type":"complete"`) {
 		t.Fatalf("expected no complete SSE event for missing strategy, got body %q", responseBody)
+	}
+}
+
+// streamTestVendor sends one content update and closes the channel, as a
+// real vendor does.
+type streamTestVendor struct{ serverTestVendor }
+
+func (m *streamTestVendor) SendStream(_ context.Context, _ []*chat.ChatCompletionMessage, _ *domain.ChatOptions, ch chan domain.StreamUpdate) error {
+	defer close(ch)
+	ch <- domain.StreamUpdate{Type: domain.StreamTypeContent, Content: "reply"}
+	return nil
+}
+
+// A session file with a JSON null entry must not stop the server. The
+// /chat request must complete in the normal way.
+func TestHandleChat_SessionWithNullMessage(t *testing.T) {
+	t.Setenv("HOME", t.TempDir())
+	gin.SetMode(gin.TestMode)
+
+	db := fsdb.NewDb(t.TempDir())
+	if err := os.MkdirAll(db.Sessions.Dir, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	sessionFile := filepath.Join(db.Sessions.Dir, "nulls.json")
+	if err := os.WriteFile(sessionFile, []byte(`[null,{"role":"user","content":"earlier"},null]`), 0o644); err != nil {
+		t.Fatal(err)
+	}
+
+	vm := ai.NewVendorsManager()
+	vm.AddVendors(&streamTestVendor{serverTestVendor{name: "TestVendor", models: []string{"test-model"}}})
+	registry := &core.PluginRegistry{
+		Db:            db,
+		VendorManager: vm,
+		Defaults: &tools.Defaults{
+			PluginBase:         &plugins.PluginBase{},
+			Vendor:             &plugins.Setting{Value: "TestVendor"},
+			Model:              &plugins.SetupQuestion{Setting: &plugins.Setting{Value: "test-model"}},
+			ModelContextLength: &plugins.SetupQuestion{Setting: &plugins.Setting{Value: "0"}},
+		},
+	}
+
+	router := gin.New()
+	NewChatHandler(router, registry, db)
+
+	body := `{"prompts":[{"userInput":"hello","vendor":"TestVendor","model":"test-model","sessionName":"nulls"}]}`
+	req := httptest.NewRequest(http.MethodPost, "/chat", strings.NewReader(body))
+	req.Header.Set("Content-Type", "application/json")
+	resp := &closeNotifierRecorder{
+		ResponseRecorder: httptest.NewRecorder(),
+		closeCh:          make(chan bool, 1),
+	}
+
+	router.ServeHTTP(resp, req)
+
+	if resp.Code != http.StatusOK {
+		t.Fatalf("expected status 200, got %d with body %q", resp.Code, resp.Body.String())
+	}
+	got := resp.Body.String()
+	if !strings.Contains(got, `"content":"reply"`) || !strings.Contains(got, `"type":"complete"`) {
+		t.Fatalf("expected the reply and a complete event, got body %q", got)
+	}
+	if strings.Contains(got, `"type":"error"`) {
+		t.Fatalf("expected no error event, got body %q", got)
 	}
 }

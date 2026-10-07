@@ -1,6 +1,7 @@
 package fsdb
 
 import (
+	"crypto/rand"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -26,7 +27,7 @@ func NewDb(dir string) (db *Db) {
 	}
 
 	db.Sessions = &SessionsEntity{
-		&StorageEntity{Label: "Sessions", Dir: db.FilePath("sessions"), FileExtension: ".json"}}
+		StorageEntity: &StorageEntity{Label: "Sessions", Dir: db.FilePath("sessions"), FileExtension: ".json"}}
 
 	db.Contexts = &ContextsEntity{
 		&StorageEntity{Label: "Contexts", Dir: db.FilePath("contexts")}}
@@ -47,7 +48,7 @@ type Db struct {
 }
 
 func (o *Db) Configure() (err error) {
-	if err = os.MkdirAll(o.Dir, os.ModePerm); err != nil {
+	if err = os.MkdirAll(o.Dir, 0700); err != nil {
 		return
 	}
 
@@ -95,7 +96,7 @@ func (o *Db) IsEnvFileExists() (ret bool) {
 
 func (o *Db) SaveEnv(content string) error {
 	return o.WithEnvLock(func() error {
-		if err := writeFileAtomic(o.EnvFilePath, []byte(content)); err != nil {
+		if err := writeFileAtomic(o.EnvFilePath, []byte(content), 0600); err != nil {
 			return fmt.Errorf(i18n.T("db_error_updating_env_file"), err)
 		}
 		return nil
@@ -161,21 +162,21 @@ func writeEnvFileAtomic(path string, env map[string]string) error {
 	if err != nil {
 		return err
 	}
-	return writeFileAtomic(path, []byte(content+"\n"))
+	return writeFileAtomic(path, []byte(content+"\n"), 0600)
 }
 
-func writeFileAtomic(path string, content []byte) error {
-	tmp, err := os.CreateTemp(filepath.Dir(path), ".env.tmp-")
+// writeFileAtomic writes content to a temporary file in the same directory
+// and then renames it to path. A reader thus never sees a partial file. The
+// file gets perm less the umask, as with os.WriteFile.
+func writeFileAtomic(path string, content []byte, perm os.FileMode) error {
+	tmp, err := os.OpenFile(filepath.Join(filepath.Dir(path), ".tmp-"+rand.Text()),
+		os.O_WRONLY|os.O_CREATE|os.O_EXCL, perm)
 	if err != nil {
 		return err
 	}
 	tmpName := tmp.Name()
 	defer os.Remove(tmpName)
 
-	if err := tmp.Chmod(0600); err != nil {
-		_ = tmp.Close()
-		return err
-	}
 	_, err = tmp.Write(content)
 	if err == nil {
 		err = tmp.Sync()

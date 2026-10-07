@@ -80,3 +80,22 @@ func TestHandleSetupAndServerCommands_ServeOllamaEnvFile(t *testing.T) {
 		t.Fatalf("flags must win: got key %q, origins %q", gotKey, gotOrigins)
 	}
 }
+
+// TestAPIKeyPassedAsArg makes sure that only an API key on the command line
+// gives the warning.
+func TestAPIKeyPassedAsArg(t *testing.T) {
+	cases := []struct {
+		args []string
+		want bool
+	}{
+		{[]string{"--serve", "--api-key", "secret"}, true},
+		{[]string{"--serve", "--api-key=secret"}, true},
+		{[]string{"--serve"}, false},
+		{[]string{"--serve", "--address", "127.0.0.1:8080"}, false},
+	}
+	for _, c := range cases {
+		if got := apiKeyPassedAsArg(c.args); got != c.want {
+			t.Errorf("apiKeyPassedAsArg(%q) = %v, want %v", c.args, got, c.want)
+		}
+	}
+}

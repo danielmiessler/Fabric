@@ -71,6 +71,10 @@ pnpm run dev
 
 Visit [http://localhost:5173](http://localhost:5173) (default port).
 
+The web UI has no login. Each client that can open the web UI can use the Fabric server through it. If you start the web UI with `--host`, each computer on the network can use your Fabric server.
+
+If you open the web UI through a LAN address or on a port that is not 5173 or 4173 (`npm run preview`), start Fabric with `fabric --serve --cors-origins http://<address>:<port>`. If you do not, the server refuses each change with `403 Forbidden`.
+
 ## Streamlit UI
 
 For Python enthusiasts, this alternative UI excels at data visualization and chaining complex patterns. It supports clipboard ops across platforms (install pyperclip on Windows, xclip on Linux).
@@ -92,7 +96,7 @@ For Python enthusiasts, this alternative UI excels at data visualization and cha
 
 ### Setup and Run
 
-From `web/`:
+From `scripts/python_ui/`:
 
 ```bash
 pip install -r requirements.txt #Or: pip install streamlit pandas matplotlib seaborn numpy python-dotenv pyperclip
@@ -100,6 +104,16 @@ streamlit run streamlit.py
 ```
 
 Access at [http://localhost:8501](http://localhost:8501) (default port).
+
+The UI can read your clipboard, show all prompts and outputs, and change patterns. Thus, it binds to `127.0.0.1` by default. Streamlit reads this setting from `scripts/python_ui/.streamlit/config.toml` only when it starts from `scripts/python_ui/`. If you start it from a different folder, add `--server.address 127.0.0.1`.
+
+To ask for a token before the UI shows, set `FABRIC_UI_TOKEN`:
+
+```bash
+FABRIC_UI_TOKEN='a-long-random-value' streamlit run streamlit.py
+```
+
+Set the token before you make the UI available on a different address.
 
 ## Obsidian Integration
 

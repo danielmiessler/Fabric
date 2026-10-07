@@ -119,6 +119,7 @@ func TestPatternsHandler_BackendErrorHidesPaths(t *testing.T) {
 		httptest.NewRequest(http.MethodGet, "/patterns/missing", nil),
 		httptest.NewRequest(http.MethodPost, "/patterns/missing/apply", strings.NewReader(`{"input":"x"}`)),
 	} {
+		req.Header.Set("Content-Type", "application/json")
 		w := httptest.NewRecorder()
 		r.ServeHTTP(w, req)
 		if w.Code != http.StatusInternalServerError {
@@ -219,6 +220,7 @@ func TestPatternsHandler_RejectsUnsafeNamesOnReadRoutes(t *testing.T) {
 		httptest.NewRequest(http.MethodGet, "/patterns/NUL", nil),
 		httptest.NewRequest(http.MethodPost, "/patterns/foo:bar/apply", strings.NewReader(`{"input":"x"}`)),
 	} {
+		req.Header.Set("Content-Type", "application/json")
 		w := httptest.NewRecorder()
 		r.ServeHTTP(w, req)
 		if w.Code != http.StatusBadRequest {

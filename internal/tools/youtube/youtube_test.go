@@ -175,6 +175,8 @@ func TestYtDlpLangArgs(t *testing.T) {
 		{"user --sub-lang", "en", []string{"--sub-lang", "en-orig"}, nil},
 		{"user --sub-langs=", "en", []string{"--sub-langs=en-orig"}, nil},
 		{"no language", "", nil, nil},
+		{"one letter language", "e", nil, []string{"--sub-langs", "e,e.*"}},
+		{"regional language", "en-GB", nil, []string{"--sub-langs", "en-GB,en.*,en"}},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

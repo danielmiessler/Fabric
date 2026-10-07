@@ -1,10 +1,12 @@
 package cli
 
 import (
+	"fmt"
 	"os"
 	"strings"
 
 	"github.com/danielmiessler/fabric/internal/core"
+	"github.com/danielmiessler/fabric/internal/i18n"
 	restapi "github.com/danielmiessler/fabric/internal/server"
 )
 
@@ -33,6 +35,12 @@ func handleSetupAndServerCommands(currentFlags *Flags, registry *core.PluginRegi
 		currentFlags.ServeCORSOrigins = strings.Split(v, ",")
 	}
 
+	// Show a warning when the API key is on the command line. Other local
+	// users can see command-line arguments in the process list.
+	if (currentFlags.Serve || currentFlags.ServeOllama) && apiKeyPassedAsArg(os.Args[1:]) {
+		fmt.Fprintln(os.Stderr, i18n.T("server_api_key_arg_warning"))
+	}
+
 	if currentFlags.Serve {
 		registry.ConfigureVendors()
 		err = restapi.Serve(registry, currentFlags.ServeAddress, currentFlags.ServeAPIKey, currentFlags.ServeCORSOrigins)
@@ -46,4 +54,15 @@ func handleSetupAndServerCommands(currentFlags *Flags, registry *core.PluginRegi
 	}
 
 	return false, nil
+}
+
+// apiKeyPassedAsArg reports whether the REST API key is on the command line,
+// not in the FABRIC_API_KEY environment variable or the .env file.
+func apiKeyPassedAsArg(args []string) bool {
+	for _, a := range args {
+		if a == "--api-key" || strings.HasPrefix(a, "--api-key=") {
+			return true
+		}
+	}
+	return false
 }

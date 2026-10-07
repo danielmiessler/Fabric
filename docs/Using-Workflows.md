@@ -68,6 +68,8 @@ These flags have the same effect as in a run with one pattern:
 
 `--stream` applies to the last step only. Fabric does not show the output of the other steps. It gives that output only to the next step.
 
+`--input-has-vars` replaces the variables in your input and in each `input` value in the workflow file. Fabric does not replace variables in the output of a step. It gives that output to the next step as literal text.
+
 Fabric ignores `--session` when you use `--workflow`.
 
 ## Checks before the run

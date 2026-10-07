@@ -14,7 +14,9 @@ operations:
   project:
     cmd_template: "{{executable}} -json /home/matt/memories.db \"select * from memories where type= 'project'\""
   byid:
-    cmd_template: "{{executable}} -json /home/matt/memories.db \"select * from memories where uid= {{value}}\""
+    # Do not put {{value}} directly in double quotes. printf %d makes the
+    # value an integer in its own command.
+    cmd_template: "{{executable}} -json /home/matt/memories.db \"select * from memories where uid= $(printf %d {{value}})\""
   all:
     cmd_template: "{{executable}} -json ~/memories.db \"select * from memories\""
 

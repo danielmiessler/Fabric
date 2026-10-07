@@ -128,7 +128,7 @@ func fetchFilesViaGitCLI(opts FetchOptions) error {
 	}
 	defer os.RemoveAll(tmpDir)
 
-	cmd := exec.Command("git", "clone", "--depth", "1", opts.RepoURL, tmpDir)
+	cmd := exec.Command("git", "clone", "--depth", "1", "--", opts.RepoURL, tmpDir)
 	if output, err := cmd.CombinedOutput(); err != nil {
 		return fmt.Errorf(i18n.T("githelper_failed_git_cli_clone"), err, string(output))
 	}
@@ -144,6 +144,13 @@ func fetchFilesViaGitCLI(opts FetchOptions) error {
 			return err
 		}
 		if d.IsDir() {
+			return nil
+		}
+
+		// Skip symlinks and other non-regular files. A symlink in the
+		// repository can point to a file outside the clone. copyFile opens
+		// the source, so it would copy that file into the patterns folder.
+		if !d.Type().IsRegular() {
 			return nil
 		}
 
@@ -169,6 +176,14 @@ func fetchFilesViaGitCLI(opts FetchOptions) error {
 }
 
 func copyFile(src, dst string) error {
+	// Refuse a source that is not a regular file. This is a second check
+	// after the walk, so that copyFile never follows a symlink.
+	if info, err := os.Lstat(src); err != nil {
+		return err
+	} else if !info.Mode().IsRegular() {
+		return fmt.Errorf(i18n.T("githelper_skip_non_regular_file"), src)
+	}
+
 	srcFile, err := os.Open(src)
 	if err != nil {
 		return err

@@ -1,10 +1,13 @@
 package strategy
 
 import (
+	"bytes"
 	"os"
 	"path/filepath"
 	"strings"
 	"testing"
+
+	debuglog "github.com/danielmiessler/fabric/internal/log"
 )
 
 func TestLoadStrategy_ValidName(t *testing.T) {
@@ -151,5 +154,70 @@ func TestLoadStrategy_NotFound(t *testing.T) {
 	_, err := LoadStrategy("nonexistent")
 	if err == nil {
 		t.Fatal("expected error for nonexistent strategy")
+	}
+}
+
+func TestLoadStrategy_NameWithSeparatorFailsBeforeStat(t *testing.T) {
+	homeDir := t.TempDir()
+	t.Setenv("HOME", homeDir)
+
+	strategyDir := filepath.Join(homeDir, ".config", "fabric", "strategies")
+	if err := os.MkdirAll(strategyDir, 0o755); err != nil {
+		t.Fatalf("failed to create strategy dir: %v", err)
+	}
+	if err := os.WriteFile(filepath.Join(homeDir, ".config", "fabric", "x.json"), []byte(`{}`), 0o644); err != nil {
+		t.Fatalf("failed to write outside file: %v", err)
+	}
+
+	// A file that exists and a file that does not exist must give the same
+	// error, so the error does not show which files exist.
+	_, errExists := LoadStrategy("../x")
+	_, errMissing := LoadStrategy("../missing")
+	if errExists == nil || errMissing == nil {
+		t.Fatalf("expected errors, got %v and %v", errExists, errMissing)
+	}
+	if strings.ReplaceAll(errExists.Error(), "../x", "N") != strings.ReplaceAll(errMissing.Error(), "../missing", "N") {
+		t.Errorf("errors differ: %q and %q", errExists, errMissing)
+	}
+}
+
+// TestLoadAllFiles_SkipsFileThatDoesNotLoad checks that a strategy file that
+// does not load does not hide the strategies after it.
+func TestLoadAllFiles_SkipsFileThatDoesNotLoad(t *testing.T) {
+	homeDir := t.TempDir()
+	t.Setenv("HOME", homeDir)
+
+	strategyDir := filepath.Join(homeDir, ".config", "fabric", "strategies")
+	if err := os.MkdirAll(strategyDir, 0o755); err != nil {
+		t.Fatalf("failed to create strategy dir: %v", err)
+	}
+	// LoadStrategy refuses the name "a." because it ends with a dot, and
+	// bad.json is not JSON. Both come before good.json in the walk.
+	files := map[string]string{
+		"a..json":   `{"description":"desc","prompt":"PROMPT"}`,
+		"bad.json":  `{`,
+		"good.json": `{"description":"desc","prompt":"PROMPT"}`,
+	}
+	for name, content := range files {
+		if err := os.WriteFile(filepath.Join(strategyDir, name), []byte(content), 0o644); err != nil {
+			t.Fatalf("failed to write %s: %v", name, err)
+		}
+	}
+
+	var logged bytes.Buffer
+	debuglog.SetOutput(&logged)
+	t.Cleanup(func() { debuglog.SetOutput(os.Stderr) })
+
+	strategies, err := LoadAllFiles()
+	if err != nil {
+		t.Fatalf("LoadAllFiles returned error: %v", err)
+	}
+	if _, ok := strategies["good"]; !ok || len(strategies) != 1 {
+		t.Errorf("strategies = %v, want only good", strategies)
+	}
+	for _, name := range []string{"a..json", "bad.json"} {
+		if !strings.Contains(logged.String(), name) {
+			t.Errorf("log %q does not tell about %s", logged.String(), name)
+		}
 	}
 }

@@ -27,6 +27,9 @@ Non-text Content:
 
 Server Error:
 {{plugin:fetch:get:https://httpstat.us/500}}
+
+Non-public Address:
+{{plugin:fetch:get:http://127.0.0.1:8080/status}}
 ```
 
 ## Security Considerations
@@ -35,5 +38,8 @@ Server Error:
 - Be aware of rate limits
 - Content is limited to 1MB
 - Only text content types are allowed
+- The plugin connects only to public IP addresses. It refuses loopback, private, shared (`100.64.0.0/10`), link-local, multicast and unspecified addresses. It checks the address after DNS resolution, and again for each redirect
+- A fetch stops after 30 seconds or after 5 redirects
+- The plugin does not use `HTTP_PROXY` or `HTTPS_PROXY`
 - Consider URL allow listing in production
 - Validate and sanitize fetched content before use

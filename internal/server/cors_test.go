@@ -70,7 +70,7 @@ func TestCORSMiddleware(t *testing.T) {
 }
 
 func TestCleanCORSOrigins(t *testing.T) {
-	got, err := cleanCORSOrigins([]string{"http://a.example", " http://b.example", "", " "}, "")
+	got, err := cleanCORSOrigins([]string{"http://a.example", " http://b.example/", "", " "}, "")
 	if err != nil || !slices.Equal(got, []string{"http://a.example", "http://b.example"}) {
 		t.Fatalf("got %q, %v", got, err)
 	}

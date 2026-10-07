@@ -139,7 +139,10 @@ operations:
   value:
     cmd_template: "{{executable}} -json ~/memories.db \"select * from memories where type= 'value'\""
   byid:
-    cmd_template: "{{executable}} -json ~/memories.db \"select * from memories where uid= {{value}}\""
+    # Do not put {{value}} directly in double quotes. There, the shell escape
+    # quotes are literal, and $(cmd) in the value runs. printf %d makes the
+    # value an integer in its own command.
+    cmd_template: "{{executable}} -json ~/memories.db \"select * from memories where uid= $(printf %d {{value}})\""
   all:
     cmd_template: "{{executable}} -json ~/memories.db \"select * from memories\""
 

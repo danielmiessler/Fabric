@@ -2,23 +2,25 @@
 
 Simple test file for validating file plugin functionality.
 
+Each path is relative to the working directory of the fabric process.
+
 ## Basic File Operations
 
 ```
 Read File:
-{{plugin:file:read:/path/to/file.txt}}
+{{plugin:file:read:docs/file.txt}}
 
 Last 5 Lines:
-{{plugin:file:tail:/path/to/log.txt|5}}
+{{plugin:file:tail:logs/app.log|5}}
 
 Check Existence:
-{{plugin:file:exists:/path/to/file.txt}}
+{{plugin:file:exists:docs/file.txt}}
 
 Get Size:
-{{plugin:file:size:/path/to/file.txt}}
+{{plugin:file:size:docs/file.txt}}
 
 Last Modified:
-{{plugin:file:modified:/path/to/file.txt}}
+{{plugin:file:modified:docs/file.txt}}
 ```
 
 ## Error Cases
@@ -26,26 +28,32 @@ These should produce appropriate error messages:
 
 ```
 Invalid Operation:
-{{plugin:file:invalid:/path/to/file.txt}}
+{{plugin:file:invalid:docs/file.txt}}
 
 Non-existent File:
-{{plugin:file:read:/path/to/nonexistent.txt}}
+{{plugin:file:read:docs/nonexistent.txt}}
 
 Path Traversal Attempt:
 {{plugin:file:read:../../../etc/passwd}}
 
+Absolute Path:
+{{plugin:file:read:/path/to/file.txt}}
+
+Home Directory Path:
+{{plugin:file:read:~/file.txt}}
+
 Invalid Tail Format:
-{{plugin:file:tail:/path/to/file.txt}}
+{{plugin:file:tail:docs/file.txt}}
 
 Large File:
-{{plugin:file:read:/path/to/huge.iso}}
+{{plugin:file:read:data/huge.iso}}
 ```
 
 ## Security Considerations
 
-- Carefully control which paths are accessible
-- Consider using path allow lists in production
+- The plugin rejects an absolute path, a path that starts with `~`, and a path that contains `..`
+- A symbolic link must be relative and must stay in the working directory
+- The plugin can read all files in the working directory and its subdirectories. Run `fabric` in a directory that has only the files that patterns can read
+- The REST server (`fabric --serve`) does not run the file plugin
 - Be aware of file size limits (1MB max)
-- No directory traversal is allowed
-- Home directory (~/) expansion is supported
 - All paths are cleaned and normalized

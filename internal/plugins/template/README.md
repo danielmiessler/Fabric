@@ -42,15 +42,17 @@ The template system supports nested tokens, where inner tokens are resolved befo
 
 #### Simple Variable Nesting
 ```markdown
-{{outer{{inner}}}}
+{{user_{{inner}}}}
 
 Example:
 Variables: {
   "inner": "name",
-  "john": "John Doe"
+  "user_name": "John Doe"
 }
-{{{{inner}}}} -> {{name}} -> John Doe
+{{user_{{inner}}}} -> {{user_name}} -> John Doe
 ```
+
+The outer token must have template text in addition to the inner token. In `{{{{inner}}}}`, the body is only the value of `inner`, so the result is the literal text `{{name}}`.
 
 #### Nested Plugin Calls
 ```markdown
@@ -61,10 +63,13 @@ Then resolves: {{plugin:text:upper:john}} -> "JOHN"
 
 ### How Nested Resolution Works
 
-1. **Iterative Processing**
-   - The engine processes the template in multiple passes
-   - Each pass identifies all `{{...}}` patterns
-   - Processing continues until no more replacements are needed
+1. **Single Pass**
+   - The engine reads the template one time, from left to right
+   - Each `{{...}}` token in the template resolves one time
+   - Inner tokens resolve before the token that contains them
+   - The engine does not scan text from a variable, a plugin or an extension, so a `{{...}}` in that text stays as literal text
+   - In `{{{name}}}` (three braces), the outer braces are literal text: `{John Doe}`
+   - A token with a single brace, for example `{{a}{b}}`, stays as literal text
 
 2. **Resolution Order**
    ```markdown
@@ -129,6 +134,14 @@ Then resolves: {{plugin:text:upper:john}} -> "JOHN"
    >   Value: john
    > Plugin result: JOHN
    ```
+
+5. **Variables in Plugin Tokens**
+   - A token in the template can use a variable value as a plugin operation or value. For example, `{{plugin:sys:env:{{env_var}}}}` reads the environment variable that `env_var` names
+   - A REST client can set the variables of a request. Thus a pattern for REST use must not take a plugin namespace, operation or value from a variable
+
+6. **Variables in User Input**
+   - With `--input-has-vars`, Fabric replaces the variables in the user input
+   - A plugin or extension token in the user input stays as literal text, and the plugin or extension does not run. The input can contain text from other sources, for example a web page or a transcript
 
 ### Examples
 

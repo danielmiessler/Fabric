@@ -2,8 +2,10 @@ package restapi
 
 import (
 	"fmt"
+	"maps"
 	"net/http"
 	"os"
+	"slices"
 	"strings"
 
 	"github.com/danielmiessler/fabric/internal/plugins/db/fsdb"
@@ -21,26 +23,32 @@ func NewConfigHandler(r *gin.Engine, db *fsdb.Db) *ConfigHandler {
 	}
 
 	r.GET("/config", handler.GetConfig)
-	r.POST("/config/update", handler.UpdateConfig)
+	r.POST("/config/update", requireJSON, handler.UpdateConfig)
 
 	return handler
 }
 
-// maskAPIKey redacts all but the last 4 characters of a secret key (CWE-200).
+// maskedValue is the fixed mask that GET /config returns for a set key.
+const maskedValue = "********"
+
+// maskAPIKey replaces a secret key with a fixed mask (CWE-200).
 // An empty value (key not configured) is returned unchanged so the UI can
 // distinguish "not set" from "set but redacted".
 func maskAPIKey(key string) string {
-	const visible = 4
-	if len(key) <= visible {
-		return key
+	if key == "" {
+		return ""
 	}
-	return strings.Repeat("*", len(key)-visible) + key[len(key)-visible:]
+	// The mask has a fixed length. It does not show the key length or
+	// characters from the key. It only shows that a key is set. isRedacted
+	// finds the mask when the UI sends it back.
+	return maskedValue
 }
 
-// isRedacted returns true when a submitted value looks like a masked key
-// returned by maskAPIKey, signalling that the user did not change the field.
+// isRedacted returns true when a submitted value is the mask that
+// maskAPIKey returns. This shows that the user did not change the field.
+// A value that only contains '*' is a new value.
 func isRedacted(value string) bool {
-	return strings.Contains(value, "*")
+	return value == maskedValue
 }
 
 func (h *ConfigHandler) GetConfig(c *gin.Context) {
@@ -62,17 +70,18 @@ func (h *ConfigHandler) GetConfig(c *gin.Context) {
 			"silicon":       "",
 			"deepseek":      "",
 			"grokai":        "",
+			"lmstudio":      "",
 		})
 		return
 	}
 
 	err := h.db.LoadEnvFile()
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		storageError(c, err)
 		return
 	}
 
-	// API keys are masked to their last 4 characters (CWE-200).
+	// API keys are replaced with a fixed mask (CWE-200).
 	// URLs are not secrets and are returned as-is so the UI can display them.
 	config := map[string]string{
 		"openai":        maskAPIKey(os.Getenv("OPENAI_API_KEY")),
@@ -133,23 +142,41 @@ func (h *ConfigHandler) UpdateConfig(c *gin.Context) {
 		"LM_STUDIO_API_BASE_URL": config.LMStudioURL,
 	}
 
-	var envContent strings.Builder
-	for key, value := range envVars {
+	updates := make(map[string]string, len(envVars))
+	// Sorted keys make the key in the error message the same each time.
+	for _, key := range slices.Sorted(maps.Keys(envVars)) {
+		value := envVars[key]
 		// Skip empty values and redacted placeholders returned by GET /config.
 		// Writing a masked value back would corrupt the stored key.
-		if value != "" && !isRedacted(value) {
-			envContent.WriteString(fmt.Sprintf("%s=%s\n", key, value))
-			os.Setenv(key, value)
+		// UpdateEnvVars also skips a value of only spaces, thus skip it here.
+		if strings.TrimSpace(value) == "" || isRedacted(value) {
+			continue
+		}
+		// A CR or LF in a value can add a line to the .env file. A NUL
+		// makes os.Setenv fail. Refuse these characters.
+		if strings.ContainsAny(value, "\r\n\x00") {
+			c.JSON(http.StatusBadRequest, gin.H{"error": fmt.Sprintf("invalid value for %s: must not contain CR, LF or NUL", key)})
+			return
+		}
+		updates[key] = value
+	}
+
+	// Merge the updates into the current .env file. Keep the keys that
+	// this form does not know, for example tokens from other tools.
+	// UpdateEnvVars reads, merges and writes the file under a lock.
+	if err := h.db.UpdateEnvVars(updates); err != nil {
+		storageError(c, err)
+		return
+	}
+	for key, value := range updates {
+		if err := os.Setenv(key, value); err != nil {
+			storageError(c, err)
+			return
 		}
 	}
 
-	if err := h.db.SaveEnv(envContent.String()); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
-	}
-
 	if err := h.db.LoadEnvFile(); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		storageError(c, err)
 		return
 	}
 

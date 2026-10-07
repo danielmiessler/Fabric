@@ -148,11 +148,16 @@ func runWorkflow(
 			return "", stepErr(err)
 		}
 
+		// With --input-has-vars, replace the variables only in text from the
+		// user: the first step input and each input in the workflow file. The
+		// output of a step goes to the next step as literal text.
+		stepInputHasVars := flags.InputHasVars && (i == 0 || usedOverride)
+
 		req := &domain.ChatRequest{
 			ContextName:           flags.Context,
 			PatternName:           step.Pattern,
 			PatternVariables:      mergeVars(flags.PatternVariables, step.Variables),
-			InputHasVars:          flags.InputHasVars,
+			InputHasVars:          stepInputHasVars,
 			NoVariableReplacement: flags.NoVariableReplacement,
 			StrategyName:          flags.Strategy,
 			Language:              language,
@@ -234,9 +239,10 @@ func handleWorkflowProcessing(currentFlags *Flags, registry *core.PluginRegistry
 		return
 	}
 
-	// Print the result unless streaming already printed it.
+	// Print the result unless streaming already printed it. Remove terminal
+	// control sequences from the displayed copy only.
 	if !currentFlags.Stream || chatOptions.SuppressThink {
-		fmt.Println(result)
+		fmt.Println(domain.SanitizeTerminalOutput(result))
 	}
 
 	if currentFlags.Copy {

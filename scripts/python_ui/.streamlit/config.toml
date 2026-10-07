@@ -1,0 +1,9 @@
+# Fabric Pattern Studio server defaults.
+#
+# Streamlit reads this file only when it starts from scripts/python_ui/.
+# Bind to loopback, so that the network cannot get to the UI. The UI can
+# read the host clipboard, show all prompts and outputs, and change patterns.
+# To set a different address, use your own authentication, and set
+# FABRIC_UI_TOKEN.
+[server]
+address = "127.0.0.1"

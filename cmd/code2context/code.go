@@ -82,9 +82,11 @@ func ScanDirectory(rootDir string, maxDepth int, instructions string, ignoreList
 			return nil
 		}
 
+		// Read only regular files. Skip symlinks, devices and sockets, so
+		// that a symlink cannot add a file from outside the project.
 		if info.IsDir() {
 			dirCount++
-		} else {
+		} else if info.Mode().IsRegular() {
 			fileCount++
 
 			content, err := os.ReadFile(path)

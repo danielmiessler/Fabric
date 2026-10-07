@@ -1,14 +1,22 @@
 package cli
 
 import (
+	"context"
 	"fmt"
 	"os"
 	"path/filepath"
+	"slices"
 	"strings"
 	"testing"
 
 	"github.com/danielmiessler/fabric/internal/chat"
+	"github.com/danielmiessler/fabric/internal/core"
+	"github.com/danielmiessler/fabric/internal/domain"
+	"github.com/danielmiessler/fabric/internal/plugins"
+	"github.com/danielmiessler/fabric/internal/plugins/ai"
+	"github.com/danielmiessler/fabric/internal/plugins/ai/dryrun"
 	"github.com/danielmiessler/fabric/internal/plugins/db/fsdb"
+	"github.com/danielmiessler/fabric/internal/tools"
 )
 
 // fakePatterns implements patternResolver for validation tests.
@@ -261,5 +269,103 @@ func TestMergeVars(t *testing.T) {
 	}
 	if mergeVars(nil, nil) != nil {
 		t.Error("expected nil for empty merge")
+	}
+}
+
+// stepVendor is a dry run vendor that gives the same reply to each request. It
+// keeps the last message of each request, which is the input of the step.
+type stepVendor struct {
+	*dryrun.Client
+	reply  string
+	inputs []string
+}
+
+func (v *stepVendor) Send(_ context.Context, msgs []*chat.ChatCompletionMessage, _ *domain.ChatOptions) (string, error) {
+	v.inputs = append(v.inputs, msgs[len(msgs)-1].Content)
+	return v.reply, nil
+}
+
+// newStepRegistry makes a registry with vendor as the default vendor and a
+// pattern for each step of wf.
+func newStepRegistry(t *testing.T, vendor *stepVendor, wf *Workflow) *core.PluginRegistry {
+	t.Helper()
+	db := fsdb.NewDb(t.TempDir())
+	for _, step := range wf.Steps {
+		dir := filepath.Join(db.Patterns.Dir, step.Pattern)
+		must(t, os.MkdirAll(dir, 0o755))
+		must(t, os.WriteFile(filepath.Join(dir, "system.md"), []byte("Do the task."), 0o644))
+	}
+	vendors := ai.NewVendorsManager()
+	vendors.AddVendors(vendor)
+	return &core.PluginRegistry{
+		Db:            db,
+		VendorManager: vendors,
+		Defaults: &tools.Defaults{
+			PluginBase:         &plugins.PluginBase{},
+			Vendor:             &plugins.Setting{Value: vendor.GetName()},
+			Model:              &plugins.SetupQuestion{Setting: &plugins.Setting{Value: "test-model"}},
+			ModelContextLength: &plugins.SetupQuestion{Setting: &plugins.Setting{Value: "0"}},
+		},
+	}
+}
+
+// TestRunWorkflowInputHasVars checks that --input-has-vars replaces the
+// variables in the user input and in a step input from the workflow file. The
+// output of a step goes to the next step as literal text. Without the flag,
+// each input stays as literal text.
+func TestRunWorkflowInputHasVars(t *testing.T) {
+	wf := &Workflow{Steps: []WorkflowStep{
+		{Pattern: "first"},
+		{Pattern: "second"},
+		{Pattern: "third", Input: "{{name}} from the workflow file"},
+	}}
+	vendor := &stepVendor{Client: dryrun.NewClient(), reply: "{{name}} {{plugin:sys:env:HOME}}"}
+	registry := newStepRegistry(t, vendor, wf)
+	tests := []struct {
+		inputHasVars bool
+		want         []string
+	}{
+		{true, []string{"world from the user", "{{name}} {{plugin:sys:env:HOME}}", "world from the workflow file"}},
+		{false, []string{"{{name}} from the user", "{{name}} {{plugin:sys:env:HOME}}", "{{name}} from the workflow file"}},
+	}
+	for _, tc := range tests {
+		vendor.inputs = nil
+		flags := &Flags{
+			InputHasVars:     tc.inputHasVars,
+			PatternVariables: map[string]string{"name": "world"},
+			Language:         "en",
+		}
+		if _, err := runWorkflow(registry, wf, "{{name}} from the user", flags, &domain.ChatOptions{}); err != nil {
+			t.Fatal(err)
+		}
+		if !slices.Equal(vendor.inputs, tc.want) {
+			t.Errorf("InputHasVars=%t: step inputs = %q, want %q", tc.inputHasVars, vendor.inputs, tc.want)
+		}
+	}
+}
+
+// TestHandleWorkflowProcessingSanitizesOutput checks that the printed result
+// has no terminal control sequence, and that the output file keeps the full
+// reply.
+func TestHandleWorkflowProcessingSanitizesOutput(t *testing.T) {
+	dir := t.TempDir()
+	wfPath := filepath.Join(dir, "wf.yaml")
+	must(t, os.WriteFile(wfPath, []byte("steps:\n  - pattern: only\n"), 0o644))
+	wf, err := LoadWorkflow(wfPath)
+	must(t, err)
+
+	const reply = "a\x1b]8;;http://evil.example\x07b"
+	registry := newStepRegistry(t, &stepVendor{Client: dryrun.NewClient(), reply: reply}, wf)
+	outPath := filepath.Join(dir, "out.txt")
+	flags := &Flags{Workflow: wfPath, Message: "in", Output: outPath, Language: "en"}
+
+	printed := captureStdout(t, func() { must(t, handleWorkflowProcessing(flags, registry, "")) })
+	if got := string(printed); got != "ab\n" {
+		t.Errorf("printed %q, want %q", got, "ab\n")
+	}
+	saved, err := os.ReadFile(outPath)
+	must(t, err)
+	if string(saved) != reply+"\n" {
+		t.Errorf("output file = %q, want %q", saved, reply+"\n")
 	}
 }

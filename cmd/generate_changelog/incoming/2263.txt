@@ -1,0 +1,7 @@
+### PR [#2263](https://github.com/danielmiessler/Fabric/pull/2263) by [aldoyh](https://github.com/aldoyh): Add Arabic localization file with application options and commands
+
+- Added an Arabic localization file covering application options and commands.
+- Expanded Bahrain Arabic translations across the CLI, setup flow, and error messages.
+- Added Saudi Arabic translations that match the Bahrain locale coverage.
+- Removed generic Arabic translations in favor of a regional fallback strategy, with tests for locale candidate resolution and the default Bahrain fallback order.
+- Refactored the code structure for improved readability and maintainability.

@@ -11,7 +11,7 @@ As of this update, Fabric supports these language variants:
 
 - **Arabic variants**:
   - `ar` - Modern Standard Arabic (defaults to `ar-BH`)
-  - `ar-BH` - Bahrain Arabic (Modern Standard Arabic with Bahraini dialect)
+  - `ar-BH` - Bahrain Arabic (Modern Standard Arabic)
   - `ar-SA` - Saudi Arabic (Modern Standard Arabic)
   - Arabic support added in 2026, with default to Bahrain Arabic variant
 

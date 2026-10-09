@@ -438,6 +438,7 @@
   "path_to_yaml_config": "YAML yapılandırma dosyası yolu",
   "pattern_not_found_list_available": "'%s' deseni bulunamadı. Mevcut desenleri görmek için 'fabric -l' komutunu çalıştırın",
   "pattern_invalid_name": "geçersiz desen adı: %q",
+  "pattern_from_binary_name_hint": "İpucu: -p bayrağı verilmedi; ikili dosya adı '%s' desen adı olarak kullanıldı. Bir deseni açıkça belirtmek için -p <desen> kullanın.",
   "pattern_not_found_no_patterns": "'%s' deseni bulunamadı.\n\nHiçbir desen yüklü değil! Bunu düzeltmek için:\n  • Desenleri yapılandırmak ve indirmek için 'fabric --setup' komutunu çalıştırın\n  • Veya desenleri doğrudan indirip güncellemek için 'fabric -U' komutunu çalıştırın",
   "pattern_variables_help": "Desen değişkenleri için değerler, örn. -v=#role:expert -v=#points:30",
   "patterns_cloning_repository": "Depo kopyalanıyor %s (yol: %s)...\n",

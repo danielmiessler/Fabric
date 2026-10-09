@@ -114,7 +114,7 @@ func downloadLocale(path, locale string) error {
 	if baseURL == "" {
 		baseURL = "https://raw.githubusercontent.com/danielmiessler/Fabric/main/internal/i18n/locales"
 	}
-	
+
 	url := fmt.Sprintf("%s/%s.json", baseURL, locale)
 	resp, err := http.Get(url)
 	if err != nil {

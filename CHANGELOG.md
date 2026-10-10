@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.4.517 (2026-10-10)
+
+### PR [#2263](https://github.com/danielmiessler/Fabric/pull/2263) by [aldoyh](https://github.com/aldoyh) and [ksylvan](https://github.com/ksylvan): Add Arabic localization file with application options and commands
+
+- Added an Arabic localization file covering application options and commands.
+- Expanded Bahrain Arabic translations across the CLI, setup flow, and error messages.
+- Added Saudi Arabic translations that match the Bahrain locale coverage.
+- Removed generic Arabic translations in favor of a regional fallback strategy, with tests for locale candidate resolution and the default Bahrain fallback order.
+- Refactored the code structure for improved readability and maintainability.
+
 ## v1.4.516 (2026-10-07)
 
 ### PR [#2261](https://github.com/danielmiessler/Fabric/pull/2261) by [ksylvan](https://github.com/ksylvan): fix: harden REST server, template engine and plugins

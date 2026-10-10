@@ -15,6 +15,7 @@ import (
 // flagDescriptionMap maps long flag names to i18n keys. A flag that is missing here shows its struct tag description.
 var flagDescriptionMap = map[string]string{
 	"pattern":                    "choose_pattern_from_available",
+	"workflow":                   "workflow_file_help",
 	"variable":                   "pattern_variables_help",
 	"context":                    "choose_context_from_available",
 	"session":                    "choose_session_from_available",
@@ -36,6 +37,7 @@ var flagDescriptionMap = map[string]string{
 	"model":                      "choose_model",
 	"vendor":                     "specify_vendor_for_model",
 	"modelContextLength":         "model_context_length_ollama",
+	"maxTokens":                  "max_tokens_help",
 	"output":                     "output_to_file",
 	"output-session":             "output_entire_session",
 	"extract":                    "extract_first_code_block",

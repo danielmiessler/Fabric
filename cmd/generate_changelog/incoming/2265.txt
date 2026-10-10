@@ -1,0 +1,4 @@
+### PR [#2265](https://github.com/danielmiessler/Fabric/pull/2265) by [Owaid0723666](https://github.com/Owaid0723666): feat: add onomeo as an OpenAI-compatible provider
+
+- Added onomeo as an OpenAI-compatible provider, registered in the ProviderMap with the base URL `https://onomeo.com/v1`.
+- Added a matching `TestCreateClient` test case.

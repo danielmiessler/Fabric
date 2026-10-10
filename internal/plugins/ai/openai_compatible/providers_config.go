@@ -354,6 +354,11 @@ var ProviderMap = map[string]ProviderConfig{
 		BaseURL:             "https://api.novita.ai/openai/v1",
 		ImplementsResponses: false,
 	},
+	"onomeo": {
+		Name:                "onomeo",
+		BaseURL:             "https://onomeo.com/v1",
+		ImplementsResponses: false,
+	},
 	"OpenCode Go": {
 		Name:                "OpenCode Go",
 		BaseURL:             "https://opencode.ai/zen/go/v1",

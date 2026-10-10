@@ -2,11 +2,18 @@
 
 ## Current Implementation
 
-As of this update, Fabric supports Portuguese language variants:
+As of this update, Fabric supports these language variants:
 
-- `pt-BR` - Brazilian Portuguese
-- `pt-PT` - European Portuguese
-- `pt` - defaults to `pt-BR` for backward compatibility
+- **Portuguese variants**:
+  - `pt-BR` - Brazilian Portuguese
+  - `pt-PT` - European Portuguese
+  - `pt` - defaults to `pt-BR` for backward compatibility
+
+- **Arabic variants**:
+  - `ar` - Modern Standard Arabic (defaults to `ar-BH`)
+  - `ar-BH` - Bahrain Arabic (Modern Standard Arabic)
+  - `ar-SA` - Saudi Arabic (Modern Standard Arabic)
+  - Arabic support added in 2026, with default to Bahrain Arabic variant
 
 ## Architecture
 

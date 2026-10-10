@@ -27,6 +27,7 @@ var (
 // getLocaleCandidates tries it after the requested locale and the base language.
 var defaultLanguageVariants = map[string]string{
 	"pt": "pt-BR", // "pt" meant Brazilian Portuguese before pt-PT.json existed
+	"ar": "ar-BH", // "ar" defaults to Bahrain Arabic
 }
 
 // Init initializes the i18n bundle and localizer. It loads the specified locale
@@ -67,8 +68,12 @@ func Init(locale string) (*i18n.Localizer, error) {
 	path := filepath.Join(userLocaleDir(), locale+".json")
 	if _, err := os.Stat(path); os.IsNotExist(err) && !embedded {
 		if err := downloadLocale(path, locale); err != nil {
-			// a failed download leaves the English fallback in place
-			fmt.Fprintf(os.Stderr, "%s\n", fmt.Sprintf(getErrorMessage("i18n_download_failed", "Failed to download translation for language '%s': %v"), locale, err))
+			// Only show download error if we don't have an embedded locale
+			// This prevents errors for locales that exist embedded but not on GitHub yet
+			// Also, don't show error for 404s - they're expected for new/unreleased locales
+			if !embedded && !strings.Contains(err.Error(), "404") {
+				fmt.Fprintf(os.Stderr, "%s\n", fmt.Sprintf(getErrorMessage("i18n_download_failed", "Failed to download translation for language '%s': %v"), locale, err))
+			}
 		}
 	}
 	if _, err := os.Stat(path); err == nil {
@@ -104,7 +109,13 @@ func userLocaleDir() string {
 }
 
 func downloadLocale(path, locale string) error {
-	url := fmt.Sprintf("https://raw.githubusercontent.com/danielmiessler/Fabric/main/internal/i18n/locales/%s.json", locale)
+	// Allow overriding the download URL via environment variable for forks/local development
+	baseURL := os.Getenv("FABRIC_LOCALE_DOWNLOAD_URL")
+	if baseURL == "" {
+		baseURL = "https://raw.githubusercontent.com/danielmiessler/Fabric/main/internal/i18n/locales"
+	}
+
+	url := fmt.Sprintf("%s/%s.json", baseURL, locale)
 	resp, err := http.Get(url)
 	if err != nil {
 		return err

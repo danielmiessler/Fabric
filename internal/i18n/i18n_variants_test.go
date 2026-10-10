@@ -55,6 +55,11 @@ func TestGetLocaleCandidates(t *testing.T) {
 		{"pt-BR", []string{"pt-BR", "pt"}},          // the request is already the default
 		{"pt", []string{"pt", "pt-BR"}},
 
+		// Arabic variants
+		{"ar-SA", []string{"ar-SA", "ar", "ar-BH"}}, // ar-BH is the default for ar
+		{"ar-BH", []string{"ar-BH", "ar"}},
+		{"ar", []string{"ar", "ar-BH"}},
+
 		// Other languages without default variants
 		{"en-US", []string{"en-US", "en"}},
 		{"en", []string{"en"}},

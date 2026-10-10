@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.4.518 (2026-10-10)
+
+### PR [#2265](https://github.com/danielmiessler/Fabric/pull/2265) by [Owaid0723666](https://github.com/Owaid0723666): feat: add onomeo as an OpenAI-compatible provider
+
+- Added onomeo as an OpenAI-compatible provider, registered in the ProviderMap with the base URL `https://onomeo.com/v1`.
+- Added a matching `TestCreateClient` test case.
+
 ## v1.4.517 (2026-10-10)
 
 ### PR [#2263](https://github.com/danielmiessler/Fabric/pull/2263) by [aldoyh](https://github.com/aldoyh) and [ksylvan](https://github.com/ksylvan): Add Arabic localization file with application options and commands

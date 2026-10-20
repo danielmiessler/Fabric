@@ -59,7 +59,7 @@ func newSecuredEngine(registry *core.PluginRegistry, apiKey string, corsOrigins 
 	// The query string can hold template variables, for example on
 	// POST /patterns/:name/apply. Do not write it to the log.
 	r.Use(gin.LoggerWithConfig(gin.LoggerConfig{SkipQueryString: true}))
-	r.Use(gin.Recovery())
+	r.Use(gin.RecoveryWithWriter(RedactingWriter{out: gin.DefaultErrorWriter}))
 
 	if len(corsOrigins) > 0 {
 		r.Use(CORSMiddleware(corsOrigins))

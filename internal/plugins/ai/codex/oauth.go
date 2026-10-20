@@ -137,10 +137,9 @@ func (c *Client) handleOAuthCallback(
 	}
 
 	if !oauthStatesMatch(expectedState, r.URL.Query().Get("state")) {
+		// A callback with the wrong state did not come from our authorize request. Reject it
+		// and keep waiting, so that it cannot cancel the login that is pending.
 		http.Error(w, i18n.T("codex_oauth_state_mismatch"), http.StatusBadRequest)
-		c.publishOAuthResult(results, oauthResult{
-			err: errors.New(i18n.T("codex_login_state_mismatch")),
-		})
 		return
 	}
 

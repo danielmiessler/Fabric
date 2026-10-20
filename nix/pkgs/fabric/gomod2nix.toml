@@ -74,11 +74,11 @@ schema = 3
     version = "v1.5.6"
     hash = "sha256-mUvvzkY2CCbID2PK6q4Ta+emIb3d2PxCTJqPWi4zLy4="
   [mod."github.com/aws/aws-sdk-go-v2/service/bedrock"]
-    version = "v1.73.4"
-    hash = "sha256-pnDF8hbVPMLyjo48tFM2Bj8qdfszU49656+57HV72Sc="
+    version = "v1.73.5"
+    hash = "sha256-i1BluXqn8LU7EXI0AHmXqe5IsFQ0QGIdnYyTsHlvSM8="
   [mod."github.com/aws/aws-sdk-go-v2/service/bedrockruntime"]
-    version = "v1.63.4"
-    hash = "sha256-INeiVnL5wfbywkPpkYTxBy3P8kG6yoG25STuWdGHmG0="
+    version = "v1.63.5"
+    hash = "sha256-97NEXSgDnj5auLpplCHKPS4GUFrCNvssAdVb86rOuD0="
   [mod."github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding"]
     version = "v1.13.21"
     hash = "sha256-Om4sMurGFiNLWZa0GUVaxPH9BVb9K4eWvbUFxuTcjZw="
@@ -137,8 +137,8 @@ schema = 3
     version = "v1.1.0"
     hash = "sha256-oePAjhI+dYRrMQAeUWnJ3o+PdHFU1tk1Z/R3/kGdjnw="
   [mod."github.com/gabriel-vasile/mimetype"]
-    version = "v1.4.15"
-    hash = "sha256-MSmdWIAtF32qz02SDQx+cuj8EZCFUemTCAQPFq42JN0="
+    version = "v1.4.16"
+    hash = "sha256-Rh2Hz9Dv7fcKnI6mepScae2KpmBdhjxqIJW5HVVOJWs="
   [mod."github.com/gin-contrib/sse"]
     version = "v1.1.2"
     hash = "sha256-9QQPbX41wqHcdmG5WyT1gIkTSBkcqfqihFV/4odVYS0="
@@ -299,11 +299,11 @@ schema = 3
     version = "v2.6.1"
     hash = "sha256-ag/8GBAwqkOyIVrdlaFYLxy9dgPOq7VbactrLmzxK7E="
   [mod."github.com/ollama/ollama"]
-    version = "v0.40.5"
-    hash = "sha256-c0v8j59+jy/Z3SlRtBUvZNQOL5+ZCSGHMCvFw6kwi2A="
+    version = "v0.40.6"
+    hash = "sha256-9wqDYEdReZ32W5rZQ/PXmMVAMcJ6OVTcD4RnF9AfVXc="
   [mod."github.com/openai/openai-go/v3"]
-    version = "v3.78.0"
-    hash = "sha256-ZWBPp82VYXCj/MIn0y9rqGPcBq3oWkRSHL5w0OmWAbc="
+    version = "v3.82.0"
+    hash = "sha256-2Wa6BcjuY1y9xaKEmf8XvpPDy0O91d9Wdhz78oISLMA="
   [mod."github.com/otiai10/copy"]
     version = "v1.14.1"
     hash = "sha256-8RR7u17SbYg9AeBXVHIv5ZMU+kHmOcx0rLUKyz6YtU0="
@@ -332,17 +332,14 @@ schema = 3
     version = "v0.6.0"
     hash = "sha256-xaxHnTKIZt1cHK5ZqTuSTOt5RNSjQB37GlrIgEGBskM="
   [mod."github.com/quic-go/quic-go"]
-    version = "v0.64.0"
-    hash = "sha256-vGmXcwzRzZhRrJ6Rb0fn2uRAiqmPWms9QqOYuNTlenA="
+    version = "v0.64.1"
+    hash = "sha256-lbt3F0zedf5iGYOTkNknGsrSQClxWy+/1i5GnmWgCI4="
   [mod."github.com/samber/lo"]
     version = "v1.53.0"
     hash = "sha256-RCf4Buf357TTWQnMPSWKrfdJ4L/RqOHNBD0g3+VpMw8="
   [mod."github.com/sergi/go-diff"]
     version = "v1.4.0"
     hash = "sha256-rs9NKpv/qcQEMRg7CmxGdP4HGuFdBxlpWf9LbA9wS4k="
-  [mod."github.com/sgaunet/perplexity-go/v2"]
-    version = "v2.17.0"
-    hash = "sha256-XBbRHH67GMHysTih25BWnY5askffoN+i5vaRlTc19w4="
   [mod."github.com/skeema/knownhosts"]
     version = "v1.3.3"
     hash = "sha256-lcQuDNZRblmXTOtE+NtNfP1Gf7BPmbqQyJLvN1Ty+dk="
@@ -449,13 +446,13 @@ schema = 3
     version = "v0.52.0"
     hash = "sha256-keFn6eH6Oa54T4r9msvMw1q4wqJ2yRadGTb/TbPvmXI="
   [mod."google.golang.org/api"]
-    version = "v0.304.0"
-    hash = "sha256-r3AR0pY47Kg51A3W743JKQX0npwFxlkQA4oVxB2hLxM="
+    version = "v0.305.0"
+    hash = "sha256-+7wI8rQh3+Gp3Qphef/oL6PKMbMelj2CqtP7yUS+Xx4="
   [mod."google.golang.org/genai"]
     version = "v1.75.0"
     hash = "sha256-NnijDdz5eZTW5LG5n8sDHDd1aUaz+dHrITfe2xOwJtM="
   [mod."google.golang.org/genproto/googleapis/rpc"]
-    version = "v0.0.0-20261012220534-4341edf3f941"
+    version = "v0.0.0-20261019180522-ce908d29299b"
     hash = "sha256-qBJJ3Go2HqyEE+jp6FMafhXbMBbA/PIXvbdROnLPAYA="
   [mod."google.golang.org/grpc"]
     version = "v1.84.0"

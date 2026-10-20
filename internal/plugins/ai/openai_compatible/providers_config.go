@@ -388,6 +388,11 @@ var ProviderMap = map[string]ProviderConfig{
 		BaseURL:             "https://api.orcarouter.ai/v1",
 		ImplementsResponses: false,
 	},
+	"OVHcloud": {
+		Name:                "OVHcloud",
+		BaseURL:             "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
+		ImplementsResponses: false,
+	},
 	"Pzero": {
 		Name:                "Pzero",
 		BaseURL:             "https://api.pzero.studio/v1",

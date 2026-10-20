@@ -196,13 +196,24 @@ func ApplyFileChanges(projectRoot string, changes []FileChange) error {
 
 // unsafePath reports whether a component of the clean, relative path is .git
 // (any case) or a symlink that is in the root.
+//
+// A name comparison is not sufficient. On Windows, the NTFS 8.3 short name
+// GIT~1 also opens the .git directory. Thus unsafePath also refuses a component
+// that is the same file as the .git entry in its parent directory.
 func unsafePath(root *os.Root, clean string) bool {
 	parts := strings.Split(clean, string(filepath.Separator))
 	for i, part := range parts {
 		if strings.EqualFold(part, ".git") {
 			return true
 		}
-		if info, err := root.Lstat(filepath.Join(parts[:i+1]...)); err == nil && info.Mode()&os.ModeSymlink != 0 {
+		info, err := root.Lstat(filepath.Join(parts[:i+1]...))
+		if err != nil {
+			continue
+		}
+		if info.Mode()&os.ModeSymlink != 0 {
+			return true
+		}
+		if git, err := root.Lstat(filepath.Join(append(parts[:i:i], ".git")...)); err == nil && os.SameFile(info, git) {
 			return true
 		}
 	}

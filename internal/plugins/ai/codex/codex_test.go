@@ -842,3 +842,60 @@ func writeSSE(w http.ResponseWriter, frame string) {
 	fmt.Fprintf(w, "%s\n\n", frame)
 	w.(http.Flusher).Flush()
 }
+
+func TestRunOAuthFlowIgnoresCallbackWithWrongState(t *testing.T) {
+	authServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path != "/oauth/token" {
+			http.NotFound(w, r)
+			return
+		}
+		_ = json.NewEncoder(w).Encode(oauthTokens{
+			IDToken:      testJWT("acct_oauth", time.Now().Add(time.Hour)),
+			AccessToken:  testJWT("acct_oauth", time.Now().Add(time.Hour)),
+			RefreshToken: "refresh-oauth",
+		})
+	}))
+	defer authServer.Close()
+
+	client := NewClient()
+	client.AuthBaseURL.Value = authServer.URL
+
+	badStatus := make(chan int, 1)
+	openBrowserFn := func(authURL string) error {
+		parsed, err := url.Parse(authURL)
+		if err != nil {
+			return err
+		}
+		callbackURL := parsed.Query().Get("redirect_uri")
+		state := parsed.Query().Get("state")
+
+		go func() {
+			// Another local process sends a callback with the wrong state first.
+			resp, err := http.Get(callbackURL + "?code=forged&state=not-the-state")
+			if err != nil {
+				badStatus <- 0
+				return
+			}
+			_ = resp.Body.Close()
+			badStatus <- resp.StatusCode
+
+			// The real browser callback arrives afterwards.
+			_, _ = http.Get(callbackURL + "?code=auth-code&state=" + url.QueryEscape(state))
+		}()
+		return nil
+	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
+	tokens, err := client.runOAuthFlow(ctx, openBrowserFn)
+	if err != nil {
+		t.Fatalf("runOAuthFlow() error = %v, want the valid callback to complete the login", err)
+	}
+	if tokens.RefreshToken != "refresh-oauth" {
+		t.Fatalf("RefreshToken = %q, want %q", tokens.RefreshToken, "refresh-oauth")
+	}
+	if got := <-badStatus; got != http.StatusBadRequest {
+		t.Fatalf("wrong-state callback status = %d, want %d", got, http.StatusBadRequest)
+	}
+}

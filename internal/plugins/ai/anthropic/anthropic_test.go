@@ -229,6 +229,21 @@ func TestBuildMessageParams_Opus47OmitsSamplingParams(t *testing.T) {
 	}
 }
 
+func TestBuildMessageParams_Haiku55AndMythosOmitSamplingParams(t *testing.T) {
+	for _, model := range []string{"claude-haiku-5-5", "claude-mythos-5", "claude-mythos-5-1", "claude-mythos-preview"} {
+		params := NewClient().buildMessageParams(
+			[]anthropic.MessageParam{anthropic.NewUserMessage(anthropic.NewTextBlock("Hello"))},
+			&domain.ChatOptions{Model: model, Temperature: 0.7, TopP: 0.8},
+		)
+		if params.Temperature.Value != 0 {
+			t.Errorf("expected temperature to be omitted for %s, got %f", model, params.Temperature.Value)
+		}
+		if params.TopP.Value != 0 {
+			t.Errorf("expected top_p to be omitted for %s, got %f", model, params.TopP.Value)
+		}
+	}
+}
+
 func TestModelBetasConfiguration(t *testing.T) {
 	client := NewClient()
 	model := string(anthropic.ModelClaudeSonnet5)
@@ -440,7 +455,7 @@ func TestParseThinking_AdaptiveModelUsesAdaptivePlusEffort(t *testing.T) {
 }
 
 func TestParseThinking_LegacyModelKeepsBudgetTokens(t *testing.T) {
-	thinking, effort, ok := parseThinking(domain.ThinkingMedium, string(anthropic.ModelClaudeOpus4_7))
+	thinking, effort, ok := parseThinking(domain.ThinkingMedium, string(anthropic.ModelClaudeOpus4_6))
 	if !ok {
 		t.Fatal("parseThinking returned ok=false")
 	}
@@ -503,7 +518,11 @@ func TestBuildMessageParams_ThinkingShapeFollowsModel(t *testing.T) {
 		wantEffort   anthropic.OutputConfigEffort
 	}{
 		{anthropic.ModelClaudeSonnet5, true, anthropic.OutputConfigEffortMedium},
-		{anthropic.ModelClaudeOpus4_7, false, ""},
+		{anthropic.ModelClaudeOpus4_7, true, anthropic.OutputConfigEffortMedium},
+		{anthropic.ModelClaudeOpus4_8, true, anthropic.OutputConfigEffortMedium},
+		{anthropic.ModelClaudeHaiku5_5, true, anthropic.OutputConfigEffortMedium},
+		{anthropic.ModelClaudeMythos5, true, anthropic.OutputConfigEffortMedium},
+		{anthropic.ModelClaudeOpus4_6, false, ""},
 	} {
 		params := NewClient().buildMessageParams(
 			[]anthropic.MessageParam{anthropic.NewUserMessage(anthropic.NewTextBlock("Hello"))},

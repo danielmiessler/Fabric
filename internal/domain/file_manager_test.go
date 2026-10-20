@@ -3,6 +3,7 @@ package domain
 import (
 	"os"
 	"path/filepath"
+	"runtime"
 	"testing"
 )
 
@@ -237,6 +238,33 @@ func TestApplyFileChanges_RejectsGitAndSymlinks(t *testing.T) {
 	}
 	if _, err := os.Stat(filepath.Join(projectRoot, ".git", "hooks", "pre-commit")); err == nil {
 		t.Errorf("file was written into .git through a symlink")
+	}
+}
+
+// TestApplyFileChanges_RejectsGitShortName makes sure that ApplyFileChanges
+// does not write into .git through its Windows 8.3 short name.
+func TestApplyFileChanges_RejectsGitShortName(t *testing.T) {
+	if runtime.GOOS != "windows" {
+		t.Skip("8.3 short names are a Windows feature")
+	}
+	projectRoot := t.TempDir()
+	if err := os.MkdirAll(filepath.Join(projectRoot, ".git", "hooks"), 0755); err != nil {
+		t.Fatal(err)
+	}
+	git, _ := os.Stat(filepath.Join(projectRoot, ".git"))
+	alias, err := os.Stat(filepath.Join(projectRoot, "GIT~1"))
+	if err != nil || !os.SameFile(git, alias) {
+		t.Skip("8.3 short names are disabled on this volume")
+	}
+	for _, path := range []string{"git~1/hooks/pre-commit", `GIT~1\hooks\pre-commit`, "git~1"} {
+		if err := ApplyFileChanges(projectRoot, []FileChange{
+			{Operation: "create", Path: path, Content: "#!/bin/sh\n"},
+		}); err == nil {
+			t.Errorf("write to %q through the .git short name should be rejected", path)
+		}
+	}
+	if _, err := os.Stat(filepath.Join(projectRoot, ".git", "hooks", "pre-commit")); err == nil {
+		t.Errorf("file was written into .git through its short name")
 	}
 }
 

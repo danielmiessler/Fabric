@@ -224,7 +224,7 @@ func TestValidateImageFile(t *testing.T) {
 	t.Run("Valid extensions should pass", func(t *testing.T) {
 		validExtensions := []string{".png", ".jpeg", ".jpg", ".webp"}
 		for _, ext := range validExtensions {
-			filename := "/tmp/test" + ext
+			filename := filepath.Join(t.TempDir(), "test"+ext)
 			err := validateImageFile(filename)
 			assert.NoError(t, err, "Extension %s should be valid", ext)
 		}
@@ -233,7 +233,7 @@ func TestValidateImageFile(t *testing.T) {
 	t.Run("Invalid extensions should fail", func(t *testing.T) {
 		invalidExtensions := []string{".gif", ".bmp", ".tiff", ".svg", ".txt", ""}
 		for _, ext := range invalidExtensions {
-			filename := "/tmp/test" + ext
+			filename := filepath.Join(t.TempDir(), "test"+ext)
 			err := validateImageFile(filename)
 			assert.Error(t, err, "Extension %s should be invalid", ext)
 			assert.Contains(t, err.Error(), "invalid image file extension")
@@ -262,19 +262,20 @@ func TestValidateImageFile(t *testing.T) {
 }
 
 func TestBuildChatOptionsWithImageFileValidation(t *testing.T) {
+	dir := t.TempDir()
 	t.Run("Valid image file should pass", func(t *testing.T) {
 		flags := &Flags{
-			ImageFile: "/tmp/output.png",
+			ImageFile: filepath.Join(dir, "output.png"),
 		}
 
 		options, err := flags.BuildChatOptions()
 		assert.NoError(t, err)
-		assert.Equal(t, "/tmp/output.png", options.ImageFile)
+		assert.Equal(t, filepath.Join(dir, "output.png"), options.ImageFile)
 	})
 
 	t.Run("Invalid extension should fail", func(t *testing.T) {
 		flags := &Flags{
-			ImageFile: "/tmp/output.gif",
+			ImageFile: filepath.Join(dir, "output.gif"),
 		}
 
 		options, err := flags.BuildChatOptions()
@@ -329,16 +330,17 @@ func TestValidateImageParameters(t *testing.T) {
 		assert.Contains(t, err.Error(), "image parameters")
 	})
 
+	dir := t.TempDir()
 	t.Run("Valid size values should pass", func(t *testing.T) {
 		validSizes := []string{"1024x1024", "1536x1024", "1024x1536", "auto"}
 		for _, size := range validSizes {
-			err := validateImageParameters("/tmp/test.png", size, "", "", 0)
+			err := validateImageParameters(filepath.Join(dir, "test.png"), size, "", "", 0)
 			assert.NoError(t, err, "Size %s should be valid", size)
 		}
 	})
 
 	t.Run("Invalid size should fail", func(t *testing.T) {
-		err := validateImageParameters("/tmp/test.png", "invalid", "", "", 0)
+		err := validateImageParameters(filepath.Join(dir, "test.png"), "invalid", "", "", 0)
 		assert.Error(t, err)
 		assert.Contains(t, err.Error(), "invalid image size")
 	})
@@ -346,13 +348,13 @@ func TestValidateImageParameters(t *testing.T) {
 	t.Run("Valid quality values should pass", func(t *testing.T) {
 		validQualities := []string{"low", "medium", "high", "auto"}
 		for _, quality := range validQualities {
-			err := validateImageParameters("/tmp/test.png", "", quality, "", 0)
+			err := validateImageParameters(filepath.Join(dir, "test.png"), "", quality, "", 0)
 			assert.NoError(t, err, "Quality %s should be valid", quality)
 		}
 	})
 
 	t.Run("Invalid quality should fail", func(t *testing.T) {
-		err := validateImageParameters("/tmp/test.png", "", "invalid", "", 0)
+		err := validateImageParameters(filepath.Join(dir, "test.png"), "", "invalid", "", 0)
 		assert.Error(t, err)
 		assert.Contains(t, err.Error(), "invalid image quality")
 	})
@@ -360,64 +362,65 @@ func TestValidateImageParameters(t *testing.T) {
 	t.Run("Valid background values should pass", func(t *testing.T) {
 		validBackgrounds := []string{"opaque", "transparent"}
 		for _, background := range validBackgrounds {
-			err := validateImageParameters("/tmp/test.png", "", "", background, 0)
+			err := validateImageParameters(filepath.Join(dir, "test.png"), "", "", background, 0)
 			assert.NoError(t, err, "Background %s should be valid", background)
 		}
 	})
 
 	t.Run("Invalid background should fail", func(t *testing.T) {
-		err := validateImageParameters("/tmp/test.png", "", "", "invalid", 0)
+		err := validateImageParameters(filepath.Join(dir, "test.png"), "", "", "invalid", 0)
 		assert.Error(t, err)
 		assert.Contains(t, err.Error(), "invalid image background")
 	})
 
 	t.Run("Compression for JPEG should pass", func(t *testing.T) {
-		err := validateImageParameters("/tmp/test.jpg", "", "", "", 75)
+		err := validateImageParameters(filepath.Join(dir, "test.jpg"), "", "", "", 75)
 		assert.NoError(t, err)
 	})
 
 	t.Run("Compression for WebP should pass", func(t *testing.T) {
-		err := validateImageParameters("/tmp/test.webp", "", "", "", 50)
+		err := validateImageParameters(filepath.Join(dir, "test.webp"), "", "", "", 50)
 		assert.NoError(t, err)
 	})
 
 	t.Run("Compression for PNG should fail", func(t *testing.T) {
-		err := validateImageParameters("/tmp/test.png", "", "", "", 75)
+		err := validateImageParameters(filepath.Join(dir, "test.png"), "", "", "", 75)
 		assert.Error(t, err)
 		assert.Contains(t, err.Error(), "image compression can only be used with JPEG and WebP formats")
 	})
 
 	t.Run("Invalid compression range should fail", func(t *testing.T) {
-		err := validateImageParameters("/tmp/test.jpg", "", "", "", 150)
+		err := validateImageParameters(filepath.Join(dir, "test.jpg"), "", "", "", 150)
 		assert.Error(t, err)
 		assert.Contains(t, err.Error(), "image compression must be between 0 and 100")
 
-		err = validateImageParameters("/tmp/test.jpg", "", "", "", -10)
+		err = validateImageParameters(filepath.Join(dir, "test.jpg"), "", "", "", -10)
 		assert.Error(t, err)
 		assert.Contains(t, err.Error(), "image compression must be between 0 and 100")
 	})
 
 	t.Run("Transparent background for PNG should pass", func(t *testing.T) {
-		err := validateImageParameters("/tmp/test.png", "", "", "transparent", 0)
+		err := validateImageParameters(filepath.Join(dir, "test.png"), "", "", "transparent", 0)
 		assert.NoError(t, err)
 	})
 
 	t.Run("Transparent background for WebP should pass", func(t *testing.T) {
-		err := validateImageParameters("/tmp/test.webp", "", "", "transparent", 0)
+		err := validateImageParameters(filepath.Join(dir, "test.webp"), "", "", "transparent", 0)
 		assert.NoError(t, err)
 	})
 
 	t.Run("Transparent background for JPEG should fail", func(t *testing.T) {
-		err := validateImageParameters("/tmp/test.jpg", "", "", "transparent", 0)
+		err := validateImageParameters(filepath.Join(dir, "test.jpg"), "", "", "transparent", 0)
 		assert.Error(t, err)
 		assert.Contains(t, err.Error(), "transparent background can only be used with PNG and WebP formats")
 	})
 }
 
 func TestBuildChatOptionsWithImageParameters(t *testing.T) {
+	dir := t.TempDir()
 	t.Run("Valid image parameters should pass", func(t *testing.T) {
 		flags := &Flags{
-			ImageFile:        "/tmp/test.png",
+			ImageFile:        filepath.Join(dir, "test.png"),
 			ImageSize:        "1024x1024",
 			ImageQuality:     "high",
 			ImageBackground:  "transparent",
@@ -427,7 +430,7 @@ func TestBuildChatOptionsWithImageParameters(t *testing.T) {
 		options, err := flags.BuildChatOptions()
 		assert.NoError(t, err)
 		assert.NotNil(t, options)
-		assert.Equal(t, "/tmp/test.png", options.ImageFile)
+		assert.Equal(t, filepath.Join(dir, "test.png"), options.ImageFile)
 		assert.Equal(t, "1024x1024", options.ImageSize)
 		assert.Equal(t, "high", options.ImageQuality)
 		assert.Equal(t, "transparent", options.ImageBackground)
@@ -436,7 +439,7 @@ func TestBuildChatOptionsWithImageParameters(t *testing.T) {
 
 	t.Run("Invalid image parameters should fail", func(t *testing.T) {
 		flags := &Flags{
-			ImageFile:       "/tmp/test.png",
+			ImageFile:       filepath.Join(dir, "test.png"),
 			ImageSize:       "invalid",
 			ImageQuality:    "high",
 			ImageBackground: "transparent",
@@ -450,7 +453,7 @@ func TestBuildChatOptionsWithImageParameters(t *testing.T) {
 
 	t.Run("JPEG with compression should pass", func(t *testing.T) {
 		flags := &Flags{
-			ImageFile:        "/tmp/test.jpg",
+			ImageFile:        filepath.Join(dir, "test.jpg"),
 			ImageSize:        "1536x1024",
 			ImageQuality:     "medium",
 			ImageBackground:  "opaque",

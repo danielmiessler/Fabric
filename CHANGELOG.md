@@ -1,5 +1,60 @@
 # Changelog
 
+## v1.4.530 (2026-10-20)
+
+### PR [#2277](https://github.com/danielmiessler/Fabric/pull/2277) by [pcbeingused333](https://github.com/pcbeingused333) and [ksylvan](https://github.com/ksylvan): fix(server): redact the API key in the recovery request dumps
+
+- Fixed the server so that `gin.Recovery()` request dumps no longer leak the `X-API-Key` header in clear text; `Cookie` and `Proxy-Authorization` are now masked as well.
+- Applied the redaction through the Gin recovery middleware, so both the REST and Ollama servers are protected, with tests covering the debug-mode panic dump and the broken-pipe dump.
+- Exported `RedactingWriter` and simplified the recovery log redaction logic, splitting request dumps on CRLF and matching header prefixes case-sensitively.
+- Fixed flaky CLI image tests by isolating their files in a private temporary directory instead of the shared `/tmp`, preventing "image file already exists" failures during parallel runs.
+- Switched image test paths to automatic `t.TempDir()` cleanup and portable path construction with `filepath.Join`.
+
+## v1.4.529 (2026-10-20)
+
+### PR [#2278](https://github.com/danielmiessler/Fabric/pull/2278) by [ksylvan](https://github.com/ksylvan): feat: add OVHcloud as an OpenAI-compatible AI provider
+
+- Added OVHcloud as a new OpenAI-compatible AI provider.
+- Registered OVHcloud with its OpenAI-compatible API endpoint configuration.
+- Disabled Responses API support for the OVHcloud provider.
+- Documented OVHcloud support in the README and changelog.
+
+## v1.4.528 (2026-10-19)
+
+### PR [#2276](https://github.com/danielmiessler/Fabric/pull/2276) by [ksylvan](https://github.com/ksylvan): fix(perplexity): move the Perplexity vendor to the Agent API
+
+- Fixed Perplexity requests that failed with "Sonar is now the Agent API". The vendor now uses the Perplexity Agent API (`/v1/responses`) through the OpenAI client, and the `perplexity-go` dependency is removed.
+- Saved Sonar model names continue to work: `sonar` maps to `perplexity/sonar`, `sonar-pro` to the `fast` preset, and `sonar-reasoning-pro` to the `low` preset. `fabric -L` lists the Agent API models and presets.
+- Perplexity search results show as numbered sources, in streaming and non-streaming modes. The numbers agree with the `[n]` markers in the answer.
+- Fixed streamed Perplexity answers that showed two times.
+
+## v1.4.527 (2026-10-19)
+
+### PR [#2273](https://github.com/danielmiessler/Fabric/pull/2273) by [ksylvan](https://github.com/ksylvan): fix(web): run predev and prebuild scripts on Windows
+
+- Fixed the web `predev` and `prebuild` scripts failing on Windows, where `cmd.exe` lacks the `mkdir -p` and `cp` commands and caused `npm run dev` to abort before Vite started.
+- Replaced the shell commands with Node's `fs.cpSync`, which creates the `static/data` directory when missing and works across all platforms.
+
+## v1.4.526 (2026-10-18)
+
+### PR [#2270](https://github.com/danielmiessler/Fabric/pull/2270) by [pcbeingused333](https://github.com/pcbeingused333) and [kaylvan](https://github.com/kaylvan): fix(anthropic): send adaptive thinking and no sampling params to Haiku 5.5, Mythos and Opus 4.7/4.8
+
+- Fixed Anthropic requests by omitting sampling parameters (such as the default 0.7 temperature) for Claude Haiku 5.5 and Mythos models, which reject non-default values.
+- Extended adaptive thinking support to Opus 4.7, Opus 4.8, Haiku 5.5, and Mythos 5/5.1, preventing 400 errors caused by sending `budget_tokens` with `thinking.type=enabled`; Opus 4.6 remains the newest model that accepts it.
+- Added new Claude models, including Fable 5.1, Sonnet 5.5, Haiku 5.5, and Mythos 5 and 5.1.
+- Enabled million-token context beta support for all newly listed models.
+- Upgraded dependencies: mimetype to v1.4.16, Ollama to v0.40.6, and openai-go to v3.81.0.
+
+## v1.4.525 (2026-10-18)
+
+### PR [#2272](https://github.com/danielmiessler/Fabric/pull/2272) by [ksylvan](https://github.com/ksylvan): fix: refuse writes into .git through its Windows 8.3 short name
+
+- Fixed a security gap that allowed writes into the `.git` directory through its Windows 8.3 short name (`GIT~1`), which could let `create_coding_feature` plant a Git hook.
+- Updated `unsafePath` to reject any path component that resolves to the same file as the `.git` entry in its parent directory, using `os.SameFile`.
+- Added a Windows test covering the `git~1` alias.
+- Added a `windows-latest` job to the CI workflow.
+- Limited the Windows CI job to the file manager domain tests (run with `-v`), since other packages fail on Windows due to path separators, shell scripts, and a notification timeout.
+
 ## v1.4.524 (2026-10-16)
 
 ### PR [#2244](https://github.com/danielmiessler/Fabric/pull/2244) by [taljeon](https://github.com/taljeon): fix(core): preserve the selected vendor model spelling

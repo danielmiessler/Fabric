@@ -2,6 +2,7 @@ package openai
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"net/http"
@@ -76,6 +77,8 @@ type Client struct {
 	sessionHeaderName string
 	// userAgent, when non-empty, overrides the SDK's default User-Agent header.
 	userAgent string
+	// responseParamsHook, when set, changes each Responses API request after Fabric builds it.
+	responseParamsHook func(*responses.ResponseNewParams)
 }
 
 // SetResponsesAPIEnabled configures whether to use the Responses API
@@ -109,6 +112,12 @@ func (o *Client) SetSessionHeaderName(name string) {
 // requests. Pass an empty string to keep the SDK's default.
 func (o *Client) SetUserAgent(userAgent string) {
 	o.userAgent = userAgent
+}
+
+// SetResponseParamsHook sets a function that changes each Responses API
+// request after Fabric builds it. Perplexity uses it to select presets.
+func (o *Client) SetResponseParamsHook(hook func(*responses.ResponseNewParams)) {
+	o.responseParamsHook = hook
 }
 
 // requestOptions returns per-request options that attach Fabric's session ID
@@ -178,9 +187,13 @@ func (o *Client) sendStreamResponses(
 
 	req := o.buildResponseParams(msgs, opts)
 	stream := o.ApiClient.Responses.NewStreaming(ctx, req, o.requestOptions(opts.SessionID)...)
+	var sources []string
 	for stream.Next() {
 		event := stream.Current()
 		switch event.Type {
+		case string(constant.ResponseCompleted("").Default()):
+			completed := event.AsResponseCompleted()
+			sources = searchResultSources(&completed.Response)
 		case string(constant.ResponseOutputTextDelta("").Default()):
 			channel <- domain.StreamUpdate{
 				Type:    domain.StreamTypeContent,
@@ -192,9 +205,13 @@ func (o *Client) sendStreamResponses(
 		}
 	}
 	if stream.Err() == nil {
+		content := "\n"
+		if len(sources) > 0 {
+			content = sourcesHeader + strings.Join(sources, "\n") + "\n"
+		}
 		channel <- domain.StreamUpdate{
 			Type:    domain.StreamTypeContent,
-			Content: "\n",
+			Content: content,
 		}
 	}
 	return stream.Err()
@@ -371,6 +388,9 @@ func (o *Client) buildResponseParams(
 			ret.SetExtraFields(extraFields)
 		}
 	}
+	if o.responseParamsHook != nil {
+		o.responseParamsHook(&ret)
+	}
 	return
 }
 
@@ -437,10 +457,38 @@ func (o *Client) extractText(resp *responses.Response) (ret string) {
 
 	ret = strings.Join(textParts, "")
 
+	citations = append(citations, searchResultSources(resp)...)
 	if len(citations) > 0 {
-		ret += "\n\n## Sources\n\n" + strings.Join(citations, "\n")
+		ret += sourcesHeader + strings.Join(citations, "\n")
 	}
 
+	return
+}
+
+const sourcesHeader = "\n\n## Sources\n\n"
+
+// searchResultSources lists the results of the Perplexity "search_results"
+// output items. The result IDs agree with the [n] markers in the answer text.
+func searchResultSources(resp *responses.Response) (ret []string) {
+	for _, item := range resp.Output {
+		if item.Type != "search_results" {
+			continue
+		}
+		var parsed struct {
+			Results []struct {
+				ID    int    `json:"id"`
+				Title string `json:"title"`
+				URL   string `json:"url"`
+			} `json:"results"`
+		}
+		if err := json.Unmarshal([]byte(item.RawJSON()), &parsed); err != nil {
+			debuglog.Debug(debuglog.Basic, "cannot parse search_results item: %v\n", err)
+			continue
+		}
+		for _, r := range parsed.Results {
+			ret = append(ret, fmt.Sprintf("- [%d] [%s](%s)", r.ID, r.Title, r.URL))
+		}
+	}
 	return
 }
 

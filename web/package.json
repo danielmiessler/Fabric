@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "postinstall": "svelte-kit sync",
-    "prebuild": "mkdir -p static/data && cp ../scripts/pattern_descriptions/pattern_descriptions.json static/data/",
-    "predev": "mkdir -p static/data && cp ../scripts/pattern_descriptions/pattern_descriptions.json static/data/",
+    "prebuild": "node -e \"require('fs').cpSync('../scripts/pattern_descriptions/pattern_descriptions.json', 'static/data/pattern_descriptions.json')\"",
+    "predev": "node -e \"require('fs').cpSync('../scripts/pattern_descriptions/pattern_descriptions.json', 'static/data/pattern_descriptions.json')\"",
     "dev": "vite dev",
     "build": "vite build",
     "preview": "vite preview",

@@ -1,247 +1,78 @@
+// Package perplexity connects Fabric to the Perplexity Agent API. The Agent
+// API uses the OpenAI Responses format, so the OpenAI client does the work.
 package perplexity
 
 import (
 	"context"
-	"fmt"
-	"os"
+	"maps"
+	"slices"
 	"strings"
-	"sync"
 
-	"github.com/danielmiessler/fabric/internal/chat"
-	"github.com/danielmiessler/fabric/internal/domain"
-	"github.com/danielmiessler/fabric/internal/i18n"
-	debuglog "github.com/danielmiessler/fabric/internal/log"
-	"github.com/danielmiessler/fabric/internal/plugins"
-	perplexity "github.com/sgaunet/perplexity-go/v2"
+	"github.com/danielmiessler/fabric/internal/plugins/ai/openai"
+	openaisdk "github.com/openai/openai-go/v3"
+	"github.com/openai/openai-go/v3/packages/param"
+	"github.com/openai/openai-go/v3/responses"
 )
 
-const (
-	providerName = "Perplexity"
-)
+// presets are the Agent API presets. Fabric shows them as models.
+var presets = []string{"fast", "low", "medium", "high", "xhigh"}
 
-var models = []string{
-	"r1-1776", "sonar", "sonar-pro", "sonar-reasoning", "sonar-reasoning-pro",
+// legacyModels maps the Sonar API model names to Agent API names, as the
+// Perplexity migration guide recommends. Old configurations continue to work.
+var legacyModels = map[string]string{
+	"sonar":               "perplexity/sonar",
+	"sonar-pro":           "fast",
+	"sonar-reasoning-pro": "low",
+	"sonar-deep-research": "high",
 }
 
 type Client struct {
-	*plugins.PluginBase
-	APIKey *plugins.SetupQuestion
-	client *perplexity.Client
+	*openai.Client
 }
 
 func NewClient() *Client {
-	c := &Client{}
-	c.PluginBase = plugins.NewVendorPluginBase(providerName, c.Configure)
-	c.APIKey = c.AddSetupQuestion("API_KEY", true)
+	c := &Client{openai.NewClientCompatibleWithResponses("Perplexity", "https://api.perplexity.ai/v1", true, nil)}
+	c.SetWebSearchToolName("web_search")
+	c.SetResponseParamsHook(agentParams)
 	return c
 }
 
-func (c *Client) Configure() error {
-	if c.APIKey.Value == "" {
-		envKey := c.EnvNamePrefix + "API_KEY"
-		apiKeyFromEnv := os.Getenv(envKey)
-		if apiKeyFromEnv != "" {
-			c.APIKey.Value = apiKeyFromEnv
-		} else {
-			return fmt.Errorf(i18n.T("perplexity_api_key_not_configured"), providerName, envKey, providerName)
+// ListModels adds the presets to the models of the Agent API.
+func (c *Client) ListModels(ctx context.Context) ([]string, error) {
+	models, err := c.Client.ListModels(ctx)
+	return append(models, presets...), err
+}
+
+// anthropicMaxTokens is the output limit for Anthropic models when the user
+// does not set one. The Agent API requires a limit for these models. The
+// value is the same as the Fabric Anthropic default.
+const anthropicMaxTokens = 4096
+
+// agentParams changes a request for the Agent API. A preset goes in the
+// "preset" field and the model stays empty. Presets set their own sampling,
+// and some presets reject temperature, so Fabric does not send it with a
+// preset. The request always has the web_search tool, because Sonar always
+// searched the web.
+func agentParams(p *responses.ResponseNewParams) {
+	model := string(p.Model)
+	if name, ok := legacyModels[model]; ok {
+		model = name
+	}
+	p.Model = responses.ResponsesModel(model)
+	if slices.Contains(presets, model) {
+		p.Model = ""
+		extra := maps.Clone(p.ExtraFields())
+		if extra == nil {
+			extra = map[string]any{}
 		}
+		extra["preset"] = model
+		p.SetExtraFields(extra)
+		p.Temperature, p.TopP = param.Opt[float64]{}, param.Opt[float64]{}
 	}
-	c.client = perplexity.NewClient(c.APIKey.Value)
-	return nil
-}
-
-func (c *Client) ListModels(_ context.Context) ([]string, error) {
-	// The Perplexity API has no models endpoint, so the list is static.
-	return models, nil
-}
-
-func (c *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions) (string, error) {
-	if c.client == nil {
-		if err := c.Configure(); err != nil {
-			return "", fmt.Errorf(i18n.T("perplexity_failed_configure"), err)
-		}
+	if strings.HasPrefix(model, "anthropic/") && !p.MaxOutputTokens.Valid() {
+		p.MaxOutputTokens = openaisdk.Int(anthropicMaxTokens)
 	}
-
-	var perplexityMessages []perplexity.Message
-	for _, msg := range msgs {
-		perplexityMessages = append(perplexityMessages, perplexity.Message{
-			Role:    msg.Role,
-			Content: msg.Content,
-		})
+	if !slices.ContainsFunc(p.Tools, func(t responses.ToolUnionParam) bool { return t.OfWebSearch != nil }) {
+		p.Tools = append(p.Tools, responses.ToolParamOfWebSearch("web_search"))
 	}
-
-	requestOptions := []perplexity.CompletionRequestOption{
-		perplexity.WithModel(opts.Model),
-		perplexity.WithMessages(perplexityMessages),
-	}
-	if opts.MaxTokens > 0 {
-		requestOptions = append(requestOptions, perplexity.WithMaxTokens(opts.MaxTokens))
-	}
-	if opts.Temperature > 0 {
-		requestOptions = append(requestOptions, perplexity.WithTemperature(opts.Temperature))
-	}
-	if opts.TopP > 0 {
-		requestOptions = append(requestOptions, perplexity.WithTopP(opts.TopP))
-	}
-	if opts.PresencePenalty != 0 {
-		requestOptions = append(requestOptions, perplexity.WithPresencePenalty(opts.PresencePenalty))
-	}
-	if opts.FrequencyPenalty != 0 {
-		requestOptions = append(requestOptions, perplexity.WithFrequencyPenalty(opts.FrequencyPenalty))
-	}
-
-	request := perplexity.NewCompletionRequest(requestOptions...)
-
-	resp, err := c.client.SendCompletionRequest(request)
-	if err != nil {
-		return "", fmt.Errorf(i18n.T("perplexity_api_request_failed"), err)
-	}
-
-	var content strings.Builder
-	content.WriteString(resp.GetLastContent())
-
-	citations := resp.GetCitations()
-	if len(citations) > 0 {
-		content.WriteString(i18n.T("perplexity_citations_header"))
-		for i, citation := range citations {
-			content.WriteString(fmt.Sprintf("- [%d] %s\n", i+1, citation))
-		}
-	}
-
-	return content.String(), nil
-}
-
-func (c *Client) SendStream(_ context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan domain.StreamUpdate) error {
-	if c.client == nil {
-		if err := c.Configure(); err != nil {
-			close(channel)
-			return fmt.Errorf(i18n.T("perplexity_failed_configure"), err)
-		}
-	}
-
-	var perplexityMessages []perplexity.Message
-	for _, msg := range msgs {
-		perplexityMessages = append(perplexityMessages, perplexity.Message{
-			Role:    msg.Role,
-			Content: msg.Content,
-		})
-	}
-
-	requestOptions := []perplexity.CompletionRequestOption{
-		perplexity.WithModel(opts.Model),
-		perplexity.WithMessages(perplexityMessages),
-		perplexity.WithStream(true),
-	}
-
-	if opts.MaxTokens > 0 {
-		requestOptions = append(requestOptions, perplexity.WithMaxTokens(opts.MaxTokens))
-	}
-	if opts.Temperature > 0 {
-		requestOptions = append(requestOptions, perplexity.WithTemperature(opts.Temperature))
-	}
-	if opts.TopP > 0 {
-		requestOptions = append(requestOptions, perplexity.WithTopP(opts.TopP))
-	}
-	if opts.PresencePenalty != 0 {
-		requestOptions = append(requestOptions, perplexity.WithPresencePenalty(opts.PresencePenalty))
-	}
-	if opts.FrequencyPenalty != 0 {
-		requestOptions = append(requestOptions, perplexity.WithFrequencyPenalty(opts.FrequencyPenalty))
-	}
-
-	request := perplexity.NewCompletionRequest(requestOptions...)
-
-	responseChan := make(chan perplexity.CompletionResponse)
-	var wg sync.WaitGroup
-	wg.Add(1)
-
-	go func() {
-		err := c.client.SendSSEHTTPRequest(&wg, request, responseChan)
-		if err != nil {
-			// The library closes responseChan on error, so the receiver goroutine closes channel.
-			debuglog.Log(i18n.T("perplexity_streaming_error"), err)
-		}
-	}()
-
-	go func() {
-		defer close(channel)
-		var lastResponse *perplexity.CompletionResponse
-		for resp := range responseChan {
-			lastResponse = &resp
-			if len(resp.Choices) > 0 {
-				content := ""
-				if resp.Choices[0].Delta.Content != "" {
-					content = resp.Choices[0].Delta.Content
-				} else if resp.Choices[0].Message.Content != "" {
-					content = resp.Choices[0].Message.Content
-				}
-				if content != "" {
-					channel <- domain.StreamUpdate{
-						Type:    domain.StreamTypeContent,
-						Content: content,
-					}
-				}
-			}
-
-			if resp.Usage.TotalTokens != 0 {
-				channel <- domain.StreamUpdate{
-					Type: domain.StreamTypeUsage,
-					Usage: &domain.UsageMetadata{
-						InputTokens:  int(resp.Usage.PromptTokens),
-						OutputTokens: int(resp.Usage.CompletionTokens),
-						TotalTokens:  int(resp.Usage.TotalTokens),
-					},
-				}
-			}
-		}
-
-		if lastResponse != nil {
-			citations := lastResponse.GetCitations()
-			if len(citations) > 0 {
-				var citationsText strings.Builder
-				citationsText.WriteString(i18n.T("perplexity_citations_header"))
-				for i, citation := range citations {
-					citationsText.WriteString(fmt.Sprintf("- [%d] %s\n", i+1, citation))
-				}
-				channel <- domain.StreamUpdate{
-					Type:    domain.StreamTypeContent,
-					Content: citationsText.String(),
-				}
-			}
-		}
-	}()
-
-	return nil
-}
-
-func (c *Client) NeedsRawMode(modelName string) bool {
-	return true
-}
-
-// Setup is called by the fabric CLI framework to guide the user through configuration.
-func (c *Client) Setup() error {
-	return c.PluginBase.Setup()
-}
-
-// GetName returns the name of the plugin.
-func (c *Client) GetName() string {
-	return c.PluginBase.Name
-}
-
-// GetEnvNamePrefix returns the environment variable prefix for the plugin.
-// Corrected: Receiver name
-func (c *Client) GetEnvNamePrefix() string {
-	return c.PluginBase.EnvNamePrefix
-}
-
-// AddSetupQuestion adds a setup question to the plugin.
-// This is a helper method, usually called from NewClient.
-func (c *Client) AddSetupQuestion(text string, isSensitive bool) *plugins.SetupQuestion {
-	return c.PluginBase.AddSetupQuestion(text, isSensitive)
-}
-
-// GetSetupQuestions returns the setup questions for the plugin.
-// Corrected: Return the slice of setup questions from PluginBase
-func (c *Client) GetSetupQuestions() []*plugins.SetupQuestion {
-	return c.PluginBase.SetupQuestions
 }

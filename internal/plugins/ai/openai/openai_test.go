@@ -401,3 +401,13 @@ func TestBuildResponseParams_WebSearchToolsJSON(t *testing.T) {
 		})
 	}
 }
+
+func TestExtractTextSearchResultSources(t *testing.T) {
+	var resp responses.Response
+	require.NoError(t, json.Unmarshal([]byte(`{"output":[
+		{"type":"search_results","queries":["q"],"results":[{"id":1,"title":"T1","url":"https://a.example"},{"id":2,"title":"T2","url":"https://b.example"}]},
+		{"type":"message","role":"assistant","content":[{"type":"output_text","text":"Answer.[2]","annotations":[]}]}
+	]}`), &resp))
+
+	assert.Equal(t, "Answer.[2]\n\n## Sources\n\n- [1] [T1](https://a.example)\n- [2] [T2](https://b.example)", NewClient().extractText(&resp))
+}

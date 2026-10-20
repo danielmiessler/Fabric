@@ -42,3 +42,22 @@ jobs:
 
       - name: Check Formatting
         run: nix flake check
+
+  test-windows:
+    name: Run tests (Windows)
+    runs-on: windows-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Set up Go
+        uses: actions/setup-go@v6
+        with:
+          go-version-file: ./go.mod
+
+      # Many other packages do not pass on Windows yet, so this job runs only
+      # the file manager tests. Add a package here when it passes on Windows.
+      - name: Run tests
+        run: go test -v ./internal/domain/...

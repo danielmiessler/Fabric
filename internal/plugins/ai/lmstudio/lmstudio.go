@@ -90,6 +90,8 @@ func (c *Client) ListModels(_ context.Context) ([]string, error) {
 }
 
 func (c *Client) SendStream(_ context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan domain.StreamUpdate) (err error) {
+	defer close(channel)
+
 	url := fmt.Sprintf("%s/chat/completions", c.ApiUrl.Value)
 
 	payload := map[string]any{
@@ -127,8 +129,6 @@ func (c *Client) SendStream(_ context.Context, msgs []*chat.ChatCompletionMessag
 		err = fmt.Errorf(i18n.T("lmstudio_unexpected_status_code"), resp.StatusCode)
 		return
 	}
-
-	defer close(channel)
 
 	reader := bufio.NewReader(resp.Body)
 	for {

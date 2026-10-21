@@ -491,6 +491,8 @@
   "plugin_configured": " ✓",
   "plugin_enable_bool_question": "Habilitar %v %v (true/false)",
   "plugin_enter_value": "Introduce tu %v %v",
+  "plugin_insecure_base_url": "Fabric no envía credenciales ni prompts a %s en texto sin cifrar. Use una URL https://. http:// solo se permite para localhost.",
+  "plugin_invalid_base_url": "La URL base no es válida.",
   "plugin_invalid_bool": "bool no válido: %q",
   "plugin_invalid_boolean_value": "valor booleano no válido: %v",
   "plugin_not_configured": " ⚠️  NO CONFIGURADO",

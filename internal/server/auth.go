@@ -5,6 +5,7 @@ import (
 	"crypto/subtle"
 	"fmt"
 	"log/slog"
+	"net"
 	"net/http"
 	"strings"
 
@@ -25,7 +26,11 @@ func requireAPIKeyForBind(address, apiKey string) error {
 	if apiKey != "" && len(apiKey) < minAPIKeyLength {
 		slog.Warn("API key is short: use a random key of 16 or more characters", "length", len(apiKey))
 	}
-	if apiKey != "" || isLoopbackHost(hostOnly(address)) {
+	// Only the exact name "localhost" or a loopback IP is accepted. A name
+	// such as "app.localhost" goes to DNS on some systems, and the server
+	// can then listen on a public interface with no key.
+	host := hostOnly(address)
+	if apiKey != "" || host == "localhost" || net.ParseIP(host).IsLoopback() {
 		return nil
 	}
 	return fmt.Errorf(i18n.T("server_api_key_required"), address)

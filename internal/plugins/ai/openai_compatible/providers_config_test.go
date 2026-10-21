@@ -1,10 +1,21 @@
 package openai_compatible
 
 import (
+	"fmt"
+	"os"
 	"testing"
 
+	"github.com/danielmiessler/fabric/internal/i18n"
 	"github.com/stretchr/testify/assert"
 )
+
+func TestMain(m *testing.M) {
+	if _, err := i18n.Init("en"); err != nil {
+		fmt.Fprintf(os.Stderr, "failed to init i18n: %v\n", err)
+		os.Exit(1)
+	}
+	os.Exit(m.Run())
+}
 
 func TestCreateClient(t *testing.T) {
 	testCases := []struct {
@@ -167,4 +178,17 @@ func TestIsConfiguredOptionalKey(t *testing.T) {
 	if groq.IsConfigured() {
 		t.Fatal("required-key provider must not be configured without a key")
 	}
+}
+
+func TestConfigureRequiresHTTPSForRemoteBaseURL(t *testing.T) {
+	t.Setenv("MISTRAL_API_KEY", "synthetic-key")
+	t.Setenv("MISTRAL_API_BASE_URL", "http://api.example.com/v1")
+	client, _ := CreateClient("Mistral")
+	assert.ErrorContains(t, client.Configure(), "http://api.example.com")
+
+	// The LiteLLM default is http://localhost, so it stays accepted.
+	t.Setenv("LITELLM_API_KEY", "synthetic-key")
+	t.Setenv("LITELLM_API_BASE_URL", "")
+	client, _ = CreateClient("LiteLLM")
+	assert.NoError(t, client.Configure())
 }

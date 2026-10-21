@@ -491,6 +491,8 @@
   "plugin_configured": " ✓",
   "plugin_enable_bool_question": "%v %v را فعال کنید (true/false)",
   "plugin_enter_value": "مقدار %v %v خود را وارد کنید",
+  "plugin_insecure_base_url": "Fabric اعتبارنامه‌ها و پرامپت‌ها را به‌صورت متن ساده به %s ارسال نمی‌کند. از یک نشانی https:// استفاده کنید. http:// فقط برای localhost مجاز است.",
+  "plugin_invalid_base_url": "نشانی پایه معتبر نیست.",
   "plugin_invalid_bool": "مقدار bool نامعتبر: %q",
   "plugin_invalid_boolean_value": "مقدار بولی نامعتبر: %v",
   "plugin_not_configured": " ⚠️  پیکربندی نشده",

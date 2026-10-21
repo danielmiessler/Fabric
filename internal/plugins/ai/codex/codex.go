@@ -104,6 +104,10 @@ func (c *Client) Setup() error {
 	if err := c.AuthBaseURL.Ask(vendorName); err != nil {
 		return err
 	}
+	// Check the origins before the OAuth flow sends the code and the verifier.
+	if err := c.requireSecureOrigins(); err != nil {
+		return err
+	}
 
 	if strings.TrimSpace(c.RefreshToken.Value) != "" {
 		if err := c.configure(); err == nil {
@@ -149,6 +153,9 @@ func (c *Client) configure() error {
 	if strings.TrimSpace(c.RefreshToken.Value) == "" {
 		return errors.New(i18n.T("codex_refresh_token_required"))
 	}
+	if err := c.requireSecureOrigins(); err != nil {
+		return err
+	}
 
 	if _, _, err := c.ensureAccessToken(context.Background(), false); err != nil {
 		return err
@@ -167,6 +174,19 @@ func (c *Client) configure() error {
 	c.ApiClient = &apiClient
 	debuglog.Debug(debuglog.Detailed, "Codex configure: authenticated account_present=%t base_url=%s\n", strings.TrimSpace(c.AccountID.Value) != "", c.ApiBaseURL.Value)
 
+	return nil
+}
+
+// requireSecureOrigins refuses plaintext http to a remote auth or API origin.
+// The refresh token goes to the auth origin, the access token to the API origin.
+// The transport reads these settings for each request, so call this check
+// again when they change.
+func (c *Client) requireSecureOrigins() error {
+	for _, baseURL := range []string{c.AuthBaseURL.Value, c.ApiBaseURL.Value} {
+		if err := plugins.RequireSecureBaseURL(baseURL); err != nil {
+			return err
+		}
+	}
 	return nil
 }
 

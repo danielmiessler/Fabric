@@ -350,3 +350,36 @@ func TestReadLine_LineEndings(t *testing.T) {
 		})
 	}
 }
+
+func TestSetupQuestion_Ask_MasksSensitiveValue(t *testing.T) {
+	setting := &Setting{
+		EnvVariable: "TEST_SENSITIVE_API_KEY",
+		Value:       "sk-synthetic-secret-1234",
+		Sensitive:   true,
+	}
+	question := &SetupQuestion{Setting: setting, Question: "Enter key:"}
+	restore := captureInput("\n")
+	defer restore()
+	out := captureOutput(func() {
+		assert.NoError(t, question.Ask("TestConfigurable"))
+	})
+	assert.NotContains(t, out, "sk-synthetic-secret-1234")
+	assert.Contains(t, out, MaskedValue)
+	assert.Equal(t, "sk-synthetic-secret-1234", setting.Value)
+}
+
+func TestSetting_Print_MasksSensitiveValue(t *testing.T) {
+	setting := &Setting{EnvVariable: "TEST_API_KEY", Value: "sk-synthetic-secret-1234", Sensitive: true}
+	out := captureOutput(func() { setting.Print() })
+	assert.NotContains(t, out, "sk-synthetic-secret-1234")
+	assert.Contains(t, out, "TEST_API_KEY")
+}
+
+func TestPluginBase_AddSetting_MarksSecretNamesSensitive(t *testing.T) {
+	p := &PluginBase{EnvNamePrefix: "V_"}
+	assert.True(t, p.AddSetting("API Key", true).Sensitive)
+	assert.True(t, p.AddSetting("access_token", false).Sensitive)
+	assert.True(t, p.AddSetting("client secret", false).Sensitive)
+	assert.False(t, p.AddSetting("API Base URL", false).Sensitive)
+	assert.False(t, p.AddSetting("keyword", false).Sensitive)
+}

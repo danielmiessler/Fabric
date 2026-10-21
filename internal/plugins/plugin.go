@@ -13,6 +13,9 @@ import (
 const AnswerReset = "reset"
 const SettingTypeBool = "bool"
 
+// MaskedValue stands in for a sensitive value in prompts and printed output.
+const MaskedValue = "********"
+
 type Plugin interface {
 	GetName() string
 	GetSetupDescription() string
@@ -56,6 +59,7 @@ func (o *PluginBase) GetSetupDescription() (ret string) {
 
 func (o *PluginBase) AddSetting(name string, required bool) (ret *Setting) {
 	ret = NewSetting(fmt.Sprintf("%v%v", o.EnvNamePrefix, BuildEnvVariable(name)), required)
+	ret.Sensitive = isSensitiveName(name)
 	o.Settings = append(o.Settings, ret)
 	return
 }
@@ -151,6 +155,27 @@ type Setting struct {
 	Value       string
 	Required    bool
 	Type        string // "string" (default), "bool"
+	Sensitive   bool   // mask the value in prompts and printed output
+}
+
+// isSensitiveName reports whether a setting name holds a credential, such as
+// "API Key", "access_token" or "client secret".
+func isSensitiveName(name string) bool {
+	for word := range strings.SplitSeq(BuildEnvVariable(name), "_") {
+		switch word {
+		case "KEY", "TOKEN", "SECRET", "PASSWORD":
+			return true
+		}
+	}
+	return false
+}
+
+// DisplayValue returns the value as it may be shown to the user.
+func (o *Setting) DisplayValue() string {
+	if o.Sensitive && o.Value != "" {
+		return MaskedValue
+	}
+	return o.Value
 }
 
 func (o *Setting) IsValid() bool {
@@ -166,7 +191,7 @@ func (o *Setting) Print() {
 		v, _ := ParseBool(o.Value)
 		fmt.Printf("%v: %v\n", o.EnvVariable, v)
 	} else {
-		fmt.Printf("%v: %v\n", o.EnvVariable, o.Value)
+		fmt.Printf("%v: %v\n", o.EnvVariable, o.DisplayValue())
 	}
 }
 
@@ -219,7 +244,7 @@ func (o *SetupQuestion) Ask(label string) (err error) {
 		}
 		fmt.Printf(i18n.T("plugin_question_bool"), prefix, o.Question, current, AnswerReset)
 	} else if o.Value != "" {
-		fmt.Printf(i18n.T("plugin_question_with_default"), prefix, o.Question, o.Value, AnswerReset)
+		fmt.Printf(i18n.T("plugin_question_with_default"), prefix, o.Question, o.DisplayValue(), AnswerReset)
 	} else {
 		fmt.Printf(i18n.T("plugin_question_optional"), prefix, o.Question)
 	}
@@ -267,7 +292,7 @@ func (o *SetupQuestion) OnAnswerWithReset(answer string, isReset bool) (err erro
 
 func (o *Setting) IsValidErr() (err error) {
 	if !o.IsValid() {
-		err = fmt.Errorf(i18n.T("plugin_setting_not_valid"), o.EnvVariable, o.Value)
+		err = fmt.Errorf(i18n.T("plugin_setting_not_valid"), o.EnvVariable, o.DisplayValue())
 	}
 	return
 }

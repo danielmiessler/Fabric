@@ -1,6 +1,7 @@
 package i18n
 
 import (
+	"encoding/json"
 	"testing"
 
 	gi18n "github.com/nicksnyder/go-i18n/v2/i18n"
@@ -37,5 +38,34 @@ func TestTranslation(t *testing.T) {
 				t.Fatalf("unexpected translation for %s: got %s, expected %s", tc.lang, msg, tc.expected)
 			}
 		})
+	}
+}
+
+// TestLocaleKeyParity makes sure that each locale has all the keys in en.json.
+// i18n.T panics for a key that the active locale does not have.
+func TestLocaleKeyParity(t *testing.T) {
+	load := func(name string) map[string]any {
+		data, err := localeFS.ReadFile("locales/" + name)
+		if err != nil {
+			t.Fatal(err)
+		}
+		var m map[string]any
+		if err := json.Unmarshal(data, &m); err != nil {
+			t.Fatalf("%s: %v", name, err)
+		}
+		return m
+	}
+	en := load("en.json")
+	files, err := localeFS.ReadDir("locales")
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, f := range files {
+		locale := load(f.Name())
+		for key := range en {
+			if _, ok := locale[key]; !ok {
+				t.Errorf("%s: missing key %q", f.Name(), key)
+			}
+		}
 	}
 }

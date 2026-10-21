@@ -11,6 +11,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"net/url"
+	"os"
 	"strings"
 	"sync"
 	"sync/atomic"
@@ -24,6 +25,14 @@ import (
 	"github.com/openai/openai-go/v3/option"
 	"github.com/openai/openai-go/v3/shared/constant"
 )
+
+func TestMain(m *testing.M) {
+	if _, err := i18n.Init("en"); err != nil {
+		fmt.Fprintf(os.Stderr, "failed to init i18n: %v\n", err)
+		os.Exit(1)
+	}
+	os.Exit(m.Run())
+}
 
 func TestBuildAuthorizeURLIncludesPKCE(t *testing.T) {
 	pkce := pkceCodes{
@@ -897,5 +906,56 @@ func TestRunOAuthFlowIgnoresCallbackWithWrongState(t *testing.T) {
 	}
 	if got := <-badStatus; got != http.StatusBadRequest {
 		t.Fatalf("wrong-state callback status = %d, want %d", got, http.StatusBadRequest)
+	}
+}
+
+func TestConfigureRejectsPlaintextRemoteOrigins(t *testing.T) {
+	// The auth server fails the test if a token request gets to it.
+	authServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		t.Errorf("unexpected auth request to %s", r.URL.Path)
+	}))
+	defer authServer.Close()
+
+	for _, tc := range []struct{ name, api, auth, origin string }{
+		{"auth origin", defaultBaseURL, "http://auth.example.com", "http://auth.example.com"},
+		{"api origin", "http://api.example.com/codex", authServer.URL, "http://api.example.com"},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			client := NewClient()
+			client.ApiBaseURL.Value = tc.api
+			client.AuthBaseURL.Value = tc.auth
+			client.RefreshToken.Value = "synthetic-refresh-token"
+
+			// The check runs before any token request, so nothing is sent.
+			err := client.configure()
+			if err == nil || !strings.Contains(err.Error(), tc.origin) {
+				t.Fatalf("configure() error = %v, want a refusal of %s", err, tc.origin)
+			}
+			if strings.Contains(err.Error(), "synthetic-refresh-token") {
+				t.Fatalf("error leaks the refresh token: %v", err)
+			}
+		})
+	}
+}
+
+func TestSetupRejectsPlaintextRemoteAuthOrigin(t *testing.T) {
+	// Empty answers keep the current values.
+	stdin, w, err := os.Pipe()
+	if err != nil {
+		t.Fatal(err)
+	}
+	_ = w.Close()
+	oldStdin := os.Stdin
+	os.Stdin = stdin
+	t.Cleanup(func() { os.Stdin = oldStdin; _ = stdin.Close() })
+
+	client := NewClient()
+	client.AuthBaseURL.Value = "http://auth.example.com"
+	t.Setenv(client.AuthBaseURL.EnvVariable, "")
+	t.Setenv(client.ApiBaseURL.EnvVariable, "")
+
+	// The check runs before the OAuth flow opens a browser.
+	if err := client.Setup(); err == nil || !strings.Contains(err.Error(), "http://auth.example.com") {
+		t.Fatalf("Setup() error = %v, want a refusal of http://auth.example.com", err)
 	}
 }

@@ -8,6 +8,7 @@ import (
 	"net/url"
 	"strings"
 
+	"github.com/danielmiessler/fabric/internal/util"
 	"github.com/gin-gonic/gin"
 )
 
@@ -19,17 +20,6 @@ func hostOnly(hostport string) string {
 		return h
 	}
 	return strings.Trim(hostport, "[]")
-}
-
-// isLoopbackHost tells if host is "localhost" or a loopback IP address.
-func isLoopbackHost(host string) bool {
-	if host == "localhost" {
-		return true
-	}
-	if ip := net.ParseIP(host); ip != nil {
-		return ip.IsLoopback()
-	}
-	return false
 }
 
 // originHost gives the host name of an Origin header value, with no port.
@@ -83,7 +73,7 @@ func LoopbackSecurityMiddleware(corsOrigins []string) gin.HandlerFunc {
 
 		// The Host must be a loopback host or the host of a CORS origin.
 		host := hostOnly(c.Request.Host)
-		if !isLoopbackHost(host) && !allowedHosts[host] {
+		if !util.IsLoopbackHost(host) && !allowedHosts[host] {
 			slog.Warn("request blocked: unexpected Host", "client", c.ClientIP(), "host", c.Request.Host, "path", c.Request.URL.Path)
 			c.AbortWithStatusJSON(http.StatusForbidden, gin.H{"error": "Forbidden: unexpected Host header"})
 			return

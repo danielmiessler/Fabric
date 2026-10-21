@@ -491,6 +491,8 @@
   "plugin_configured": " ✓",
   "plugin_enable_bool_question": "تفعيل %v %v (true/false)",
   "plugin_enter_value": "أدخل %v %v",
+  "plugin_insecure_base_url": "لا يرسل Fabric بيانات الاعتماد والمطالبات إلى %s كنص عادي. استخدم عنوان URL يبدأ بـ https://. يُسمح بـ http:// فقط لـ localhost.",
+  "plugin_invalid_base_url": "عنوان URL الأساسي غير صالح.",
   "plugin_invalid_bool": "قيمة منطقية غير صالحة: %q",
   "plugin_invalid_boolean_value": "قيمة منطقية غير صالحة: %v",
   "plugin_not_configured": " ⚠️  غير مُكوَّن",

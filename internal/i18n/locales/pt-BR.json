@@ -491,6 +491,8 @@
   "plugin_configured": " ✓",
   "plugin_enable_bool_question": "Ativar %v %v (true/false)",
   "plugin_enter_value": "Informe seu %v %v",
+  "plugin_insecure_base_url": "O Fabric não envia credenciais e prompts para %s em texto simples. Use uma URL https://. http:// é permitido apenas para localhost.",
+  "plugin_invalid_base_url": "A URL base não é válida.",
   "plugin_invalid_bool": "bool inválido: %q",
   "plugin_invalid_boolean_value": "valor booleano inválido: %v",
   "plugin_not_configured": " ⚠️  NÃO CONFIGURADO",

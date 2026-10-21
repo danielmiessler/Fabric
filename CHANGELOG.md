@@ -1,5 +1,48 @@
 # Changelog
 
+## v1.4.537 (2026-10-21)
+
+### PR [#2291](https://github.com/danielmiessler/Fabric/pull/2291) by [pcbeingused333](https://github.com/pcbeingused333) and [ksylvan](https://github.com/ksylvan): fix(lmstudio): close the stream channel on every error path
+
+- Fixed LM Studio streaming so the stream channel is closed on every error path, preventing hangs and leaked goroutines.
+- Consolidated the LM Studio stream error channel closure tests, combining HTTP failure and unavailable server scenarios into subtests.
+- Updated tests to call `SendStream` directly and verify immediate channel closure, removing redundant goroutines, error channels, and timeout dependencies.
+
+## v1.4.536 (2026-10-21)
+
+### PR [#2289](https://github.com/danielmiessler/Fabric/pull/2289) by [pcbeingused333](https://github.com/pcbeingused333) and [ksylvan](https://github.com/ksylvan): fix(plugins): refuse plaintext http to remote hosts for OpenAI, Exolab and Codex
+
+- Fixed a security issue where plaintext HTTP connections to remote hosts could expose API keys and prompts; OpenAI-compatible clients, Exolab, and Codex now require HTTPS.
+- Allowed HTTP only for localhost, loopback addresses, and `*.localhost`, leaving all built-in defaults unchanged.
+- Tightened server bind authentication by requiring API keys for binds using localhost subdomains.
+- Consolidated Codex authentication and API endpoint security checks, with shared loopback detection across endpoint validation and middleware.
+- Localized base URL validation errors across all supported locales.
+- If you use an `http://` base URL to a host other than localhost, change it to `https://` or use a local tunnel. Otherwise the vendor is not loaded. Run with `--debug=3` to see the reason.
+
+## v1.4.535 (2026-10-21)
+
+### PR [#2284](https://github.com/danielmiessler/Fabric/pull/2284) by [pcbeingused333](https://github.com/pcbeingused333) and [ksylvan](https://github.com/ksylvan): fix(gemini): keep thought summaries out of the output and count thinking tokens
+
+- Leave Gemini and Vertex AI thought summaries out of the response text and report thinking tokens as output tokens.
+
+## v1.4.534 (2026-10-21)
+
+### PR [#2282](https://github.com/danielmiessler/Fabric/pull/2282) by [pcbeingused333](https://github.com/pcbeingused333): fix(openai): replace the image models OpenAI retires on 2026-10-23
+
+- Use gpt-image-2.5-sunburst for the image generation tool and gpt-5.6-luna instead of gpt-4.1-nano in the supported image models.
+
+## v1.4.533 (2026-10-21)
+
+### PR [#2281](https://github.com/danielmiessler/Fabric/pull/2281) by [pcbeingused333](https://github.com/pcbeingused333): fix(anthropic): return the error that ends a stream
+
+- Return a mid-stream Anthropic error from SendStream instead of printing it and exiting with status 0.
+
+## v1.4.532 (2026-10-20)
+
+### PR [#2280](https://github.com/danielmiessler/Fabric/pull/2280) by [pcbeingused333](https://github.com/pcbeingused333): fix(plugins): mask secret setting values in setup prompts and output
+
+- Mark settings named like a credential as sensitive and show a mask instead of their value in the setup prompt, `Print` and the invalid-setting error.
+
 ## v1.4.531 (2026-10-20)
 
 ### PR [#2279](https://github.com/danielmiessler/Fabric/pull/2279) by [pcbeingused333](https://github.com/pcbeingused333): fix: keep the Codex login waiting after a callback with the wrong state

@@ -32,6 +32,9 @@ type Client struct {
 }
 
 func (oi *Client) configure() (err error) {
+	if err = plugins.RequireSecureBaseURL(oi.ApiBaseURL.Value); err != nil {
+		return
+	}
 	oi.apiModels = strings.Split(oi.ApiModels.Value, ",")
 
 	opts := []option.RequestOption{option.WithAPIKey(oi.ApiKey.Value)}

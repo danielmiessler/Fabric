@@ -270,6 +270,7 @@ func TestRequireAPIKeyForBind(t *testing.T) {
 		{"[::]:8080", "", true},
 		{"192.168.1.50:8080", "", true},
 		{"example.com:8080", "", true},
+		{"app.localhost:8080", "", true}, // may resolve through DNS
 		{":8080", "secret", false},
 		{"0.0.0.0:8080", "secret", false},
 	}

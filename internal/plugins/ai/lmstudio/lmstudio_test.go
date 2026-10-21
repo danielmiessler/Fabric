@@ -90,3 +90,34 @@ func TestListModelsDoesNotSendBearerForWhitespaceOnlyKey(t *testing.T) {
 	require.NoError(t, err)
 	require.Equal(t, []string{"model-1"}, models)
 }
+
+func TestSendStreamClosesChannelOnError(t *testing.T) {
+	t.Parallel()
+
+	failing := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusInternalServerError)
+	}))
+	defer failing.Close()
+
+	down := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {}))
+	down.Close()
+
+	for name, url := range map[string]string{"http 500": failing.URL, "server down": down.URL} {
+		t.Run(name, func(t *testing.T) {
+			client := NewClient()
+			client.ApiUrl.Value = url
+			client.HttpClient = &http.Client{}
+
+			ch := make(chan domain.StreamUpdate)
+			require.Error(t, client.SendStream(context.Background(), []*chat.ChatCompletionMessage{{Role: "user", Content: "hi"}}, &domain.ChatOptions{Model: "m"}, ch))
+
+			// chatter.go ranges over the channel until the vendor closes it.
+			select {
+			case _, ok := <-ch:
+				require.False(t, ok, "unexpected update")
+			default:
+				t.Fatal("channel was not closed")
+			}
+		})
+	}
+}

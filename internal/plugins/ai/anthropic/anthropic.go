@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	neturl "net/url"
-	"os"
 	"path"
 	"slices"
 	"strconv"
@@ -280,8 +279,8 @@ func (an *Client) SendStream(
 		}
 	}
 
-	if stream.Err() != nil {
-		fmt.Fprintf(os.Stderr, i18n.T("anthropic_stream_error"), stream.Err())
+	if streamErr := stream.Err(); streamErr != nil {
+		err = fmt.Errorf(i18n.T("anthropic_stream_error"), streamErr)
 	}
 	close(channel)
 	return

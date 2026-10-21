@@ -40,7 +40,7 @@ func TestAddImageGenerationTool(t *testing.T) {
 	assert.Len(t, result, 1, "Should add one image generation tool")
 	assert.NotNil(t, result[0].OfImageGeneration, "Should have image generation tool")
 	assert.Equal(t, "image_generation", string(result[0].OfImageGeneration.Type))
-	assert.Equal(t, "gpt-image-1", result[0].OfImageGeneration.Model)
+	assert.Equal(t, "gpt-image-2.5-sunburst", result[0].OfImageGeneration.Model)
 	assert.Equal(t, "png", result[0].OfImageGeneration.OutputFormat)
 
 	opts = &domain.ChatOptions{
@@ -55,7 +55,7 @@ func TestAddImageGenerationTool(t *testing.T) {
 func TestBuildResponseParams_WithImageGeneration(t *testing.T) {
 	client := NewClient()
 	opts := &domain.ChatOptions{
-		Model:     "gpt-image-1",
+		Model:     "gpt-image-2.5-sunburst",
 		ImageFile: "output.png",
 	}
 
@@ -72,7 +72,7 @@ func TestBuildResponseParams_WithImageGeneration(t *testing.T) {
 		if tool.OfImageGeneration != nil {
 			hasImageTool = true
 			assert.Equal(t, "image_generation", string(tool.OfImageGeneration.Type))
-			assert.Equal(t, "gpt-image-1", tool.OfImageGeneration.Model)
+			assert.Equal(t, "gpt-image-2.5-sunburst", tool.OfImageGeneration.Model)
 			break
 		}
 	}
@@ -82,7 +82,7 @@ func TestBuildResponseParams_WithImageGeneration(t *testing.T) {
 func TestBuildResponseParams_WithBothSearchAndImage(t *testing.T) {
 	client := NewClient()
 	opts := &domain.ChatOptions{
-		Model:          "gpt-image-1",
+		Model:          "gpt-image-2.5-sunburst",
 		Search:         true,
 		SearchLocation: "America/Los_Angeles",
 		ImageFile:      "output.png",
@@ -246,8 +246,8 @@ func TestSupportsImageGeneration(t *testing.T) {
 			expected: false,
 		},
 		{
-			name:     "gpt-4.1-nano supports image generation",
-			model:    "gpt-4.1-nano",
+			name:     "gpt-5.6-luna supports image generation",
+			model:    "gpt-5.6-luna",
 			expected: true,
 		},
 		{
@@ -421,7 +421,7 @@ func TestAddImageGenerationToolWithUserParameters(t *testing.T) {
 
 			tool := tools[0].OfImageGeneration
 
-			assert.Equal(t, "gpt-image-1", tool.Model)
+			assert.Equal(t, "gpt-image-2.5-sunburst", tool.Model)
 			assert.Equal(t, tt.expected["output_format"], tool.OutputFormat)
 
 			if expectedSize, ok := tt.expected["size"]; ok {

@@ -491,6 +491,8 @@
   "plugin_configured": " ✓",
   "plugin_enable_bool_question": "%v の %v を有効にしますか (true/false)",
   "plugin_enter_value": "%v の %v を入力してください",
+  "plugin_insecure_base_url": "Fabric は認証情報とプロンプトを %s に平文で送信しません。https:// の URL を使用してください。http:// は localhost でのみ使用できます。",
+  "plugin_invalid_base_url": "ベース URL が無効です。",
   "plugin_invalid_bool": "無効な bool です: %q",
   "plugin_invalid_boolean_value": "無効なブール値です: %v",
   "plugin_not_configured": " ⚠️  未設定",

@@ -491,6 +491,8 @@
   "plugin_configured": " ✓",
   "plugin_enable_bool_question": "%v %v etkinleştirilsin mi (true/false)",
   "plugin_enter_value": "%v %v değerinizi girin",
+  "plugin_insecure_base_url": "Fabric kimlik bilgilerini ve istemleri %s adresine düz metin olarak göndermez. Bir https:// URL'si kullanın. http:// yalnızca localhost için kullanılabilir.",
+  "plugin_invalid_base_url": "Temel URL geçerli değil.",
   "plugin_invalid_bool": "geçersiz boolean: %q",
   "plugin_invalid_boolean_value": "geçersiz boolean değeri: %v",
   "plugin_not_configured": " ⚠️  YAPILANDIRILMADI",

@@ -491,6 +491,8 @@
   "plugin_configured": " ✓",
   "plugin_enable_bool_question": "启用 %v %v（true/false）",
   "plugin_enter_value": "请输入您的 %v %v",
+  "plugin_insecure_base_url": "Fabric 不会以明文方式向 %s 发送凭据和提示词。请使用 https:// URL。http:// 仅允许用于 localhost。",
+  "plugin_invalid_base_url": "基础 URL 无效。",
   "plugin_invalid_bool": "无效的 bool：%q",
   "plugin_invalid_boolean_value": "无效的布尔值：%v",
   "plugin_not_configured": " ⚠️  未配置",

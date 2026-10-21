@@ -20,7 +20,7 @@ const ImageGenerationToolType = "image_generation"
 
 // ImageGenerationSupportedModels lists all models that support image generation
 var ImageGenerationSupportedModels = []string{
-	"gpt-4.1-nano",
+	"gpt-5.6-luna",
 	"o3",
 	"gpt-5",
 	"gpt-5-nano",
@@ -58,7 +58,7 @@ func (o *Client) addImageGenerationTool(opts *domain.ChatOptions, tools []respon
 		imageGenTool := responses.ToolUnionParam{
 			OfImageGeneration: &responses.ToolImageGenerationParam{
 				Type:         ImageGenerationToolType,
-				Model:        "gpt-image-1",
+				Model:        "gpt-image-2.5-sunburst",
 				OutputFormat: outputFormat,
 			},
 		}

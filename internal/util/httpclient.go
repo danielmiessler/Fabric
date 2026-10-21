@@ -7,6 +7,7 @@ import (
 	"net"
 	"net/http"
 	"net/netip"
+	"strings"
 	"syscall"
 	"time"
 
@@ -107,4 +108,15 @@ func NewPublicHTTPClient(timeout time.Duration, control func(network, address st
 			return nil
 		},
 	}
+}
+
+// IsLoopbackHost tells if host is "localhost", a subdomain of "localhost" or
+// a loopback IP address. The host has no port and no IPv6 brackets.
+func IsLoopbackHost(host string) bool {
+	host = strings.ToLower(strings.TrimSuffix(host, "."))
+	if host == "localhost" || strings.HasSuffix(host, ".localhost") {
+		return true
+	}
+	ip := net.ParseIP(host)
+	return ip != nil && ip.IsLoopback()
 }

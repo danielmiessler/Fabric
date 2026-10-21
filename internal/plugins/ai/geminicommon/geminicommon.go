@@ -54,7 +54,9 @@ func ConvertMessages(msgs []*chat.ChatCompletionMessage) []*genai.Content {
 	return contents
 }
 
-// ExtractText extracts just the text parts from a Gemini response.
+// ExtractText extracts just the text parts from a Gemini response. Thought
+// summaries (parts with Thought set, returned when --thinking asks for them)
+// are model reasoning, not answer text, so they are left out.
 func ExtractText(response *genai.GenerateContentResponse) string {
 	if response == nil {
 		return ""
@@ -66,12 +68,19 @@ func ExtractText(response *genai.GenerateContentResponse) string {
 			continue
 		}
 		for _, part := range candidate.Content.Parts {
-			if part != nil && part.Text != "" {
+			if part != nil && !part.Thought && part.Text != "" {
 				builder.WriteString(part.Text)
 			}
 		}
 	}
 	return builder.String()
+}
+
+// OutputTokenCount returns the tokens the model generated: the visible answer
+// plus the thinking tokens, which Gemini reports separately but bills as output
+// and counts in TotalTokenCount.
+func OutputTokenCount(usage *genai.GenerateContentResponseUsageMetadata) int {
+	return int(usage.CandidatesTokenCount) + int(usage.ThoughtsTokenCount)
 }
 
 // ExtractTextWithCitations extracts text content from the response and appends

@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.4.538 (2026-10-21)
+
+### PR [#2294](https://github.com/danielmiessler/Fabric/pull/2294) by [ksylvan](https://github.com/ksylvan): chore: update Go SDK dependencies and frontend build tooling
+
+- Upgraded the Anthropic, OpenAI, and Ollama Go SDK dependencies.
+- Updated AWS Bedrock, runtime, eventstream, and Smithy dependencies.
+- Refreshed Google API, certificate proxy, and GAX dependencies.
+- Upgraded Vite to 8.3.5 and Rolldown to 1.2.14.
+- Updated PostCSS, Nanoid, OXC types, and platform bindings, and synchronized Go checksums with the npm and pnpm lockfiles.
+
 ## v1.4.537 (2026-10-21)
 
 ### PR [#2291](https://github.com/danielmiessler/Fabric/pull/2291) by [pcbeingused333](https://github.com/pcbeingused333) and [ksylvan](https://github.com/ksylvan): fix(lmstudio): close the stream channel on every error path

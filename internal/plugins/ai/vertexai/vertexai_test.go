@@ -1,11 +1,16 @@
 package vertexai
 
 import (
+	"context"
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	"time"
 
+	"github.com/anthropics/anthropic-sdk-go"
+	"github.com/anthropics/anthropic-sdk-go/option"
+	"github.com/danielmiessler/fabric/internal/chat"
 	"github.com/danielmiessler/fabric/internal/domain"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -433,4 +438,52 @@ func TestBuildGeminiConfig(t *testing.T) {
 		assert.NotNil(t, config.ThinkingConfig)
 		assert.True(t, config.ThinkingConfig.IncludeThoughts)
 	})
+}
+
+// Cancelling the caller's context must abort an in-flight Claude stream
+// instead of letting it run to server completion.
+func TestSendStreamClaudeHonorsContextCancellation(t *testing.T) {
+	const totalFrames = 40
+
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "text/event-stream")
+		_, _ = w.Write([]byte("event: message_start\ndata: {\"type\":\"message_start\",\"message\":{\"id\":\"msg_1\",\"type\":\"message\",\"role\":\"assistant\",\"content\":[],\"model\":\"claude-test\",\"usage\":{\"input_tokens\":1,\"output_tokens\":0}}}\n\n"))
+		_, _ = w.Write([]byte("event: content_block_start\ndata: {\"type\":\"content_block_start\",\"index\":0,\"content_block\":{\"type\":\"text\",\"text\":\"\"}}\n\n"))
+		w.(http.Flusher).Flush()
+		for i := 0; i < totalFrames; i++ {
+			if r.Context().Err() != nil {
+				return
+			}
+			_, _ = w.Write([]byte("event: content_block_delta\ndata: {\"type\":\"content_block_delta\",\"index\":0,\"delta\":{\"type\":\"text_delta\",\"text\":\"chunk \"}}\n\n"))
+			w.(http.Flusher).Flush()
+			time.Sleep(25 * time.Millisecond)
+		}
+	}))
+	t.Cleanup(server.Close)
+
+	anthropicClient := anthropic.NewClient(option.WithBaseURL(server.URL), option.WithAPIKey("test-key"), option.WithMaxRetries(0))
+	client := &Client{client: &anthropicClient}
+
+	channel := make(chan domain.StreamUpdate)
+	ctx, cancel := context.WithCancel(context.Background())
+	t.Cleanup(cancel)
+
+	errCh := make(chan error, 1)
+	go func() {
+		errCh <- client.SendStream(ctx, []*chat.ChatCompletionMessage{{Role: chat.ChatMessageRoleUser, Content: "hello"}}, &domain.ChatOptions{Model: "claude-test"}, channel)
+	}()
+
+	// Consume the first content update, then cancel mid-stream.
+	for update := range channel {
+		if update.Type == domain.StreamTypeContent {
+			break
+		}
+	}
+	cancel()
+
+	// Drain the remaining updates so SendStream can return.
+	for range channel {
+	}
+
+	require.ErrorIs(t, <-errCh, context.Canceled)
 }

@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	"time"
 
 	"github.com/danielmiessler/fabric/internal/chat"
 	"github.com/danielmiessler/fabric/internal/domain"
@@ -13,6 +14,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/aws/protocol/eventstream"
 	"github.com/aws/aws-sdk-go-v2/credentials"
+	"github.com/aws/aws-sdk-go-v2/service/bedrock"
 	"github.com/aws/aws-sdk-go-v2/service/bedrockruntime"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -100,4 +102,78 @@ func TestSendStream_ReturnsMidStreamError(t *testing.T) {
 
 	require.NotEmpty(t, updates)
 	assert.Equal(t, "Hel", updates[0].Content)
+}
+
+// hangingServer answers nothing until the test ends.
+func hangingServer(t *testing.T) *httptest.Server {
+	t.Helper()
+	release := make(chan struct{})
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		select {
+		case <-r.Context().Done():
+		case <-release:
+		}
+	}))
+	t.Cleanup(func() {
+		close(release)
+		server.Close()
+	})
+	return server
+}
+
+// Cancelling the caller's context must stop SendStream instead of letting the request run on.
+func TestSendStream_HonorsContextCancellation(t *testing.T) {
+	server := hangingServer(t)
+	client := NewClient()
+	client.runtimeClient = bedrockruntime.New(bedrockruntime.Options{
+		Region:           "us-east-1",
+		BaseEndpoint:     aws.String(server.URL),
+		Credentials:      credentials.NewStaticCredentialsProvider("id", "secret", ""),
+		RetryMaxAttempts: 1,
+	})
+
+	ctx, cancel := context.WithCancel(context.Background())
+	time.AfterFunc(50*time.Millisecond, cancel)
+
+	channel := make(chan domain.StreamUpdate, 16)
+	msgs := []*chat.ChatCompletionMessage{{Role: chat.ChatMessageRoleUser, Content: "hi"}}
+	done := make(chan error, 1)
+	go func() { done <- client.SendStream(ctx, msgs, &domain.ChatOptions{Model: "test-model"}, channel) }()
+
+	select {
+	case err := <-done:
+		require.Error(t, err)
+		assert.ErrorIs(t, err, context.Canceled)
+	case <-time.After(3 * time.Second):
+		t.Fatal("SendStream ignored the cancelled context")
+	}
+}
+
+// Cancelling the caller's context must stop ListModels as well.
+func TestListModels_HonorsContextCancellation(t *testing.T) {
+	server := hangingServer(t)
+	client := NewClient()
+	client.controlPlaneClient = bedrock.New(bedrock.Options{
+		Region:           "us-east-1",
+		BaseEndpoint:     aws.String(server.URL),
+		Credentials:      credentials.NewStaticCredentialsProvider("id", "secret", ""),
+		RetryMaxAttempts: 1,
+	})
+
+	ctx, cancel := context.WithCancel(context.Background())
+	time.AfterFunc(50*time.Millisecond, cancel)
+
+	done := make(chan error, 1)
+	go func() {
+		_, err := client.ListModels(ctx)
+		done <- err
+	}()
+
+	select {
+	case err := <-done:
+		require.Error(t, err)
+		assert.ErrorIs(t, err, context.Canceled)
+	case <-time.After(3 * time.Second):
+		t.Fatal("ListModels ignored the cancelled context")
+	}
 }

@@ -170,10 +170,8 @@ func (c *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, o
 }
 
 // SendStream sends a message to Copilot and streams the response.
-func (c *Client) SendStream(_ context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan domain.StreamUpdate) error {
+func (c *Client) SendStream(ctx context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan domain.StreamUpdate) error {
 	defer close(channel)
-
-	ctx := context.Background()
 
 	conversationID, err := c.createConversation(ctx)
 	if err != nil {

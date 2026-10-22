@@ -1,11 +1,17 @@
 package gemini
 
 import (
+	"context"
+	"errors"
+	"net/http"
+	"net/http/httptest"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/danielmiessler/fabric/internal/chat"
 	"github.com/danielmiessler/fabric/internal/domain"
+	"github.com/danielmiessler/fabric/internal/plugins"
 	"github.com/danielmiessler/fabric/internal/plugins/ai/geminicommon"
 	"google.golang.org/genai"
 )
@@ -247,5 +253,89 @@ func TestGenerateWAVFile(t *testing.T) {
 
 	if len(result) >= 4 && string(result[0:4]) != "RIFF" {
 		t.Error("Generated WAV data doesn't start with RIFF header")
+	}
+}
+
+// newGeminiTestClient points the genai SDK at a local server through the
+// documented GOOGLE_GEMINI_BASE_URL variable.
+func newGeminiTestClient(t *testing.T, handler http.HandlerFunc) *Client {
+	t.Helper()
+	server := httptest.NewServer(handler)
+	t.Cleanup(server.Close)
+	t.Setenv("GOOGLE_GEMINI_BASE_URL", server.URL)
+
+	client := &Client{}
+	client.PluginBase = &plugins.PluginBase{}
+	client.ApiKey = &plugins.SetupQuestion{Setting: &plugins.Setting{Value: "test-key"}}
+	return client
+}
+
+// Cancelling the caller's context must abort an in-flight Gemini stream
+// instead of letting it run to server completion.
+func TestSendStreamHonorsContextCancellation(t *testing.T) {
+	const totalFrames = 40
+
+	client := newGeminiTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "text/event-stream")
+		for i := 0; i < totalFrames; i++ {
+			if r.Context().Err() != nil {
+				return
+			}
+			_, _ = w.Write([]byte(`data: {"candidates":[{"content":{"role":"model","parts":[{"text":"chunk "}]}}]}` + "\n\n"))
+			w.(http.Flusher).Flush()
+			time.Sleep(25 * time.Millisecond)
+		}
+	})
+
+	channel := make(chan domain.StreamUpdate)
+	ctx, cancel := context.WithCancel(context.Background())
+	t.Cleanup(cancel)
+
+	errCh := make(chan error, 1)
+	go func() {
+		errCh <- client.SendStream(ctx, []*chat.ChatCompletionMessage{{Role: chat.ChatMessageRoleUser, Content: "hello"}}, &domain.ChatOptions{Model: "gemini-test"}, channel)
+	}()
+
+	// Consume the first update, then cancel mid-stream.
+	if _, ok := <-channel; !ok {
+		t.Fatal("expected at least one stream update before cancellation")
+	}
+	cancel()
+
+	// Drain the remaining updates so SendStream can return.
+	for range channel {
+	}
+
+	if err := <-errCh; !errors.Is(err, context.Canceled) {
+		t.Fatalf("SendStream error = %v, want context.Canceled", err)
+	}
+}
+
+// ListModels must stop waiting for the server once the caller's context is cancelled.
+func TestListModelsHonorsContextCancellation(t *testing.T) {
+	client := newGeminiTestClient(t, func(_ http.ResponseWriter, r *http.Request) {
+		// bounded so a missing fix fails the test instead of blocking server.Close
+		select {
+		case <-r.Context().Done():
+		case <-time.After(2 * time.Second):
+		}
+	})
+
+	ctx, cancel := context.WithTimeout(context.Background(), 100*time.Millisecond)
+	t.Cleanup(cancel)
+
+	done := make(chan error, 1)
+	go func() {
+		_, err := client.ListModels(ctx)
+		done <- err
+	}()
+
+	select {
+	case err := <-done:
+		if !errors.Is(err, context.DeadlineExceeded) {
+			t.Fatalf("ListModels error = %v, want context.DeadlineExceeded", err)
+		}
+	case <-time.After(3 * time.Second):
+		t.Fatal("ListModels kept waiting after its context was cancelled")
 	}
 }

@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	"time"
 
 	"github.com/danielmiessler/fabric/internal/chat"
 	"github.com/danielmiessler/fabric/internal/domain"
@@ -119,5 +120,63 @@ func TestSendStreamClosesChannelOnError(t *testing.T) {
 				t.Fatal("channel was not closed")
 			}
 		})
+	}
+}
+
+func hangingClient(t *testing.T) *Client {
+	t.Helper()
+	release := make(chan struct{})
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		select {
+		case <-r.Context().Done():
+		case <-release:
+		}
+	}))
+	t.Cleanup(func() {
+		close(release)
+		server.Close()
+	})
+
+	client := NewClient()
+	client.ApiUrl.Value = server.URL
+	client.HttpClient = server.Client()
+	return client
+}
+
+func TestSendStreamHonorsContextCancellation(t *testing.T) {
+	client := hangingClient(t)
+	ctx, cancel := context.WithCancel(context.Background())
+	time.AfterFunc(50*time.Millisecond, cancel)
+
+	channel := make(chan domain.StreamUpdate, 1)
+	done := make(chan error, 1)
+	go func() {
+		done <- client.SendStream(ctx, []*chat.ChatCompletionMessage{{Role: chat.ChatMessageRoleUser, Content: "hi"}}, &domain.ChatOptions{Model: "m"}, channel)
+	}()
+
+	select {
+	case err := <-done:
+		require.ErrorIs(t, err, context.Canceled)
+	case <-time.After(3 * time.Second):
+		t.Fatal("SendStream ignored the cancelled context")
+	}
+}
+
+func TestListModelsHonorsContextCancellation(t *testing.T) {
+	client := hangingClient(t)
+	ctx, cancel := context.WithCancel(context.Background())
+	time.AfterFunc(50*time.Millisecond, cancel)
+
+	done := make(chan error, 1)
+	go func() {
+		_, err := client.ListModels(ctx)
+		done <- err
+	}()
+
+	select {
+	case err := <-done:
+		require.ErrorIs(t, err, context.Canceled)
+	case <-time.After(3 * time.Second):
+		t.Fatal("ListModels ignored the cancelled context")
 	}
 }

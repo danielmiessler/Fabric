@@ -1,9 +1,13 @@
 package openai_compatible
 
 import (
+	"context"
 	"fmt"
+	"net/http"
+	"net/http/httptest"
 	"os"
 	"testing"
+	"time"
 
 	"github.com/danielmiessler/fabric/internal/i18n"
 	"github.com/stretchr/testify/assert"
@@ -191,4 +195,35 @@ func TestConfigureRequiresHTTPSForRemoteBaseURL(t *testing.T) {
 	t.Setenv("LITELLM_API_BASE_URL", "")
 	client, _ = CreateClient("LiteLLM")
 	assert.NoError(t, client.Configure())
+}
+
+func TestListModelsWithModelsURLHonorsContextCancellation(t *testing.T) {
+	release := make(chan struct{})
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		select {
+		case <-r.Context().Done():
+		case <-release:
+		}
+	}))
+	t.Cleanup(func() {
+		close(release)
+		server.Close()
+	})
+
+	client := NewClient(ProviderConfig{Name: "CtxTest", BaseURL: server.URL, ModelsURL: server.URL})
+	ctx, cancel := context.WithCancel(context.Background())
+	time.AfterFunc(50*time.Millisecond, cancel)
+
+	done := make(chan error, 1)
+	go func() {
+		_, err := client.ListModels(ctx)
+		done <- err
+	}()
+
+	select {
+	case err := <-done:
+		assert.Error(t, err)
+	case <-time.After(3 * time.Second):
+		t.Fatal("ListModels ignored the cancelled context")
+	}
 }

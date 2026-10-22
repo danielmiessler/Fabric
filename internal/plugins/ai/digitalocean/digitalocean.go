@@ -63,7 +63,7 @@ func (c *Client) ListModels(ctx context.Context) ([]string, error) {
 		}
 		return nil, errors.New(i18n.T("digitalocean_model_list_unavailable"))
 	}
-	return c.fetchModelsFromControlPlane(context.Background())
+	return c.fetchModelsFromControlPlane(ctx)
 }
 
 func (c *Client) fetchModelsFromControlPlane(ctx context.Context) ([]string, error) {

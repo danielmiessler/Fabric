@@ -609,7 +609,14 @@ func (o *PluginRegistry) GetChatter(model string, modelContextLength int, vendor
 			if actualModelName == "" {
 				if idx := strings.Index(model, "/"); idx > 0 {
 					prefix := model[:idx]
-					if v := vendorManager.FindByName(prefix); v != nil {
+					v, activationErr := o.activateVendor(prefix)
+					if activationErr != nil {
+						return ret, activationErr
+					}
+					if v != nil {
+						if models, err = vendorManager.GetModels(); err != nil {
+							return
+						}
 						vendorName = prefix
 						model = model[idx+1:]
 						if normalized := models.FilterByVendor(prefix).FindModelNameCaseInsensitive(model); normalized != "" {

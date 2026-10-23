@@ -277,7 +277,7 @@ func TestSendStreamHonorsContextCancellation(t *testing.T) {
 
 	client := newGeminiTestClient(t, func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/event-stream")
-		for i := 0; i < totalFrames; i++ {
+		for range totalFrames {
 			if r.Context().Err() != nil {
 				return
 			}

@@ -55,7 +55,7 @@ func TestSendStreamHonorsContextCancellation(t *testing.T) {
 			_, _ = w.Write([]byte(`{"id":"conv-1"}`))
 			return
 		}
-		for i := 0; i < totalFrames; i++ {
+		for range totalFrames {
 			if r.Context().Err() != nil {
 				return
 			}

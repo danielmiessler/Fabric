@@ -450,7 +450,7 @@ func TestSendStreamClaudeHonorsContextCancellation(t *testing.T) {
 		_, _ = w.Write([]byte("event: message_start\ndata: {\"type\":\"message_start\",\"message\":{\"id\":\"msg_1\",\"type\":\"message\",\"role\":\"assistant\",\"content\":[],\"model\":\"claude-test\",\"usage\":{\"input_tokens\":1,\"output_tokens\":0}}}\n\n"))
 		_, _ = w.Write([]byte("event: content_block_start\ndata: {\"type\":\"content_block_start\",\"index\":0,\"content_block\":{\"type\":\"text\",\"text\":\"\"}}\n\n"))
 		w.(http.Flusher).Flush()
-		for i := 0; i < totalFrames; i++ {
+		for range totalFrames {
 			if r.Context().Err() != nil {
 				return
 			}

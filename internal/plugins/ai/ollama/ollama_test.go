@@ -261,3 +261,18 @@ func TestOllamaWireFormat(t *testing.T) {
 	assert.Equal(t, http.StatusNotFound, statusErr.StatusCode)
 	assert.Equal(t, "model not found", statusErr.Message)
 }
+
+func TestCreateChatRequestMapsMaxTokensAndSeed(t *testing.T) {
+	client := &Client{}
+	msgs := []*chat.ChatCompletionMessage{{Role: chat.ChatMessageRoleUser, Content: "hi"}}
+
+	req, err := client.createChatRequest(context.Background(), msgs, &domain.ChatOptions{Model: "m", MaxTokens: 128, Seed: 42})
+	require.NoError(t, err)
+	assert.Equal(t, 128, req.Options["num_predict"])
+	assert.Equal(t, 42, req.Options["seed"])
+
+	req, err = client.createChatRequest(context.Background(), msgs, &domain.ChatOptions{Model: "m"})
+	require.NoError(t, err)
+	assert.NotContains(t, req.Options, "num_predict")
+	assert.NotContains(t, req.Options, "seed")
+}

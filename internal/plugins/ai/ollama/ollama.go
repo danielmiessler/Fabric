@@ -290,6 +290,14 @@ func (o *Client) createChatRequest(ctx context.Context, msgs []*chat.ChatComplet
 		options["num_ctx"] = opts.ModelContextLength
 	}
 
+	if opts.MaxTokens > 0 {
+		options["num_predict"] = opts.MaxTokens
+	}
+
+	if opts.Seed != 0 {
+		options["seed"] = opts.Seed
+	}
+
 	ret = ollamaChatRequest{
 		Model:    opts.Model,
 		Messages: messages,

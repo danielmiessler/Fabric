@@ -26,6 +26,7 @@ import (
 	debuglog "github.com/danielmiessler/fabric/internal/log"
 	"github.com/danielmiessler/fabric/internal/plugins"
 	"github.com/danielmiessler/fabric/internal/plugins/ai"
+	anthropicplugin "github.com/danielmiessler/fabric/internal/plugins/ai/anthropic"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/aws/middleware"
@@ -478,14 +479,10 @@ func (c *BedrockClient) SendStream(ctx context.Context, msgs []*chat.ChatComplet
 
 	messages := c.toMessages(msgs)
 
-	// Some models, such as Claude, reject a request that sets both temperature
-	// and top_p. Send only temperature.
 	var converseInput = bedrockruntime.ConverseStreamInput{
-		ModelId:  aws.String(opts.Model),
-		Messages: messages,
-		InferenceConfig: &types.InferenceConfiguration{
-			Temperature: aws.Float32(float32(opts.Temperature)),
-		},
+		ModelId:         aws.String(opts.Model),
+		Messages:        messages,
+		InferenceConfig: inferenceConfig(opts),
 	}
 
 	response, err := c.runtimeClient.ConverseStream(ctx, &converseInput)
@@ -554,8 +551,9 @@ func (c *BedrockClient) Send(ctx context.Context, msgs []*chat.ChatCompletionMes
 	messages := c.toMessages(msgs)
 
 	var converseInput = bedrockruntime.ConverseInput{
-		ModelId:  aws.String(opts.Model),
-		Messages: messages,
+		ModelId:         aws.String(opts.Model),
+		Messages:        messages,
+		InferenceConfig: inferenceConfig(opts),
 	}
 	response, err := c.runtimeClient.Converse(ctx, &converseInput)
 	if err != nil {
@@ -568,6 +566,19 @@ func (c *BedrockClient) Send(ctx context.Context, msgs []*chat.ChatCompletionMes
 	}
 
 	return responseTextFromContent(responseText.Value.Content)
+}
+
+// inferenceConfig returns the sampling settings of a Converse or ConverseStream request.
+// Some models, such as Claude, reject a request that sets both temperature and top_p,
+// so only temperature is sent. Claude models that reject sampling parameters altogether
+// (Opus 4.7 and later, the Claude 5 models) get none, or the request fails with a 400.
+func inferenceConfig(opts *domain.ChatOptions) *types.InferenceConfiguration {
+	if anthropicplugin.ModelDisallowsSamplingParams(opts.Model) {
+		return nil
+	}
+	return &types.InferenceConfiguration{
+		Temperature: aws.Float32(float32(opts.Temperature)),
+	}
 }
 
 func responseTextFromContent(content []types.ContentBlock) (string, error) {

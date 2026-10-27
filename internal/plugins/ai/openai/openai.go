@@ -281,25 +281,34 @@ func (o *Client) supportsResponsesAPI() bool {
 	return o.ImplementsResponses
 }
 
+// openAIReasoningModelPrefixes are the OpenAI reasoning models. They reject temperature and top_p,
+// and the Chat Completions API takes their output limit as max_completion_tokens.
+var openAIReasoningModelPrefixes = []string{
+	"gpt-5",
+	"gpt-6",
+	"o1",
+	"o3",
+	"o4",
+}
+
+func isOpenAIReasoningModel(modelName string) bool {
+	for _, prefix := range openAIReasoningModelPrefixes {
+		if strings.HasPrefix(modelName, prefix) {
+			return true
+		}
+	}
+	return false
+}
+
 func (o *Client) NeedsRawMode(modelName string) bool {
-	openaiModelsPrefixes := []string{
-		"glm",
-		"gpt-5",
-		"gpt-6",
-		"o1",
-		"o3",
-		"o4",
+	if isOpenAIReasoningModel(modelName) || strings.HasPrefix(modelName, "glm") {
+		return true
 	}
 	openAIModelsNeedingRaw := []string{
 		"gpt-4o-mini-search-preview",
 		"gpt-4o-mini-search-preview-2025-03-11",
 		"gpt-4o-search-preview",
 		"gpt-4o-search-preview-2025-03-11",
-	}
-	for _, prefix := range openaiModelsPrefixes {
-		if strings.HasPrefix(modelName, prefix) {
-			return true
-		}
 	}
 	return slices.Contains(openAIModelsNeedingRaw, modelName)
 }
@@ -378,13 +387,15 @@ func (o *Client) buildResponseParams(
 		ret.Reasoning = shared.ReasoningParam{Effort: eff}
 	}
 
+	// Raw mode leaves out the sampling options. It keeps the output limit that the user asked for.
+	if opts.MaxTokens != 0 {
+		ret.MaxOutputTokens = openai.Int(int64(opts.MaxTokens))
+	}
+
 	if !opts.Raw {
 		ret.Temperature = openai.Float(opts.Temperature)
 		if opts.TopP != 0 {
 			ret.TopP = openai.Float(opts.TopP)
-		}
-		if opts.MaxTokens != 0 {
-			ret.MaxOutputTokens = openai.Int(int64(opts.MaxTokens))
 		}
 
 		// The Responses API has no fields for these parameters. Send them as extra fields.

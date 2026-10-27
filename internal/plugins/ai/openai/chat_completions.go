@@ -86,13 +86,20 @@ func (o *Client) buildChatCompletionParams(
 		Messages: messages,
 	}
 
+	// Raw mode leaves out the sampling options. It keeps the output limit that the user asked for.
+	// The reasoning models reject max_tokens, so they get max_completion_tokens.
+	if opts.MaxTokens != 0 {
+		if isOpenAIReasoningModel(opts.Model) {
+			ret.MaxCompletionTokens = openai.Int(int64(opts.MaxTokens))
+		} else {
+			ret.MaxTokens = openai.Int(int64(opts.MaxTokens))
+		}
+	}
+
 	if !opts.Raw {
 		ret.Temperature = openai.Float(opts.Temperature)
 		if opts.TopP != 0 {
 			ret.TopP = openai.Float(opts.TopP)
-		}
-		if opts.MaxTokens != 0 {
-			ret.MaxTokens = openai.Int(int64(opts.MaxTokens))
 		}
 		if opts.PresencePenalty != 0 {
 			ret.PresencePenalty = openai.Float(opts.PresencePenalty)

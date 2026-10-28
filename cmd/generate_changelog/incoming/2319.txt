@@ -1,0 +1,3 @@
+### PR [#2319](https://github.com/danielmiessler/Fabric/pull/2319) by [nicho810](https://github.com/nicho810): feat(providers): add cheapaimodel as an OpenAI-compatible provider
+
+- Feat: add cheapaimodel as an OpenAI-compatible provider

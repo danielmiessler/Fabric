@@ -1,0 +1,4 @@
+### PR [#2323](https://github.com/danielmiessler/Fabric/pull/2323) by [tanishqbaweja](https://github.com/tanishqbaweja): fix(cli): stop config.yaml from overriding flags and zeroing options it omits
+
+- Fix `config.yaml` resetting every option it leaves out to zero: a config with a single key such as `ytDlpArgs:` or `notification: true` no longer runs with temperature 0 and top_p 0.
+- Fix command-line flags losing to `config.yaml` when written as bundled short flags (`-sp summarize`), attached values (`-t0.2`) or the Windows forms (`/t 0.2`, `/temperature:0.2`).

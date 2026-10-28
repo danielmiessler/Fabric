@@ -1,0 +1,6 @@
+### PR [#2322](https://github.com/danielmiessler/Fabric/pull/2322) by [tonydavis629](https://github.com/tonydavis629): feat: add Obscurify AI as an OpenAI-compatible provider
+
+- Feat: add Obscurify AI as an OpenAI-compatible provider
+Add an "Obscurify AI" entry to ProviderMap with base URL
+<https://obscurify.ai/v1> (key from OBSCURIFY_AI_API_KEY), a
+TestCreateClient case, and a line in the README provider list.

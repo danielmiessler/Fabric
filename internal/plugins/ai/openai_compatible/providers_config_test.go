@@ -93,6 +93,11 @@ func TestCreateClient(t *testing.T) {
 			exists:   true,
 		},
 		{
+			name:     "Existing provider - Obscurify AI",
+			provider: "Obscurify AI",
+			exists:   true,
+		},
+		{
 			name:     "Existing provider - OpenCode Go",
 			provider: "OpenCode Go",
 			exists:   true,

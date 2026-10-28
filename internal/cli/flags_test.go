@@ -5,6 +5,7 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"testing"
 
@@ -186,6 +187,51 @@ stream: true
 		assert.Equal(t, "gpt-3.5-turbo", flags.Model)
 		assert.Equal(t, "analyze", flags.Pattern) // unchanged from YAML
 		assert.True(t, flags.Stream)              // unchanged from YAML
+	})
+
+	t.Run("CLI overrides YAML in any flag syntax", func(t *testing.T) {
+		oldArgs := os.Args
+		defer func() { os.Args = oldArgs }()
+
+		cliArgs := [][]string{
+			{"--temperature=0.2", "--pattern=summarize"},
+			{"-t0.2", "-sp", "summarize"},
+		}
+		if runtime.GOOS == "windows" {
+			cliArgs = append(cliArgs,
+				[]string{"/t", "0.2", "/p", "summarize"},
+				[]string{"/temperature:0.2", "/pattern:summarize"},
+			)
+		}
+		for _, args := range cliArgs {
+			os.Args = append([]string{"cmd", "--config", tmpfile.Name()}, args...)
+
+			flags, err := Init()
+			if assert.NoError(t, err, args) {
+				assert.Equal(t, 0.2, flags.Temperature, args)
+				assert.Equal(t, "summarize", flags.Pattern, args)
+			}
+		}
+	})
+
+	t.Run("Options missing from YAML keep their defaults", func(t *testing.T) {
+		partialConfig := filepath.Join(t.TempDir(), "config.yaml")
+		if err := os.WriteFile(partialConfig, []byte("model: gpt-4\ntemperature: 0\n"), 0o600); err != nil {
+			t.Fatal(err)
+		}
+
+		oldArgs := os.Args
+		defer func() { os.Args = oldArgs }()
+		os.Args = []string{"cmd", "--config", partialConfig}
+
+		flags, err := Init()
+		assert.NoError(t, err)
+		assert.Equal(t, "gpt-4", flags.Model)
+		assert.Equal(t, 0.0, flags.Temperature) // set to 0 in YAML
+		assert.Equal(t, domain.DefaultTopP, flags.TopP)
+		assert.Equal(t, "Kore", flags.Voice)
+		assert.Equal(t, "<think>", flags.ThinkStartTag)
+		assert.Equal(t, "</think>", flags.ThinkEndTag)
 	})
 
 	t.Run("Invalid YAML config", func(t *testing.T) {
@@ -477,31 +523,4 @@ func TestBuildChatOptionsWithImageParameters(t *testing.T) {
 		assert.Contains(t, err.Error(), "image parameters")
 		assert.Contains(t, err.Error(), "can only be used with --image-file")
 	})
-}
-
-func TestExtractFlag(t *testing.T) {
-	tests := []struct {
-		name     string
-		arg      string
-		expected string
-	}{
-		// Unix-style flags
-		{"long flag", "--help", "help"},
-		{"long flag with value", "--pattern=analyze", "pattern"},
-		{"short flag", "-h", "h"},
-		{"short flag with value", "-p=test", "p"},
-		{"single dash", "-", ""},
-		{"double dash only", "--", ""},
-
-		// Non-flags
-		{"regular arg", "analyze", ""},
-		{"path arg", "./file.txt", ""},
-	}
-
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			result := extractFlag(tt.arg)
-			assert.Equal(t, tt.expected, result)
-		})
-	}
 }

@@ -302,6 +302,7 @@ go install github.com/danielmiessler/fabric/cmd/fabric@latest
 - API Route
 - Apple Foundation Models (محلي، macOS 27 أو أحدث: قم بتشغيل `sudo fm license` مرة واحدة، ثم `fm serve --port 1976`؛ لا يوجد مفتاح API؛ حدده مرة واحدة في `fabric -S` لتمكينه)
 - Cerebras
+- cheapaimodel
 - Cheaper Inference
 - DeepSeek
 - DemonRoute

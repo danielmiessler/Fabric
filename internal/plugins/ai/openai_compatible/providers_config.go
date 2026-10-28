@@ -278,6 +278,11 @@ var ProviderMap = map[string]ProviderConfig{
 		BaseURL:             "https://api.cerebras.ai/v1",
 		ImplementsResponses: false,
 	},
+	"cheapaimodel": {
+		Name:                "cheapaimodel",
+		BaseURL:             "https://api.cheapaimodel.ai/v1",
+		ImplementsResponses: false,
+	},
 	"Cheaper Inference": {
 		Name:                "Cheaper Inference",
 		BaseURL:             "https://api.cheaperinference.com/v1",

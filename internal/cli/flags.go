@@ -129,38 +129,6 @@ var execNamesWithoutPattern = []string{"", "fabric", "fabric-ai", "main", "cmd"}
 // Init Initialize flags. returns a Flags struct and an error
 func Init() (ret *Flags, err error) {
 	debuglog.SetLevel(debuglog.LevelFromInt(parseDebugLevel(os.Args[1:])))
-	// usedFlags records which YAML-backed flags the command line set. YAML must not override them.
-	usedFlags := make(map[string]bool)
-	yamlArgsScan := os.Args[1:]
-
-	flagToYamlTag := make(map[string]string)
-	t := reflect.TypeFor[Flags]()
-	for field := range t.Fields() {
-		yamlTag := field.Tag.Get("yaml")
-		if yamlTag != "" {
-			longTag := field.Tag.Get("long")
-			shortTag := field.Tag.Get("short")
-			if longTag != "" {
-				flagToYamlTag[longTag] = yamlTag
-				debuglog.Debug(debuglog.Detailed, "Mapped long flag %s to yaml tag %s\n", longTag, yamlTag)
-			}
-			if shortTag != "" {
-				flagToYamlTag[shortTag] = yamlTag
-				debuglog.Debug(debuglog.Detailed, "Mapped short flag %s to yaml tag %s\n", shortTag, yamlTag)
-			}
-		}
-	}
-
-	for _, arg := range yamlArgsScan {
-		flag := extractFlag(arg)
-
-		if flag != "" {
-			if yamlTag, exists := flagToYamlTag[flag]; exists {
-				usedFlags[yamlTag] = true
-				debuglog.Debug(debuglog.Detailed, "CLI flag used: %s (yaml: %s)\n", flag, yamlTag)
-			}
-		}
-	}
 
 	ret = &Flags{}
 	parser := flags.NewParser(ret, flags.HelpFlag|flags.PassDoubleDash)
@@ -172,6 +140,20 @@ func Init() (ret *Flags, err error) {
 			os.Exit(0)
 		}
 		return
+	}
+
+	// usedFlags records which YAML-backed flags the command line set. YAML must not override them.
+	// The parser knows every flag syntax, such as "-sp name", "-t0.2" or "/t 0.2" on Windows.
+	usedFlags := make(map[string]bool)
+	for _, group := range parser.Groups() {
+		for _, opt := range group.Options() {
+			if opt.IsSet() && !opt.IsSetDefault() {
+				if yamlTag := opt.Field().Tag.Get("yaml"); yamlTag != "" {
+					usedFlags[yamlTag] = true
+					debuglog.Debug(debuglog.Detailed, "CLI flag used: %s (yaml: %s)\n", opt, yamlTag)
+				}
+			}
+		}
 	}
 
 	if ret.Pattern == "" {
@@ -197,11 +179,12 @@ func Init() (ret *Flags, err error) {
 
 	if ret.Config != "" {
 		var yamlFlags *Flags
-		if yamlFlags, err = loadYAMLConfig(ret.Config); err != nil {
+		var yamlKeys map[string]bool
+		if yamlFlags, yamlKeys, err = loadYAMLConfig(ret.Config); err != nil {
 			return
 		}
 
-		// YAML fills only the flags that the command line did not set.
+		// YAML fills only the flags that the file sets and the command line did not set.
 		flagsVal := reflect.ValueOf(ret).Elem()
 		yamlVal := reflect.ValueOf(yamlFlags).Elem()
 		flagsType := flagsVal.Type()
@@ -209,7 +192,7 @@ func Init() (ret *Flags, err error) {
 		for i := 0; i < flagsType.NumField(); i++ {
 			field := flagsType.Field(i)
 			if yamlTag := field.Tag.Get("yaml"); yamlTag != "" {
-				if !usedFlags[yamlTag] {
+				if yamlKeys[yamlTag] && !usedFlags[yamlTag] {
 					flagField := flagsVal.Field(i)
 					yamlField := yamlVal.Field(i)
 					if flagField.CanSet() {
@@ -261,22 +244,6 @@ func parseDebugLevel(args []string) int {
 	return 0
 }
 
-func extractFlag(arg string) string {
-	var flag string
-	if after, ok := strings.CutPrefix(arg, "--"); ok {
-		flag = after
-		if i := strings.Index(flag, "="); i > 0 {
-			flag = flag[:i]
-		}
-	} else if strings.HasPrefix(arg, "-") && len(arg) > 1 {
-		flag = strings.TrimPrefix(arg, "-")
-		if i := strings.Index(flag, "="); i > 0 {
-			flag = flag[:i]
-		}
-	}
-	return flag
-}
-
 func assignWithConversion(targetField, sourceField reflect.Value) error {
 	if sourceField.Kind() == reflect.String {
 		str := sourceField.String()
@@ -308,28 +275,38 @@ func assignWithConversion(targetField, sourceField reflect.Value) error {
 	return fmt.Errorf(i18n.T("unsupported_conversion"), sourceField.Kind(), targetField.Kind())
 }
 
-func loadYAMLConfig(configPath string) (*Flags, error) {
+// loadYAMLConfig returns the flags from the config file and the set of keys the file contains.
+func loadYAMLConfig(configPath string) (*Flags, map[string]bool, error) {
 	absPath, err := util.GetAbsolutePath(configPath)
 	if err != nil {
-		return nil, fmt.Errorf(i18n.T("invalid_config_path"), err)
+		return nil, nil, fmt.Errorf(i18n.T("invalid_config_path"), err)
 	}
 
 	data, err := os.ReadFile(absPath)
 	if err != nil {
 		if os.IsNotExist(err) {
-			return nil, fmt.Errorf(i18n.T("config_file_not_found"), absPath)
+			return nil, nil, fmt.Errorf(i18n.T("config_file_not_found"), absPath)
 		}
-		return nil, fmt.Errorf(i18n.T("error_reading_config_file"), err)
+		return nil, nil, fmt.Errorf(i18n.T("error_reading_config_file"), err)
 	}
 
 	config := &Flags{}
 	if err := yaml.Unmarshal(data, config); err != nil {
-		return nil, fmt.Errorf(i18n.T("error_parsing_config_file"), err)
+		return nil, nil, fmt.Errorf(i18n.T("error_parsing_config_file"), err)
+	}
+
+	var values map[string]any
+	if err := yaml.Unmarshal(data, &values); err != nil {
+		return nil, nil, fmt.Errorf(i18n.T("error_parsing_config_file"), err)
+	}
+	keys := make(map[string]bool, len(values))
+	for key := range values {
+		keys[key] = true
 	}
 
 	debuglog.Debug(debuglog.Detailed, "Config: %v\n", config)
 
-	return config, nil
+	return config, keys, nil
 }
 
 func readStdin() (ret string, err error) {

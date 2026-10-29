@@ -342,6 +342,11 @@ var ProviderMap = map[string]ProviderConfig{
 		BaseURL:             "http://localhost:4000",
 		ImplementsResponses: false,
 	},
+	"llm.buzz": {
+		Name:                "llm.buzz",
+		BaseURL:             "https://api.llm.buzz/api/v1",
+		ImplementsResponses: false,
+	},
 	"llmman": {
 		Name:                "llmman",
 		BaseURL:             "http://localhost:17434/v1",

@@ -378,6 +378,7 @@ Fabric supports a wide range of AI providers:
 - Hostinger Router
 - Langdock
 - LiteLLM
+- llm.buzz
 - MiniMax
 - Mistral
 - Novita AI

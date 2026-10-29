@@ -133,6 +133,11 @@ func TestCreateClient(t *testing.T) {
 			exists:   true,
 		},
 		{
+			name:     "Existing provider - llm.buzz",
+			provider: "llm.buzz",
+			exists:   true,
+		},
+		{
 			name:     "Existing provider - llmman",
 			provider: "llmman",
 			exists:   true,

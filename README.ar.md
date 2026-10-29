@@ -312,6 +312,7 @@ go install github.com/danielmiessler/fabric/cmd/fabric@latest
 - Hostinger Router
 - Langdock
 - LiteLLM
+- llm.buzz
 - MiniMax
 - Mistral
 - Novita AI

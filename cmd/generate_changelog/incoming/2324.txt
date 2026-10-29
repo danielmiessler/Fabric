@@ -1,0 +1,4 @@
+### PR [#2324](https://github.com/danielmiessler/Fabric/pull/2324) by [tanishqbaweja](https://github.com/tanishqbaweja): fix(cli): apply --extract to --workflow output and print it with --stream
+
+- Fix `--workflow` ignoring `--extract` and `--extract-last`: the code block is now printed, copied (`-c`) and written (`-o`) instead of the full response of the last step.
+- Fix `--workflow` with `--stream` and `--extract` printing nothing and exiting 0; the extracted block is printed as in single-pattern runs.

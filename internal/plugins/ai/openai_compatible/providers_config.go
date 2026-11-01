@@ -278,6 +278,11 @@ var ProviderMap = map[string]ProviderConfig{
 		BaseURL:             "https://api.cerebras.ai/v1",
 		ImplementsResponses: false,
 	},
+	"cheapaimodel": {
+		Name:                "cheapaimodel",
+		BaseURL:             "https://api.cheapaimodel.ai/v1",
+		ImplementsResponses: false,
+	},
 	"Cheaper Inference": {
 		Name:                "Cheaper Inference",
 		BaseURL:             "https://api.cheaperinference.com/v1",
@@ -301,6 +306,11 @@ var ProviderMap = map[string]ProviderConfig{
 	"Eden AI": {
 		Name:                "Eden AI",
 		BaseURL:             "https://api.edenai.run/v3",
+		ImplementsResponses: false,
+	},
+	"EmpirioLabs AI": {
+		Name:                "EmpirioLabs AI",
+		BaseURL:             "https://api.empiriolabs.ai/v1",
 		ImplementsResponses: false,
 	},
 	"FuturMix": {
@@ -340,6 +350,11 @@ var ProviderMap = map[string]ProviderConfig{
 	"LiteLLM": {
 		Name:                "LiteLLM",
 		BaseURL:             "http://localhost:4000",
+		ImplementsResponses: false,
+	},
+	"llm.buzz": {
+		Name:                "llm.buzz",
+		BaseURL:             "https://api.llm.buzz/api/v1",
 		ImplementsResponses: false,
 	},
 	"llmman": {

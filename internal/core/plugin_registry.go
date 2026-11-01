@@ -455,7 +455,12 @@ func (o *PluginRegistry) ConfigureVendors() {
 	o.VendorManager.Clear()
 	for _, vendor := range o.VendorsAll.Vendors {
 		if vendorErr := vendor.Configure(); vendorErr != nil {
-			debuglog.Debug(debuglog.Trace, "vendor %s not configured: %v\n", vendor.GetName(), vendorErr)
+			msg := fmt.Sprintf(i18n.T("vendor_not_configured"), vendor.GetName())
+			if vendor.IsConfigured() {
+				debuglog.Log("%s: %v\n", msg, vendorErr)
+			} else {
+				debuglog.Debug(debuglog.Trace, "%s: %v\n", msg, vendorErr)
+			}
 		} else if vendor.IsConfigured() {
 			o.VendorManager.AddVendors(vendor)
 		}

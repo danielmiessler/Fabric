@@ -108,6 +108,30 @@ func TestRequireSecureBaseURLAllowInsecureLAN(t *testing.T) {
 	if err := RequireSecureBaseURL("http://api.openai.com/v1"); err == nil {
 		t.Error("lan keyword must still reject a public host")
 	}
+
+	// IPv6 zones, bracketed entries and trailing dots, as "lan" already allows.
+	t.Setenv("FABRIC_ALLOW_INSECURE_LAN", "fe80::1, fd00:1::/32, [fd00::5], nas.lan.")
+	for _, raw := range []string{
+		"http://[fe80::1%25eth0]:11434",   // exact IP, zoned host
+		"http://[fd00:1::7%25eth0]:11434", // CIDR, zoned host
+		"http://[fd00::5]:11434",          // bracketed entry
+		"http://nas.lan:11434",            // trailing-dot entry
+	} {
+		if err := RequireSecureBaseURL(raw); err != nil {
+			t.Errorf("normalized allowlist: RequireSecureBaseURL(%q) = %v, want nil", raw, err)
+		}
+	}
+	for _, raw := range []string{
+		"http://[fe80::2%25eth0]:11434",
+		"http://[fd00:2::7%25eth0]:11434",
+		"http://[2001:db8::1%25eth0]:11434",
+		"http://[fd00::6]:11434",
+		"http://nas2.lan:11434",
+	} {
+		if err := RequireSecureBaseURL(raw); err == nil {
+			t.Errorf("normalized allowlist: RequireSecureBaseURL(%q) = nil, want an error", raw)
+		}
+	}
 }
 
 func TestRequireSecureBaseURLErrorOmitsCredentials(t *testing.T) {

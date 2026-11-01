@@ -167,11 +167,14 @@ func HostAllowedForInsecureHTTP(host, spec string) bool {
 	if host == "" {
 		return false
 	}
-	hostIP := net.ParseIP(host)
+	// A zone (fe80::1%eth0) names the interface, not the address.
+	ipHost, _, _ := strings.Cut(host, "%")
+	hostIP := net.ParseIP(ipHost)
 	entries := strings.FieldsFunc(strings.ToLower(spec), func(r rune) bool {
 		return r == ',' || unicode.IsSpace(r)
 	})
 	for _, entry := range entries {
+		entry = strings.TrimSuffix(strings.Trim(entry, "[]"), ".")
 		if entry == "lan" {
 			if isPrivateLANHost(host) {
 				return true

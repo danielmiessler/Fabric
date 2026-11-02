@@ -1,10 +1,14 @@
 package cli
 
 import (
+	"bytes"
+	"os"
+	"path/filepath"
 	"strings"
 	"testing"
 
 	"github.com/danielmiessler/fabric/internal/domain"
+	debuglog "github.com/danielmiessler/fabric/internal/log"
 	"github.com/danielmiessler/fabric/internal/plugins/ai/dryrun"
 )
 
@@ -179,5 +183,35 @@ func TestHandleChatProcessingSanitizesOutput(t *testing.T) {
 	printed := captureStdout(t, func() { must(t, handleChatProcessing(flags, registry, "")) })
 	if got := string(printed); got != "ab\n" {
 		t.Errorf("printed %q, want %q", got, "ab\n")
+	}
+}
+
+// TestHandleChatProcessingNotificationKeepsResult checks that the notification
+// does not change the result of the command. A failed notification is only
+// logged, and the error of -o is still returned.
+func TestHandleChatProcessingNotificationKeepsResult(t *testing.T) {
+	registry := newStepRegistry(t, &stepVendor{Client: dryrun.NewClient(), reply: "reply"}, &Workflow{})
+	var logged bytes.Buffer
+	debuglog.SetOutput(&logged)
+	t.Cleanup(func() { debuglog.SetOutput(os.Stderr) })
+
+	// The notification command false exits with status 1.
+	flags := &Flags{Message: "in", Language: "en", NotificationCommand: "false"}
+	var err error
+	captureStdout(t, func() { err = handleChatProcessing(flags, registry, "") })
+	if err != nil {
+		t.Errorf("failed notification: got error %v, want nil", err)
+	}
+	if !strings.Contains(logged.String(), "Failed to send notification") {
+		t.Errorf("log %q does not report the failed notification", logged.String())
+	}
+
+	// -o does not overwrite an existing file. A successful notification must not hide that error.
+	output := filepath.Join(t.TempDir(), "out.txt")
+	must(t, os.WriteFile(output, []byte("old content\n"), 0o644))
+	flags = &Flags{Message: "in", Language: "en", Output: output, NotificationCommand: "true"}
+	captureStdout(t, func() { err = handleChatProcessing(flags, registry, "") })
+	if err == nil || !strings.Contains(err.Error(), output) {
+		t.Errorf("existing output file: got error %v, want the error for %s", err, output)
 	}
 }

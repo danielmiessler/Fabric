@@ -536,18 +536,11 @@ func TestChatter_Send_StreamingBufferStreamDoesNotPrint(t *testing.T) {
 		BufferStream: true,
 	}
 
-	oldStdout := os.Stdout
-	r, w, err := os.Pipe()
-	if err != nil {
-		t.Fatalf("failed to create pipe: %v", err)
-	}
-	os.Stdout = w
-
-	session, sendErr := chatter.Send(context.Background(), request, opts)
-
-	w.Close()
-	os.Stdout = oldStdout
-	printed, _ := io.ReadAll(r)
+	var session *fsdb.Session
+	var sendErr error
+	printed := captureStdout(t, func() {
+		session, sendErr = chatter.Send(context.Background(), request, opts)
+	})
 
 	if sendErr != nil {
 		t.Fatalf("Expected no error, but got: %v", sendErr)
@@ -718,25 +711,17 @@ func TestChatter_Send_DryRunLeavesSessionUnchanged(t *testing.T) {
 	}
 	chatter := &Chatter{db: db, DryRun: true, vendor: dryrun.NewClient(), model: "test-model"}
 
-	oldStdout := os.Stdout
-	t.Cleanup(func() { os.Stdout = oldStdout })
-	r, w, err := os.Pipe()
-	if err != nil {
-		t.Fatalf("failed to create pipe: %v", err)
-	}
-	os.Stdout = w
-	for _, name := range []string{"existing", "new"} {
-		request := &domain.ChatRequest{
-			SessionName: name,
-			Message:     &chat.ChatCompletionMessage{Role: chat.ChatMessageRoleUser, Content: "hello"},
+	printed := captureStdout(t, func() {
+		for _, name := range []string{"existing", "new"} {
+			request := &domain.ChatRequest{
+				SessionName: name,
+				Message:     &chat.ChatCompletionMessage{Role: chat.ChatMessageRoleUser, Content: "hello"},
+			}
+			if _, err := chatter.Send(context.Background(), request, &domain.ChatOptions{Model: "test-model"}); err != nil {
+				t.Errorf("Send on session %q: %v", name, err)
+			}
 		}
-		if _, err := chatter.Send(context.Background(), request, &domain.ChatOptions{Model: "test-model"}); err != nil {
-			t.Errorf("Send on session %q: %v", name, err)
-		}
-	}
-	w.Close()
-	os.Stdout = oldStdout
-	printed, _ := io.ReadAll(r)
+	})
 
 	if got, err := db.Sessions.Load("existing"); err != nil || string(got) != saved {
 		t.Errorf("existing session = %q (error %v), want it unchanged", got, err)
@@ -803,17 +788,11 @@ func TestChatter_Send_StreamingSanitizesTerminalOutput(t *testing.T) {
 		Message: &chat.ChatCompletionMessage{Role: chat.ChatMessageRoleUser, Content: "test message"},
 	}
 
-	oldStdout := os.Stdout
-	t.Cleanup(func() { os.Stdout = oldStdout })
-	r, w, err := os.Pipe()
-	if err != nil {
-		t.Fatalf("failed to create pipe: %v", err)
-	}
-	os.Stdout = w
-	session, sendErr := chatter.Send(context.Background(), request, &domain.ChatOptions{Model: "test-model"})
-	w.Close()
-	os.Stdout = oldStdout
-	printed, _ := io.ReadAll(r)
+	var session *fsdb.Session
+	var sendErr error
+	printed := captureStdout(t, func() {
+		session, sendErr = chatter.Send(context.Background(), request, &domain.ChatOptions{Model: "test-model"})
+	})
 
 	if sendErr != nil {
 		t.Fatalf("Expected no error, but got: %v", sendErr)
@@ -824,4 +803,20 @@ func TestChatter_Send_StreamingSanitizesTerminalOutput(t *testing.T) {
 	if got := session.GetLastMessage().Content; got != raw {
 		t.Errorf("session content %q, want %q", got, raw)
 	}
+}
+
+// captureStdout runs fn and returns the text that fn writes to stdout.
+func captureStdout(t *testing.T, fn func()) []byte {
+	t.Helper()
+	r, w, err := os.Pipe()
+	if err != nil {
+		t.Fatalf("failed to create pipe: %v", err)
+	}
+	oldStdout := os.Stdout
+	os.Stdout = w
+	defer func() { os.Stdout = oldStdout }()
+	fn()
+	w.Close()
+	printed, _ := io.ReadAll(r)
+	return printed
 }

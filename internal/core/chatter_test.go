@@ -15,6 +15,7 @@ import (
 
 	"github.com/danielmiessler/fabric/internal/chat"
 	"github.com/danielmiessler/fabric/internal/domain"
+	"github.com/danielmiessler/fabric/internal/plugins/ai/dryrun"
 	"github.com/danielmiessler/fabric/internal/plugins/db/fsdb"
 )
 
@@ -535,18 +536,11 @@ func TestChatter_Send_StreamingBufferStreamDoesNotPrint(t *testing.T) {
 		BufferStream: true,
 	}
 
-	oldStdout := os.Stdout
-	r, w, err := os.Pipe()
-	if err != nil {
-		t.Fatalf("failed to create pipe: %v", err)
-	}
-	os.Stdout = w
-
-	session, sendErr := chatter.Send(context.Background(), request, opts)
-
-	w.Close()
-	os.Stdout = oldStdout
-	printed, _ := io.ReadAll(r)
+	var session *fsdb.Session
+	var sendErr error
+	printed := captureStdout(t, func() {
+		session, sendErr = chatter.Send(context.Background(), request, opts)
+	})
 
 	if sendErr != nil {
 		t.Fatalf("Expected no error, but got: %v", sendErr)
@@ -703,6 +697,83 @@ func TestChatter_Send_ConcurrentSameSessionKeepsAllMessages(t *testing.T) {
 	}
 }
 
+// TestChatter_Send_DryRunLeavesSessionUnchanged checks that a dry run does not
+// write a named session. The dry run reply is not a model reply. If the session
+// keeps it, the next request sends it to the model.
+func TestChatter_Send_DryRunLeavesSessionUnchanged(t *testing.T) {
+	db := fsdb.NewDb(t.TempDir())
+	if err := db.Sessions.Configure(); err != nil {
+		t.Fatalf("configure: %v", err)
+	}
+	saved := `[{"role":"user","content":"earlier"},{"role":"assistant","content":"reply"}]`
+	if err := db.Sessions.Save("existing", []byte(saved)); err != nil {
+		t.Fatalf("save: %v", err)
+	}
+	chatter := &Chatter{db: db, DryRun: true, vendor: dryrun.NewClient(), model: "test-model"}
+
+	printed := captureStdout(t, func() {
+		for _, name := range []string{"existing", "new"} {
+			request := &domain.ChatRequest{
+				SessionName: name,
+				Message:     &chat.ChatCompletionMessage{Role: chat.ChatMessageRoleUser, Content: "hello"},
+			}
+			if _, err := chatter.Send(context.Background(), request, &domain.ChatOptions{Model: "test-model"}); err != nil {
+				t.Errorf("Send on session %q: %v", name, err)
+			}
+		}
+	})
+
+	if got, err := db.Sessions.Load("existing"); err != nil || string(got) != saved {
+		t.Errorf("existing session = %q (error %v), want it unchanged", got, err)
+	}
+	if db.Sessions.Exists("new") {
+		t.Error("dry run made a file for the new session")
+	}
+	if len(printed) != 0 {
+		t.Errorf("dry run printed %q, want nothing", printed)
+	}
+}
+
+// TestChatter_Send_DryRunAppliesNoFileChanges checks that a dry run of
+// create_coding_feature does not write files. The dry run reply contains the
+// pattern, and the pattern has an example of the file changes format.
+func TestChatter_Send_DryRunAppliesNoFileChanges(t *testing.T) {
+	db := fsdb.NewDb(t.TempDir())
+	patternDir := filepath.Join(db.Patterns.Dir, "create_coding_feature")
+	if err := os.MkdirAll(patternDir, 0o755); err != nil {
+		t.Fatalf("mkdir: %v", err)
+	}
+	pattern := "Use this format:\n" + domain.FileChangesMarker + "\n" +
+		`[{"operation": "create", "path": "README.md", "content": "example"}]` + "\n"
+	if err := os.WriteFile(filepath.Join(patternDir, "system.md"), []byte(pattern), 0o644); err != nil {
+		t.Fatalf("write pattern: %v", err)
+	}
+
+	project := t.TempDir()
+	t.Chdir(project)
+	if err := os.WriteFile("README.md", []byte("keep"), 0o644); err != nil {
+		t.Fatalf("write README.md: %v", err)
+	}
+
+	chatter := &Chatter{db: db, DryRun: true, vendor: dryrun.NewClient(), model: "test-model"}
+	request := &domain.ChatRequest{
+		PatternName: "create_coding_feature",
+		Message:     &chat.ChatCompletionMessage{Role: chat.ChatMessageRoleUser, Content: "add a feature"},
+	}
+	session, err := chatter.Send(context.Background(), request, &domain.ChatOptions{Model: "test-model"})
+	if err != nil {
+		t.Fatalf("Send: %v", err)
+	}
+
+	if got, err := os.ReadFile(filepath.Join(project, "README.md")); err != nil || string(got) != "keep" {
+		t.Errorf("README.md = %q (error %v), want %q", got, err, "keep")
+	}
+	// The reply is the full dry run text, not only the text before the marker.
+	if got := session.GetLastMessage().Content; !strings.HasSuffix(got, dryrun.DryRunResponse) {
+		t.Errorf("reply %q does not end with the dry run response", got)
+	}
+}
+
 // A streamed reply goes to the terminal with no OSC 52 sequence, and the
 // session keeps the full text.
 func TestChatter_Send_StreamingSanitizesTerminalOutput(t *testing.T) {
@@ -717,17 +788,11 @@ func TestChatter_Send_StreamingSanitizesTerminalOutput(t *testing.T) {
 		Message: &chat.ChatCompletionMessage{Role: chat.ChatMessageRoleUser, Content: "test message"},
 	}
 
-	oldStdout := os.Stdout
-	t.Cleanup(func() { os.Stdout = oldStdout })
-	r, w, err := os.Pipe()
-	if err != nil {
-		t.Fatalf("failed to create pipe: %v", err)
-	}
-	os.Stdout = w
-	session, sendErr := chatter.Send(context.Background(), request, &domain.ChatOptions{Model: "test-model"})
-	w.Close()
-	os.Stdout = oldStdout
-	printed, _ := io.ReadAll(r)
+	var session *fsdb.Session
+	var sendErr error
+	printed := captureStdout(t, func() {
+		session, sendErr = chatter.Send(context.Background(), request, &domain.ChatOptions{Model: "test-model"})
+	})
 
 	if sendErr != nil {
 		t.Fatalf("Expected no error, but got: %v", sendErr)
@@ -738,4 +803,20 @@ func TestChatter_Send_StreamingSanitizesTerminalOutput(t *testing.T) {
 	if got := session.GetLastMessage().Content; got != raw {
 		t.Errorf("session content %q, want %q", got, raw)
 	}
+}
+
+// captureStdout runs fn and returns the text that fn writes to stdout.
+func captureStdout(t *testing.T, fn func()) []byte {
+	t.Helper()
+	r, w, err := os.Pipe()
+	if err != nil {
+		t.Fatalf("failed to create pipe: %v", err)
+	}
+	oldStdout := os.Stdout
+	os.Stdout = w
+	defer func() { os.Stdout = oldStdout }()
+	fn()
+	w.Close()
+	printed, _ := io.ReadAll(r)
+	return printed
 }

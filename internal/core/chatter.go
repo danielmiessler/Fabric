@@ -87,7 +87,8 @@ func (o *Chatter) Send(ctx context.Context, request *domain.ChatRequest, opts *d
 		defer unlock()
 	}
 
-	if session, err = o.BuildSession(request, opts.Raw, true); err != nil {
+	// A dry run does not save the session, so it does not announce a new one.
+	if session, err = o.BuildSession(request, opts.Raw, !o.DryRun); err != nil {
 		return
 	}
 
@@ -228,7 +229,9 @@ func (o *Chatter) Send(ctx context.Context, request *domain.ChatRequest, opts *d
 
 	// Apply file changes only in CLI mode, where UpdateChan is nil.
 	// API mode streams responses and must not write files without supervision.
-	if request.PatternName == "create_coding_feature" && opts.UpdateChan == nil {
+	// A dry run reply is the request text, and the pattern in it has an example
+	// of the file changes format. Do not apply that example.
+	if request.PatternName == "create_coding_feature" && opts.UpdateChan == nil && !o.DryRun {
 		summary, fileChanges, parseErr := domain.ParseFileChanges(message)
 		if parseErr != nil {
 			// The error can contain a path or an operation from the model.
@@ -251,7 +254,9 @@ func (o *Chatter) Send(ctx context.Context, request *domain.ChatRequest, opts *d
 
 	session.Append(&chat.ChatCompletionMessage{Role: chat.ChatMessageRoleAssistant, Content: message})
 
-	if session.Name != "" {
+	// A dry run reply is not a model reply. If the session keeps it, the next
+	// request sends it to the model.
+	if session.Name != "" && !o.DryRun {
 		err = o.db.Sessions.SaveSession(session)
 	}
 	return

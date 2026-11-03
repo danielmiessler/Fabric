@@ -109,6 +109,26 @@ func TestBuildGenerateContentConfig_WithSearchAndLocation(t *testing.T) {
 	}
 }
 
+func TestBuildGenerateContentConfig_WithSeed(t *testing.T) {
+	client := &Client{}
+
+	cfg, err := client.buildGenerateContentConfig(&domain.ChatOptions{Seed: 42})
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if cfg.Seed == nil || *cfg.Seed != 42 {
+		t.Errorf("expected seed 42 in the config, got %v", cfg.Seed)
+	}
+
+	cfg, err = client.buildGenerateContentConfig(&domain.ChatOptions{})
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if cfg.Seed != nil {
+		t.Errorf("expected no seed when none is set, got %d", *cfg.Seed)
+	}
+}
+
 func TestBuildGenerateContentConfig_InvalidLocation(t *testing.T) {
 	client := &Client{}
 	opts := &domain.ChatOptions{Search: true, SearchLocation: "invalid"}

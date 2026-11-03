@@ -89,6 +89,30 @@ func (c *Client) ListModels(ctx context.Context) ([]string, error) {
 	return models, nil
 }
 
+// applyChatOptions adds the sampling options to a chat completions payload, the way the OpenAI
+// plugin does: temperature always, the others only when set, and none in raw mode.
+func applyChatOptions(payload map[string]any, opts *domain.ChatOptions) {
+	if opts.Raw {
+		return
+	}
+	payload["temperature"] = opts.Temperature
+	if opts.TopP != 0 {
+		payload["top_p"] = opts.TopP
+	}
+	if opts.MaxTokens != 0 {
+		payload["max_tokens"] = opts.MaxTokens
+	}
+	if opts.PresencePenalty != 0 {
+		payload["presence_penalty"] = opts.PresencePenalty
+	}
+	if opts.FrequencyPenalty != 0 {
+		payload["frequency_penalty"] = opts.FrequencyPenalty
+	}
+	if opts.Seed != 0 {
+		payload["seed"] = opts.Seed
+	}
+}
+
 func (c *Client) SendStream(ctx context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, channel chan domain.StreamUpdate) (err error) {
 	defer close(channel)
 
@@ -102,6 +126,7 @@ func (c *Client) SendStream(ctx context.Context, msgs []*chat.ChatCompletionMess
 			"include_usage": true,
 		},
 	}
+	applyChatOptions(payload, opts)
 
 	var jsonPayload []byte
 	if jsonPayload, err = json.Marshal(payload); err != nil {
@@ -206,6 +231,7 @@ func (c *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, o
 		"messages": msgs,
 		"model":    opts.Model,
 	}
+	applyChatOptions(payload, opts)
 
 	var jsonPayload []byte
 	if jsonPayload, err = json.Marshal(payload); err != nil {

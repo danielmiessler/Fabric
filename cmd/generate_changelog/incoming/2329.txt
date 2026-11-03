@@ -1,0 +1,4 @@
+### PR [#2329](https://github.com/danielmiessler/Fabric/pull/2329) by [tanishqbaweja](https://github.com/tanishqbaweja): fix(cli): keep --notification from hiding the -o error or failing the command
+
+- Fix notifications hiding the `-o` error: with `--notification`, `--notification-command` or the matching `config.yaml` keys, an output file that already exists or cannot be created now gives an error and exit code 1 instead of a silent exit 0.
+- Fix a failed notification failing the command after the result was printed: a custom command that exits non-zero, a missing built-in notifier or a missing `sh` is now only logged.

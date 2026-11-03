@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.4.564 (2026-11-03)
+
+### PR [#2322](https://github.com/danielmiessler/Fabric/pull/2322) by [tonydavis629](https://github.com/tonydavis629): feat: add Obscurify AI as an OpenAI-compatible provider
+
+- Added Obscurify AI as an OpenAI-compatible provider, including a new ProviderMap entry with the base URL `https://obscurify.ai/v1` and authentication via the `OBSCURIFY_AI_API_KEY` environment variable.
+- Added a `TestCreateClient` test case covering the new Obscurify AI provider.
+- Updated the README provider list to document Obscurify AI.
+
 ## v1.4.563 (2026-11-02)
 
 ### PR [#2328](https://github.com/danielmiessler/Fabric/pull/2328) by [tanishqbaweja](https://github.com/tanishqbaweja) and [ksylvan](https://github.com/ksylvan): fix(core): stop --dry-run from applying file changes and saving the session

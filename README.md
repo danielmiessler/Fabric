@@ -741,6 +741,7 @@ Application Options:
   -q, --scrape_question=            Search question using Jina AI
       --serply_search=              Search Google using Serply and send the results to chat
       --firecrawl_search=           Search the web using Firecrawl and send the top pages to chat as Markdown
+      --keenable_search=            Search the web using Keenable (no API key required) and send the results to chat
   -e, --seed=                       Seed to be used for LMM generation
   -w, --wipecontext=                Wipe context
   -W, --wipesession=                Wipe session

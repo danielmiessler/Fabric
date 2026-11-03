@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.4.563 (2026-11-02)
+
+### PR [#2328](https://github.com/danielmiessler/Fabric/pull/2328) by [tanishqbaweja](https://github.com/tanishqbaweja) and [ksylvan](https://github.com/ksylvan): fix(core): stop --dry-run from applying file changes and saving the session
+
+- Fix `--dry-run -p create_coding_feature` overwriting `README.md` and creating `src/main.c` from the example in the pattern; the dry run now prints the full request and changes no files.
+- Fix `--dry-run --session` saving the fake reply to the session, where the next real request sent it to the model; a dry run no longer creates or changes a session file.
+- New helper function `captureStdout(t, fn) []byte` to refactor common test pattern.
+
 ## v1.4.562 (2026-11-01)
 
 ### PR [#2319](https://github.com/danielmiessler/Fabric/pull/2319) by [nicho810](https://github.com/nicho810): feat(providers): add cheapaimodel as an OpenAI-compatible provider

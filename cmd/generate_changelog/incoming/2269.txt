@@ -1,0 +1,3 @@
+### PR [#2269](https://github.com/danielmiessler/Fabric/pull/2269) by [taljeon](https://github.com/taljeon): fix: reactivate vendors selected by model prefix
+
+- Fix: reactivate vendors selected by model prefix

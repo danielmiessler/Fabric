@@ -462,6 +462,11 @@ var ProviderMap = map[string]ProviderConfig{
 		BaseURL:             "https://api.trustedrouter.com/v1",
 		ImplementsResponses: false,
 	},
+	"UberLLM": {
+		Name:                "UberLLM",
+		BaseURL:             "https://api.uberllm.dev/v1",
+		ImplementsResponses: false,
+	},
 	"Venice AI": {
 		Name:                "Venice AI",
 		BaseURL:             "https://api.venice.ai/api/v1",

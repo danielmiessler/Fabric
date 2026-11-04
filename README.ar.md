@@ -327,6 +327,7 @@ go install github.com/danielmiessler/fabric/cmd/fabric@latest
 - SiliconCloud
 - Synthorai
 - Together
+- UberLLM
 - Venice AI
 - Y-API
 - Z AI

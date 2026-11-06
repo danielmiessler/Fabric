@@ -46,6 +46,7 @@ import (
 	"github.com/danielmiessler/fabric/internal/tools/jina"
 	"github.com/danielmiessler/fabric/internal/tools/lang"
 	"github.com/danielmiessler/fabric/internal/tools/serply"
+	"github.com/danielmiessler/fabric/internal/tools/sofya"
 	"github.com/danielmiessler/fabric/internal/tools/spotify"
 	"github.com/danielmiessler/fabric/internal/tools/youtube"
 	"github.com/danielmiessler/fabric/internal/util"
@@ -63,6 +64,7 @@ func NewPluginRegistry(db *fsdb.Db) (ret *PluginRegistry, err error) {
 		Jina:           jina.NewClient(),
 		Serply:         serply.NewClient(),
 		Firecrawl:      firecrawl.NewClient(),
+		Sofya:          sofya.NewClient(),
 		Spotify:        spotify.NewSpotify(),
 		Strategies:     strategy.NewStrategiesManager(),
 	}
@@ -156,6 +158,7 @@ type PluginRegistry struct {
 	Jina               *jina.Client
 	Serply             *serply.Client
 	Firecrawl          *firecrawl.Client
+	Sofya              *sofya.Client
 	Spotify            *spotify.Spotify
 	TemplateExtensions *template.ExtensionManager
 	Strategies         *strategy.StrategiesManager
@@ -177,6 +180,7 @@ func (o *PluginRegistry) SaveEnvFile() (err error) {
 	o.Jina.SetupFillEnvFileContent(&envFileContent)
 	o.Serply.SetupFillEnvFileContent(&envFileContent)
 	o.Firecrawl.SetupFillEnvFileContent(&envFileContent)
+	o.Sofya.SetupFillEnvFileContent(&envFileContent)
 	o.Spotify.SetupFillEnvFileContent(&envFileContent)
 	o.Language.SetupFillEnvFileContent(&envFileContent)
 
@@ -335,7 +339,7 @@ func (o *PluginRegistry) runInteractiveSetup() (err error) {
 
 	groupsPlugins.AddGroupItems(i18n.T("setup_required_tools"), o.Defaults, o.PatternsLoader, o.Strategies)
 
-	groupsPlugins.AddGroupItems(i18n.T("setup_optional_configuration_header"), o.CustomPatterns, o.Firecrawl, o.Jina, o.Language, o.Serply, o.Spotify, o.YouTube)
+	groupsPlugins.AddGroupItems(i18n.T("setup_optional_configuration_header"), o.CustomPatterns, o.Firecrawl, o.Jina, o.Language, o.Serply, o.Sofya, o.Spotify, o.YouTube)
 
 	for {
 		groupsPlugins.Print(false)
@@ -526,6 +530,7 @@ func (o *PluginRegistry) Configure() (err error) {
 	_ = o.Jina.Configure()
 	_ = o.Serply.Configure()
 	_ = o.Firecrawl.Configure()
+	_ = o.Sofya.Configure()
 	_ = o.Spotify.Configure()
 	_ = o.Language.Configure()
 	return

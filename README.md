@@ -741,6 +741,7 @@ Application Options:
   -u, --scrape_url=                 Scrape website URL to markdown using Jina AI
   -q, --scrape_question=            Search question using Jina AI
       --serply_search=              Search Google using Serply and send the results to chat
+      --parallel_search=            Search the web using Parallel (anonymous by default) and return source excerpts
       --firecrawl_search=           Search the web using Firecrawl and send the top pages to chat as Markdown
   -e, --seed=                       Seed to be used for LMM generation
   -w, --wipecontext=                Wipe context
@@ -804,6 +805,21 @@ Use the `--debug` flag to control runtime logging:
 - `2`: detailed debugging
 - `3`: trace level
 - `4`: wire level (full request and response bodies)
+
+### Optional Parallel web search
+
+Use `fabric --parallel_search "golang generics tutorial"` to print source URLs and
+excerpts without an inference provider. Add `-p summarize` to send the results to
+a configured model. This option connects to [Parallel's Unified MCP server](https://docs.parallel.ai/integrations/mcp/quickstart)
+and uses its default Fast search mode. Anonymous access is free with rate limits.
+It makes no requests unless `--parallel_search` is supplied; existing Jina,
+Serply, Firecrawl, and model-native `--search` behavior stays the same.
+
+An optional `PARALLEL_API_KEY` in the environment or Fabric's `.env` uses your
+Parallel account and its billing. You can also set it via `fabric --setup`.
+Authentication and rate-limit errors are returned directly, without switching
+providers or retrying anonymously. Fabric exposes only the MCP search tool,
+not fetch, research, or other server tools.
 
 ### Dry Run Mode
 

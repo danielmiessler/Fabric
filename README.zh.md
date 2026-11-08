@@ -392,6 +392,7 @@ Fabric 支持广泛的 AI 供应商：
 - SiliconCloud
 - Synthorai
 - Together
+- UberLLM
 - Venice AI
 - Y-API
 - Z AI

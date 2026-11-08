@@ -283,6 +283,11 @@ var ProviderMap = map[string]ProviderConfig{
 		BaseURL:             "https://api.cheapaimodel.ai/v1",
 		ImplementsResponses: false,
 	},
+	"llmbuzz": {
+		Name:                "llmbuzz",
+		BaseURL:             "https://api.llm.buzz/api/v1",
+		ImplementsResponses: false,
+	},
 	"Cheaper Inference": {
 		Name:                "Cheaper Inference",
 		BaseURL:             "https://api.cheaperinference.com/v1",
@@ -465,6 +470,11 @@ var ProviderMap = map[string]ProviderConfig{
 	"TrustedRouter": {
 		Name:                "TrustedRouter",
 		BaseURL:             "https://api.trustedrouter.com/v1",
+		ImplementsResponses: false,
+	},
+	"UberLLM": {
+		Name:                "UberLLM",
+		BaseURL:             "https://api.uberllm.dev/v1",
 		ImplementsResponses: false,
 	},
 	"Venice AI": {

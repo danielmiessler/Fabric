@@ -447,6 +447,11 @@ var ProviderMap = map[string]ProviderConfig{
 		BaseURL:             "https://api.siliconflow.cn/v1",
 		ImplementsResponses: false,
 	},
+	"StandardCompute": {
+		Name:                "StandardCompute",
+		BaseURL:             "https://api.stdcmpt.com/v1",
+		ImplementsResponses: false,
+	},
 	"Synthorai": {
 		Name:                "Synthorai",
 		BaseURL:             "https://synthorai.io/v1",

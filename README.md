@@ -393,6 +393,7 @@ Fabric supports a wide range of AI providers:
 - Pzero
 - Requesty
 - SiliconCloud
+- StandardCompute
 - Synthorai
 - Together
 - Venice AI

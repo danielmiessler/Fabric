@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.4.566 (2026-11-08)
+
+### PR [#2333](https://github.com/danielmiessler/Fabric/pull/2333) by [bigconnect](https://github.com/bigconnect): feat(providers): add llm.buzz as OpenAI-compatible provider
+
+- Feat(providers): add llm.buzz as OpenAI-compatible provider
+
 ## v1.4.565 (2026-11-04)
 
 ### PR [#2332](https://github.com/danielmiessler/Fabric/pull/2332) by [PSA-Team-source](https://github.com/PSA-Team-source): feat(providers): add UberLLM as an OpenAI-compatible provider

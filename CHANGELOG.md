@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.4.567 (2026-11-08)
+
+### PR [#2336](https://github.com/danielmiessler/Fabric/pull/2336) by [henrikdukefoss](https://github.com/henrikdukefoss): feat(providers): add StandardCompute as an OpenAI-compatible provider
+
+- Added StandardCompute as an OpenAI-compatible provider, including a new ProviderMap entry with the base URL `https://api.stdcmpt.com/v1` and authentication via the `STANDARDCOMPUTE_API_KEY` environment variable.
+- Added a `TestCreateClient` test case covering the new StandardCompute provider.
+- Updated the README provider list to document StandardCompute.
+
 ## v1.4.566 (2026-11-08)
 
 ### PR [#2333](https://github.com/danielmiessler/Fabric/pull/2333) by [bigconnect](https://github.com/bigconnect): feat(providers): add llm.buzz as OpenAI-compatible provider

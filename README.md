@@ -399,6 +399,7 @@ Fabric supports a wide range of AI providers:
 - Together
 - UberLLM
 - Venice AI
+- Wiro
 - Y-API
 - Z AI
 

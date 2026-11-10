@@ -268,6 +268,11 @@ var ProviderMap = map[string]ProviderConfig{
 		BaseURL:             "https://global.api-route.com/v1",
 		ImplementsResponses: false,
 	},
+	"AtmoRouter": {
+		Name:                "AtmoRouter",
+		BaseURL:             "https://atmorouter.dev/v1",
+		ImplementsResponses: false,
+	},
 	"ByteDance Ark": {
 		Name:                "ByteDance Ark",
 		BaseURL:             "https://ark.cn-beijing.volces.com/api/v3",

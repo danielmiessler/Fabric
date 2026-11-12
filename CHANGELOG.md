@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.4.568 (2026-11-10)
+
+### PR [#2338](https://github.com/danielmiessler/Fabric/pull/2338) by [ksylvan](https://github.com/ksylvan): feat(anthropic): upgrade to anthropic-sdk-go v2.8.0
+
+- Upgraded the Anthropic SDK to v2 while preserving Claude compatibility, including migrated Anthropic, Vertex AI, and error handling imports.
+- Upgraded Go to 1.26.10 and refreshed project dependencies.
+- Preserved legacy sampling controls across requests and beta retries, with Vertex AI sampling requests pinned to the legacy version.
+- Restricted X-Api-Key authentication to custom Anthropic endpoints only.
+- Added support for the Claude Fable 5.2 and Mythos 5.2 models.
+
 ## v1.4.567 (2026-11-08)
 
 ### PR [#2336](https://github.com/danielmiessler/Fabric/pull/2336) by [henrikdukefoss](https://github.com/henrikdukefoss): feat(providers): add StandardCompute as an OpenAI-compatible provider

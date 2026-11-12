@@ -953,7 +953,10 @@ func TestBedrockTemperatureTopPMutualExclusivity(t *testing.T) {
 		{Role: chat.ChatMessageRoleUser, Content: "Hello"},
 	}
 
+	// Only older models accept sampling values.
+	const model = "us.anthropic.claude-sonnet-4-5-20250929-v1:0"
 	opts1 := &domain.ChatOptions{
+		Model:       model,
 		Temperature: 0.8,
 		TopP:        domain.DefaultTopP,
 	}
@@ -972,6 +975,7 @@ func TestBedrockTemperatureTopPMutualExclusivity(t *testing.T) {
 	}
 
 	opts2 := &domain.ChatOptions{
+		Model:       model,
 		Temperature: 0.8,
 		TopP:        0.95, // not the default 0.9
 	}

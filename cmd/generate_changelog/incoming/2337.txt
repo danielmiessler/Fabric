@@ -1,5 +1,0 @@
-### PR [#2337](https://github.com/danielmiessler/Fabric/pull/2337) by [EminBudak](https://github.com/EminBudak): feat(providers): add Wiro AI as an OpenAI-compatible provider
-
-- Added Wiro AI as an OpenAI-compatible provider, including a new ProviderMap entry with the base URL `https://llm.wiro.ai/v1` and authentication via the `WIRO_API_KEY` environment variable.
-- Added a `TestCreateClient` test case covering the new Wiro provider.
-- Updated the README provider lists (English, Chinese and Arabic) to document Wiro.

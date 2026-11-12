@@ -369,6 +369,7 @@ Fabric supports a wide range of AI providers:
 - Apple Foundation Models (local, macOS 27 or later: run `sudo fm license` once, then `fm serve --port 1976`; no API key; select it once in `fabric -S` to enable it)
 - Cerebras
 - cheapaimodel
+- llm.buzz
 - Cheaper Inference
 - DeepSeek
 - DemonRoute
@@ -383,6 +384,7 @@ Fabric supports a wide range of AI providers:
 - MiniMax
 - Mistral
 - Novita AI
+- Obscurify AI
 - OpenCode Go
 - OpenCode Zen
 - OpenRouter
@@ -392,8 +394,10 @@ Fabric supports a wide range of AI providers:
 - Pzero
 - Requesty
 - SiliconCloud
+- StandardCompute
 - Synthorai
 - Together
+- UberLLM
 - Venice AI
 - Y-API
 - Z AI

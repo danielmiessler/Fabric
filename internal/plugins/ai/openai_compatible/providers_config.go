@@ -283,6 +283,11 @@ var ProviderMap = map[string]ProviderConfig{
 		BaseURL:             "https://api.cheapaimodel.ai/v1",
 		ImplementsResponses: false,
 	},
+	"llmbuzz": {
+		Name:                "llmbuzz",
+		BaseURL:             "https://api.llm.buzz/api/v1",
+		ImplementsResponses: false,
+	},
 	"Cheaper Inference": {
 		Name:                "Cheaper Inference",
 		BaseURL:             "https://api.cheaperinference.com/v1",
@@ -388,6 +393,11 @@ var ProviderMap = map[string]ProviderConfig{
 		BaseURL:             "https://onomeo.com/v1",
 		ImplementsResponses: false,
 	},
+	"Obscurify AI": {
+		Name:                "Obscurify AI",
+		BaseURL:             "https://obscurify.ai/v1",
+		ImplementsResponses: false,
+	},
 	"OpenCode Go": {
 		Name:                "OpenCode Go",
 		BaseURL:             "https://opencode.ai/zen/go/v1",
@@ -442,6 +452,11 @@ var ProviderMap = map[string]ProviderConfig{
 		BaseURL:             "https://api.siliconflow.cn/v1",
 		ImplementsResponses: false,
 	},
+	"StandardCompute": {
+		Name:                "StandardCompute",
+		BaseURL:             "https://api.stdcmpt.com/v1",
+		ImplementsResponses: false,
+	},
 	"Synthorai": {
 		Name:                "Synthorai",
 		BaseURL:             "https://synthorai.io/v1",
@@ -455,6 +470,11 @@ var ProviderMap = map[string]ProviderConfig{
 	"TrustedRouter": {
 		Name:                "TrustedRouter",
 		BaseURL:             "https://api.trustedrouter.com/v1",
+		ImplementsResponses: false,
+	},
+	"UberLLM": {
+		Name:                "UberLLM",
+		BaseURL:             "https://api.uberllm.dev/v1",
 		ImplementsResponses: false,
 	},
 	"Venice AI": {

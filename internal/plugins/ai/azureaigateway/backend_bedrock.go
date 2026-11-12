@@ -96,10 +96,10 @@ func (b *BedrockBackend) PrepareRequest(msgs []*chat.ChatCompletionMessage, opts
 	if len(systemParts) > 0 {
 		body["system"] = strings.Join(systemParts, "\n\n")
 	}
-	// Some Claude models reject temperature and top_p. The Anthropic API accepts
-	// temperature or top_p, not both: send top_p when it is not the default,
-	// otherwise temperature.
-	if !anthropicplugin.ModelDisallowsSamplingParams(opts.Model) {
+	// Only older Claude models accept temperature and top_p. They accept one of
+	// the two, not both: send top_p when it is not the default, otherwise
+	// temperature.
+	if anthropicplugin.ModelAcceptsSamplingParams(opts.Model) {
 		if opts.TopP != domain.DefaultTopP {
 			body["top_p"] = opts.TopP
 		} else {

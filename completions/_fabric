@@ -116,6 +116,9 @@ _fabric() {
     '(-q --scrape_question)'{-q,--scrape_question}'[Search question using Jina AI]:question:' \
     '(--serply_search)--serply_search[Search Google using Serply]:query:' \
     '(--firecrawl_search)--firecrawl_search[Search the web using Firecrawl]:query:' \
+    '(--searchapi_search)--searchapi_search[Search Google using SearchApi]:query:' \
+    '(--sofya_search)--sofya_search[Search the web using Sofya]:query:' \
+    '(--keenable_search)--keenable_search[Search the web using Keenable]:query:' \
     '(-e --seed)'{-e,--seed}'[Seed to be used for LMM generation]:seed:' \
     '(--thinking)--thinking[Set reasoning/thinking level]:level:(off low medium high)' \
     '(-w --wipecontext)'{-w,--wipecontext}'[Wipe context]:context:_fabric_contexts' \

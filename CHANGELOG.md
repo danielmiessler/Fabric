@@ -1,5 +1,98 @@
 # Changelog
 
+## v1.4.575 (2026-11-13)
+
+### PR [#2340](https://github.com/danielmiessler/Fabric/pull/2340) by [Rutvij97](https://github.com/Rutvij97): feat: add create_investigation_visualization_mermaid pattern
+
+- Added the `create_investigation_visualization_mermaid` pattern, a Mermaid-based variant of `create_investigation_visualization` that renders investigation graphs natively in GitHub, GitLab, Obsidian, and other Markdown viewers without requiring a Graphviz toolchain.
+- Registered the new pattern in `pattern_explanations`, `suggest_pattern`, and the pattern description and extract indexes. (Closes #322)
+
+### PR [#2341](https://github.com/danielmiessler/Fabric/pull/2341) by [gabsferreira](https://github.com/gabsferreira): feat: add SearchApi Google search via --searchapi_search flag
+
+- Added an optional SearchApi Google search plugin (`SEARCHAPI_API_KEY`) exposed through the new `--searchapi_search` flag, which runs a Google search and appends the organic results to the chat as markdown, alongside the existing `--serply_search` and `--firecrawl_search` tools. Installations without a key remain unchanged.
+- Wired the plugin into the setup wizard's optional configuration group, the plugin registry and the `.env` writer, with help and error strings in all 14 locales.
+- Documented the `--searchapi_search` flag in the README and added it to the bash, zsh and fish completions.
+- Added unit tests covering the Bearer authentication header, request parameters, markdown output and the API error path.
+
+## v1.4.574 (2026-11-13)
+
+### PR [#2335](https://github.com/danielmiessler/Fabric/pull/2335) by [yusufgurdogan](https://github.com/yusufgurdogan): feat: add Sofya web search via --sofya_search flag
+
+- Feat: add Sofya web search via --sofya_search flag
+
+## v1.4.573 (2026-11-13)
+
+### PR [#2330](https://github.com/danielmiessler/Fabric/pull/2330) by [KGKallasmaa](https://github.com/KGKallasmaa) and [ksylvan](https://github.com/ksylvan): feat: add --keenable_search web search (no API key required)
+
+- Add `--keenable_search` flag to search the web with Keenable and send results to chat
+- Use Keenable public endpoint without a key; optional API key switches to the keyed endpoint
+- Add i18n strings for all locales, README help, and shell completions
+
+## v1.4.572 (2026-11-13)
+
+### PR [#2313](https://github.com/danielmiessler/Fabric/pull/2313) by [pcbeingused333](https://github.com/pcbeingused333): fix(bedrock): omit temperature for Claude models that reject it
+
+- Fixed Bedrock integration to omit the temperature parameter for Claude models that reject it, including on the Send path.
+- Replaced `ModelDisallowsSamplingParams` with `ModelAcceptsSamplingParams`, limiting the allowlist to older Claude models.
+- Restricted the sampling-parameter skip to model IDs containing `anthropic.claude`, so Nova, Llama, and Mistral models retain temperature support.
+- Extended `TestSampling_KeptForOtherModels` to cover `us.amazon.nova-pro-v1:0`.
+
+## v1.4.571 (2026-11-13)
+
+### PR [#2342](https://github.com/danielmiessler/Fabric/pull/2342) by [weare-linkrra](https://github.com/weare-linkrra): feat(providers): add Synap as an OpenAI-compatible provider
+
+- Added Synap as an OpenAI-compatible provider, including a new ProviderMap entry with the base URL `https://synap402.com/v1` and authentication via the `SYNAP_API_KEY` environment variable.
+- Added a `TestCreateClient` test case covering the new Synap provider.
+- Updated the README provider lists (English, Chinese, Arabic) to document Synap.
+
+## v1.4.570 (2026-11-13)
+
+### PR [#2339](https://github.com/danielmiessler/Fabric/pull/2339) by [BeckleyTenriajeng](https://github.com/BeckleyTenriajeng): feat(providers): add AtmoRouter as an OpenAI-compatible provider
+
+- Added AtmoRouter as an OpenAI-compatible provider, including a new ProviderMap entry with the base URL `https://atmorouter.dev/v1` and authentication via the `ATMOROUTER_API_KEY` environment variable.
+- Added a `TestCreateClient` test case covering the new AtmoRouter provider.
+- Updated the README provider list to document AtmoRouter.
+
+## v1.4.569 (2026-11-12)
+
+### PR [#2337](https://github.com/danielmiessler/Fabric/pull/2337) by [EminBudak](https://github.com/EminBudak): feat(providers): add Wiro AI as an OpenAI-compatible provider
+
+- Added Wiro AI as an OpenAI-compatible provider, including a new ProviderMap entry with the base URL `https://llm.wiro.ai/v1` and authentication via the `WIRO_API_KEY` environment variable.
+- Added a `TestCreateClient` test case covering the new Wiro provider.
+- Updated the README provider lists (English, Chinese and Arabic) to document Wiro.
+
+## v1.4.568 (2026-11-10)
+
+### PR [#2338](https://github.com/danielmiessler/Fabric/pull/2338) by [ksylvan](https://github.com/ksylvan): feat(anthropic): upgrade to anthropic-sdk-go v2.8.0
+
+- Upgraded the Anthropic SDK to v2 while preserving Claude compatibility, including migrated Anthropic, Vertex AI, and error handling imports.
+- Upgraded Go to 1.26.10 and refreshed project dependencies.
+- Preserved legacy sampling controls across requests and beta retries, with Vertex AI sampling requests pinned to the legacy version.
+- Restricted X-Api-Key authentication to custom Anthropic endpoints only.
+- Added support for the Claude Fable 5.2 and Mythos 5.2 models.
+
+## v1.4.567 (2026-11-08)
+
+### PR [#2336](https://github.com/danielmiessler/Fabric/pull/2336) by [henrikdukefoss](https://github.com/henrikdukefoss): feat(providers): add StandardCompute as an OpenAI-compatible provider
+
+- Added StandardCompute as an OpenAI-compatible provider, including a new ProviderMap entry with the base URL `https://api.stdcmpt.com/v1` and authentication via the `STANDARDCOMPUTE_API_KEY` environment variable.
+- Added a `TestCreateClient` test case covering the new StandardCompute provider.
+- Updated the README provider list to document StandardCompute.
+
+## v1.4.566 (2026-11-08)
+
+### PR [#2333](https://github.com/danielmiessler/Fabric/pull/2333) by [bigconnect](https://github.com/bigconnect): feat(providers): add llm.buzz as OpenAI-compatible provider
+
+- Feat(providers): add llm.buzz as OpenAI-compatible provider
+
+## v1.4.565 (2026-11-04)
+
+### PR [#2332](https://github.com/danielmiessler/Fabric/pull/2332) by [PSA-Team-source](https://github.com/PSA-Team-source): feat(providers): add UberLLM as an OpenAI-compatible provider
+
+- Added UberLLM as an OpenAI-compatible provider, with a new ProviderMap entry using the base URL `https://api.uberllm.dev/v1` and authentication via the `UBERLLM_API_KEY` environment variable.
+- Added a `TestCreateClient` test case covering the new UberLLM provider.
+- Updated the provider lists in README.md, README.zh.md and README.ar.md.
+
 ## v1.4.564 (2026-11-03)
 
 ### PR [#2322](https://github.com/danielmiessler/Fabric/pull/2322) by [tonydavis629](https://github.com/tonydavis629): feat: add Obscurify AI as an OpenAI-compatible provider

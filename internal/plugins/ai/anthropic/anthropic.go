@@ -9,8 +9,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/anthropics/anthropic-sdk-go"
-	"github.com/anthropics/anthropic-sdk-go/option"
+	"github.com/anthropics/anthropic-sdk-go/v2"
+	"github.com/anthropics/anthropic-sdk-go/v2/option"
 	"github.com/danielmiessler/fabric/internal/chat"
 	"github.com/danielmiessler/fabric/internal/domain"
 	"github.com/danielmiessler/fabric/internal/i18n"
@@ -18,46 +18,67 @@ import (
 	"github.com/danielmiessler/fabric/internal/plugins"
 )
 
-const defaultBaseUrl = "https://api.anthropic.com/"
+const (
+	defaultBaseUrl = "https://api.anthropic.com/"
+	anthropicHost  = "api.anthropic.com"
+)
 
 const webSearchToolName = "web_search"
 const webSearchToolType = "web_search_20250305"
 const sourcesHeader = "## Sources"
 
-// These models reject non-default sampling parameters.
-// Requests to them do not include temperature or top_p.
-var samplingParamsDisallowedModels = []string{
-	"claude-opus-4-7",
-	"claude-opus-4-8",
-	"claude-opus-5",
-	"claude-sonnet-5",
-	"claude-haiku-5",
-	"claude-fable-5",
-	"claude-mythos",
+// Only these older models accept non-default sampling parameters. Claude
+// Opus 4.7 and all later models reject them, so a model that is not in this
+// list gets no temperature or top_p. New models need no change here.
+var samplingParamsAllowedModels = []string{
+	"claude-3",             // Claude 3, 3.5 and 3.7
+	"claude-opus-4-0",      // Claude Opus 4 alias
+	"claude-opus-4-2025",   // Claude Opus 4 dated ID
+	"claude-opus-4@",       // Claude Opus 4 on Vertex AI
+	"claude-sonnet-4-0",    // Claude Sonnet 4 alias
+	"claude-sonnet-4-2025", // Claude Sonnet 4 dated ID
+	"claude-sonnet-4@",     // Claude Sonnet 4 on Vertex AI
+	"claude-opus-4-1",
+	"claude-opus-4-5",
+	"claude-opus-4-6",
+	"claude-sonnet-4-5",
+	"claude-sonnet-4-6",
+	"claude-haiku-4-5",
 }
 
-// ModelDisallowsSamplingParams reports whether a Claude model rejects temperature and top_p.
-// It matches anywhere in the ID, so Bedrock (`us.anthropic.claude-opus-5-5-v1:0`),
-// Vertex AI (`claude-opus-4-7@20260101`) and gateway (`anthropic/claude-opus-5`) IDs
+// ModelAcceptsSamplingParams reports whether a Claude model accepts temperature and top_p.
+// It matches anywhere in the ID, so Bedrock (`us.anthropic.claude-sonnet-4-5-20250929-v1:0`),
+// Vertex AI (`claude-opus-4-5@20251101`) and gateway (`anthropic/claude-sonnet-4-6`) IDs
 // resolve like the plain ones. Other plugins that call Claude use it too.
-func ModelDisallowsSamplingParams(model string) bool {
-	return slices.ContainsFunc(samplingParamsDisallowedModels, func(name string) bool {
+func ModelAcceptsSamplingParams(model string) bool {
+	return slices.ContainsFunc(samplingParamsAllowedModels, func(name string) bool {
 		return strings.Contains(model, name)
 	})
 }
 
-// SetSamplingParams sets TopP or Temperature on a Claude request, as the model allows.
-// Some models reject both, and the others reject a request that sets both.
-func SetSamplingParams(params *anthropic.MessageNewParams, opts *domain.ChatOptions) {
-	if ModelDisallowsSamplingParams(opts.Model) {
-		return
+// LegacyAPIVersion is the last Claude API version that accepts temperature
+// and top_p. API version 2026-10-21 removes them and has no replacement
+// setting. SDK v2 sends 2026-10-21 and has no fields for them.
+const LegacyAPIVersion = "2023-06-01"
+
+// SamplingOptions returns the request options that send top_p or temperature
+// on a Claude request, as the model allows. Models that accept them get one
+// of the two values in the JSON body, because they reject a request that sets
+// both, and the request stays on LegacyAPIVersion. Other models get no
+// options, so their requests use the current API version.
+func SamplingOptions(opts *domain.ChatOptions) []option.RequestOption {
+	if !ModelAcceptsSamplingParams(opts.Model) {
+		return nil
 	}
+	// Send temperature also at its default value. The Fabric default is 0.7,
+	// and the API default is 1.0.
+	key, value := "temperature", opts.Temperature
 	if opts.TopP != domain.DefaultTopP {
-		params.TopP = anthropic.Opt(opts.TopP)
-	} else {
-		// Send temperature also at its default value. The Fabric default is 0.7,
-		// and the API default is 1.0.
-		params.Temperature = anthropic.Opt(opts.Temperature)
+		key, value = "top_p", opts.TopP
+	}
+	return []option.RequestOption{
+		option.WithHeader("anthropic-version", LegacyAPIVersion),
+		option.WithJSONSet(key, value),
 	}
 }
 
@@ -128,6 +149,8 @@ func NewClient() (ret *Client) {
 	ret.maxTokens = 4096
 	ret.defaultRequiredUserMessage = "Hi"
 	ret.models = []string{
+		string(anthropic.ModelClaudeFable5_2),
+		string(anthropic.ModelClaudeMythos5_2),
 		string(anthropic.ModelClaudeOpus5_5),
 		string(anthropic.ModelClaudeFable5_1),
 		string(anthropic.ModelClaudeSonnet5_5),
@@ -161,6 +184,8 @@ func NewClient() (ret *Client) {
 	// are not in the map.
 	const context1M = "context-1m-2025-08-07"
 	ret.modelBetas = map[string][]string{
+		string(anthropic.ModelClaudeFable5_2):  {context1M},
+		string(anthropic.ModelClaudeMythos5_2): {context1M},
 		string(anthropic.ModelClaudeOpus5_5):   {context1M},
 		string(anthropic.ModelClaudeFable5_1):  {context1M},
 		string(anthropic.ModelClaudeSonnet5_5): {context1M},
@@ -221,6 +246,14 @@ func (an *Client) configure() (err error) {
 
 	opts = append(opts, option.WithAPIKey(an.ApiKey.Value))
 
+	// SDK v2 sends the key as "Authorization: Bearer", and the Claude API gets
+	// it in that header. A proxy at a custom base URL can read only X-Api-Key,
+	// as SDK v1 sent it, so a custom base URL gets the key in that header only.
+	// The API expects one credential for each request.
+	if u, err := neturl.Parse(an.ApiBaseURL.Value); an.ApiBaseURL.Value != "" && (err != nil || u.Hostname() != anthropicHost) {
+		opts = append(opts, option.WithHeader("X-Api-Key", an.ApiKey.Value), option.WithHeaderDel("Authorization"))
+	}
+
 	an.client = anthropic.NewClient(opts...)
 	return
 }
@@ -279,15 +312,12 @@ func (an *Client) SendStream(
 	}
 
 	params := an.buildMessageParams(messages, opts)
+	samplingOpts := SamplingOptions(opts)
 	betas := an.modelBetas[opts.Model]
-	var reqOpts []option.RequestOption
-	if len(betas) > 0 {
-		reqOpts = append(reqOpts, option.WithHeader("anthropic-beta", strings.Join(betas, ",")))
-	}
-	stream := an.client.Messages.NewStreaming(ctx, params, reqOpts...)
+	stream := an.client.Messages.NewStreaming(ctx, params, withBetas(samplingOpts, betas)...)
 	if stream.Err() != nil && len(betas) > 0 {
 		debuglog.Debug(debuglog.Basic, "Anthropic beta feature %s failed: %v\n", strings.Join(betas, ","), stream.Err())
-		stream = an.client.Messages.NewStreaming(ctx, params)
+		stream = an.client.Messages.NewStreaming(ctx, params, samplingOpts...)
 	}
 
 	for stream.Next() {
@@ -328,6 +358,15 @@ func (an *Client) SendStream(
 	return
 }
 
+// withBetas returns reqOpts with an anthropic-beta header for betas.
+// It does not change reqOpts.
+func withBetas(reqOpts []option.RequestOption, betas []string) []option.RequestOption {
+	if len(betas) == 0 {
+		return reqOpts
+	}
+	return append(reqOpts, option.WithHeader("anthropic-beta", strings.Join(betas, ",")))
+}
+
 func (an *Client) buildMessageParams(msgs []anthropic.MessageParam, opts *domain.ChatOptions) (
 	params anthropic.MessageNewParams) {
 
@@ -341,8 +380,6 @@ func (an *Client) buildMessageParams(msgs []anthropic.MessageParam, opts *domain
 		MaxTokens: int64(maxTokens),
 		Messages:  msgs,
 	}
-
-	SetSamplingParams(&params, opts)
 
 	if opts.Search {
 		webTool := anthropic.WebSearchTool20250305Param{
@@ -380,15 +417,12 @@ func (an *Client) Send(ctx context.Context, msgs []*chat.ChatCompletionMessage, 
 
 	var message *anthropic.Message
 	params := an.buildMessageParams(messages, opts)
+	samplingOpts := SamplingOptions(opts)
 	betas := an.modelBetas[opts.Model]
-	var reqOpts []option.RequestOption
-	if len(betas) > 0 {
-		reqOpts = append(reqOpts, option.WithHeader("anthropic-beta", strings.Join(betas, ",")))
-	}
-	if message, err = an.client.Messages.New(ctx, params, reqOpts...); err != nil {
+	if message, err = an.client.Messages.New(ctx, params, withBetas(samplingOpts, betas)...); err != nil {
 		if len(betas) > 0 {
 			debuglog.Debug(debuglog.Basic, "Anthropic beta feature %s failed: %v\n", strings.Join(betas, ","), err)
-			if message, err = an.client.Messages.New(ctx, params); err != nil {
+			if message, err = an.client.Messages.New(ctx, params, samplingOpts...); err != nil {
 				return
 			}
 		} else {

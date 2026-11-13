@@ -396,6 +396,7 @@ Fabric supports a wide range of AI providers:
 - Requesty
 - SiliconCloud
 - StandardCompute
+- Synap
 - Synthorai
 - Together
 - UberLLM

@@ -1,4 +1,0 @@
-### PR [#2340](https://github.com/danielmiessler/Fabric/pull/2340) by [Rutvij97](https://github.com/Rutvij97): feat: add create_investigation_visualization_mermaid pattern
-
-- Added the `create_investigation_visualization_mermaid` pattern, a Mermaid-based variant of `create_investigation_visualization` that renders investigation graphs natively in GitHub, GitLab, Obsidian, and other Markdown viewers without requiring a Graphviz toolchain.
-- Registered the new pattern in `pattern_explanations`, `suggest_pattern`, and the pattern description and extract indexes. (Closes #322)

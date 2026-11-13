@@ -1,6 +1,0 @@
-### PR [#2341](https://github.com/danielmiessler/Fabric/pull/2341) by [gabsferreira](https://github.com/gabsferreira): feat: add SearchApi Google search via --searchapi_search flag
-
-- Added an optional SearchApi Google search plugin (`SEARCHAPI_API_KEY`) exposed through the new `--searchapi_search` flag, which runs a Google search and appends the organic results to the chat as markdown, alongside the existing `--serply_search` and `--firecrawl_search` tools. Installations without a key remain unchanged.
-- Wired the plugin into the setup wizard's optional configuration group, the plugin registry and the `.env` writer, with help and error strings in all 14 locales.
-- Documented the `--searchapi_search` flag in the README and added it to the bash, zsh and fish completions.
-- Added unit tests covering the Bearer authentication header, request parameters, markdown output and the API error path.

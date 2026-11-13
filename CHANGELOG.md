@@ -1,5 +1,19 @@
 # Changelog
 
+## v1.4.575 (2026-11-13)
+
+### PR [#2340](https://github.com/danielmiessler/Fabric/pull/2340) by [Rutvij97](https://github.com/Rutvij97): feat: add create_investigation_visualization_mermaid pattern
+
+- Added the `create_investigation_visualization_mermaid` pattern, a Mermaid-based variant of `create_investigation_visualization` that renders investigation graphs natively in GitHub, GitLab, Obsidian, and other Markdown viewers without requiring a Graphviz toolchain.
+- Registered the new pattern in `pattern_explanations`, `suggest_pattern`, and the pattern description and extract indexes. (Closes #322)
+
+### PR [#2341](https://github.com/danielmiessler/Fabric/pull/2341) by [gabsferreira](https://github.com/gabsferreira): feat: add SearchApi Google search via --searchapi_search flag
+
+- Added an optional SearchApi Google search plugin (`SEARCHAPI_API_KEY`) exposed through the new `--searchapi_search` flag, which runs a Google search and appends the organic results to the chat as markdown, alongside the existing `--serply_search` and `--firecrawl_search` tools. Installations without a key remain unchanged.
+- Wired the plugin into the setup wizard's optional configuration group, the plugin registry and the `.env` writer, with help and error strings in all 14 locales.
+- Documented the `--searchapi_search` flag in the README and added it to the bash, zsh and fish completions.
+- Added unit tests covering the Bearer authentication header, request parameters, markdown output and the API error path.
+
 ## v1.4.574 (2026-11-13)
 
 ### PR [#2335](https://github.com/danielmiessler/Fabric/pull/2335) by [yusufgurdogan](https://github.com/yusufgurdogan): feat: add Sofya web search via --sofya_search flag

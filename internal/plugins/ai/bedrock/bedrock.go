@@ -568,12 +568,11 @@ func (c *BedrockClient) Send(ctx context.Context, msgs []*chat.ChatCompletionMes
 	return responseTextFromContent(responseText.Value.Content)
 }
 
-// inferenceConfig returns the sampling settings of a Converse or ConverseStream request.
-// Some models, such as Claude, reject a request that sets both temperature and top_p,
-// so only temperature is sent. Claude models that reject sampling parameters altogether
-// (Opus 4.7 and later, the Claude 5 models) get none, or the request fails with a 400.
+// inferenceConfig returns the sampling settings for a Converse or ConverseStream request.
+// Claude models reject a request that sets both temperature and top_p, so the request
+// sends temperature only. Newer Claude models reject all sampling parameters and get none.
 func inferenceConfig(opts *domain.ChatOptions) *types.InferenceConfiguration {
-	if anthropicplugin.ModelDisallowsSamplingParams(opts.Model) {
+	if strings.Contains(opts.Model, "anthropic.claude") && !anthropicplugin.ModelAcceptsSamplingParams(opts.Model) {
 		return nil
 	}
 	return &types.InferenceConfiguration{

@@ -81,7 +81,12 @@ func TestSampling_OmittedForModelsThatRejectIt(t *testing.T) {
 
 func TestSampling_KeptForOtherModels(t *testing.T) {
 	for _, stream := range []bool{true, false} {
-		config := inferenceConfigOf(t, sendOnce(t, stream, "anthropic.claude-sonnet-4-5-20250929-v1:0"))
-		assert.InDelta(t, 0.7, config["temperature"], 0.001, "stream=%v", stream)
+		for _, model := range []string{
+			"anthropic.claude-sonnet-4-5-20250929-v1:0",
+			"us.amazon.nova-pro-v1:0",
+		} {
+			config := inferenceConfigOf(t, sendOnce(t, stream, model))
+			assert.InDelta(t, 0.7, config["temperature"], 0.001, "stream=%v model=%s", stream, model)
+		}
 	}
 }

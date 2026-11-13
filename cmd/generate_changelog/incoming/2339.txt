@@ -1,5 +1,0 @@
-### PR [#2339](https://github.com/danielmiessler/Fabric/pull/2339) by [BeckleyTenriajeng](https://github.com/BeckleyTenriajeng): feat(providers): add AtmoRouter as an OpenAI-compatible provider
-
-- Added AtmoRouter as an OpenAI-compatible provider, including a new ProviderMap entry with the base URL `https://atmorouter.dev/v1` and authentication via the `ATMOROUTER_API_KEY` environment variable.
-- Added a `TestCreateClient` test case covering the new AtmoRouter provider.
-- Updated the README provider list to document AtmoRouter.

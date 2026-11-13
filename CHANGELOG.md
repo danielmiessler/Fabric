@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.4.571 (2026-11-13)
+
+### PR [#2342](https://github.com/danielmiessler/Fabric/pull/2342) by [weare-linkrra](https://github.com/weare-linkrra): feat(providers): add Synap as an OpenAI-compatible provider
+
+- Added Synap as an OpenAI-compatible provider, including a new ProviderMap entry with the base URL `https://synap402.com/v1` and authentication via the `SYNAP_API_KEY` environment variable.
+- Added a `TestCreateClient` test case covering the new Synap provider.
+- Updated the README provider lists (English, Chinese, Arabic) to document Synap.
+
 ## v1.4.570 (2026-11-13)
 
 ### PR [#2339](https://github.com/danielmiessler/Fabric/pull/2339) by [BeckleyTenriajeng](https://github.com/BeckleyTenriajeng): feat(providers): add AtmoRouter as an OpenAI-compatible provider

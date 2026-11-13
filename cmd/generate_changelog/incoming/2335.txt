@@ -1,3 +1,0 @@
-### PR [#2335](https://github.com/danielmiessler/Fabric/pull/2335) by [yusufgurdogan](https://github.com/yusufgurdogan): feat: add Sofya web search via --sofya_search flag
-
-- Feat: add Sofya web search via --sofya_search flag

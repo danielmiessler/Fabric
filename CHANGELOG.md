@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.4.574 (2026-11-13)
+
+### PR [#2335](https://github.com/danielmiessler/Fabric/pull/2335) by [yusufgurdogan](https://github.com/yusufgurdogan): feat: add Sofya web search via --sofya_search flag
+
+- Feat: add Sofya web search via --sofya_search flag
+
 ## v1.4.573 (2026-11-13)
 
 ### PR [#2330](https://github.com/danielmiessler/Fabric/pull/2330) by [KGKallasmaa](https://github.com/KGKallasmaa) and [ksylvan](https://github.com/ksylvan): feat: add --keenable_search web search (no API key required)

@@ -1,5 +1,21 @@
 # Changelog
 
+## v1.4.570 (2026-11-13)
+
+### PR [#2339](https://github.com/danielmiessler/Fabric/pull/2339) by [BeckleyTenriajeng](https://github.com/BeckleyTenriajeng): feat(providers): add AtmoRouter as an OpenAI-compatible provider
+
+- Added AtmoRouter as an OpenAI-compatible provider, including a new ProviderMap entry with the base URL `https://atmorouter.dev/v1` and authentication via the `ATMOROUTER_API_KEY` environment variable.
+- Added a `TestCreateClient` test case covering the new AtmoRouter provider.
+- Updated the README provider list to document AtmoRouter.
+
+## v1.4.569 (2026-11-12)
+
+### PR [#2337](https://github.com/danielmiessler/Fabric/pull/2337) by [EminBudak](https://github.com/EminBudak): feat(providers): add Wiro AI as an OpenAI-compatible provider
+
+- Added Wiro AI as an OpenAI-compatible provider, including a new ProviderMap entry with the base URL `https://llm.wiro.ai/v1` and authentication via the `WIRO_API_KEY` environment variable.
+- Added a `TestCreateClient` test case covering the new Wiro provider.
+- Updated the README provider lists (English, Chinese and Arabic) to document Wiro.
+
 ## v1.4.568 (2026-11-10)
 
 ### PR [#2338](https://github.com/danielmiessler/Fabric/pull/2338) by [ksylvan](https://github.com/ksylvan): feat(anthropic): upgrade to anthropic-sdk-go v2.8.0

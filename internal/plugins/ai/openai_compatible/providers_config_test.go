@@ -188,6 +188,16 @@ func TestCreateClient(t *testing.T) {
 			exists:   true,
 		},
 		{
+			name:     "Existing provider - AtmoRouter",
+			provider: "AtmoRouter",
+			exists:   true,
+		},
+		{
+			name:     "Existing provider - Wiro",
+			provider: "Wiro",
+			exists:   true,
+		},
+		{
 			name:     "Non-existent provider",
 			provider: "NonExistent",
 			exists:   false,

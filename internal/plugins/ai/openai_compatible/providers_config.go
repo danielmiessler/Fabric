@@ -268,6 +268,11 @@ var ProviderMap = map[string]ProviderConfig{
 		BaseURL:             "https://global.api-route.com/v1",
 		ImplementsResponses: false,
 	},
+	"AtmoRouter": {
+		Name:                "AtmoRouter",
+		BaseURL:             "https://atmorouter.dev/v1",
+		ImplementsResponses: false,
+	},
 	"ByteDance Ark": {
 		Name:                "ByteDance Ark",
 		BaseURL:             "https://ark.cn-beijing.volces.com/api/v3",
@@ -490,6 +495,11 @@ var ProviderMap = map[string]ProviderConfig{
 	"WebWright": {
 		Name:                "WebWright",
 		BaseURL:             "https://webwright.ai/v1",
+		ImplementsResponses: false,
+	},
+	"Wiro": {
+		Name:                "Wiro",
+		BaseURL:             "https://llm.wiro.ai/v1",
 		ImplementsResponses: false,
 	},
 	"Y-API": {

@@ -1,0 +1,6 @@
+### PR [#2313](https://github.com/danielmiessler/Fabric/pull/2313) by [pcbeingused333](https://github.com/pcbeingused333): fix(bedrock): omit temperature for Claude models that reject it
+
+- Fixed Bedrock integration to omit the temperature parameter for Claude models that reject it, including on the Send path.
+- Replaced `ModelDisallowsSamplingParams` with `ModelAcceptsSamplingParams`, limiting the allowlist to older Claude models.
+- Restricted the sampling-parameter skip to model IDs containing `anthropic.claude`, so Nova, Llama, and Mistral models retain temperature support.
+- Extended `TestSampling_KeptForOtherModels` to cover `us.amazon.nova-pro-v1:0`.

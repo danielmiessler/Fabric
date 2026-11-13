@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.4.573 (2026-11-13)
+
+### PR [#2330](https://github.com/danielmiessler/Fabric/pull/2330) by [KGKallasmaa](https://github.com/KGKallasmaa) and [ksylvan](https://github.com/ksylvan): feat: add --keenable_search web search (no API key required)
+
+- Add `--keenable_search` flag to search the web with Keenable and send results to chat
+- Use Keenable public endpoint without a key; optional API key switches to the keyed endpoint
+- Add i18n strings for all locales, README help, and shell completions
+
 ## v1.4.572 (2026-11-13)
 
 ### PR [#2313](https://github.com/danielmiessler/Fabric/pull/2313) by [pcbeingused333](https://github.com/pcbeingused333): fix(bedrock): omit temperature for Claude models that reject it

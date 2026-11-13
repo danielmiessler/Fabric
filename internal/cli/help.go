@@ -61,6 +61,8 @@ var flagDescriptionMap = map[string]string{
 	"serply_search":              "serply_search_help",
 	"firecrawl_search":           "firecrawl_search_help",
 	"searchapi_search":           "searchapi_search_help",
+	"sofya_search":               "sofya_search_help",
+	"keenable_search":            "keenable_search_help",
 	"seed":                       "seed_for_lmm_generation",
 	"wipecontext":                "wipe_context",
 	"wipesession":                "wipe_session",

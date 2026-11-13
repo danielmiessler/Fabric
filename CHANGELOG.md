@@ -1,5 +1,52 @@
 # Changelog
 
+## v1.4.574 (2026-11-13)
+
+### PR [#2335](https://github.com/danielmiessler/Fabric/pull/2335) by [yusufgurdogan](https://github.com/yusufgurdogan): feat: add Sofya web search via --sofya_search flag
+
+- Feat: add Sofya web search via --sofya_search flag
+
+## v1.4.573 (2026-11-13)
+
+### PR [#2330](https://github.com/danielmiessler/Fabric/pull/2330) by [KGKallasmaa](https://github.com/KGKallasmaa) and [ksylvan](https://github.com/ksylvan): feat: add --keenable_search web search (no API key required)
+
+- Add `--keenable_search` flag to search the web with Keenable and send results to chat
+- Use Keenable public endpoint without a key; optional API key switches to the keyed endpoint
+- Add i18n strings for all locales, README help, and shell completions
+
+## v1.4.572 (2026-11-13)
+
+### PR [#2313](https://github.com/danielmiessler/Fabric/pull/2313) by [pcbeingused333](https://github.com/pcbeingused333): fix(bedrock): omit temperature for Claude models that reject it
+
+- Fixed Bedrock integration to omit the temperature parameter for Claude models that reject it, including on the Send path.
+- Replaced `ModelDisallowsSamplingParams` with `ModelAcceptsSamplingParams`, limiting the allowlist to older Claude models.
+- Restricted the sampling-parameter skip to model IDs containing `anthropic.claude`, so Nova, Llama, and Mistral models retain temperature support.
+- Extended `TestSampling_KeptForOtherModels` to cover `us.amazon.nova-pro-v1:0`.
+
+## v1.4.571 (2026-11-13)
+
+### PR [#2342](https://github.com/danielmiessler/Fabric/pull/2342) by [weare-linkrra](https://github.com/weare-linkrra): feat(providers): add Synap as an OpenAI-compatible provider
+
+- Added Synap as an OpenAI-compatible provider, including a new ProviderMap entry with the base URL `https://synap402.com/v1` and authentication via the `SYNAP_API_KEY` environment variable.
+- Added a `TestCreateClient` test case covering the new Synap provider.
+- Updated the README provider lists (English, Chinese, Arabic) to document Synap.
+
+## v1.4.570 (2026-11-13)
+
+### PR [#2339](https://github.com/danielmiessler/Fabric/pull/2339) by [BeckleyTenriajeng](https://github.com/BeckleyTenriajeng): feat(providers): add AtmoRouter as an OpenAI-compatible provider
+
+- Added AtmoRouter as an OpenAI-compatible provider, including a new ProviderMap entry with the base URL `https://atmorouter.dev/v1` and authentication via the `ATMOROUTER_API_KEY` environment variable.
+- Added a `TestCreateClient` test case covering the new AtmoRouter provider.
+- Updated the README provider list to document AtmoRouter.
+
+## v1.4.569 (2026-11-12)
+
+### PR [#2337](https://github.com/danielmiessler/Fabric/pull/2337) by [EminBudak](https://github.com/EminBudak): feat(providers): add Wiro AI as an OpenAI-compatible provider
+
+- Added Wiro AI as an OpenAI-compatible provider, including a new ProviderMap entry with the base URL `https://llm.wiro.ai/v1` and authentication via the `WIRO_API_KEY` environment variable.
+- Added a `TestCreateClient` test case covering the new Wiro provider.
+- Updated the README provider lists (English, Chinese and Arabic) to document Wiro.
+
 ## v1.4.568 (2026-11-10)
 
 ### PR [#2338](https://github.com/danielmiessler/Fabric/pull/2338) by [ksylvan](https://github.com/ksylvan): feat(anthropic): upgrade to anthropic-sdk-go v2.8.0

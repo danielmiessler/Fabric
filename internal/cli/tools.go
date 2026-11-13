@@ -123,6 +123,20 @@ func handleToolProcessing(currentFlags *Flags, registry *core.PluginRegistry) (m
 		}
 	}
 
+	if currentFlags.KeenableSearch != "" {
+		// Keenable works without an API key, so there is no configured check.
+		var results string
+		if results, err = registry.Keenable.Search(currentFlags.KeenableSearch); err != nil {
+			return
+		}
+		messageTools = AppendMessage(messageTools, results)
+
+		if !currentFlags.IsChatRequest() {
+			err = currentFlags.WriteOutput(messageTools)
+			return
+		}
+	}
+
 	if currentFlags.Spotify != "" {
 		if !registry.Spotify.IsConfigured() {
 			err = errors.New(i18n.T("spotify_not_configured"))

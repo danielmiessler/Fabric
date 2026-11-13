@@ -44,6 +44,7 @@ import (
 	"github.com/danielmiessler/fabric/internal/tools/custom_patterns"
 	"github.com/danielmiessler/fabric/internal/tools/firecrawl"
 	"github.com/danielmiessler/fabric/internal/tools/jina"
+	"github.com/danielmiessler/fabric/internal/tools/keenable"
 	"github.com/danielmiessler/fabric/internal/tools/lang"
 	"github.com/danielmiessler/fabric/internal/tools/serply"
 	"github.com/danielmiessler/fabric/internal/tools/spotify"
@@ -61,6 +62,7 @@ func NewPluginRegistry(db *fsdb.Db) (ret *PluginRegistry, err error) {
 		YouTube:        youtube.NewYouTube(),
 		Language:       lang.NewLanguage(),
 		Jina:           jina.NewClient(),
+		Keenable:       keenable.NewClient(),
 		Serply:         serply.NewClient(),
 		Firecrawl:      firecrawl.NewClient(),
 		Spotify:        spotify.NewSpotify(),
@@ -154,6 +156,7 @@ type PluginRegistry struct {
 	YouTube            *youtube.YouTube
 	Language           *lang.Language
 	Jina               *jina.Client
+	Keenable           *keenable.Client
 	Serply             *serply.Client
 	Firecrawl          *firecrawl.Client
 	Spotify            *spotify.Spotify
@@ -175,6 +178,7 @@ func (o *PluginRegistry) SaveEnvFile() (err error) {
 
 	o.YouTube.SetupFillEnvFileContent(&envFileContent)
 	o.Jina.SetupFillEnvFileContent(&envFileContent)
+	o.Keenable.SetupFillEnvFileContent(&envFileContent)
 	o.Serply.SetupFillEnvFileContent(&envFileContent)
 	o.Firecrawl.SetupFillEnvFileContent(&envFileContent)
 	o.Spotify.SetupFillEnvFileContent(&envFileContent)
@@ -335,7 +339,7 @@ func (o *PluginRegistry) runInteractiveSetup() (err error) {
 
 	groupsPlugins.AddGroupItems(i18n.T("setup_required_tools"), o.Defaults, o.PatternsLoader, o.Strategies)
 
-	groupsPlugins.AddGroupItems(i18n.T("setup_optional_configuration_header"), o.CustomPatterns, o.Firecrawl, o.Jina, o.Language, o.Serply, o.Spotify, o.YouTube)
+	groupsPlugins.AddGroupItems(i18n.T("setup_optional_configuration_header"), o.CustomPatterns, o.Firecrawl, o.Jina, o.Keenable, o.Language, o.Serply, o.Spotify, o.YouTube)
 
 	for {
 		groupsPlugins.Print(false)
@@ -524,6 +528,7 @@ func (o *PluginRegistry) Configure() (err error) {
 	// These plugins are optional. Ignore their configuration errors.
 	_ = o.YouTube.Configure()
 	_ = o.Jina.Configure()
+	_ = o.Keenable.Configure()
 	_ = o.Serply.Configure()
 	_ = o.Firecrawl.Configure()
 	_ = o.Spotify.Configure()

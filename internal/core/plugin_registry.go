@@ -46,6 +46,7 @@ import (
 	"github.com/danielmiessler/fabric/internal/tools/jina"
 	"github.com/danielmiessler/fabric/internal/tools/keenable"
 	"github.com/danielmiessler/fabric/internal/tools/lang"
+	"github.com/danielmiessler/fabric/internal/tools/searchapi"
 	"github.com/danielmiessler/fabric/internal/tools/serply"
 	"github.com/danielmiessler/fabric/internal/tools/sofya"
 	"github.com/danielmiessler/fabric/internal/tools/spotify"
@@ -66,6 +67,7 @@ func NewPluginRegistry(db *fsdb.Db) (ret *PluginRegistry, err error) {
 		Keenable:       keenable.NewClient(),
 		Serply:         serply.NewClient(),
 		Firecrawl:      firecrawl.NewClient(),
+		SearchApi:      searchapi.NewClient(),
 		Sofya:          sofya.NewClient(),
 		Spotify:        spotify.NewSpotify(),
 		Strategies:     strategy.NewStrategiesManager(),
@@ -161,6 +163,7 @@ type PluginRegistry struct {
 	Keenable           *keenable.Client
 	Serply             *serply.Client
 	Firecrawl          *firecrawl.Client
+	SearchApi          *searchapi.Client
 	Sofya              *sofya.Client
 	Spotify            *spotify.Spotify
 	TemplateExtensions *template.ExtensionManager
@@ -184,6 +187,7 @@ func (o *PluginRegistry) SaveEnvFile() (err error) {
 	o.Keenable.SetupFillEnvFileContent(&envFileContent)
 	o.Serply.SetupFillEnvFileContent(&envFileContent)
 	o.Firecrawl.SetupFillEnvFileContent(&envFileContent)
+	o.SearchApi.SetupFillEnvFileContent(&envFileContent)
 	o.Sofya.SetupFillEnvFileContent(&envFileContent)
 	o.Spotify.SetupFillEnvFileContent(&envFileContent)
 	o.Language.SetupFillEnvFileContent(&envFileContent)
@@ -343,7 +347,7 @@ func (o *PluginRegistry) runInteractiveSetup() (err error) {
 
 	groupsPlugins.AddGroupItems(i18n.T("setup_required_tools"), o.Defaults, o.PatternsLoader, o.Strategies)
 
-	groupsPlugins.AddGroupItems(i18n.T("setup_optional_configuration_header"), o.CustomPatterns, o.Firecrawl, o.Jina, o.Keenable, o.Language, o.Serply, o.Sofya, o.Spotify, o.YouTube)
+	groupsPlugins.AddGroupItems(i18n.T("setup_optional_configuration_header"), o.CustomPatterns, o.Firecrawl, o.Jina, o.Keenable, o.Language, o.SearchApi, o.Serply, o.Sofya, o.Spotify, o.YouTube)
 
 	for {
 		groupsPlugins.Print(false)
@@ -535,6 +539,7 @@ func (o *PluginRegistry) Configure() (err error) {
 	_ = o.Keenable.Configure()
 	_ = o.Serply.Configure()
 	_ = o.Firecrawl.Configure()
+	_ = o.SearchApi.Configure()
 	_ = o.Sofya.Configure()
 	_ = o.Spotify.Configure()
 	_ = o.Language.Configure()

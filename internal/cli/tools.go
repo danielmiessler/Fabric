@@ -9,7 +9,7 @@ import (
 	"github.com/danielmiessler/fabric/internal/tools/youtube"
 )
 
-// handleToolProcessing runs the YouTube, web scrape, and Spotify tools and collects their output.
+// handleToolProcessing runs the YouTube, web scrape, search, and Spotify tools and collects their output.
 // When the run is not a chat request, it also prints the output.
 func handleToolProcessing(currentFlags *Flags, registry *core.PluginRegistry) (messageTools string, err error) {
 	if currentFlags.YouTube != "" {
@@ -113,6 +113,19 @@ func handleToolProcessing(currentFlags *Flags, registry *core.PluginRegistry) (m
 
 		var results string
 		if results, err = registry.Firecrawl.Search(currentFlags.FirecrawlSearch); err != nil {
+			return
+		}
+		messageTools = AppendMessage(messageTools, results)
+
+		if !currentFlags.IsChatRequest() {
+			err = currentFlags.WriteOutput(messageTools)
+			return
+		}
+	}
+
+	if currentFlags.ParallelSearch != "" {
+		var results string
+		if results, err = registry.Parallel.Search(currentFlags.ParallelSearch); err != nil {
 			return
 		}
 		messageTools = AppendMessage(messageTools, results)

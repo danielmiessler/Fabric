@@ -83,6 +83,11 @@ func TestCreateClient(t *testing.T) {
 			exists:   true,
 		},
 		{
+			name:     "Existing provider - cheapaimodel",
+			provider: "cheapaimodel",
+			exists:   true,
+		},
+		{
 			name:     "Existing provider - CloudGPU",
 			provider: "CloudGPU",
 			exists:   true,
@@ -90,6 +95,21 @@ func TestCreateClient(t *testing.T) {
 		{
 			name:     "Existing provider - OpenCode Zen",
 			provider: "OpenCode Zen",
+			exists:   true,
+		},
+		{
+			name:     "Existing provider - Synap",
+			provider: "Synap",
+			exists:   true,
+		},
+		{
+			name:     "Existing provider - UberLLM",
+			provider: "UberLLM",
+			exists:   true,
+		},
+		{
+			name:     "Existing provider - Obscurify AI",
+			provider: "Obscurify AI",
 			exists:   true,
 		},
 		{
@@ -113,6 +133,11 @@ func TestCreateClient(t *testing.T) {
 			exists:   true,
 		},
 		{
+			name:     "Existing provider - EmpirioLabs AI",
+			provider: "EmpirioLabs AI",
+			exists:   true,
+		},
+		{
 			name:     "Existing provider - FuturMix",
 			provider: "FuturMix",
 			exists:   true,
@@ -133,6 +158,11 @@ func TestCreateClient(t *testing.T) {
 			exists:   true,
 		},
 		{
+			name:     "Existing provider - llm.buzz",
+			provider: "llm.buzz",
+			exists:   true,
+		},
+		{
 			name:     "Existing provider - llmman",
 			provider: "llmman",
 			exists:   true,
@@ -150,6 +180,21 @@ func TestCreateClient(t *testing.T) {
 		{
 			name:     "Existing provider - WebWright",
 			provider: "WebWright",
+			exists:   true,
+		},
+		{
+			name:     "Existing provider - StandardCompute",
+			provider: "StandardCompute",
+			exists:   true,
+		},
+		{
+			name:     "Existing provider - AtmoRouter",
+			provider: "AtmoRouter",
+			exists:   true,
+		},
+		{
+			name:     "Existing provider - Wiro",
+			provider: "Wiro",
 			exists:   true,
 		},
 		{

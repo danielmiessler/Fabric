@@ -1,5 +1,116 @@
 # Changelog
 
+## v1.4.571 (2026-11-13)
+
+### PR [#2342](https://github.com/danielmiessler/Fabric/pull/2342) by [weare-linkrra](https://github.com/weare-linkrra): feat(providers): add Synap as an OpenAI-compatible provider
+
+- Added Synap as an OpenAI-compatible provider, including a new ProviderMap entry with the base URL `https://synap402.com/v1` and authentication via the `SYNAP_API_KEY` environment variable.
+- Added a `TestCreateClient` test case covering the new Synap provider.
+- Updated the README provider lists (English, Chinese, Arabic) to document Synap.
+
+## v1.4.570 (2026-11-13)
+
+### PR [#2339](https://github.com/danielmiessler/Fabric/pull/2339) by [BeckleyTenriajeng](https://github.com/BeckleyTenriajeng): feat(providers): add AtmoRouter as an OpenAI-compatible provider
+
+- Added AtmoRouter as an OpenAI-compatible provider, including a new ProviderMap entry with the base URL `https://atmorouter.dev/v1` and authentication via the `ATMOROUTER_API_KEY` environment variable.
+- Added a `TestCreateClient` test case covering the new AtmoRouter provider.
+- Updated the README provider list to document AtmoRouter.
+
+## v1.4.569 (2026-11-12)
+
+### PR [#2337](https://github.com/danielmiessler/Fabric/pull/2337) by [EminBudak](https://github.com/EminBudak): feat(providers): add Wiro AI as an OpenAI-compatible provider
+
+- Added Wiro AI as an OpenAI-compatible provider, including a new ProviderMap entry with the base URL `https://llm.wiro.ai/v1` and authentication via the `WIRO_API_KEY` environment variable.
+- Added a `TestCreateClient` test case covering the new Wiro provider.
+- Updated the README provider lists (English, Chinese and Arabic) to document Wiro.
+
+## v1.4.568 (2026-11-10)
+
+### PR [#2338](https://github.com/danielmiessler/Fabric/pull/2338) by [ksylvan](https://github.com/ksylvan): feat(anthropic): upgrade to anthropic-sdk-go v2.8.0
+
+- Upgraded the Anthropic SDK to v2 while preserving Claude compatibility, including migrated Anthropic, Vertex AI, and error handling imports.
+- Upgraded Go to 1.26.10 and refreshed project dependencies.
+- Preserved legacy sampling controls across requests and beta retries, with Vertex AI sampling requests pinned to the legacy version.
+- Restricted X-Api-Key authentication to custom Anthropic endpoints only.
+- Added support for the Claude Fable 5.2 and Mythos 5.2 models.
+
+## v1.4.567 (2026-11-08)
+
+### PR [#2336](https://github.com/danielmiessler/Fabric/pull/2336) by [henrikdukefoss](https://github.com/henrikdukefoss): feat(providers): add StandardCompute as an OpenAI-compatible provider
+
+- Added StandardCompute as an OpenAI-compatible provider, including a new ProviderMap entry with the base URL `https://api.stdcmpt.com/v1` and authentication via the `STANDARDCOMPUTE_API_KEY` environment variable.
+- Added a `TestCreateClient` test case covering the new StandardCompute provider.
+- Updated the README provider list to document StandardCompute.
+
+## v1.4.566 (2026-11-08)
+
+### PR [#2333](https://github.com/danielmiessler/Fabric/pull/2333) by [bigconnect](https://github.com/bigconnect): feat(providers): add llm.buzz as OpenAI-compatible provider
+
+- Feat(providers): add llm.buzz as OpenAI-compatible provider
+
+## v1.4.565 (2026-11-04)
+
+### PR [#2332](https://github.com/danielmiessler/Fabric/pull/2332) by [PSA-Team-source](https://github.com/PSA-Team-source): feat(providers): add UberLLM as an OpenAI-compatible provider
+
+- Added UberLLM as an OpenAI-compatible provider, with a new ProviderMap entry using the base URL `https://api.uberllm.dev/v1` and authentication via the `UBERLLM_API_KEY` environment variable.
+- Added a `TestCreateClient` test case covering the new UberLLM provider.
+- Updated the provider lists in README.md, README.zh.md and README.ar.md.
+
+## v1.4.564 (2026-11-03)
+
+### PR [#2322](https://github.com/danielmiessler/Fabric/pull/2322) by [tonydavis629](https://github.com/tonydavis629): feat: add Obscurify AI as an OpenAI-compatible provider
+
+- Added Obscurify AI as an OpenAI-compatible provider, including a new ProviderMap entry with the base URL `https://obscurify.ai/v1` and authentication via the `OBSCURIFY_AI_API_KEY` environment variable.
+- Added a `TestCreateClient` test case covering the new Obscurify AI provider.
+- Updated the README provider list to document Obscurify AI.
+
+## v1.4.563 (2026-11-02)
+
+### PR [#2328](https://github.com/danielmiessler/Fabric/pull/2328) by [tanishqbaweja](https://github.com/tanishqbaweja) and [ksylvan](https://github.com/ksylvan): fix(core): stop --dry-run from applying file changes and saving the session
+
+- Fix `--dry-run -p create_coding_feature` overwriting `README.md` and creating `src/main.c` from the example in the pattern; the dry run now prints the full request and changes no files.
+- Fix `--dry-run --session` saving the fake reply to the session, where the next real request sent it to the model; a dry run no longer creates or changes a session file.
+- New helper function `captureStdout(t, fn) []byte` to refactor common test pattern.
+
+## v1.4.562 (2026-11-01)
+
+### PR [#2319](https://github.com/danielmiessler/Fabric/pull/2319) by [nicho810](https://github.com/nicho810): feat(providers): add cheapaimodel as an OpenAI-compatible provider
+
+- Feat: add cheapaimodel as an OpenAI-compatible provider
+
+## v1.4.561 (2026-11-01)
+
+### PR [#2323](https://github.com/danielmiessler/Fabric/pull/2323) by [tanishqbaweja](https://github.com/tanishqbaweja) and [ksylvan](https://github.com/ksylvan): fix(cli): stop config.yaml from overriding flags and zeroing options it omits
+
+- Fix `config.yaml` resetting every option it leaves out to zero: a config with a single key such as `ytDlpArgs:` or `notification: true` no longer runs with temperature 0 and top_p 0.
+- Fix command-line flags losing to `config.yaml` when written as bundled short flags (`-sp summarize`), attached values (`-t0.2`) or the Windows forms (`/t 0.2`, `/temperature:0.2`).
+
+## v1.4.560 (2026-10-28)
+
+### PR [#2320](https://github.com/danielmiessler/Fabric/pull/2320) by [jaeminbird](https://github.com/jaeminbird): fix(plugins): match zoned IPv6 hosts and normalize FABRIC_ALLOW_INSECURE_LAN entries
+
+- `FABRIC_ALLOW_INSECURE_LAN` CIDR and exact-IP entries now match zoned IPv6 hosts such as `http://[fe80::1%25eth0]:11434`, which only the `lan` keyword allowed before.
+- Allowlist entries are trimmed of `[]` brackets and a trailing dot, so `[fd00::5]` and `nas.lan.` match like `fd00::5` and `nas.lan`.
+
+## v1.4.559 (2026-11-01)
+
+### PR [#2325](https://github.com/danielmiessler/Fabric/pull/2325) by [bigconnect](https://github.com/bigconnect): feat(providers): add llm.buzz as an OpenAI-compatible provider
+
+- Feat: add llm.buzz as an OpenAI-compatible provider
+
+## v1.4.558 (2026-11-01)
+
+### PR [#2321](https://github.com/danielmiessler/Fabric/pull/2321) by [wozhenbang2004](https://github.com/wozhenbang2004) and
+[ksylvan](https://github.com/ksylvan): fix: report configured vendor initialization failures
+
+- Fix: report configured vendor initialization failures
+
+## v1.4.557 (2026-10-27)
+
+### PR [#2318](https://github.com/danielmiessler/Fabric/pull/2318) by [Adam-Dalloul](https://github.com/Adam-Dalloul): feat: add EmpirioLabs AI as an OpenAI-compatible provider
+
+- Feat: add EmpirioLabs AI as an OpenAI-compatible provider
+
 ## v1.4.556 (2026-10-26)
 
 ### PR [#2312](https://github.com/danielmiessler/Fabric/pull/2312) by [mrhy7176](https://github.com/mrhy7176): feat: add CloudGPU as an OpenAI-compatible provider

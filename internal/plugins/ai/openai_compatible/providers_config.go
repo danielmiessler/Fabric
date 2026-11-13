@@ -268,6 +268,11 @@ var ProviderMap = map[string]ProviderConfig{
 		BaseURL:             "https://global.api-route.com/v1",
 		ImplementsResponses: false,
 	},
+	"AtmoRouter": {
+		Name:                "AtmoRouter",
+		BaseURL:             "https://atmorouter.dev/v1",
+		ImplementsResponses: false,
+	},
 	"ByteDance Ark": {
 		Name:                "ByteDance Ark",
 		BaseURL:             "https://ark.cn-beijing.volces.com/api/v3",
@@ -276,6 +281,16 @@ var ProviderMap = map[string]ProviderConfig{
 	"Cerebras": {
 		Name:                "Cerebras",
 		BaseURL:             "https://api.cerebras.ai/v1",
+		ImplementsResponses: false,
+	},
+	"cheapaimodel": {
+		Name:                "cheapaimodel",
+		BaseURL:             "https://api.cheapaimodel.ai/v1",
+		ImplementsResponses: false,
+	},
+	"llmbuzz": {
+		Name:                "llmbuzz",
+		BaseURL:             "https://api.llm.buzz/api/v1",
 		ImplementsResponses: false,
 	},
 	"Cheaper Inference": {
@@ -301,6 +316,11 @@ var ProviderMap = map[string]ProviderConfig{
 	"Eden AI": {
 		Name:                "Eden AI",
 		BaseURL:             "https://api.edenai.run/v3",
+		ImplementsResponses: false,
+	},
+	"EmpirioLabs AI": {
+		Name:                "EmpirioLabs AI",
+		BaseURL:             "https://api.empiriolabs.ai/v1",
 		ImplementsResponses: false,
 	},
 	"FuturMix": {
@@ -342,6 +362,11 @@ var ProviderMap = map[string]ProviderConfig{
 		BaseURL:             "http://localhost:4000",
 		ImplementsResponses: false,
 	},
+	"llm.buzz": {
+		Name:                "llm.buzz",
+		BaseURL:             "https://api.llm.buzz/api/v1",
+		ImplementsResponses: false,
+	},
 	"llmman": {
 		Name:                "llmman",
 		BaseURL:             "http://localhost:17434/v1",
@@ -371,6 +396,11 @@ var ProviderMap = map[string]ProviderConfig{
 	"onomeo": {
 		Name:                "onomeo",
 		BaseURL:             "https://onomeo.com/v1",
+		ImplementsResponses: false,
+	},
+	"Obscurify AI": {
+		Name:                "Obscurify AI",
+		BaseURL:             "https://obscurify.ai/v1",
 		ImplementsResponses: false,
 	},
 	"OpenCode Go": {
@@ -427,6 +457,16 @@ var ProviderMap = map[string]ProviderConfig{
 		BaseURL:             "https://api.siliconflow.cn/v1",
 		ImplementsResponses: false,
 	},
+	"StandardCompute": {
+		Name:                "StandardCompute",
+		BaseURL:             "https://api.stdcmpt.com/v1",
+		ImplementsResponses: false,
+	},
+	"Synap": {
+		Name:                "Synap",
+		BaseURL:             "https://synap402.com/v1",
+		ImplementsResponses: false,
+	},
 	"Synthorai": {
 		Name:                "Synthorai",
 		BaseURL:             "https://synthorai.io/v1",
@@ -442,6 +482,11 @@ var ProviderMap = map[string]ProviderConfig{
 		BaseURL:             "https://api.trustedrouter.com/v1",
 		ImplementsResponses: false,
 	},
+	"UberLLM": {
+		Name:                "UberLLM",
+		BaseURL:             "https://api.uberllm.dev/v1",
+		ImplementsResponses: false,
+	},
 	"Venice AI": {
 		Name:                "Venice AI",
 		BaseURL:             "https://api.venice.ai/api/v1",
@@ -450,6 +495,11 @@ var ProviderMap = map[string]ProviderConfig{
 	"WebWright": {
 		Name:                "WebWright",
 		BaseURL:             "https://webwright.ai/v1",
+		ImplementsResponses: false,
+	},
+	"Wiro": {
+		Name:                "Wiro",
+		BaseURL:             "https://llm.wiro.ai/v1",
 		ImplementsResponses: false,
 	},
 	"Y-API": {

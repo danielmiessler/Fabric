@@ -215,6 +215,11 @@ func (o *Client) buildGenerateContentConfig(opts *domain.ChatOptions) (*genai.Ge
 		MaxOutputTokens: maxTokens,
 	}
 
+	if opts.Seed != 0 {
+		seed := int32(opts.Seed)
+		cfg.Seed = &seed
+	}
+
 	if opts.Search {
 		cfg.Tools = []*genai.Tool{{GoogleSearch: &genai.GoogleSearch{}}}
 		if loc := opts.SearchLocation; loc != "" {

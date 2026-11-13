@@ -64,6 +64,7 @@ These flags have the same effect as in a run with one pattern:
 - `-v` sets pattern variables. A step `variables` value with the same name replaces the `-v` value.
 - `-C` (context), `--strategy`, and `-g` (language) apply to each step.
 - `-c` copies the last output to the clipboard. `-o` writes it to a file.
+- `--extract` and `--extract-last` keep only the first or last fenced code block of the last output. If the output has no code block, Fabric keeps all of it.
 - `--dry-run` shows the prompts, but does not send them to a model.
 
 `--stream` applies to the last step only. Fabric does not show the output of the other steps. It gives that output only to the next step.

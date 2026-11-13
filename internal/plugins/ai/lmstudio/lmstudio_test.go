@@ -2,6 +2,7 @@ package lmstudio
 
 import (
 	"context"
+	"encoding/json"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -178,5 +179,81 @@ func TestListModelsHonorsContextCancellation(t *testing.T) {
 		require.ErrorIs(t, err, context.Canceled)
 	case <-time.After(3 * time.Second):
 		t.Fatal("ListModels ignored the cancelled context")
+	}
+}
+
+// chatPayloads sends one Send and one SendStream request with opts and returns the JSON body of each.
+func chatPayloads(t *testing.T, opts *domain.ChatOptions) (send, stream map[string]any) {
+	t.Helper()
+
+	var bodies []map[string]any
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		var body map[string]any
+		require.NoError(t, json.NewDecoder(r.Body).Decode(&body))
+		bodies = append(bodies, body)
+		if body["stream"] == true {
+			w.Header().Set("Content-Type", "text/event-stream")
+			_, _ = w.Write([]byte("data: [DONE]\n\n"))
+			return
+		}
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"choices":[{"message":{"content":"ok"}}]}`))
+	}))
+	t.Cleanup(server.Close)
+
+	client := NewClient()
+	client.ApiUrl.Value = server.URL
+	client.HttpClient = server.Client()
+
+	msgs := []*chat.ChatCompletionMessage{{Role: chat.ChatMessageRoleUser, Content: "hello"}}
+
+	_, err := client.Send(context.Background(), msgs, opts)
+	require.NoError(t, err)
+
+	channel := make(chan domain.StreamUpdate, 4)
+	require.NoError(t, client.SendStream(context.Background(), msgs, opts, channel))
+
+	require.Len(t, bodies, 2)
+	return bodies[0], bodies[1]
+}
+
+func TestChatPayloadCarriesTheSamplingOptions(t *testing.T) {
+	t.Parallel()
+
+	send, stream := chatPayloads(t, &domain.ChatOptions{
+		Model:            "m",
+		Temperature:      0.3,
+		TopP:             0.8,
+		MaxTokens:        256,
+		PresencePenalty:  0.5,
+		FrequencyPenalty: 0.25,
+		Seed:             42,
+	})
+
+	for name, body := range map[string]map[string]any{"Send": send, "SendStream": stream} {
+		require.Equal(t, 0.3, body["temperature"], name)
+		require.Equal(t, 0.8, body["top_p"], name)
+		require.EqualValues(t, 256, body["max_tokens"], name)
+		require.Equal(t, 0.5, body["presence_penalty"], name)
+		require.Equal(t, 0.25, body["frequency_penalty"], name)
+		require.EqualValues(t, 42, body["seed"], name)
+	}
+}
+
+func TestChatPayloadOmitsUnsetOptionsAndHonorsRaw(t *testing.T) {
+	t.Parallel()
+
+	send, stream := chatPayloads(t, &domain.ChatOptions{Model: "m", Temperature: 0.7})
+	for name, body := range map[string]map[string]any{"Send": send, "SendStream": stream} {
+		require.Equal(t, 0.7, body["temperature"], name)
+		for _, key := range []string{"top_p", "max_tokens", "presence_penalty", "frequency_penalty", "seed"} {
+			require.NotContains(t, body, key, name)
+		}
+	}
+
+	send, stream = chatPayloads(t, &domain.ChatOptions{Model: "m", Raw: true, Temperature: 0.7, Seed: 42})
+	for name, body := range map[string]map[string]any{"Send": send, "SendStream": stream} {
+		require.NotContains(t, body, "temperature", name)
+		require.NotContains(t, body, "seed", name)
 	}
 }

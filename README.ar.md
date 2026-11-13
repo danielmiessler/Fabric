@@ -325,10 +325,12 @@ go install github.com/danielmiessler/fabric/cmd/fabric@latest
 - Pzero
 - Requesty
 - SiliconCloud
+- Synap
 - Synthorai
 - Together
 - UberLLM
 - Venice AI
+- Wiro
 - Y-API
 - Z AI
 

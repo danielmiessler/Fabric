@@ -228,7 +228,7 @@ func TestSearchPreservesBodyReadFailures(t *testing.T) {
 func TestSearchLimitsResultsAndFields(t *testing.T) {
 	var sb strings.Builder
 	sb.WriteString(`{"results":[`)
-	for i := 0; i < 50; i++ {
+	for i := range 50 {
 		if i > 0 {
 			sb.WriteString(",")
 		}

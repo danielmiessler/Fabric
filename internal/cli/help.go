@@ -60,6 +60,7 @@ var flagDescriptionMap = map[string]string{
 	"scrape_question":            "search_question_jina",
 	"serply_search":              "serply_search_help",
 	"firecrawl_search":           "firecrawl_search_help",
+	"parallel_search":            "parallel_search_help",
 	"searchapi_search":           "searchapi_search_help",
 	"sofya_search":               "sofya_search_help",
 	"keenable_search":            "keenable_search_help",

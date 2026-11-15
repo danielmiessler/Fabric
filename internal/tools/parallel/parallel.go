@@ -66,7 +66,6 @@ func (c *Client) Search(query string) (string, error) {
 	session, err := client.Connect(ctx, &mcp.StreamableClientTransport{
 		Endpoint: c.endpoint,
 		HTTPClient: &http.Client{
-			Timeout:   90 * time.Second,
 			Transport: requestTransport{base: http.DefaultTransport, apiKey: c.ApiKey.Value},
 			// Never forward credentials or queries to a redirected endpoint.
 			CheckRedirect: func(*http.Request, []*http.Request) error { return http.ErrUseLastResponse },
@@ -78,20 +77,6 @@ func (c *Client) Search(query string) (string, error) {
 		return "", fmt.Errorf("Parallel MCP connection: %w", err)
 	}
 	defer session.Close()
-
-	found := false
-	for tool, err := range session.Tools(ctx, nil) {
-		if err != nil {
-			return "", fmt.Errorf("Parallel MCP discovery: %w", err)
-		}
-		if tool.Name == "web_search" {
-			found = true
-			break
-		}
-	}
-	if !found {
-		return "", fmt.Errorf("Parallel MCP does not offer web_search")
-	}
 	result, err := session.CallTool(ctx, &mcp.CallToolParams{
 		Name:      "web_search",
 		Arguments: map[string]any{"objective": query, "search_queries": []string{query}},

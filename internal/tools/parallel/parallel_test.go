@@ -62,10 +62,11 @@ func TestSearchMCP(t *testing.T) {
 				require.Equal(t, "## Go\nhttps://go.dev/\n\nA passage\n\nAnother passage\n\n---\n\nParallel warning: Limited results", got)
 				mu.Lock()
 				defer mu.Unlock()
-				for _, method := range []string{"initialize", "notifications/initialized", "tools/list", "tools/call", "DELETE"} {
+				for _, method := range []string{"initialize", "notifications/initialized", "tools/call", "DELETE"} {
 					require.Equal(t, 1, methods[method], "method %s; requests %v", method, methods)
 				}
 				require.Zero(t, methods["GET"])
+				require.Zero(t, methods["tools/list"], "tools/list should not be called")
 			})
 		}
 	}
@@ -95,7 +96,7 @@ func TestSearchErrors(t *testing.T) {
 		result *mcp.CallToolResult
 		want   string
 	}{
-		{name: "missing tool", want: "does not offer web_search"},
+		{name: "missing tool", want: "unknown tool"},
 		{name: "tool error", tool: true, result: &mcp.CallToolResult{IsError: true, Content: []mcp.Content{&mcp.TextContent{Text: "rate limited"}}}, want: "rate limited"},
 		{name: "malformed", tool: true, result: &mcp.CallToolResult{Content: []mcp.Content{&mcp.TextContent{Text: "invalid JSON"}}}, want: "response"},
 	} {

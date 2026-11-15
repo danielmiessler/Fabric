@@ -276,7 +276,6 @@
   "firecrawl_failed_decode_response": "failed to decode response: %w",
   "firecrawl_failed_execute_request": "failed to execute request: %w",
   "firecrawl_label": "Firecrawl",
-  "firecrawl_not_configured": "Firecrawl is not configured, please run the setup procedure",
   "firecrawl_search_help": "Search the web using Firecrawl and send the top pages to chat as Markdown",
   "firecrawl_setup_description": "Firecrawl - to search the web and send the full pages to chat (get a key at https://www.firecrawl.dev/signin?utm_source=fabric&utm_medium=integration)",
   "gemini_audio_data_too_small": "audio data too small: %d bytes, minimum required: %d",
@@ -537,7 +536,6 @@
   "searchapi_failed_decode_response": "failed to decode response: %w",
   "searchapi_failed_execute_request": "failed to execute request: %w",
   "searchapi_label": "SearchApi",
-  "searchapi_not_configured": "SearchApi is not configured, please run the setup procedure",
   "searchapi_search_help": "Search Google using SearchApi and send the results to chat",
   "searchapi_setup_description": "SearchApi - to search Google and send the results to chat (get a key at https://www.searchapi.io)",
   "seed_for_lmm_generation": "Seed to be used for LMM generation",
@@ -547,7 +545,6 @@
   "serply_failed_decode_response": "failed to decode response: %w",
   "serply_failed_execute_request": "failed to execute request: %w",
   "serply_label": "Serply",
-  "serply_not_configured": "Serply is not configured, please run the setup procedure",
   "serply_search_help": "Search Google using Serply and send the results to chat",
   "serply_setup_description": "Serply - to search Google and send the results to chat",
   "serve_fabric_api_ollama_endpoints": "Serve the Fabric Rest API with ollama endpoints",
@@ -612,7 +609,6 @@
   "sofya_failed_decode_response": "failed to decode response: %w",
   "sofya_failed_execute_request": "failed to execute request: %w",
   "sofya_label": "Sofya",
-  "sofya_not_configured": "Sofya is not configured, please run the setup procedure",
   "sofya_search_help": "Search the web using Sofya and send the top pages to chat as Markdown",
   "sofya_setup_description": "Sofya - to search the web and send the full pages to chat (get a key at https://sofya.co)",
   "specify_language_code": "Specify the Language Code for the chat, e.g. -g=en -g=zh -g=pt-BR -g=pt-PT",
@@ -818,5 +814,7 @@
   "youtube_visual_sensitivity_help": "Tolerance for FFmpeg scene detection (0.0 - 1.0)",
   "youtube_ytdlp_not_found": "yt-dlp not found in PATH. Please install yt-dlp to use YouTube transcript functionality",
   "youtube_ytdlp_required_visual_extraction": "yt-dlp is required for visual extraction but not found in PATH",
-  "youtube_ytdlp_stderr_error": "error reading yt-dlp stderr"
+  "youtube_ytdlp_stderr_error": "error reading yt-dlp stderr",
+  "search_not_configured": "%s is not configured, please run the setup procedure",
+  "parallel_search_help": "Search the web using Parallel (anonymous by default) and return source excerpts"
 }

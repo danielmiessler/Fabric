@@ -276,7 +276,6 @@
   "firecrawl_failed_decode_response": "yanıtı çözümlenemedi: %w",
   "firecrawl_failed_execute_request": "istek yürütülemedi: %w",
   "firecrawl_label": "Firecrawl",
-  "firecrawl_not_configured": "Firecrawl yapılandırılmamış, lütfen kurulum prosedürünü çalıştırın",
   "firecrawl_search_help": "Firecrawl kullanarak web'de ara ve en iyi sayfaları Markdown olarak sohbete gönder",
   "firecrawl_setup_description": "Firecrawl - web'de arama yapıp sayfaların tamamını sohbete göndermek için (anahtar: https://www.firecrawl.dev/signin?utm_source=fabric&utm_medium=integration)",
   "gemini_audio_data_too_small": "ses verisi çok küçük: %d bayt, minimum gerekli: %d",
@@ -537,7 +536,6 @@
   "searchapi_failed_decode_response": "yanıtı çözümlenemedi: %w",
   "searchapi_failed_execute_request": "istek yürütülemedi: %w",
   "searchapi_label": "SearchApi",
-  "searchapi_not_configured": "SearchApi yapılandırılmamış, lütfen kurulum prosedürünü çalıştırın",
   "searchapi_search_help": "SearchApi kullanarak Google'da ara ve sonuçları sohbete gönder",
   "searchapi_setup_description": "SearchApi - Google'da arama yapıp sonuçları sohbete göndermek için (anahtar: https://www.searchapi.io)",
   "seed_for_lmm_generation": "LMM üretimi için kullanılacak başlangıç değeri",
@@ -547,7 +545,6 @@
   "serply_failed_decode_response": "yanıtı çözümlenemedi: %w",
   "serply_failed_execute_request": "istek yürütülemedi: %w",
   "serply_label": "Serply",
-  "serply_not_configured": "Serply yapılandırılmamış, lütfen kurulum prosedürünü çalıştırın",
   "serply_search_help": "Serply kullanarak Google'da ara ve sonuçları sohbete gönder",
   "serply_setup_description": "Serply - Google'da arama yapıp sonuçları sohbete göndermek için",
   "serve_fabric_api_ollama_endpoints": "Fabric REST API'sini Ollama uç noktalarıyla sun",
@@ -612,7 +609,6 @@
   "sofya_failed_decode_response": "yanıtı çözümlenemedi: %w",
   "sofya_failed_execute_request": "istek yürütülemedi: %w",
   "sofya_label": "Sofya",
-  "sofya_not_configured": "Sofya yapılandırılmamış, lütfen kurulum prosedürünü çalıştırın",
   "sofya_search_help": "Sofya kullanarak web'de ara ve en iyi sayfaları Markdown olarak sohbete gönder",
   "sofya_setup_description": "Sofya - web'de arama yapıp sayfaların tamamını sohbete göndermek için (anahtar: https://sofya.co)",
   "specify_language_code": "Sohbet için Dil Kodunu belirtin, örn. -g=en -g=zh -g=pt-BR -g=pt-PT",
@@ -818,5 +814,7 @@
   "youtube_visual_sensitivity_help": "FFmpeg sahne algılama toleransı (0.0 - 1.0)",
   "youtube_ytdlp_not_found": "yt-dlp PATH'te bulunamadı. YouTube transkript işlevselliğini kullanmak için lütfen yt-dlp'yi kurun",
   "youtube_ytdlp_required_visual_extraction": "görsel çıkarma için yt-dlp gerekli ancak PATH'te bulunamadı",
-  "youtube_ytdlp_stderr_error": "yt-dlp stderr okunurken hata oluştu"
+  "youtube_ytdlp_stderr_error": "yt-dlp stderr okunurken hata oluştu",
+  "search_not_configured": "%s yapılandırılmadı, lütfen kurulum yordamını çalıştırın",
+  "parallel_search_help": "Parallel kullanarak web'de arama yapın (varsayılan olarak anonim) ve kaynak alıntılarını döndürün"
 }

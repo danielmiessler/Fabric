@@ -276,7 +276,6 @@
   "firecrawl_failed_decode_response": "رمزگشایی پاسخ ناموفق بود: %w",
   "firecrawl_failed_execute_request": "اجرای درخواست ناموفق بود: %w",
   "firecrawl_label": "Firecrawl",
-  "firecrawl_not_configured": "Firecrawl پیکربندی نشده است، لطفاً روند راه‌اندازی را اجرا کنید",
   "firecrawl_search_help": "جستجو در وب با استفاده از Firecrawl و ارسال صفحات برتر به گفتگو به صورت Markdown",
   "firecrawl_setup_description": "Firecrawl - برای جستجو در وب و ارسال کامل صفحات به گفتگو (دریافت کلید از https://www.firecrawl.dev/signin?utm_source=fabric&utm_medium=integration)",
   "gemini_audio_data_too_small": "داده صوتی بسیار کوچک: %d بایت، حداقل مورد نیاز: %d",
@@ -537,7 +536,6 @@
   "searchapi_failed_decode_response": "رمزگشایی پاسخ ناموفق بود: %w",
   "searchapi_failed_execute_request": "اجرای درخواست ناموفق بود: %w",
   "searchapi_label": "SearchApi",
-  "searchapi_not_configured": "SearchApi پیکربندی نشده است، لطفاً روند راه‌اندازی را اجرا کنید",
   "searchapi_search_help": "جستجو در Google با استفاده از SearchApi و ارسال نتایج به گفتگو",
   "searchapi_setup_description": "SearchApi - برای جستجو در Google و ارسال نتایج به گفتگو (دریافت کلید از https://www.searchapi.io)",
   "seed_for_lmm_generation": "Seed برای استفاده در تولید LMM",
@@ -547,7 +545,6 @@
   "serply_failed_decode_response": "رمزگشایی پاسخ ناموفق بود: %w",
   "serply_failed_execute_request": "اجرای درخواست ناموفق بود: %w",
   "serply_label": "Serply",
-  "serply_not_configured": "Serply پیکربندی نشده است، لطفاً روند راه‌اندازی را اجرا کنید",
   "serply_search_help": "جستجو در Google با استفاده از Serply و ارسال نتایج به گفتگو",
   "serply_setup_description": "Serply - برای جستجو در Google و ارسال نتایج به گفتگو",
   "serve_fabric_api_ollama_endpoints": "سرویس API REST Fabric با نقاط پایانی ollama",
@@ -612,7 +609,6 @@
   "sofya_failed_decode_response": "رمزگشایی پاسخ ناموفق بود: %w",
   "sofya_failed_execute_request": "اجرای درخواست ناموفق بود: %w",
   "sofya_label": "Sofya",
-  "sofya_not_configured": "Sofya پیکربندی نشده است، لطفاً روند راه‌اندازی را اجرا کنید",
   "sofya_search_help": "جستجو در وب با استفاده از Sofya و ارسال صفحات برتر به گفتگو به صورت Markdown",
   "sofya_setup_description": "Sofya - برای جستجو در وب و ارسال کامل صفحات به گفتگو (دریافت کلید از https://sofya.co)",
   "specify_language_code": "کد زبان برای گفتگو را مشخص کنید، مثلاً -g=en -g=zh -g=pt-BR -g=pt-PT",
@@ -818,5 +814,7 @@
   "youtube_visual_sensitivity_help": "میزان حساسیت تشخیص صحنه در FFmpeg (0.0 - 1.0)",
   "youtube_ytdlp_not_found": "yt-dlp در PATH یافت نشد. لطفاً yt-dlp را نصب کنید تا از قابلیت رونویسی یوتیوب استفاده کنید",
   "youtube_ytdlp_required_visual_extraction": "برای استخراج بصری به yt-dlp نیاز است اما در PATH پیدا نشد",
-  "youtube_ytdlp_stderr_error": "خطا در خواندن stderr yt-dlp"
+  "youtube_ytdlp_stderr_error": "خطا در خواندن stderr yt-dlp",
+  "search_not_configured": "%s پیکربندی نشده است، لطفاً روش تنظیم را اجرا کنید",
+  "parallel_search_help": "جستجو در وب با استفاده از Parallel (به طور پیش‌فرض ناشناس) و بازگرداندن گزیده‌های منبع"
 }

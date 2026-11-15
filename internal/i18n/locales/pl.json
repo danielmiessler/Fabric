@@ -276,7 +276,6 @@
   "firecrawl_failed_decode_response": "nie udało się zdekodować odpowiedzi: %w",
   "firecrawl_failed_execute_request": "nie udało się wykonać żądania: %w",
   "firecrawl_label": "Firecrawl",
-  "firecrawl_not_configured": "Firecrawl nie jest skonfigurowane, uruchom procedurę konfiguracji",
   "firecrawl_search_help": "Wyszukaj w sieci przy użyciu Firecrawl i wyślij najlepsze strony do czatu jako Markdown",
   "firecrawl_setup_description": "Firecrawl - do wyszukiwania w sieci i wysyłania pełnych stron do czatu (klucz: https://www.firecrawl.dev/signin?utm_source=fabric&utm_medium=integration)",
   "gemini_audio_data_too_small": "dane audio zbyt małe: %d bajtów, wymagane minimum: %d",
@@ -537,7 +536,6 @@
   "searchapi_failed_decode_response": "nie udało się zdekodować odpowiedzi: %w",
   "searchapi_failed_execute_request": "nie udało się wykonać żądania: %w",
   "searchapi_label": "SearchApi",
-  "searchapi_not_configured": "SearchApi nie jest skonfigurowane, uruchom procedurę konfiguracji",
   "searchapi_search_help": "Wyszukaj w Google przy użyciu SearchApi i wyślij wyniki do czatu",
   "searchapi_setup_description": "SearchApi - do wyszukiwania w Google i wysyłania wyników do czatu (klucz: https://www.searchapi.io)",
   "seed_for_lmm_generation": "Ziarno używane do generowania przez LMM",
@@ -547,7 +545,6 @@
   "serply_failed_decode_response": "nie udało się zdekodować odpowiedzi: %w",
   "serply_failed_execute_request": "nie udało się wykonać żądania: %w",
   "serply_label": "Serply",
-  "serply_not_configured": "Serply nie jest skonfigurowane, uruchom procedurę konfiguracji",
   "serply_search_help": "Wyszukaj w Google przy użyciu Serply i wyślij wyniki do czatu",
   "serply_setup_description": "Serply - do wyszukiwania w Google i wysyłania wyników do czatu",
   "serve_fabric_api_ollama_endpoints": "Uruchom fabric Rest API z endpointami ollama",
@@ -612,7 +609,6 @@
   "sofya_failed_decode_response": "nie udało się zdekodować odpowiedzi: %w",
   "sofya_failed_execute_request": "nie udało się wykonać żądania: %w",
   "sofya_label": "Sofya",
-  "sofya_not_configured": "Sofya nie jest skonfigurowane, uruchom procedurę konfiguracji",
   "sofya_search_help": "Wyszukaj w sieci przy użyciu Sofya i wyślij najlepsze strony do czatu jako Markdown",
   "sofya_setup_description": "Sofya - do wyszukiwania w sieci i wysyłania pełnych stron do czatu (klucz: https://sofya.co)",
   "specify_language_code": "Określ kod języka dla czatu, np. -g=pl -g=en -g=zh -g=pt-BR",
@@ -818,5 +814,7 @@
   "youtube_visual_sensitivity_help": "Czułość wykrywania scen FFmpeg (0.0 - 1.0)",
   "youtube_ytdlp_not_found": "nie znaleziono yt-dlp w PATH. Zainstaluj yt-dlp, aby korzystać z funkcji transkrypcji YouTube",
   "youtube_ytdlp_required_visual_extraction": "yt-dlp jest wymagany do ekstrakcji wizualnej, ale nie został znaleziony w PATH",
-  "youtube_ytdlp_stderr_error": "błąd podczas odczytu stderr yt-dlp"
+  "youtube_ytdlp_stderr_error": "błąd podczas odczytu stderr yt-dlp",
+  "search_not_configured": "%s nie jest skonfigurowany, uruchom procedurę konfiguracji",
+  "parallel_search_help": "Wyszukuj w sieci za pomocą Parallel (anonimowo domyślnie) i zwracaj fragmenty źródła"
 }

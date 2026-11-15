@@ -276,7 +276,6 @@
   "firecrawl_failed_decode_response": "レスポンスのデコードに失敗しました: %w",
   "firecrawl_failed_execute_request": "リクエストの実行に失敗しました: %w",
   "firecrawl_label": "Firecrawl",
-  "firecrawl_not_configured": "Firecrawlが設定されていません。セットアップ手順を実行してください",
   "firecrawl_search_help": "Firecrawl を使用して Web を検索し、上位のページを Markdown としてチャットに送信",
   "firecrawl_setup_description": "Firecrawl - Web を検索してページ全体をチャットに送信 (キーの取得: https://www.firecrawl.dev/signin?utm_source=fabric&utm_medium=integration)",
   "gemini_audio_data_too_small": "オーディオデータが小さすぎます: %d バイト、最小要件: %d",
@@ -537,7 +536,6 @@
   "searchapi_failed_decode_response": "レスポンスのデコードに失敗しました: %w",
   "searchapi_failed_execute_request": "リクエストの実行に失敗しました: %w",
   "searchapi_label": "SearchApi",
-  "searchapi_not_configured": "SearchApiが設定されていません。セットアップ手順を実行してください",
   "searchapi_search_help": "SearchApi を使用して Google を検索し、結果をチャットに送信",
   "searchapi_setup_description": "SearchApi - Google を検索して結果をチャットに送信 (キーの取得: https://www.searchapi.io)",
   "seed_for_lmm_generation": "LMM生成で使用するシード",
@@ -547,7 +545,6 @@
   "serply_failed_decode_response": "レスポンスのデコードに失敗しました: %w",
   "serply_failed_execute_request": "リクエストの実行に失敗しました: %w",
   "serply_label": "Serply",
-  "serply_not_configured": "Serplyが設定されていません。セットアップ手順を実行してください",
   "serply_search_help": "Serply を使用して Google を検索し、結果をチャットに送信",
   "serply_setup_description": "Serply - Google を検索して結果をチャットに送信",
   "serve_fabric_api_ollama_endpoints": "ollamaエンドポイント付きのFabric REST APIを提供",
@@ -612,7 +609,6 @@
   "sofya_failed_decode_response": "レスポンスのデコードに失敗しました: %w",
   "sofya_failed_execute_request": "リクエストの実行に失敗しました: %w",
   "sofya_label": "Sofya",
-  "sofya_not_configured": "Sofyaが設定されていません。セットアップ手順を実行してください",
   "sofya_search_help": "Sofya を使用して Web を検索し、上位のページを Markdown としてチャットに送信",
   "sofya_setup_description": "Sofya - Web を検索してページ全体をチャットに送信 (キーの取得: https://sofya.co)",
   "specify_language_code": "チャットの言語コードを指定、例: -g=en -g=zh -g=pt-BR -g=pt-PT",
@@ -818,5 +814,7 @@
   "youtube_visual_sensitivity_help": "FFmpeg のシーン検出の許容度 (0.0 - 1.0)",
   "youtube_ytdlp_not_found": "PATHにyt-dlpが見つかりません。YouTubeトランスクリプト機能を使用するにはyt-dlpをインストールしてください",
   "youtube_ytdlp_required_visual_extraction": "視覚抽出には yt-dlp が必要ですが、PATH に見つかりません",
-  "youtube_ytdlp_stderr_error": "yt-dlp stderrの読み取りエラー"
+  "youtube_ytdlp_stderr_error": "yt-dlp stderrの読み取りエラー",
+  "search_not_configured": "%sが設定されていません。セットアップ手順を実行してください",
+  "parallel_search_help": "Parallelを使用してウェブを検索し(デフォルトで匿名)、ソースの抜粋を返す"
 }

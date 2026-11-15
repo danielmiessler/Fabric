@@ -276,7 +276,6 @@
   "firecrawl_failed_decode_response": "no se pudo decodificar la respuesta: %w",
   "firecrawl_failed_execute_request": "no se pudo ejecutar la solicitud: %w",
   "firecrawl_label": "Firecrawl",
-  "firecrawl_not_configured": "Firecrawl no está configurado, por favor ejecute el procedimiento de configuración",
   "firecrawl_search_help": "Buscar en la web usando Firecrawl y enviar las páginas principales al chat como Markdown",
   "firecrawl_setup_description": "Firecrawl - para buscar en la web y enviar las páginas completas al chat (obtenga una clave en https://www.firecrawl.dev/signin?utm_source=fabric&utm_medium=integration)",
   "gemini_audio_data_too_small": "datos de audio demasiado pequeños: %d bytes, mínimo requerido: %d",
@@ -537,7 +536,6 @@
   "searchapi_failed_decode_response": "no se pudo decodificar la respuesta: %w",
   "searchapi_failed_execute_request": "no se pudo ejecutar la solicitud: %w",
   "searchapi_label": "SearchApi",
-  "searchapi_not_configured": "SearchApi no está configurado, por favor ejecute el procedimiento de configuración",
   "searchapi_search_help": "Buscar en Google usando SearchApi y enviar los resultados al chat",
   "searchapi_setup_description": "SearchApi - para buscar en Google y enviar los resultados al chat (obtenga una clave en https://www.searchapi.io)",
   "seed_for_lmm_generation": "Semilla para ser usada en la generación LMM",
@@ -547,7 +545,6 @@
   "serply_failed_decode_response": "no se pudo decodificar la respuesta: %w",
   "serply_failed_execute_request": "no se pudo ejecutar la solicitud: %w",
   "serply_label": "Serply",
-  "serply_not_configured": "Serply no está configurado, por favor ejecute el procedimiento de configuración",
   "serply_search_help": "Buscar en Google usando Serply y enviar los resultados al chat",
   "serply_setup_description": "Serply - para buscar en Google y enviar los resultados al chat",
   "serve_fabric_api_ollama_endpoints": "Servir la API REST de Fabric con endpoints de ollama",
@@ -612,7 +609,6 @@
   "sofya_failed_decode_response": "no se pudo decodificar la respuesta: %w",
   "sofya_failed_execute_request": "no se pudo ejecutar la solicitud: %w",
   "sofya_label": "Sofya",
-  "sofya_not_configured": "Sofya no está configurado, por favor ejecute el procedimiento de configuración",
   "sofya_search_help": "Buscar en la web usando Sofya y enviar las páginas principales al chat como Markdown",
   "sofya_setup_description": "Sofya - para buscar en la web y enviar las páginas completas al chat (obtenga una clave en https://sofya.co)",
   "specify_language_code": "Especificar el Código de Idioma para el chat, ej. -g=en -g=zh -g=pt-BR -g=pt-PT",
@@ -818,5 +814,7 @@
   "youtube_visual_sensitivity_help": "Tolerancia para la detección de escenas de FFmpeg (0.0 - 1.0)",
   "youtube_ytdlp_not_found": "yt-dlp no encontrado en PATH. Por favor instala yt-dlp para usar la funcionalidad de transcripción de YouTube",
   "youtube_ytdlp_required_visual_extraction": "yt-dlp es requerido para la extracción visual pero no se encontró en PATH",
-  "youtube_ytdlp_stderr_error": "error al leer stderr de yt-dlp"
+  "youtube_ytdlp_stderr_error": "error al leer stderr de yt-dlp",
+  "search_not_configured": "%s no está configurado, ejecute el procedimiento de configuración",
+  "parallel_search_help": "Buscar en la web usando Parallel (anónimo por defecto) y devolver fragmentos de fuente"
 }

@@ -9,7 +9,7 @@ import (
 	"github.com/danielmiessler/fabric/internal/tools/youtube"
 )
 
-// handleToolProcessing runs the YouTube, web scrape, and Spotify tools and collects their output.
+// handleToolProcessing runs the YouTube, web scrape, search, and Spotify tools and collects their output.
 // When the run is not a chat request, it also prints the output.
 func handleToolProcessing(currentFlags *Flags, registry *core.PluginRegistry) (messageTools string, err error) {
 	if currentFlags.YouTube != "" {
@@ -87,82 +87,32 @@ func handleToolProcessing(currentFlags *Flags, registry *core.PluginRegistry) (m
 		}
 	}
 
-	if currentFlags.SerplySearch != "" {
-		if !registry.Serply.IsConfigured() {
-			err = errors.New(i18n.T("serply_not_configured"))
-			return
-		}
-
-		var results string
-		if results, err = registry.Serply.Search(currentFlags.SerplySearch); err != nil {
-			return
-		}
-		messageTools = AppendMessage(messageTools, results)
-
-		if !currentFlags.IsChatRequest() {
-			err = currentFlags.WriteOutput(messageTools)
-			return
+	type searchTool struct {
+		query  string
+		plugin interface {
+			IsConfigured() bool
+			GetName() string
+			Search(string) (string, error)
 		}
 	}
 
-	if currentFlags.FirecrawlSearch != "" {
-		if !registry.Firecrawl.IsConfigured() {
-			err = errors.New(i18n.T("firecrawl_not_configured"))
+	for _, tool := range []searchTool{
+		{currentFlags.SerplySearch, registry.Serply},
+		{currentFlags.FirecrawlSearch, registry.Firecrawl},
+		{currentFlags.ParallelSearch, registry.Parallel},
+		{currentFlags.SearchApiSearch, registry.SearchApi},
+		{currentFlags.SofyaSearch, registry.Sofya},
+		{currentFlags.KeenableSearch, registry.Keenable},
+	} {
+		if tool.query == "" {
+			continue
+		}
+		if !tool.plugin.IsConfigured() {
+			err = fmt.Errorf(i18n.T("search_not_configured"), tool.plugin.GetName())
 			return
 		}
-
 		var results string
-		if results, err = registry.Firecrawl.Search(currentFlags.FirecrawlSearch); err != nil {
-			return
-		}
-		messageTools = AppendMessage(messageTools, results)
-
-		if !currentFlags.IsChatRequest() {
-			err = currentFlags.WriteOutput(messageTools)
-			return
-		}
-	}
-
-	if currentFlags.SearchApiSearch != "" {
-		if !registry.SearchApi.IsConfigured() {
-			err = errors.New(i18n.T("searchapi_not_configured"))
-			return
-		}
-
-		var results string
-		if results, err = registry.SearchApi.Search(currentFlags.SearchApiSearch); err != nil {
-			return
-		}
-		messageTools = AppendMessage(messageTools, results)
-
-		if !currentFlags.IsChatRequest() {
-			err = currentFlags.WriteOutput(messageTools)
-			return
-		}
-	}
-
-	if currentFlags.SofyaSearch != "" {
-		if !registry.Sofya.IsConfigured() {
-			err = errors.New(i18n.T("sofya_not_configured"))
-			return
-		}
-
-		var results string
-		if results, err = registry.Sofya.Search(currentFlags.SofyaSearch); err != nil {
-			return
-		}
-		messageTools = AppendMessage(messageTools, results)
-
-		if !currentFlags.IsChatRequest() {
-			err = currentFlags.WriteOutput(messageTools)
-			return
-		}
-	}
-
-	if currentFlags.KeenableSearch != "" {
-		// Keenable works without an API key, so there is no configured check.
-		var results string
-		if results, err = registry.Keenable.Search(currentFlags.KeenableSearch); err != nil {
+		if results, err = tool.plugin.Search(tool.query); err != nil {
 			return
 		}
 		messageTools = AppendMessage(messageTools, results)

@@ -276,7 +276,6 @@
   "firecrawl_failed_decode_response": "فشل فك ترميز الاستجابة: %w",
   "firecrawl_failed_execute_request": "فشل تنفيذ الطلب: %w",
   "firecrawl_label": "Firecrawl",
-  "firecrawl_not_configured": "لم يتم تكوين Firecrawl، يُرجى تشغيل إجراء الإعداد",
   "firecrawl_search_help": "البحث في الويب باستخدام Firecrawl وإرسال أفضل الصفحات إلى المحادثة بتنسيق Markdown",
   "firecrawl_setup_description": "Firecrawl - للبحث في الويب وإرسال الصفحات كاملة إلى المحادثة (احصل على مفتاح من https://www.firecrawl.dev/signin?utm_source=fabric&utm_medium=integration)",
   "gemini_audio_data_too_small": "البيانات الصوتية صغيرة جدًا: %d بايت، الحد الأدنى المطلوب: %d",
@@ -537,7 +536,6 @@
   "searchapi_failed_decode_response": "فشل فك ترميز الاستجابة: %w",
   "searchapi_failed_execute_request": "فشل تنفيذ الطلب: %w",
   "searchapi_label": "SearchApi",
-  "searchapi_not_configured": "لم يتم تكوين SearchApi، يرجى تشغيل إجراء الإعداد",
   "searchapi_search_help": "البحث في Google باستخدام SearchApi وإرسال النتائج إلى المحادثة",
   "searchapi_setup_description": "SearchApi - للبحث في Google وإرسال النتائج إلى المحادثة (احصل على مفتاح من https://www.searchapi.io)",
   "seed_for_lmm_generation": "البذرة (seed) المستخدمة لتوليد LMM",
@@ -547,7 +545,6 @@
   "serply_failed_decode_response": "فشل فك ترميز الاستجابة: %w",
   "serply_failed_execute_request": "فشل تنفيذ الطلب: %w",
   "serply_label": "Serply",
-  "serply_not_configured": "لم يتم تكوين Serply، يرجى تشغيل إجراء الإعداد",
   "serply_search_help": "البحث في Google باستخدام Serply وإرسال النتائج إلى المحادثة",
   "serply_setup_description": "Serply - للبحث في Google وإرسال النتائج إلى المحادثة",
   "serve_fabric_api_ollama_endpoints": "تشغيل Fabric REST API مع نقاط نهاية ollama",
@@ -612,7 +609,6 @@
   "sofya_failed_decode_response": "فشل فك ترميز الاستجابة: %w",
   "sofya_failed_execute_request": "فشل تنفيذ الطلب: %w",
   "sofya_label": "Sofya",
-  "sofya_not_configured": "لم يتم تكوين Sofya، يُرجى تشغيل إجراء الإعداد",
   "sofya_search_help": "البحث في الويب باستخدام Sofya وإرسال أفضل الصفحات إلى المحادثة بتنسيق Markdown",
   "sofya_setup_description": "Sofya - للبحث في الويب وإرسال الصفحات كاملة إلى المحادثة (احصل على مفتاح من https://sofya.co)",
   "specify_language_code": "تحديد رمز اللغة للمحادثة، مثال: -g=en -g=zh -g=pt-BR -g=pt-PT",
@@ -818,5 +814,7 @@
   "youtube_visual_sensitivity_help": "درجة التسامح لاكتشاف المشاهد في FFmpeg (0.0 - 1.0)",
   "youtube_ytdlp_not_found": "لم يتم العثور على yt-dlp في PATH. يرجى تثبيت yt-dlp لاستخدام وظيفة نصوص YouTube",
   "youtube_ytdlp_required_visual_extraction": "yt-dlp مطلوب للاستخراج المرئي ولكنه غير موجود في PATH",
-  "youtube_ytdlp_stderr_error": "خطأ في قراءة stderr الخاص بـ yt-dlp"
+  "youtube_ytdlp_stderr_error": "خطأ في قراءة stderr الخاص بـ yt-dlp",
+  "search_not_configured": "%s غير مكون، يرجى تشغيل إجراء الإعداد",
+  "parallel_search_help": "البحث عن الويب باستخدام Parallel (مجاني بشكل افتراضي) وإرجاع مقتطفات المصدر"
 }

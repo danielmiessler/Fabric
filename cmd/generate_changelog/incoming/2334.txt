@@ -1,3 +1,7 @@
 ### PR [#2334](https://github.com/danielmiessler/Fabric/pull/2334) by [georgeatparallel](https://github.com/georgeatparallel): Add opt-in Parallel MCP web search to the CLI
 
-- Feat: add opt-in Parallel MCP web search
+- Added opt-in Parallel MCP web search to the CLI.
+- Unified search handling into a single shared processing loop across all providers.
+- Called Parallel web search directly, removing the tool discovery step.
+- Added Parallel search shell completions for Bash, Zsh, and Fish.
+- Standardized provider configuration error messages and localized Parallel help text.

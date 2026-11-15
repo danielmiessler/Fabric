@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.4.576 (2026-11-15)
+
+### PR [#2334](https://github.com/danielmiessler/Fabric/pull/2334) by [georgeatparallel](https://github.com/georgeatparallel) and [ksylvan](https://github.com/ksylvan): Add opt-in Parallel MCP web search to the CLI
+
+- Added opt-in Parallel MCP web search to the CLI.
+- Unified search handling into a single shared processing loop across all providers.
+- Called Parallel web search directly, removing the tool discovery step.
+- Added Parallel search shell completions for Bash, Zsh, and Fish.
+- Standardized provider configuration error messages and localized Parallel help text.
+
 ## v1.4.575 (2026-11-13)
 
 ### PR [#2340](https://github.com/danielmiessler/Fabric/pull/2340) by [Rutvij97](https://github.com/Rutvij97): feat: add create_investigation_visualization_mermaid pattern

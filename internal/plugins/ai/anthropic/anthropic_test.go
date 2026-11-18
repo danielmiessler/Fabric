@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/anthropics/anthropic-sdk-go"
+	"github.com/anthropics/anthropic-sdk-go/v2"
 	"github.com/danielmiessler/fabric/internal/chat"
 	"github.com/danielmiessler/fabric/internal/domain"
 )
@@ -73,10 +73,7 @@ func TestClient_ListModels_ReturnsCorrectModels(t *testing.T) {
 func TestBuildMessageParams_WithoutSearch(t *testing.T) {
 	client := NewClient()
 	opts := &domain.ChatOptions{
-		Model:       "claude-3-5-sonnet-latest",
-		Temperature: 0.8,                // Not the default, so the value must come from opts
-		TopP:        domain.DefaultTopP, // The default, so the code sends temperature
-		Search:      false,
+		Model: "claude-3-5-sonnet-latest",
 	}
 
 	messages := []anthropic.MessageParam{
@@ -91,10 +88,6 @@ func TestBuildMessageParams_WithoutSearch(t *testing.T) {
 
 	if params.Model != anthropic.Model(opts.Model) {
 		t.Errorf("Expected model %s, got %s", opts.Model, params.Model)
-	}
-
-	if params.Temperature.Value != opts.Temperature {
-		t.Errorf("Expected temperature %f, got %f", opts.Temperature, params.Temperature.Value)
 	}
 }
 
@@ -206,44 +199,6 @@ func TestBuildMessageParams_WithSearchAndLocation(t *testing.T) {
 	}
 }
 
-func TestBuildMessageParams_Opus47OmitsSamplingParams(t *testing.T) {
-	client := NewClient()
-	opts := &domain.ChatOptions{
-		Model:       string(anthropic.ModelClaudeOpus4_7),
-		Temperature: 0.8,
-		TopP:        0.8,
-		Search:      false,
-	}
-
-	messages := []anthropic.MessageParam{
-		anthropic.NewUserMessage(anthropic.NewTextBlock("Hello")),
-	}
-
-	params := client.buildMessageParams(messages, opts)
-
-	if params.Temperature.Value != 0 {
-		t.Errorf("expected temperature to be omitted for %s, got %f", opts.Model, params.Temperature.Value)
-	}
-	if params.TopP.Value != 0 {
-		t.Errorf("expected top_p to be omitted for %s, got %f", opts.Model, params.TopP.Value)
-	}
-}
-
-func TestBuildMessageParams_Haiku55AndMythosOmitSamplingParams(t *testing.T) {
-	for _, model := range []string{"claude-haiku-5-5", "claude-mythos-5", "claude-mythos-5-1", "claude-mythos-preview"} {
-		params := NewClient().buildMessageParams(
-			[]anthropic.MessageParam{anthropic.NewUserMessage(anthropic.NewTextBlock("Hello"))},
-			&domain.ChatOptions{Model: model, Temperature: 0.7, TopP: 0.8},
-		)
-		if params.Temperature.Value != 0 {
-			t.Errorf("expected temperature to be omitted for %s, got %f", model, params.Temperature.Value)
-		}
-		if params.TopP.Value != 0 {
-			t.Errorf("expected top_p to be omitted for %s, got %f", model, params.TopP.Value)
-		}
-	}
-}
-
 func TestModelBetasConfiguration(t *testing.T) {
 	client := NewClient()
 	model := string(anthropic.ModelClaudeSonnet5)
@@ -342,56 +297,6 @@ func TestCitationFormatting(t *testing.T) {
 	}
 }
 
-func TestBuildMessageParams_DefaultValues(t *testing.T) {
-	client := NewClient()
-
-	opts := &domain.ChatOptions{
-		Model:       "claude-3-5-sonnet-latest",
-		Temperature: domain.DefaultTemperature, // 0.7, sent because the API default is 1.0
-		TopP:        domain.DefaultTopP,        // 0.9, the default, so the code sends temperature
-		Search:      false,
-	}
-
-	messages := []anthropic.MessageParam{
-		anthropic.NewUserMessage(anthropic.NewTextBlock("Hello")),
-	}
-
-	params := client.buildMessageParams(messages, opts)
-
-	if params.Temperature.Value != opts.Temperature {
-		t.Errorf("Expected temperature %f, got %f", opts.Temperature, params.Temperature.Value)
-	}
-
-	if params.TopP.Value != 0 {
-		t.Errorf("Expected TopP to not be set (0), but got %f", params.TopP.Value)
-	}
-}
-
-func TestBuildMessageParams_ExplicitTopP(t *testing.T) {
-	client := NewClient()
-
-	opts := &domain.ChatOptions{
-		Model:       "claude-3-5-sonnet-latest",
-		Temperature: domain.DefaultTemperature, // 0.7, not sent because TopP is set
-		TopP:        0.5,                       // Not the default, so the code sends it
-		Search:      false,
-	}
-
-	messages := []anthropic.MessageParam{
-		anthropic.NewUserMessage(anthropic.NewTextBlock("Hello")),
-	}
-
-	params := client.buildMessageParams(messages, opts)
-
-	if params.Temperature.Value != 0 {
-		t.Errorf("Expected temperature to not be set (0), but got %f", params.Temperature.Value)
-	}
-
-	if params.TopP.Value != opts.TopP {
-		t.Errorf("Expected TopP %f, got %f", opts.TopP, params.TopP.Value)
-	}
-}
-
 func TestToMessages_MultiContentPDFAttachment(t *testing.T) {
 	client := NewClient()
 	msg := &chat.ChatCompletionMessage{
@@ -414,15 +319,19 @@ func TestToMessages_MultiContentPDFAttachment(t *testing.T) {
 	if len(messages) != 1 {
 		t.Fatalf("Expected 1 message, got %d", len(messages))
 	}
-	if len(messages[0].Content) != 2 {
-		t.Fatalf("Expected 2 content blocks, got %d", len(messages[0].Content))
+	if messages[0].OfUser == nil {
+		t.Fatalf("Expected a user message, got %#v", messages[0])
 	}
-	if messages[0].Content[0].OfText == nil || messages[0].Content[0].OfText.Text != "Summarize this document." {
-		t.Fatalf("Expected first content block to be text, got %#v", messages[0].Content[0])
+	content := messages[0].OfUser.Content
+	if len(content) != 2 {
+		t.Fatalf("Expected 2 content blocks, got %d", len(content))
 	}
-	document := messages[0].Content[1].OfDocument
+	if content[0].OfText == nil || content[0].OfText.Text != "Summarize this document." {
+		t.Fatalf("Expected first content block to be text, got %#v", content[0])
+	}
+	document := content[1].OfDocument
 	if document == nil || document.Source.OfBase64 == nil {
-		t.Fatalf("Expected second content block to be a base64 document, got %#v", messages[0].Content[1])
+		t.Fatalf("Expected second content block to be a base64 document, got %#v", content[1])
 	}
 	if document.Source.OfBase64.Data != "SGVsbG8=" {
 		t.Fatalf("Expected document data to match base64 payload, got %s", document.Source.OfBase64.Data)
@@ -493,7 +402,7 @@ func TestParseThinking_OffOnModelsThatRejectDisabledThinking(t *testing.T) {
 	if !ok || thinking.OfBetweenTools == nil || thinking.OfDisabled != nil || effort != "" {
 		t.Errorf("claude-sonnet-5-5: expected between_tools with no effort, got %+v effort=%q ok=%v", thinking, effort, ok)
 	}
-	for _, model := range []string{"claude-opus-5-5", "claude-fable-5-1", "claude-fable-5", "claude-mythos-5-1", "claude-mythos-preview"} {
+	for _, model := range []string{"claude-opus-5-5", "claude-fable-5-2", "claude-fable-5-1", "claude-fable-5", "claude-mythos-5-1", "claude-mythos-5-2", "claude-mythos-preview"} {
 		thinking, effort, ok := parseThinking(domain.ThinkingOff, model)
 		if !ok || thinking.OfAdaptive == nil || thinking.OfDisabled != nil {
 			t.Errorf("model %s: expected adaptive thinking instead of disabled, got %+v ok=%v", model, thinking, ok)

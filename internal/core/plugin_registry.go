@@ -44,8 +44,12 @@ import (
 	"github.com/danielmiessler/fabric/internal/tools/custom_patterns"
 	"github.com/danielmiessler/fabric/internal/tools/firecrawl"
 	"github.com/danielmiessler/fabric/internal/tools/jina"
+	"github.com/danielmiessler/fabric/internal/tools/keenable"
 	"github.com/danielmiessler/fabric/internal/tools/lang"
+	"github.com/danielmiessler/fabric/internal/tools/parallel"
+	"github.com/danielmiessler/fabric/internal/tools/searchapi"
 	"github.com/danielmiessler/fabric/internal/tools/serply"
+	"github.com/danielmiessler/fabric/internal/tools/sofya"
 	"github.com/danielmiessler/fabric/internal/tools/spotify"
 	"github.com/danielmiessler/fabric/internal/tools/youtube"
 	"github.com/danielmiessler/fabric/internal/util"
@@ -61,8 +65,12 @@ func NewPluginRegistry(db *fsdb.Db) (ret *PluginRegistry, err error) {
 		YouTube:        youtube.NewYouTube(),
 		Language:       lang.NewLanguage(),
 		Jina:           jina.NewClient(),
+		Keenable:       keenable.NewClient(),
 		Serply:         serply.NewClient(),
 		Firecrawl:      firecrawl.NewClient(),
+		Parallel:       parallel.NewClient(),
+		SearchApi:      searchapi.NewClient(),
+		Sofya:          sofya.NewClient(),
 		Spotify:        spotify.NewSpotify(),
 		Strategies:     strategy.NewStrategiesManager(),
 	}
@@ -154,8 +162,12 @@ type PluginRegistry struct {
 	YouTube            *youtube.YouTube
 	Language           *lang.Language
 	Jina               *jina.Client
+	Keenable           *keenable.Client
 	Serply             *serply.Client
 	Firecrawl          *firecrawl.Client
+	Parallel           *parallel.Client
+	SearchApi          *searchapi.Client
+	Sofya              *sofya.Client
 	Spotify            *spotify.Spotify
 	TemplateExtensions *template.ExtensionManager
 	Strategies         *strategy.StrategiesManager
@@ -175,8 +187,12 @@ func (o *PluginRegistry) SaveEnvFile() (err error) {
 
 	o.YouTube.SetupFillEnvFileContent(&envFileContent)
 	o.Jina.SetupFillEnvFileContent(&envFileContent)
+	o.Keenable.SetupFillEnvFileContent(&envFileContent)
 	o.Serply.SetupFillEnvFileContent(&envFileContent)
 	o.Firecrawl.SetupFillEnvFileContent(&envFileContent)
+	o.Parallel.SetupFillEnvFileContent(&envFileContent)
+	o.SearchApi.SetupFillEnvFileContent(&envFileContent)
+	o.Sofya.SetupFillEnvFileContent(&envFileContent)
 	o.Spotify.SetupFillEnvFileContent(&envFileContent)
 	o.Language.SetupFillEnvFileContent(&envFileContent)
 
@@ -335,7 +351,7 @@ func (o *PluginRegistry) runInteractiveSetup() (err error) {
 
 	groupsPlugins.AddGroupItems(i18n.T("setup_required_tools"), o.Defaults, o.PatternsLoader, o.Strategies)
 
-	groupsPlugins.AddGroupItems(i18n.T("setup_optional_configuration_header"), o.CustomPatterns, o.Firecrawl, o.Jina, o.Language, o.Serply, o.Spotify, o.YouTube)
+	groupsPlugins.AddGroupItems(i18n.T("setup_optional_configuration_header"), o.CustomPatterns, o.Firecrawl, o.Jina, o.Keenable, o.Language, o.Parallel, o.SearchApi, o.Serply, o.Sofya, o.Spotify, o.YouTube)
 
 	for {
 		groupsPlugins.Print(false)
@@ -524,8 +540,12 @@ func (o *PluginRegistry) Configure() (err error) {
 	// These plugins are optional. Ignore their configuration errors.
 	_ = o.YouTube.Configure()
 	_ = o.Jina.Configure()
+	_ = o.Keenable.Configure()
 	_ = o.Serply.Configure()
 	_ = o.Firecrawl.Configure()
+	_ = o.Parallel.Configure()
+	_ = o.SearchApi.Configure()
+	_ = o.Sofya.Configure()
 	_ = o.Spotify.Configure()
 	_ = o.Language.Configure()
 	return
@@ -581,7 +601,12 @@ func (o *PluginRegistry) GetChatter(model string, modelContextLength int, vendor
 
 		var models *ai.VendorsModels
 		if models, err = vendorManager.GetModels(); err != nil {
-			return
+			// Codex can use a manual model when the model list fails.
+			// GetModels then returns an empty catalog.
+			if models == nil || !strings.EqualFold(vendorName, "Codex") {
+				return
+			}
+			err = nil
 		}
 
 		// Use the vendor's spelling of the model name. It becomes ret.model.

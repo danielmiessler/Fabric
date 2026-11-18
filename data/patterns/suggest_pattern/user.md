@@ -1076,6 +1076,10 @@ Transform security metrics to CSV for visualizing progress over time.
 
 Create Graphviz vis. of investigation data showing relationships and findings.
 
+### create_investigation_visualization_mermaid
+
+Create Mermaid vis. of investigation data showing relationships and findings.
+
 ### create_logo
 
 Generate minimalist logo prompts capturing brand essence via vector graphics.

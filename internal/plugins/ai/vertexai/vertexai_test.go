@@ -8,12 +8,15 @@ import (
 	"testing"
 	"time"
 
-	"github.com/anthropics/anthropic-sdk-go"
-	"github.com/anthropics/anthropic-sdk-go/option"
+	"github.com/anthropics/anthropic-sdk-go/v2"
+	"github.com/anthropics/anthropic-sdk-go/v2/option"
+	"github.com/anthropics/anthropic-sdk-go/v2/vertex"
 	"github.com/danielmiessler/fabric/internal/chat"
 	"github.com/danielmiessler/fabric/internal/domain"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"golang.org/x/oauth2"
+	"golang.org/x/oauth2/google"
 )
 
 func TestExtractModelName(t *testing.T) {
@@ -486,4 +489,42 @@ func TestSendStreamClaudeHonorsContextCancellation(t *testing.T) {
 	}
 
 	require.ErrorIs(t, <-errCh, context.Canceled)
+}
+
+// Vertex AI reads the API version from the body. A model that takes sampling
+// values must get the Vertex AI name of the legacy version there, not the
+// first-party name from the header. Other models get the SDK's current version.
+func TestSendClaudeSamplingUsesLegacyVertexVersion(t *testing.T) {
+	var body map[string]any
+	var header []string
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		header = r.Header.Values("anthropic-version")
+		body = nil // Decode into a non-nil map keeps the keys of the last request.
+		require.NoError(t, json.NewDecoder(r.Body).Decode(&body))
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"id":"msg_1","type":"message","role":"assistant","model":"m","content":[{"type":"text","text":"ok"}],"stop_reason":"end_turn","usage":{"input_tokens":1,"output_tokens":1}}`))
+	}))
+	t.Cleanup(server.Close)
+
+	creds := &google.Credentials{TokenSource: oauth2.StaticTokenSource(&oauth2.Token{AccessToken: "fake"})}
+	anthropicClient := anthropic.NewClient(
+		option.WithoutEnvironmentDefaults(),
+		vertex.WithCredentials(context.Background(), "us-central1", "test-project", creds),
+		option.WithBaseURL(server.URL),
+		option.WithMaxRetries(0),
+	)
+	client := &Client{client: &anthropicClient}
+	msgs := []*chat.ChatCompletionMessage{{Role: chat.ChatMessageRoleUser, Content: "hi"}}
+
+	_, err := client.sendClaude(context.Background(), msgs, &domain.ChatOptions{Model: "claude-sonnet-4-6@20260101", Temperature: 0.3, TopP: domain.DefaultTopP})
+	require.NoError(t, err)
+	assert.Empty(t, header)
+	assert.Equal(t, legacyVertexAPIVersion, body["anthropic_version"])
+	assert.Equal(t, 0.3, body["temperature"])
+
+	_, err = client.sendClaude(context.Background(), msgs, &domain.ChatOptions{Model: "claude-opus-5-5", Temperature: 0.3, TopP: 0.5})
+	require.NoError(t, err)
+	assert.Equal(t, "2026-10-21", body["anthropic_version"])
+	assert.NotContains(t, body, "temperature")
+	assert.NotContains(t, body, "top_p")
 }

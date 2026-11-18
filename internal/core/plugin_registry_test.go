@@ -39,6 +39,7 @@ type testVendor struct {
 	name         string
 	models       []string
 	configureErr error
+	listErr      error
 }
 
 func (m *testVendor) GetName() string                              { return m.name }
@@ -47,7 +48,7 @@ func (m *testVendor) IsConfigured() bool                           { return true
 func (m *testVendor) Configure() error                             { return m.configureErr }
 func (m *testVendor) Setup() error                                 { return nil }
 func (m *testVendor) SetupFillEnvFileContent(*bytes.Buffer)        {}
-func (m *testVendor) ListModels(context.Context) ([]string, error) { return m.models, nil }
+func (m *testVendor) ListModels(context.Context) ([]string, error) { return m.models, m.listErr }
 func (m *testVendor) SendStream(context.Context, []*chat.ChatCompletionMessage, *domain.ChatOptions, chan domain.StreamUpdate) error {
 	return nil
 }
@@ -126,6 +127,30 @@ func TestGetChatter_AllowsExplicitCodexManualModel(t *testing.T) {
 	}
 	if chatter.vendor.GetName() != "Codex" {
 		t.Fatalf("expected Codex vendor, got %s", chatter.vendor.GetName())
+	}
+	if chatter.model != "gpt-5.1-codex" {
+		t.Fatalf("expected manual Codex model to pass through, got %s", chatter.model)
+	}
+}
+
+func TestGetChatter_AllowsExplicitCodexModelWhenListingFails(t *testing.T) {
+	codexVendor := &testVendor{name: "Codex", listErr: errors.New("models endpoint down")}
+
+	vm := ai.NewVendorsManager()
+	vm.AddVendors(codexVendor)
+
+	defaults := &tools.Defaults{
+		PluginBase:         &plugins.PluginBase{},
+		Vendor:             &plugins.Setting{Value: "Codex"},
+		Model:              &plugins.SetupQuestion{Setting: &plugins.Setting{Value: "gpt-5.4"}},
+		ModelContextLength: &plugins.SetupQuestion{Setting: &plugins.Setting{Value: "0"}},
+	}
+
+	registry := &PluginRegistry{Db: fsdb.NewDb(t.TempDir()), VendorManager: vm, Defaults: defaults}
+
+	chatter, err := registry.GetChatter("gpt-5.1-codex", 0, "Codex", false, false)
+	if err != nil {
+		t.Fatalf("GetChatter() error = %v", err)
 	}
 	if chatter.model != "gpt-5.1-codex" {
 		t.Fatalf("expected manual Codex model to pass through, got %s", chatter.model)

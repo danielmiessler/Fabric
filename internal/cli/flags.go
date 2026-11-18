@@ -72,7 +72,11 @@ type Flags struct {
 	ScrapeURL                       string               `short:"u" long:"scrape_url" description:"Scrape website URL to markdown using Jina AI"`
 	ScrapeQuestion                  string               `short:"q" long:"scrape_question" description:"Search question using Jina AI"`
 	SerplySearch                    string               `long:"serply_search" description:"Search Google using Serply and send the results to chat"`
+	ParallelSearch                  string               `long:"parallel_search" description:"Search the web using Parallel (anonymous by default) and return source excerpts"`
 	FirecrawlSearch                 string               `long:"firecrawl_search" description:"Search the web using Firecrawl and send the top pages to chat as Markdown"`
+	SearchApiSearch                 string               `long:"searchapi_search" description:"Search Google using SearchApi and send the results to chat"`
+	SofyaSearch                     string               `long:"sofya_search" description:"Search the web using Sofya and send the top pages to chat as Markdown"`
+	KeenableSearch                  string               `long:"keenable_search" description:"Search the web using Keenable (no API key required) and send the results to chat"`
 	Seed                            int                  `short:"e" long:"seed" yaml:"seed" description:"Seed to be used for LMM generation"`
 	WipeContext                     string               `short:"w" long:"wipecontext" description:"Wipe context"`
 	WipeSession                     string               `short:"W" long:"wipesession" description:"Wipe session"`

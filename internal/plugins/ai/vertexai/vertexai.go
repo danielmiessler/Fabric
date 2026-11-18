@@ -6,8 +6,9 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/anthropics/anthropic-sdk-go"
-	"github.com/anthropics/anthropic-sdk-go/vertex"
+	"github.com/anthropics/anthropic-sdk-go/v2"
+	"github.com/anthropics/anthropic-sdk-go/v2/option"
+	"github.com/anthropics/anthropic-sdk-go/v2/vertex"
 	"github.com/danielmiessler/fabric/internal/chat"
 	"github.com/danielmiessler/fabric/internal/domain"
 	"github.com/danielmiessler/fabric/internal/i18n"
@@ -24,7 +25,23 @@ const (
 	cloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 	defaultRegion      = "global"
 	defaultMaxTokens   = 4096
+
+	// legacyVertexAPIVersion is the Vertex AI name of the API version that
+	// accepts temperature and top_p (anthropic.LegacyAPIVersion). SDK v1 sent it.
+	legacyVertexAPIVersion = "vertex-2023-10-16"
 )
+
+// samplingOptions returns the anthropic plugin's sampling options for Vertex AI.
+// Vertex AI reads the API version from the anthropic_version body field. The SDK
+// copies the header into that field only when the body has no such field, so
+// this body value wins.
+func samplingOptions(opts *domain.ChatOptions) []option.RequestOption {
+	reqOpts := anthropicplugin.SamplingOptions(opts)
+	if reqOpts == nil {
+		return nil
+	}
+	return append(reqOpts, option.WithJSONSet("anthropic_version", legacyVertexAPIVersion))
+}
 
 // NewClient creates a new Vertex AI client for accessing Claude models via Google Cloud
 func NewClient() (ret *Client) {
@@ -141,9 +158,7 @@ func (c *Client) sendClaude(ctx context.Context, msgs []*chat.ChatCompletionMess
 		Messages:  anthropicMessages,
 	}
 
-	anthropicplugin.SetSamplingParams(&params, opts)
-
-	response, err := c.client.Messages.New(ctx, params)
+	response, err := c.client.Messages.New(ctx, params, samplingOptions(opts)...)
 	if err != nil {
 		return "", err
 	}
@@ -188,9 +203,7 @@ func (c *Client) sendStreamClaude(ctx context.Context, msgs []*chat.ChatCompleti
 		Messages:  anthropicMessages,
 	}
 
-	anthropicplugin.SetSamplingParams(&params, opts)
-
-	stream := c.client.Messages.NewStreaming(ctx, params)
+	stream := c.client.Messages.NewStreaming(ctx, params, samplingOptions(opts)...)
 
 	for stream.Next() {
 		event := stream.Current()

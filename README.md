@@ -352,7 +352,7 @@ Fabric supports a wide range of AI providers:
 - OpenAI Codex (ChatGPT/Codex subscription OAuth via private backend)
 - Anthropic (Claude)
 - Claude Code (Claude subscription via the local `claude` CLI)
-- Google Gemini
+- Google Gemini (API key, or Google OAuth through Vertex AI: see [Gemini OAuth](./docs/Gemini-OAuth.md))
 - Ollama (local models)
 - Azure OpenAI
 - Amazon Bedrock

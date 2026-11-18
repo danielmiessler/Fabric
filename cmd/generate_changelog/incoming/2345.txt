@@ -1,5 +1,0 @@
-### PR [#2345](https://github.com/danielmiessler/Fabric/pull/2345) by [ksylvan](https://github.com/ksylvan): docs: compress input before you run a pattern
-
-- Added a guide that shows how to compress long input with SuperCompress before you send it to a pattern. Fabric reads `stdin`, so the compressor goes in the pipe and Fabric needs no new flag.
-- Added a warning that SuperCompress sends the input to a hosted API.
-- Linked the new guide from the README examples. Closes #2151.

@@ -1,5 +1,0 @@
-### PR [#2344](https://github.com/danielmiessler/Fabric/pull/2344) by [ksylvan](https://github.com/ksylvan): docs: use Gemini with Google OAuth through the VertexAI vendor
-
-- Added documentation explaining how to use Gemini with Google OAuth through the Vertex AI vendor, which already sends Gemini requests using Google Application Default Credentials.
-- Clarified why subscription-based OAuth (Gemini CLI or Antigravity client) is not supported.
-- Linked the new guide from the README for easier discovery. Closes #1911.

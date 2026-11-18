@@ -1,5 +1,24 @@
 # Changelog
 
+## v1.4.578 (2026-11-18)
+
+### PR [#2329](https://github.com/danielmiessler/Fabric/pull/2329) by [tanishqbaweja](https://github.com/tanishqbaweja): fix(cli): keep --notification from hiding the -o error or failing the command
+
+- Fix notifications hiding the `-o` error: with `--notification`, `--notification-command` or the matching `config.yaml` keys, an output file that already exists or cannot be created now gives an error and exit code 1 instead of a silent exit 0.
+- Fix a failed notification failing the command after the result was printed: a custom command that exits non-zero, a missing built-in notifier or a missing `sh` is now only logged.
+
+### PR [#2344](https://github.com/danielmiessler/Fabric/pull/2344) by [ksylvan](https://github.com/ksylvan): docs: use Gemini with Google OAuth through the VertexAI vendor
+
+- Added documentation explaining how to use Gemini with Google OAuth through the Vertex AI vendor, which already sends Gemini requests using Google Application Default Credentials.
+- Clarified why subscription-based OAuth (Gemini CLI or Antigravity client) is not supported.
+- Linked the new guide from the README for easier discovery. Closes #1911.
+
+### PR [#2345](https://github.com/danielmiessler/Fabric/pull/2345) by [ksylvan](https://github.com/ksylvan): docs: compress input before you run a pattern
+
+- Added a guide that shows how to compress long input with SuperCompress before you send it to a pattern. Fabric reads `stdin`, so the compressor goes in the pipe and Fabric needs no new flag.
+- Added a warning that SuperCompress sends the input to a hosted API.
+- Linked the new guide from the README examples. Closes #2151.
+
 ## v1.4.577 (2026-11-18)
 
 ### PR [#2343](https://github.com/danielmiessler/Fabric/pull/2343) by [ksylvan](https://github.com/ksylvan): fix: do not cache model discovery when all vendors fail

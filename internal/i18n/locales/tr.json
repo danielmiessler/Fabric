@@ -754,6 +754,7 @@
   "vendor_not_configured": "sağlayıcı %s yapılandırılmadı",
   "vendor_not_found": "sağlayıcı %s bulunamadı",
   "vendors_no_ai_vendors_configured_read_models": "modelleri okumak için yapılandırılmış hiçbir yapay zeka sağlayıcısı yok",
+  "vendors_all_failed_list_models": "tüm yapay zeka sağlayıcıları modelleri listeleyemedi",
   "vertexai_client_not_initialized": "VertexAI istemcisi başlatılmadı",
   "vertexai_error_api_status": "API %d durumunu döndürdü: %s",
   "vertexai_error_create_request": "istek oluşturulamadı: %w",

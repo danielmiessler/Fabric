@@ -754,6 +754,7 @@
   "vendor_not_configured": "المزوّد %s غير مُكوَّن",
   "vendor_not_found": "المزوّد %s غير موجود",
   "vendors_no_ai_vendors_configured_read_models": "لا يوجد مزوّدو ذكاء اصطناعي مُكوَّنون لقراءة النماذج منهم",
+  "vendors_all_failed_list_models": "فشل جميع مزوّدي الذكاء الاصطناعي في سرد النماذج",
   "vertexai_client_not_initialized": "لم تتم تهيئة عميل VertexAI",
   "vertexai_error_api_status": "أعادت API الحالة %d: %s",
   "vertexai_error_create_request": "فشل إنشاء الطلب: %w",

@@ -754,6 +754,7 @@
   "vendor_not_configured": "dostawca %s nie jest skonfigurowany",
   "vendor_not_found": "dostawca %s nie został znaleziony",
   "vendors_no_ai_vendors_configured_read_models": "brak skonfigurowanych dostawców AI do odczytu modeli",
+  "vendors_all_failed_list_models": "wszyscy dostawcy AI nie zdołali wyświetlić listy modeli",
   "vertexai_client_not_initialized": "klient VertexAI nie jest zainicjalizowany",
   "vertexai_error_api_status": "API zwróciło status %d: %s",
   "vertexai_error_create_request": "nie udało się utworzyć żądania: %w",

@@ -754,6 +754,7 @@
   "vendor_not_configured": "تامین‌کننده %s پیکربندی نشده است",
   "vendor_not_found": "ارائه‌دهنده %s یافت نشد",
   "vendors_no_ai_vendors_configured_read_models": "هیچ ارائه‌دهنده هوش مصنوعی برای خواندن مدل‌ها پیکربندی نشده است",
+  "vendors_all_failed_list_models": "همه ارائه‌دهندگان هوش مصنوعی در فهرست کردن مدل‌ها ناموفق بودند",
   "vertexai_client_not_initialized": "کلاینت VertexAI مقداردهی نشده است",
   "vertexai_error_api_status": "API وضعیت %d را برگرداند: %s",
   "vertexai_error_create_request": "ایجاد درخواست ناموفق بود: %w",

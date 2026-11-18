@@ -124,9 +124,9 @@ func handleChatProcessing(currentFlags *Flags, registry *core.PluginRegistry, me
 	}
 
 	if chatOptions.Notification {
-		if err = sendNotification(chatOptions, chatReq.PatternName, result); err != nil {
+		if notifyErr := sendNotification(chatOptions, chatReq.PatternName, result); notifyErr != nil {
 			// A notification failure does not fail the command.
-			debuglog.Log("Failed to send notification: %v\n", err)
+			debuglog.Log("Failed to send notification: %v\n", notifyErr)
 		}
 	}
 

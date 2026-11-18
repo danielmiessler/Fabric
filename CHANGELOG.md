@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.4.577 (2026-11-18)
+
+### PR [#2343](https://github.com/danielmiessler/Fabric/pull/2343) by [ksylvan](https://github.com/ksylvan): fix: do not cache model discovery when all vendors fail
+
+- Retry model discovery instead of caching total failures.
+- Preserve successful partial catalogs, including empty vendor results.
+- Allow manual Codex model selection when model listing fails.
+- Localize errors when all vendors fail model discovery.
+- Add regression tests for retries and Codex fallback.
+
 ## v1.4.576 (2026-11-15)
 
 ### PR [#2334](https://github.com/danielmiessler/Fabric/pull/2334) by [georgeatparallel](https://github.com/georgeatparallel) and [ksylvan](https://github.com/ksylvan): Add opt-in Parallel MCP web search to the CLI

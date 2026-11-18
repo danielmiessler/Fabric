@@ -754,6 +754,7 @@
   "vendor_not_configured": "供应商 %s 未配置",
   "vendor_not_found": "未找到供应商 %s",
   "vendors_no_ai_vendors_configured_read_models": "没有配置 AI 供应商来读取模型",
+  "vendors_all_failed_list_models": "所有 AI 供应商都未能列出模型",
   "vertexai_client_not_initialized": "VertexAI 客户端未初始化",
   "vertexai_error_api_status": "API 返回状态 %d：%s",
   "vertexai_error_create_request": "创建请求失败：%w",

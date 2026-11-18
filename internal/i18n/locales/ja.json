@@ -754,6 +754,7 @@
   "vendor_not_configured": "ベンダー %s が設定されていません",
   "vendor_not_found": "ベンダー %s が見つかりません",
   "vendors_no_ai_vendors_configured_read_models": "モデルを読み取るためのAIベンダーが設定されていません",
+  "vendors_all_failed_list_models": "すべてのAIベンダーでモデルの一覧取得に失敗しました",
   "vertexai_client_not_initialized": "VertexAIクライアントが初期化されていません",
   "vertexai_error_api_status": "APIはステータス%dを返しました: %s",
   "vertexai_error_create_request": "リクエストの作成に失敗しました: %w",

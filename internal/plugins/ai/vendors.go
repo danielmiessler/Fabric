@@ -61,10 +61,13 @@ func (o *VendorsManager) GetModels() (ret *VendorsModels, err error) {
 	// The lock makes sure that only one call reads the models.
 	o.modelsMu.Lock()
 	defer o.modelsMu.Unlock()
-	if o.Models == nil {
-		err = o.readModels()
+	if o.Models != nil {
+		return o.Models, nil
 	}
-	ret = o.Models
+	// Do not cache a failed discovery. The next call tries the vendors again.
+	if ret, err = o.readModels(); err == nil {
+		o.Models = ret
+	}
 	return
 }
 
@@ -85,13 +88,16 @@ func (o *VendorsManager) FindByName(name string) Vendor {
 	return o.VendorsByName[strings.ToLower(name)]
 }
 
-func (o *VendorsManager) readModels() (err error) {
+// readModels returns an error if no vendors are configured or if all vendors fail.
+// If all vendors fail, it also returns the empty catalog.
+func (o *VendorsManager) readModels() (ret *VendorsModels, err error) {
 	if len(o.Vendors) == 0 {
 		err = errors.New(i18n.T("vendors_no_ai_vendors_configured_read_models"))
 		return
 	}
 
-	o.Models = NewVendorsModels()
+	ret = NewVendorsModels()
+	failed := 0
 
 	var wg sync.WaitGroup
 	resultsChan := make(chan modelResult, len(o.Vendors))
@@ -110,13 +116,17 @@ func (o *VendorsManager) readModels() (err error) {
 
 	for result := range resultsChan {
 		if result.err != nil {
+			failed++
 			fmt.Println(result.vendorName, result.err)
 		} else {
 			sort.Slice(result.models, func(i, j int) bool {
 				return strings.ToLower(result.models[i]) < strings.ToLower(result.models[j])
 			})
-			o.Models.AddGroupItems(result.vendorName, result.models...)
+			ret.AddGroupItems(result.vendorName, result.models...)
 		}
+	}
+	if failed == len(o.Vendors) {
+		err = errors.New(i18n.T("vendors_all_failed_list_models"))
 	}
 	return
 }

@@ -601,7 +601,12 @@ func (o *PluginRegistry) GetChatter(model string, modelContextLength int, vendor
 
 		var models *ai.VendorsModels
 		if models, err = vendorManager.GetModels(); err != nil {
-			return
+			// Codex can use a manual model when the model list fails.
+			// GetModels then returns an empty catalog.
+			if models == nil || !strings.EqualFold(vendorName, "Codex") {
+				return
+			}
+			err = nil
 		}
 
 		// Use the vendor's spelling of the model name. It becomes ret.model.

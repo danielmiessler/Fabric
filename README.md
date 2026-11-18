@@ -943,6 +943,12 @@ Now let's look at some things you can do with Fabric.
     fabric -u https://github.com/danielmiessler/fabric/ -p analyze_claims
     ```
 
+6. Compress long input before you run a pattern, to use fewer tokens. See [Input Compression](./docs/Input-Compression.md).
+
+    ```bash
+    cat long_document.txt | compress "main ideas and claims" | fabric --pattern summarize
+    ```
+
 ## Just use the Patterns
 
 <img width="1173" alt="fabric-patterns-screenshot" src="https://github.com/danielmiessler/fabric/assets/50654/9186a044-652b-4673-89f7-71cf066f32d8">

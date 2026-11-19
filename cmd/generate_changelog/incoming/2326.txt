@@ -1,0 +1,5 @@
+### PR [#2326](https://github.com/danielmiessler/Fabric/pull/2326) by [dependabot[bot][bot]](https://github.com/apps/dependabot): chore(deps): bump the npm_and_yarn group across 1 directory with 2 updates
+
+- Bumped the `npm_and_yarn` dependency group in the `/web` directory with two updates.
+- Updated `dompurify` from 3.4.16 to 3.4.17 (direct production dependency).
+- Updated `@sveltejs/kit` from 2.70.3 to 3.1.0, a major version upgrade that may introduce breaking changes (direct development dependency).

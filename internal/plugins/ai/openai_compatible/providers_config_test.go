@@ -183,6 +183,11 @@ func TestCreateClient(t *testing.T) {
 			exists:   true,
 		},
 		{
+			name:     "Existing provider - WorldRouter",
+			provider: "WorldRouter",
+			exists:   true,
+		},
+		{
 			name:     "Existing provider - StandardCompute",
 			provider: "StandardCompute",
 			exists:   true,

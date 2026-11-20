@@ -396,6 +396,7 @@ Fabric 支持广泛的 AI 供应商：
 - UberLLM
 - Venice AI
 - Wiro
+- WorldRouter
 - Y-API
 - Z AI
 

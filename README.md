@@ -402,6 +402,7 @@ Fabric supports a wide range of AI providers:
 - UberLLM
 - Venice AI
 - Wiro
+- WorldRouter
 - Y-API
 - Z AI
 

@@ -331,6 +331,7 @@ go install github.com/danielmiessler/fabric/cmd/fabric@latest
 - UberLLM
 - Venice AI
 - Wiro
+- WorldRouter
 - Y-API
 - Z AI
 

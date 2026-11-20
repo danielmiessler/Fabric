@@ -1,3 +1,0 @@
-### PR [#2351](https://github.com/danielmiessler/Fabric/pull/2351) by [moldach](https://github.com/moldach): Add explain_http_error pattern for HTTP 4xx responses
-
-- Feat: add a pattern for explaining HTTP client errors

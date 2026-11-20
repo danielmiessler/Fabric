@@ -1,6 +1,0 @@
-### PR [#2350](https://github.com/danielmiessler/Fabric/pull/2350) by [Opgeek-1](https://github.com/Opgeek-1): feat(providers): add WorldRouter as an OpenAI-compatible provider
-
-- Added WorldRouter as an OpenAI-compatible provider with base URL `https://inference-api.worldrouter.ai/v1`.
-- The API key is read from `WORLDROUTER_API_KEY`.
-- Added a `TestCreateClient` case for the new provider.
-- Listed WorldRouter in the English, Chinese and Arabic READMEs.

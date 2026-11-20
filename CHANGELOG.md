@@ -1,5 +1,18 @@
 # Changelog
 
+## v1.4.579 (2026-11-20)
+
+### PR [#2350](https://github.com/danielmiessler/Fabric/pull/2350) by [Opgeek-1](https://github.com/Opgeek-1): feat(providers): add WorldRouter as an OpenAI-compatible provider
+
+- Added WorldRouter as an OpenAI-compatible provider with base URL `https://inference-api.worldrouter.ai/v1`.
+- The API key is read from `WORLDROUTER_API_KEY`.
+- Added a `TestCreateClient` case for the new provider.
+- Listed WorldRouter in the English, Chinese and Arabic READMEs.
+
+### PR [#2351](https://github.com/danielmiessler/Fabric/pull/2351) by [moldach](https://github.com/moldach): Add explain_http_error pattern for HTTP 4xx responses
+
+- Feat: add a pattern for explaining HTTP client errors
+
 ## v1.4.578 (2026-11-18)
 
 ### PR [#2329](https://github.com/danielmiessler/Fabric/pull/2329) by [tanishqbaweja](https://github.com/tanishqbaweja): fix(cli): keep --notification from hiding the -o error or failing the command

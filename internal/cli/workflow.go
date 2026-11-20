@@ -239,9 +239,16 @@ func handleWorkflowProcessing(currentFlags *Flags, registry *core.PluginRegistry
 		return
 	}
 
+	// Keep only the requested fenced code block of the last output.
+	if currentFlags.Extract || currentFlags.ExtractLast {
+		if code, found := domain.ExtractFencedCodeBlock(result, currentFlags.ExtractLast); found {
+			result = code
+		}
+	}
+
 	// Print the result unless streaming already printed it. Remove terminal
 	// control sequences from the displayed copy only.
-	if !currentFlags.Stream || chatOptions.SuppressThink {
+	if !currentFlags.Stream || chatOptions.SuppressThink || chatOptions.BufferStream {
 		fmt.Println(domain.SanitizeTerminalOutput(result))
 	}
 

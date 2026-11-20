@@ -272,8 +272,9 @@ func TestMergeVars(t *testing.T) {
 	}
 }
 
-// stepVendor is a dry run vendor that gives the same reply to each request. It
-// keeps the last message of each request, which is the input of the step.
+// stepVendor is a dry run vendor that gives the same reply to each request, also
+// when it streams. It keeps the last message of each request, which is the
+// input of the step.
 type stepVendor struct {
 	*dryrun.Client
 	reply  string
@@ -283,6 +284,17 @@ type stepVendor struct {
 func (v *stepVendor) Send(_ context.Context, msgs []*chat.ChatCompletionMessage, _ *domain.ChatOptions) (string, error) {
 	v.inputs = append(v.inputs, msgs[len(msgs)-1].Content)
 	return v.reply, nil
+}
+
+// SendStream streams the reply of Send as one update.
+func (v *stepVendor) SendStream(ctx context.Context, msgs []*chat.ChatCompletionMessage, opts *domain.ChatOptions, updates chan domain.StreamUpdate) error {
+	defer close(updates)
+	reply, err := v.Send(ctx, msgs, opts)
+	if err != nil {
+		return err
+	}
+	updates <- domain.StreamUpdate{Type: domain.StreamTypeContent, Content: reply}
+	return nil
 }
 
 // newStepRegistry makes a registry with vendor as the default vendor and a
@@ -367,5 +379,50 @@ func TestHandleWorkflowProcessingSanitizesOutput(t *testing.T) {
 	must(t, err)
 	if string(saved) != reply+"\n" {
 		t.Errorf("output file = %q, want %q", saved, reply+"\n")
+	}
+}
+
+// TestHandleWorkflowProcessingExtract checks that --extract and --extract-last
+// print and write only the fenced code block of the last output, also with
+// --stream. An output without a code block stays complete.
+func TestHandleWorkflowProcessingExtract(t *testing.T) {
+	dir := t.TempDir()
+	wfPath := filepath.Join(dir, "wf.yaml")
+	must(t, os.WriteFile(wfPath, []byte("steps:\n  - pattern: only\n"), 0o644))
+	wf, err := LoadWorkflow(wfPath)
+	must(t, err)
+
+	vendor := &stepVendor{Client: dryrun.NewClient()}
+	registry := newStepRegistry(t, vendor, wf)
+	const blocks = "First:\n```go\nfmt.Println(1)\n```\nLast:\n```sh\necho 2\n```"
+	tests := []struct {
+		name  string
+		reply string
+		flags Flags
+		want  string
+	}{
+		{"extract", blocks, Flags{Extract: true}, "fmt.Println(1)\n"},
+		{"extract with stream", blocks, Flags{Extract: true, Stream: true}, "fmt.Println(1)\n"},
+		{"extract-last", blocks, Flags{ExtractLast: true}, "echo 2\n"},
+		{"extract-last with stream", blocks, Flags{ExtractLast: true, Stream: true}, "echo 2\n"},
+		{"no code block with stream", "No code.", Flags{Extract: true, Stream: true}, "No code.\n"},
+	}
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			vendor.reply = tc.reply
+			flags := tc.flags
+			flags.Workflow, flags.Message, flags.Language = wfPath, "in", "en"
+			flags.Output = filepath.Join(t.TempDir(), "out.txt")
+
+			printed := captureStdout(t, func() { must(t, handleWorkflowProcessing(&flags, registry, "")) })
+			if string(printed) != tc.want {
+				t.Errorf("printed %q, want %q", printed, tc.want)
+			}
+			saved, err := os.ReadFile(flags.Output)
+			must(t, err)
+			if string(saved) != tc.want {
+				t.Errorf("output file = %q, want %q", saved, tc.want)
+			}
+		})
 	}
 }

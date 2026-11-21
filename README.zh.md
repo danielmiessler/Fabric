@@ -363,6 +363,7 @@ Fabric 支持广泛的 AI 供应商：
 **OpenAI 兼容供应商：**
 
 - Abacus
+- AIGROW
 - AIML
 - AIStupidLevel
 - API Route

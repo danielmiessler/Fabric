@@ -69,3 +69,21 @@ func TestSendStreamResponsesCompletedStreamHasNoError(t *testing.T) {
 	require.NoError(t, err)
 	require.Equal(t, "Hello", updates[0].Content)
 }
+
+func TestSendStreamResponsesReportsUsage(t *testing.T) {
+	updates, err := streamResponses(t, responsesSSE(
+		sseEvent("response.output_text.delta", `{"type":"response.output_text.delta","sequence_number":1,"item_id":"i","output_index":0,"content_index":0,"delta":"Hello","logprobs":[]}`),
+		sseEvent("response.completed", `{"type":"response.completed","sequence_number":2,"response":{"id":"resp_1","object":"response","created_at":0,"status":"completed","model":"gpt-5.6-terra","output":[],"parallel_tool_calls":false,"tool_choice":"auto","tools":[],"usage":{"input_tokens":11,"output_tokens":7,"total_tokens":18,"input_tokens_details":{"cached_tokens":0},"output_tokens_details":{"reasoning_tokens":0}}}}`),
+	))
+
+	require.NoError(t, err)
+
+	var usage *domain.UsageMetadata
+	for _, update := range updates {
+		if update.Type == domain.StreamTypeUsage {
+			usage = update.Usage
+		}
+	}
+	require.NotNil(t, usage, "the usage of the completed response was not emitted")
+	require.Equal(t, domain.UsageMetadata{InputTokens: 11, OutputTokens: 7, TotalTokens: 18}, *usage)
+}

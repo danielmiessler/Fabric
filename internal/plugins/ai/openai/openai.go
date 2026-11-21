@@ -193,6 +193,7 @@ func (o *Client) sendStreamResponses(
 	req := o.buildResponseParams(msgs, opts)
 	stream := o.ApiClient.Responses.NewStreaming(ctx, req, o.requestOptions(opts.SessionID)...)
 	var sources []string
+	var usage *domain.UsageMetadata
 	var failure error
 	for stream.Next() {
 		event := stream.Current()
@@ -200,6 +201,13 @@ func (o *Client) sendStreamResponses(
 		case string(constant.ResponseCompleted("").Default()):
 			completed := event.AsResponseCompleted()
 			sources = searchResultSources(&completed.Response)
+			if u := completed.Response.Usage; u.TotalTokens > 0 {
+				usage = &domain.UsageMetadata{
+					InputTokens:  int(u.InputTokens),
+					OutputTokens: int(u.OutputTokens),
+					TotalTokens:  int(u.TotalTokens),
+				}
+			}
 		case string(constant.ResponseFailed("").Default()):
 			// A failed response ends the stream without an SDK error.
 			e := event.AsResponseFailed().Response.Error
@@ -219,6 +227,9 @@ func (o *Client) sendStreamResponses(
 	}
 	if failure != nil {
 		return failure
+	}
+	if usage != nil {
+		channel <- domain.StreamUpdate{Type: domain.StreamTypeUsage, Usage: usage}
 	}
 	content := "\n"
 	if len(sources) > 0 {

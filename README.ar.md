@@ -297,6 +297,7 @@ go install github.com/danielmiessler/fabric/cmd/fabric@latest
 **المزودون المتوافقون مع OpenAI:**
 
 - Abacus
+- AIGROW
 - AIML
 - AIStupidLevel
 - API Route

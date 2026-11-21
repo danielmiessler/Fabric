@@ -242,6 +242,11 @@ var ProviderMap = map[string]ProviderConfig{
 		ModelsURL:           "static:abacus",
 		ImplementsResponses: false,
 	},
+	"AIGROW": {
+		Name:                "AIGROW",
+		BaseURL:             "https://aigrow.gg/v1",
+		ImplementsResponses: false,
+	},
 	"AIML": {
 		Name:                "AIML",
 		BaseURL:             "https://api.aimlapi.com/v1",

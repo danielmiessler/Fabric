@@ -53,6 +53,11 @@ func TestCreateClient(t *testing.T) {
 			exists:   true,
 		},
 		{
+			name:     "Existing provider - AIGROW",
+			provider: "AIGROW",
+			exists:   true,
+		},
+		{
 			name:     "Existing provider - AIStupidLevel",
 			provider: "AIStupidLevel",
 			exists:   true,

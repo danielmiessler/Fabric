@@ -201,17 +201,19 @@ func (o *Client) sendStreamResponses(
 		case string(constant.ResponseCompleted("").Default()):
 			completed := event.AsResponseCompleted()
 			sources = searchResultSources(&completed.Response)
-			if u := completed.Response.Usage; u.TotalTokens > 0 {
-				usage = &domain.UsageMetadata{
-					InputTokens:  int(u.InputTokens),
-					OutputTokens: int(u.OutputTokens),
-					TotalTokens:  int(u.TotalTokens),
-				}
-			}
+			usage = responseUsage(completed.Response)
+		case string(constant.ResponseIncomplete("").Default()):
+			// max_output_tokens, a content filter, or a reasoning budget ends
+			// the stream here. The event still carries response.usage.
+			incomplete := event.AsResponseIncomplete()
+			sources = searchResultSources(&incomplete.Response)
+			usage = responseUsage(incomplete.Response)
 		case string(constant.ResponseFailed("").Default()):
 			// A failed response ends the stream without an SDK error.
-			e := event.AsResponseFailed().Response.Error
+			failed := event.AsResponseFailed()
+			e := failed.Response.Error
 			failure = fmt.Errorf("response failed: %s (%s)", e.Message, e.Code)
+			usage = responseUsage(failed.Response)
 		case string(constant.ResponseOutputTextDelta("").Default()):
 			channel <- domain.StreamUpdate{
 				Type:    domain.StreamTypeContent,
@@ -225,11 +227,11 @@ func (o *Client) sendStreamResponses(
 	if err := stream.Err(); err != nil {
 		return err
 	}
-	if failure != nil {
-		return failure
-	}
 	if usage != nil {
 		channel <- domain.StreamUpdate{Type: domain.StreamTypeUsage, Usage: usage}
+	}
+	if failure != nil {
+		return failure
 	}
 	content := "\n"
 	if len(sources) > 0 {
@@ -488,6 +490,20 @@ func (o *Client) extractText(resp *responses.Response) (ret string) {
 	}
 
 	return
+}
+
+// responseUsage reads the token counts OpenAI puts on a terminal Responses
+// event. A zero total means the event did not report usage.
+func responseUsage(resp responses.Response) *domain.UsageMetadata {
+	u := resp.Usage
+	if u.TotalTokens == 0 {
+		return nil
+	}
+	return &domain.UsageMetadata{
+		InputTokens:  int(u.InputTokens),
+		OutputTokens: int(u.OutputTokens),
+		TotalTokens:  int(u.TotalTokens),
+	}
 }
 
 const sourcesHeader = "\n\n## Sources\n\n"

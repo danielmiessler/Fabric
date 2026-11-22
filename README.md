@@ -363,6 +363,7 @@ Fabric supports a wide range of AI providers:
 **OpenAI-Compatible Providers:**
 
 - Abacus
+- AIGROW
 - AIML
 - AIStupidLevel
 - API Route

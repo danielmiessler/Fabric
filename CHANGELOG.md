@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.4.580 (2026-11-21)
+
+### PR [#2352](https://github.com/danielmiessler/Fabric/pull/2352) by [guglielmo-io](https://github.com/guglielmo-io): feat(providers): add AIGROW as an OpenAI-compatible provider
+
+- Added AIGROW as an OpenAI-compatible provider, including a new ProviderMap entry with the base URL `https://aigrow.gg/v1` and authentication via the `AIGROW_API_KEY` environment variable.
+- Added a `TestCreateClient` test case covering the new AIGROW provider.
+- Updated the README provider lists (English, Chinese, Arabic) to document AIGROW.
+
 ## v1.4.579 (2026-11-20)
 
 ### PR [#2350](https://github.com/danielmiessler/Fabric/pull/2350) by [Opgeek-1](https://github.com/Opgeek-1): feat(providers): add WorldRouter as an OpenAI-compatible provider

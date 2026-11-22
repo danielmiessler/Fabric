@@ -352,22 +352,26 @@ func (o *Client) performTTSGeneration(ctx context.Context, client *genai.Client,
 				return "", fmt.Errorf(i18n.T("gemini_unexpected_data_type"), part.InlineData.MIMEType)
 			}
 
-			pcmData := part.InlineData.Data
-			if len(pcmData) < MinAudioDataSize {
-				return "", fmt.Errorf(i18n.T("gemini_audio_data_too_small"), len(pcmData), MinAudioDataSize)
+			audioData := part.InlineData.Data
+			if len(audioData) < MinAudioDataSize {
+				return "", fmt.Errorf(i18n.T("gemini_audio_data_too_small"), len(audioData), MinAudioDataSize)
 			}
 
-			wavData, err := o.generateWAVFile(pcmData)
-			if err != nil {
-				return "", fmt.Errorf(i18n.T("gemini_wav_generation_failed"), err)
-			}
-
-			if len(wavData) < WAVHeaderSize {
-				return "", fmt.Errorf(i18n.T("gemini_wav_data_invalid"), len(wavData), WAVHeaderSize)
+			// Gemini 3.8 TTS already returns a RIFF/WAVE container. Only
+			// wrap the raw PCM returned by older models.
+			if string(audioData[:4]) == "RIFF" && string(audioData[8:12]) == "WAVE" {
+				if len(audioData)-WAVHeaderSize > MaxAudioDataSize {
+					return "", fmt.Errorf(i18n.T("gemini_pcm_data_too_large"), len(audioData)-WAVHeaderSize, MaxAudioDataSize)
+				}
+			} else {
+				audioData, err = o.generateWAVFile(audioData)
+				if err != nil {
+					return "", fmt.Errorf(i18n.T("gemini_wav_generation_failed"), err)
+				}
 			}
 
 			// The CLI detects this prefix and writes the bytes after it to the output file.
-			return AudioDataPrefix + string(wavData), nil
+			return AudioDataPrefix + string(audioData), nil
 		}
 	}
 

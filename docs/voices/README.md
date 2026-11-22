@@ -19,12 +19,12 @@ To generate these samples, use the following commands:
 
 ```bash
 # Generate each voice sample
-echo "The quick brown fox jumped over the lazy dog" | fabric -m gemini-2.5-flash-preview-tts --voice Kore -o docs/voices/Kore.wav
-echo "The quick brown fox jumped over the lazy dog" | fabric -m gemini-2.5-flash-preview-tts --voice Charon -o docs/voices/Charon.wav
-echo "The quick brown fox jumped over the lazy dog" | fabric -m gemini-2.5-flash-preview-tts --voice Vega -o docs/voices/Vega.wav
-echo "The quick brown fox jumped over the lazy dog" | fabric -m gemini-2.5-flash-preview-tts --voice Capella -o docs/voices/Capella.wav
-echo "The quick brown fox jumped over the lazy dog" | fabric -m gemini-2.5-flash-preview-tts --voice Achird -o docs/voices/Achird.wav
-echo "The quick brown fox jumped over the lazy dog" | fabric -m gemini-2.5-flash-preview-tts --voice Lyra -o docs/voices/Lyra.wav
+echo "The quick brown fox jumped over the lazy dog" | fabric -m gemini-3.8-flash-tts --voice Kore -o docs/voices/Kore.wav
+echo "The quick brown fox jumped over the lazy dog" | fabric -m gemini-3.8-flash-tts --voice Charon -o docs/voices/Charon.wav
+echo "The quick brown fox jumped over the lazy dog" | fabric -m gemini-3.8-flash-tts --voice Vega -o docs/voices/Vega.wav
+echo "The quick brown fox jumped over the lazy dog" | fabric -m gemini-3.8-flash-tts --voice Capella -o docs/voices/Capella.wav
+echo "The quick brown fox jumped over the lazy dog" | fabric -m gemini-3.8-flash-tts --voice Achird -o docs/voices/Achird.wav
+echo "The quick brown fox jumped over the lazy dog" | fabric -m gemini-3.8-flash-tts --voice Lyra -o docs/voices/Lyra.wav
 ```
 
 ## Audio Format

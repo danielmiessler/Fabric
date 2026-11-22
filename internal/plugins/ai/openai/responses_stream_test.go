@@ -79,12 +79,7 @@ func TestSendStreamResponsesReportsUsage(t *testing.T) {
 
 	require.NoError(t, err)
 
-	var usage *domain.UsageMetadata
-	for _, update := range updates {
-		if update.Type == domain.StreamTypeUsage {
-			usage = update.Usage
-		}
-	}
+	usage := reportedUsage(updates)
 	require.NotNil(t, usage, "the usage of the completed response was not emitted")
 	require.Equal(t, domain.UsageMetadata{InputTokens: 11, OutputTokens: 7, TotalTokens: 18}, *usage)
 }

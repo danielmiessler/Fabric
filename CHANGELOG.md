@@ -1,5 +1,14 @@
 # Changelog
 
+## v1.4.581 (2026-11-22)
+
+### PR [#2353](https://github.com/danielmiessler/Fabric/pull/2353) by [pcbeingused333](https://github.com/pcbeingused333) and [ksylvan](https://github.com/ksylvan): fix(openai): report usage from the Responses API stream
+
+- Fixed missing token counts in `--metadata` for streamed Responses API requests by reporting usage from the `response.completed` event, which was previously read only for search sources.
+- Fixed empty usage data when a Responses stream ends without completing: usage is now read from the `response.incomplete` and `response.failed` events and sent before returning a failure.
+- Refactored the usage test helper to use `slices.Backward` for locating the last OpenAI stream usage update instead of manual reverse indexing.
+- Updated the OpenAI stream test to reuse the `reportedUsage` helper in place of an inline usage scan, while preserving checks for usage emission and exact token totals.
+
 ## v1.4.580 (2026-11-21)
 
 ### PR [#2352](https://github.com/danielmiessler/Fabric/pull/2352) by [guglielmo-io](https://github.com/guglielmo-io): feat(providers): add AIGROW as an OpenAI-compatible provider

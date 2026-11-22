@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/http/httptest"
+	"slices"
 	"testing"
 
 	"github.com/danielmiessler/fabric/internal/chat"
@@ -117,9 +118,9 @@ func TestSendStreamResponsesReportsUsageWhenFailed(t *testing.T) {
 }
 
 func reportedUsage(updates []domain.StreamUpdate) *domain.UsageMetadata {
-	for i := len(updates) - 1; i >= 0; i-- {
-		if updates[i].Type == domain.StreamTypeUsage {
-			return updates[i].Usage
+	for _, update := range slices.Backward(updates) {
+		if update.Type == domain.StreamTypeUsage {
+			return update.Usage
 		}
 	}
 	return nil

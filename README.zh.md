@@ -391,6 +391,7 @@ Fabric 支持广泛的 AI 供应商：
 - Pzero
 - Requesty
 - SiliconCloud
+- Straitly
 - Synap
 - Synthorai
 - Together

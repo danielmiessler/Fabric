@@ -326,6 +326,7 @@ go install github.com/danielmiessler/fabric/cmd/fabric@latest
 - Pzero
 - Requesty
 - SiliconCloud
+- Straitly
 - Synap
 - Synthorai
 - Together

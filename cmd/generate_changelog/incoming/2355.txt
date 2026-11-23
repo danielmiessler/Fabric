@@ -1,5 +1,0 @@
-### PR [#2355](https://github.com/danielmiessler/Fabric/pull/2355) by [HashimSyedUBC](https://github.com/HashimSyedUBC): feat(providers): add Straitly as an OpenAI-compatible provider
-
-- Added Straitly as an OpenAI-compatible provider, including a new ProviderMap entry with the base URL `https://api.straitly.ai/v1` and authentication via the `STRAITLY_API_KEY` environment variable.
-- Added a `TestCreateClient` test case covering the new Straitly provider.
-- Updated the README provider lists (English, Chinese, Arabic) to document Straitly.

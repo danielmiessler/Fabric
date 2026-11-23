@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.4.582 (2026-11-23)
+
+### PR [#2355](https://github.com/danielmiessler/Fabric/pull/2355) by [HashimSyedUBC](https://github.com/HashimSyedUBC): feat(providers): add Straitly as an OpenAI-compatible provider
+
+- Added Straitly as an OpenAI-compatible provider, including a new ProviderMap entry with the base URL `https://api.straitly.ai/v1` and authentication via the `STRAITLY_API_KEY` environment variable.
+- Added a `TestCreateClient` test case covering the new Straitly provider.
+- Updated the README provider lists (English, Chinese, Arabic) to document Straitly.
+
 ## v1.4.581 (2026-11-22)
 
 ### PR [#2353](https://github.com/danielmiessler/Fabric/pull/2353) by [pcbeingused333](https://github.com/pcbeingused333) and [ksylvan](https://github.com/ksylvan): fix(openai): report usage from the Responses API stream

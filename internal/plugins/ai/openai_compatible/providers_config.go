@@ -467,6 +467,11 @@ var ProviderMap = map[string]ProviderConfig{
 		BaseURL:             "https://api.stdcmpt.com/v1",
 		ImplementsResponses: false,
 	},
+	"Straitly": {
+		Name:                "Straitly",
+		BaseURL:             "https://api.straitly.ai/v1",
+		ImplementsResponses: false,
+	},
 	"Synap": {
 		Name:                "Synap",
 		BaseURL:             "https://synap402.com/v1",

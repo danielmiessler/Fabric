@@ -1,7 +1,9 @@
 package gemini
 
 import (
+	"bytes"
 	"context"
+	"encoding/json"
 	"errors"
 	"net/http"
 	"net/http/httptest"
@@ -268,6 +270,69 @@ func newGeminiTestClient(t *testing.T, handler http.HandlerFunc) *Client {
 	client.PluginBase = &plugins.PluginBase{}
 	client.ApiKey = &plugins.SetupQuestion{Setting: &plugins.Setting{Value: "test-key"}}
 	return client
+}
+
+// Gemini 3.8 returns a complete WAV. Older models return linear PCM.
+func TestSendTTSWritesExactlyOneWAVContainer(t *testing.T) {
+	pcmData := bytes.Repeat([]byte{0x01, 0x02}, 32)
+	wantWAV, err := (&Client{}).generateWAVFile(pcmData)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	for _, tt := range []struct {
+		name, model, mimeType string
+		data                  []byte
+	}{
+		{"native WAV", "gemini-3.8-flash-tts", "audio/wav", wantWAV},
+		{"legacy PCM", "gemini-2.5-flash-preview-tts", "audio/L16;rate=24000", pcmData},
+	} {
+		t.Run(tt.name, func(t *testing.T) {
+			client := newGeminiTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+				if want := "/v1beta/models/" + tt.model + ":generateContent"; r.Method != http.MethodPost || r.URL.Path != want {
+					t.Errorf("request = %s %s, want POST %s", r.Method, r.URL.Path, want)
+				}
+				var request struct {
+					Contents         []*genai.Content            `json:"contents"`
+					GenerationConfig genai.GenerateContentConfig `json:"generationConfig"`
+				}
+				if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
+					t.Errorf("decode TTS request: %v", err)
+				} else {
+					if len(request.Contents) != 1 || len(request.Contents[0].Parts) != 1 || request.Contents[0].Parts[0].Text != "hello" {
+						t.Error("expected a single transcript part")
+					}
+					config := request.GenerationConfig
+					if len(config.ResponseModalities) != 1 || config.ResponseModalities[0] != "AUDIO" {
+						t.Error("expected an AUDIO response")
+					}
+					if config.SpeechConfig == nil || config.SpeechConfig.VoiceConfig == nil || config.SpeechConfig.VoiceConfig.PrebuiltVoiceConfig == nil || config.SpeechConfig.VoiceConfig.PrebuiltVoiceConfig.VoiceName != "Charon" {
+						t.Error("expected the requested Charon voice")
+					}
+				}
+				w.Header().Set("Content-Type", "application/json")
+				response := genai.GenerateContentResponse{Candidates: []*genai.Candidate{{
+					Content: &genai.Content{Parts: []*genai.Part{{
+						InlineData: &genai.Blob{MIMEType: tt.mimeType, Data: tt.data},
+					}}},
+				}}}
+				if err := json.NewEncoder(w).Encode(response); err != nil {
+					t.Errorf("encode TTS response: %v", err)
+				}
+			})
+
+			got, err := client.Send(context.Background(),
+				[]*chat.ChatCompletionMessage{{Role: chat.ChatMessageRoleUser, Content: "hello"}},
+				&domain.ChatOptions{Model: tt.model, AudioOutput: true, Voice: "Charon"})
+			if err != nil {
+				t.Fatal(err)
+			}
+			audio, ok := strings.CutPrefix(got, AudioDataPrefix)
+			if !ok || !bytes.Equal([]byte(audio), wantWAV) {
+				t.Fatalf("got %d WAV bytes, want %d unmodified WAV bytes", len(audio), len(wantWAV))
+			}
+		})
+	}
 }
 
 // Cancelling the caller's context must abort an in-flight Gemini stream

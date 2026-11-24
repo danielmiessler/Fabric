@@ -15,17 +15,19 @@ The Gemini TTS feature in Fabric allows you to:
 
 ### Basic TTS Generation
 
-To generate audio from text using TTS:
+To generate audio from text using TTS with a Gemini API key:
+
+Google [lists December 18, 2026 as the shutdown date](https://ai.google.dev/gemini-api/docs/deprecations#audio-preview-models) for the older `gemini-2.5-flash-preview-tts`. The examples below use `gemini-3.8-flash-tts`.
 
 ```bash
 # Basic TTS with default voice (Kore)
-echo "Hello, this is a test of Gemini TTS" | fabric -m gemini-2.5-flash-preview-tts -o output.wav
+echo "Hello, this is a test of Gemini TTS" | fabric -m gemini-3.8-flash-tts -o output.wav
 
 # Using a specific voice
-echo "Hello, this is a test with the Charon voice" | fabric -m gemini-2.5-flash-preview-tts --voice Charon -o output.wav
+echo "Hello, this is a test with the Charon voice" | fabric -m gemini-3.8-flash-tts --voice Charon -o output.wav
 
 # Using TTS with a pattern
-fabric -p summarize --voice Puck -m gemini-2.5-flash-preview-tts -o summary.wav < document.txt
+fabric -p summarize --voice Puck -m gemini-3.8-flash-tts -o summary.wav < document.txt
 ```
 
 ### Voice Selection
@@ -33,7 +35,7 @@ fabric -p summarize --voice Puck -m gemini-2.5-flash-preview-tts -o summary.wav 
 Use the `--voice` flag to specify which voice to use for TTS generation:
 
 ```bash
-fabric -m gemini-2.5-flash-preview-tts --voice Zephyr -o output.wav "Your text here"
+fabric -m gemini-3.8-flash-tts --voice Zephyr -o output.wav "Your text here"
 ```
 
 If no voice is specified, the default voice "Kore" will be used.
@@ -75,11 +77,7 @@ fabric --list-gemini-voices --shell-complete-list
 
 Google Gemini TTS has usage quotas that vary by plan:
 
-### Free Tier
-
-- **15 requests per day** per project per TTS model
-- Quota resets daily
-- Applies to all TTS models (e.g., `gemini-2.5-flash-preview-tts`)
+Check Google’s [current limits](https://ai.google.dev/gemini-api/docs/rate-limits) for your project and model.
 
 ### Rate Limit Errors
 
@@ -103,7 +101,7 @@ For current rate limits and pricing, visit: <https://ai.google.dev/gemini-api/do
 
 - `--voice <voice_name>` - Specify the TTS voice to use
 - `-o <filename.wav>` - Output audio file (required for TTS models)
-- `-m <tts_model>` - Specify a TTS-capable model (e.g., `gemini-2.5-flash-preview-tts`)
+- `-m <tts_model>` - Specify a TTS-capable model (e.g., `gemini-3.8-flash-tts`)
 
 ### YAML Configuration
 

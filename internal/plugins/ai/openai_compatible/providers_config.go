@@ -482,6 +482,11 @@ var ProviderMap = map[string]ProviderConfig{
 		BaseURL:             "https://synthorai.io/v1",
 		ImplementsResponses: false,
 	},
+	"TeamoRouter": {
+		Name:                "TeamoRouter",
+		BaseURL:             "https://api.teamorouter.com/v1",
+		ImplementsResponses: false,
+	},
 	"Together": {
 		Name:                "Together",
 		BaseURL:             "https://api.together.xyz/v1",

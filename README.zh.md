@@ -394,6 +394,7 @@ Fabric 支持广泛的 AI 供应商：
 - Straitly
 - Synap
 - Synthorai
+- TeamoRouter
 - Together
 - UberLLM
 - Venice AI

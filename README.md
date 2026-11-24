@@ -400,6 +400,7 @@ Fabric supports a wide range of AI providers:
 - Straitly
 - Synap
 - Synthorai
+- TeamoRouter
 - Together
 - UberLLM
 - Venice AI

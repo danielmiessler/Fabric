@@ -329,6 +329,7 @@ go install github.com/danielmiessler/fabric/cmd/fabric@latest
 - Straitly
 - Synap
 - Synthorai
+- TeamoRouter
 - Together
 - UberLLM
 - Venice AI

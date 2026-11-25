@@ -35,7 +35,14 @@ func Cli(version string) (err error) {
 		return
 	}
 
-	var registry, err2 = initializeFabric()
+	if !currentFlags.Setup {
+		if err = currentFlags.resolveWebSearch(); err != nil {
+			return
+		}
+	}
+	standaloneWebSearch := currentFlags.WebSearch != nil && !currentFlags.Setup &&
+		!currentFlags.IsChatRequest() && currentFlags.TranscribeFile == ""
+	var registry, err2 = initializeFabric(standaloneWebSearch)
 	if err2 != nil {
 		if !currentFlags.Setup {
 			debuglog.Log("%s\n", err2.Error())

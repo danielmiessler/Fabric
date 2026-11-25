@@ -817,5 +817,12 @@
   "youtube_ytdlp_required_visual_extraction": "yt-dlp مطلوب للاستخراج المرئي ولكنه غير موجود في PATH",
   "youtube_ytdlp_stderr_error": "خطأ في قراءة stderr الخاص بـ yt-dlp",
   "search_not_configured": "%s غير مكون، يرجى تشغيل إجراء الإعداد",
-  "parallel_search_help": "البحث عن الويب باستخدام Parallel (مجاني بشكل افتراضي) وإرجاع مقتطفات المصدر"
+  "parallel_search_help": "البحث عن الويب باستخدام Parallel (مجاني بشكل افتراضي) وإرجاع مقتطفات المصدر",
+  "web_search_help": "البحث في الويب وعرض مقتطفات من المصادر (المزوّد الافتراضي: Parallel)",
+  "web_search_query_required": "يتطلب --web-search عبارة بحث غير فارغة",
+  "web_search_provider_conflict": "لا يمكن الجمع بين --web-search وخيارات البحث الخاصة بمزوّد معيّن",
+  "web_search_provider_help": "مزوّد --web-search أو off لتعطيله",
+  "web_search_disabled": "البحث المستقل على الويب معطّل",
+  "web_search_unknown_provider": "مزوّد البحث المستقل على الويب غير معروف: %q",
+  "web_search_preview_conflict": "لا يمكن الجمع بين --web-search و--dry-run أو --print-prompt"
 }

@@ -46,6 +46,22 @@ func TestDb_LoadEnvFile(t *testing.T) {
 	}
 }
 
+func TestDb_ConfigureWithOptionalEnv(t *testing.T) {
+	db := NewDb(t.TempDir())
+	if err := db.ConfigureWithOptionalEnv(); err != nil {
+		t.Fatalf("missing .env should be allowed: %v", err)
+	}
+	if db.IsEnvFileExists() {
+		t.Fatal("optional .env should not be created")
+	}
+	if err := os.WriteFile(db.EnvFilePath, []byte("KEY=\"unterminated\n"), 0600); err != nil {
+		t.Fatal(err)
+	}
+	if err := db.ConfigureWithOptionalEnv(); err == nil {
+		t.Fatal("malformed .env should be rejected")
+	}
+}
+
 func TestDb_SaveEnv(t *testing.T) {
 	dir := t.TempDir()
 	db := NewDb(dir)

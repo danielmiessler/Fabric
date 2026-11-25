@@ -13,14 +13,19 @@ import (
 const ConfigDirPerms os.FileMode = 0755
 const EnvFilePerms os.FileMode = 0644
 
-func initializeFabric() (registry *core.PluginRegistry, err error) {
+func initializeFabric(allowMissingEnv bool) (registry *core.PluginRegistry, err error) {
 	var homedir string
 	if homedir, err = os.UserHomeDir(); err != nil {
 		return
 	}
 
 	fabricDb := fsdb.NewDb(filepath.Join(homedir, ".config/fabric"))
-	if err = fabricDb.Configure(); err != nil {
+	if allowMissingEnv {
+		err = fabricDb.ConfigureWithOptionalEnv()
+	} else {
+		err = fabricDb.Configure()
+	}
+	if err != nil {
 		return
 	}
 

@@ -110,6 +110,8 @@ function __fabric_register_completions
         complete -c $cmd -s g -l language -x -d "Specify the Language Code for the chat, e.g. -g=en -g=zh"
         complete -c $cmd -s u -l scrape_url -x -d "Scrape website URL to markdown using Jina AI"
         complete -c $cmd -s q -l scrape_question -x -d "Search question using Jina AI"
+        complete -c $cmd -l web-search -x -d "Search the web (default provider: Parallel)"
+        complete -c $cmd -l web-search-provider -x -a "parallel keenable firecrawl jina searchapi serply sofya off" -d "Choose a provider for standalone web search"
         complete -c $cmd -l serply_search -x -d "Search Google using Serply and send the results to chat"
         complete -c $cmd -l firecrawl_search -x -d "Search the web using Firecrawl and send the top pages to chat as Markdown"
         complete -c $cmd -l parallel_search -x -d "Search the web using Parallel and return source excerpts"

@@ -817,5 +817,12 @@
   "youtube_ytdlp_required_visual_extraction": "برای استخراج بصری به yt-dlp نیاز است اما در PATH پیدا نشد",
   "youtube_ytdlp_stderr_error": "خطا در خواندن stderr yt-dlp",
   "search_not_configured": "%s پیکربندی نشده است، لطفاً روش تنظیم را اجرا کنید",
-  "parallel_search_help": "جستجو در وب با استفاده از Parallel (به طور پیش‌فرض ناشناس) و بازگرداندن گزیده‌های منبع"
+  "parallel_search_help": "جستجو در وب با استفاده از Parallel (به طور پیش‌فرض ناشناس) و بازگرداندن گزیده‌های منبع",
+  "web_search_help": "جستجو در وب و نمایش گزیده‌های منابع (ارائه‌دهندهٔ پیش‌فرض: Parallel)",
+  "web_search_query_required": "--web-search به یک عبارت جستجوی غیرخالی نیاز دارد",
+  "web_search_provider_conflict": "نمی‌توان --web-search را با گزینه‌های جستجوی مخصوص یک ارائه‌دهنده ترکیب کرد",
+  "web_search_provider_help": "ارائه‌دهنده برای --web-search یا off برای غیرفعال کردن آن",
+  "web_search_disabled": "جستجوی مستقل وب غیرفعال است",
+  "web_search_unknown_provider": "ارائه‌دهندهٔ جستجوی مستقل وب ناشناخته است: %q",
+  "web_search_preview_conflict": "نمی‌توان --web-search را با --dry-run یا --print-prompt ترکیب کرد"
 }

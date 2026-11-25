@@ -156,6 +156,7 @@ Keep in mind that many of these were recorded when Fabric was Python-based, so r
       - [Fish Completion](#fish-completion)
   - [Usage](#usage)
     - [Debug Levels](#debug-levels)
+    - [Standalone web search](#standalone-web-search)
     - [Dry Run Mode](#dry-run-mode)
     - [Extensions](#extensions)
   - [REST API Server](#rest-api-server)
@@ -749,6 +750,8 @@ Application Options:
   -g, --language=                   Specify the Language Code for the chat, e.g. -g=en -g=zh -g=pt-BR -g=pt-PT
   -u, --scrape_url=                 Scrape website URL to markdown using Jina AI
   -q, --scrape_question=            Search question using Jina AI
+      --web-search=                  Search the web and return source excerpts (default provider: Parallel)
+      --web-search-provider=         Provider for --web-search, or off to disable it
       --serply_search=              Search Google using Serply and send the results to chat
       --parallel_search=            Search the web using Parallel (anonymous by default) and return source excerpts
       --firecrawl_search=           Search the web using Firecrawl and send the top pages to chat as Markdown
@@ -818,14 +821,28 @@ Use the `--debug` flag to control runtime logging:
 - `3`: trace level
 - `4`: wire level (full request and response bodies)
 
-### Optional Parallel web search
+### Standalone web search
 
-Use `fabric --parallel_search "golang generics tutorial"` to print source URLs and
-excerpts without an inference provider. Add `-p summarize` to send the results to
-a configured model. This option connects to [Parallel's Unified MCP server](https://docs.parallel.ai/integrations/mcp/quickstart)
-and uses its default Fast search mode. Anonymous access is free with rate limits.
-It makes no requests unless `--parallel_search` is supplied; existing Jina,
-Serply, Firecrawl, and model-native `--search` behavior stays the same.
+On a fresh install, run `fabric --web-search "golang generics tutorial"` to print
+source URLs and excerpts. A standalone search can run before `fabric --setup`.
+Once a model and patterns are configured, add `-p summarize` to send the results
+to a model.
+
+Fabric sends the query supplied to `--web-search` when you use that flag.
+The default is [Parallel's hosted MCP server](https://docs.parallel.ai/integrations/mcp/quickstart),
+which uses Fast mode for free, rate-limited requests without an API key.
+Use `--debug=1` to see the selected provider on stderr.
+
+Set `--web-search-provider=keenable` for one run or `webSearchProvider: keenable`
+in Fabric's YAML config. Available values are `parallel`, `keenable`, `firecrawl`,
+`jina`, `searchapi`, `serply`, `sofya`, and `off`. Set `webSearchProvider: "off"`
+to disable this entry point. The new `--web-search` flag requires a query and
+cannot be combined with a provider-specific search flag, `--dry-run`, or
+`--print-prompt`.
+
+Provider-specific flags such as `--parallel_search` select their own tools.
+Use `--search` to enable the active chat model's native web search on supported
+models.
 
 An optional `PARALLEL_API_KEY` in the environment or Fabric's `.env` uses your
 Parallel account and its billing. You can also set it via `fabric --setup`.

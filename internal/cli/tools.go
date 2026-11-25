@@ -3,15 +3,65 @@ package cli
 import (
 	"errors"
 	"fmt"
+	"strings"
 
 	"github.com/danielmiessler/fabric/internal/core"
 	"github.com/danielmiessler/fabric/internal/i18n"
+	debuglog "github.com/danielmiessler/fabric/internal/log"
 	"github.com/danielmiessler/fabric/internal/tools/youtube"
 )
+
+// resolveWebSearch validates the generic search request and selects an existing
+// tool. The query stays separate from prompt text and stdin.
+func (f *Flags) resolveWebSearch() error {
+	if f.WebSearch == nil {
+		return nil
+	}
+	if strings.TrimSpace(*f.WebSearch) == "" {
+		return errors.New(i18n.T("web_search_query_required"))
+	}
+	if f.DryRun || f.PrintPrompt {
+		return errors.New(i18n.T("web_search_preview_conflict"))
+	}
+
+	provider := strings.ToLower(strings.TrimSpace(f.WebSearchProvider))
+	switch provider {
+	case "":
+		provider = "parallel"
+	case "off":
+		return errors.New(i18n.T("web_search_disabled"))
+	}
+
+	queries := map[string]*string{
+		"firecrawl": &f.FirecrawlSearch,
+		"jina":      &f.ScrapeQuestion,
+		"keenable":  &f.KeenableSearch,
+		"parallel":  &f.ParallelSearch,
+		"searchapi": &f.SearchApiSearch,
+		"serply":    &f.SerplySearch,
+		"sofya":     &f.SofyaSearch,
+	}
+	target, ok := queries[provider]
+	if !ok {
+		return fmt.Errorf(i18n.T("web_search_unknown_provider"), provider)
+	}
+	for _, query := range queries {
+		if *query != "" {
+			return errors.New(i18n.T("web_search_provider_conflict"))
+		}
+	}
+	*target = *f.WebSearch
+	f.WebSearchProvider = provider
+	return nil
+}
 
 // handleToolProcessing runs the YouTube, web scrape, search, and Spotify tools and collects their output.
 // When the run is not a chat request, it also prints the output.
 func handleToolProcessing(currentFlags *Flags, registry *core.PluginRegistry) (messageTools string, err error) {
+	if currentFlags.WebSearch != nil {
+		debuglog.Debug(debuglog.Basic, "Standalone web search provider: %s\n", currentFlags.WebSearchProvider)
+	}
+
 	if currentFlags.YouTube != "" {
 		if !registry.YouTube.IsConfigured() {
 			err = errors.New(i18n.T("youtube_not_configured"))

@@ -38,7 +38,12 @@ pattern: analyze  # Use pattern name or filename
 # Feature flags
 stream: true
 raw: false
+
+# Provider for an explicit --web-search query
+webSearchProvider: parallel  # Set to "off" to disable this entry point
 ```
+
+Use `--web-search-provider` to override this choice for a single run.
 
 ## Rules and Behavior
 

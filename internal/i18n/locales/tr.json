@@ -817,5 +817,12 @@
   "youtube_ytdlp_required_visual_extraction": "görsel çıkarma için yt-dlp gerekli ancak PATH'te bulunamadı",
   "youtube_ytdlp_stderr_error": "yt-dlp stderr okunurken hata oluştu",
   "search_not_configured": "%s yapılandırılmadı, lütfen kurulum yordamını çalıştırın",
-  "parallel_search_help": "Parallel kullanarak web'de arama yapın (varsayılan olarak anonim) ve kaynak alıntılarını döndürün"
+  "parallel_search_help": "Parallel kullanarak web'de arama yapın (varsayılan olarak anonim) ve kaynak alıntılarını döndürün",
+  "web_search_help": "Web'de arama yap ve kaynak alıntılarını göster (varsayılan sağlayıcı: Parallel)",
+  "web_search_query_required": "--web-search boş olmayan bir arama sorgusu gerektirir",
+  "web_search_provider_conflict": "--web-search, sağlayıcıya özel arama seçenekleriyle birlikte kullanılamaz",
+  "web_search_provider_help": "--web-search için sağlayıcı, devre dışı bırakmak için off",
+  "web_search_disabled": "Bağımsız web araması devre dışı",
+  "web_search_unknown_provider": "Bilinmeyen bağımsız web araması sağlayıcısı %q",
+  "web_search_preview_conflict": "--web-search, --dry-run veya --print-prompt ile birlikte kullanılamaz"
 }

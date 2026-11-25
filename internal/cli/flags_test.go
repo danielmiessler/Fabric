@@ -11,6 +11,7 @@ import (
 
 	"github.com/danielmiessler/fabric/internal/domain"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestInit(t *testing.T) {
@@ -23,6 +24,60 @@ func TestInit(t *testing.T) {
 	flags, err := Init()
 	assert.NoError(t, err)
 	assert.Equal(t, expectedFlags.Copy, flags.Copy)
+}
+
+func TestInitWebSearch(t *testing.T) {
+	oldArgs := os.Args
+	t.Cleanup(func() { os.Args = oldArgs })
+
+	os.Args = []string{"fabric", "--web-search", "Go generics", "--search", "--search-location=America/Los_Angeles"}
+	flags, err := Init()
+	if !assert.NoError(t, err) || !assert.NotNil(t, flags.WebSearch) {
+		return
+	}
+	assert.Equal(t, "Go generics", *flags.WebSearch)
+	assert.Empty(t, flags.ParallelSearch)
+	assert.False(t, flags.IsChatRequest())
+	options, err := flags.BuildChatOptions()
+	if assert.NoError(t, err) {
+		assert.True(t, options.Search)
+		assert.Equal(t, "America/Los_Angeles", options.SearchLocation)
+	}
+
+	os.Args = []string{"fabric", "--web-search="}
+	flags, err = Init()
+	if assert.NoError(t, err) && assert.NotNil(t, flags.WebSearch) {
+		assert.Empty(t, *flags.WebSearch)
+	}
+
+	os.Args = []string{"fabric", "--web-search"}
+	_, err = Init()
+	assert.ErrorContains(t, err, "web-search")
+}
+
+func TestWebSearchProviderConfigPrecedence(t *testing.T) {
+	oldArgs := os.Args
+	t.Cleanup(func() { os.Args = oldArgs })
+	config := filepath.Join(t.TempDir(), "config.yaml")
+	require.NoError(t, os.WriteFile(config, []byte("webSearchProvider: off\nwebSearch: ignored\n"), 0600))
+
+	os.Args = []string{"fabric", "--config", config, "ordinary input"}
+	flags, err := Init()
+	require.NoError(t, err)
+	require.Nil(t, flags.WebSearch)
+	require.NoError(t, flags.resolveWebSearch())
+
+	os.Args = []string{"fabric", "--config", config, "--web-search=query"}
+	flags, err = Init()
+	require.NoError(t, err)
+	require.ErrorContains(t, flags.resolveWebSearch(), "disabled")
+
+	os.Args = append(os.Args, "--web-search-provider=keenable")
+	flags, err = Init()
+	require.NoError(t, err)
+	require.NoError(t, flags.resolveWebSearch())
+	require.Equal(t, "query", flags.KeenableSearch)
+	require.Empty(t, flags.ParallelSearch)
 }
 
 func TestInitPatternFromBinaryName(t *testing.T) {

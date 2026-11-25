@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.4.583 (2026-11-24)
+
+### PR [#2357](https://github.com/danielmiessler/Fabric/pull/2357) by [2867297362mjb-sketch](https://github.com/2867297362mjb-sketch): feat(providers): add TeamoRouter as an OpenAI-compatible provider
+
+- Added TeamoRouter as an OpenAI-compatible provider, including a new ProviderMap entry with the base URL `https://api.teamorouter.com/v1` and authentication via the `TEAMOROUTER_API_KEY` environment variable.
+- Added a `TestCreateClient` test case covering the new TeamoRouter provider.
+- Updated the README provider lists (English, Chinese, Arabic) to document TeamoRouter.
+
 ## v1.4.582 (2026-11-23)
 
 ### PR [#2355](https://github.com/danielmiessler/Fabric/pull/2355) by [HashimSyedUBC](https://github.com/HashimSyedUBC): feat(providers): add Straitly as an OpenAI-compatible provider

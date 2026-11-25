@@ -23,6 +23,9 @@ func (f *Flags) resolveWebSearch() error {
 	if f.DryRun || f.PrintPrompt {
 		return errors.New(i18n.T("web_search_preview_conflict"))
 	}
+	if f.namedSearchOption {
+		return errors.New(i18n.T("web_search_provider_conflict"))
+	}
 
 	provider := "parallel"
 	if f.WebSearchProvider != nil {
@@ -44,11 +47,6 @@ func (f *Flags) resolveWebSearch() error {
 	target, ok := queries[provider]
 	if !ok {
 		return fmt.Errorf(i18n.T("web_search_unknown_provider"), provider)
-	}
-	for _, query := range queries {
-		if *query != "" {
-			return errors.New(i18n.T("web_search_provider_conflict"))
-		}
 	}
 	*target = *f.WebSearch
 	debuglog.Debug(debuglog.Basic, "Standalone web search provider: %s\n", provider)

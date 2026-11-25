@@ -40,7 +40,7 @@ func Cli(version string) (err error) {
 			return
 		}
 	}
-	standaloneWebSearch := currentFlags.WebSearch != nil && !currentFlags.Setup &&
+	standaloneWebSearch := currentFlags.webSearchStandaloneOptions && !currentFlags.Setup &&
 		!currentFlags.IsChatRequest() && currentFlags.TranscribeFile == ""
 	var registry, err2 = initializeFabric(standaloneWebSearch)
 	if err2 != nil {

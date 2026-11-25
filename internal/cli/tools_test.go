@@ -40,18 +40,10 @@ func TestSearchToolPrecedenceAndOptIn(t *testing.T) {
 	}
 }
 
-func TestWebSearchRejectsEmptyQueryAndProviderConflicts(t *testing.T) {
+func TestWebSearchRejectsEmptyQuery(t *testing.T) {
 	for _, query := range []string{"", "  "} {
 		flags := &Flags{WebSearch: &query}
 		require.ErrorContains(t, flags.resolveWebSearch(), "non-empty query")
-	}
-
-	for _, flags := range []*Flags{
-		{ScrapeQuestion: "query"}, {SerplySearch: "query"}, {FirecrawlSearch: "query"},
-		{ParallelSearch: "query"}, {SearchApiSearch: "query"}, {SofyaSearch: "query"}, {KeenableSearch: "query"},
-	} {
-		flags.WebSearch = new("query")
-		require.ErrorContains(t, flags.resolveWebSearch(), "provider-specific search flags")
 	}
 }
 

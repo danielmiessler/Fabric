@@ -24,11 +24,11 @@ func (f *Flags) resolveWebSearch() error {
 		return errors.New(i18n.T("web_search_preview_conflict"))
 	}
 
-	provider := strings.ToLower(strings.TrimSpace(f.WebSearchProvider))
-	switch provider {
-	case "":
-		provider = "parallel"
-	case "off":
+	provider := "parallel"
+	if f.WebSearchProvider != nil {
+		provider = strings.ToLower(strings.TrimSpace(*f.WebSearchProvider))
+	}
+	if provider == "off" {
 		return errors.New(i18n.T("web_search_disabled"))
 	}
 
@@ -51,17 +51,13 @@ func (f *Flags) resolveWebSearch() error {
 		}
 	}
 	*target = *f.WebSearch
-	f.WebSearchProvider = provider
+	debuglog.Debug(debuglog.Basic, "Standalone web search provider: %s\n", provider)
 	return nil
 }
 
 // handleToolProcessing runs the YouTube, web scrape, search, and Spotify tools and collects their output.
 // When the run is not a chat request, it also prints the output.
 func handleToolProcessing(currentFlags *Flags, registry *core.PluginRegistry) (messageTools string, err error) {
-	if currentFlags.WebSearch != nil {
-		debuglog.Debug(debuglog.Basic, "Standalone web search provider: %s\n", currentFlags.WebSearchProvider)
-	}
-
 	if currentFlags.YouTube != "" {
 		if !registry.YouTube.IsConfigured() {
 			err = errors.New(i18n.T("youtube_not_configured"))
@@ -123,8 +119,12 @@ func handleToolProcessing(currentFlags *Flags, registry *core.PluginRegistry) (m
 		}
 
 		if currentFlags.ScrapeQuestion != "" {
+			search := registry.Jina.ScrapeQuestion
+			if currentFlags.WebSearch != nil {
+				search = registry.Jina.Search
+			}
 			var website string
-			if website, err = registry.Jina.ScrapeQuestion(currentFlags.ScrapeQuestion); err != nil {
+			if website, err = search(currentFlags.ScrapeQuestion); err != nil {
 				return
 			}
 

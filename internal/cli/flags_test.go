@@ -72,7 +72,14 @@ func TestWebSearchProviderConfigPrecedence(t *testing.T) {
 	require.NoError(t, err)
 	require.ErrorContains(t, flags.resolveWebSearch(), "disabled")
 
-	os.Args = append(os.Args, "--web-search-provider=keenable")
+	queryArgs := os.Args
+	os.Args = append(queryArgs, "--web-search-provider=")
+	flags, err = Init()
+	require.NoError(t, err)
+	require.ErrorContains(t, flags.resolveWebSearch(), "Unknown standalone web search provider")
+	require.Empty(t, flags.ParallelSearch)
+
+	os.Args = append(queryArgs, "--web-search-provider=keenable")
 	flags, err = Init()
 	require.NoError(t, err)
 	require.NoError(t, flags.resolveWebSearch())

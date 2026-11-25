@@ -4,16 +4,19 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
 	"os"
 	"path/filepath"
+	"strings"
 	"sync/atomic"
 	"testing"
 
 	"github.com/danielmiessler/fabric/internal/core"
 	"github.com/danielmiessler/fabric/internal/tools/firecrawl"
+	"github.com/danielmiessler/fabric/internal/tools/jina"
 	"github.com/danielmiessler/fabric/internal/tools/parallel"
 	"github.com/danielmiessler/fabric/internal/tools/serply"
 	"github.com/modelcontextprotocol/go-sdk/mcp"
@@ -57,8 +60,8 @@ func TestWebSearchRejectsDisabledUnknownAndPreviewRequests(t *testing.T) {
 		flags Flags
 		want  string
 	}{
-		{Flags{WebSearchProvider: "off"}, "disabled"},
-		{Flags{WebSearchProvider: "missing"}, "Unknown standalone web search provider"},
+		{Flags{WebSearchProvider: new("off")}, "disabled"},
+		{Flags{WebSearchProvider: new("missing")}, "Unknown standalone web search provider"},
 		{Flags{DryRun: true}, "--dry-run"},
 		{Flags{PrintPrompt: true}, "--print-prompt"},
 	} {
@@ -129,6 +132,34 @@ func TestWebSearchUsesParallelAndPreservesOutputRouting(t *testing.T) {
 	require.Equal(t, expected, got)
 	require.NoFileExists(t, flags.Output)
 	require.EqualValues(t, 2, searchCalls.Load())
+}
+
+func TestWebSearchJinaSurfacesProviderFailure(t *testing.T) {
+	const response = "Jina rejected the request"
+	expectedURL := "https://s.jina.ai/C%23%20generics%3F"
+	transport := http.DefaultTransport
+	t.Cleanup(func() { http.DefaultTransport = transport })
+	http.DefaultTransport = searchRoundTripperFunc(func(req *http.Request) (*http.Response, error) {
+		assert.Equal(t, expectedURL, req.URL.String())
+		return &http.Response{
+			Status:     "429 Too Many Requests",
+			StatusCode: http.StatusTooManyRequests,
+			Body:       io.NopCloser(strings.NewReader(response)),
+		}, nil
+	})
+	registry := &core.PluginRegistry{Jina: jina.NewClient()}
+
+	generic := &Flags{WebSearch: new("C# generics?"), WebSearchProvider: new("jina")}
+	require.NoError(t, generic.resolveWebSearch())
+	got, err := handleToolProcessing(generic, registry)
+	require.ErrorContains(t, err, "429")
+	require.Empty(t, got)
+
+	expectedURL = "https://s.jina.ai/query"
+	legacy := &Flags{ScrapeQuestion: "query", Pattern: "summarize"}
+	got, err = handleToolProcessing(legacy, registry)
+	require.NoError(t, err)
+	require.Equal(t, response, got)
 }
 
 type searchRoundTripperFunc func(*http.Request) (*http.Response, error)

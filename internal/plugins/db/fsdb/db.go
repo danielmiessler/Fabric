@@ -107,8 +107,14 @@ func (o *Db) LoadEnvFile() error {
 
 func (o *Db) loadEnvFile(allowMissingEnv bool) error {
 	err := godotenv.Load(o.EnvFilePath)
-	if err == nil || (allowMissingEnv && errors.Is(err, os.ErrNotExist)) {
+	if err == nil {
 		return nil
+	}
+	if allowMissingEnv && errors.Is(err, os.ErrNotExist) {
+		// A dangling .env symlink is an existing configuration entry.
+		if _, statErr := os.Lstat(o.EnvFilePath); errors.Is(statErr, os.ErrNotExist) {
+			return nil
+		}
 	}
 	return fmt.Errorf(i18n.T("db_error_loading_env_file"), err)
 }

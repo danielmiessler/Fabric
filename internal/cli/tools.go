@@ -54,8 +54,8 @@ func (f *Flags) resolveWebSearch() error {
 }
 
 // handleToolProcessing runs the YouTube, web scrape, search, and Spotify tools and collects their output.
-// When the run is not a chat request, it also prints the output.
-func handleToolProcessing(currentFlags *Flags, registry *core.PluginRegistry) (messageTools string, err error) {
+// A standalone web search can be handled even when it returns no results.
+func handleToolProcessing(currentFlags *Flags, registry *core.PluginRegistry) (messageTools string, handledStandaloneWebSearch bool, err error) {
 	if currentFlags.YouTube != "" {
 		if !registry.YouTube.IsConfigured() {
 			err = errors.New(i18n.T("youtube_not_configured"))
@@ -130,6 +130,7 @@ func handleToolProcessing(currentFlags *Flags, registry *core.PluginRegistry) (m
 		}
 
 		if !currentFlags.IsChatRequest() {
+			handledStandaloneWebSearch = currentFlags.WebSearch != nil && currentFlags.ScrapeQuestion != ""
 			err = currentFlags.WriteOutput(messageTools)
 			return
 		}
@@ -166,6 +167,7 @@ func handleToolProcessing(currentFlags *Flags, registry *core.PluginRegistry) (m
 		messageTools = AppendMessage(messageTools, results)
 
 		if !currentFlags.IsChatRequest() {
+			handledStandaloneWebSearch = currentFlags.WebSearch != nil
 			err = currentFlags.WriteOutput(messageTools)
 			return
 		}

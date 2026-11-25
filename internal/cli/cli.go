@@ -103,12 +103,13 @@ func Cli(version string) (err error) {
 	}
 
 	var messageTools string
-	if messageTools, err = handleToolProcessing(currentFlags, registry); err != nil {
+	var handledStandaloneWebSearch bool
+	if messageTools, handledStandaloneWebSearch, err = handleToolProcessing(currentFlags, registry); err != nil {
 		return
 	}
 
 	// handleToolProcessing already printed the tool output.
-	if messageTools != "" && !currentFlags.IsChatRequest() {
+	if handledStandaloneWebSearch || (messageTools != "" && !currentFlags.IsChatRequest()) {
 		return nil
 	}
 

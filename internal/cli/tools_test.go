@@ -29,13 +29,13 @@ func TestSearchToolPrecedenceAndOptIn(t *testing.T) {
 
 	// Explicit provider errors take precedence: Serply and Firecrawl configured checks run first.
 	for _, flags := range []*Flags{{SerplySearch: "query", ParallelSearch: "query"}, {FirecrawlSearch: "query", ParallelSearch: "query"}} {
-		_, err := handleToolProcessing(flags, registry)
+		_, _, err := handleToolProcessing(flags, registry)
 		require.ErrorContains(t, err, "not configured")
 	}
 
 	// No opt-in (no ParallelSearch flag) makes no search requests.
 	for _, flags := range []*Flags{{}, {Search: true}, {DryRun: true}} {
-		_, err := handleToolProcessing(flags, registry)
+		_, _, err := handleToolProcessing(flags, registry)
 		require.NoError(t, err)
 	}
 }
@@ -119,8 +119,9 @@ func TestWebSearchUsesParallelAndPreservesOutputRouting(t *testing.T) {
 	flags := &Flags{WebSearch: new("Go generics"), Pattern: "summarize", Message: "private input",
 		Output: filepath.Join(home, "summary.md")}
 	require.NoError(t, flags.resolveWebSearch())
-	got, err := handleToolProcessing(flags, registry)
+	got, handled, err := handleToolProcessing(flags, registry)
 	require.NoError(t, err)
+	require.False(t, handled)
 	require.Equal(t, expected, got)
 	require.NoFileExists(t, flags.Output)
 	require.EqualValues(t, 2, searchCalls.Load())
@@ -143,15 +144,55 @@ func TestWebSearchJinaSurfacesProviderFailure(t *testing.T) {
 
 	generic := &Flags{WebSearch: new("C# generics?"), WebSearchProvider: new("jina")}
 	require.NoError(t, generic.resolveWebSearch())
-	got, err := handleToolProcessing(generic, registry)
+	got, _, err := handleToolProcessing(generic, registry)
 	require.ErrorContains(t, err, "429")
 	require.Empty(t, got)
 
 	expectedURL = "https://s.jina.ai/query"
 	legacy := &Flags{ScrapeQuestion: "query", Pattern: "summarize"}
-	got, err = handleToolProcessing(legacy, registry)
+	got, _, err = handleToolProcessing(legacy, registry)
 	require.NoError(t, err)
 	require.Equal(t, response, got)
+}
+
+func TestStandaloneWebSearchCompletesWithNoResults(t *testing.T) {
+	transport := http.DefaultTransport
+	t.Cleanup(func() { http.DefaultTransport = transport })
+	home := t.TempDir()
+	t.Setenv("HOME", home)
+	t.Setenv("USERPROFILE", home)
+	t.Setenv("KEENABLE_API_KEY", "")
+	t.Setenv("JINA_AI_API_KEY", "")
+	oldArgs := os.Args
+	t.Cleanup(func() { os.Args = oldArgs })
+
+	for _, tc := range []struct{ provider, endpoint, body string }{
+		{provider: "keenable", endpoint: "https://api.keenable.ai/v1/search/public", body: `{"results":[]}`},
+		{provider: "jina", endpoint: "https://s.jina.ai/query"},
+	} {
+		t.Run(tc.provider, func(t *testing.T) {
+			var searchCalls int
+			http.DefaultTransport = searchRoundTripperFunc(func(req *http.Request) (*http.Response, error) {
+				if req.URL.String() != tc.endpoint {
+					return nil, fmt.Errorf("unexpected endpoint: %s", req.URL)
+				}
+				searchCalls++
+				return &http.Response{
+					StatusCode: http.StatusOK,
+					Body:       io.NopCloser(strings.NewReader(tc.body)),
+				}, nil
+			})
+
+			output := filepath.Join(t.TempDir(), "results.md")
+			os.Args = []string{"fabric", "--web-search=query", "--web-search-provider=" + tc.provider, "--search", "-o", output}
+			err := Cli("test")
+			require.Equal(t, 1, searchCalls)
+			written, readErr := os.ReadFile(output)
+			require.NoError(t, readErr)
+			require.Equal(t, "\n", string(written))
+			require.NoError(t, err)
+		})
+	}
 }
 
 type searchRoundTripperFunc func(*http.Request) (*http.Response, error)

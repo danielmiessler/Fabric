@@ -1,0 +1,5 @@
+### PR [#2361](https://github.com/danielmiessler/Fabric/pull/2361) by [raullenchai](https://github.com/raullenchai): feat(providers): add Rapid-MLX as an OpenAI-compatible provider
+
+- Added Rapid-MLX, a local inference server for Apple Silicon, as an OpenAI-compatible provider with the default base URL `http://localhost:8000/v1` and an optional API key (`RAPID_MLX_API_KEY`).
+- Added a `TestCreateClient` case for Rapid-MLX and extended `TestIsConfiguredOptionalKey` to cover it.
+- Updated the README provider lists (English, Chinese, Arabic) to document Rapid-MLX.

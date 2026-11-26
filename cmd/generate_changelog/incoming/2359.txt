@@ -1,0 +1,5 @@
+### PR [#2359](https://github.com/danielmiessler/Fabric/pull/2359) by [Specstreamai](https://github.com/Specstreamai): feat: add SpecStream web search via --specstream_search flag
+
+- Added an optional SpecStream web search plugin (`SPECSTREAM_API_KEY`) exposed through the new `--specstream_search` flag, which searches the web and appends each top result's title, URL and page passages to the chat as markdown, falling back to the snippet when a page was not read.
+- Added `httptest` coverage for passages, the snippet fallback, empty results, API errors and `IsConfigured`.
+- Documented the flag in the README, added it to the bash, zsh and fish completions, and added its i18n keys in all 14 locales.

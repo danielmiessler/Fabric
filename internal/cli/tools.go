@@ -103,6 +103,7 @@ func handleToolProcessing(currentFlags *Flags, registry *core.PluginRegistry) (m
 		{currentFlags.SearchApiSearch, registry.SearchApi},
 		{currentFlags.SofyaSearch, registry.Sofya},
 		{currentFlags.KeenableSearch, registry.Keenable},
+		{currentFlags.SpecStreamSearch, registry.SpecStream},
 	} {
 		if tool.query == "" {
 			continue

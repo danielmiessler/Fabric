@@ -77,6 +77,7 @@ type Flags struct {
 	SearchApiSearch                 string               `long:"searchapi_search" description:"Search Google using SearchApi and send the results to chat"`
 	SofyaSearch                     string               `long:"sofya_search" description:"Search the web using Sofya and send the top pages to chat as Markdown"`
 	KeenableSearch                  string               `long:"keenable_search" description:"Search the web using Keenable (no API key required) and send the results to chat"`
+	SpecStreamSearch                string               `long:"specstream_search" description:"Search the web using SpecStream and send the top results with page passages to chat"`
 	Seed                            int                  `short:"e" long:"seed" yaml:"seed" description:"Seed to be used for LMM generation"`
 	WipeContext                     string               `short:"w" long:"wipecontext" description:"Wipe context"`
 	WipeSession                     string               `short:"W" long:"wipesession" description:"Wipe session"`

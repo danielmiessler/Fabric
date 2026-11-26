@@ -50,6 +50,7 @@ import (
 	"github.com/danielmiessler/fabric/internal/tools/searchapi"
 	"github.com/danielmiessler/fabric/internal/tools/serply"
 	"github.com/danielmiessler/fabric/internal/tools/sofya"
+	"github.com/danielmiessler/fabric/internal/tools/specstream"
 	"github.com/danielmiessler/fabric/internal/tools/spotify"
 	"github.com/danielmiessler/fabric/internal/tools/youtube"
 	"github.com/danielmiessler/fabric/internal/util"
@@ -71,6 +72,7 @@ func NewPluginRegistry(db *fsdb.Db) (ret *PluginRegistry, err error) {
 		Parallel:       parallel.NewClient(),
 		SearchApi:      searchapi.NewClient(),
 		Sofya:          sofya.NewClient(),
+		SpecStream:     specstream.NewClient(),
 		Spotify:        spotify.NewSpotify(),
 		Strategies:     strategy.NewStrategiesManager(),
 	}
@@ -168,6 +170,7 @@ type PluginRegistry struct {
 	Parallel           *parallel.Client
 	SearchApi          *searchapi.Client
 	Sofya              *sofya.Client
+	SpecStream         *specstream.Client
 	Spotify            *spotify.Spotify
 	TemplateExtensions *template.ExtensionManager
 	Strategies         *strategy.StrategiesManager
@@ -193,6 +196,7 @@ func (o *PluginRegistry) SaveEnvFile() (err error) {
 	o.Parallel.SetupFillEnvFileContent(&envFileContent)
 	o.SearchApi.SetupFillEnvFileContent(&envFileContent)
 	o.Sofya.SetupFillEnvFileContent(&envFileContent)
+	o.SpecStream.SetupFillEnvFileContent(&envFileContent)
 	o.Spotify.SetupFillEnvFileContent(&envFileContent)
 	o.Language.SetupFillEnvFileContent(&envFileContent)
 
@@ -351,7 +355,7 @@ func (o *PluginRegistry) runInteractiveSetup() (err error) {
 
 	groupsPlugins.AddGroupItems(i18n.T("setup_required_tools"), o.Defaults, o.PatternsLoader, o.Strategies)
 
-	groupsPlugins.AddGroupItems(i18n.T("setup_optional_configuration_header"), o.CustomPatterns, o.Firecrawl, o.Jina, o.Keenable, o.Language, o.Parallel, o.SearchApi, o.Serply, o.Sofya, o.Spotify, o.YouTube)
+	groupsPlugins.AddGroupItems(i18n.T("setup_optional_configuration_header"), o.CustomPatterns, o.Firecrawl, o.Jina, o.Keenable, o.Language, o.Parallel, o.SearchApi, o.Serply, o.Sofya, o.SpecStream, o.Spotify, o.YouTube)
 
 	for {
 		groupsPlugins.Print(false)
@@ -546,6 +550,7 @@ func (o *PluginRegistry) Configure() (err error) {
 	_ = o.Parallel.Configure()
 	_ = o.SearchApi.Configure()
 	_ = o.Sofya.Configure()
+	_ = o.SpecStream.Configure()
 	_ = o.Spotify.Configure()
 	_ = o.Language.Configure()
 	return

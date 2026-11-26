@@ -394,6 +394,7 @@ Fabric supports a wide range of AI providers:
 - OrcaRouter
 - OVHcloud
 - Pzero
+- Rapid-MLX
 - Requesty
 - SiliconCloud
 - StandardCompute

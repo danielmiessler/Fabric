@@ -1,0 +1,4 @@
+### PR [#2360](https://github.com/danielmiessler/Fabric/pull/2360) by [al-global-tech](https://github.com/al-global-tech): Rename UberLLM to MartLLM
+
+- Renamed UberLLM to MartLLM, with the same service, accounts, and API keys carried over.
+- Updated the site to <https://martllm.com> and the API base URL to <https://api.martllm.com/v1>, while the legacy uberllm.dev addresses continue to work.

@@ -2,6 +2,7 @@ package fsdb
 
 import (
 	"crypto/rand"
+	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -47,12 +48,22 @@ type Db struct {
 	envMu sync.Mutex
 }
 
-func (o *Db) Configure() (err error) {
+func (o *Db) Configure() error {
+	return o.configure(false)
+}
+
+// ConfigureWithOptionalEnv accepts a missing .env file for standalone commands
+// that can work without credentials.
+func (o *Db) ConfigureWithOptionalEnv() error {
+	return o.configure(true)
+}
+
+func (o *Db) configure(allowMissingEnv bool) (err error) {
 	if err = os.MkdirAll(o.Dir, 0700); err != nil {
 		return
 	}
 
-	if err = o.LoadEnvFile(); err != nil {
+	if err = o.loadEnvFile(allowMissingEnv); err != nil {
 		return
 	}
 
@@ -90,11 +101,22 @@ func (o *Db) Configure() (err error) {
 	return
 }
 
-func (o *Db) LoadEnvFile() (err error) {
-	if err = godotenv.Load(o.EnvFilePath); err != nil {
-		err = fmt.Errorf(i18n.T("db_error_loading_env_file"), err)
+func (o *Db) LoadEnvFile() error {
+	return o.loadEnvFile(false)
+}
+
+func (o *Db) loadEnvFile(allowMissingEnv bool) error {
+	err := godotenv.Load(o.EnvFilePath)
+	if err == nil {
+		return nil
 	}
-	return
+	if allowMissingEnv && errors.Is(err, os.ErrNotExist) {
+		// A dangling .env symlink is an existing configuration entry.
+		if _, statErr := os.Lstat(o.EnvFilePath); errors.Is(statErr, os.ErrNotExist) {
+			return nil
+		}
+	}
+	return fmt.Errorf(i18n.T("db_error_loading_env_file"), err)
 }
 
 func (o *Db) IsEnvFileExists() (ret bool) {

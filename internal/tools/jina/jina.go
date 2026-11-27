@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"net/url"
 
 	"github.com/danielmiessler/fabric/internal/i18n"
 	"github.com/danielmiessler/fabric/internal/plugins"
@@ -35,14 +36,19 @@ func NewClient() (ret *Client) {
 
 // ScrapeURL return the main content of a webpage in clean, LLM-friendly text.
 func (jc *Client) ScrapeURL(url string) (ret string, err error) {
-	return jc.request(fmt.Sprintf("https://r.jina.ai/%s", url))
+	return jc.request(fmt.Sprintf("https://r.jina.ai/%s", url), false)
 }
 
 func (jc *Client) ScrapeQuestion(question string) (ret string, err error) {
-	return jc.request(fmt.Sprintf("https://s.jina.ai/%s", question))
+	return jc.request(fmt.Sprintf("https://s.jina.ai/%s", question), false)
 }
 
-func (jc *Client) request(requestURL string) (ret string, err error) {
+// Search handles provider-neutral requests with an escaped query and HTTP errors.
+func (jc *Client) Search(query string) (string, error) {
+	return jc.request("https://s.jina.ai/"+url.PathEscape(query), true)
+}
+
+func (jc *Client) request(requestURL string, checkStatus bool) (ret string, err error) {
 	var req *http.Request
 	if req, err = http.NewRequest("GET", requestURL, nil); err != nil {
 		err = fmt.Errorf("%s", fmt.Sprintf(i18n.T("jina_error_creating_request"), err))
@@ -60,6 +66,9 @@ func (jc *Client) request(requestURL string) (ret string, err error) {
 		return
 	}
 	defer resp.Body.Close()
+	if checkStatus && (resp.StatusCode < 200 || resp.StatusCode >= 300) {
+		return "", fmt.Errorf("Jina search: %s", resp.Status)
+	}
 
 	var body []byte
 	if body, err = io.ReadAll(resp.Body); err != nil {

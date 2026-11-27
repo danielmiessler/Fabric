@@ -817,5 +817,12 @@
   "youtube_ytdlp_required_visual_extraction": "视觉提取需要 yt-dlp，但在 PATH 中未找到",
   "youtube_ytdlp_stderr_error": "读取 yt-dlp stderr 时出错",
   "search_not_configured": "%s未配置,请运行设置过程",
-  "parallel_search_help": "使用 Parallel 搜索网络(默认匿名)并返回源摘录"
+  "parallel_search_help": "使用 Parallel 搜索网络(默认匿名)并返回源摘录",
+  "web_search_help": "搜索网页并返回来源摘录（默认提供商：Parallel）",
+  "web_search_query_required": "--web-search 需要非空的搜索查询",
+  "web_search_provider_conflict": "--web-search 不能与特定提供商的搜索选项同时使用",
+  "web_search_provider_help": "--web-search 的提供商，设为 off 可禁用",
+  "web_search_disabled": "独立网页搜索已禁用",
+  "web_search_unknown_provider": "未知的独立网页搜索提供商 %q",
+  "web_search_preview_conflict": "--web-search 不能与 --dry-run 或 --print-prompt 同时使用"
 }

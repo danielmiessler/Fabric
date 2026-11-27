@@ -817,5 +817,12 @@
   "youtube_ytdlp_required_visual_extraction": "視覚抽出には yt-dlp が必要ですが、PATH に見つかりません",
   "youtube_ytdlp_stderr_error": "yt-dlp stderrの読み取りエラー",
   "search_not_configured": "%sが設定されていません。セットアップ手順を実行してください",
-  "parallel_search_help": "Parallelを使用してウェブを検索し(デフォルトで匿名)、ソースの抜粋を返す"
+  "parallel_search_help": "Parallelを使用してウェブを検索し(デフォルトで匿名)、ソースの抜粋を返す",
+  "web_search_help": "ウェブを検索し、参照元の抜粋を表示する（既定のプロバイダー: Parallel）",
+  "web_search_query_required": "--web-search には空でない検索語句が必要です",
+  "web_search_provider_conflict": "--web-search はプロバイダー固有の検索オプションと併用できません",
+  "web_search_provider_help": "--web-search のプロバイダー。無効にする場合は off",
+  "web_search_disabled": "単独のウェブ検索は無効です",
+  "web_search_unknown_provider": "単独のウェブ検索プロバイダー %q は不明です",
+  "web_search_preview_conflict": "--web-search は --dry-run または --print-prompt と併用できません"
 }

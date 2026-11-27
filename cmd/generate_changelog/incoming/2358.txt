@@ -1,0 +1,3 @@
+### PR [#2358](https://github.com/danielmiessler/Fabric/pull/2358) by [georgeatparallel](https://github.com/georgeatparallel): Add keyless web search for fresh installs
+
+- Add `fabric --web-search` for keyless standalone searches on a fresh install. Use Parallel MCP when the user has no provider preference.

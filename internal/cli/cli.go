@@ -35,7 +35,14 @@ func Cli(version string) (err error) {
 		return
 	}
 
-	var registry, err2 = initializeFabric()
+	if !currentFlags.Setup {
+		if err = currentFlags.resolveWebSearch(); err != nil {
+			return
+		}
+	}
+	standaloneWebSearch := currentFlags.webSearchStandaloneOptions && !currentFlags.Setup &&
+		!currentFlags.IsChatRequest() && currentFlags.TranscribeFile == ""
+	var registry, err2 = initializeFabric(standaloneWebSearch)
 	if err2 != nil {
 		if !currentFlags.Setup {
 			debuglog.Log("%s\n", err2.Error())
@@ -96,12 +103,13 @@ func Cli(version string) (err error) {
 	}
 
 	var messageTools string
-	if messageTools, err = handleToolProcessing(currentFlags, registry); err != nil {
+	var handledStandaloneWebSearch bool
+	if messageTools, handledStandaloneWebSearch, err = handleToolProcessing(currentFlags, registry); err != nil {
 		return
 	}
 
 	// handleToolProcessing already printed the tool output.
-	if messageTools != "" && !currentFlags.IsChatRequest() {
+	if handledStandaloneWebSearch || (messageTools != "" && !currentFlags.IsChatRequest()) {
 		return nil
 	}
 

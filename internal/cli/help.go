@@ -58,6 +58,8 @@ var flagDescriptionMap = map[string]string{
 	"language":                   "specify_language_code",
 	"scrape_url":                 "scrape_website_url",
 	"scrape_question":            "search_question_jina",
+	"web-search":                 "web_search_help",
+	"web-search-provider":        "web_search_provider_help",
 	"serply_search":              "serply_search_help",
 	"firecrawl_search":           "firecrawl_search_help",
 	"parallel_search":            "parallel_search_help",

@@ -114,6 +114,8 @@ _fabric() {
     '(-g --language)'{-g,--language}'[Specify the Language Code for the chat, e.g. -g=en -g=zh]:language:' \
     '(-u --scrape_url)'{-u,--scrape_url}'[Scrape website URL to markdown using Jina AI]:url:' \
     '(-q --scrape_question)'{-q,--scrape_question}'[Search question using Jina AI]:question:' \
+    '(--web-search)--web-search[Search the web (default provider\: Parallel)]:query:' \
+    '(--web-search-provider)--web-search-provider[Choose a provider for standalone web search]:provider:(parallel keenable firecrawl jina searchapi serply sofya off)' \
     '(--serply_search)--serply_search[Search Google using Serply]:query:' \
     '(--firecrawl_search)--firecrawl_search[Search the web using Firecrawl]:query:' \
     '(--parallel_search)--parallel_search[Search the web using Parallel]:query:' \

@@ -3,15 +3,59 @@ package cli
 import (
 	"errors"
 	"fmt"
+	"strings"
 
 	"github.com/danielmiessler/fabric/internal/core"
 	"github.com/danielmiessler/fabric/internal/i18n"
+	debuglog "github.com/danielmiessler/fabric/internal/log"
 	"github.com/danielmiessler/fabric/internal/tools/youtube"
 )
 
+// resolveWebSearch validates the generic search request and selects an existing
+// tool. The query stays separate from prompt text and stdin.
+func (f *Flags) resolveWebSearch() error {
+	if f.WebSearch == nil {
+		return nil
+	}
+	if strings.TrimSpace(*f.WebSearch) == "" {
+		return errors.New(i18n.T("web_search_query_required"))
+	}
+	if f.DryRun || f.PrintPrompt {
+		return errors.New(i18n.T("web_search_preview_conflict"))
+	}
+	if f.namedSearchOption {
+		return errors.New(i18n.T("web_search_provider_conflict"))
+	}
+
+	provider := "parallel"
+	if f.WebSearchProvider != nil {
+		provider = strings.ToLower(strings.TrimSpace(*f.WebSearchProvider))
+	}
+	if provider == "off" {
+		return errors.New(i18n.T("web_search_disabled"))
+	}
+
+	queries := map[string]*string{
+		"firecrawl": &f.FirecrawlSearch,
+		"jina":      &f.ScrapeQuestion,
+		"keenable":  &f.KeenableSearch,
+		"parallel":  &f.ParallelSearch,
+		"searchapi": &f.SearchApiSearch,
+		"serply":    &f.SerplySearch,
+		"sofya":     &f.SofyaSearch,
+	}
+	target, ok := queries[provider]
+	if !ok {
+		return fmt.Errorf(i18n.T("web_search_unknown_provider"), provider)
+	}
+	*target = *f.WebSearch
+	debuglog.Debug(debuglog.Basic, "Standalone web search provider: %s\n", provider)
+	return nil
+}
+
 // handleToolProcessing runs the YouTube, web scrape, search, and Spotify tools and collects their output.
-// When the run is not a chat request, it also prints the output.
-func handleToolProcessing(currentFlags *Flags, registry *core.PluginRegistry) (messageTools string, err error) {
+// A standalone web search can be handled even when it returns no results.
+func handleToolProcessing(currentFlags *Flags, registry *core.PluginRegistry) (messageTools string, handledStandaloneWebSearch bool, err error) {
 	if currentFlags.YouTube != "" {
 		if !registry.YouTube.IsConfigured() {
 			err = errors.New(i18n.T("youtube_not_configured"))
@@ -73,8 +117,12 @@ func handleToolProcessing(currentFlags *Flags, registry *core.PluginRegistry) (m
 		}
 
 		if currentFlags.ScrapeQuestion != "" {
+			search := registry.Jina.ScrapeQuestion
+			if currentFlags.WebSearch != nil {
+				search = registry.Jina.Search
+			}
 			var website string
-			if website, err = registry.Jina.ScrapeQuestion(currentFlags.ScrapeQuestion); err != nil {
+			if website, err = search(currentFlags.ScrapeQuestion); err != nil {
 				return
 			}
 
@@ -82,6 +130,7 @@ func handleToolProcessing(currentFlags *Flags, registry *core.PluginRegistry) (m
 		}
 
 		if !currentFlags.IsChatRequest() {
+			handledStandaloneWebSearch = currentFlags.WebSearch != nil && currentFlags.ScrapeQuestion != ""
 			err = currentFlags.WriteOutput(messageTools)
 			return
 		}
@@ -118,6 +167,7 @@ func handleToolProcessing(currentFlags *Flags, registry *core.PluginRegistry) (m
 		messageTools = AppendMessage(messageTools, results)
 
 		if !currentFlags.IsChatRequest() {
+			handledStandaloneWebSearch = currentFlags.WebSearch != nil
 			err = currentFlags.WriteOutput(messageTools)
 			return
 		}

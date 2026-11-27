@@ -817,5 +817,12 @@
   "youtube_ytdlp_required_visual_extraction": "yt-dlp est requis pour l’extraction visuelle mais est introuvable dans PATH",
   "youtube_ytdlp_stderr_error": "erreur lors de la lecture du stderr de yt-dlp",
   "search_not_configured": "%s n'est pas configuré, veuillez exécuter la procédure de configuration",
-  "parallel_search_help": "Rechercher sur le Web à l'aide de Parallel (anonyme par défaut) et renvoyer des extraits sources"
+  "parallel_search_help": "Rechercher sur le Web à l'aide de Parallel (anonyme par défaut) et renvoyer des extraits sources",
+  "web_search_help": "Rechercher sur le Web et renvoyer des extraits de sources (fournisseur par défaut : Parallel)",
+  "web_search_query_required": "--web-search exige une requête non vide",
+  "web_search_provider_conflict": "--web-search ne peut pas être combiné avec des options de recherche propres à un fournisseur",
+  "web_search_provider_help": "Fournisseur pour --web-search, ou off pour le désactiver",
+  "web_search_disabled": "La recherche Web autonome est désactivée",
+  "web_search_unknown_provider": "Fournisseur de recherche Web autonome inconnu %q",
+  "web_search_preview_conflict": "--web-search ne peut pas être combiné avec --dry-run ou --print-prompt"
 }

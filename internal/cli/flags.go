@@ -71,6 +71,8 @@ type Flags struct {
 	Language                        string               `short:"g" long:"language" description:"Specify the Language Code for the chat, e.g. -g=en -g=zh" default:""`
 	ScrapeURL                       string               `short:"u" long:"scrape_url" description:"Scrape website URL to markdown using Jina AI"`
 	ScrapeQuestion                  string               `short:"q" long:"scrape_question" description:"Search question using Jina AI"`
+	WebSearch                       *string              `long:"web-search" description:"Search the web and return source excerpts (default provider: Parallel)"`
+	WebSearchProvider               *string              `long:"web-search-provider" yaml:"webSearchProvider" description:"Provider for --web-search, or off to disable it"`
 	SerplySearch                    string               `long:"serply_search" description:"Search Google using Serply and send the results to chat"`
 	ParallelSearch                  string               `long:"parallel_search" description:"Search the web using Parallel (anonymous by default) and return source excerpts"`
 	FirecrawlSearch                 string               `long:"firecrawl_search" description:"Search the web using Firecrawl and send the top pages to chat as Markdown"`
@@ -124,6 +126,8 @@ type Flags struct {
 	ShowMetadata                    bool                 `long:"show-metadata" description:"Print metadata (input/output tokens) to stderr"`
 	Debug                           int                  `long:"debug" description:"Set debug level (0=off, 1=basic, 2=detailed, 3=trace, 4=wire)" default:"0"`
 	patternFromBinary               bool                 // Init sets this when the pattern name comes from the binary name.
+	webSearchStandaloneOptions      bool                 // Only standalone search options were set on the command line.
+	namedSearchOption               bool                 // A provider-specific search option was set, even with an empty query.
 }
 
 // These binary names do not select a pattern. "main" is argv[0] for
@@ -149,9 +153,21 @@ func Init() (ret *Flags, err error) {
 	// usedFlags records which YAML-backed flags the command line set. YAML must not override them.
 	// The parser knows every flag syntax, such as "-sp name", "-t0.2" or "/t 0.2" on Windows.
 	usedFlags := make(map[string]bool)
+	ret.webSearchStandaloneOptions = ret.WebSearch != nil
 	for _, group := range parser.Groups() {
 		for _, opt := range group.Options() {
 			if opt.IsSet() && !opt.IsSetDefault() {
+				if ret.WebSearch != nil {
+					switch opt.LongName {
+					case "config", "debug", "language", "output", "search", "search-location", "web-search", "web-search-provider":
+						// These options do not select a separate action.
+					case "scrape_question", "firecrawl_search", "keenable_search", "parallel_search", "searchapi_search", "serply_search", "sofya_search":
+						ret.namedSearchOption = true
+						ret.webSearchStandaloneOptions = false
+					default:
+						ret.webSearchStandaloneOptions = false
+					}
+				}
 				if yamlTag := opt.Field().Tag.Get("yaml"); yamlTag != "" {
 					usedFlags[yamlTag] = true
 					debuglog.Debug(debuglog.Detailed, "CLI flag used: %s (yaml: %s)\n", opt, yamlTag)
@@ -174,10 +190,12 @@ func Init() (ret *Flags, err error) {
 
 	// GetDefaultConfigPath returns "" when ~/.config/fabric/config.yaml does not exist.
 	if ret.Config == "" {
-		if defaultConfigPath, err := util.GetDefaultConfigPath(); err == nil && defaultConfigPath != "" {
+		if defaultConfigPath, configErr := util.GetDefaultConfigPath(ret.WebSearch != nil); configErr == nil {
 			ret.Config = defaultConfigPath
-		} else if err != nil {
-			debuglog.Debug(debuglog.Detailed, "Could not determine default config path: %v\n", err)
+		} else if ret.WebSearch != nil {
+			return nil, configErr
+		} else {
+			debuglog.Debug(debuglog.Detailed, "Could not determine default config path: %v\n", configErr)
 		}
 	}
 
@@ -302,6 +320,10 @@ func loadYAMLConfig(configPath string) (*Flags, map[string]any, error) {
 	var values map[string]any
 	if err := yaml.Unmarshal(data, &values); err != nil {
 		return nil, nil, fmt.Errorf(i18n.T("error_parsing_config_file"), err)
+	}
+	if _, specified := values["webSearchProvider"]; specified && config.WebSearchProvider == nil {
+		// YAML decodes an explicit null the same way as an omitted field.
+		config.WebSearchProvider = new("")
 	}
 
 	debuglog.Debug(debuglog.Detailed, "Config: %v\n", config)

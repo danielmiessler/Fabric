@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.4.584 (2026-11-27)
+
+### PR [#2360](https://github.com/danielmiessler/Fabric/pull/2360) by [al-global-tech](https://github.com/al-global-tech): Rename UberLLM to MartLLM
+
+- Renamed UberLLM to MartLLM, with the same service, accounts, and API keys carried over.
+- Updated the site to <https://martllm.com> and the API base URL to <https://api.martllm.com/v1>, while the legacy uberllm.dev addresses continue to work.
+
 ## v1.4.583 (2026-11-24)
 
 ### PR [#2357](https://github.com/danielmiessler/Fabric/pull/2357) by [2867297362mjb-sketch](https://github.com/2867297362mjb-sketch): feat(providers): add TeamoRouter as an OpenAI-compatible provider

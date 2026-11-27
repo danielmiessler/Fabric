@@ -315,6 +315,7 @@ go install github.com/danielmiessler/fabric/cmd/fabric@latest
 - Langdock
 - LiteLLM
 - llm.buzz
+- LLMTR
 - MiniMax
 - Mistral
 - Novita AI

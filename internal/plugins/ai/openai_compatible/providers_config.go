@@ -377,6 +377,11 @@ var ProviderMap = map[string]ProviderConfig{
 		BaseURL:             "http://localhost:17434/v1",
 		ImplementsResponses: false,
 	},
+	"LLMTR": {
+		Name:                "LLMTR",
+		BaseURL:             "https://llmtr.com/v1",
+		ImplementsResponses: false,
+	},
 	"Mammouth": {
 		Name:                "Mammouth",
 		BaseURL:             "https://api.mammouth.ai/v1",

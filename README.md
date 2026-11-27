@@ -383,6 +383,7 @@ Fabric supports a wide range of AI providers:
 - Langdock
 - LiteLLM
 - llm.buzz
+- LLMTR
 - MiniMax
 - Mistral
 - Novita AI

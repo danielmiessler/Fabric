@@ -332,7 +332,7 @@ go install github.com/danielmiessler/fabric/cmd/fabric@latest
 - Synthorai
 - TeamoRouter
 - Together
-- UberLLM
+- MartLLM
 - Venice AI
 - Wiro
 - WorldRouter

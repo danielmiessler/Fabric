@@ -1,0 +1,4 @@
+### PR [#2362](https://github.com/danielmiessler/Fabric/pull/2362) by [ZainnQureshii](https://github.com/ZainnQureshii): fix(cli): save patterned YouTube playlist output to the requested file
+
+- Fixed `--playlist` with `--pattern` and `-o` writing a video-list CSV to the output file and passing empty input to the pattern; the CSV export now runs only when the command is not a chat request.
+- Added a regression test with a local YouTube API fixture and a fake model that checks both the standalone CSV export and the saved pattern response.

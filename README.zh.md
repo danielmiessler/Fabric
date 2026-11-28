@@ -390,6 +390,7 @@ Fabric 支持广泛的 AI 供应商：
 - Opper
 - OrcaRouter
 - Pzero
+- Rapid-MLX
 - Requesty
 - SiliconCloud
 - Straitly

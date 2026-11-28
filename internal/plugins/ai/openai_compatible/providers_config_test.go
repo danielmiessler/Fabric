@@ -108,6 +108,11 @@ func TestCreateClient(t *testing.T) {
 			exists:   true,
 		},
 		{
+			name:     "Existing provider - Rapid-MLX",
+			provider: "Rapid-MLX",
+			exists:   true,
+		},
+		{
 			name:     "Existing provider - Straitly",
 			provider: "Straitly",
 			exists:   true,
@@ -255,17 +260,29 @@ func TestOpenCodeProvidersConfigureSessionRouting(t *testing.T) {
 }
 
 func TestIsConfiguredOptionalKey(t *testing.T) {
-	const envVar = "APPLE_FOUNDATION_MODELS_API_BASE_URL"
-	t.Setenv(envVar, "")
+	for _, tc := range []struct {
+		provider string
+		envVar   string
+		baseURL  string
+	}{
+		{"Apple Foundation Models", "APPLE_FOUNDATION_MODELS_API_BASE_URL", "http://localhost:1976/v1"},
+		{"Rapid-MLX", "RAPID_MLX_API_BASE_URL", "http://localhost:8000/v1"},
+	} {
+		t.Run(tc.provider, func(t *testing.T) {
+			t.Setenv(tc.envVar, "")
+			client, _ := CreateClient(tc.provider)
+			t.Setenv(client.ApiKey.EnvVariable, "")
+			assert.False(t, client.ApiKey.Required)
+			assert.Equal(t, tc.envVar, client.ApiBaseURL.EnvVariable)
+			if client.IsConfigured() {
+				t.Fatal("optional-key provider must not be configured until its base URL is in the environment")
+			}
 
-	apple, _ := CreateClient("Apple Foundation Models")
-	if apple.IsConfigured() {
-		t.Fatal("optional-key provider must not be configured until its base URL is in the environment")
-	}
-
-	t.Setenv(envVar, "http://localhost:1976/v1")
-	if !apple.IsConfigured() {
-		t.Fatal("optional-key provider must be configured once its base URL is in the environment")
+			t.Setenv(tc.envVar, tc.baseURL)
+			if !client.IsConfigured() {
+				t.Fatal("optional-key provider must be configured once its base URL is in the environment")
+			}
+		})
 	}
 
 	groq, _ := CreateClient("Groq")

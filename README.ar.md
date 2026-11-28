@@ -325,6 +325,7 @@ go install github.com/danielmiessler/fabric/cmd/fabric@latest
 - Opper
 - OrcaRouter
 - Pzero
+- Rapid-MLX
 - Requesty
 - SiliconCloud
 - Straitly

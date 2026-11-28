@@ -452,6 +452,12 @@ var ProviderMap = map[string]ProviderConfig{
 		BaseURL:             "https://api.pzero.studio/v1",
 		ImplementsResponses: false,
 	},
+	"Rapid-MLX": {
+		Name:                "Rapid-MLX",
+		BaseURL:             "http://localhost:8000/v1",
+		ImplementsResponses: false,
+		ApiKeyOptional:      true,
+	},
 	"Requesty": {
 		Name:                "Requesty",
 		BaseURL:             "https://router.requesty.ai/v1",

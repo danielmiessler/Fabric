@@ -1,0 +1,3 @@
+### PR [#2364](https://github.com/danielmiessler/Fabric/pull/2364) by [KunalSiyag](https://github.com/KunalSiyag): feat(providers): add GMI Cloud preset
+
+- Feat(providers): add GMI Cloud preset

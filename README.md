@@ -757,6 +757,7 @@ Application Options:
       --searchapi_search=           Search Google using SearchApi and send the results to chat
       --sofya_search=               Search the web using Sofya and send the top pages to chat as Markdown
       --keenable_search=            Search the web using Keenable (no API key required) and send the results to chat
+      --specstream_search=          Search the web using SpecStream and send the top results with page passages to chat
   -e, --seed=                       Seed to be used for LMM generation
   -w, --wipecontext=                Wipe context
   -W, --wipesession=                Wipe session

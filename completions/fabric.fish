@@ -116,6 +116,7 @@ function __fabric_register_completions
         complete -c $cmd -l searchapi_search -x -d "Search Google using SearchApi and send the results to chat"
         complete -c $cmd -l sofya_search -x -d "Search the web using Sofya and send the top pages to chat as Markdown"
         complete -c $cmd -l keenable_search -x -d "Search the web using Keenable (no API key required) and send the results to chat"
+        complete -c $cmd -l specstream_search -x -d "Search the web using SpecStream and send the top results with page passages to chat"
         complete -c $cmd -s e -l seed -x -d "Seed to be used for LMM generation"
         complete -c $cmd -l address -x -d "The address to bind the REST API (default: :8080)"
         complete -c $cmd -l api-key -x -d "API key used to secure server routes"

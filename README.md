@@ -377,6 +377,7 @@ Fabric supports a wide range of AI providers:
 - DemonRoute
 - DigitalOcean
 - Eden AI
+- GMI Cloud
 - GrokAI
 - Groq
 - Hostinger Router

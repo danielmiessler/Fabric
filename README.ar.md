@@ -309,6 +309,7 @@ go install github.com/danielmiessler/fabric/cmd/fabric@latest
 - DemonRoute
 - DigitalOcean
 - Eden AI
+- GMI Cloud
 - GrokAI
 - Groq
 - Hostinger Router

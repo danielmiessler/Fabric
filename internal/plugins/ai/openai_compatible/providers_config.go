@@ -333,6 +333,11 @@ var ProviderMap = map[string]ProviderConfig{
 		BaseURL:             "https://futurmix.ai/v1",
 		ImplementsResponses: false,
 	},
+	"GMI Cloud": {
+		Name:                "GMI Cloud",
+		BaseURL:             "https://api.gmi-serving.com/v1",
+		ImplementsResponses: false,
+	},
 	"Hostinger Router": {
 		Name:                "Hostinger Router",
 		BaseURL:             "https://router.hostinger.com/v1",

@@ -21,6 +21,17 @@ func TestMain(m *testing.M) {
 	os.Exit(m.Run())
 }
 
+func TestGMICloudPreset(t *testing.T) {
+	client, ok := CreateClient("GMI Cloud")
+	if !ok {
+		t.Fatal("GMI Cloud provider is missing")
+	}
+	assert.Equal(t, "https://api.gmi-serving.com/v1", client.ApiBaseURL.Value)
+	assert.Equal(t, "GMI_CLOUD_API_KEY", client.ApiKey.EnvVariable)
+	assert.True(t, client.ApiKey.Required)
+	assert.False(t, client.ImplementsResponses)
+}
+
 func TestCreateClient(t *testing.T) {
 	testCases := []struct {
 		name     string

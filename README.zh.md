@@ -374,6 +374,7 @@ Fabric 支持广泛的 AI 供应商：
 - DeepSeek
 - DigitalOcean
 - Eden AI
+- GMI Cloud
 - GrokAI
 - Groq
 - Hostinger Router
